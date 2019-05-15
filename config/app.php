@@ -174,6 +174,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Emadadly\LaravelUuid\LaravelUuidServiceProvider::class,
+        jeremykenedy\LaravelRoles\RolesServiceProvider::class,
+        Laravolt\Avatar\ServiceProvider::class,
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
 
     ],
 
@@ -225,6 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Avatar'    => Laravolt\Avatar\Facade::class,
 
     ],
 
