@@ -178,6 +178,7 @@ return [
         jeremykenedy\LaravelRoles\RolesServiceProvider::class,
         Laravolt\Avatar\ServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
+        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class
 
     ],
 
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Avatar'    => Laravolt\Avatar\Facade::class,
+        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class
 
     ],
 
