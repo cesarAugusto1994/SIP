@@ -16,14 +16,30 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if(!Auth::user()->hasPermission('view.cursos')) {
             return abort(403, 'Unauthorized action.');
         }
 
         $courses = Course::paginate();
-        return view('admin.training.courses.index', compact('courses'));
+
+        $table = (new \Okipa\LaravelTable\Table)->model(Course::class)
+        ->request($request)
+        ->routes([
+            'index'      => ['name' => 'courses.index'],
+            'create'     => ['name' => 'courses.create'],
+            'edit'       => ['name' => 'courses.edit'],
+            'destroy'    => ['name' => 'courses.destroy'],
+            'show'    => ['name' => 'courses.show'],
+        ])
+        ->rowsNumber(50) // or set `false` to get all the items contained in database
+        ->rowsNumberSelectionActivation(false);
+        $table->column('title')->title('Titulo')->sortable()->searchable();
+        $table->column('description')->title('Descrição')->searchable();
+        $table->column('workload')->title('Carga Horária')->sortable()->searchable();
+
+        return view('training.courses.index', compact('courses'));
     }
 
     /**
@@ -104,7 +120,7 @@ class CoursesController extends Controller
         }
 
         $course = Course::uuid($id);
-        return view('admin.training.courses.edit', compact('course'));
+        return view('training.courses.edit', compact('course'));
     }
 
     /**

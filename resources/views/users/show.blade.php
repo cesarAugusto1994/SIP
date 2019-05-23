@@ -1,0 +1,578 @@
+@extends('base')
+
+@section('content')
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Perfil</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Perfil do usuário</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <!--profile cover start-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="cover-profile">
+                <div class="profile-bg-img">
+                    <img class="profile-bg-img img-fluid" src="{{ asset('adminty\images\user-profile\bg-img1.jpg') }}" alt="">
+                    <div class="card-block user-info">
+                        <div class="col-md-12">
+                            <div class="media-left">
+                                <a href="#" class="profile-image">
+                                    <img class="user-img img-radius" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="user-img">
+                                </a>
+                            </div>
+                            <div class="media-body row">
+                                <div class="col-lg-12">
+                                    <div class="user-title">
+                                        <h2>{{ $person->name }}</h2>
+                                        <span class="text-white">{{$person->occupation->name}}</span>
+                                        <br/>
+                                        @if($person->active)
+                                            <span class="text-white"> <i class="fa fa-circle text-success" title="Ativo"></i> Ativo</span>
+                                        @else
+                                            <span class="text-white"> <i class="fa fa-circle text-danger" title="Inativo"></i> Inativo</span>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="pull-right cover-btn">
+                                        <button type="button" class="btn btn-primary btn-sm"><i class="icofont icofont-ui-messaging"></i> Mensagem</button>
+
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                          <a href="#!" class="dropdown-item" data-toggle="modal" data-target="#editar-senha">Alterar Senha</a>
+                                          @if(auth()->user()->id !== $person->user->id)
+                                            <a class="dropdown-item" href="{{ route('impersonate', $person->user->id) }}">logar como</a>
+                                          @endif
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--profile cover end-->
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- tab header start -->
+            <div class="tab-header card">
+                <ul class="nav nav-tabs md-tabs tab-timeline" role="tablist" id="mytab">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#personal" role="tab">Informações Pessoais</a>
+                        <div class="slide"></div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#configs" role="tab">Configurações</a>
+                        <div class="slide"></div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#roles" role="tab">Permissões</a>
+                        <div class="slide"></div>
+                    </li>
+                </ul>
+            </div>
+            <!-- tab header end -->
+            <!-- tab content start -->
+            <div class="tab-content">
+                <!-- tab panel personal start -->
+                <div class="tab-pane active" id="personal" role="tabpanel">
+                    <!-- personal card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-header-text">Informações Pessoais</h5>
+                        </div>
+                        <div class="card-block">
+                            <div class="view-info">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="general-info">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-xl-6">
+                                                    <div class="table-responsive">
+                                                        <table class="table m-0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">Nome</th>
+                                                                    <td>{{ $person->name }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Telefone</th>
+                                                                    <td>{{ $person->phone ?? 'Não informado' }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Email</th>
+                                                                    <td>{{ $person->user->email }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">CPF</th>
+                                                                    <td>{{ $person->cpf }}</td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!-- end of table col-lg-6 -->
+                                                <div class="col-lg-12 col-xl-6">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">Departamento</th>
+                                                                    <td>{{$person->department->name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Cargo</th>
+                                                                    <td>{{$person->occupation->name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Ultimo Login</th>
+                                                                    <td>{{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!-- end of table col-lg-6 -->
+                                            </div>
+                                            <!-- end of row -->
+                                        </div>
+                                        <!-- end of general info -->
+                                    </div>
+                                    <!-- end of col-lg-12 -->
+                                </div>
+                                <!-- end of row -->
+                            </div>
+                            <!-- end of view-info -->
+                        </div>
+                        <!-- end of card-block -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+
+                            <div class="card user-activity-card">
+                              <div class="card-header">
+                                <h5>Atividades</h5>
+                                <span>Fluxo de atividades do usuário</span>
+                                <div class="card-header-right">
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="feather icon-maximize full-card"></i></li>
+                                        <li><i class="feather icon-minus minimize-card"></i></li>
+                                    </ul>
+                                </div>
+                              </div>
+                              <div class="card-block">
+
+                                @if($activities->isNotEmpty())
+
+                                  @foreach($activities->take(4) as $activity)
+
+                                    <div class="row m-b-25">
+                                        <div class="col">
+                                            <h6 class="m-b-5">{{ \App\Helpers\TimesAgo::render($activity->created_at) ?? '' }}</h6>
+                                            <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
+                                            <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
+                                        </div>
+                                    </div>
+
+                                  @endforeach
+
+                                  <div class="text-center">
+                                      <a href="#!" class="b-b-primary text-primary">Ver todas atividades</a>
+                                  </div>
+
+                                @endif
+
+                              </div>
+                          </div>
+
+                        </div>
+
+                        <div class="col-lg-4">
+
+                            <div class="card user-activity-card">
+                              <div class="card-header">
+                                <h5>Log de Acessos</h5>
+                                <span>Fluxo de acessos do usuário</span>
+                                <div class="card-header-right">
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="feather icon-maximize full-card"></i></li>
+                                        <li><i class="feather icon-minus minimize-card"></i></li>
+                                    </ul>
+                                </div>
+                              </div>
+                              <div class="card-block">
+
+                                @if($person->user->authentications->isNotEmpty())
+
+                                  @foreach($person->user->authentications as $login)
+
+                                    <div class="row m-b-25">
+                                        <div class="col">
+                                            <h6 class="m-b-5">{{ \App\Helpers\TimesAgo::render($login->login_at) ?? '' }} </h6>
+                                            <p class="text-muted m-b-0">Logou em: {{ $login->login_at ? $login->login_at->format('d/m/Y H:i:s') : '' }}</p>
+                                            <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>Tempo de sessão: {{ \App\Helpers\TimesAgo::diffBetween($login->login_at, $login->logout_at) }}</p>
+                                        </div>
+                                    </div>
+
+                                  @endforeach
+
+                                  <div class="text-center">
+                                      <a href="#!" class="b-b-primary text-primary">Ver todos logs</a>
+                                  </div>
+
+                                @endif
+
+                              </div>
+                          </div>
+
+                        </div>
+                    </div>
+                    <!-- personal card end-->
+                </div>
+                <!-- tab pane personal end -->
+                <!-- tab pane info start -->
+                <div class="tab-pane" id="configs" role="tabpanel">
+
+                  <div class="row">
+                      <div class="col-lg-8">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-header-text">Editar Configurações</h5>
+                            </div>
+                            <div class="card-block">
+
+                              <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->id])}}" method="post">
+                                  {{csrf_field()}}
+
+                                  <div class="row m-b-30">
+
+                                      <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">Nome</label>
+                                            <div class="input-group">
+                                              <input type="text" required name="name" value="{{$user->person->name}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Departamento</label>
+                                            <div class="input-group">
+                                              <select class="select2 select-occupations" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" name="department_id" required>
+                                                  @foreach($departments as $department)
+                                                      <option value="{{$department->uuid}}" {{ $user->person->department_id == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
+                                                  @endforeach
+                                              </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Avatar</label>
+                                            <div class="input-group">
+
+                                              <input name="avatar" data-buttonText="Selecionar Arquivo" data-dragdrop="true" data-buttonName="btn btn-primary" data-badge="true" type="file" data-input="false" accept="image/*" class="filestyle" multiple/>
+
+                                            </div>
+                                        </div>
+
+                                      </div>
+
+                                      <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">CPF</label>
+                                            <div class="input-group">
+                                              <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Cargo</label>
+                                            <div class="input-group">
+                                              <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
+
+                                                  @foreach($occupations as $occupation)
+                                                      <option value="{{$occupation->uuid}}" {{ $user->person->occupation_id == $occupation->id ? 'selected' : '' }}>{{$occupation->name}}</option>
+                                                  @endforeach
+
+                                              </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                                            <label class="col-form-label" for="active">Ativo</label>
+                                            <div class="input-group">
+                                                <input type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
+                                            </div>
+                                            {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                                        </div>
+
+                                      </div>
+
+                                      <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">E-mail</label>
+                                            <div class="input-group">
+                                              <input type="email" readonly name="email" value="{{$user->email}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        @php
+
+                                          $day = null;
+
+                                          if($user->person->birthday) {
+                                            $day = $user->person->birthday->format('d/m/Y');
+                                          }
+
+                                        @endphp
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Nascimento</label>
+                                            <div class="input-group">
+                                              <input type="text" name="birthday" value="{{$day}}" class="form-control inputDate">
+                                            </div>
+                                        </div>
+                                      </div>
+
+                                  </div>
+
+                                  <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+
+                              </form>
+
+                            </div>
+                        </div>
+
+                      </div>
+
+                      <div class="col-lg-4">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-header-text">Editar Acessos</h5>
+                            </div>
+                            <div class="card-block">
+
+                              <form action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
+                                  @csrf
+
+                                  <div class="row m-b-30">
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Usuário SOC</label>
+                                            <div class="input-group">
+                                              <input type="text" name="login_soc" value="{{ $user->login_soc ?? '' }}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Senha SOC</label>
+                                            <div class="input-group">
+                                              <input type="text" name="password_soc" value="{{$user->password_soc ?? ''}}" class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">ID SOC</label>
+                                            <div class="input-group">
+                                              <input type="text" name="id_soc" value="{{$user->id_soc??''}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
+                                            <label class="col-form-label">Previlégios</label>
+                                            <div class="input-group">
+                                              <select id="role" name="roles" required="required" class="select2" title="Selecione">
+                                                @foreach($roles as $role)
+                                                  <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                                @endforeach
+                                              </select>
+                                            </div>
+                                            {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                      <div class="form-group {!! $errors->has('do_task') ? 'has-error' : '' !!}">
+                                          <label class="col-form-label" for="do_task">Executa Tarefas</label>
+                                          <div class="input-group">
+                                              <input type="checkbox" id="do_task" name="do_task" {{ $user->do_task ? 'active' : '' }} data-plugin="switchery" checked value="{{ 1 }}">
+                                          </div>
+                                          {!! $errors->first('do_task', '<p class="help-block">:message</p>') !!}
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                  <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+                              </form>
+
+                            </div>
+                        </div>
+
+                      </div>
+
+                  </div>
+
+                </div>
+                <!-- tab pane info end -->
+                <!-- tab pane contact start -->
+                <div class="tab-pane" id="roles" role="tabpanel">
+                  <div class="card">
+                      <div class="card-header">
+                          <h5 class="card-header-text">Editar Permissões</h5>
+                      </div>
+                      <div class="card-block">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                              @if(auth()->user()->id == $user->id)
+                                <div class="alert alert-warning">Não é possível que você altere as suas permissões.</div>
+                              @endif
+
+                              <div class="panel-group" id="accordion">
+
+                                @foreach($modules as $key => $module)
+
+                                    @if($module->children->isNotEmpty())
+
+                                      <div class="panel panel-default">
+                                          <div class="panel-heading">
+                                              <h5 class="panel-title">
+                                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}" class="collapsed" aria-expanded="false">{{$module->name}}</a>
+                                              </h5>
+                                          </div>
+                                          <div id="collapse{{ $loop->index }}" class="panel-collapse {{ $key==0 ? 'in' : '' }} collapse" style="">
+                                              <div class="panel-body">
+
+                                                @forelse($module->children as $item)
+
+                                                <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                                                  <h5>
+                                                      {{$item->name}}
+                                                  </h5>
+                                                </div>
+
+                                                <table class="table table-borderd">
+                                                    <tbody>
+                                                    @foreach($item->permissions as $permission)
+
+                                                    @php
+                                                        $hasPermission = $user->hasPermission($permission->slug);
+                                                    @endphp
+
+                                                    <tr>
+                                                        <td class="project-actions">
+                                                            <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                              data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                              data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
+                                                              data-plugin="switchery" value="1"/>
+                                                        </td>
+                                                        <td class="project-title">
+                                                            <p>Nome:</p>
+                                                            <a href="#">{{$permission->name}}</a>
+                                                        </td>
+                                                        <td class="project-title">
+                                                            <p>Descrição:</p>
+                                                            <a href="#">{{$permission->description}}</a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                                @empty
+                                                    <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
+                                                @endforelse
+
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                    @endif
+
+                                @endforeach
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                      </div>
+                  </div>
+                </div>
+                <!-- tab pane contact end -->
+            </div>
+            <!-- tab content end -->
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="editar-senha" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+              <h4 class="modal-title">Alterar Senha</h4>
+            </div>
+            <form action="{{route('user_update_password', ['id' => $user->uuid])}}" method="post">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <div class="form-group"><label>Nova Senha</label>
+                      <input type="password" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@stop

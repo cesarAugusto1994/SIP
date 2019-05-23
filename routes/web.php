@@ -159,6 +159,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::put('clients/{id}/addresses/{address}/update', 'AddressesController@update')->name('client_addresses_update');
 
     Route::get('clients/employees/search', 'ClientController@employees')->name('client_employees_search');
+    Route::get('employees/search', 'ClientController@employeeFind')->name('employees_find');
+
 
     Route::get('clients/{id}/employees', 'EmployeesController@show')->name('client_employees');
     Route::get('clients/{id}/employees/create', 'EmployeesController@create')->name('client_employee_create');

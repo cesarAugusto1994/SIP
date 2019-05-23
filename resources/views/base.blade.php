@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\icon\themify-icons\themify-icons.css') }}">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\icon\icofont\css\icofont.css') }}">
+
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\icon\feather\css\feather.css') }}">
     <!-- Notification.css -->
@@ -36,6 +37,18 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\jquery.mCustomScrollbar.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\font-awesome\css\font-awesome.min.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+
+    <link href="{{ asset('adminty\components\bootstrap-tagsinput\css\bootstrap-tagsinput.css') }}" rel="stylesheet" />
+    <link href="{{ asset('adminty\components\select2\css\select2-b.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('adminty\components\switchery\css\switchery.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
 
 </head>
 
@@ -179,14 +192,159 @@
 <script type="text/javascript" src="{{ asset('adminty\js\script.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\js\bootstrap-growl.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('adminty\pages\notification\notification.js') }}"></script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.20.6/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
 
+<!-- ck editor -->
+<script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+
+<script src="{{ asset('adminty\components\bootstrap-tagsinput\js\bootstrap-tagsinput.js') }}"></script>
+<script src="{{ asset('adminty\components\select2\js\select2.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('adminty\components\switchery\js\switchery.min.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/pt-BR.js"></script>
+
+<script src="{{ asset('adminty\components/bootstrap-filestyle/js/bootstrap-filestyle.min.js') }}" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+<script>
+
+  // Mascara de CPF e CNPJ
+  var CpfCnpjMaskBehavior = function (val) {
+        return val.replace(/\D/g, '').length <= 11 ? '000.000.000-009' : '00.000.000/0000-00';
+      },
+      cpfCnpjpOptions = {
+        onKeyPress: function(val, e, field, options) {
+          field.mask(CpfCnpjMaskBehavior.apply({}, arguments), options);
+        }
+      };
+
+  $(function() {
+    $(':input[name=document]').mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
+    $('.inputDocument').mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
+  })
+
+</script>
+
+<script>
+
+    function notify(message, type){
+        $.growl({
+            message: message
+        },{
+            type: type,
+            allow_dismiss: false,
+            label: 'Cancel',
+            className: 'btn-xs btn-inverse',
+            placement: {
+                from: 'bottom',
+                align: 'right'
+            },
+            delay: 2500,
+            animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutRight'
+            },
+            offset: {
+                x: 30,
+                y: 30
+            }
+        });
+    };
+
+</script>
+
+@yield('scripts')
+
+@if (notify()->ready())
+    <script>
+        notify("{!! notify()->message() !!}", 'inverse');
+/*
+        swal({
+            title: "{!! notify()->message() !!}",
+            text: "{!! notify()->option('text') !!}",
+            type: "{{ notify()->type() }}",
+            @if (notify()->option('timer'))
+                timer: {{ notify()->option('timer') }},
+                showConfirmButton: false
+            @endif
+        });*/
+
+    </script>
+@endif
 
 <script>
 
 $(document).ready(function() {
+
+    $('.select2').select2({
+			width: '100%'
+		});
+
+    $('.inputDate').mask('00/00/0000');
+	  $('.inputCep').mask('00000-000');
+		$('.inputPhone').mask('(00)00000-0000');
+	  $('.inputCpf').mask('000.000.000-00', {reverse: true});
+  	$('.inputCnpj').mask('00.000.000/0000-00', {reverse: true});
+		$('.inputMoney').mask('000.000.000.000.000,00', {reverse: true});
+
+    $('.inputDate').datepicker({
+  	    format: "dd/mm/yyyy",
+  	    todayBtn: "linked",
+  	    clearBtn: true,
+  	    language: "pt-BR",
+  	    calendarWeeks: true,
+  	    autoclose: true,
+  	    todayHighlight: true,
+  	    toggleActive: true
+		});
+
+    $(".inputCep").blur(function() {
+
+          let route = $(this).data('cep');
+          let value = $(this).val();
+
+          if(value) {
+
+            $.ajax({
+              type: 'GET',
+              async: true,
+              url: route+'?search='+value,
+              success: function(response) {
+
+                  if(!response.success) {
+
+                    Swal.fire({
+                      type: 'error',
+                      title: 'Oops...',
+                      text: response.message,
+                    })
+
+                  }
+
+                  let dataResponse = response.data['response'];
+                  let dataResponseCoodenadas = response.data['coordenadas'];
+
+                  $("#street").val(dataResponse.logradouro);
+                  $("#district").val(dataResponse.bairro);
+                  $("#city").val(dataResponse.localidade);
+                  $("#state").val(dataResponse.uf);
+
+                  $("#long").val(dataResponseCoodenadas.lng);
+                  $("#lat").val(dataResponseCoodenadas.lat);
+
+                  $('.ibox-loading').children('.ibox-content').removeClass('sk-loading');
+              }
+            })
+
+          }
+
+    });
 
     $(".btnRemoveItem").click(function(e) {
         var self = $(this);
@@ -221,19 +379,11 @@ $(document).ready(function() {
                 self.parents('tr').hide();
                 self.parents('.cardMessageTypes').hide();
 
-                Swal.fire({
-                  type: 'success',
-                  title: 'Feito!',
-                  text: data.message,
-                })
+                notify(data.message, 'inverse');
 
               } else {
 
-                Swal.fire({
-                  type: 'error',
-                  title: 'Oops...',
-                  text: data.message,
-                })
+                notify(data.message, 'danger');
 
               }
 
@@ -287,6 +437,157 @@ $(document).ready(function() {
 
           }
       });
+
+    let checkboxPermissions = $(".checkboxPermissions");
+
+    checkboxPermissions.change(function() {
+
+      var _self = $(this);
+      var isChecked = _self[0].checked;
+
+      var route = _self.data('route-grant');
+
+      if(isChecked !== true) {
+        route = _self.data('route-revoke');
+      }
+
+      $.ajax({
+        headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         },
+        url: route,
+        type: 'POST',
+        dataType: 'json',
+        data: {}
+      }).done(function(data) {
+
+        if(data.success) {
+
+          const toast = swal.mixin({
+            toast: true,
+            position: 'top-center',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          toast({
+            type: 'success',
+            title: data.message
+          });
+
+        } else {
+
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: data.message,
+          })
+
+        }
+
+      });
+
+    });
+
+    let selectClientAddress = $(".select-client-addresses");
+    let selectAddress = $("#select-address");
+
+    selectClientAddress.change(function() {
+
+      let self = $(this);
+      let route = self.data('search-addresses');
+      let value = self.val();
+
+      $.ajax({
+        type: 'GET',
+        url: route + '?param=' + value,
+        async: true,
+        success: function(response) {
+
+          let html = "";
+          selectAddress.html("");
+          selectAddress.trigger('change');
+
+          $.each(response.data, function(idx, item) {
+
+              let address = item.description +', '+item.street+', '+item.number+' - '+item.district+', '+item.city+' - '+item.zip;
+
+              html += "<option value="+ item.uuid +">"+ address +"</option>";
+
+          });
+
+          selectAddress.append(html);
+          selectAddress.trigger('change');
+
+        }
+      })
+
+    });
+
+    let selectClientEmployees = $(".select-client-employees");
+    let selectEmployee = $("#select-employee");
+
+    selectClientEmployees.change(function() {
+
+      let self = $(this);
+      let route = self.data('search-employees');
+      let value = self.val();
+
+      $.ajax({
+        type: 'GET',
+        url: route + '?param=' + value,
+        async: true,
+        success: function(response) {
+
+          let html = "";
+          selectEmployee.html("");
+          //selectEmployee.trigger('change');
+
+          $.each(response.data, function(idx, item) {
+              let employee = item.name +' - '+item.email;
+              html += "<option value="+ item.uuid +">"+ employee +"</option>";
+          });
+
+          selectEmployee.append(html);
+          //selectEmployee.trigger('change');
+
+        }
+      })
+
+    });
+
+    let selectOccupations = $(".select-occupations");
+    let occupation = $("#occupation");
+
+    selectOccupations.change(function () {
+
+      let self = $(this);
+      let route = self.data('search-occupations');
+      let value = self.val();
+
+      $.ajax({
+        type: 'GET',
+        url: route + '?param=' + value,
+        async: true,
+        success: function(response) {
+
+          let html = "";
+          occupation.html("");
+          occupation.selectpicker('refresh');
+
+          $.each(response.data, function(idx, item) {
+
+              html += "<option value="+ item.uuid +">"+ item.name +"</option>";
+
+          });
+
+          occupation.append(html);
+          occupation.selectpicker('refresh');
+
+        }
+      })
+
+    });
 
 });
 

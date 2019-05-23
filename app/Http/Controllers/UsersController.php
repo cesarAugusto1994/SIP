@@ -86,7 +86,7 @@ class UsersController extends Controller
         $departments = Department::all();
         $occupations = Occupation::where('department_id', $departments->first()->id)->get();
 
-        return view('admin.users.index', compact('roles', 'people', 'departments', 'occupations'));
+        return view('users.index', compact('roles', 'people', 'departments', 'occupations'));
     }
 
     public function permissions($id)
@@ -99,7 +99,7 @@ class UsersController extends Controller
 
         $user = User::uuid($id);
 
-        return view('admin.users.permissions', compact('permissionsGroupedByModule', 'user', 'modules'));
+        return view('users.permissions', compact('permissionsGroupedByModule', 'user', 'modules'));
     }
 
     public function grant($id, $permission)
@@ -250,7 +250,7 @@ class UsersController extends Controller
         $departments = Department::all();
         $occupations = Occupation::where('department_id', $departments->first()->id)->get();
 
-        return view('admin.users.create', compact('roles', 'departments', 'occupations'));
+        return view('users.create', compact('roles', 'departments', 'occupations'));
     }
 
     /**
@@ -343,20 +343,12 @@ class UsersController extends Controller
         $departments = Department::all();
         $departamentoAtual = $user->person->department;
         $occupations = Occupation::where('department_id', $departamentoAtual->id)->get();
-
         $activities = $user->activities->sortByDesc('id')->take(6);
-
         $roles = Role::all();
-
         $permissions = Permission::all();
         $modules = Module::all();
 
-
-
-        return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person', 'modules'))
-        ->with('user', $user)
-        ->with('logs', TaskLogs::where('user_id', $user->id)->limit(6)->orderBy('id', 'DESC')->get())
-        ->with('departments', Department::all());
+        return view('users.show', compact('user', 'occupations', 'departments', 'activities', 'roles', 'person', 'modules'));
     }
 
     /**

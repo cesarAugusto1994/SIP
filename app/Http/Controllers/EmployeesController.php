@@ -18,15 +18,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $table = (new Table)
-          ->model(Employee::class)
-          ->routes(['index' => ['name' => 'employees.index']]);
-        $table->column('name')->title('Name')->sortable()->searchable();
-        $table->column('cpf')->title('CPF')->sortable()->searchable();
-        $table->column('phone')->title('Telefone')->sortable()->searchable();
-        $table->column('email')->title('E-mail')->sortable()->searchable();
-
-        return view('admin.clients.employees.index', compact('table'));
+        //
     }
 
     /**
@@ -43,7 +35,7 @@ class EmployeesController extends Controller
         $companies = Client::all();
         $company = Client::uuid($id);
 
-        return view('admin.clients.employees.create', compact('company', 'companies'));
+        return view('clients.employees.create', compact('company', 'companies'));
     }
 
     /**
@@ -113,7 +105,7 @@ class EmployeesController extends Controller
         $company = Client::uuid($id);
         $employee = Employee::uuid($employee);
 
-        return view('admin.clients.employees.edit', compact('company', 'companies', 'employee'));
+        return view('clients.employees.edit', compact('company', 'companies', 'employee'));
     }
 
     /**

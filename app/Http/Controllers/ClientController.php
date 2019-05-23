@@ -80,7 +80,7 @@ class ClientController extends Controller
             $clients->appends($key, $value);
         }
 
-        return view('admin.clients.index', compact('clients', 'quantity'));
+        return view('clients.index', compact('clients', 'quantity'));
     }
 
     /**
@@ -90,7 +90,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-      return view('admin.clients.create');
+      return view('clients.create');
     }
 
     public function uploadDocuments($id, Request $request)
@@ -225,7 +225,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::uuid($id);
-        return view('admin.clients.show', compact('client'));
+        return view('clients.show', compact('client'));
     }
 
     public function addresses(Request $request)
@@ -280,6 +280,32 @@ class ClientController extends Controller
 
     }
 
+    public function employeeFind(Request $request)
+    {
+        $param = $request->get('param');
+
+        try {
+
+          $employee = Employee::where('name', 'LIKE', "%$param%")->get();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Registros retornados',
+            'data' => $employee
+          ]);
+
+        } catch(\Exception $e) {
+
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado',
+            'data' => []
+          ]);
+
+        }
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -289,7 +315,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = Client::uuid($id);
-        return view('admin.clients.edit', compact('client'));
+        return view('clients.edit', compact('client'));
     }
 
     /**

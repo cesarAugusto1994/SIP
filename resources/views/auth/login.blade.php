@@ -38,7 +38,7 @@
             </div>
             <div class="row m-t-30">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Entrar</button>
+                    <button type="submit" class="btn btn-success btn-md btn-block waves-effect waves-light text-center m-b-20">Entrar</button>
                 </div>
             </div>
 

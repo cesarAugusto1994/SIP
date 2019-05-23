@@ -1,0 +1,152 @@
+@extends('base')
+
+@section('css')
+
+@stop
+
+@section('content')
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Cursos</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('courses.index') }}">Cursos</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Adicionar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Novo Curso</h5>
+            <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                    <li><i class="feather icon-maximize full-card"></i></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-block">
+
+              <form method="post" action="{{route('courses.update', $course->uuid)}}">
+
+                {{csrf_field()}}
+                {{method_field('PUT')}}
+
+                <div class="row m-b-30">
+                    <div class="col-md-12">
+
+                      <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="form-group {!! $errors->has('title') ? 'has-error' : '' !!}">
+                                <label class="col-form-label" for="title">Titulo</label>
+                                <div class="input-group">
+                                    <input type="text" id="title" name="title" value="{{ $course->title }}" class="form-control" autofocus placeholder="Informe o titulo">
+                                </div>
+                                {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
+                            </div>
+
+                          </div>
+
+                          <div class="col-md-6">
+
+                            <div class="form-group {!! $errors->has('workload') ? 'has-error' : '' !!}">
+                                <label class="col-form-label" for="workload">Carga Horária</label>
+                                <div class="input-group">
+                                    <input type="number" id="workload" name="workload" value="{{ $course->workload }}" class="form-control" value="10">
+
+                                </div>
+                                {!! $errors->first('workload', '<p class="help-block">:message</p>') !!}
+                            </div>
+
+                          </div>
+
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
+                            <label class="col-form-label" for="description">Descrição</label>
+                            <div class="input-group">
+                                <textarea name="description" rows="4" class="form-control ckeditor">{{ $course->description }}</textarea>
+                            </div>
+                            {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group {!! $errors->has('grade') ? 'has-error' : '' !!}">
+                          <label class="col-form-label" for="grade">Grade Curricular</label>
+                          <div class="input-group">
+                                <textarea name="grade" rows="4" class="form-control ckeditor">{{ $course->grade }}</textarea>
+                          </div>
+                          {!! $errors->first('grade', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-success">Salvar</button>
+                <a class="btn btn-danger" href="{{ route('courses.index') }}">Cancelar</a>
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+ @stop
+
+ @section('scripts')
+
+ <script>
+    CKEDITOR.replace( 'editor', {
+        // Define the toolbar: http://docs.ckeditor.com/#!/guide/dev_toolbar
+        // The standard preset from CDN which we used as a base provides more features than we need.
+        // Also by default it comes with a 2-line toolbar. Here we put all buttons in a single row.
+        toolbar: [{
+            name: 'clipboard',
+            items: ['Undo', 'Redo']
+        }, {
+            name: 'styles',
+            items: ['Styles', 'Format']
+        }, {
+            name: 'basicstyles',
+            items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat']
+        }, {
+            name: 'paragraph',
+            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
+        }, {
+            name: 'links',
+            items: ['Link', 'Unlink']
+        }, {
+            name: 'insert',
+            items: ['Image', 'EmbedSemantic', 'Table']
+        }, {
+            name: 'tools',
+            items: ['Maximize']
+        }, {
+            name: 'editing',
+            items: ['Scayt']
+        }],
+    });
+ </script>
+
+ @stop

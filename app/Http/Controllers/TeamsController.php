@@ -22,7 +22,7 @@ class TeamsController extends Controller
     public function index()
     {
         $teams = Team::all();
-        return view('admin.training.teams.index', compact('teams'));
+        return view('training.teams.index', compact('teams'));
     }
 
     /**
@@ -35,7 +35,7 @@ class TeamsController extends Controller
         $companies = Company::whereHas('employees')->get();
         $courses = Course::where('active', true)->get();
         $teachers = People::where('occupation_id', 9)->get();
-        return view('admin.training.teams.create', compact('companies', 'courses', 'teachers'));
+        return view('training.teams.create', compact('companies', 'courses', 'teachers'));
     }
 
     public function start($id, Request $request)
@@ -126,14 +126,14 @@ class TeamsController extends Controller
         $data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
 
         $team = Team::create($data);
-
+/*
         foreach ($data['employees'] as $key => $employeeID) {
           TeamEmployees::create([
             'team_id' => $team->id,
             'employee_id' => Employee::uuid($employeeID)->id,
           ]);
         }
-
+*/
         return redirect()->route('teams.show', $team->uuid);
     }
 
@@ -188,7 +188,7 @@ class TeamsController extends Controller
         $courses = Course::where('active', true)->get();
         $teachers = People::where('occupation_id', 9)->get();
 
-        return view('admin.training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected'));
+        return view('training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected'));
     }
 
     /**

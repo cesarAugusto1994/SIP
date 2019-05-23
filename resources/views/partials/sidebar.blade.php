@@ -15,14 +15,14 @@
 
             @foreach($menus as $menu)
 
-                @if($menu->childs->isEmpty())
+                @if($menu->childs->isEmpty() && $menu->parent)
                   @continue;
                 @endif
 
                 @permission($menu->permission)
 
-                <li class="pcoded-hasmenu">
-                    <a href="javascript:void(0)">
+                <li class="@if(!$menu->childs->isEmpty()) pcoded-hasmenu @endif">
+                    <a href="@if(!$menu->childs->isEmpty()) javascript:void(0) @else {{ route($menu->route) }} @endif">
                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                         <span class="pcoded-mtext">{{ $menu->title }}</span>
                     </a>

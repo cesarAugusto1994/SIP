@@ -1,4 +1,4 @@
-<nav class="navbar header-navbar pcoded-header" header-theme="theme1">
+<nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
 
         <div class="navbar-logo" logo-theme="theme4">

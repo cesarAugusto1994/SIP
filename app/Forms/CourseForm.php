@@ -10,18 +10,27 @@ class CourseForm extends Form
     public function buildForm()
     {
         $this
-            ->add('Titulo', Field::TEXT, [
-                'rules' => 'required|min:5'
+            ->add('title', Field::TEXT, [
+                'rules' => 'required|min:5',
+                'label' => 'Titulo'
             ])
-            ->add('Carga Horária', Field::TEXT, [
-                'rules' => 'required|min:5'
+            ->add('workload', 'number', [
+                'rules' => 'required|min:5',
+                'label' => 'Carga Horária'
             ])
-            ->add('Descrição', Field::TEXTAREA, [
-                'rules' => 'max:5000'
+            ->add('description', Field::TEXTAREA, [
+                'rules' => 'max:5000',
+                'attr' => ['class' => 'summernote'],
+                'label' => 'Descrição'
             ])
-            ->add('Grade Curricular', Field::TEXTAREA, [
-                'rules' => 'max:5000'
+            ->add('grade', Field::TEXTAREA, [
+                'rules' => 'max:5000',
+                'attr' => ['class' => 'summernote'],
+                'label' => 'Grade Curricular'
             ])
-            ->add('submit', 'submit', ['label' => 'Salvar', 'class' => 'btn-inverse']);
+            ->add('submit', 'submit', [
+              'label' => 'Salvar',
+              'attr' => ['class' => 'btn btn-success'],
+            ]);
     }
 }

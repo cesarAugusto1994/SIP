@@ -12,4 +12,9 @@ class Menu extends Model
     {
          return $this->hasMany('App\Models\Menu', 'parent');
     }
+
+    public function parentRow()
+    {
+         return $this->belongsTo('App\Models\Menu');
+    }
 }

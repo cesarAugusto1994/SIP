@@ -31,7 +31,7 @@ class AddressesController extends Controller
         }
 
         $client = Client::uuid($id);
-        return view('admin.clients.addresses.create', compact('client'));
+        return view('clients.addresses.create', compact('client'));
     }
 
     /**
@@ -72,7 +72,7 @@ class AddressesController extends Controller
         }
 
         $client = Client::uuid($id);
-        return view('admin.clients.addresses.index', compact('client'));
+        return view('clients.addresses.index', compact('client'));
     }
 
     /**
@@ -85,7 +85,7 @@ class AddressesController extends Controller
     {
         $address = Address::uuid($address);
         $client = $address->client;
-        return view('admin.clients.addresses.edit', compact('client', 'address'));
+        return view('clients.addresses.edit', compact('client', 'address'));
     }
 
     /**

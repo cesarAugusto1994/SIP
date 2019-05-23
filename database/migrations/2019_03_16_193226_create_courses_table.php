@@ -28,6 +28,19 @@ class CreateCoursesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });
+
+        Schema::create('employee_courses', function (Blueprint $table) {
+            $table->integer('employee_id')->unsigned();
+            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->integer('course_id')->unsigned();
+            $table->foreign('course_id')->references('id')->on('courses');
+            $table->boolean('required')->default(true);
+            $table->enum('frequency', ['Mensal', 'Bimestral', 'Trimestral', 'Semestral', 'Anual', 'Periódicamente'])->default('Anual');
+            $table->integer('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->uuid('uuid')->unique();
+            $table->timestamps();
+        });
     }
 
     /**

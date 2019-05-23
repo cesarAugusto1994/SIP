@@ -84,58 +84,39 @@
 
         <div class="col-md-4 col-sm-12">
 
-          <div class="card">
+          <div class="card user-activity-card">
               <div class="card-header">
-                  <h5>Atividades</h5>
-                  <span>Fluxo de atividades do usuário</span>
-                  <div class="card-header-right">
-                      <ul class="list-unstyled card-option">
-                          <li><i class="feather icon-maximize full-card"></i></li>
-                          <li><i class="feather icon-minus minimize-card"></i></li>
-                      </ul>
-                  </div>
+                <h5>Atividades</h5>
+                <span>Fluxo de atividades do usuário</span>
+                <div class="card-header-right">
+                    <ul class="list-unstyled card-option">
+                        <li><i class="feather icon-maximize full-card"></i></li>
+                        <li><i class="feather icon-minus minimize-card"></i></li>
+                    </ul>
+                </div>
               </div>
               <div class="card-block">
 
                 @if($activities->isNotEmpty())
 
-                  <div class="timeline timeline-left">
+                  @foreach($activities->take(4) as $activity)
 
-                      @foreach($activities->take(4) as $activity)
+                    <div class="row m-b-25">
+                        <div class="col">
+                            <h6 class="m-b-5">{{ $activity->created_at->format('H:i') }}</h6>
+                            <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
+                            <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
+                        </div>
+                    </div>
 
-                      <article class="timeline-item">
-                          <div class="timeline-desk">
-                              <div class="panel">
-                                  <div class="timeline-box">
-                                      <span class="arrow"></span>
-                                      <span class="timeline-icon {{ array_random(['', 'bg-success', 'bg-primary', 'bg-danger']) }}"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                      <h4 class="">{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</h4>
-                                      <p class="timeline-date text-muted"><small>{{ $activity->created_at->format('H:i') }}</small></p>
-                                      <p>{{ $activity->description }}:
-                                         {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }} </p>
-                                  </div>
-                              </div>
-                          </div>
-                      </article>
+                  @endforeach
 
-                      @endforeach
-
+                  <div class="text-center">
+                      <a href="#!" class="b-b-primary text-primary">Visualizar todas atividades</a>
                   </div>
 
-                  @else
+                @endif
 
-                  <div class="widget white-bg no-padding">
-                      <div class="p-m text-center">
-                          <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
-                          <br/>
-                          <h4 class="font-bold no-margins">
-                              Voce não possui nenhum log até o momento
-                          </h4>
-                      </div>
-                  </div>
-
-                  @endif
-                  
               </div>
           </div>
 
