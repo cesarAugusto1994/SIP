@@ -24,7 +24,7 @@ class DocumentsController extends Controller
         $types = Type::where('can_delivery', true)->pluck('id');
 
         $documents = Documents::whereIn('type_id', $types)->orderByDesc('id')->paginate(10);
-        return view('admin.documents.index', compact('documents'));
+        return view('documents.index', compact('documents'));
     }
 
     /**
@@ -36,7 +36,7 @@ class DocumentsController extends Controller
     {
         $clients = Client::all();
         $types = Type::all();
-        return view('admin.documents.create',compact('clients', 'types'));
+        return view('documents.create',compact('clients', 'types'));
     }
 
     /**
@@ -98,7 +98,7 @@ class DocumentsController extends Controller
         $document = Documents::uuid($id);
         $clients = Client::all();
         $types = Type::all();
-        return view('admin.documents.edit',compact('clients', 'document', 'types'));
+        return view('documents.edit',compact('clients', 'document', 'types'));
     }
 
     /**

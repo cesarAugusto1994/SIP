@@ -182,6 +182,7 @@ return [
         Codecourse\Notify\NotifyServiceProvider::class,
         geekcom\ValidatorDocs\ValidatorProvider::class,
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
 
     ],
 
@@ -237,6 +238,7 @@ return [
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
         'Notify' => Codecourse\Notify\Facades\Notify::class,
         'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 

@@ -31,7 +31,7 @@ class DeliveryOrderController extends Controller
         }
 
         $orders = DeliveryOrder::all();
-        return view('admin.delivery-order.index', compact('orders'));
+        return view('delivery-order.index', compact('orders'));
     }
 
     public function printTags($id, Request $request)
@@ -40,7 +40,7 @@ class DeliveryOrderController extends Controller
 
         $user = $request->user();
 
-        echo route('start_delivery', $delivery->uuid);
+        //echo route('start_delivery', $delivery->uuid);
 
         $titulo = "etiquetas-".str_random();
 
@@ -61,7 +61,7 @@ class DeliveryOrderController extends Controller
         if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
 
             $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
-            //$delivery->save();
+            $delivery->save();
 
             $message = 'Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' está em Transito.';
 
@@ -75,7 +75,7 @@ class DeliveryOrderController extends Controller
             ->queue(new DeliveryOrderMail($delivery, 'Ordem de Entrega', $message));
 */
 
-            $job = dispatch(new DeliveryOrderJob($delivery, 'Ordem de Entrega', $message));
+            //$job = dispatch(new DeliveryOrderJob($delivery, 'Ordem de Entrega', $message));
 
             //dd($job);
 
@@ -117,7 +117,7 @@ class DeliveryOrderController extends Controller
      */
     public function create()
     {
-        return view('admin.delivery-order.create');
+        return view('delivery-order.create');
     }
 
     public function conference(Request $request)
@@ -186,7 +186,7 @@ class DeliveryOrderController extends Controller
             }
         }
 
-        return view('admin.delivery-order.conference', compact('documents', 'delivers'));
+        return view('delivery-order.conference', compact('documents', 'delivers'));
     }
 
     /**
