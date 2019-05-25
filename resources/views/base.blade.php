@@ -541,7 +541,7 @@ $(document).ready(function() {
         success: function(response) {
 
           let html = "";
-          selectEmployee.html("");
+          selectEmployee.html("<option value=''>Informe um funcionário</option>");
           //selectEmployee.trigger('change');
 
           $.each(response.data, function(idx, item) {
@@ -584,6 +584,48 @@ $(document).ready(function() {
 
           occupation.append(html);
           occupation.selectpicker('refresh');
+
+        }
+      })
+
+    });
+
+    let selectClientDocuments= $(".select-client-documents");
+    let tableDocuments = $("#table-documents");
+
+    selectClientDocuments.change(function() {
+
+      let self = $(this);
+      let route = self.data('search-documents');
+      let value = self.val();
+
+      tableDocuments.html("");
+
+      $.ajax({
+        type: 'GET',
+        url: route + '?param=' + value,
+        async: true,
+        success: function(response) {
+
+          console.log(response);
+
+          let html = "";
+      
+          $.each(response.data, function(idx, item) {
+
+              html += "<tr>";
+              html += "<td><input type='checkbox' name='documents[]' value='"+ item.id +"'/></td>";
+              html += "<td>"+ item.type +"</td>";
+              html += "<td>"+ item.client +"</td>";
+              html += "<td>"+ item.status +"</td>";
+              html += "<td>"+ item.annotations +"</td>";
+              html += "</tr>";
+
+              tableDocuments.append(html);
+
+          });
+
+
 
         }
       })

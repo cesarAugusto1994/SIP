@@ -32,6 +32,7 @@ class CreateDocumentsTable extends Migration
 
         Schema::create('document_type_log', function (Blueprint $table) {
             $table->increments('id');
+
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('document_types');
             $table->float('old_price', 12,2)->default(0.00);
@@ -44,34 +45,22 @@ class CreateDocumentsTable extends Migration
 
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('description');
-
+            $table->string('annotations')->nullable();
             $table->string('link')->nullable();
             $table->string('filename')->nullable();
             $table->string('extension')->nullable();
-
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
-
-            $table->integer('address_id')->nullable();
-
             $table->integer('employee_id')->nullable();
-
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
-
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('documents_statuses');
-
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('document_types');
-
             $table->float('price', 12,2)->default(0.00);
-
             $table->float('extra_value', 12,2)->default(0.00);
             $table->uuid('uuid')->unique();
-
             $table->timestamps();
         });
     }

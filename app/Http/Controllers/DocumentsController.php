@@ -56,13 +56,11 @@ class DocumentsController extends Controller
         $data['status_id'] = 1;
 
         $client = Client::uuid($data['client_id']);
-        $address = Address::uuid($data['address_id']);
         $type = Type::uuid($data['type_id']);
 
         $employee = Employee::uuid($data['employee_id']);
 
         $data['client_id'] = $client->id;
-        $data['address_id'] = $address->id;
         $data['type_id'] = $type->id;
         $data['price'] = $type->price;
         $data['employee_id'] = $employee->id;
@@ -98,7 +96,8 @@ class DocumentsController extends Controller
         $document = Documents::uuid($id);
         $clients = Client::all();
         $types = Type::all();
-        return view('documents.edit',compact('clients', 'document', 'types'));
+        $employees = Employee::all();
+        return view('documents.edit',compact('clients', 'document', 'types', 'employees'));
     }
 
     /**
@@ -115,12 +114,12 @@ class DocumentsController extends Controller
         $document = Documents::uuid($id);
 
         $client = Client::uuid($data['client_id']);
-        $address = Address::uuid($data['address_id']);
         $type = Type::uuid($data['type_id']);
+        $employee = Employee::uuid($data['employee_id']);
 
         $data['client_id'] = $client->id;
-        $data['address_id'] = $address->id;
         $data['type_id'] = $type->id;
+        $data['employee_id'] = $employee->id;
 
         $document->update($data);
 

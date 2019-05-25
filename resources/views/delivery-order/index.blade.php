@@ -89,6 +89,10 @@
                       <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                         @permission('edit.documentos')
+                          <a href="{{route('delivery-order.show', ['id' => $order->uuid])}}" class="dropdown-item"> Visualizar </a>
+                        @endpermission
+
+                        @permission('edit.documentos')
                           <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="dropdown-item"> Imprimir Etiqueta </a>
                         @endpermission
 

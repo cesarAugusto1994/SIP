@@ -49,7 +49,6 @@
                 <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Descrição</th>
                       <th>Tipo</th>
                       <th>Cliente</th>
                       <th>Status</th>
@@ -64,10 +63,6 @@
                 <tr>
                     <td>
                         <a>{{$document->id}}</a>
-                    </td>
-
-                    <td>
-                        <a>{{ $document->description }}</a>
                     </td>
 
                     <td>
@@ -97,7 +92,7 @@
 
                         @permission('edit.documentos')
                           @if($document->status_id == 1)
-                              <a href="{{route('delivery_order_conference', ['document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i> Entrega</a>
+                              <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i> Entrega</a>
                           @endif
                         @endpermission
                         @permission('edit.documentos')

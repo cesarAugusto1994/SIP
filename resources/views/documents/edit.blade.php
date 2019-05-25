@@ -47,14 +47,6 @@
 
                 <div class="col-md-4">
 
-                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
-                        <label class="col-form-label">Descrição</label>
-                        <div class="input-group">
-                          <input type="text" required name="description" value="{{ $document->description }}" class="form-control">
-                        </div>
-                        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
-                    </div>
-
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo</label>
                         <div class="input-group">
@@ -71,12 +63,12 @@
 
                 <div class="col-md-4">
 
-
-
                     <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Cliente</label>
                         <div class="input-group">
-                          <select class="select2 select-client-addresses" data-search-addresses="{{ route('client_addresses_search') }}" name="client_id" required>
+                          <select class="select2 select-client-employees"
+                            data-search-employees="{{ route('client_employees_search') }}"
+                            name="client_id" required>
                                 @foreach($clients as $client)
                                     <option value="{{$client->uuid}}" {{ $document->client_id == $client->id ? 'selected' : '' }}>{{$client->name}}</option>
                                 @endforeach
@@ -89,26 +81,38 @@
 
                 <div class="col-md-4">
 
-
-                  <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
-                      <label class="col-form-label">Endereço</label>
+                  <div class="form-group {!! $errors->has('employee_id') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
-                        <select class="select2" id="select-address" name="address_id" required>
-                          @foreach($document->client->addresses as $address)
-                              <option value="{{$address->uuid}}" {{ $document->address_id == $address->id ? 'selected' : '' }}>{{$address->description}}</option>
-                          @endforeach
+                        <select class="select2" id="select-employee" name="employee_id">
+                              <option value="">Selecione um Funcionário</option>
+                              @foreach($employees as $employee)
+                                  <option value="{{$employee->uuid}}" {{ $document->employee_id == $employee->id ? 'selected' : '' }}>{{$employee->name}}</option>
+                              @endforeach
                         </select>
                       </div>
-                      {!! $errors->first('address_id', '<p class="help-block">:message</p>') !!}
+                      {!! $errors->first('employee_id', '<p class="help-block">:message</p>') !!}
                   </div>
 
+                </div>
+
+                <div class="col-md-12">
+
+                  <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Anotações</label>
+                      <div class="input-group">
+                        <textarea class="form-control" rows="4" name="annotations">{{ $document->annotations }}</textarea>
+                      </div>
+                      {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
+                  </div>
 
                 </div>
 
             </div>
 
-            <button class="btn btn-primary">Salvar</button>
-            <a class="btn btn-white" href="{{ route('documents.index') }}">Cancelar</a>
+            <button class="btn btn-success btn-sm">Salvar</button>
+            <a class="btn btn-danger btn-sm" href="{{ route('documents.index') }}">Cancelar</a>
+            
         </form>
 
       </div>

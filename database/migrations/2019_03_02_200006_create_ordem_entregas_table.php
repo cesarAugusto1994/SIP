@@ -25,6 +25,8 @@ class CreateOrdemEntregasTable extends Migration
             $table->foreign('status_id')->references('id')->on('delivery_order_statuses');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->integer('address_id')->unsigned();
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->integer('delivered_by')->unsigned();
             $table->foreign('delivered_by')->references('id')->on('users');
             $table->integer('delivered_at')->nullable();

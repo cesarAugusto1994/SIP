@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="{{ route('courses.index') }}">Ordem de Entrega</a>
+                    <li class="breadcrumb-item"><a href="{{ route('delivery-order.index') }}">Ordem de Entrega</a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Conferência</a>
                     </li>

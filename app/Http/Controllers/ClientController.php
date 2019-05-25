@@ -280,6 +280,45 @@ class ClientController extends Controller
 
     }
 
+    public function documents(Request $request)
+    {
+        $id = $request->get('param');
+
+        try {
+
+          $client = Client::uuid($id);
+          $documents = $client->documents->where('status_id', 1);
+
+          $response = [];
+
+          foreach ($documents as $key => $document) {
+              $response[] = [
+                'id' => $document->uuid,
+                'type' => $document->type->name,
+                'client' => $document->client->name,
+                'status' => $document->status->name,
+                'annotations' => $document->annotations,
+              ];
+          }
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Registros retornados',
+            'data' => $response
+          ]);
+
+        } catch(\Exception $e) {
+
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado',
+            'data' => []
+          ]);
+
+        }
+
+    }
+
     public function employeeFind(Request $request)
     {
         $param = $request->get('param');

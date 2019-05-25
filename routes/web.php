@@ -161,6 +161,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::get('clients/employees/search', 'ClientController@employees')->name('client_employees_search');
     Route::get('employees/search', 'ClientController@employeeFind')->name('employees_find');
 
+    Route::get('clients/documents/search', 'ClientController@documents')->name('client_documents_search');
+
 
     Route::get('clients/{id}/employees', 'EmployeesController@show')->name('client_employees');
     Route::get('clients/{id}/employees/create', 'EmployeesController@create')->name('client_employee_create');

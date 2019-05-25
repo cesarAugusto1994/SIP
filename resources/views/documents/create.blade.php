@@ -46,14 +46,6 @@
 
                 <div class="col-md-4">
 
-                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
-                        <label class="col-form-label">Descrição</label>
-                        <div class="input-group">
-                          <input type="text" required name="description" value="{{ old('description') }}" class="form-control">
-                        </div>
-                        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
-                    </div>
-
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo</label>
                         <div class="input-group">
@@ -73,7 +65,7 @@
                   <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="select2 select-client-addresses select-client-employees" data-search-addresses="{{ route('client_addresses_search') }}"
+                        <select class="select2 select-client-employees"
                           data-search-employees="{{ route('client_employees_search') }}"
                           name="client_id" required>
                               <option value="">Selecione um Cliente</option>
@@ -85,16 +77,6 @@
                       {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
                   </div>
 
-                  <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
-                      <label class="col-form-label">Endereço</label>
-                      <div class="input-group">
-                        <select class="select2" id="select-address" name="address_id" required>
-                            <option value="">Selecione um Cliente</option>
-                        </select>
-                      </div>
-                      {!! $errors->first('address_id', '<p class="help-block">:message</p>') !!}
-                  </div>
-
                 </div>
 
                 <div class="col-md-4">
@@ -102,12 +84,23 @@
                   <div class="form-group {!! $errors->has('employee_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
-                        <select class="select2 select-client-employees" data-search-employees="{{ route('client_employees_search') }}" id="select-employee" name="employee_id">
+                        <select class="select2" id="select-employee" name="employee_id">
                               <option value="">Selecione um Cliente</option>
-
                         </select>
                       </div>
                       {!! $errors->first('employee_id', '<p class="help-block">:message</p>') !!}
+                  </div>
+
+                </div>
+
+                <div class="col-md-12">
+
+                  <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Anotações</label>
+                      <div class="input-group">
+                        <textarea class="form-control" rows="4" name="annotations">{{ old('annotations') }}</textarea>
+                      </div>
+                      {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
                   </div>
 
                 </div>

@@ -115,9 +115,53 @@ class DeliveryOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('delivery-order.create');
+        $data = $request->request->all();
+
+        if(!$request->has('document')) {
+
+          notify()->flash('Documento não informado!', 'error', [
+            'text' => 'Um documento deve ser informado para a geração da Ordem de entrega.'
+          ]);
+
+          return back();
+        }
+
+        $occupation = Occupation::where('name', 'Entregador')->get();
+
+        if($occupation->isEmpty()) {
+          notify()->flash('Cargo de Entregador não existe.', 'warning', [
+            'text' => 'Para que a entrega possa ser realizada é necessário criar o cargo Entregador.'
+          ]);
+
+          return back();
+        }
+
+        $occupation = $occupation->first();
+
+        $delivers = People::where('occupation_id', $occupation->id)->get();
+
+        if($delivers->isEmpty()) {
+          notify()->flash('Nenhum usuário com o cargo de Entregador.', 'warning', [
+            'text' => 'Para que a entrega possa ser realizada é necessário ao menos um usuário com o cargo de Entregador.'
+          ]);
+
+          return back();
+        }
+
+        $clients = Client::all();
+
+        if($request->has('client')) {
+            $client = Client::uuid($request->get('client'));
+            $documents = $client->documents->where('status_id', 1);
+        } else {
+            $documents = Documents::whereIn('uuid', $data['document'])->get();
+        }
+
+        //dd($documents);
+
+        return view('delivery-order.create', compact('documents', 'delivers', 'clients'));
     }
 
     public function conference(Request $request)
@@ -175,7 +219,7 @@ class DeliveryOrderController extends Controller
         }
 
         $documents = Documents::whereIn('uuid', $data['document'])->get();
-
+/*
         foreach ($documents as $key => $document) {
             if(!$document->address) {
               notify()->flash('Endereço não informado!', 'error', [
@@ -185,7 +229,7 @@ class DeliveryOrderController extends Controller
               return back();
             }
         }
-
+*/
         return view('delivery-order.conference', compact('documents', 'delivers'));
     }
 
@@ -266,7 +310,8 @@ class DeliveryOrderController extends Controller
      */
     public function show($id)
     {
-        //
+          $order = DeliveryOrder::uuid($id);
+          return view('delivery-order.show', compact('order'));
     }
 
     /**
