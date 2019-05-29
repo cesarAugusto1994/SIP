@@ -74,7 +74,13 @@
                     </td>
 
                     <td>
-                        <a>{{ $document->status->name }}</a>
+                      @if($document->status->id == 1)
+                          <label class="label label-inverse-primary">{{ $document->status->name }}</label>
+                      @elseif ($document->status->id == 2)
+                          <label class="label label-inverse-warning">{{ $document->status->name }}</label>
+                      @else
+                          <label class="label label-inverse-success">{{ $document->status->name }}</label>
+                      @endif
                     </td>
 
                     <td>
@@ -92,18 +98,14 @@
 
                         @permission('edit.documentos')
                           @if($document->status_id == 1)
-                              <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i> Entrega</a>
+                              <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
                           @endif
                         @endpermission
                         @permission('edit.documentos')
-                          @if($document->status_id == 1)
                           <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-edit"></i> Editar</a>
-                          @endif
                         @endpermission
                         @permission('delete.documentos')
-                          @if($document->status_id == 1)
                           <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                          @endif
                         @endpermission
 
                       </div>

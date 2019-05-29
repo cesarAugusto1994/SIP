@@ -22,6 +22,131 @@
 
 <div class="page-body">
     <div class="row">
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-yellow text-white">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5">New Customer</p>
+                            <h4 class="m-b-0">852</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="feather icon-user f-50 text-c-yellow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-green text-white">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5">Income</p>
+                            <h4 class="m-b-0">$5,852</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="feather icon-credit-card f-50 text-c-green"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-pink text-white">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5">Ticket</p>
+                            <h4 class="m-b-0">42</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="feather icon-book f-50 text-c-pink"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-blue text-white">
+                <div class="card-block">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="m-b-5">Orders</p>
+                            <h4 class="m-b-0">$5,242</h4>
+                        </div>
+                        <div class="col col-auto text-right">
+                            <i class="feather icon-shopping-cart f-50 text-c-blue"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card widget-card-1">
+                <div class="card-block-small">
+                    <i class="feather icon-pie-chart bg-c-blue card1-icon"></i>
+                    <span class="text-c-blue f-w-600">Use Space</span>
+                    <h4>49/50GB</h4>
+                    <div>
+                        <span class="f-left m-t-10 text-muted">
+                            <i class="text-c-blue f-16 feather icon-alert-triangle m-r-10"></i>Get more space
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card widget-card-1">
+                <div class="card-block-small">
+                    <i class="feather icon-home bg-c-pink card1-icon"></i>
+                    <span class="text-c-pink f-w-600">Revenue</span>
+                    <h4>$23,589</h4>
+                    <div>
+                        <span class="f-left m-t-10 text-muted">
+                            <i class="text-c-pink f-16 feather icon-calendar m-r-10"></i>Last 24 hours
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card widget-card-1">
+                <div class="card-block-small">
+                    <i class="feather icon-alert-triangle bg-c-green card1-icon"></i>
+                    <span class="text-c-green f-w-600">Fixed Issue</span>
+                    <h4>45</h4>
+                    <div>
+                        <span class="f-left m-t-10 text-muted">
+                            <i class="text-c-green f-16 feather icon-tag m-r-10"></i>Tracked at microsoft
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card widget-card-1">
+                <div class="card-block-small">
+                    <i class="feather icon-twitter bg-c-yellow card1-icon"></i>
+                    <span class="text-c-yellow f-w-600">Followers</span>
+                    <h4>+562</h4>
+                    <div>
+                        <span class="f-left m-t-10 text-muted">
+                            <i class="text-c-yellow f-16 feather icon-watch m-r-10"></i>Just update
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-8 col-sm-12">
             <div class="card">
                 <div class="card-header">

@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('page-title', 'Mural de Recados')
+@extends('base')
 
 @section('content')
 

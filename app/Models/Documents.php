@@ -25,6 +25,11 @@ class Documents extends Model
         return $this->belongsTo('App\User', 'created_by');
     }
 
+    public function employee()
+    {
+        return $this->belongsTo('App\Models\Client\Employee');
+    }
+
     public function status()
     {
         return $this->belongsTo('App\Models\Documents\Status', 'status_id');

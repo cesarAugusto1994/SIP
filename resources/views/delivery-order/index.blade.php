@@ -26,6 +26,9 @@
 </div>
 
 <div class="page-body">
+
+  
+
   <div class="card">
       <div class="card-header">
           <h5>Listagem de Documentos</h5>
@@ -52,7 +55,6 @@
                       <th>Status</th>
                       <th>Entregador</th>
                       <th>Adicionado em</th>
-                      <th>Tempo passado</th>
                       <th>Opções</th>
                     </tr>
                 </thead>
@@ -65,10 +67,12 @@
 
                     <td>
                         <a href="{{ route('clients.show', $order->client->uuid) }}"><b>{{ $order->client->name }}</b></a>
+                        <br/>
+                        <label class="label label-inverse-primary">{{$order->address->street}}, {{$order->address->number}} - {{$order->address->district}}, {{$order->address->city}}</label>
                     </td>
 
                     <td>
-                        {{ $order->status->name }}
+                        <label class="label label-inverse-success">{{ $order->status->name }}</label>
                     </td>
 
                     <td>
@@ -77,10 +81,8 @@
 
                     <td>
                         {{ $order->created_at->format('d/m/Y H:i') }}
-                    </td>
-
-                    <td>
-                        {{ $order->created_at->diffForHumans() }}
+                        <br/>
+                        <label class="label label-inverse-danger">{{ $order->created_at->diffForHumans() }}</label>
                     </td>
 
                     <td class="dropdown">

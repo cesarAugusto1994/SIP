@@ -27,7 +27,7 @@ class MessageBoardController extends Controller
             return $message->user->status == 'ENVIADO';
         });
 
-        return view('admin.message.board.index', compact('messages', 'categories', 'messagesWaiting'));
+        return view('message.board.index', compact('messages', 'categories', 'messagesWaiting'));
     }
 
     /**
@@ -40,7 +40,7 @@ class MessageBoardController extends Controller
         $departments = Department::all();
         $categories = MessageBoardCategory::all();
         $types = Type::all();
-        return view('admin.message.board.create', compact('departments', 'categories','types'));
+        return view('message.board.create', compact('departments', 'categories','types'));
     }
 
     /**
@@ -147,7 +147,7 @@ class MessageBoardController extends Controller
         }
 
         $categories = MessageBoardCategory::all();
-        return view('admin.message.board.show', compact('messageBoard', 'categories'));
+        return view('message.board.show', compact('messageBoard', 'categories'));
     }
 
     /**

@@ -607,10 +607,8 @@ $(document).ready(function() {
         async: true,
         success: function(response) {
 
-          console.log(response);
-
           let html = "";
-      
+
           $.each(response.data, function(idx, item) {
 
               html += "<tr>";

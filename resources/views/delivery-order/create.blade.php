@@ -46,10 +46,6 @@
                     </div>
                     <div class="card-block">
 
-                        @foreach($documents as $document)
-                          <input type="hidden" name="documents[]" value="{{ $document->uuid }}"/>
-                        @endforeach
-
                         <div class="row m-b-30">
 
                             <div class="col-md-6">
@@ -57,8 +53,8 @@
                             <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                                 <label class="col-form-label">Cliente</label>
                                 <div class="input-group">
-                                  <select class="select2 select-client-employees select-client-documents"
-                                    data-search-employees="{{ route('client_employees_search') }}"
+                                  <select class="select2 select-client-addresses select-client-documents"
+                                    data-search-addresses="{{ route('client_addresses_search') }}"
                                     data-search-documents="{{ route('client_documents_search') }}"
                                     name="client_id" required>
                                         <option value="">Selecione um Cliente</option>
@@ -79,6 +75,9 @@
                                   <div class="input-group">
                                     <select class="select2" id="select-address" name="address_id" required>
                                         <option value="">Selecione um Cliente</option>
+                                        @foreach($addresses as $address)
+                                            <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}}</option>
+                                        @endforeach
                                     </select>
                                   </div>
                                   {!! $errors->first('address_id', '<p class="help-block">:message</p>') !!}
@@ -120,7 +119,7 @@
                                 <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Anotações</label>
                                     <div class="input-group">
-                                        <textarea class="form-control" name="annotations"></textarea>
+                                        <textarea rows="5" class="form-control" name="annotations"></textarea>
                                         {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
@@ -173,7 +172,6 @@
                                         if(in_array($document->uuid, $docs)) {
                                           $checked = 'checked';
                                         }
-
                                     @endphp
 
                                     <td><input type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>

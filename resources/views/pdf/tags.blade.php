@@ -54,13 +54,6 @@
                 <div class="">
                   <div class="panel-body">
 
-                    @foreach($delivery->documents as $document)
-                    @php
-                        $document = $document->document;
-                    @endphp
-
-
-
                     <div class="row">
 
                       <div class="col-md-12 pull-right">
@@ -78,15 +71,15 @@
                           <h3>{{ $delivery->client->name }}</h3>
 
                           <address>
-                              <b>Endereço:</b> {{ $document->address->street }}, {{ $document->address->number }},<br>
-                              <b>Bairro:</b> {{ $document->address->district }},<br>
-                              <b>Complemento:</b> {{ $document->address->complement }}<br>
-                              <b>Cidade:</b> {{ $document->address->city }}<br>
-                              <b>CEP:</b> {{ $document->address->zip }}<br>
-                              <b>Referencia:</b> {{ $document->address->reference }}<br>
+                              <b>Endereço:</b> {{ $delivery->address->street }}, {{ $delivery->address->number }},<br>
+                              <b>Bairro:</b> {{ $delivery->address->district }},<br>
+                              <b>Complemento:</b> {{ $delivery->address->complement }}<br>
+                              <b>Cidade:</b> {{ $delivery->address->city }}<br>
+                              <b>CEP:</b> {{ $delivery->address->zip }}<br>
+                              <b>Referencia:</b> {{ $delivery->address->reference }}<br>
                               <br>
-                              <b>Email:</b> {{ $document->client->email }}<br>
-                              <b>Telefone:</b> {{ $document->client->phone }}
+                              <b>Email:</b> {{ $delivery->client->email }}<br>
+                              <b>Telefone:</b> {{ $delivery->client->phone }}
                           </address>
 
                           <address>
@@ -98,8 +91,6 @@
 
                     </div>
 
-                    @endforeach
-
                     <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:5em"></div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
@@ -110,8 +101,10 @@
 
                       <thead>
                         <tr>
-                            <th>Descrição</th>
-                            <th>Entrega</th>
+                            <th>Tipo</th>
+                            <th>Funcionário</th>
+                            <th>Anotações</th>
+                            <th>Entregue?</th>
                         </tr>
                       </thead>
 
@@ -122,19 +115,24 @@
                             $document = $document->document;
                         @endphp
                           <tr>
-                              <td>{{ $document->description }}</td>
                               <td>{{ $document->type->name }}</td>
+                              <td>{{ $document->employee->name }}</td>
+                              <td>{{ $document->annotations }}</td>
+                              <td>
+                                  Sim <input type="checkbox"/>
+                                  Não <input type="checkbox"/>
+                              </td>
                           </tr>
                         @endforeach
 
                         <tr>
-                            <td colspan="2" class="text-center"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
+                            <td colspan="4" class="text-center"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
                             DATADOS E CARIMBADOS.</b></td>
                         </tr>
 
                         <tr>
                             <td>Data/Hora: __/__/____ __:__</td>
-                            <td>Assinatura: ___________________________________________</td>
+                            <td colspan="3">Assinatura: ___________________________________________</td>
                         </tr>
 
                       </tbody>

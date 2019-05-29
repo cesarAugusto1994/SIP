@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
 use App\Models\{Documents,Client, People};
+use App\Models\Client\Address;
 use App\Models\Department\Occupation;
 use App\Models\DeliveryOrder\Documents as DeliveryOrderDocuments;
 use App\Helpers\Constants;
@@ -151,17 +152,17 @@ class DeliveryOrderController extends Controller
         }
 
         $clients = Client::all();
+        $addresses = [];
 
         if($request->has('client')) {
             $client = Client::uuid($request->get('client'));
             $documents = $client->documents->where('status_id', 1);
+            $addresses = $client->addresses;
         } else {
             $documents = Documents::whereIn('uuid', $data['document'])->get();
         }
 
-        //dd($documents);
-
-        return view('delivery-order.create', compact('documents', 'delivers', 'clients'));
+        return view('delivery-order.create', compact('documents', 'delivers', 'clients', 'addresses'));
     }
 
     public function conference(Request $request)
@@ -248,11 +249,16 @@ class DeliveryOrderController extends Controller
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
+        $address = Address::uuid($data['address_id']);
+        $data['address_id'] = $address->id;
+
         $documents = Documents::whereIn('uuid', $data['documents'])->get();
 
         $documentsGroupedByClients = [];
 
         $deliveryDate = $data['delivery_date'] ? \DateTime::createFromFormat('d/m/Y', $data['delivery_date']) : null;
+
+        #dd($deliveryDate);
 
         foreach ($documents as $key => $document) {
 
@@ -278,7 +284,9 @@ class DeliveryOrderController extends Controller
             $deliveryOrder = DeliveryOrder::create([
               'client_id' => $keyClient,
               'status_id' => 1,
-              'delivered_by' => $data['delivered_by']
+              'delivered_by' => $data['delivered_by'],
+              'address_id' => $data['address_id'],
+              'delivery_date' => $deliveryDate,
             ]);
 
             foreach ($documentsGroupedByClient as $key => $document) {
@@ -347,16 +355,13 @@ class DeliveryOrderController extends Controller
         }
 
         $delivery = DeliveryOrder::uuid($id);
-        $documents = $delivery->documents;
-        $resultado = [];
 
-        foreach ($delivery->documents as $key => $document) {
-            $resultado[] = $document->document;
-        }
+        $client = $delivery->client;
 
-        $documents = $resultado;
+        $documents = $client->documents;
+        $addresses = $client->addresses;
 
-        return view('admin.delivery-order.edit', compact('documents', 'delivers', 'delivery'));
+        return view('delivery-order.edit', compact('documents', 'delivers', 'delivery', 'addresses'));
     }
 
     /**
@@ -380,6 +385,26 @@ class DeliveryOrderController extends Controller
         $deliveryOrder = DeliveryOrder::uuid($id);
 
         $deliveryDate = $data['delivery_date'] ? \DateTime::createFromFormat('d/m/Y', $data['delivery_date']) : null;
+
+        $deliveryOrder->documents->map(function($document) {
+            $document->document->status_id = 1;
+            $document->document->save();
+            $document->delete();
+        });
+
+        foreach ($documents as $key => $document) {
+
+            DeliveryOrderDocuments::create([
+              'document_id' => $document->id,
+              'delivery_order_id' => $deliveryOrder->id,
+              'delivery_date' => $deliveryDate,
+              'annotations' => $data['annotations'],
+              'user_id' => $request->user()->id
+            ]);
+
+            $document->status_id = 2;
+            $document->save();
+        }
 
         $deliveryOrder->update([
           'delivered_by' => $data['delivered_by'],

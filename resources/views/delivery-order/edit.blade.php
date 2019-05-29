@@ -1,130 +1,189 @@
-@extends('layouts.layout')
+@extends('base')
 
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-12">
-            <h2>Ordem de Entrega</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li>
-                    <a href="{{route('delivery-order.index')}}">Ordem de Entrega</a>
-                </li>
-                <li class="active">
-                    <strong>Conferêcia</strong>
-                </li>
-            </ol>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Ordem de Entrega</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('delivery-order.index') }}">Ordem de Entrega</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+<div class="page-body">
+
+    <form method="post" action="{{route('delivery-order.update', $delivery->uuid)}}">
+        {{csrf_field()}}
+        {{method_field('PUT')}}
         <div class="row">
 
-              <div class="col-lg-3">
-                  <div class="ibox float-e-margins">
-                      <div class="ibox-title">
-                          <h5>Conferência</h5>
-                      </div>
-                      <div class="ibox-content">
+              <div class="col-lg-7">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Nova Ordem de Entrega</h5>
+                        <div class="card-header-right">
+                            <ul class="list-unstyled card-option">
+                                <li><i class="feather icon-maximize full-card"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block">
 
-                        <form method="post" class="form-horizontal" action="{{route('delivery-order.update', $delivery->uuid)}}">
-                            {{csrf_field()}}
-                            {{method_field('PUT')}}
-                            @foreach($documents as $document)
-                              <input type="hidden" name="documents[]" value="{{ $document->uuid }}"/>
-                            @endforeach
+                        <div class="row m-b-30">
 
-                            <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
-                              <label class="col-sm-12">Entregador</label>
-                                <div class="col-sm-12">
-                                <select class="selectpicker show-tick select-entregador" data-search-user="{{ route('user_search') }}" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="delivered_by" required>
-                                      @foreach($delivers as $deliver)
-                                          <option value="{{$deliver->uuid}}" {{$delivery->delivered_by==$deliver->id ? 'selected' : ''}}>{{$deliver->name}}</option>
-                                      @endforeach
-                                  </select>
-                                    {!! $errors->first('delivered_by', '<p class="help-block">:message</p>') !!}
-                                </div>
+                            <div class="col-md-12">
+
+                            <h4>{{ $delivery->client->name }}</h4>
+
                             </div>
 
-                            <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
-                              <label class="col-sm-12">Entrega</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control inputDate" name="delivery_date" value="{{ $delivery->delivery_date ? $delivery->delivery_date->format('d/m/Y') : '' }}"/>
-                                    {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
-                                </div>
+                            <div class="col-md-12">
+
+                              <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
+                                  <label class="col-form-label">Endereço</label>
+                                  <div class="input-group">
+                                    <select class="select2" id="select-address" name="address_id" required>
+                                        @foreach($addresses as $address)
+                                            <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}}</option>
+                                        @endforeach
+                                    </select>
+                                  </div>
+                                  {!! $errors->first('address_id', '<p class="help-block">:message</p>') !!}
+                              </div>
+
                             </div>
 
-                            <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
-                              <label class="col-sm-12">Anotações</label>
-                                <div class="col-sm-12">
-                                    <textarea class="form-control" name="annotations">{{ $delivery->annotations }}</textarea>
-                                    {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
+                            <div class="col-md-6">
+
+                                <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
+                                  <label class="col-form-label">Entregador</label>
+                                    <div class="input-group">
+                                      <select class="select2 select-entregador" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
+                                          <option value="">Selecione um entregador</option>
+                                          @foreach($delivers as $deliver)
+                                              <option value="{{$deliver->uuid}}" {{ $deliver->id == $delivery->delivered_by ? 'selected' : '' }}>{{$deliver->name}}</option>
+                                          @endforeach
+                                      </select>
+                                      {!! $errors->first('delivered_by', '<p class="help-block">:message</p>') !!}
+                                    </div>
                                 </div>
+
                             </div>
 
+                            <div class="col-md-6">
 
-                            <button class="btn btn-primary btn-block">Salvar</button>
-                        </form>
+                                <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
+                                  <label class="col-form-label">Entrega</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control inputDate" name="delivery_date" value="{{ $delivery->delivery_date ? $delivery->delivery_date->format('d/m/Y') : '' }}"/>
+                                        {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
+                                  <label class="col-form-label">Anotações</label>
+                                    <div class="input-group">
+                                        <textarea rows="5" class="form-control" name="annotations">{{ $delivery->annotations }}</textarea>
+                                        {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-success btn-sm">Salvar</button>
 
                       </div>
                   </div>
               </div>
 
+              <div class="col-lg-5">
+                  <div class="card">
+                      <div class="card-header">
+                          <h5>Documentos</h5>
+                          <div class="card-header-right">
+                              <ul class="list-unstyled card-option">
+                                  <li><i class="feather icon-maximize full-card"></i></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="card-block">
 
-              @foreach($documents as $document)
+                        <div class="table-responsive">
 
-                <div class="col-lg-9">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>{{ $document->description }},
-                              Gerado em: {{ $document->created_at->format('d/m/Y H:i') }},
-                              Por {{ $document->creator->person->name ?? '' }}</h5>
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Tipo</th>
+                                  <th>Cliente</th>
+                                  <th>Status</th>
+                                  <th>Anotações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="table-documents">
+
+                                @foreach($documents as $document)
+                                <tr>
+                                    @php
+                                        $docs = $delivery->documents->pluck('document.uuid');
+
+                                        $checked = '';
+
+                                        if(in_array($document->uuid, $docs->toArray())) {
+                                          $checked = 'checked';
+                                        }
+
+                                    @endphp
+
+                                    <td><input type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
+                                    <td>{{ $document->type->name }}</td>
+                                    <td>{{ $document->client->name }}</td>
+                                    <td>{{ $document->status->name }}</td>
+                                    <td>{{ $document->annotations }}</td>
+                                </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+
                         </div>
-                        <div class="ibox-content">
 
-                          <div class="row">
+                      </div>
+                  </div>
+              </div>
 
-                          <div class="col-sm-9">
-
-                          <address>
-                            <strong>{{ $document->client->name }}</strong><br>
-                            {{ $document->address->street }}, {{ $document->address->number }}, {{ $document->address->reference }} {{ $document->address->complement }}<br>
-                            {{ $document->address->district }}, {{ $document->address->city }} {{ $document->address->zip }}<br>
-                            <abbr title="Telefone">P:</abbr> {{ $document->client->phone }}
-                            <br/>
-                            <abbr title="E-mail">E-mail:</abbr>
-                            <a href="mailto:{{ $document->client->email }}">{{ $document->client->email }}</a>
-                          </address>
-
-                          <address>
-                            <strong>Entregador</strong><br>
-                            <span id="entregador"><span class="text-navy">Selecione o Entregador</span></span>
-                          </address>
-
-                          </div>
-
-                          <div class="col-sm-3">
-                              {!! QrCode::size(120)->generate(route('start_delivery', $document->uuid)); !!}
-                          </div>
-
-                          </div>
-
-                        </div>
-                    </div>
-                </div>
-
-              @endforeach
-
-
-
-        </div>
-    </div>
+          </div>
+    </form>
+</div>
 
 @endsection
 
-@push('scripts')
+@section('scripts')
     <script>
 
       $(document).ready(function() {
@@ -163,4 +222,4 @@
       });
 
     </script>
-@endpush
+@stop

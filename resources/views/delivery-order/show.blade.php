@@ -19,7 +19,7 @@
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('delivery-order.index') }}">Ordem de Entrega</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Conferência</a>
+                    <li class="breadcrumb-item"><a href="#!">Informações</a>
                     </li>
                 </ul>
             </div>
@@ -31,253 +31,222 @@
 
   <div class="row">
 
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Informações do Cliente e Documento</h5>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="feather icon-maximize full-card"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-block">
+      <div class="col-lg-12 card-block">
 
-                        <div class="view-info">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="general-info">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-xl-6">
-                                                <div class="">
-                                                    <table class="table m-0">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th scope="row">Cliente</th>
-                                                                <td>{{ $order->client->name }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">Telefone</th>
-                                                                <td>{{ $order->client->phone }}</td>
-                                                            </tr>
+        @permission('edit.documentos')
+          <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-sm"> Imprimir Etiqueta </a>
+        @endpermission
 
-                                                            <tr>
-                                                                <th scope="row">Email</th>
-                                                                <td>{{ $order->client->email }}</td>
-                                                            </tr>
+        @permission('edit.documentos')
+          <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-outline-primary btn-sm"> Editar </a>
+        @endpermission
 
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <!-- end of table col-lg-6 -->
-                                            <div class="col-lg-12 col-xl-6">
-                                                <div class="">
-                                                    <table class="table">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th scope="row">Data Agendamento</th>
-                                                                <td>{{ $order->delivery_date }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">Data Entrega</th>
-                                                                <td>{{ $order->delivery_at ? $order->delivery_at->format('d/m/Y H:i') : '-' }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row">Entregador</th>
-                                                                <td><span id="entregador"><span class="text-navy">Selecione o Entregador</span></span></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+        @permission('delete.documentos')
+          <a href="#!" data-route="{{route('documents.destroy', ['id' => $order->uuid])}}" class="btn btn-danger btn-sm"> Cancelar </a>
+        @endpermission
 
-                                            <!-- end of table col-lg-6 -->
-                                        </div>
-                                        <!-- end of row -->
-                                    </div>
-                                    <!-- end of general info -->
-                                </div>
-                                <!-- end of col-lg-12 -->
-                            </div>
-                            <!-- end of row -->
-                        </div>
+      </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-12">
-              <div class="card">
-                  <div class="card-header">
-                      <h5>Endereço</h5>
-                      <div class="card-header-right">
-                          <ul class="list-unstyled card-option">
-                              <li><i class="feather icon-maximize full-card"></i></li>
-                          </ul>
-                      </div>
+      <div class="col-lg-7">
+          <div class="card">
+              <div class="card-header">
+                  <h5>Informações Gerais</h5>
+                  <div class="card-header-right">
+                      <ul class="list-unstyled card-option">
+                          <li><i class="feather icon-maximize full-card"></i></li>
+                      </ul>
                   </div>
-                  <div class="card-block">
+              </div>
+              <div class="card-block">
 
-                    <div class="view-info">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="general-info">
-                                    <div class="row">
-
-                                      <div class="col-lg-12 col-xl-12">
-                                          <div class="table-responsive">
+                  <div class="view-info">
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <div class="general-info">
+                                  <div class="row">
+                                      <div class="col-lg-12 col-xl-6">
+                                          <div class="">
                                               <table class="table m-0">
                                                   <tbody>
                                                       <tr>
-                                                          <th scope="row">Rua </th>
-                                                          <td>{{ $document->address->street }}, {{ $document->address->number }}</td>
+                                                          <th scope="row">Cliente</th>
+                                                          <td>{{ $order->client->name }}</td>
                                                       </tr>
                                                       <tr>
-                                                          <th scope="row">Bairro</th>
-                                                          <td>{{ $document->address->district }}</td>
+                                                          <th scope="row">Telefone</th>
+                                                          <td>{{ $order->client->phone }}</td>
                                                       </tr>
+
                                                       <tr>
-                                                          <th scope="row">Cidade</th>
-                                                          <td>{{ $document->address->city }}</td>
-                                                      </tr>
-                                                      <tr>
-                                                          <th scope="row">CEP</th>
-                                                          <td>{{ $document->address->zip }}</td>
-                                                      </tr>
-                                                      <tr>
-                                                          <th scope="row">Complemento</th>
-                                                          <td>{{ $document->address->complement }}</td>
-                                                      </tr>
-                                                      <tr>
-                                                          <th scope="row">Referencia</th>
-                                                          <td>{{ $document->address->reference }}</td>
+                                                          <th scope="row">Email</th>
+                                                          <td>{{ $order->client->email }}</td>
                                                       </tr>
 
                                                   </tbody>
                                               </table>
                                           </div>
                                       </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-
-                  </div>
-              </div>
-            </div>
-
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Documentos</h5>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="feather icon-maximize full-card"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-block">
-
-                      <div class="table-responsive">
-                          @if($documents->isNotEmpty())
-                          <table class="table table-hover">
-
-                              <thead>
-                                  <tr>
-                                    <th>ID</th>
-                                    <th>Descrição</th>
-                                    <th>Tipo</th>
-                                    <th>Cliente</th>
-                                    <th>Status</th>
-                                    <th>Adicionado por</th>
-                                    <th>Adicionado em</th>
-                                    <th>Opções</th>
-                                  </tr>
-                              </thead>
-
-                              <tbody>
-                              @foreach($documents as $document)
-                              <tr>
-                                  <td>
-                                      <a>{{$document->id}}</a>
-                                  </td>
-
-                                  <td>
-                                      <a>{{ $document->description }}</a>
-                                  </td>
-
-                                  <td>
-                                      <a>{{ $document->type->name ?? '-' }}</a>
-                                  </td>
-
-                                  <td>
-                                      <p><a href="{{route('clients.edit', ['id' => $document->client->uuid])}}">{{ $document->client->name }}</a></p>
-                                  </td>
-
-                                  <td>
-                                      <a>{{ $document->status->name }}</a>
-                                  </td>
-
-                                  <td>
-                                      <p><a>{{ $document->creator->person->name }}</a></p>
-                                  </td>
-
-                                  <td>
-                                      <p><a>{{ $document->created_at->format('d/m/Y H:i') }}</a></p>
-                                  </td>
-
-                                  <td class="dropdown">
-
-                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                      @permission('edit.documentos')
-                                        @if($document->status_id == 1)
-                                            <a href="{{route('delivery_order_conference', ['document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i> Entrega</a>
-                                        @endif
-                                      @endpermission
-                                      @permission('edit.documentos')
-                                        @if($document->status_id == 1)
-                                        <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-edit"></i> Editar</a>
-                                        @endif
-                                      @endpermission
-                                      @permission('delete.documentos')
-                                        @if($document->status_id == 1)
-                                        <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                                        @endif
-                                      @endpermission
-
-                                    </div>
-
-                                  </td>
-
-                              </tr>
-                              @endforeach
-                              </tbody>
-                          </table>
-
-                          <div class="text-center">{{ $documents->links() }}</div>
-
-                          @else
-
-                              <div class="widget white-bg no-padding">
-                                  <div class="p-m text-center">
-                                      <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
-                                      <h4 class="font-bold no-margins">
-                                          Nenhum documento encontrado.
-                                      </h4>
+                                      <!-- end of table col-lg-6 -->
+                                      <div class="col-lg-12 col-xl-6">
+                                          <div class="">
+                                              <table class="table">
+                                                  <tbody>
+                                                      <tr>
+                                                          <th scope="row">Situação</th>
+                                                          <td><label class="label label-inverse-success">{{ $order->status->name ?? '-' }}</label></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th scope="row">Data Agendamento</th>
+                                                          <td>{{ $order->delivery_date ? $order->delivery_date : '-' }}</td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th scope="row">Data Entrega</th>
+                                                          <td>{{ $order->delivery_at ? $order->delivery_at->format('d/m/Y H:i') : '-' }}</td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th scope="row">Entregador</th>
+                                                          <td>{{ $order->user->person->name ?? '-' }}</td>
+                                                      </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
                                   </div>
+                                  <!-- end of row -->
                               </div>
-
-                          @endif
+                              <!-- end of general info -->
+                          </div>
+                          <!-- end of col-lg-12 -->
                       </div>
+                      <!-- end of row -->
+                  </div>
 
-                    </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <h5>Endereço</h5>
+                <div class="card-header-right">
+                    <ul class="list-unstyled card-option">
+                        <li><i class="feather icon-maximize full-card"></i></li>
+                    </ul>
                 </div>
             </div>
+            <div class="card-block">
+
+              <div class="view-info">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <div class="general-info">
+                              <div class="row">
+
+                                <div class="col-lg-12 col-xl-12">
+                                    <div class="table-responsive">
+                                        <table class="table m-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Rua </th>
+                                                    <td>{{ $order->address->street }}, {{ $order->address->number }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Bairro</th>
+                                                    <td>{{ $order->address->district }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Cidade</th>
+                                                    <td>{{ $order->address->city }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">CEP</th>
+                                                    <td>{{ $order->address->zip }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Complemento</th>
+                                                    <td>{{ $order->address->complement }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Referencia</th>
+                                                    <td>{{ $order->address->reference }}</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header">
+                  <h5>Documentos</h5>
+                  <div class="card-header-right">
+                      <ul class="list-unstyled card-option">
+                          <li><i class="feather icon-maximize full-card"></i></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="card-block">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                              <th>Tipo</th>
+                              <th>Cliente</th>
+                              <th>Funcionário</th>
+                              <th>Status</th>
+                              <th>Anotações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($order->documents as $document)
+                        @php
+                          $document = $document->document;
+                        @endphp
+                        <tr>
+                            <td>
+                                <a>{{ $document->type->name ?? '-' }}</a>
+                            </td>
+
+                            <td>
+                                <p><a href="{{route('clients.edit', ['id' => $order->client->uuid])}}">{{ $order->client->name }}</a></p>
+                            </td>
+
+                            <td>
+                                <a>{{$document->employee->name ?? '-'}}</a>
+                            </td>
+
+                            <td>
+                                <a>{{ $document->status->name }}</a>
+                            </td>
+
+                            <td>
+                                <a>{{$document->annotations}}</a>
+                            </td>
+
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+              </div>
+          </div>
+      </div>
 
   </div>
 
