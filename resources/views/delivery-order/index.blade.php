@@ -27,7 +27,7 @@
 
 <div class="page-body">
 
-  
+
 
   <div class="card">
       <div class="card-header">
@@ -59,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($orders as $order)
+                @foreach($orders->sortByDesc('id') as $order)
                 <tr>
                     <td>
                         #{{ str_pad($order->id, 6, "0", STR_PAD_LEFT)  }}

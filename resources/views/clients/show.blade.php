@@ -276,7 +276,7 @@
                             <tr>
 
                                 <td>
-                                    <a target="_blank" href="{{ route('document_preview', $document->uuid) }}">{{$document->description}}</a>
+                                    <a target="_blank" href="{{ route('document_preview', $document->uuid) }}">{{$document->filename}}</a>
                                 </td>
 
                                 <td>

@@ -22,6 +22,11 @@ class MessageBoard extends Model
         return $this->belongsTo('App\User', 'created_by');
     }
 
+    public function type()
+    {
+      return $this->belongsTo('App\Models\MessageBoard\Type', 'type_id');
+    }
+
     public function attachments()
     {
         return $this->hasMany('App\Models\MessageBoard\Attachment', 'board_id');

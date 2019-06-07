@@ -31,23 +31,30 @@
 
   <div class="row">
 
-      <div class="col-lg-12 card-block">
+      <div class="col-lg-12">
 
-        @permission('edit.documentos')
-          <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-sm"> Imprimir Etiqueta </a>
-        @endpermission
+        <div class="card">
+            <div class="card-block">
 
-        @permission('edit.documentos')
-          <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-outline-primary btn-sm"> Editar </a>
-        @endpermission
+              @permission('edit.documentos')
+                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-round btn-sm"> Imprimir Etiqueta </a>
+              @endpermission
 
-        @permission('delete.documentos')
-          <a href="#!" data-route="{{route('documents.destroy', ['id' => $order->uuid])}}" class="btn btn-danger btn-sm"> Cancelar </a>
-        @endpermission
+              @permission('edit.documentos')
+                <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-round btn-sm"> Editar </a>
+              @endpermission
+
+              @permission('delete.documentos')
+                <a href="#!" data-route="{{route('documents.destroy', ['id' => $order->uuid])}}" class="btn btn-danger btn-round btn-sm"> Cancelar </a>
+              @endpermission
+
+            </div>
+
+        </div>
 
       </div>
 
-      <div class="col-lg-7">
+      <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
                   <h5>Informações Gerais</h5>
@@ -64,10 +71,18 @@
                           <div class="col-lg-12">
                               <div class="general-info">
                                   <div class="row">
-                                      <div class="col-lg-12 col-xl-6">
+                                      <div class="col-lg-12 col-xl-12">
                                           <div class="">
                                               <table class="table m-0">
                                                   <tbody>
+                                                      <tr>
+                                                          <th scope="row">Código</th>
+                                                          <td>#{{ str_pad($order->id, 6, "0", STR_PAD_LEFT)  }}</td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th scope="row">Cadastro</th>
+                                                          <td>{{ $order->created_at->format('d/m/Y H:i:s') }}</td>
+                                                      </tr>
                                                       <tr>
                                                           <th scope="row">Cliente</th>
                                                           <td>{{ $order->client->name }}</td>
@@ -82,15 +97,6 @@
                                                           <td>{{ $order->client->email }}</td>
                                                       </tr>
 
-                                                  </tbody>
-                                              </table>
-                                          </div>
-                                      </div>
-                                      <!-- end of table col-lg-6 -->
-                                      <div class="col-lg-12 col-xl-6">
-                                          <div class="">
-                                              <table class="table">
-                                                  <tbody>
                                                       <tr>
                                                           <th scope="row">Situação</th>
                                                           <td><label class="label label-inverse-success">{{ $order->status->name ?? '-' }}</label></td>
@@ -107,6 +113,7 @@
                                                           <th scope="row">Entregador</th>
                                                           <td>{{ $order->user->person->name ?? '-' }}</td>
                                                       </tr>
+
                                                   </tbody>
                                               </table>
                                           </div>
@@ -125,7 +132,7 @@
           </div>
       </div>
 
-      <div class="col-lg-5">
+      <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
                 <h5>Endereço</h5>

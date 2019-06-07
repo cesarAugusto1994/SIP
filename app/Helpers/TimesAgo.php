@@ -8,10 +8,10 @@ namespace App\Helpers;
 class TimesAgo
 {
     const TIMEBEFORE_NOW = 'agora';
-    const TIMEBEFORE_MINUTE = '{num} minuto atrás';
-    const TIMEBEFORE_MINUTES = '{num} minutos atrás';
-    const TIMEBEFORE_HOUR = '{num} hora atrás';
-    const TIMEBEFORE_HOURS = '{num} horas atrás';
+    const TIMEBEFORE_MINUTE = '{num} min.';
+    const TIMEBEFORE_MINUTES = '{num} mins.';
+    const TIMEBEFORE_HOUR = '{num} hora.';
+    const TIMEBEFORE_HOURS = '{num} horas.';
     const TIMEBEFORE_YESTERDAY = 'ontem';
     const TIMEBEFORE_FORMAT = '%e %b';
     const TIMEBEFORE_FORMAT_YEAR = '%e %b, %Y';

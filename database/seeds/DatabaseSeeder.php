@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DocumentStatusTableSeeder::class);
 
         $this->call(DeliveryOrderStatusesTableSeeder::class);
+        $this->call(DeliveryDocumentTypesTableSeeder::class);
 
         //$this->call(MapperStatusTableSeeder::class);
         $this->call(ClientsTableSeeder::class);

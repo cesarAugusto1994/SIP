@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Documents, Client};
+use App\Models\Delivery\Document;
+use App\Models\Client;
 use App\Models\Client\{Address, Employee};
-use App\Models\Documents\Type;
+use App\Models\Delivery\Document\Type;
 use Auth;
 
 class DocumentsController extends Controller
@@ -21,9 +22,9 @@ class DocumentsController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        $types = Type::where('can_delivery', true)->pluck('id');
+        $types = Type::pluck('id');
 
-        $documents = Documents::whereIn('type_id', $types)->orderByDesc('id')->paginate(10);
+        $documents = Document::whereIn('type_id', $types)->orderByDesc('id')->paginate(10);
         return view('documents.index', compact('documents'));
     }
 
@@ -58,14 +59,26 @@ class DocumentsController extends Controller
         $client = Client::uuid($data['client_id']);
         $type = Type::uuid($data['type_id']);
 
-        $employee = Employee::uuid($data['employee_id']);
-
         $data['client_id'] = $client->id;
         $data['type_id'] = $type->id;
         $data['price'] = $type->price;
-        $data['employee_id'] = $employee->id;
 
-        $document = Documents::create($data);
+        if($request->filled('employees')) {
+
+          $employees = Employee::whereIn('uuid', $data['employees'])->get();
+
+          foreach ($employees as $key => $employee) {
+
+            $data['employee_id'] = $employee->id;
+            $document = Document::create($data);
+
+          }
+
+        } else {
+
+          $document = Document::create($data);
+
+        }
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo Documento adicionado com sucesso.'
@@ -93,7 +106,7 @@ class DocumentsController extends Controller
      */
     public function edit($id)
     {
-        $document = Documents::uuid($id);
+        $document = Document::uuid($id);
         $clients = Client::all();
         $types = Type::all();
         $employees = Employee::all();
@@ -111,7 +124,7 @@ class DocumentsController extends Controller
     {
         $data = $request->request->all();
 
-        $document = Documents::uuid($id);
+        $document = Document::uuid($id);
 
         $client = Client::uuid($data['client_id']);
         $type = Type::uuid($data['type_id']);
@@ -140,7 +153,7 @@ class DocumentsController extends Controller
     {
         try {
 
-          $document = Documents::uuid($id);
+          $document = Document::uuid($id);
           $document->delete();
 
           return response()->json([

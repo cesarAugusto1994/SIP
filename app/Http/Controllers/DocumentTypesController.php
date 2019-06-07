@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Documents\Type;
+use App\Models\Delivery\Documents\Type;
 
 class DocumentTypesController extends Controller
 {
@@ -94,7 +94,7 @@ class DocumentTypesController extends Controller
         $type = Type::uuid($id);
 
         $data['price'] = number_format(str_replace(',', '.', $data['price']), 2);
-        
+
         $type->update($data);
 
         notify()->flash('Tipo Atualizado!', 'success', [

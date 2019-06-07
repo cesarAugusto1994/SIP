@@ -66,7 +66,7 @@
                     </td>
 
                     <td>
-                        <a>{{ $document->type->name ?? '-' }}</a>
+                        <a class="label label-{{ array_random(['info', 'success', 'primary', 'danger', 'warning']) }}">{{ $document->type->name ?? '-' }}</a>
                     </td>
 
                     <td>

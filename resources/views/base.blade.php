@@ -630,6 +630,37 @@ $(document).ready(function() {
 
     });
 
+    $("#select-department").change(function() {
+
+      var self = $(this);
+      var selectedDepartment = $("#select-department").select2("val");
+
+      selectedDepartment = 'id='+ selectedDepartment;
+
+      $("#select-user").html("");
+
+      $.ajax({
+          type: 'GET',
+          url: $("#select-department").data('route'),
+          dataType: 'html',
+          data: selectedDepartment,
+          }).done( function( data ) {
+              data = JSON.parse(data);
+
+              data = $.map(data.data, function(item) {
+                if(item) {
+                  return { id: item.id, text: item.name };
+                }
+
+              });
+
+              $('#select-user').select2({
+                    data: data,
+              });
+              $('#select-user').trigger('change');
+           });
+    });
+
 });
 
 </script>

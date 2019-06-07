@@ -114,7 +114,6 @@ class ClientController extends Controller
                   'filename' => $filename,
                   'extension' => $extension,
                   'created_by' => $user->id,
-                  'status_id' => 1,
                   'type_id' => 6,
                 ]);
             }
@@ -141,7 +140,9 @@ class ClientController extends Controller
 
           $document = Documents::uuid($id);
 
-          Storage::delete($document->link);
+          if(Storage::exists($document->link)) {
+              Storage::delete($document->link);
+          }
 
           $document->delete();
 

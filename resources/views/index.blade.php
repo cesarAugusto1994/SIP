@@ -23,6 +23,8 @@
 <div class="page-body">
     <div class="row">
 
+      <!--
+
         <div class="col-xl-3 col-md-6">
             <div class="card bg-c-yellow text-white">
                 <div class="card-block">
@@ -147,8 +149,10 @@
             </div>
         </div>
 
+      -->
+
         <div class="col-md-8 col-sm-12">
-            <div class="card">
+            <div class="card latest-update-card">
                 <div class="card-header">
                     <h5>Gestão à Vista</h5>
                     <span>Mural de recados com informes e anúncios da empresa ou setor</span>
@@ -163,30 +167,24 @@
 
                   @if($messages->isNotEmpty())
 
-                    <div class="timeline">
+                    <div class="latest-update-box">
+                      @foreach($messages as $message)
+                          <div class="row p-t-20 p-b-30">
+                              <div class="col-auto text-right update-meta">
+                                  <p class="text-muted m-b-0 d-inline">{{ \App\Helpers\TimesAgo::render($message->created_at) }}</p>
+                                  <i class="feather icon-briefcase bg-info update-icon"></i>
+                              </div>
+                              <div class="col">
+                                  <h6><a class="" href="{{ route('message-board.show', $message->uuid) }}">{{ $message->subject }}</a>
+                                      <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
+                                  </h6>
+                                  <p class="text-muted m-b-0">
+                                      {{ strip_tags(substr($message->content, 0, 120)) }}
+                                  </p>
+                              </div>
+                          </div>
 
-                        @foreach($messages as $message)
-
-                        <article class="timeline-item {{ $loop->index % 2 == 0 ? 'alt' : '' }}">
-                            <div class="timeline-desk">
-                                <div class="panel">
-                                    <div class="timeline-box">
-                                        <span class="arrow{{ $loop->index % 2 == 0 ? '-alt' : '' }}"></span>
-                                        <span class="timeline-icon {{ array_random(['', 'bg-success', 'bg-primary', 'bg-danger']) }}"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                        <h4 class="">{{ \App\Helpers\TimesAgo::render($message->created_at) }}</h4>
-                                        <p class="timeline-date text-muted"><small>{{ $message->created_at->format('H:i:s d/m/Y') }}</small></p>
-                                        <a class="" href="{{route('user')}}">
-                                            <img width="45" class="img-circle rounded-circle" src="{{ route('image', ['user' => $message->user->uuid, 'link' => $message->user->avatar, 'avatar' => true])}}">
-                                        </a>
-                                        <strong>{{ $message->user->person->name }}</strong> adicionou um novo recado sobre: <a class="" href="{{ route('message-board.show', $message->uuid) }}">{{ $message->subject }}</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        @endforeach
-
+                      @endforeach
                     </div>
 
                     @else

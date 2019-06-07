@@ -84,7 +84,7 @@
                   <div class="form-group {!! $errors->has('employee_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
-                        <select class="select2" id="select-employee" name="employee_id">
+                        <select class="select2" id="select-employee" name="employees[]" multiple>
                               <option value="">Selecione um Cliente</option>
                         </select>
                       </div>
