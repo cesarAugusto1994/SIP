@@ -51,12 +51,12 @@
                                           <img class="media-object img-radius" src="{{ route('image', ['user' => $messageBoard->user->uuid, 'link' => $messageBoard->user->avatar, 'avatar' => true])}}" alt="E-mail User">
                                       </a>
                                   </div>
-                                  <div class="media-body photo-contant">
+                                  <div class="media-body photo-contant table-responsive">
                                       <a href="#">
                                           <h6 class="user-name txt-primary">{{ $messageBoard->user->person->name }} </h6>
                                       </a>
                                       <small>{{ $messageBoard->created_at->format('d/m/Y H:i:s') }}</small>
-                                      <div>
+                                      <div class="">
                                           <p class="email-content">
                                               {!! $messageBoard->content !!}
                                           </p>
