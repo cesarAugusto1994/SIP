@@ -55,14 +55,12 @@
                               <li>
                                   <div class="media">
                                       <a href="{{ route('notifications.show', $notification->id) }}">
-                                        <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
                                         <div class="media-body">
                                             <h5 class="notification-user">Mensagem</h5>
                                             <p class="notification-msg">{{ $notification['data']['message'] }}</p>
                                             <span class="notification-time">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</span>
                                         </div>
                                       </a>
-                                    </div>
                                   </div>
                               </li>
 
