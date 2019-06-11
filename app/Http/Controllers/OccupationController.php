@@ -27,7 +27,7 @@ class OccupationController extends Controller
             $occupations = Occupation::all();
         }
 
-        return view('admin.occupation.index', compact('occupations'));
+        return view('occupation.index', compact('occupations'));
     }
 
     public function search(Request $request)
@@ -67,7 +67,7 @@ class OccupationController extends Controller
     public function create()
     {
         $departments = Department::all();
-        return view('admin.occupation.create', compact('departments'));
+        return view('occupation.create', compact('departments'));
     }
 
     /**
@@ -113,7 +113,7 @@ class OccupationController extends Controller
     {
         $departments = Department::all();
         $occupation = Occupation::uuid($id);
-        return view('admin.occupation.edit', compact('departments', 'occupation'));
+        return view('occupation.edit', compact('departments', 'occupation'));
     }
 
     /**

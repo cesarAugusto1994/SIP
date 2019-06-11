@@ -33,7 +33,7 @@ class DepartmentsController extends Controller
         }
 
         $departments = Department::all();
-        return view('admin.departments.index')->with('departments', $departments);
+        return view('departments.index')->with('departments', $departments);
     }
 
     /**
@@ -43,7 +43,7 @@ class DepartmentsController extends Controller
      */
     public function create()
     {
-        return view('admin.departments.create')->with('users', User::all());
+        return view('departments.create')->with('users', User::all());
     }
 
     /**
@@ -70,7 +70,7 @@ class DepartmentsController extends Controller
         $department = Department::uuid($id);
         $processes = Process::where('department_id', $id)->get();
 
-        return view('admin.departments.details')
+        return view('departments.show')
             ->with('department', $department)
             ->with('processes', $processes);
     }
@@ -83,7 +83,7 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.departments.edit')
+        return view('departments.edit')
             ->with('department', Department::uuid($id))
             ->with('users', User::all());
     }
@@ -106,7 +106,7 @@ class DepartmentsController extends Controller
           'text' => 'Departamento atualizado com sucesso.'
         ]);
 
-        return redirect()->route('departments');;
+        return redirect()->route('departments.index');;
     }
 
     /**

@@ -70,7 +70,7 @@ class UserTableSeeder extends Seeder
             adinuza.lopes@provider-es.com.br,
             aeliton.silva@provider-es.com.br,
             andre.tavares@provider-es.com.br,
-            vinycius.alves@provider-es.com.br, ";
+            vinycius.alves@provider-es.com.br";
 
         $users = explode(',', $users);
 

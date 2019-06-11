@@ -19,6 +19,7 @@ class MenuTableSeeder extends Seeder
             'permission' => null,
             'description' => 'Painel Principal',
             'parent' => null,
+            'icon' => 'feather icon-home',
           ],
 
           [
@@ -27,6 +28,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.clientes',
             'description' => 'Clientes',
             'parent' => null,
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Treinamentos',
@@ -34,6 +36,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.treinamentos',
             'description' => 'Treinamentos',
             'parent' => null,
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Cursos',
@@ -41,6 +44,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.cursos',
             'description' => 'Cursos',
             'parent' => 'Treinamentos',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Turmas',
@@ -48,6 +52,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.turmas',
             'description' => 'Turmas',
             'parent' => 'Treinamentos',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Agenda',
@@ -55,6 +60,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.agenda',
             'description' => 'Agenda',
             'parent' => 'Treinamentos',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Gestão de Entregas',
@@ -62,6 +68,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.gestao.de.entregas',
             'description' => 'Gestão de Entregas',
             'parent' => null,
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Documentos',
@@ -69,6 +76,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.documentos',
             'description' => 'Documentos',
             'parent' => 'Gestão de Entregas',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Entregas',
@@ -76,6 +84,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.ordem.entrega',
             'description' => 'Entregas',
             'parent' => 'Gestão de Entregas',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Tipos de Documentos',
@@ -83,6 +92,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.tipo.documento',
             'description' => 'Tipos de Documentos',
             'parent' => 'Gestão de Entregas',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Mural de Recados',
@@ -90,6 +100,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.mural.de.recados',
             'description' => 'Mural de Recados',
             'parent' => null,
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Mural',
@@ -97,6 +108,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.mural',
             'description' => 'Mural',
             'parent' => 'Mural de Recados',
+            'icon' => 'feather icon-home',
           ],
 
           [
@@ -105,6 +117,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.tipos.de.recados',
             'description' => 'Tipos',
             'parent' => 'Mural de Recados',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Administrativo',
@@ -112,13 +125,15 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.administrativo',
             'description' => 'Administrativo',
             'parent' => null,
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Departamentos',
-            'route' => 'departments',
+            'route' => 'departments.index',
             'permission' => 'view.departamentos',
             'description' => 'Departamentos',
             'parent' => 'Administrativo',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Cargos',
@@ -126,6 +141,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.cargos',
             'description' => 'Cargos',
             'parent' => 'Administrativo',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Usuários',
@@ -133,13 +149,7 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.usuarios',
             'description' => 'Usuários',
             'parent' => 'Administrativo',
-          ],
-          [
-            'title' => 'Privilégios',
-            'route' => 'roles.index',
-            'permission' => 'view.privilegios',
-            'description' => 'Privilégios',
-            'parent' => 'Administrativo',
+            'icon' => 'feather icon-home',
           ],
           [
             'title' => 'Configurações',
@@ -147,6 +157,23 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.configuracoes',
             'description' => 'Configurações',
             'parent' => 'Administrativo',
+            'icon' => 'feather icon-home',
+          ],
+          [
+            'title' => 'Chat',
+            'route' => 'home',
+            'permission' => 'view.chat',
+            'description' => 'Chat',
+            'parent' => null,
+            'icon' => 'feather icon-home',
+          ],
+          [
+            'title' => 'Chamados',
+            'route' => 'home',
+            'permission' => 'view.chamados',
+            'description' => 'Chamados',
+            'parent' => null,
+            'icon' => 'feather icon-home',
           ],
 
         ];

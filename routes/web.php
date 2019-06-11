@@ -76,12 +76,12 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::post('task/{id}/delay', 'TaskController@delay')->name('task_delay');
 
     # Departments
-    Route::get('departments', 'DepartmentsController@index')->name('departments');
-    Route::get('department/{id}', 'DepartmentsController@show')->name('department');
-    Route::get('department/create/form', 'DepartmentsController@create')->name('department_create');
-    Route::get('department/{id}/edit', 'DepartmentsController@edit')->name('department_edit');
-    Route::post('department/create/store', 'DepartmentsController@store')->name('department_store');
-    Route::post('department/{id}/update', 'DepartmentsController@update')->name('department_update');
+    Route::resource('departments', 'DepartmentsController');
+    //Route::get('department/{id}', 'DepartmentsController@show')->name('department');
+    //Route::get('department/create/form', 'DepartmentsController@create')->name('department_create');
+    //Route::get('department/{id}/edit', 'DepartmentsController@edit')->name('department_edit');
+    //Route::post('department/create/store', 'DepartmentsController@store')->name('department_store');
+    //Route::post('department/{id}/update', 'DepartmentsController@update')->name('department_update');
 
     # Processes
     Route::get('processes', 'ProcessesController@index')->name('processes');

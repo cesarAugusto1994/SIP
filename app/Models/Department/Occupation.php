@@ -12,7 +12,7 @@ class Occupation extends Model
     use LogsActivity;
 
     protected $table = 'occupation';
-    
+
     protected $fillable = ['name', 'department_id', 'active'];
 
     protected static $logAttributes = ['name', 'department_id', 'active'];
@@ -20,5 +20,16 @@ class Occupation extends Model
     public function department()
     {
         return $this->belongsTo('App\Models\Department');
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Cargo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Cargo Removido";
+        }
+
+        return "Cargo Adicionado";
     }
 }

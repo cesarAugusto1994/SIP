@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('base')
+
+
 
 @section('page-title', 'Conversa com ' . $user->person->name)
 

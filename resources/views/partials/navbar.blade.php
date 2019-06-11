@@ -32,57 +32,47 @@
                     </a>
                 </li>
             </ul>
+
+            @php
+                $user = auth()->user();
+                $totalNotifications = $user->unreadNotifications->count();
+            @endphp
+
             <ul class="nav-right">
                 <li class="header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="dropdown-toggle" data-toggle="dropdown">
                             <i class="feather icon-bell"></i>
-                            <span class="badge bg-c-pink">5</span>
+                            <span class="badge bg-c-pink" data-count="{{ $totalNotifications }}">{{ $totalNotifications }}</span>
                         </div>
-                        <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <ul class="show-notification notification-view dropdown-menu notification-list" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                             <li>
-                                <h6>Notifications</h6>
-                                <label class="label label-danger">New</label>
+                                <h6>Notificações</h6>
                             </li>
-                            <li>
-                                <div class="media">
-                                    <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                    <div class="media-body">
-                                        <h5 class="notification-user">John Doe</h5>
-                                        <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                        <span class="notification-time">30 minutes ago</span>
+
+                            @foreach($user->unreadNotifications as $notification)
+
+                              <li>
+                                  <div class="media">
+                                      <a href="{{ route('notifications.show', $notification->id) }}">
+                                        <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            <h5 class="notification-user">Mensagem</h5>
+                                            <p class="notification-msg">{{ $notification['data']['message'] }}</p>
+                                            <span class="notification-time">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</span>
+                                        </div>
+                                      </a>
                                     </div>
-                                </div>
-                            </li>
+                                  </div>
+                              </li>
+
+                            @endforeach
+
                             <li>
-                                <div class="media">
-                                    <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
-                                    <div class="media-body">
-                                        <h5 class="notification-user">Joseph William</h5>
-                                        <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                        <span class="notification-time">30 minutes ago</span>
-                                    </div>
-                                </div>
+                                <a href="{{ route('notifications_markasread') }}">Todas notificações</a>
                             </li>
-                            <li>
-                                <div class="media">
-                                    <img class="d-flex align-self-center img-radius" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
-                                    <div class="media-body">
-                                        <h5 class="notification-user">Sara Soudein</h5>
-                                        <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                        <span class="notification-time">30 minutes ago</span>
-                                    </div>
-                                </div>
-                            </li>
+
                         </ul>
-                    </div>
-                </li>
-                <li class="header-notification">
-                    <div class="dropdown-primary dropdown">
-                        <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
-                            <i class="feather icon-message-square"></i>
-                            <span class="badge bg-c-green">3</span>
-                        </div>
                     </div>
                 </li>
                 <li class="user-profile header-notification">

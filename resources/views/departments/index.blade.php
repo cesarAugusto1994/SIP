@@ -1,48 +1,76 @@
-@extends('layouts.app')
-
-@section('page-title', 'Departamentos')
+@extends('base')
 
 @section('content')
 
-    <div class="card-box">
-        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
-
-        @permission('create.departamentos')
-          <a href="{{route('department_create')}}" class="btn btn-custom  dim m-t-lg">Novo Departamento</a>
-        @endpermission
-
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Departamentos</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Departamentos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="card-box">
-        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Listagem de Departamentos</h5>
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
 
-        <div class="row">
+                  @permission('create.departamentos')
+                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('departments.create')}}">Novo Departamento</a></li>
+                  @endpermission
 
-          @foreach($departments as $department)
+              </ul>
+          </div>
+      </div>
+      <div class="card-block">
 
-              <div class="col-sm-4">
-                  <div class="card-box">
-                      <h6 class="text-muted font-13 m-t-0 text-uppercase"><i class="fa fa-user"></i> {{$department->user->person->name}}</h6>
-                      <h3 class="m-b-20 mt-3">{{$department->name}}</h3>
+        <div class="table-responsive">
+            <table class="table table-hover table-borderless">
+                <thead>
+                    <tr>
+                        <th>Departamento</th>
+                        <th>Responsável</th>
+                        <th class="text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                      <div class="row text-center m-t-30">
-                        <div class="col-4">
-                            <a class="btn btn-default btn-block text-success" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
-                        </div>
-                        <div class="col-4">
-                            <a class="btn btn-default btn-block" href="{{ route('department_edit', $department->uuid) }}"><i class="fa fa-pencil"></i> Editar</a>
-                        </div>
-                        <div class="col-4">
-                            <a class="btn btn-default btn-block text-danger" href="{{route('department', ['id' => $department->uuid])}}"><i class="fa fa-cogs"></i> Processos</a>
-                        </div>
-                    </div>
-                  </div>
-              </div>
+                  @foreach($departments as $department)
 
-          @endforeach
+                      <tr>
+                          <td>{{$department->name}}</td>
+                          <td>{{$department->user->person->name}}</td>
+                          <td class="text-right">
+                              <a class="btn btn-success btn-sm btn-round" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
+                              <a class="btn btn-primary btn-sm btn-round" href="{{ route('departments.edit', $department->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                          </td>
+                      </tr>
 
+                  @endforeach
+
+                </tbody>
+            </table>
         </div>
 
-    </div>
+      </div>
+  </div>
+</div>
 
 @endsection

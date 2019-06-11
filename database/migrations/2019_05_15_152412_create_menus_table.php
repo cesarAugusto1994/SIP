@@ -20,6 +20,7 @@ class CreateMenusTable extends Migration
             $table->string('permission')->nullable();
             $table->string('description')->nullable();
             $table->integer('parent')->nullable();
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }

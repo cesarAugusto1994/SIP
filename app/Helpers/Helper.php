@@ -108,6 +108,22 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Department') {
+
+          if($item) {
+            $route = route('departments.show', $item->uuid);
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
+        }
+
+        if($model == 'App\Models\Department\Occupation') {
+
+          if($item) {
+            $route = route('occupations.show', $item->uuid);
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
+        }
+
         if($model == 'App\Models\People') {
           $route = route('user', $item->uuid);
           $html = '<a href='.$route.'>'.$item->name.'</a>';

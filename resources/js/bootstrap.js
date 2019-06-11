@@ -1,3 +1,4 @@
+
 window._ = require('lodash');
 
 /**
@@ -42,6 +43,15 @@ if (token) {
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
+
+import Echo from "laravel-echo"
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'fbc40aa0ff741e4532da',
+    cluster: 'mt1',
+    encrypted: true
+});
 
 // import Echo from 'laravel-echo'
 

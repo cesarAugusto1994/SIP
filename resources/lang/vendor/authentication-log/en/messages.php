@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'subject' => 'Login from a new device',
-    'content' => 'Your :app account logged in from a new device.',
+    'subject' => 'Login de um novo dispositivo',
+    'content' => 'Sua conta :app foi conectada a partir de um novo dispositivo.',
 
 ];

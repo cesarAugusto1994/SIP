@@ -1,14 +1,43 @@
-@extends('layouts.app')
-
-@section('page-title', 'Departamentos')
+@extends('base')
 
 @section('content')
 
-    <div class="card-box">
-        <h6 class="font-13 m-t-0 m-b-30">Editar Departamento</h6>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Editar Departamento</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('departments.index') }}"> Departamentos </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <form method="post" action="{{route('department_update', ['id' => $department->uuid])}}">
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Listagem de Departamentos</h5>
+      </div>
+      <div class="card-block">
+
+        <form method="post" action="{{route('departments.update', ['id' => $department->uuid])}}">
             {{csrf_field()}}
+            {{method_field('PUT')}}
 
             <div class="row m-b-30">
 
@@ -39,12 +68,13 @@
                 </div>
             </div>
 
+            <button class="btn btn-success btn-sm">Salvar</button>
+            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('departments.index') }}">Cancelar</a>
 
-
-            <button class="btn btn-custom">Salvar</button>
-            <a class="btn btn-default" href="{{ route('departments') }}">Cancelar</a>
         </form>
 
-    </div>
+      </div>
+  </div>
+</div>
 
 @endsection

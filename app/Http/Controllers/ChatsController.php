@@ -65,13 +65,13 @@ class ChatsController extends Controller
         $departments = Department::all();
         $occupations = Occupation::where('department_id', $departments->first()->id)->get();
 
-        return view('admin.chat.index', compact('people', 'departments', 'occupations'));
+        return view('chat.index', compact('people', 'departments', 'occupations'));
     }
 
     public function create($id)
     {
         $user = User::uuid($id);
-        return view('admin.chat.conversation', compact('user'));
+        return view('chat.conversation', compact('user'));
     }
 
     /**

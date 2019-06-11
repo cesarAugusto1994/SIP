@@ -213,6 +213,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
+<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+
 <script>
 
   // Mascara de CPF e CNPJ
@@ -660,6 +663,47 @@ $(document).ready(function() {
               $('#select-user').trigger('change');
            });
     });
+
+    var notificationsWrapper   = $('.notification-list');
+    var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+    var notificationsCountElem = notificationsToggle.find('.noti-icon-badge');
+    var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+    var notifications          = notificationsWrapper.find('.slimscroll');
+
+    if (notificationsCount <= 0) {
+      //notificationsWrapper.hide();
+    }
+
+    // Enable pusher logging - don't include this in production
+    // Pusher.logToConsole = true;
+
+    var pusher = new Pusher('fbc40aa0ff741e4532da', {
+      encrypted: true,
+      cluster: 'mt1',
+    });
+
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('notifications');
+
+    // Bind a function to a Event (the full Laravel class)
+    channel.bind('App\\Events\\Notifications', function(data) {
+      console.log(data);
+      var existingNotifications = notifications.html();
+      var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+      var newNotificationHtml = `
+        <a href="javascript:void(0);" class="dropdown-item notify-item">
+            <div class="notify-icon bg-success"><i class="mdi mdi-account-plus"></i></div>
+            <p class="notify-details">`+data.message+`<small class="text-muted">`+data.time+`</small></p>
+        </a>
+      `;
+      notifications.html(newNotificationHtml + existingNotifications);
+
+      notificationsCount += 1;
+      notificationsCountElem.attr('data-count', notificationsCount);
+      notificationsWrapper.find('.notif-count').text(notificationsCount);
+      notificationsWrapper.show();
+    });
+
 
 });
 

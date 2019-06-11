@@ -1,55 +1,77 @@
-@extends('layouts.app')
-
-@section('page-title', 'Cargos')
+@extends('base')
 
 @section('content')
 
-    <div class="card-box">
-        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
-
-        @permission('create.cargos')
-          <a href="{{route('occupations.create')}}" class="btn btn-custom m-t-lg">Novo Cargo</a>
-        @endpermission
-
-    </div>
-
-    <div class="row">
-
-      @forelse($occupations as $occupation)
-
-          <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card-box">
-                  <h6 class="text-muted font-13 m-t-0 text-uppercase"><i class="fa fa-user"></i> {{$occupation->department->name}}</h6>
-                  <h3 class="m-b-20 mt-3">{{$occupation->name}}</h3>
-
-                  <div class="row text-center m-t-30">
-                    <div class="col-6">
-                        <a class="btn btn-default btn-block" href="{{route('occupations.edit', ['id' => $occupation->uuid])}}"><i class="fa fa-pencil"></i> Editar</a>
-                    </div>
-                    <div class="col-6">
-                        <a class="btn btn-danger btn-block btn-outline btnRemoveItem" data-route="{{route('occupations.destroy', ['id' => $occupation->uuid])}}"><i class="fa fa-close"></i> Remover</a>
-                    </div>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Cargos</h4>
                 </div>
-              </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Cargos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Listagem de Cargos</h5>
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+
+                  @permission('create.cargos')
+                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('occupations.create')}}">Novo Cargo</a></li>
+                  @endpermission
+
+              </ul>
           </div>
+      </div>
+      <div class="card-block">
 
-      @empty
+        <div class="table-responsive">
+            <table class="table table-hover table-borderless">
+                <thead>
+                    <tr>
+                        <th>Cargo</th>
+                        <th>Departamento</th>
+                        <th class="text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-        <div class="col-sm-12">
+                  @forelse($occupations as $occupation)
 
-          <div class="widget white-bg no-padding m-t-30">
-              <div class="p-m text-center">
-                  <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
-                  <h4 class="font-bold no-margins">
-                      Nenhum registro encontrado.
-                  </h4>
-              </div>
-          </div>
+                      <tr>
+                          <td>{{$occupation->name}}</td>
+                          <td>{{$occupation->department->name}}</td>
+                          <td class="text-right">
+                              <a class="btn btn-primary btn-sm btn-round" href="{{ route('occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                              <button class="btn btn-danger btn-sm btn-round btnRemoveItem" data-route="{{route('occupations.destroy', ['id' => $occupation->uuid])}}"><i class="fa fa-close"></i> Remover</button>
+                          </td>
+                      </tr>
+
+                  @endforeach
+
+                </tbody>
+            </table>
 
         </div>
 
-      @endforelse
-
-    </div>
+      </div>
+  </div>
+</div>
 
 @endsection

@@ -36,4 +36,15 @@ class Department extends Model
         return $this->hasMany('App\Models\Department\Occupation');
     }
 
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Departamento atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Departamento Removido";
+        }
+
+        return "Departamento Adicionado";
+    }
+
 }
