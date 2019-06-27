@@ -44,6 +44,18 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Modulos'),
           ],
           [
+            'name' => 'Chamados',
+            'slug' => str_slug('Chamados'),
+            'description' => 'Chamados',
+            'parent' => str_slug('Chamados'),
+          ],
+          [
+            'name' => 'Tipo de Chamados',
+            'slug' => str_slug('Tipo de Chamados'),
+            'description' => 'Tipo de Chamados',
+            'parent' => str_slug('Chamados'),
+          ],
+          [
             'name' => 'Gestão de Processos',
             'slug' => str_slug('Gestao de Processos'),
             'description' => 'Gestão de Processos',

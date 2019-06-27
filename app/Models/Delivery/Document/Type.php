@@ -12,7 +12,7 @@ class Type extends Model
 
     protected $table = 'delivery_document_types';
 
-    protected $fillable = ['name', 'active'];
+    protected $fillable = ['name', 'price', 'active'];
 
-    protected static $logAttributes = ['name', 'active'];
+    protected static $logAttributes = ['name', 'price', 'active'];
 }

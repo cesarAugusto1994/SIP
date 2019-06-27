@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
-use App\Models\{Documents,Client, People};
+use App\Models\{Client, People};
+use App\Models\Delivery\Document;
 use App\Models\Client\Address;
 use App\Models\Department\Occupation;
 use App\Models\DeliveryOrder\Documents as DeliveryOrderDocuments;
@@ -159,7 +160,7 @@ class DeliveryOrderController extends Controller
             $documents = $client->documents->where('status_id', 1);
             $addresses = $client->addresses;
         } else {
-            $documents = Documents::whereIn('uuid', $data['document'])->get();
+            $documents = Document::whereIn('uuid', $data['document'])->get();
         }
 
         return view('delivery-order.create', compact('documents', 'delivers', 'clients', 'addresses'));
@@ -180,7 +181,7 @@ class DeliveryOrderController extends Controller
 
         if(count($data) == 1) {
 
-          $document = Documents::uuid(current($data['document']));
+          $document = Document::uuid(current($data['document']));
           $hasDocument = DeliveryOrderDocuments::where('document_id', $document->id)->get();
 
           if($hasDocument->isNotEmpty()) {
@@ -219,7 +220,7 @@ class DeliveryOrderController extends Controller
           return back();
         }
 
-        $documents = Documents::whereIn('uuid', $data['document'])->get();
+        $documents = Document::whereIn('uuid', $data['document'])->get();
 /*
         foreach ($documents as $key => $document) {
             if(!$document->address) {
@@ -252,7 +253,7 @@ class DeliveryOrderController extends Controller
         $address = Address::uuid($data['address_id']);
         $data['address_id'] = $address->id;
 
-        $documents = Documents::whereIn('uuid', $data['documents'])->get();
+        $documents = Document::whereIn('uuid', $data['documents'])->get();
 
         $documentsGroupedByClients = [];
 
@@ -380,7 +381,7 @@ class DeliveryOrderController extends Controller
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
-        $documents = Documents::whereIn('uuid', $data['documents'])->get();
+        $documents = Document::whereIn('uuid', $data['documents'])->get();
 
         $deliveryOrder = DeliveryOrder::uuid($id);
 

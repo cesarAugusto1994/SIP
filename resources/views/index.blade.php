@@ -176,11 +176,12 @@
                               </div>
                               <div class="col">
                                   <h6><a class="" href="{{ route('message-board.show', $message->uuid) }}">{{ $message->subject }}</a>
-                                      <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
+
                                   </h6>
                                   <p class="text-muted m-b-0">
-                                      {{ strip_tags(substr($message->content, 0, 120)) }}
+                                      {{ strip_tags(substr($message->content, 0, 240)) }}...
                                   </p>
+                                  <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
                               </div>
                           </div>
 

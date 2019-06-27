@@ -160,21 +160,38 @@ class MenuTableSeeder extends Seeder
             'icon' => 'feather icon-home',
           ],
           [
-            'title' => 'Chat',
-            'route' => 'home',
-            'permission' => 'view.chat',
-            'description' => 'Chat',
-            'parent' => null,
-            'icon' => 'feather icon-home',
-          ],
-          [
             'title' => 'Chamados',
-            'route' => 'home',
+            'route' => null,
             'permission' => 'view.chamados',
             'description' => 'Chamados',
             'parent' => null,
             'icon' => 'feather icon-home',
           ],
+          [
+            'title' => 'Chamados',
+            'route' => 'tickets.index',
+            'permission' => 'view.chamados',
+            'description' => 'Lista de Chamados',
+            'parent' => 'Chamados',
+            'icon' => 'feather icon-home',
+          ],
+          [
+            'title' => 'Tipos de chamados',
+            'route' => 'ticket-types.index',
+            'permission' => 'view.chamados',
+            'description' => 'Tipos de Chamados',
+            'parent' => 'Chamados',
+            'icon' => 'feather icon-home',
+          ],
+          [
+            'title' => 'Chat',
+            'route' => 'chat',
+            'permission' => 'view.chat',
+            'description' => 'Chat',
+            'parent' => null,
+            'icon' => 'feather icon-home',
+          ],
+
 
         ];
 

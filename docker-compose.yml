@@ -17,7 +17,7 @@ services:
     volumes:
       - ./:/var/www
     links:
-      - db
+      - mysql
       - webserver
     #command: npm install
     networks:
@@ -39,13 +39,13 @@ services:
       - app-network
 
   #MySQL Service
-  db:
+  mysql:
     image: mysql:5.7.22
-    container_name: db
+    container_name: mysql
     restart: always
     tty: true
     ports:
-      - "3306:3306"
+      - "3309:3306"
     environment:
       MYSQL_USER: root
       MYSQL_PASSWORD: mestre

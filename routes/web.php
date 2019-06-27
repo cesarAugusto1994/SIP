@@ -150,6 +150,15 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::resource('students', 'StudentsController');
     Route::resource('teams', 'TeamsController');
 
+    Route::resource('tickets', 'TicketsController');
+    Route::resource('ticket-types', 'TicketTypesController');
+    Route::resource('ticket-type-departments', 'TicketTypeDepartmentsController');
+
+    Route::post('tickets/{id}/start', 'TicketsController@startTicket')->name('ticket_start');
+    Route::post('tickets/{id}/conclude', 'TicketsController@concludeTicket')->name('ticket_conclude');
+    Route::post('tickets/{id}/finish', 'TicketsController@finishTicket')->name('ticket_finish');
+    Route::post('tickets/{id}/cancel', 'TicketsController@cancelTicket')->name('ticket_cancel');
+
     Route::get('clients/addresses/search', 'ClientController@addresses')->name('client_addresses_search');
     Route::get('clients/{id}/addresses', 'AddressesController@show')->name('client_addresses');
     Route::get('clients/{id}/addresses/create', 'AddressesController@create')->name('client_addresses_create');

@@ -267,7 +267,7 @@
 
 @if (notify()->ready())
     <script>
-        notify("{!! notify()->message() !!}", 'inverse');
+        notify("{!! notify()->option('text') !!}", 'inverse');
 /*
         swal({
             title: "{!! notify()->message() !!}",

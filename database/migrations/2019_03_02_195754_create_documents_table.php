@@ -16,8 +16,6 @@ class CreateDocumentsTable extends Migration
         Schema::create('document_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->float('price', 12,2)->default(0.00);
-            $table->boolean('can_delivery')->default(false);
             $table->boolean('active')->default(true);
             $table->uuid('uuid')->unique();
             $table->timestamps();
@@ -49,6 +47,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('delivery_document_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->float('price', 12,2)->default(0.00);
             $table->boolean('active')->default(true);
             $table->uuid('uuid')->unique();
             $table->timestamps();

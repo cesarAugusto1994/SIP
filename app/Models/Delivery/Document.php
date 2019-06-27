@@ -25,4 +25,29 @@ class Document extends Model
       'status_id', 'type_id',
       'price', 'extra_value'
     ];
+
+    public function client()
+    {
+        return $this->belongsTo('App\Models\Client');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Models\Client\Employee');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Delivery\Document\Status', 'status_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Delivery\Document\Type', 'type_id');
+    }
 }

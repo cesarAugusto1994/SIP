@@ -89,6 +89,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\MessageBoard\User');
     }
 
+    public function tickets()
+    {
+        return $this->hasMany('App\Models\Ticket');
+    }
+
     /**
     * @param string|array $roles
     */

@@ -63,8 +63,6 @@ class DocumentTypesTableSeeder extends Seeder
         foreach ($list as $item) {
             Type::create([
               'name' => $item['name'],
-              'price' => $item['price'],
-              'can_delivery' => $item['can_delivery'],
             ]);
         }
     }

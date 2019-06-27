@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ClientsTableSeeder::class);
         $this->call(MessageTypesTableSeeder::class);
         $this->call(DocumentTypesTableSeeder::class);
-
+        $this->call(TicketStatusesTableSeeder::class);
+      
         Model::reguard();
     }
 }

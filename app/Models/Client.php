@@ -17,7 +17,7 @@ class Client extends Model
 
     public function documents()
     {
-        return $this->hasMany('App\Models\Documents', 'client_id');
+        return $this->hasMany('App\Models\Delivery\Document', 'client_id');
     }
 
     public function addresses()

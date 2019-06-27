@@ -31,7 +31,7 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Listagem de Documentos</h5>
+          <h5>OEs</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
@@ -115,7 +115,17 @@
                 </tbody>
             </table>
             @else
-                <div class="alert alert-warning">Nenhuma ordem de entrega foi registrada até o momento.</div>
+
+                <div class="widget white-bg no-padding">
+                    <div class="p-m text-center">
+                        <h1 class="m-md"><i class="far fa-bell-slash fa-2x"></i></h1>
+                        <br/>
+                        <h4 class="font-bold no-margins">
+                            Nenhuma ordem de entrega foi registrada até o momento.
+                        </h4>
+                    </div>
+                </div>
+
             @endif
         </div>
 

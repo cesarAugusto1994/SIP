@@ -70,7 +70,8 @@ class UserTableSeeder extends Seeder
             adinuza.lopes@provider-es.com.br,
             aeliton.silva@provider-es.com.br,
             andre.tavares@provider-es.com.br,
-            vinycius.alves@provider-es.com.br";
+            vinycius.alves@provider-es.com.br,
+            jelia.santos@provider-es.com.br";
 
         $users = explode(',', $users);
 
@@ -117,7 +118,7 @@ class UserTableSeeder extends Seeder
               //$user->api_token = $user->createToken('Provider')->accessToken;
 
               //$user->profile()->save(new Profile());
-              $user->attachRole($adminRole);
+              $user->attachRole($userRole);
 
               if($adminRole->id == 1) {
                   $user->syncPermissions($permissions);

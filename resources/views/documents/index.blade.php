@@ -93,7 +93,7 @@
 
                     <td class="dropdown">
 
-                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                      <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                       <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                         @permission('edit.documentos')

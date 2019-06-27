@@ -22,9 +22,7 @@ class DocumentsController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        $types = Type::pluck('id');
-
-        $documents = Document::whereIn('type_id', $types)->orderByDesc('id')->paginate(10);
+        $documents = Document::orderByDesc('id')->paginate(10);
         return view('documents.index', compact('documents'));
     }
 
@@ -49,6 +47,8 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
+
+        //dd($data);
 
         $user = $request->user();
 
