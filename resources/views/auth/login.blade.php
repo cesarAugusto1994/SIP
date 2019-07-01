@@ -9,11 +9,6 @@
     </div>
     <div class="auth-box card">
         <div class="card-block">
-            <div class="row m-b-20">
-                <div class="col-md-12">
-                    <h3 class="text-center">Acessar Sistema</h3>
-                </div>
-            </div>
             <div class="form-group form-primary">
                 <input type="text" name="email" class="form-control" required="" placeholder="E-mail">
                 <span class="form-bar"></span>

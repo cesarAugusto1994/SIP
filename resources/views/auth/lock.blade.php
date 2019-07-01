@@ -9,11 +9,6 @@
     </div>
     <div class="auth-box card">
         <div class="card-block">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="text-center"><i class="feather icon-lock text-primary f-60 p-t-15 p-b-20 d-block"></i> Desbloquear </h3>
-                </div>
-            </div>
 
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>
@@ -25,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"><i class="icofont icofont-lock"></i> Desbloquear </button>
+                    <button type="submit" class="btn btn-success btn-md btn-block waves-effect text-center m-b-20"><i class="icofont icofont-lock"></i> Desbloquear </button>
                 </div>
             </div>
 

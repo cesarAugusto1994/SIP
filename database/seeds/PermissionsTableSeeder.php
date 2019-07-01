@@ -35,9 +35,9 @@ class PermissionsTableSeeder extends Seeder
           if(in_array($module->name, [
             'Painel Principal',
             'Gestão de Entregas',
-            'Gestão de Processos',
             'Administrativo',
-            'Treinamentos'
+            'Treinamentos',
+            'Chat'
           ])) {
             continue;
           }

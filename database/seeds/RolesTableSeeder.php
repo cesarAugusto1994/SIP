@@ -38,7 +38,7 @@ class RolesTableSeeder extends Seeder
 
         }
 
-        if (Role::where('name', '=', 'Usuario')->first() === null) {
+        if (Role::where('name', '=', 'User')->first() === null) {
             $userRole = Role::create([
                 'name'        => 'User',
                 'slug'        => 'User',

@@ -49,21 +49,10 @@ class ModulesTableSeeder extends Seeder
             'description' => 'Chamados',
             'parent' => str_slug('Chamados'),
           ],
-          [
-            'name' => 'Tipo de Chamados',
-            'slug' => str_slug('Tipo de Chamados'),
-            'description' => 'Tipo de Chamados',
-            'parent' => str_slug('Chamados'),
-          ],
-          [
-            'name' => 'Gestão de Processos',
-            'slug' => str_slug('Gestao de Processos'),
-            'description' => 'Gestão de Processos',
-            'parent' => str_slug('Modulos'),
-          ],
+
           [
             'name' => 'Treinamentos',
-            'slug' => str_slug('Gestao de Treinamentos'),
+            'slug' => str_slug('Treinamentos'),
             'description' => 'Gestão de Treinamentos',
             'parent' => str_slug('Modulos'),
           ],
@@ -106,40 +95,9 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
-            'name' => 'Board',
-            'slug' => str_slug('Board'),
-            'description' => 'Board',
-            'parent' => str_slug('Gestao de Processos'),
-          ],
-          [
-            'name' => 'Mapeamentos',
-            'slug' => str_slug('Mapeamentos'),
-            'description' => 'Mapeamentos',
-            'parent' => str_slug('Gestao de Processos'),
-          ],
-          [
-            'name' => 'Processos',
-            'slug' => str_slug('Processos'),
-            'description' => 'Processos',
-            'parent' => str_slug('Gestao de Processos'),
-          ],
-          [
-            'name' => 'Tarefas',
-            'slug' => str_slug('Tarefas'),
-            'description' => 'Tarefas',
-            'parent' => str_slug('Gestao de Processos'),
-          ],
-
-          [
             'name' => 'Cursos',
             'slug' => str_slug('Cursos'),
             'description' => 'Cursos',
-            'parent' => str_slug('Gestao de Treinamentos'),
-          ],
-          [
-            'name' => 'Alunos',
-            'slug' => str_slug('Alunos'),
-            'description' => 'Alunos',
             'parent' => str_slug('Gestao de Treinamentos'),
           ],
 
@@ -164,12 +122,7 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Mural de Recados'),
           ],
 
-          [
-            'name' => 'Tipos de Recados',
-            'slug' => str_slug('Tipos de Recados'),
-            'description' => 'Tipos de Recados',
-            'parent' => str_slug('Mural de Recados'),
-          ],
+
 
           [
             'name' => 'Departamentos',
@@ -191,6 +144,20 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Tipos de Recados',
+            'slug' => str_slug('Tipos de Recados'),
+            'description' => 'Tipos de Recados',
+            'parent' => str_slug('Mural de Recados'),
+          ],
+
+          [
+            'name' => 'Tipo de Chamados',
+            'slug' => str_slug('Tipo de Chamados'),
+            'description' => 'Tipo de Chamados',
+            'parent' => str_slug('Chamados'),
+          ],
+
+          [
             'name' => 'Privilégios',
             'slug' => str_slug('Privilegios'),
             'description' => 'Privilégios',
@@ -203,20 +170,15 @@ class ModulesTableSeeder extends Seeder
             'description' => 'Permissões',
             'parent' => str_slug('Administrativo'),
           ],
-
-          [
-            'name' => 'Calendário',
-            'slug' => str_slug('Calendario'),
-            'description' => 'Calendário',
-            'parent' => str_slug('Modulos'),
-          ],
         ];
 
         foreach ($itens as $key => $value) {
 
             if($value['parent']) {
                 $module = Module::where('slug', $value['parent'])->get()->first();
-                $value['parent'] = $module->id;
+                if($module) {
+                  $value['parent'] = $module->id;
+                }
             }
 
             Module::create($value);
