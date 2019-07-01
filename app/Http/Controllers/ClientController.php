@@ -31,8 +31,6 @@ class ClientController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        //exit;
-
         $clients = [];
 
         $clients = Client::where('id', '>', 0);

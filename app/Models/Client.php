@@ -20,6 +20,11 @@ class Client extends Model
         return $this->hasMany('App\Models\Delivery\Document', 'client_id');
     }
 
+    public function files()
+    {
+        return $this->hasMany('App\Models\Documents', 'client_id');
+    }
+
     public function addresses()
     {
         return $this->hasMany('App\Models\Client\Address', 'client_id');

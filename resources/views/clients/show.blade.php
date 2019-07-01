@@ -36,18 +36,18 @@
       <div class="card-block">
 
         @permission('create.clientes')
-            <a href="{{route('client_employee_create', $client->uuid)}}" class="btn text-success btn-sm m-t-lg"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
+            <a href="{{route('client_employee_create', $client->uuid)}}" class="btn btn-success btn-sm"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
         @endpermission
 
         @permission('create.clientes')
-            <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-primary btn-sm m-t-lg"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
+            <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-primary btn-sm"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
         @endpermission
 
         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#uploadDocuments"><i class="fas fa-file"></i> Upload de Documentos</button>
 
         <a href="{{route('clients.edit', ['id' => $client->uuid])}}"
            style="margin-left: 4px;"
-           class="btn btn-info btn-outline btn-sm pull-right"><i class="far fa-edit"></i> Editar</a>
+           class="btn btn-inverse btn-sm pull-right"><i class="far fa-edit"></i> Editar</a>
 
       </div>
   </div>
@@ -259,7 +259,7 @@
           </div>
           <div class="card-block">
 
-            @if($client->documents->isNotEmpty())
+            @if($client->files->isNotEmpty())
               <div class="table-responsive">
 
                 <table class="table table-hover">
@@ -272,7 +272,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($client->documents as $document)
+                        @foreach($client->files as $document)
                             <tr>
 
                                 <td>
