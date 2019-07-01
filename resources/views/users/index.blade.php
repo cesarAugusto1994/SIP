@@ -68,8 +68,8 @@
           <h5>Listagem de Turmas</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
-                  <li><a class="btn btn-sm btn-success btn-round" href="{{ route('users.create') }}">Novo</a></li>
-                  <li><i class="feather icon-maximize full-card"></i></li>
+                  <li><a class="btn btn-sm btn-success btn-round" href="{{ route('users.create') }}">Novo Usuário</a></li>
+
               </ul>
           </div>
       </div>

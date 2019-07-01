@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    $currentUser = auth()->user();
+@endphp
+
 <div class="page-header">
     <div class="row align-items-end">
         <div class="col-lg-8">
@@ -89,10 +93,12 @@
                         <a class="nav-link" data-toggle="tab" href="#configs" role="tab">Configurações</a>
                         <div class="slide"></div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#roles" role="tab">Permissões</a>
-                        <div class="slide"></div>
-                    </li>
+                    @if($currentUser->isAdmin())
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#roles" role="tab">Permissões</a>
+                          <div class="slide"></div>
+                      </li>
+                    @endif
                 </ul>
             </div>
             <!-- tab header end -->
@@ -267,12 +273,12 @@
                             </div>
                             <div class="card-block">
 
-                              <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->id])}}" method="post">
+                              <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->uuid])}}" method="post">
                                   {{csrf_field()}}
 
                                   <div class="row m-b-30">
 
-                                      <div class="col-md-4">
+                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">Nome</label>
                                             <div class="input-group">
@@ -280,6 +286,7 @@
                                             </div>
                                         </div>
 
+                                        @if($currentUser->isAdmin())
                                         <div class="form-group">
                                             <label class="col-form-label">Departamento</label>
                                             <div class="input-group">
@@ -290,26 +297,19 @@
                                               </select>
                                             </div>
                                         </div>
+                                        @endif
 
-                                        <div class="form-group">
-                                            <label class="col-form-label">Avatar</label>
-                                            <div class="input-group">
-
-                                              <input name="avatar" data-buttonText="Selecionar Arquivo" data-dragdrop="true" data-buttonName="btn btn-primary" data-badge="true" type="file" data-input="false" accept="image/*" class="filestyle" multiple/>
-
-                                            </div>
-                                        </div>
 
                                       </div>
 
-                                      <div class="col-md-4">
+                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">CPF</label>
                                             <div class="input-group">
                                               <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control">
                                             </div>
                                         </div>
-
+                                        @if($currentUser->isAdmin())
                                         <div class="form-group">
                                             <label class="col-form-label">Cargo</label>
                                             <div class="input-group">
@@ -322,18 +322,11 @@
                                               </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                                            <label class="col-form-label" for="active">Ativo</label>
-                                            <div class="input-group">
-                                                <input type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
-                                            </div>
-                                            {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
-                                        </div>
+                                        @endif
 
                                       </div>
 
-                                      <div class="col-md-4">
+                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">E-mail</label>
                                             <div class="input-group">
@@ -359,6 +352,29 @@
                                         </div>
                                       </div>
 
+                                      <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Avatar</label>
+                                            <div class="input-group">
+
+                                              <input name="avatar" data-buttonText="Selecionar Imagem" data-dragdrop="true" data-badge="false" type="file" data-input="true" accept="image/*" class="filestyle" multiple/>
+
+                                            </div>
+                                        </div>
+
+                                      </div>
+                                      @if($currentUser->isAdmin())
+                                        <div class="col-md-12">
+                                          <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                                              <label class="col-form-label" for="active">Ativo</label>
+                                              <div class="input-group">
+                                                  <input type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
+                                              </div>
+                                              {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                                          </div>
+                                        </div>
+                                      @endif
                                   </div>
 
                                   <button type="submit" class="btn btn-success btn-sm">Salvar</button>
@@ -415,7 +431,7 @@
                                         </div>
 
                                     </div>
-
+                                    @if($currentUser->isAdmin())
                                     <div class="col-md-12">
 
                                         <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
@@ -431,22 +447,11 @@
                                         </div>
 
                                     </div>
-
-                                    <div class="col-md-12">
-
-                                      <div class="form-group {!! $errors->has('do_task') ? 'has-error' : '' !!}">
-                                          <label class="col-form-label" for="do_task">Executa Tarefas</label>
-                                          <div class="input-group">
-                                              <input type="checkbox" id="do_task" name="do_task" {{ $user->do_task ? 'active' : '' }} data-plugin="switchery" checked value="{{ 1 }}">
-                                          </div>
-                                          {!! $errors->first('do_task', '<p class="help-block">:message</p>') !!}
-                                      </div>
-
-                                    </div>
+                                    @endif
 
                                   </div>
 
-                                  <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+                                  <button type="submit" class="btn btn-success btn-block btn-sm">Salvar</button>
                               </form>
 
                             </div>

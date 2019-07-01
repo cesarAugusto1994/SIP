@@ -106,21 +106,12 @@ class MenuTableSeeder extends Seeder
 
           [
             'title' => 'Chamados',
-            'route' => null,
+            'route' => 'tickets.index',
             'permission' => 'view.chamados',
-            'description' => 'Chamados',
+            'description' => 'Lista de Chamados',
             'parent' => null,
             'icon' => 'fas fa-ticket-alt',
           ],
-              [
-                'title' => 'Chamados',
-                'route' => 'tickets.index',
-                'permission' => 'view.chamados',
-                'description' => 'Lista de Chamados',
-                'parent' => 'Chamados',
-                'icon' => 'feather icon-home',
-              ],
-
 
 
           [
@@ -169,7 +160,7 @@ class MenuTableSeeder extends Seeder
               'route' => 'types.index',
               'permission' => 'view.tipo.documento',
               'description' => 'Tipos de Documentos',
-              'parent' => 'Gestão de Entregas',
+              'parent' => 'Administrativo',
               'icon' => 'far fa-file-alt',
             ],
 
@@ -187,7 +178,7 @@ class MenuTableSeeder extends Seeder
               'route' => 'ticket-types.index',
               'permission' => 'view.chamados',
               'description' => 'Tipos de Chamados',
-              'parent' => 'Chamados',
+              'parent' => 'Administrativo',
               'icon' => 'feather icon-home',
             ],
 

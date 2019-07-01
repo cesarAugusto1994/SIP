@@ -290,6 +290,14 @@ $(document).ready(function() {
         //e.preventDefault();
         //alert('qwe');
 
+        window.swal({
+          title: 'Em progresso',
+          text: 'Aguarde enquantos os dados são salvos.',
+          type: 'info',
+          showConfirmButton: false,
+          allowOutsideClick: false
+        })
+
         $(this).hide();
     });
 

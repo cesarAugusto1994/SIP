@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Models\People;
-
+use App\Models\RoleDefaultPermissions;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 
@@ -122,6 +122,11 @@ class UserTableSeeder extends Seeder
               if($adminRole->id == 1) {
                   $user->syncPermissions($permissions);
               }
+
+              $permissionForRole = RoleDefaultPermissions::where('role_id', $userRole->id)
+              ->pluck('permission_id');
+
+              $user->syncPermissions($permissionForRole);
 
               $user->save();
           }

@@ -16,6 +16,7 @@
 
             @php
                 $menus = \App\Helpers\Helper::menus();
+                $user = auth()->user();
             @endphp
 
             @foreach($menus as $menu)
@@ -24,10 +25,10 @@
                   @continue;
                 @endif
 
-                @permission($menu->permission)
+                @if($user->hasPermission($menu->permission))
 
-                  <li class="@if(!$menu->childs->isEmpty()) pcoded-hasmenu @endif">
-                      <a href="@if(!$menu->childs->isEmpty()) javascript:void(0) @else {{ route($menu->route) }} @endif">
+                  <li class="@if($menu->childs->isNotEmpty()) pcoded-hasmenu @endif">
+                      <a href="@if($menu->childs->isNotEmpty()) javascript:void(0) @else {{ route($menu->route) }} @endif">
                           <span class="pcoded-micon"><i class="{{ $menu->icon }}"></i></span>
                           <span class="pcoded-mtext">{{ $menu->title }}</span>
                       </a>
@@ -55,7 +56,7 @@
                       @endif
                   </li>
 
-                @endpermission
+                @endif
 
             @endforeach
 

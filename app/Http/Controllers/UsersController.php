@@ -315,7 +315,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        Notification::send(User::where('id', 1)->get(), new NewUserNotification($user));
+        Notification::send(User::whereNot('id', $user->id)->get(), new NewUserNotification($user));
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo usuário adicionado com sucesso.'
@@ -384,7 +384,7 @@ class UsersController extends Controller
     {
         $data = $request->request->all();
 
-        $user = User::findOrFail($id);
+        $user = User::uuid($id);
 
         $person = $user->person;
 
@@ -396,15 +396,19 @@ class UsersController extends Controller
         $person->name = $data['name'];
         $person->cpf = $data['cpf'];
 
-        $department = Department::uuid($data['department_id']);
-        $person->department_id = $department->id;
+        if($request->has('department_id')) {
+          $department = Department::uuid($data['department_id']);
+          $person->department_id = $department->id;
+        }
 
-        $occupation = Occupation::uuid($data['occupation_id']);
-        $person->occupation_id = $occupation->id;
+        if($request->has('occupation_id')) {
+          $occupation = Occupation::uuid($data['occupation_id']);
+          $person->occupation_id = $occupation->id;
+        }
 
         $person->save();
 
-        $user->email = $data['email'];
+        //$user->email = $data['email'];
 
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             $path = $request->avatar->store('avatar');

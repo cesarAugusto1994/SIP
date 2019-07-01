@@ -37,6 +37,7 @@ class PermissionsTableSeeder extends Seeder
             'Gestão de Entregas',
             'Administrativo',
             'Treinamentos',
+            'Mural de Recados',
             'Chat'
           ])) {
             continue;

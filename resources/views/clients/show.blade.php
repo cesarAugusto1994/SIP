@@ -43,8 +43,6 @@
             <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-primary btn-sm"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
         @endpermission
 
-        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#uploadDocuments"><i class="fas fa-file"></i> Upload de Documentos</button>
-
         <a href="{{route('clients.edit', ['id' => $client->uuid])}}"
            style="margin-left: 4px;"
            class="btn btn-inverse btn-sm pull-right"><i class="far fa-edit"></i> Editar</a>
@@ -251,7 +249,41 @@
 
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-4">
+
+      <div class="card">
+          <div class="card-header">
+              <h5>Upload de Arquivos</h5>
+          </div>
+          <div class="card-block">
+
+            <form id="formUpload" method="post" action="{{route('client_documents_upload', [$client->uuid])}}" enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="row m-b-10">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group">
+
+                              <input required name="files[]" data-buttonText="Selecionar Arquivos" data-dragdrop="true"  data-buttonName="btn btn-warning" data-badge="true" type="file" data-input="false" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-primary btnFormUpload">Salvar</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+          </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
 
       <div class="card">
           <div class="card-header">
@@ -316,63 +348,18 @@
               <div class="widget white-bg no-padding">
                   <div class="p-m text-center">
                       <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
-                      <p class="font-bold no-margins">Nenhum registro encontrado.</p>
+                      <p class="font-bold no-margins">Nenhum documento encontrado.</p>
 
-                      @permission('create.clientes')
-                          <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#uploadDocuments"><i class="fas fa-file"></i> Upload de Documentos</button>
-                      @endpermission
                   </div>
               </div>
             @endif
 
-          </div>
       </div>
 
     </div>
 
   </div>
 
-</div>
-
-
-<div class="modal fade" id="uploadDocuments" tabindex="-1" role="dialog" aria-labelledby="editStatus" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mySmallModalLabel">Upload de Documentos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-
-            <form id="formUpload" method="post" action="{{route('client_documents_upload', [$client->uuid])}}" enctype="multipart/form-data">
-
-              <div class="modal-body">
-
-                    @csrf
-
-                    <div class="row m-b-30">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="col-form-label" for="status">Documentos</label>
-                                <div class="input-group">
-
-                                  <input required name="files[]" data-buttonText="Selecionar Arquivos" data-dragdrop="true"  data-buttonName="btn-primary" data-badge="true" type="file" data-input="true" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-              </div>
-
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                  <button type="submit" class="btn btn-primary btnFormUpload">Salvar</button>
-              </div>
-
-            </form>
-
-        </div>
-    </div>
 </div>
 
 @endsection

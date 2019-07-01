@@ -45,16 +45,18 @@ class RolesTableSeeder extends Seeder
                 'description' => 'Acesso de User',
                 'level'       => 1,
             ]);
+
+            $permissions = [5,7,8,9,10,11,12,13,21,74];
+
+            foreach ($permissions as $key => $item) {
+                RoleDefaultPermissions::create([
+                  'role_id' => $userRole->id,
+                  'permission_id' => $item
+                ]);
+            }
+
         }
 
-        if (Role::where('name', '=', 'Unverified')->first() === null) {
-            $userRole = Role::create([
-                'name'        => 'Unverified',
-                'slug'        => 'Unverified',
-                'description' => 'Acesso de Unverified',
-                'level'       => 0,
-            ]);
-        }
 
     }
 }
