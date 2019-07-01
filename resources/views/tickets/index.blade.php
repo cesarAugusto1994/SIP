@@ -114,6 +114,8 @@
       </div>
       <div class="card-block">
 
+        @if($tickets->isNotEmpty())
+
         <div class="table-responsive">
             <table class="table table-hover table-borderless">
                 <thead>
@@ -127,7 +129,7 @@
                 </thead>
                 <tbody>
 
-                  @foreach($tickets as $ticket)
+                  @foreach($tickets->sortByDesc('id') as $ticket)
 
                       @php
 
@@ -180,6 +182,24 @@
                 </tbody>
             </table>
         </div>
+
+        @else
+
+          <div class="col-md-12 col-lg-12">
+
+            <div class="widget white-bg no-padding">
+                <div class="p-m text-center">
+                    <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
+                    <br/>
+                    <h4 class="font-bold no-margins">
+                        Nenhum chamado registrado até o momento.
+                    </h4>
+                </div>
+            </div>
+
+          </div>
+
+        @endif
 
       </div>
   </div>

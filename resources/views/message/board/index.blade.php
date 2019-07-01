@@ -28,19 +28,31 @@
 <div class="page-body">
 
     <div class="card">
+
+        <div class="card-header">
+            <h5>Listagem de Recados</h5>
+            <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+
+                    @permission('create.chamados')
+                      <li><a class="btn btn-sm btn-success btn-round" href="{{route('message-board.create')}}">Novo Recado</a></li>
+                    @endpermission
+
+                </ul>
+            </div>
+        </div>
+
         <!-- Email-card start -->
         <div class="card-block email-card">
 
             <div class="row">
 
+              @if($messages->isNotEmpty())
+
                 <div class="col-lg-12 col-xl-12">
 
                   <div class="mail-body">
-                      <div class="mail-body-header">
-                          <a href="{{route('message-board.create')}}" class="btn btn-success btn-round btn-xs waves-effect waves-light">
-                                <i class="icofont icofont-exclamation-circle"></i> Novo Recado
-                          </a>
-                      </div>
+
                       <div class="mail-body-content">
                           <div class="table-responsive">
                               <table class="table">
@@ -69,7 +81,27 @@
                           </div>
                       </div>
                   </div>
+
                 </div>
+
+              @else
+
+                <div class="col-md-12 col-lg-12">
+
+                  <div class="widget white-bg no-padding">
+                      <div class="p-m text-center">
+                          <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
+                          <br/>
+                          <h4 class="font-bold no-margins">
+                              Nenhum recado registrado até o momento.
+                          </h4>
+                      </div>
+                  </div>
+
+                </div>
+
+              @endif
+
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ class ClientsTableSeeder extends Seeder
     public function run()
     {
 
-        factory('App\Models\Client', 50)
+        factory('App\Models\Client', 5)
         ->create()
         ->each(function ($client) {
             $client->addresses()->save(factory(App\Models\Client\Address::class)->make());

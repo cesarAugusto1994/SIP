@@ -286,6 +286,13 @@
 
 $(document).ready(function() {
 
+    $(":submit").click(function(e) {
+        //e.preventDefault();
+        //alert('qwe');
+
+        $(this).hide();
+    });
+
     $('.select2').select2({
 			width: '100%'
 		});

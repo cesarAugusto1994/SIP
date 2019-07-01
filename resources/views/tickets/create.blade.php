@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
-                      <textarea required name="description" class="form-control ckeditor"></textarea>
+                      <textarea rows="5" required name="description" class="form-control ckeditor1"></textarea>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('departments.index') }}">Cancelar</a>
+            <a class="btn btn-danger btn-sm" href="{{ route('tickets.index') }}">Cancelar</a>
 
         </form>
 

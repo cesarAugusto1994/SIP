@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> Mural de Recados </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">{{ $messageBoard->subject }}</a>
+                    <li class="breadcrumb-item"><a href="#!">Detalhes</a>
                     </li>
                 </ul>
             </div>
