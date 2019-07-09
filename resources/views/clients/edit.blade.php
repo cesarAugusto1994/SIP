@@ -94,7 +94,7 @@
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-sm" href="{{ route('clients.index') }}">Cancelar</a>
+            <a class="btn btn-danger btn-sm" href="{{ route('clients.show', $client->uuid) }}">Cancelar</a>
 
         </form>
 
