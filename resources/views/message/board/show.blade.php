@@ -56,7 +56,7 @@
                                           <h6 class="user-name txt-primary">{{ $messageBoard->user->person->name }} </h6>
                                       </a>
                                       <small>{{ $messageBoard->created_at->format('d/m/Y H:i:s') }}</small>
-                                      <div>
+                                      <div class="table-responsive">
                                           <p class="email-content">
                                               {!! $messageBoard->content !!}
                                           </p>
