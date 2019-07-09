@@ -45,7 +45,7 @@
                               <h6 class="f-right">{{ \App\Helpers\TimesAgo::render($messageBoard->created_at) }}</h6>
                           </div>
                           <div class="card-block">
-                              <div class="media m-b-20">
+                              <div class="">
                                   <div class="media-left photo-table">
                                       <a href="#">
                                           <img class="media-object img-radius" src="{{ route('image', ['user' => $messageBoard->user->uuid, 'link' => $messageBoard->user->avatar, 'avatar' => true])}}" alt="E-mail User">
