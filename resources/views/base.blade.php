@@ -298,7 +298,7 @@ $(document).ready(function() {
           allowOutsideClick: false
         })
 
-        $(this).hide();
+        ///$(this).hide();
     });
 
     $('.select2').select2({

@@ -9,6 +9,11 @@
     </div>
     <div class="auth-box card">
         <div class="card-block">
+
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endforeach
+
             <div class="form-group form-primary">
                 <input type="text" name="email" class="form-control" required="" placeholder="E-mail">
                 <span class="form-bar"></span>

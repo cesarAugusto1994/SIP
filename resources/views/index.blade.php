@@ -194,8 +194,8 @@
                           <div class="p-m text-center">
                               <h1 class="m-md"><i class="far fa-bell-slash fa-2x"></i></h1>
                               <br/>
-                              <h4 class="font-bold no-margins">
-                                  Voce não possui nenhum recado até o momento
+                              <h5 class="font-bold no-margins">
+                                  Voce não possui nenhum recado até o momento.
                               </h4>
                           </div>
                       </div>

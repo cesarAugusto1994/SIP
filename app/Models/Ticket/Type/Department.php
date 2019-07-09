@@ -4,12 +4,10 @@ namespace App\Models\Ticket\Type;
 
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Department extends Model
 {
     use Uuids;
-    use LogsActivity;
 
     protected $table = 'department_ticket_types';
 

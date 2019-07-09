@@ -36,4 +36,15 @@ class Ticket extends Model
     {
         return $this->hasMany('App\Models\Ticket\Status\Log', 'ticket_id');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Chamado atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Chamado Removido";
+        }
+
+        return "Chamado Adicionado";
+    }
 }

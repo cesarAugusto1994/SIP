@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.umbler.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'notications@sip.com'),
-        'name' => env('MAIL_FROM_NAME', 'Notificação SIP'),
+        'address' => env('MAIL_FROM_ADDRESS', 'notificacao@provider-es.com.br'),
+        'name' => env('MAIL_FROM_NAME', 'Notificação Provider'),
     ],
 
     /*
@@ -140,5 +140,7 @@ return [
     */
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
+
+    'pretend' => false,
 
 ];

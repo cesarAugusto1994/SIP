@@ -44,4 +44,15 @@ class Documents extends Model
     {
         return $this->belongsTo('App\Models\Documents\Type', 'type_id');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Documento vinculado ao Cliente atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Documento Removido do Cliente ";
+        }
+
+        return "Documento vinculado ao Cliente";
+    }
 }

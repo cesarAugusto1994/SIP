@@ -46,6 +46,7 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
+                        <th>Categoria</th>
                         <th>Departmentos</th>
                         <th>Situação</th>
                         <th class="text-right">Opções</th>
@@ -57,6 +58,7 @@
 
                       <tr>
                           <td>{{$type->name}}</td>
+                          <td>{{$type->category->name ?? ''}}</td>
                           <td>
                               @foreach($type->departments as $depto)
                                   <span class="label label-inverse-primary">{{ $depto->department->name }}</span><br/><br/>

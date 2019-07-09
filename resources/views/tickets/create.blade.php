@@ -47,8 +47,12 @@
                     <div class="input-group">
                       <select class="form-control m-b" name="type_id" required>
                           <option value="">Informe o tipo de chamado</option>
-                          @foreach(\App\Helpers\Helper::ticketTypes() as $type)
+                          @foreach(\App\Helpers\Helper::ticketCategories() as $category)
+                            <optgroup label="{{ $category->name }}">
+                            @foreach($category->types as $type)
                               <option value="{{$type->id}}">{{$type->name}}</option>
+                            @endforeach
+                            </optgroup>
                           @endforeach
                       </select>
                     </div>

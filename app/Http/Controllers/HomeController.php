@@ -55,15 +55,27 @@ class HomeController extends Controller
             'password'      => 'Cesar1507',
             'protocol'      => 'imap'
         ]);*/
+        /*
+        $oClient = new Client([
+            'host'          => 'imap.umbler.com',
+            'port'          => 993,
+            'encryption'    => 'ssl',
+            'validate_cert' => true,
+            'username'      => 'cesar.sousa@provider-es.com.br',
+            'password'      => 'Provider@123',
+            'protocol'      => 'imap'
+        ]);
+*/
         /* Alternative by using the Facade */
-        //$oClient = \Webklex\IMAP\Facades\Client::account('default');
+        #$oClient = Webklex\IMAP\Facades\Client::account('default');
 
         //Connect to the IMAP Server
-        //$oClient->connect();
+        #$oClient->connect();
 
         /** @var \Webklex\IMAP\Folder $oFolder */
-        //$aFolder = $oClient->getFolder('INBOX');
+        #$aFolder = $oClient->getFolder('INBOX');
 
+        #dd($aFolder);
         //Get all Messages of the current Mailbox $oFolder
         /** @var \Webklex\IMAP\Support\MessageCollection $aMessage */
         //$aMessage = $aFolder->messages()->from('jelidossantos@gmail.com')->get();

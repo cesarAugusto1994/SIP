@@ -8,6 +8,7 @@ use App\Models\Training\{Course};
 use App\Models\{People, Menu};
 use App\Models\Ticket\Type;
 use App\Models\Department;
+use App\Models\Ticket\Type\Category;
 
 /**
  *
@@ -58,6 +59,20 @@ class Helper
         return self::get($key);
     }
 
+    public static function ticketCategories()
+    {
+        $key = 'ticket_type_categories';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $types = Category::all();
+
+        self::set($key, $types);
+        return self::get($key);
+    }
+
     public static function ticketTypes()
     {
         $key = 'ticket_types';
@@ -69,9 +84,7 @@ class Helper
         $types = Type::all();
 
         self::set($key, $types);
-        //return self::get($key);
-
-        return Type::all();
+        return self::get($key);
     }
 
     public static function departments()
@@ -108,6 +121,31 @@ class Helper
 
         $route = null;
         $html = null;
+
+        if($model == 'App\Models\Ticket') {
+
+          if($item) {
+            $route = route('tickets.show', $item->uuid);
+            $html = "<a href=".$route.">".$item->type->name."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Ticket\Type') {
+
+          if($item) {
+            $route = route('ticket-types.index', $item->uuid);
+            $html = "<a href=".$route."> ".$item->name."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Documents') {
+
+          if($item) {
+            $route = route('document_preview', $item->uuid);
+            $html = "<a target='_blank' href=".$route."> " . $item->filename."</a>";
+          }
+
+        }
 
         if($model == 'App\Models\Training\Course') {
 

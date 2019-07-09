@@ -119,11 +119,18 @@
 
         </div>
 
-        <div class="col-md-12 p-m text-center table-responsive">
-          {{ $people->links() }}
+        <br/><br/>
+
+        <div class="text-center">
+            {{ $people->links() }}
         </div>
 
       </div>
+
+
+
+
+
   </div>
 
 </div>

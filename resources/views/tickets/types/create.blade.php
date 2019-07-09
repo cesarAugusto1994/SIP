@@ -39,8 +39,25 @@
             @csrf
 
             <div class="row m-b-30">
+              
+              <div class="col-md-6">
 
-              <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-form-label">Categoria</label>
+                    <div class="input-group">
+                      <select class="form-control" name="category_id" required>
+                          <option value="">Informe a Categoria</option>
+                          @foreach(\App\Helpers\Helper::ticketCategories() as $category)
+                              <option value="{{$category->id}}">{{$category->name}}</option>
+                          @endforeach
+                      </select>
+
+                    </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-6">
 
                 <div class="form-group">
                     <label class="col-form-label">Nome</label>

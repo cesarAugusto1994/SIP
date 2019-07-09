@@ -13,9 +13,21 @@ class CreateTicketsTable extends Migration
      */
     public function up()
     {
+        Schema::create('ticket_type_categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->boolean('active')->default(true);
+            $table->uuid('uuid');
+            $table->timestamps();
+        });
+
         Schema::create('ticket_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('ticket_type_categories');
+
             $table->boolean('active')->default(true);
             $table->uuid('uuid');
             $table->timestamps();

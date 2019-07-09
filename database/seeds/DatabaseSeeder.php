@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ModulesTableSeeder::class);
         $this->call(DepartmentTableSeeder::class);
         $this->call(OccupationTableSeeder::class);
+
+        $this->call(TicketTypesTableSeeder::class);
+
         // Role comes before User seeder here.
         $this->call(PermissionsTableSeeder::class);
         $this->call(RolesTableSeeder::class);
@@ -38,7 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MessageTypesTableSeeder::class);
         $this->call(DocumentTypesTableSeeder::class);
         $this->call(TicketStatusesTableSeeder::class);
-      
+
         Model::reguard();
     }
 }

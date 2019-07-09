@@ -30,9 +30,9 @@ class MenuTableSeeder extends Seeder
             'parent' => null,
             'icon' => 'fas fa-users',
           ],
-          [
+          /*[
             'title' => 'Treinamentos',
-            'route' => '#',
+            'route' => null,
             'permission' => 'view.treinamentos',
             'description' => 'Treinamentos',
             'parent' => null,
@@ -61,7 +61,7 @@ class MenuTableSeeder extends Seeder
                 'description' => 'Agenda',
                 'parent' => 'Treinamentos',
                 'icon' => 'far fa-calendar-alt',
-              ],
+              ],*/
           [
             'title' => 'Gestão de Entregas',
             'route' => null,
@@ -89,20 +89,12 @@ class MenuTableSeeder extends Seeder
 
           [
             'title' => 'Mural de Recados',
-            'route' => null,
-            'permission' => 'view.mural.de.recados',
-            'description' => 'Mural de Recados',
+            'route' => 'message-board.index',
+            'permission' => 'view.mural',
+            'description' => 'Mural',
             'parent' => null,
             'icon' => 'fas fa-bullhorn',
           ],
-              [
-                'title' => 'Mural',
-                'route' => 'message-board.index',
-                'permission' => 'view.mural',
-                'description' => 'Mural',
-                'parent' => 'Mural de Recados',
-                'icon' => 'fas fa-bullhorn',
-              ],
 
           [
             'title' => 'Chamados',

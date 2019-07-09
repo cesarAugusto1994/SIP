@@ -174,7 +174,7 @@ function toggleFullScreen() {
 
 /* --------------------------------------------------------
         Color picker - demo only
-        --------------------------------------------------------   */
+        --------------------------------------------------------   *//*
 $('#styleSelector').append('' +
     '<div class="selector-toggle">' +
         '<a href="javascript:void(0)"></a>' +
@@ -352,3 +352,4 @@ $('#styleSelector').append('' +
     '</li>' +
 '</ul>'+
 '');
+*/
