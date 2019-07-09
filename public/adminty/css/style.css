@@ -1899,7 +1899,8 @@ h6.media-heading {
 }
 
 .profile-image img {
-    border: 4px solid #fff
+    border: 4px solid #fff;
+    width: 86px;
 }
 
 .user-info .media-body,
