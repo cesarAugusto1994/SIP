@@ -56,7 +56,7 @@
 
                       <tr>
                           <td>{{$department->name}}</td>
-                          <td>{{$department->user->person->name}}</td>
+                          <td>{{$department->user->person->name ?? ''}}</td>
                           <td class="text-right">
                               <a class="btn btn-success btn-sm btn-round" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
                               <a class="btn btn-primary btn-sm btn-round" href="{{ route('departments.edit', $department->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
