@@ -36,7 +36,7 @@
 
       <div class="card">
           <div class="card-header">
-              <h5>Solicitação</h5>
+              <h5><b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}</h5>
               <div class="card-header-right">
                 <div class="dropdown-inverse dropdown open">
                     <button class="btn btn-inverse btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
