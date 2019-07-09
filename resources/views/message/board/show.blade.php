@@ -56,11 +56,9 @@
                                           <h6 class="user-name txt-primary">{{ $messageBoard->user->person->name }} </h6>
                                       </a>
                                       <small>{{ $messageBoard->created_at->format('d/m/Y H:i:s') }}</small>
-                                      <div class="email-content">
-                                          <div class="table-responsive">
-                                              {!! $messageBoard->content !!}
-                                          </div>
-                                      </div>
+                                      <p class="email-content">
+                                            {!! $messageBoard->content !!}
+                                      </p>
                                       <div class="m-t-15">
                                           <i class="icofont icofont-clip f-20 m-r-10"></i>Anexos <b>({{ $messageBoard->attachments->count() }})</b>
                                           <div class="row mail-img">
