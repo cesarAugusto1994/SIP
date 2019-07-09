@@ -458,8 +458,6 @@ class UsersController extends Controller
         $user->password_soc = $data['password_soc'];
         $user->id_soc = $data['id_soc'];
 
-        $user->do_task = $data['do_task'];
-
         if($user->id != $request->user()->id) {
 
           $user->person->save();
