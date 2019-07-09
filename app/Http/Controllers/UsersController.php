@@ -422,8 +422,10 @@ class UsersController extends Controller
             $user->avatar_type = 'upload';
         }
 
-        $user->active = $request->has('active');
-
+        if($request->has('active')) {
+            $user->active = $request->has('active');
+        }
+        
         $user->save();
 
         return redirect()->route('user', ['id' => $user->uuid]);
