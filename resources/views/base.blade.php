@@ -292,7 +292,7 @@ $(document).ready(function() {
 
         window.swal({
           title: 'Em progresso',
-          text: 'Aguarde enquantos os dados são salvos.',
+          text: 'Aguarde enquanto os dados são salvos.',
           type: 'info',
           showConfirmButton: false,
           allowOutsideClick: false
