@@ -45,7 +45,7 @@
 
         <a href="{{route('clients.edit', ['id' => $client->uuid])}}"
            style="margin-left: 4px;"
-           class="btn btn-inverse btn-sm pull-right"><i class="far fa-edit"></i> Editar</a>
+           class="btn btn-inverse btn-sm"><i class="far fa-edit"></i> Editar</a>
 
       </div>
   </div>
