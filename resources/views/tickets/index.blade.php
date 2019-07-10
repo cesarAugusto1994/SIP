@@ -155,7 +155,7 @@
                       @endphp
 
                       <tr>
-                          <td><b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}</td>
+                          <td><a href="{{ route('tickets.show', $ticket->uuid) }}"><b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}</a></td>
                           <td><label class="label label-lg label-{{ $bgColor }}">{{ $ticket->logs->last()->status->name }}</label></td>
                           <td>{{$ticket->user->person->name}}</td>
                           <td>
