@@ -57,7 +57,6 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
                   <li><a class="btn btn-sm btn-success btn-round" href="{{route('clients.create')}}">Novo</a></li>
-                  <li><i class="feather icon-maximize full-card"></i></li>
               </ul>
           </div>
       </div>
@@ -147,10 +146,10 @@
 
               <div class="widget white-bg no-padding text-center">
                   <div class="p-m text-center">
-                      <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
-                      <h4 class="font-bold no-margins">
+                      <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
+                      <h6 class="font-bold no-margins">
                           Nenhum registro encontrado para o parametros informados.
-                      </h4>
+                      </h6>
                   </div>
               </div>
 

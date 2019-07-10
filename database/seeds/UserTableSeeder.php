@@ -191,6 +191,10 @@ class UserTableSeeder extends Seeder
 
         foreach ($users as $key => $user) {
 
+          if($key > 5) {
+            break;
+          }
+
           //$faker = Faker\Factory::create();
 
           $userMail = User::where('email', '=', trim($user['Email']))->first();

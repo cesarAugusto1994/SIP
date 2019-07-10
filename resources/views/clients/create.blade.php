@@ -49,14 +49,14 @@
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="name">Nome</label>
                         <div class="input-group">
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Informe o nome">
+                            <input type="text" id="name" value="{{ old('name') }}" name="name" class="form-control" placeholder="Informe o nome">
                         </div>
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                     </div>
                     <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="phone">Telefone</label>
                         <div class="input-group">
-                            <input type="text" id="phone" name="phone" class="form-control inputPhone" placeholder="Informe o Telefone">
+                            <input type="text" id="phone" name="phone" value="{{ old('phone') }}" class="form-control inputPhone" placeholder="Informe o Telefone">
                         </div>
                         {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                     </div>
