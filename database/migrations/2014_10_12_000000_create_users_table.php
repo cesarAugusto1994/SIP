@@ -13,6 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::create('units', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->uuid('uuid')->unique();
+            $table->timestamps();
+        });
+
         Schema::create('departments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -36,12 +43,17 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('phone', 15)->nullable();
+            $table->string('branch', 8)->nullable();
             $table->string('cpf', 15);
             $table->date('birthday')->nullable();
             $table->integer('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments');
             $table->integer('occupation_id')->unsigned();
             $table->foreign('occupation_id')->references('id')->on('occupation');
+
+            $table->integer('unit_id')->unsigned();
+            $table->foreign('unit_id')->references('id')->on('units');
+
             $table->time('start_day')->nullable();
             $table->time('lunch')->nullable();
             $table->time('lunch_return')->nullable();

@@ -282,10 +282,20 @@ class UsersController extends Controller
         $occupation = Occupation::uuid($data['occupation_id']);
 
         $birthday = null;
+        $branch = null;
+        $phone = null;
 
         if($request->has('birthday')) {
             $birthday = $data['birthday'];
             $birthday = \DateTime::createFromFormat('d/m/Y', $birthday);
+        }
+
+        if($request->has('branch')) {
+            $branch = $data['branch'];
+        }
+
+        if($request->has('phone')) {
+            $branch = $data['phone'];
         }
 
         $person = People::create([
@@ -293,7 +303,9 @@ class UsersController extends Controller
           'birthday' => $birthday,
           'department_id' => $department->id,
           'occupation_id' => $occupation->id,
-          'cpf' => $data['cpf']
+          'cpf' => $data['cpf'],
+          'phone' => $phone,
+          'branch' => $branch
         ]);
 
         $avatar = \Avatar::create($data['name'])->toBase64();
@@ -412,6 +424,14 @@ class UsersController extends Controller
           $person->occupation_id = $occupation->id;
         }
 
+        if($request->has('branch')) {
+            $person->branch = $data['branch'];
+        }
+
+        if($request->has('phone')) {
+            $person->branch = $data['phone'];
+        }
+
         $person->save();
 
         //$user->email = $data['email'];
@@ -425,7 +445,7 @@ class UsersController extends Controller
         if($request->has('active')) {
             $user->active = $request->has('active');
         }
-        
+
         $user->save();
 
         return redirect()->route('user', ['id' => $user->uuid]);

@@ -3989,6 +3989,7 @@ return array(
     'Underscore\\Underscore' => $vendorDir . '/anahkiasen/underscore-php/src/Underscore.php',
     'Underscore\\UnderscoreTest' => $vendorDir . '/anahkiasen/underscore-php/tests/UnderscoreTest.php',
     'Underscore\\UnderscoreTestCase' => $vendorDir . '/anahkiasen/underscore-php/tests/UnderscoreTestCase.php',
+    'UnitsTableSeeder' => $baseDir . '/database/seeds/UnitsTableSeeder.php',
     'UserTableSeeder' => $baseDir . '/database/seeds/UserTableSeeder.php',
     'Webmozart\\Assert\\Assert' => $vendorDir . '/webmozart/assert/src/Assert.php',
     'Whoops\\Exception\\ErrorException' => $vendorDir . '/filp/whoops/src/Whoops/Exception/ErrorException.php',

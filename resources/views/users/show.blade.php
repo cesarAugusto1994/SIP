@@ -208,7 +208,7 @@
                                   @endforeach
 
                                   <div class="text-center">
-                                      <a href="#!" class="b-b-primary text-primary">Ver todas atividades</a>
+                                      <a href="{{ route('activities.index') }}" class="b-b-primary text-primary">Ver todas atividades</a>
                                   </div>
 
                                 @endif
@@ -306,7 +306,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label">CPF</label>
                                             <div class="input-group">
-                                              <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control">
+                                              <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control inputCpf">
                                             </div>
                                         </div>
                                         @if($currentUser->isAdmin())
@@ -334,6 +334,11 @@
                                             </div>
                                         </div>
 
+
+                                      </div>
+
+                                      <div class="col-md-6">
+
                                         @php
 
                                           $day = null;
@@ -350,6 +355,29 @@
                                               <input type="text" name="birthday" value="{{$day}}" class="form-control inputDate">
                                             </div>
                                         </div>
+
+                                      </div>
+
+                                      <div class="col-md-6">
+
+                                          <div class="form-group">
+                                              <label class="col-form-label">Telefone</label>
+                                              <div class="input-group">
+                                                <input type="text" name="phone" value="{{$user->phone}}" class="form-control inputPhone">
+                                              </div>
+                                          </div>
+
+                                      </div>
+
+                                      <div class="col-md-6">
+
+                                          <div class="form-group">
+                                              <label class="col-form-label">Ramal</label>
+                                              <div class="input-group">
+                                                <input type="text" name="branch" value="{{$user->branch}}" class="form-control">
+                                              </div>
+                                          </div>
+
                                       </div>
 
                                       <div class="col-md-12">

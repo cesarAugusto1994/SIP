@@ -194,9 +194,9 @@
                           <div class="p-m text-center">
                               <h1 class="m-md"><i class="far fa-bell-slash fa-2x"></i></h1>
                               <br/>
-                              <h5 class="font-bold no-margins">
+                              <h6 class="font-bold no-margins">
                                   Voce não possui nenhum recado até o momento.
-                              </h4>
+                              </h6>
                           </div>
                       </div>
 
@@ -236,7 +236,19 @@
                   @endforeach
 
                   <div class="text-center">
-                      <a href="#!" class="b-b-primary text-primary">Visualizar todas atividades</a>
+                      <a href="{{ route('activities.index') }}" class="b-b-primary text-primary">Visualizar todas atividades</a>
+                  </div>
+
+                @else
+
+                  <div class="widget white-bg no-padding">
+                      <div class="p-m text-center">
+                          <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
+                          <br/>
+                          <h6 class="font-bold no-margins">
+                              Nenhum log registrado até o momento.
+                          </h6>
+                      </div>
                   </div>
 
                 @endif

@@ -43,9 +43,7 @@
             <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-primary btn-sm"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
         @endpermission
 
-        <a href="{{route('clients.edit', ['id' => $client->uuid])}}"
-           style="margin-left: 4px;"
-           class="btn btn-inverse btn-sm"><i class="far fa-edit"></i> Editar</a>
+          <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="btn btn-info btn-sm"><i class="far fa-edit"></i> Editar</a>
 
       </div>
   </div>

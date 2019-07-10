@@ -198,6 +198,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::post('role/{id}/permissions/{permission}/grant', 'RolesController@grant')->name('role_permissions_grant');
 
     Route::resource('notifications', 'NotificationsController');
+    Route::resource('activities', 'ActivitiesController');
+    
     Route::get('notifications-read', 'NotificationsController@markAsRead')->name('notifications_markasread');
 
     Route::get('team/{id}/schedules', 'TeamsController@schedule')->name('team_schedules');

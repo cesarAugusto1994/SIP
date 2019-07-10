@@ -17,7 +17,10 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Usuários</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('users') }}"> Usuários </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Novo</a></li>
                 </ul>
             </div>
         </div>
@@ -83,13 +86,14 @@
                           </div>
                           {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                       </div>
-                      <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                          <label class="col-form-label">Ativo</label>
+                      <div class="form-group {!! $errors->has('branch') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">Ramal</label>
                           <div class="input-group">
-                            <input type="checkbox" data-plugin="switchery" value="1" {{ old('active') || !request()->has('active') ? 'checked' : '' }} name="active" class="form-control">
+                            <input type="text" required value="{{ old('branch') }}" name="branch" class="form-control">
                           </div>
-                          {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                          {!! $errors->first('branch', '<p class="help-block">:message</p>') !!}
                       </div>
+
                     </div>
 
                 </div>
@@ -150,6 +154,14 @@
                           </div>
                           {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
                       </div>
+                    </div>
+
+                    <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Ativo</label>
+                        <div class="input-group">
+                          <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" {{ old('active') || !request()->has('active') ? 'checked' : '' }} name="active" class="js-switch">
+                        </div>
+                        {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                     </div>
 
                 </div>

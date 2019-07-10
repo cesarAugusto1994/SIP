@@ -285,10 +285,8 @@
 <script>
 
 $(document).ready(function() {
-
+/*
     $(":submit").click(function(e) {
-        //e.preventDefault();
-        //alert('qwe');
 
         window.swal({
           title: 'Em progresso',
@@ -298,9 +296,8 @@ $(document).ready(function() {
           allowOutsideClick: false
         })
 
-        ///$(this).hide();
     });
-
+*/
     $('.select2').select2({
 			width: '100%'
 		});
@@ -432,6 +429,7 @@ $(document).ready(function() {
               text: 'Sua sessão será finalizada.',
               type: 'success',
               showConfirmButton: false,
+              allowOutsideClick: false
             })
           }
         });

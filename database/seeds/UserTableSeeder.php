@@ -7,6 +7,8 @@ use App\Models\RoleDefaultPermissions;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Models\Department;
+use App\Models\Department\Occupation;
+use App\Models\Unit;
 
 class UserTableSeeder extends Seeder
 {
@@ -24,33 +26,47 @@ class UserTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         // Seed test admin
-        $seededAdminEmail = 'cesar.sousa@provider-es.com.br';
+        $seededAdminEmail = 'admin@provider-es.com.br';
         $user = User::where('email', '=', $seededAdminEmail)->first();
         if ($user === null) {
 
-            $name = 'Cesar Augusto Sousa';
+            $name = 'Administrador';
 
             $avatar = \Avatar::create($name)->toBase64();
 
+            $unit = Unit::create([
+              'name' => 'Vitória'
+            ]);
+
+            $department = Department::create([
+              'name' => 'Tecnologia da Informação'
+            ]);
+
+            $occupation = Occupation::create([
+              'name' => 'Administrador',
+              'department_id' => $department->id
+            ]);
+
             $person = People::create([
-              'name' => 'Cesar Sousa',
-              'department_id'=> 5,
-              'occupation_id'=> 1,
-              'birthday' => '1994-07-19',
+              'name' => 'Administrador',
+              'department_id'=> $department->id,
+              'unit_id'=> $unit->id,
+              'occupation_id'=> $occupation->id,
+              'birthday' => '1994-07-15',
               'cpf' => '12345678987'
             ]);
 
             $user = User::create([
-              'nick'                           => 'cesar.sousa',
+              'nick'                           => 'admin',
               'email'                          => $seededAdminEmail,
-              'password'                       => Hash::make('123123'),
+              'password'                       => Hash::make('Provider@123'),
               'avatar' => $avatar,
               'do_task' => false,
               'person_id' => $person->id,
               'email_verified_at' => now(),
-              'login_soc' => 'cesar.sousa',
-              'password_soc' => 'cesar1507',
-              'id_soc' => '6662',
+              'login_soc' => '',
+              'password_soc' => '',
+              'id_soc' => '',
               'api_token' => str_random(60)
 
             ]);
@@ -75,96 +91,97 @@ class UserTableSeeder extends Seeder
 */
 
         $users = array(
-          	0 => array('Setor' => 'Aprendiz', 'Nome' => 'Jovem Aprendiz', 'Email' => 'jovem.aprendiz'),
-          	1 => array('Setor' => 'Arquivo', 'Nome' => 'Arquivo', 'Email' => 'arquivo'),
-          	2 => array('Setor' => 'Atendimento', 'Nome' => 'Atendimento Cariacica', 'Email' => 'atendimento.cariacica'),
-          	3 => array('Setor' => 'Atendimento', 'Nome' => 'Atendimento Serra', 'Email' => 'atendimento.serra'),
-          	4 => array('Setor' => 'Atendimento', 'Nome' => 'Atendimento Vila Velha Centro', 'Email' => 'atendimento.vilavelha.centro'),
-          	5 => array('Setor' => 'Atendimento', 'Nome' => 'Atendimento Vila Velha Ibes', 'Email' => 'atendimento.vilavelha.ibes'),
-          	6 => array('Setor' => 'Atendimento', 'Nome' => 'Atendimento Vitória', 'Email' => 'atendimento.vitoria'),
-          	7 => array('Setor' => 'Atendimento', 'Nome' => 'Denise Pereira', 'Email' => 'denise.pereira'),
-          	8 => array('Setor' => 'Atendimento', 'Nome' => 'Atendimento Baixo Guandú', 'Email' => 'atendimento.baixoguando'),
-          	9 => array('Setor' => 'Baixo Guandú', 'Nome' => 'Karina Barteli', 'Email' => 'karina.barteli'),
-          	10 => array('Setor' => 'Baixo Guandú', 'Nome' => 'Rodrigo Alcides', 'Email' => 'rodrigo.alcides'),
-          	11 => array('Setor' => 'Coleta', 'Nome' => 'Coleta Cariacica', 'Email' => 'coleta.cariacica'),
-          	12 => array('Setor' => 'Coleta', 'Nome' => 'Coleta Serra', 'Email' => 'coleta.serra'),
-          	13 => array('Setor' => 'Coleta', 'Nome' => 'Coleta Vila Velha IBES', 'Email' => 'coleta.vilavelha.ibes'),
-          	14 => array('Setor' => 'Coleta', 'Nome' => 'Coleta Vitória', 'Email' => 'coleta.vitoria'),
-          	15 => array('Setor' => 'Coleta', 'Nome' => 'Coleta Vila Velha Centro', 'Email' => 'coleta.vilavelha.centro'),
-          	16 => array('Setor' => 'Comercial', 'Nome' => 'Herlan Gonçalves', 'Email' => 'comercial'),
-          	17 => array('Setor' => 'Comercial', 'Nome' => 'Ricardo Castro', 'Email' => 'comercial2'),
-          	18 => array('Setor' => 'Comercial', 'Nome' => 'Apoio', 'Email' => 'comercial3'),
-          	19 => array('Setor' => 'Comercial', 'Nome' => 'Gestçao Contratos', 'Email' => 'gestao.contratos'),
-          	20 => array('Setor' => 'Comercial', 'Nome' => 'Marketing', 'Email' => 'marketing'),
-          	21 => array('Setor' => 'Exames', 'Nome' => 'Simone Coelho', 'Email' => 'simone.coelho'),
-          	22 => array('Setor' => 'Diretor', 'Nome' => 'Carlos César Sad', 'Email' => 'cesar.sad'),
-          	23 => array('Setor' => 'Técnico', 'Nome' => 'Deyvd Soares', 'Email' => 'deyvd.soares'),
-          	24 => array('Setor' => 'RH', 'Nome' => 'Wesley Damásio', 'Email' => 'wesley.damasio'),
-          	25 => array('Setor' => 'Enfermeiro', 'Nome' => 'Cristinete Silva', 'Email' => 'cristinete.silva'),
-          	26 => array('Setor' => 'Enfermeiro', 'Nome' => 'Ana Florentino', 'Email' => 'enfermagem.trabalho'),
-          	27 => array('Setor' => 'Enfermeiro Cariacica', 'Nome' => 'Fernando Rodrigues', 'Email' => 'enfermagem.cariacica'),
-          	28 => array('Setor' => 'E-Social', 'Nome' => 'Ariane Pina', 'Email' => 'ariane.pina'),
-          	29 => array('Setor' => 'E-Social', 'Nome' => 'Sara Tavares', 'Email' => 'sara.tavares'),
-          	30 => array('Setor' => 'Financeiro', 'Nome' => 'Larissa', 'Email' => 'financeiro2'),
-          	31 => array('Setor' => 'Exames', 'Nome' => 'Karoline', 'Email' => 'credenciamento2'),
-          	32 => array('Setor' => 'Exames', 'Nome' => 'Monarah', 'Email' => 'credenciamento3'),
-          	33 => array('Setor' => 'Exames', 'Nome' => 'Gierke', 'Email' => 'credenciamento4'),
-          	34 => array('Setor' => 'Exames', 'Nome' => 'Lucas', 'Email' => 'credenciamento5'),
-          	35 => array('Setor' => 'Exames', 'Nome' => 'Stela', 'Email' => 'expedicao'),
-          	36 => array('Setor' => 'Exames', 'Nome' => 'Débora', 'Email' => 'liberacao'),
-          	37 => array('Setor' => 'Exames', 'Nome' => 'Nathiely', 'Email' => 'liberacao2'),
-          	38 => array('Setor' => 'Exames', 'Nome' => 'Hevellyn', 'Email' => 'liberacao3'),
-          	39 => array('Setor' => 'Exames', 'Nome' => 'Charles', 'Email' => 'liberacao4'),
-          	40 => array('Setor' => 'Exames', 'Nome' => 'Alex Sander', 'Email' => 'liberacao5'),
-          	41 => array('Setor' => 'Exames', 'Nome' => 'Paulo Vinicius', 'Email' => 'triagem'),
-          	42 => array('Setor' => 'Exames', 'Nome' => 'Thais', 'Email' => 'umap'),
-          	43 => array('Setor' => 'Exames', 'Nome' => 'Ana Carolina', 'Email' => 'ana.carolina'),
-          	44 => array('Setor' => 'Comercial', 'Nome' => 'Carlos Eduardo', 'Email' => 'carlos.eduardo'),
-          	45 => array('Setor' => 'Atendimento', 'Nome' => 'Joseth Cardozo', 'Email' => 'joseth.cardoso'),
-          	46 => array('Setor' => 'Financeiro', 'Nome' => 'Mariana Pazolini', 'Email' => 'mariana.pazolini'),
-          	47 => array('Setor' => 'Financeiro', 'Nome' => 'Laryssa', 'Email' => 'compras'),
-          	48 => array('Setor' => 'Financeiro', 'Nome' => 'Roberta', 'Email' => 'faturamento'),
-          	49 => array('Setor' => 'Financeiro', 'Nome' => 'Paulo', 'Email' => 'financeiro'),
-          	50 => array('Setor' => 'Financeiro', 'Nome' => 'Viviane Neves', 'Email' => 'cobranca'),
-          	51 => array('Setor' => 'Fono', 'Nome' => 'Fono Cariacica', 'Email' => 'bianca.kaiser'),
-          	52 => array('Setor' => 'Fono', 'Nome' => 'Gleice', 'Email' => 'fono.caricacica'),
-          	53 => array('Setor' => 'Fono', 'Nome' => 'Fono Serra', 'Email' => 'fono.serra'),
-          	54 => array('Setor' => 'Fono', 'Nome' => 'Fono Vila Velha IBES', 'Email' => 'fono.vilavelha.ibes'),
-          	55 => array('Setor' => 'Fono', 'Nome' => 'Fono Vtória', 'Email' => 'fono.vitoria'),
-          	56 => array('Setor' => 'Fono', 'Nome' => 'Fono Vitória', 'Email' => 'fono2.vitoria'),
-          	58 => array('Setor' => 'IBES', 'Nome' => 'Mariana Coelho', 'Email' => 'mariana.coelho'),
-          	59 => array('Setor' => 'IBES', 'Nome' => 'Paola neves', 'Email' => 'paola.neves'),
-          	60 => array('Setor' => 'Instrutor Treinamentos', 'Nome' => 'Aeliton Silva', 'Email' => 'aeliton.silva'),
-          	61 => array('Setor' => 'Juridico', 'Nome' => 'Perícias', 'Email' => 'juridico'),
-          	62 => array('Setor' => 'Laboratório', 'Nome' => 'Daniele', 'Email' => 'laboratorio'),
-          	63 => array('Setor' => 'Psicologia', 'Nome' => 'Psicologia', 'Email' => 'psicologia'),
-          	64 => array('Setor' => 'Psicologo', 'Nome' => 'Flávia Cypreste', 'Email' => 'flavia.cypreste'),
-          	65 => array('Setor' => 'RH', 'Nome' => 'Edilson Lima', 'Email' => 'dp'),
-          	66 => array('Setor' => 'RH', 'Nome' => 'Luciana Rocha', 'Email' => 'dp2'),
-          	67 => array('Setor' => 'RH', 'Nome' => 'Curriculos', 'Email' => 'curriculos'),
-          	68 => array('Setor' => 'Técnico', 'Nome' => 'Diego Souza', 'Email' => 'diego.souza'),
-          	69 => array('Setor' => 'Técnico', 'Nome' => 'Fellipe Freitas', 'Email' => 'fellipe.freitas'),
-          	70 => array('Setor' => 'Técnico', 'Nome' => 'Geovani Charpinel', 'Email' => 'geovani.charpinel'),
-          	71 => array('Setor' => 'Técnico', 'Nome' => 'Gizelle Rodrigues', 'Email' => 'gizelle.rodrigues'),
-          	72 => array('Setor' => 'Técnico', 'Nome' => 'Leonardo Araújp', 'Email' => 'leonardo.araujo'),
-          	73 => array('Setor' => 'Técnico', 'Nome' => 'Nadine', 'Email' => 'nadine.lodi'),
-          	74 => array('Setor' => 'Técnico', 'Nome' => 'Rebeca Senara', 'Email' => 'rebeca.senara'),
-          	75 => array('Setor' => 'Técnico', 'Nome' => 'Dávila Souza', 'Email' => 'davila.souza'),
-          	76 => array('Setor' => 'Técnico', 'Nome' => 'Emyli Almeida', 'Email' => 'emyle.almeida'),
-          	77 => array('Setor' => 'Técnico', 'Nome' => 'Felipe Batista', 'Email' => 'felipe.batista'),
-          	78 => array('Setor' => 'Técnico', 'Nome' => 'Igor Bianchi', 'Email' => 'igor.bianchi'),
-          	79 => array('Setor' => 'Técnico', 'Nome' => 'Beatriz Crespo', 'Email' => 'beatrz.crespo'),
-          	80 => array('Setor' => 'Técnico', 'Nome' => 'Débora Monteiro', 'Email' => 'debora.monteiro'),
-          	81 => array('Setor' => 'Técnico', 'Nome' => 'Ingrid Rubenich', 'Email' => 'ingrid.rubenich'),
-          	82 => array('Setor' => 'Técnico', 'Nome' => 'Bruna Oliveira', 'Email' => 'brunna.oliveira'),
-          	83 => array('Setor' => 'Técnico', 'Nome' => 'Karla Marques', 'Email' => 'karla.marques'),
-          	84 => array('Setor' => 'Técnico', 'Nome' => 'Amanda Rodrigues', 'Email' => 'amanda.rodrigues'),
-          	85 => array('Setor' => 'Técnico', 'Nome' => 'Júlio Félix', 'Email' => 'julio.felix'),
-          	86 => array('Setor' => 'Técnico', 'Nome' => 'Igor Rocha', 'Email' => 'igor.rocha'),
-          	88 => array('Setor' => 'TI', 'Nome' => 'Ely Reis', 'Email' => 'ely.reis'),
-          	89 => array('Setor' => 'TI', 'Nome' => 'Suporte TI', 'Email' => 'suporteti'),
-          	90 => array('Setor' => 'TI', 'Nome' => 'Vinycius Alves', 'Email' => 'vinycius.alves'),
-          	91 => array('Setor' => 'Treinamentos', 'Nome' => 'Sabrina Oliveira', 'Email' => 'treinamentos'),
+          	0 => array('Cargo' => 'Aprendiz', 'Unidade' => 'Vitória', 'Setor' => 'Aprendiz', 'Nome' => 'Jovem Aprendiz', 'Email' => 'jovem.aprendiz'),
+          	1 => array('Cargo' => 'Arquivo', 'Unidade' => 'Vitória', 'Setor' => 'Arquivo', 'Nome' => 'Arquivo', 'Email' => 'arquivo'),
+          	2 => array('Cargo' => 'Atendente', 'Unidade' => 'Vitória', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Cariacica', 'Email' => 'atendimento.cariacica'),
+          	3 => array('Cargo' => 'Atendente', 'Unidade' => 'Serra', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Serra', 'Email' => 'atendimento.serra'),
+          	4 => array('Cargo' => 'Atendente', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Vila Velha Centro', 'Email' => 'atendimento.vilavelha.centro'),
+          	5 => array('Cargo' => 'Atendente', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Vila Velha Ibes', 'Email' => 'atendimento.vilavelha.ibes'),
+          	6 => array('Cargo' => 'Atendente', 'Unidade' => 'Vitória', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Vitória', 'Email' => 'atendimento.vitoria'),
+          	7 => array('Cargo' => 'Atendente', 'Unidade' => 'Vitória', 'Setor' => 'Atendimento', 'Nome' => 'Denise Pereira', 'Email' => 'denise.pereira'),
+          	8 => array('Cargo' => 'Atendente', 'Unidade' => 'Baixo Guandú', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Baixo Guandú', 'Email' => 'atendimento.baixoguando'),
+          	9 => array('Cargo' => 'Administrativo', 'Unidade' => 'Baixo Guandú', 'Setor' => 'Atendimento', 'Nome' => 'Karina Barteli', 'Email' => 'karina.barteli'),
+          	10 => array('Cargo' => 'Administrativo', 'Unidade' => 'Baixo Guandú', 'Setor' => 'Técnico', 'Nome' => 'Rodrigo Alcides', 'Email' => 'rodrigo.alcides'),
+          	11 => array('Cargo' => 'Coleta', 'Unidade' => 'Cariacica', 'Setor' => 'Coleta', 'Nome' => 'Coleta Cariacica', 'Email' => 'coleta.cariacica'),
+          	12 => array('Cargo' => 'Coleta', 'Unidade' => 'Serra', 'Setor' => 'Coleta', 'Nome' => 'Coleta Serra', 'Email' => 'coleta.serra'),
+          	13 => array('Cargo' => 'Coleta', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Coleta', 'Nome' => 'Coleta Vila Velha IBES', 'Email' => 'coleta.vilavelha.ibes'),
+          	14 => array('Cargo' => 'Coleta', 'Unidade' => 'Vitória', 'Setor' => 'Coleta', 'Nome' => 'Coleta Vitória', 'Email' => 'coleta.vitoria'),
+          	15 => array('Cargo' => 'Coleta', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Coleta', 'Nome' => 'Coleta Vila Velha Centro', 'Email' => 'coleta.vilavelha.centro'),
+          	16 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Herlan Gonçalves', 'Email' => 'comercial'),
+          	17 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Ricardo Castro', 'Email' => 'comercial2'),
+          	18 => array('Cargo' => 'Aprendiz', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Apoio', 'Email' => 'comercial3'),
+          	20 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Marketing', 'Nome' => 'Marketing', 'Email' => 'marketing'),
+          	21 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Simone Coelho', 'Email' => 'simone.coelho'),
+          	22 => array('Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'Diretoria', 'Nome' => 'Carlos César Sad', 'Email' => 'cesar.sad'),
+          	23 => array('Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Deyvd Soares', 'Email' => 'deyvd.soares'),
+          	24 => array('Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'RH', 'Nome' => 'Wesley Damásio', 'Email' => 'wesley.damasio'),
+          	25 => array('Cargo' => 'Enfermeiro', 'Unidade' => 'Vitória', 'Setor' => 'Enfermagem', 'Nome' => 'Cristinete Silva', 'Email' => 'cristinete.silva'),
+          	26 => array('Cargo' => 'Enfermeiro', 'Unidade' => 'Vitória', 'Setor' => 'Enfermagem', 'Nome' => 'Ana Florentino', 'Email' => 'enfermagem.trabalho'),
+          	27 => array('Cargo' => 'Enfermeiro', 'Unidade' => 'Cariacica', 'Setor' => 'Enfermagem', 'Nome' => 'Fernando Rodrigues', 'Email' => 'enfermagem.cariacica'),
+          	28 => array('Cargo' => 'E-Social', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Ariane Pina', 'Email' => 'ariane.pina'),
+          	29 => array('Cargo' => 'E-Social', 'Unidade' => 'Vitória', 'Setor' => 'E-Social', 'Nome' => 'Sara Tavares', 'Email' => 'sara.tavares'),
+          	30 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Larissa', 'Email' => 'financeiro2'),
+          	31 => array('Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Karoline', 'Email' => 'credenciamento2'),
+          	32 => array('Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Monarah', 'Email' => 'credenciamento3'),
+          	33 => array('Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Gierke', 'Email' => 'credenciamento4'),
+          	34 => array('Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Lucas', 'Email' => 'credenciamento5'),
+          	35 => array('Cargo' => 'Expedição', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Stela', 'Email' => 'expedicao'),
+          	36 => array('Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Débora', 'Email' => 'liberacao'),
+          	37 => array('Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Nathiely', 'Email' => 'liberacao2'),
+          	38 => array('Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Hevellyn', 'Email' => 'liberacao3'),
+          	39 => array('Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Charles', 'Email' => 'liberacao4'),
+          	40 => array('Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Alex Sander', 'Email' => 'liberacao5'),
+          	41 => array('Cargo' => 'Triagem', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Paulo Vinicius', 'Email' => 'triagem'),
+          	42 => array('Cargo' => 'UMAP', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Thais', 'Email' => 'umap'),
+          	43 => array('Cargo' => 'Triagem', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Ana Carolina', 'Email' => 'ana.carolina'),
+          	44 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Carlos Eduardo', 'Email' => 'carlos.eduardo'),
+          	45 => array('Cargo' => 'Atendente', 'Unidade' => 'Vitória', 'Setor' => 'Atendimento', 'Nome' => 'Joseth Cardozo', 'Email' => 'joseth.cardoso'),
+          	46 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Mariana Pazolini', 'Email' => 'mariana.pazolini'),
+          	47 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Laryssa', 'Email' => 'compras'),
+          	48 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Roberta', 'Email' => 'faturamento'),
+          	50 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Viviane Neves', 'Email' => 'cobranca'),
+          	51 => array('Cargo' => 'Fonoaudiólogo', 'Unidade' => 'Cariacica', 'Setor' => 'Fono', 'Nome' => 'Fono Cariacica', 'Email' => 'bianca.kaiser'),
+          	52 => array('Cargo' => 'Fonoaudiólogo', 'Unidade' => 'Cariacica', 'Setor' => 'Fono', 'Nome' => 'Gleice', 'Email' => 'fono.caricacica'),
+          	53 => array('Cargo' => 'Fonoaudiólogo', 'Unidade' => 'Serra', 'Setor' => 'Fono', 'Nome' => 'Fono Serra', 'Email' => 'fono.serra'),
+          	54 => array('Cargo' => 'Fonoaudiólogo', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Fono', 'Nome' => 'Fono Vila Velha IBES', 'Email' => 'fono.vilavelha.ibes'),
+          	55 => array('Cargo' => 'Fonoaudiólogo', 'Unidade' => 'Vitória', 'Setor' => 'Fono', 'Nome' => 'Fono Vtória', 'Email' => 'fono.vitoria'),
+          	56 => array('Cargo' => 'Fonoaudiólogo', 'Unidade' => 'Vitória', 'Setor' => 'Fono', 'Nome' => 'Fono Vitória', 'Email' => 'fono2.vitoria'),
+          	58 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Administrativo', 'Nome' => 'Mariana Coelho', 'Email' => 'mariana.coelho'),
+          	59 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Administrativo', 'Nome' => 'Paola neves', 'Email' => 'paola.neves'),
+          	60 => array('Cargo' => 'Instrutor de Treinamentos', 'Unidade' => 'Vitória', 'Setor' => 'Treinamentos', 'Nome' => 'Aeliton Silva', 'Email' => 'aeliton.silva'),
+
+          	61 => array('Cargo' => 'Advogado', 'Unidade' => 'Vitória', 'Setor' => 'Juridico', 'Nome' => 'Andréia Botelho', 'Email' => 'juridico'),
+          	62 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Laboratório', 'Nome' => 'Daniele', 'Email' => 'laboratorio'),
+          	63 => array('Cargo' => 'Psicologo', 'Unidade' => 'Vitória', 'Setor' => 'Psicologia', 'Nome' => 'Psicologia', 'Email' => 'psicologia'),
+          	64 => array('Cargo' => 'Psicologo', 'Unidade' => 'Vitória', 'Setor' => 'Psicologia', 'Nome' => 'Flávia Cypreste', 'Email' => 'flavia.cypreste'),
+          	65 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'RH', 'Nome' => 'Edilson Lima', 'Email' => 'dp'),
+          	66 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'RH', 'Nome' => 'Luciana Rocha', 'Email' => 'dp2'),
+          	68 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Diego Souza', 'Email' => 'diego.souza'),
+          	69 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Fellipe Freitas', 'Email' => 'fellipe.freitas'),
+          	70 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Geovani Charpinel', 'Email' => 'geovani.charpinel'),
+          	71 => array('Cargo' => 'Técnico', 'Unidade' => 'Serra', 'Setor' => 'Técnico', 'Nome' => 'Gizelle Rodrigues', 'Email' => 'gizelle.rodrigues'),
+          	72 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Leonardo Araújp', 'Email' => 'leonardo.araujo'),
+          	73 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Nadine', 'Email' => 'nadine.lodi'),
+          	74 => array('Cargo' => 'Técnico', 'Unidade' => 'Serra', 'Setor' => 'Técnico', 'Nome' => 'Rebeca Senara', 'Email' => 'rebeca.senara'),
+          	75 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Dávila Souza', 'Email' => 'davila.souza'),
+          	76 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Emyle Almeida', 'Email' => 'emyle.almeida'),
+          	77 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Felipe Batista', 'Email' => 'felipe.batista'),
+          	78 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Igor Bianchi', 'Email' => 'igor.bianchi'),
+          	79 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Beatriz Crespo', 'Email' => 'beatrz.crespo'),
+          	80 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Débora Monteiro', 'Email' => 'debora.monteiro'),
+          	81 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Ingrid Rubenich', 'Email' => 'ingrid.rubenich'),
+          	82 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Bruna Oliveira', 'Email' => 'brunna.oliveira'),
+          	83 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Karla Marques', 'Email' => 'karla.marques'),
+          	84 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Amanda Rodrigues', 'Email' => 'amanda.rodrigues'),
+          	85 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Júlio Félix', 'Email' => 'julio.felix'),
+          	86 => array('Cargo' => 'Técnico', 'Unidade' => 'Vitória', 'Setor' => 'Técnico', 'Nome' => 'Igor Rocha', 'Email' => 'igor.rocha'),
+          	88 => array('Cargo' => 'Suporte SOC', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Ely Reis', 'Email' => 'ely.reis'),
+          	90 => array('Cargo' => 'Infraestrutura', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Vinycius Alves', 'Email' => 'vinycius.alves'),
+
+            90 => array('Cargo' => 'Infraestrutura', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'André Tavares', 'Email' => 'andre.tavares'),
+            90 => array('Cargo' => 'Infraestrutura', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Arthur Gonçalves', 'Email' => 'arthur.goncalves'),
+
+            91 => array('Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Treinamentos', 'Nome' => 'Sabrina Oliveira', 'Email' => 'treinamentos'),
           );
 
         //$users = explode(',', $users);
@@ -196,18 +213,40 @@ class UserTableSeeder extends Seeder
                 $department = $hasDepto;
               }
 
+              $hasOccupation = Occupation::where('name', $user['Cargo'])->where('department_id', $user['Setor'])->first();
+
+              if(!$hasOccupation) {
+                  $occupation = Occupation::create([
+                    'name' => $user['Cargo'],
+                    'department_id' => $department->id
+                  ]);
+              } else {
+                $occupation = $hasOccupation;
+              }
+
+              $hasUnit = Unit::where('name', $user['Unidade'])->first();
+
+              if(!$hasUnit) {
+                  $unit = Unit::create([
+                    'name' => $user['Unidade']
+                  ]);
+              } else {
+                $unit = $hasUnit;
+              }
+
               $person = People::create([
                 'name' => $user['Nome'],
                 'birthday' => '',
                 'department_id'=> $department->id,
-                'occupation_id'=> 1,
+                'unit_id'=> $unit->id,
+                'occupation_id'=> $occupation->id,
                 'cpf' => ''
               ]);
 
               $emailFormated = trim($user['Email']) . '@provider-es.com.br';
 
               $user = User::create([
-                'nick'                           => str_slug($user['Nome'], '.'),
+                'nick'                           => $user['Email'],
                 'email'                          => $emailFormated,
                 'password'                       => Hash::make('Provider@123'),
                 'avatar' => $avatar,
