@@ -16,6 +16,26 @@ class TicketTypesTableSeeder extends Seeder
     {
         $itens = [
           [
+            'name' => 'Problemas no SOC',
+            'types' => [
+              [
+                  'name' => 'Não consigo acessar',
+              ],
+              [
+                  'name' => 'Esqueci minha senha',
+              ],
+              [
+                  'name' => 'Bloqueio por errar minha senha',
+              ],
+              [
+                  'name' => 'Dúvidas',
+              ],
+              [
+                  'name' => 'Outros',
+              ],
+            ],
+          ],
+          [
             'name' => 'Problemas no Computador',
             'types' => [
               [
@@ -99,6 +119,9 @@ class TicketTypesTableSeeder extends Seeder
           [
             'name' => 'Solicitações',
             'types' => [
+              [
+                  'name' => 'Solicitação de suporte SOC',
+              ],
               [
                   'name' => 'Solicitação de Computador',
               ],
