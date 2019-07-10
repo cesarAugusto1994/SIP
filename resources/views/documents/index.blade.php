@@ -47,7 +47,6 @@
 
                 <thead>
                     <tr>
-                      <th>ID</th>
                       <th>Tipo</th>
                       <th>Cliente</th>
                       <th>Status</th>
@@ -60,10 +59,6 @@
                 <tbody>
                 @foreach($documents as $document)
                 <tr>
-                    <td>
-                        <a>{{$document->id}}</a>
-                    </td>
-
                     <td>
                         <a class="label label-{{ array_random(['info', 'success', 'primary', 'danger', 'warning']) }}">{{ $document->type->name ?? '-' }}</a>
                     </td>
