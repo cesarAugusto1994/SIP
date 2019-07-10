@@ -492,90 +492,70 @@
                 <!-- tab pane info end -->
                 <!-- tab pane contact start -->
                 <div class="tab-pane" id="roles" role="tabpanel">
+
                   <div class="card">
                       <div class="card-header">
                           <h5 class="card-header-text">Editar Permissões</h5>
                       </div>
-                      <div class="card-block">
+                      <div class="card-block accordion-block color-accordion-block">
+                          <div class="color-accordion ui-accordion ui-widget ui-helper-reset" id="color-accordion" role="tablist">
 
-                        <div class="row">
+                              @foreach($modules as $key => $module)
 
-                            <div class="col-md-12">
+                                  @if($module->children->isNotEmpty())
 
-                              @if(auth()->user()->id == $user->id)
-                                <div class="alert alert-warning">Não é possível que você altere as suas permissões.</div>
-                              @endif
+                                      <a class="accordion-msg b-none scale_active ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-accordion-header-active ui-state-active" role="tab" id="ui-id-{{ $loop->index }}-{{ $loop->index }}" aria-controls="ui-id-{{ $loop->index }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" tabindex="0"><span class="ui-accordion-header-icon ui-icon zmdi zmdi-chevron-up"></span>{{$module->name}}</a>
+                                      <div class="accordion-desc ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-{{ $loop->index }}" aria-labelledby="ui-id-{{ $loop->index }}" role="tabpanel" aria-hidden="false">
+                                        
+                                        @forelse($module->children as $item)
 
-                              <div class="panel-group" id="accordion">
-
-                                @foreach($modules as $key => $module)
-
-                                    @if($module->children->isNotEmpty())
-
-                                      <div class="panel panel-default">
-                                          <div class="panel-heading">
-                                              <h5 class="panel-title">
-                                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}" class="collapsed" aria-expanded="false">{{$module->name}}</a>
-                                              </h5>
+                                          <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                                            <h5>
+                                                {{$item->name}}
+                                            </h5>
                                           </div>
-                                          <div id="collapse{{ $loop->index }}" class="panel-collapse {{ $key==0 ? 'in' : '' }} collapse" style="">
-                                              <div class="panel-body">
 
-                                                @forelse($module->children as $item)
+                                          <table class="table table-borderd">
+                                              <tbody>
+                                              @foreach($item->permissions as $permission)
 
-                                                <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                                                  <h5>
-                                                      {{$item->name}}
-                                                  </h5>
-                                                </div>
+                                              @php
+                                                  $hasPermission = $user->hasPermission($permission->slug);
+                                              @endphp
 
-                                                <table class="table table-borderd">
-                                                    <tbody>
-                                                    @foreach($item->permissions as $permission)
+                                              <tr>
+                                                  <td class="project-actions">
+                                                      <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="js-switch checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                        data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                        data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}" value="1"/>
+                                                  </td>
+                                                  <td class="project-title">
+                                                      <p>Nome:</p>
+                                                      <a href="#">{{$permission->name}}</a>
+                                                  </td>
+                                                  <td class="project-title">
+                                                      <p>Descrição:</p>
+                                                      <a href="#">{{$permission->description}}</a>
+                                                  </td>
+                                              </tr>
+                                              @endforeach
+                                              </tbody>
+                                          </table>
+                                        @empty
+                                            <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
+                                        @endforelse
 
-                                                    @php
-                                                        $hasPermission = $user->hasPermission($permission->slug);
-                                                    @endphp
 
-                                                    <tr>
-                                                        <td class="project-actions">
-                                                            <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
-                                                              data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
-                                                              data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
-                                                              data-plugin="switchery" value="1"/>
-                                                        </td>
-                                                        <td class="project-title">
-                                                            <p>Nome:</p>
-                                                            <a href="#">{{$permission->name}}</a>
-                                                        </td>
-                                                        <td class="project-title">
-                                                            <p>Descrição:</p>
-                                                            <a href="#">{{$permission->description}}</a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                                @empty
-                                                    <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
-                                                @endforelse
-
-                                              </div>
-                                          </div>
                                       </div>
 
-                                    @endif
+                                  @endif
 
-                                @endforeach
-
-                              </div>
-
-                            </div>
+                              @endforeach
 
                           </div>
-
                       </div>
                   </div>
+
                 </div>
                 <!-- tab pane contact end -->
             </div>
