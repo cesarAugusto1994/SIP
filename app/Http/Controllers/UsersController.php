@@ -402,6 +402,8 @@ class UsersController extends Controller
     {
         $data = $request->request->all();
 
+        #dd($data);
+
         $user = User::uuid($id);
 
         $person = $user->person;
@@ -424,17 +426,15 @@ class UsersController extends Controller
           $person->occupation_id = $occupation->id;
         }
 
-        if($request->has('branch')) {
+        if($request->filled('branch')) {
             $person->branch = $data['branch'];
         }
 
-        if($request->has('phone')) {
-            $person->branch = $data['phone'];
+        if($request->filled('phone')) {
+            $person->phone = $data['phone'];
         }
 
         $person->save();
-
-        //$user->email = $data['email'];
 
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             $path = $request->avatar->store('avatar');
@@ -442,8 +442,9 @@ class UsersController extends Controller
             $user->avatar_type = 'upload';
         }
 
-        if($request->has('active')) {
+        if(auth()->user()->isAdmin()) {
             $user->active = $request->has('active');
+            $user->person->active = $request->has('active');
         }
 
         $user->save();

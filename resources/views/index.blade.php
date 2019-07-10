@@ -158,7 +158,6 @@
                     <span>Mural de recados com informes e anúncios da empresa ou setor</span>
                     <div class="card-header-right">
                         <ul class="list-unstyled card-option">
-                            <li><i class="feather icon-maximize full-card"></i></li>
                             <li><i class="feather icon-minus minimize-card"></i></li>
                         </ul>
                     </div>
@@ -179,8 +178,9 @@
 
                                   </h6>
                                   <p class="text-muted m-b-0">
-                                      {{ strip_tags(substr($message->content, 0, 240)) }}...
+                                      {{ html_entity_decode(strip_tags(substr($message->content, 0, 240))) }}...
                                   </p>
+                                  <br/>
                                   <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
                               </div>
                           </div>
@@ -214,7 +214,6 @@
                 <span>Fluxo de atividades do usuário</span>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
-                        <li><i class="feather icon-maximize full-card"></i></li>
                         <li><i class="feather icon-minus minimize-card"></i></li>
                     </ul>
                 </div>

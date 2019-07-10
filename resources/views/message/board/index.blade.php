@@ -27,10 +27,10 @@
 
 <div class="page-body">
 
-    <div class="card">
-
+    <div class="card latest-update-card">
         <div class="card-header">
-            <h5>Listagem de Recados</h5>
+            <h5>Gestão à Vista</h5>
+            <span>Mural de recados com informes e anúncios da empresa ou setor</span>
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">
 
@@ -41,68 +41,46 @@
                 </ul>
             </div>
         </div>
+        <div class="card-block">
 
-        <!-- Email-card start -->
-        <div class="card-block email-card">
+          @if($messages->isNotEmpty())
 
-            <div class="row">
+            <div class="latest-update-box">
+              @foreach($messages as $message)
+                  <div class="row p-t-20 p-b-30">
+                      <div class="col-auto text-right update-meta">
+                          <p class="text-muted m-b-0 d-inline">{{ \App\Helpers\TimesAgo::render($message->created_at) }}</p>
 
-              @if($messages->isNotEmpty())
-
-                <div class="col-lg-12 col-xl-12">
-
-                  <div class="mail-body">
-
-                      <div class="mail-body-content">
-                          <div class="table-responsive">
-                              <table class="table">
-                                <tbody>
-                                  @foreach($messages as $message)
-                                    <tr class="read">
-                                        <td><a href="{{ route('message-board.show', $message->uuid) }}" class="email-name">
-                                          <img src="{{ route('image', ['user' => $message->user->uuid, 'link' =>  $message->user->avatar, 'avatar' => true])}}"
-                                          alt="contact-img" title="contact-img" class="img-radius img-40 align-top m-r-15">
-                                          {{ $message->user->person->name ?? '' }}</a>
-                                        </td>
-                                        <td><a href="{{ route('message-board.show', $message->uuid) }}" class="email-name">{{ $message->subject }}<br/>
-                                            <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
-                                        </a></td>
-                                        <td class="email-attch">
-                                          @if($message->attachments->isNotEmpty())
-                                            <i class="fa fa-paperclip"></i>
-                                          @endif
-                                        </td>
-                                        <td class="email-time">{{ $message->created_at->format('d/m/Y H:i') }}</td>
-                                    </tr>
-                                  @endforeach
-
-                              </tbody>
-                            </table>
-                          </div>
+                          <i class="feather icon-briefcase bg-info update-icon"></i>
                       </div>
-                  </div>
-
-                </div>
-
-              @else
-
-                <div class="col-md-12 col-lg-12">
-
-                  <div class="widget white-bg no-padding">
-                      <div class="p-m text-center">
-                          <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
+                      <div class="col">
+                          <h6><a class="" href="{{ route('message-board.show', $message->uuid) }}">{{ $message->subject }}</a></h6>
+                          <p class="text-muted m-b-0 d-inline">{{ $message->created_at->format('d/m/Y H:i') }}</p>
+                          <p class="text-muted m-b-0">
+                              {{ html_entity_decode(strip_tags(substr($message->content, 0, 240))) }}...
+                          </p>
                           <br/>
-                          <h4 class="font-bold no-margins">
-                              Nenhum recado registrado até o momento.
-                          </h4>
+                          <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
                       </div>
                   </div>
 
-                </div>
-
-              @endif
-
+              @endforeach
             </div>
+
+            @else
+
+              <div class="widget white-bg no-padding">
+                  <div class="p-m text-center">
+                      <h1 class="m-md"><i class="far fa-bell-slash fa-2x"></i></h1>
+                      <br/>
+                      <h6 class="font-bold no-margins">
+                          Voce não possui nenhum recado até o momento.
+                      </h6>
+                  </div>
+              </div>
+
+            @endif
+
         </div>
     </div>
 

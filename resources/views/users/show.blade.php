@@ -48,7 +48,7 @@
                                         <h2>{{ $person->name }}</h2>
                                         <span class="text-white">{{$person->occupation->name}}</span>
                                         <br/>
-                                        @if($person->active)
+                                        @if($person->user->active)
                                             <span class="text-white"> <i class="fa fa-circle text-success" title="Ativo"></i> Ativo</span>
                                         @else
                                             <span class="text-white"> <i class="fa fa-circle text-danger" title="Inativo"></i> Inativo</span>
@@ -58,7 +58,6 @@
                                 </div>
                                 <div>
                                     <div class="pull-right cover-btn">
-                                        <button type="button" class="btn btn-primary btn-sm"><i class="icofont icofont-ui-messaging"></i> Mensagem</button>
 
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                         <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
@@ -290,7 +289,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label">Departamento</label>
                                             <div class="input-group">
-                                              <select class="select2 select-occupations" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" name="department_id" required>
+                                              <select class="form-control select-occupations" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" name="department_id" required>
                                                   @foreach($departments as $department)
                                                       <option value="{{$department->uuid}}" {{ $user->person->department_id == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
                                                   @endforeach
@@ -306,14 +305,14 @@
                                         <div class="form-group">
                                             <label class="col-form-label">CPF</label>
                                             <div class="input-group">
-                                              <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control inputCpf">
+                                              <input type="text" name="cpf" value="{{$user->person->cpf}}" class="form-control inputCpf">
                                             </div>
                                         </div>
                                         @if($currentUser->isAdmin())
                                         <div class="form-group">
                                             <label class="col-form-label">Cargo</label>
                                             <div class="input-group">
-                                              <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
+                                              <select class="form-control" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
 
                                                   @foreach($occupations as $occupation)
                                                       <option value="{{$occupation->uuid}}" {{ $user->person->occupation_id == $occupation->id ? 'selected' : '' }}>{{$occupation->name}}</option>
@@ -363,7 +362,7 @@
                                           <div class="form-group">
                                               <label class="col-form-label">Telefone</label>
                                               <div class="input-group">
-                                                <input type="text" name="phone" value="{{$user->phone}}" class="form-control inputPhone">
+                                                <input type="text" name="phone" value="{{$user->person->phone}}" class="form-control inputPhone">
                                               </div>
                                           </div>
 
@@ -374,7 +373,7 @@
                                           <div class="form-group">
                                               <label class="col-form-label">Ramal</label>
                                               <div class="input-group">
-                                                <input type="text" name="branch" value="{{$user->branch}}" class="form-control">
+                                                <input type="text" name="branch" value="{{$user->person->branch}}" class="form-control">
                                               </div>
                                           </div>
 
@@ -397,7 +396,7 @@
                                           <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                                               <label class="col-form-label" for="active">Ativo</label>
                                               <div class="input-group">
-                                                  <input type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
+                                                  <input class="js-switch" type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
                                               </div>
                                               {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                                           </div>

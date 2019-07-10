@@ -35,8 +35,8 @@
         <form method="get" action="?">
           <div class="row">
               <div class="col-lg-3 col-md-6"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
-              <div class="col-lg-2 col-md-6">
-                <select class="form-control select2 select-occupations" data-search-occupations="{{ route('occupation_search') }}" data-live-search="true" title="Departamento" data-style="btn-white" data-width="100%" placeholder="Departamento" name="department">
+              <div class="col-lg-3 col-md-6">
+                <select class="form-control select-occupations" data-search-occupations="{{ route('occupation_search') }}" data-live-search="true" title="Departamento" data-style="btn-white" data-width="100%" placeholder="Departamento" name="department">
                   <option value="">Selecionar Departamento</option>
                   @foreach($departments as $department)
                       <option value="{{$department->uuid}}">{{$department->name}}</option>
@@ -44,12 +44,12 @@
                 </select>
               </div>
               <div class="col-lg-2 col-md-6">
-                <select class="form-control select2" id="occupation" data-live-search="true" title="Cargo" data-style="btn-white" data-width="100%" placeholder="Cargo" name="occupation">
+                <select class="form-control" id="occupation" data-live-search="true" title="Cargo" data-style="btn-white" data-width="100%" placeholder="Cargo" name="occupation">
                     <option value="">Selecionar Departamento</option>
                 </select>
               </div>
-              <div class="col-lg-3 col-md-6">
-                <select class="form-control select2" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="active">
+              <div class="col-lg-2 col-md-6">
+                <select class="form-control" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="active">
                     <option value="">Situação</option>
                     <option value="0">Inativo</option>
                     <option value="1">Ativo</option>
@@ -96,7 +96,6 @@
 
                   <p>Ultimo Login: {{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</p>
                   <div>
-                      <a href="{{ route('chat_user', $person->user->uuid) }}" class="btn btn-primary waves-effect waves-light m-r-15"><i class="icofont icofont-plus m-r-5"></i>Mensagem</a>
                       <a href="{{route('user', ['id' => $person->user->uuid])}}" class="btn btn-success waves-effect waves-light"><i class="icofont icofont-user m-r-5"></i>Perfil</a>
                   </div>
               </div>

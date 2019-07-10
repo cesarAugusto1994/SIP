@@ -67,7 +67,7 @@
 
               <div class="form-group row"><label class="col-sm-2 col-form-label">Tipo:</label>
                   <div class="col-sm-10">
-                    <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="type_id" required>
+                    <select class="form-control" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="type_id" required>
                       @foreach($types as $type)
                           <option value="{{ $type->id }}">{{ $type->name }}</option>
                       @endforeach
@@ -82,13 +82,13 @@
               <div class="form-group row"><label class="col-sm-2 col-form-label">Anexos:</label>
 
                   <div class="col-sm-10">
-                    <input name="files[]" data-buttonText="Selecionar Arquivos" data-dragdrop="true"  data-buttonName="btn-primary" data-badge="true" type="file" data-input="true" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
+                    <input name="files[]" data-buttonText="Selecionar Arquivos" data-dragdrop="true"  data-buttonName="btn-primary" data-badge="true" type="file" data-input="true" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="form-control" multiple/>
                   </div>
 
               </div>
 
               <div class="form-group row"><label class="col-sm-2 col-form-label">Importante:</label>
-                  <div class="col-sm-10"><input name="important" type="checkbox" data-plugin="switchery" value=""></div>
+                  <div class="col-sm-10"><input name="important" type="checkbox" class="js-switch" value=""></div>
               </div>
 
               <div class="form-group row">

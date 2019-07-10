@@ -5,7 +5,7 @@
 <form class="md-float-material form-material" action="{{ route('post_lockscreen') }}" method="post">
     @csrf
     <div class="text-center">
-        <img src="{{ asset('images\logo-provider.png') }}" style="width:20%" alt="SIP - Provider">
+        <img src="{{ asset('images\logo-provider.png') }}" style="width:40%" alt="SIP - Provider">
     </div>
     <div class="auth-box card">
         <div class="card-block">
