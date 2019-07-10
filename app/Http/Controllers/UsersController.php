@@ -449,9 +449,11 @@ class UsersController extends Controller
 
         $user->save();
 
-        return redirect()->route('user', ['id' => $user->uuid]);
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'As informações do usuário foram alteradas com sucesso.'
+        ]);
 
-        flash('As informações do usuário foram alteradas com sucesso.')->success()->important();
+        return redirect()->route('user', ['id' => $user->uuid]);
     }
 
     public function updateConfigs(Request $request, $id)
