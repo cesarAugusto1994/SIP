@@ -32,27 +32,74 @@
 
   <div class="row">
 
+    @if($ticket->logs->last()->status->id == 3)
+    <div class="col-sm-12">
+        <!-- List type card start -->
+        <div class="card bg-c-green update-card">
+            <div class="card-header">
+                <h4>Chamado Concluído!</h4>
+
+            </div>
+            <div class="card-block">
+
+              <p class="lead">Seu chamado foi concluído, agora informe se o chamado resolveu a sua necessidade.</p>
+
+              <form style="display:inline" id="ticket-finish" style="display:inline" action="{{ route('ticket_finish', $ticket->uuid) }}" method="POST">
+                  @csrf
+                  <button class="btn btn-primary btn-sm btn-round"><i class="fa fa-tag"></i>  Finalizar Chamado</button>
+              </form>
+
+            </div>
+        </div>
+        <!-- List type card end -->
+    </div>
+    @elseif($ticket->logs->last()->status->id == 4)
+      <div class="col-sm-12">
+          <!-- List type card start -->
+          <div class="card bg-c-green update-card">
+              <div class="card-header">
+                  <h4>Chamado Finalizado!</h4>
+              </div>
+          </div>
+          <!-- List type card end -->
+      </div>
+    @elseif($ticket->logs->last()->status->id == 5)
+      <div class="col-sm-12">
+          <!-- List type card start -->
+          <div class="card bg-c-pink update-card">
+              <div class="card-header">
+                  <h4>Chamado Cancelado!</h4>
+              </div>
+
+          </div>
+          <!-- List type card end -->
+      </div>
+    @endif
+
     <div class="col-lg-12">
 
       <div class="card">
           <div class="card-header">
-              <h5><b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}</h5>
+              <h5>Solicitação</h5>
               <div class="card-header-right">
-                <div class="dropdown-inverse dropdown open">
-                    <button class="btn btn-inverse btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdown-3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                      @if($ticket->logs->last()->status->id == 1)
-                        <a class="dropdown-item waves-light waves-effect" onclick="startTicket()" href="#">Executar Chamado</a>
-                      @elseif($ticket->logs->last()->status->id == 2)
-                        <a class="dropdown-item waves-light waves-effect" onclick="concludeTicket()" href="#">Concluir Chamado</a>
-                      @elseif($ticket->logs->last()->status->id == 3 && $ticket->user_id == auth()->user()->id)
-                        <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
-                      @endif
-                      @if($ticket->logs->last()->status->id == 1 || $ticket->logs->last()->status->id == 2 || $ticket->logs->last()->status->id == 3)
-                        <a class="dropdown-item waves-light waves-effect" onclick="cancelTicket()" href="#">Cancelar Chamado</a>
-                      @endif
-                    </div>
-                </div>
+                @if($ticket->logs->last()->status->id != 4 && $ticket->logs->last()->status->id != 5)
+                  <div class="dropdown-inverse dropdown open">
+                      <button class="btn btn-inverse btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
+                      <div class="dropdown-menu" aria-labelledby="dropdown-3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+
+                        @if(auth()->user()->isAdmin() && $ticket->logs->last()->status->id == 1)
+                          <a class="dropdown-item waves-light waves-effect" onclick="startTicket()" href="#">Executar Chamado</a>
+                        @elseif(auth()->user()->isAdmin() && $ticket->logs->last()->status->id == 2)
+                          <a class="dropdown-item waves-light waves-effect" onclick="concludeTicket()" href="#">Concluir Chamado</a>
+                        @elseif($ticket->logs->last()->status->id == 3 && $ticket->user_id == auth()->user()->id)
+                          <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
+                        @endif
+                        @if($ticket->logs->last()->status->id == 1 || $ticket->logs->last()->status->id == 2 || $ticket->logs->last()->status->id == 3)
+                          <a class="dropdown-item waves-light waves-effect" onclick="cancelTicket()" href="#">Cancelar Chamado</a>
+                        @endif
+                      </div>
+                  </div>
+                @endif
               </div>
           </div>
 
@@ -76,19 +123,12 @@
           <div class="card-block">
               <div class="row">
 
-                  @if($ticket->logs->last()->status->id == 3)
-                    <div class="col-sm-12 col-xl-12">
-                      <div class="alert alert-success background-success">
-                          <strong>Chamado finalizado!</strong>
-                      </div>
-                    </div>
-                  @elseif($ticket->logs->last()->status->id == 5)
-                    <div class="col-sm-12 col-xl-12">
-                      <div class="alert alert-danger background-danger">
-                          <strong>Chamado cancelado!</strong>
-                      </div>
-                    </div>
-                  @endif
+                  <div class="col-sm-12 col-xl-12">
+                    <h4 class="sub-title">Titulo</h4>
+                    <p class="text-muted m-b-30">
+                        <b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}
+                    </p>
+                  </div>
 
                   <div class="col-sm-12 col-xl-3">
                     <h4 class="sub-title">Código</h4>
@@ -128,11 +168,35 @@
                         {{ $ticket->user->email }}
                     </p>
                   </div>
+
+                  @php
+
+                    $status = $ticket->logs->last()->status->id;
+
+                    $bgColor = 'success';
+
+                    switch($status) {
+                      case '2':
+                        $bgColor = 'warning';
+                        break;
+                      case '3':
+                        $bgColor = 'primary';
+                        break;
+                      case '4':
+                        $bgColor = 'primary';
+                        break;
+                      case '5':
+                        $bgColor = 'danger';
+                        break;
+                    }
+
+                  @endphp
+
                   <div class="col-sm-12 col-xl-3">
                     <h4 class="sub-title">Status</h4>
-
-                    <label class="label label-inverse-primary">{{ $ticket->logs->last()->status->name }}</label>
-
+                    <p class="text-muted m-b-30">
+                      <label class="label label-lg label-{{ $bgColor }}">{{ $ticket->logs->last()->status->name }}</label>
+                    </p>
                   </div>
 
                   <div class="col-sm-12 col-xl-3">
@@ -200,7 +264,7 @@
           }).then((result) => {
           if (result.value) {
 
-            $("#ticket-finish").submit();
+            $("#ticket-conclude").submit();
 
           }
         });

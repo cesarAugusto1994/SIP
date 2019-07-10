@@ -46,7 +46,7 @@ class RolesTableSeeder extends Seeder
                 'level'       => 1,
             ]);
 
-            $permissions = [5,7,8,9,10,11,12,21];
+            $permissions = [5,7,8,9,10,11,12,21,30,31,32,33];
 
             foreach ($permissions as $key => $item) {
                 RoleDefaultPermissions::create([
