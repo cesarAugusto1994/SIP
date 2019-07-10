@@ -88,7 +88,25 @@ class TicketsController extends Controller
     {
         $data = $request->request->all();
 
-        $data['user_id'] = $request->user()->id;
+        $user = $request->user();
+
+        $hasOpennedTicket = Ticket::where('user_id', $user->id)->whereHas('logs', function($query) {
+            $query->whereIn('status_id', [1,2]);
+        })->get();
+
+        if($hasOpennedTicket->isNotEmpty()) {
+          notify()->flash('Chamado não criado', 'danger', [
+            'text' => 'Já existe um chamado em aberto, aguarde a conclusão do mesmo para abrir outro chamado.'
+          ]);
+
+          return back();
+        }
+
+        dd($hasOpennedTicket);
+
+        dd($data);
+
+        $data['user_id'] = $user->id;
 
         $ticket = Ticket::create($data);
 
