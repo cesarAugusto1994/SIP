@@ -152,6 +152,7 @@ class TicketTypesTableSeeder extends Seeder
             ]);
 
             foreach ($item['types'] as $key2 => $type) {
+
                 $type2 = Type::create([
                     'name' => $type['name'],
                     'category_id' => $category->id,
@@ -159,7 +160,7 @@ class TicketTypesTableSeeder extends Seeder
 
                 Department::create([
                   'type_id' => $type2->id,
-                  'department_id' => 5
+                  'department_id' => 1
                 ]);
             }
 

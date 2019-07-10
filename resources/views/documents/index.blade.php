@@ -36,7 +36,6 @@
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('documents.create')}}">Novo</a></li>
                   @endpermission
 
-                  <li><i class="feather icon-maximize full-card"></i></li>
               </ul>
           </div>
       </div>
