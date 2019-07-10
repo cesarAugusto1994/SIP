@@ -17,6 +17,8 @@ class NotificationsController extends Controller
     {
         $user = Auth::user();
 
+        $this->markAsRead();
+
         $today = $yesterday = $older = [];
 
         $yesterdayDate = now()->modify('-1 day');
@@ -34,7 +36,7 @@ class NotificationsController extends Controller
             }
         }
 
-        return view('admin.notifications.index', compact('user', 'today', 'yesterday', 'older'));
+        return view('notifications.index', compact('user', 'today', 'yesterday', 'older'));
     }
 
     public function markAsRead()
@@ -44,10 +46,10 @@ class NotificationsController extends Controller
         $user->unreadNotifications->markAsRead();
 
         notify()->flash('Ok', 'info', [
-          'text' => 'Não possui notificações pendades de visualização.'
+          'text' => 'Não possui notificações pendentes de visualização.'
         ]);
 
-        return back();
+        //return back();
     }
 
     /**

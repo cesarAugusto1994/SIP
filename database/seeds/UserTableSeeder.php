@@ -91,7 +91,7 @@ class UserTableSeeder extends Seeder
 */
 
         $users = array(
-          	0 => array('Ramal' => null, 'Cargo' => 'Aprendiz', 'Unidade' => 'Vitória', 'Setor' => 'Aprendiz', 'Nome' => 'Jovem Aprendiz', 'Email' => 'jovem.aprendiz'),
+          	0 => array('Ramal' => 3579, 'Cargo' => 'Coordenador', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'César Augusto Sousa', 'Email' => 'cesar.sousa'),
           	1 => array('Ramal' => null, 'Cargo' => 'Arquivo', 'Unidade' => 'Vitória', 'Setor' => 'Arquivo', 'Nome' => 'Arquivo', 'Email' => 'arquivo'),
           	2 => array('Ramal' => 3596, 'Cargo' => 'Atendente', 'Unidade' => 'Vitória', 'Setor' => 'Atendimento', 'Nome' => 'Atendimento Cariacica', 'Email' => 'atendimento.cariacica'),
 

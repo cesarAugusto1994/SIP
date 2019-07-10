@@ -56,8 +56,7 @@
                                   <div class="media">
                                       <a href="{{ route('notifications.show', $notification->id) }}">
                                         <div class="media-body">
-                                            <h5 class="notification-user">Mensagem</h5>
-                                            <p class="notification-msg">{{ $notification['data']['message'] }}</p>
+                                            <p class="notification-msg">{{ $notification['data']['message'] ?? '' }}</p>
                                             <span class="notification-time">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</span>
                                         </div>
                                       </a>
@@ -67,7 +66,7 @@
                             @endforeach
 
                             <li>
-                                <a href="{{ route('notifications_markasread') }}">Todas notificações</a>
+                                <a href="{{ route('notifications.index') }}">Todas notificações</a>
                             </li>
 
                         </ul>

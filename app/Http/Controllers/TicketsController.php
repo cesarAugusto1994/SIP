@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Ticket\Status\Log;
 use Auth;
+use App\User;
+use Notification;
 
 class TicketsController extends Controller
 {
@@ -89,7 +91,7 @@ class TicketsController extends Controller
         $data = $request->request->all();
 
         $user = $request->user();
-
+/*
         $hasOpennedTicket = Ticket::where('user_id', $user->id)->whereHas('logs', function($query) {
             $query->whereIn('status_id', [1,2]);
         })->get();
@@ -105,7 +107,7 @@ class TicketsController extends Controller
         dd($hasOpennedTicket);
 
         dd($data);
-
+*/
         $data['user_id'] = $user->id;
 
         $ticket = Ticket::create($data);
@@ -125,6 +127,8 @@ class TicketsController extends Controller
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo chamado adicionado com sucesso.'
         ]);
+
+        Notification::send(User::where('id', 2)->get(), new \App\Notifications\NewTicket($ticket));
 
         return redirect()->route('tickets.index');
     }
@@ -184,6 +188,8 @@ class TicketsController extends Controller
         'text' => 'O chamado foi conclído pelo responsávelcom sucesso.'
       ]);
 
+      Notification::send($ticket->user, new \App\Notifications\ConcludedTicket($ticket));
+
       return redirect()->route('tickets.show', $ticket->uuid);
     }
 
@@ -212,6 +218,8 @@ class TicketsController extends Controller
       notify()->flash('Sucesso!', 'success', [
         'text' => 'O chamado foi finalizado com sucesso.'
       ]);
+
+
 
       return redirect()->route('tickets.show', $ticket->uuid);
     }
@@ -250,6 +258,7 @@ class TicketsController extends Controller
     public function show($id)
     {
         $ticket = Ticket::uuid($id);
+
         return view('tickets.show', compact('ticket'));
     }
 

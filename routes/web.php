@@ -17,8 +17,8 @@ Auth::routes();
 
 Route::get('test', function () {
     $user = \App\User::find(1);
-    event(new App\Events\NewUser($user));
-    \Notification::send(\App\User::where('id', 1)->get(), new \App\Notifications\NewUser($user));
+    //event(new \App\Events\NewUser($user));
+    \Notification::send(\App\User::where('id', 2)->get(), new \App\Notifications\NewUser($user));
     return "Event has been sent!";
 });
 
@@ -199,7 +199,7 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
     Route::resource('notifications', 'NotificationsController');
     Route::resource('activities', 'ActivitiesController');
-    
+
     Route::get('notifications-read', 'NotificationsController@markAsRead')->name('notifications_markasread');
 
     Route::get('team/{id}/schedules', 'TeamsController@schedule')->name('team_schedules');
