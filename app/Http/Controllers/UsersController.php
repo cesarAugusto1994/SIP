@@ -16,6 +16,7 @@ use App\Models\Department\Occupation;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Notifications\NewUser as NewUserNotification;
+use App\Helpers\Helper;
 
 class UsersController extends Controller
 {
@@ -81,19 +82,19 @@ class UsersController extends Controller
 
         $people = $people->paginate();
 
-        $roles = Role::all();
+        $roles = Helper::roles();
 
-        $departments = Department::all();
-        $occupations = Occupation::where('department_id', $departments->first()->id)->get();
+        $departments = Helper::departments();
+        $occupations = Helper::occupations($departments->first()->id);
 
         return view('users.index', compact('roles', 'people', 'departments', 'occupations'));
     }
 
     public function permissions($id)
     {
-        $permissions = Permission::all();
+        $permissions = Helper::permissions();
 
-        $modules = Module::all();
+        $modules = Helper::modules();
 
         $permissionsGroupedByModule = [];
 
@@ -246,9 +247,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        $departments = Department::all();
-        $occupations = Occupation::where('department_id', $departments->first()->id)->get();
+        $roles = Helper::roles();
+        $departments = Helper::departments();
+        $occupations = Helper::occupations($departments->first()->id);
 
         return view('users.create', compact('roles', 'departments', 'occupations'));
     }
@@ -350,21 +351,15 @@ class UsersController extends Controller
           $user = $request->user();
         }
 
-        $users = User::all();
-
-        //$user->notify(new NewUserNotification($user));
-
-        //Notification::send($users, new NewUserNotification($user));
-
+        $users = Helper::users();
         $person = $user->person;
-
-        $departments = Department::all();
+        $departments = Helper::departments();
         $departamentoAtual = $user->person->department;
-        $occupations = Occupation::where('department_id', $departamentoAtual->id)->get();
+        $occupations = Helper::occupations($departamentoAtual->id);
         $activities = $user->activities->sortByDesc('id')->take(6);
-        $roles = Role::all();
-        $permissions = Permission::all();
-        $modules = Module::all();
+        $roles = Helper::roles();
+        $permissions = Helper::permissions();
+        $modules = Helper::modules();
 
         return view('users.show', compact('user', 'occupations', 'departments', 'activities', 'roles', 'person', 'modules'));
     }

@@ -4,11 +4,15 @@ namespace App\Helpers;
 
 use Auth;
 use Session;
-use App\Models\Training\{Course};
+use App\User;
+use App\Models\Training\Course;
 use App\Models\{People, Menu};
 use App\Models\Ticket\Type;
-use App\Models\Department;
+use App\Models\{Department, Occupation, Module};
 use App\Models\Ticket\Type\Category;
+use App\Models\Unit;
+use jeremykenedy\LaravelRoles\Models\Role;
+use jeremykenedy\LaravelRoles\Models\Permission;
 
 /**
  *
@@ -56,6 +60,104 @@ class Helper
         $courses = Course::all();
 
         self::set($key, $courses);
+        return self::get($key);
+    }
+
+    public static function roles()
+    {
+        $key = 'roles';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Role::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function units()
+    {
+        $key = 'units';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Unit::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function departments()
+    {
+        $key = 'departments';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Department::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function occupation($department)
+    {
+        $key = 'ocupation-'.$department;
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Occupation::where('department_id', $department)->get();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function modules()
+    {
+        $key = 'modules';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Module::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function permissions()
+    {
+        $key = 'permissions';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Permission::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function users()
+    {
+        $key = 'users';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = User::all();
+
+        self::set($key, $data);
         return self::get($key);
     }
 

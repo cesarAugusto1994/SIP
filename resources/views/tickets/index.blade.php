@@ -35,7 +35,7 @@
                 <div class="row align-items-center">
                     <div class="col-8">
                         <h4 class="text-c-yellow f-w-600">{{ $tickets->count() }}</h4>
-                        <h6 class="text-muted m-b-0">Chamados</h6>
+                        <h6 class="text-muted m-b-0">Total</h6>
                     </div>
                     <div class="col-4 text-right">
                         <i class="feather icon-bar-chart f-28"></i>
@@ -52,7 +52,7 @@
                 <div class="row align-items-center">
                     <div class="col-8">
                         <h4 class="text-c-green f-w-600">{{ $opened }}</h4>
-                        <h6 class="text-muted m-b-0">Chamados Abertos</h6>
+                        <h6 class="text-muted m-b-0">Abertos</h6>
                     </div>
                     <div class="col-4 text-right">
                         <i class="feather icon-file-text f-28"></i>
@@ -69,7 +69,7 @@
                 <div class="row align-items-center">
                     <div class="col-8">
                         <h4 class="text-c-blue f-w-600">{{ $finished }}</h4>
-                        <h6 class="text-muted m-b-0">Chamados Finalizados</h6>
+                        <h6 class="text-muted m-b-0">Finalizados</h6>
                     </div>
                     <div class="col-4 text-right">
                         <i class="feather icon-calendar f-28"></i>
@@ -86,7 +86,7 @@
                 <div class="row align-items-center">
                     <div class="col-8">
                         <h4 class="text-c-pink f-w-600">{{ $canceled }}</h4>
-                        <h6 class="text-muted m-b-0">Chamados Cancelados</h6>
+                        <h6 class="text-muted m-b-0">Cancelados</h6>
                     </div>
                     <div class="col-4 text-right">
                         <i class="feather icon-download f-28"></i>
@@ -191,9 +191,9 @@
                 <div class="p-m text-center">
                     <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
                     <br/>
-                    <h4 class="font-bold no-margins">
+                    <h6 class="font-bold no-margins">
                         Nenhum chamado registrado até o momento.
-                    </h4>
+                    </h6>
                 </div>
             </div>
 

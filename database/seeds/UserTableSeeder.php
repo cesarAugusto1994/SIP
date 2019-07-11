@@ -191,7 +191,7 @@ class UserTableSeeder extends Seeder
 
         foreach ($users as $key => $user) {
 
-          if($key > 5) {
+          if($key > 10) {
             break;
           }
 
