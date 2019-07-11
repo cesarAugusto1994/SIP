@@ -85,7 +85,7 @@ class UsersController extends Controller
         $roles = Helper::roles();
 
         $departments = Helper::departments();
-        $occupations = Helper::occupations($departments->first()->id);
+        $occupations = Helper::occupation($departments->first()->id);
 
         return view('users.index', compact('roles', 'people', 'departments', 'occupations'));
     }
@@ -249,7 +249,7 @@ class UsersController extends Controller
     {
         $roles = Helper::roles();
         $departments = Helper::departments();
-        $occupations = Helper::occupations($departments->first()->id);
+        $occupations = Helper::occupation($departments->first()->id);
 
         return view('users.create', compact('roles', 'departments', 'occupations'));
     }
@@ -355,7 +355,7 @@ class UsersController extends Controller
         $person = $user->person;
         $departments = Helper::departments();
         $departamentoAtual = $user->person->department;
-        $occupations = Helper::occupations($departamentoAtual->id);
+        $occupations = Helper::occupation($departamentoAtual->id);
         $activities = $user->activities->sortByDesc('id')->take(6);
         $roles = Helper::roles();
         $permissions = Helper::permissions();

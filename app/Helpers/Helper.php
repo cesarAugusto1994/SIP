@@ -8,7 +8,8 @@ use App\User;
 use App\Models\Training\Course;
 use App\Models\{People, Menu};
 use App\Models\Ticket\Type;
-use App\Models\{Department, Occupation, Module};
+use App\Models\{Department, Module};
+use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
 use App\Models\Unit;
 use jeremykenedy\LaravelRoles\Models\Role;
@@ -186,20 +187,6 @@ class Helper
         $types = Type::all();
 
         self::set($key, $types);
-        return self::get($key);
-    }
-
-    public static function departments()
-    {
-        $key = 'departments';
-
-        if(self::has($key)) {
-            return self::get($key);
-        }
-
-        $departments = Department::all();
-
-        self::set($key, $departments);
         return self::get($key);
     }
 
