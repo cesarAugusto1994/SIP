@@ -53,7 +53,7 @@
                       <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}">
                           <label class="col-form-label">CPF</label>
                           <div class="input-group">
-                            <input type="text" required value="{{ old('cpf') }}" name="cpf" class="form-control inputCpf">
+                            <input type="text" required autocomplete="off" value="{{ old('cpf') }}" name="cpf" class="form-control inputCpf">
                           </div>
                           {!! $errors->first('cpf', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -64,7 +64,7 @@
                       <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                           <label class="col-form-label">E-mail</label>
                           <div class="input-group">
-                            <input type="email" required value="{{ old('email') }}" name="email" class="form-control">
+                            <input type="email" required autocomplete="off" value="{{ old('email') }}" name="email" class="form-control">
                           </div>
                           {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -72,7 +72,7 @@
                       <div class="form-group {!! $errors->has('birthday') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Nascimento</label>
                           <div class="input-group">
-                            <input type="text" required value="{{ old('birthday') }}" name="birthday" class="form-control inputDate" autocomplete="off" data-date-end-date="0d">
+                            <input type="text" required autocomplete="off" value="{{ old('birthday') }}" name="birthday" class="form-control inputDate" autocomplete="off" data-date-end-date="0d">
                           </div>
                           {!! $errors->first('birthday', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -82,14 +82,14 @@
                       <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Telefone</label>
                           <div class="input-group">
-                            <input type="text" required value="{{ old('phone') }}" name="phone" class="form-control inputPhone">
+                            <input type="text" required autocomplete="off" value="{{ old('phone') }}" name="phone" class="form-control inputPhone">
                           </div>
                           {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                       </div>
                       <div class="form-group {!! $errors->has('branch') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Ramal</label>
                           <div class="input-group">
-                            <input type="text" required value="{{ old('branch') }}" name="branch" class="form-control">
+                            <input type="text" required autocomplete="off" value="{{ old('branch') }}" name="branch" class="form-control">
                           </div>
                           {!! $errors->first('branch', '<p class="help-block">:message</p>') !!}
                       </div>
