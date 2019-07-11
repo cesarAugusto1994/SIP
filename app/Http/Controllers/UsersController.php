@@ -17,6 +17,8 @@ use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Notifications\NewUser as NewUserNotification;
 use App\Helpers\Helper;
+use Storage;
+use Image;
 
 class UsersController extends Controller
 {
@@ -401,8 +403,6 @@ class UsersController extends Controller
     {
         $data = $request->request->all();
 
-        #dd($data);
-
         $user = User::uuid($id);
 
         $person = $user->person;
@@ -441,7 +441,21 @@ class UsersController extends Controller
         $person->save();
 
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $path = $request->avatar->store('avatar');
+
+            $file = $request->file('avatar');
+
+            $path = $file->hashName('avatar');
+            // avatars/bf5db5c75904dac712aea27d45320403.jpeg
+
+            $image = Image::make($file);
+
+            $image->fit(250, 250, function ($constraint) {
+               $constraint->aspectRatio();
+            });
+
+            Storage::put($path, (string) $image->encode());
+
+            //$path = $request->avatar->store('avatar');
             $user->avatar = $path;
             $user->avatar_type = 'upload';
         }

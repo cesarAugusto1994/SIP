@@ -15,6 +15,7 @@
         "emadadly/laravel-uuid": "^1.2",
         "fideloper/proxy": "^4.0",
         "geekcom/validator-docs": "^1.5",
+        "intervention/image": "^2.5",
         "jeremykenedy/laravel-roles": "^1.7",
         "kris/laravel-form-builder": "^1.20",
         "lab404/laravel-impersonate": "^1.3",

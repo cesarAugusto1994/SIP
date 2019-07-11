@@ -75,7 +75,7 @@
                 <li class="user-profile header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ route('image', ['link' => \Auth::user()->avatar, 'avatar' => true])}}" class="img-radius" alt="User-Profile-Image">
+                            <img src="{{ route('image', ['link' => \Auth::user()->avatar, 'avatar' => true])}}" class="img-radius" alt="">
                             <span>{{ Auth()->user()->person->name }}</span>
                             <i class="feather icon-chevron-down"></i>
                         </div>
