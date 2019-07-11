@@ -12,7 +12,7 @@ class TicketStatusesTableSeeder extends Seeder
      */
     public function run()
     {
-        $itens = ['Aberto', 'Em Andamento', 'Concluída', 'Finalizada', 'Cancelada', 'Sem resposta'];
+        $itens = ['Aberto', 'Em Andamento', 'Concluído', 'Finalizado', 'Cancelado', 'Sem resposta'];
 
         foreach ($itens as $key => $item) {
             Status::create(['name' => $item]);

@@ -38,18 +38,22 @@
         <div class="card bg-c-green update-card">
             <div class="card-header">
                 <h4>Chamado Concluído!</h4>
-
             </div>
-            <div class="card-block">
 
-              <p class="lead">Seu chamado foi concluído, agora informe se o chamado resolveu a sua necessidade.</p>
+              <div class="card-block">
 
-              <form style="display:inline" id="ticket-finish" style="display:inline" action="{{ route('ticket_finish', $ticket->uuid) }}" method="POST">
-                  @csrf
-                  <button class="btn btn-primary btn-sm btn-round"><i class="fa fa-tag"></i>  Finalizar Chamado</button>
-              </form>
+                @if($ticket->user_id == auth()->user()->id)
+                <p class="lead">Seu chamado foi concluído, agora informe se o chamado resolveu a sua necessidade.</p>
+                <form style="display:inline" id="ticket-finish" style="display:inline" action="{{ route('ticket_finish', $ticket->uuid) }}" method="POST">
+                    @csrf
+                    <button class="btn btn-primary btn-sm btn-round"><i class="fa fa-tag"></i>  Finalizar Chamado</button>
+                </form>
+                @else
+                <p class="lead">Agora é preciso que o solicitante finalize o chamado.</p>
+                @endif
 
-            </div>
+              </div>
+
         </div>
         <!-- List type card end -->
     </div>
@@ -76,7 +80,7 @@
       </div>
     @endif
 
-    <div class="col-lg-12">
+    <div class="col-lg-9">
 
       <div class="card">
           <div class="card-header">
@@ -130,25 +134,25 @@
                     </p>
                   </div>
 
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Código</h4>
                     <p class="text-muted m-b-30">
                         #{{ str_pad($ticket->id, 6, "0", STR_PAD_LEFT)  }}
                     </p>
                   </div>
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Cadastro</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->created_at->format('d/m/Y H:i:s') }}
                     </p>
                   </div>
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Solicitante</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->user->person->name }}
                     </p>
                   </div>
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Setor</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->user->person->department->name }} >>
@@ -156,13 +160,13 @@
                         {{ $ticket->user->person->occupation->name }}
                     </p>
                   </div>
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Telefone</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->user->person->phone }}
                     </p>
                   </div>
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Email</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->user->email }}
@@ -192,14 +196,14 @@
 
                   @endphp
 
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Status</h4>
                     <p class="text-muted m-b-30">
                       <label class="label label-lg label-{{ $bgColor }}">{{ $ticket->logs->last()->status->name }}</label>
                     </p>
                   </div>
 
-                  <div class="col-sm-12 col-xl-3">
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Responsável</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->responsible->person->name ?? '-' }}
@@ -215,6 +219,48 @@
               </div>
           </div>
 
+      </div>
+
+    </div>
+
+
+    <div class="col-md-3 col-sm-12">
+
+      <div class="card user-activity-card">
+          <div class="card-header">
+            <h5>Logs</h5>
+          </div>
+          <div class="card-block">
+
+            @if($ticket->logs->isNotEmpty())
+
+              @foreach($ticket->logs->sortByDesc('id') as $activity)
+
+                <div class="row m-b-25">
+                    <div class="col">
+                        <h6 class="m-b-5">{{ $activity->created_at->format('d/m/Y H:i') }}</h6>
+                        <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
+                        <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
+                    </div>
+                </div>
+
+              @endforeach
+
+            @else
+
+              <div class="widget white-bg no-padding">
+                  <div class="p-m text-center">
+                      <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
+                      <br/>
+                      <h6 class="font-bold no-margins">
+                          Nenhum log registrado até o momento.
+                      </h6>
+                  </div>
+              </div>
+
+            @endif
+
+          </div>
       </div>
 
     </div>

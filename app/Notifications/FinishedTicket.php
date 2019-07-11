@@ -6,22 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\Models\MessageBoard;
+use App\Models\Ticket;
 
-class NewMessage extends Notification
+class FinishedTicket extends Notification
 {
     use Queueable;
 
-    protected $message;
+    private $ticket;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(MessageBoard $message)
+    public function __construct(Ticket $ticket)
     {
-        $this->message = $message;
+        $this->ticket = $ticket;
     }
 
     /**
@@ -44,11 +44,10 @@ class NewMessage extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting('Novo Recado')
-                    ->subject('Recado: ' . $this->message->subject)
-                    ->line($this->message->user->person->name . ' adicionou um novo recado no Mural de Recados')
-                    ->line('Assunto: ' . $this->message->subject)
-                    ->action('Acessar Recado', route('message-board.index'))
+                    ->greeting('Chamado Finalizado')
+                    ->subject('Chamado Finalizado: ' . $this->ticket->type->category->name . ': ' . $this->ticket->type->name)
+                    ->line('O chamado #' . $this->ticket->id . ' foi finalizado com sucesso por ' . $this->ticket->user->person->name . ' em ' . $this->ticket->created_at->format('d/m/Y H:i') . '.')
+                    ->action('Acessar Chamado', route('tickets.show', $this->ticket->uuid))
                     ->salutation('Esta é uma mensagem automática, favor não responder.');
     }
 
@@ -61,8 +60,8 @@ class NewMessage extends Notification
     public function toArray($notifiable)
     {
         return [
-          'message' => $this->message->user->person->name . ' adicionou um novo recado no Mural de Recados',
-          'date' => $this->message->created_at,
+          'message' => $this->ticket->user->person->name . ' finalizou o chamado ' . $this->ticket->id,
+          'date' => $this->ticket->created_at,
         ];
     }
 }

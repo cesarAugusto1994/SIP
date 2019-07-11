@@ -8,6 +8,7 @@ use App\Models\Ticket\Status\Log;
 use Auth;
 use App\User;
 use Notification;
+use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 
 class TicketsController extends Controller
 {
@@ -36,8 +37,6 @@ class TicketsController extends Controller
               return $ticket->logs->last()->status_id == 5;
             })->count();
 /*
-            dd($opened);
-
             $opened = $user->tickets()->whereHas('logs', function($query) {
               $query->where('status_id', 1);
             })->count();
@@ -91,23 +90,7 @@ class TicketsController extends Controller
         $data = $request->request->all();
 
         $user = $request->user();
-/*
-        $hasOpennedTicket = Ticket::where('user_id', $user->id)->whereHas('logs', function($query) {
-            $query->whereIn('status_id', [1,2]);
-        })->get();
 
-        if($hasOpennedTicket->isNotEmpty()) {
-          notify()->flash('Chamado não criado', 'danger', [
-            'text' => 'Já existe um chamado em aberto, aguarde a conclusão do mesmo para abrir outro chamado.'
-          ]);
-
-          return back();
-        }
-
-        dd($hasOpennedTicket);
-
-        dd($data);
-*/
         $data['user_id'] = $user->id;
 
         $ticket = Ticket::create($data);
@@ -121,14 +104,14 @@ class TicketsController extends Controller
         Log::create([
           'status_id' => 1,
           'ticket_id' => $ticket->id,
-          'description' => 'Chamado criado por ' . $request->user()->person->name
+          'description' => 'Chamado aberto por ' . $request->user()->person->name
         ]);
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo chamado adicionado com sucesso.'
         ]);
 
-        Notification::send(User::where('id', 2)->get(), new \App\Notifications\NewTicket($ticket));
+        Notification::send(User::where('id', 2)->get(), new NewTicket($ticket));
 
         return redirect()->route('tickets.index');
     }
@@ -150,7 +133,7 @@ class TicketsController extends Controller
       Log::create([
         'status_id' => 2,
         'ticket_id' => $ticket->id,
-        'description' => 'Chamado delegado por ' . $request->user()->person->name
+        'description' => 'Chamado atribuído à ' . $request->user()->person->name
       ]);
 
       $ticket->update($data);
@@ -179,7 +162,7 @@ class TicketsController extends Controller
       Log::create([
         'status_id' => 3,
         'ticket_id' => $ticket->id,
-        'description' => 'Chamado foi concluído por ' . $request->user()->person->name
+        'description' => 'Chamado concluído por ' . $request->user()->person->name
       ]);
 
       $ticket->update($data);
@@ -188,40 +171,42 @@ class TicketsController extends Controller
         'text' => 'O chamado foi conclído pelo responsávelcom sucesso.'
       ]);
 
-      Notification::send($ticket->user, new \App\Notifications\ConcludedTicket($ticket));
+      Notification::send($ticket->user, new ConcludedTicket($ticket));
 
       return redirect()->route('tickets.show', $ticket->uuid);
     }
 
     public function finishTicket($id, Request $request)
     {
-      $user = $request->user();
+        $user = $request->user();
 
-      $data['solved_at'] = now();
+        $data['solved_at'] = now();
 
-      $ticket = Ticket::uuid($id);
+        $ticket = Ticket::uuid($id);
 
-      $alreadyExists = Log::where('ticket_id', $ticket->id)->where('status_id', 4)->get();
+        $alreadyExists = Log::where('ticket_id', $ticket->id)->where('status_id', 4)->get();
 
-      if($alreadyExists->isNotEmpty()) {
-          return back();
-      }
+        if($alreadyExists->isNotEmpty()) {
+            return back();
+        }
 
-      Log::create([
-        'status_id' => 4,
-        'ticket_id' => $ticket->id,
-        'description' => 'Chamado foi finalizado por ' . $request->user()->person->name
-      ]);
+        Log::create([
+          'status_id' => 4,
+          'ticket_id' => $ticket->id,
+          'description' => 'Chamado finalizado por ' . $request->user()->person->name
+        ]);
 
-      $ticket->update($data);
+        $ticket->update($data);
 
-      notify()->flash('Sucesso!', 'success', [
-        'text' => 'O chamado foi finalizado com sucesso.'
-      ]);
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'O chamado foi finalizado com sucesso.'
+        ]);
 
+        $users = User::whereIn('id', [$ticket->user->id, $ticket->assigned_to])->get();
 
+        Notification::send($users, new FinishedTicket($ticket));
 
-      return redirect()->route('tickets.show', $ticket->uuid);
+        return redirect()->route('tickets.show', $ticket->uuid);
     }
 
     public function cancelTicket($id, Request $request)
@@ -239,11 +224,11 @@ class TicketsController extends Controller
       Log::create([
         'status_id' => 5,
         'ticket_id' => $ticket->id,
-        'description' => 'Chamado cancelado por ' . $request->user()->person->name
+        'description' => 'Chamado por ' . $request->user()->person->name
       ]);
 
       notify()->flash('Sucesso!', 'success', [
-        'text' => 'O chamado foi cancelado com sucesso.'
+        'text' => 'Chamado cancelado com sucesso.'
       ]);
 
       return redirect()->route('tickets.show', $ticket->uuid);

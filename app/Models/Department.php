@@ -16,6 +16,11 @@ class Department extends Model
 
     protected static $logAttributes = ['name', 'user_id'];
 
+    public function users()
+    {
+        return $this->hasMany('App\Models\Person', 'department_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
