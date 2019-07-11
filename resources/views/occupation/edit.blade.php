@@ -53,7 +53,7 @@
 
                   <div class="form-group"><label class="col-form-label">Departamento</label>
                       <div class="input-group">
-                        <select class="form-control m-b select2" name="department_id">
+                        <select class="form-control" name="department_id">
                             @foreach($departments as $department)
                                 <option value="{{$department->uuid}}" {{ $department->id == $occupation->department_id ? 'selected' : '' }}>{{$department->name}}</option>
                             @endforeach

@@ -37,17 +37,19 @@ class ModulesTableSeeder extends Seeder
             'description' => 'Chat',
             'parent' => str_slug('Modulos'),
           ],
+
+          [
+            'name' => 'Ramais e Telefones',
+            'slug' => str_slug('Ramais e Telefones'),
+            'description' => 'Ramais e Telefones',
+            'parent' => str_slug('Modulos'),
+          ],
+
           [
             'name' => 'Chamados',
             'slug' => str_slug('Chamados'),
             'description' => 'Chamados',
             'parent' => str_slug('Modulos'),
-          ],
-          [
-            'name' => 'Chamados',
-            'slug' => str_slug('Chamados'),
-            'description' => 'Chamados',
-            'parent' => str_slug('Chamados'),
           ],
 /*
           [
@@ -115,15 +117,6 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Treinamentos'),
           ],
 */
-
-          [
-            'name' => 'Mural',
-            'slug' => str_slug('Mural'),
-            'description' => 'Mural',
-            'parent' => str_slug('Mural de Recados'),
-          ],
-
-
 
           [
             'name' => 'Departamentos',

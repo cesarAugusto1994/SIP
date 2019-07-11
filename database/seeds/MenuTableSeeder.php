@@ -90,7 +90,7 @@ class MenuTableSeeder extends Seeder
           [
             'title' => 'Mural de Recados',
             'route' => 'message-board.index',
-            'permission' => 'view.mural',
+            'permission' => 'view.mural.de.recados',
             'description' => 'Mural',
             'parent' => null,
             'icon' => 'fas fa-bullhorn',
@@ -174,6 +174,14 @@ class MenuTableSeeder extends Seeder
               'icon' => 'feather icon-home',
             ],
 
+        [
+          'title' => 'Ramais e Telefones',
+          'route' => 'contacts',
+          'permission' => 'view.ramais.e.telefones',
+          'description' => 'Lista de Contatos',
+          'parent' => null,
+          'icon' => 'fas fa-bullhorn',
+        ],
 
         ];
 

@@ -191,7 +191,7 @@ class UserTableSeeder extends Seeder
         foreach ($users as $key => $user) {
 
           if($key > 10) {
-            break;
+            //break;
           }
 
           //$faker = Faker\Factory::create();
@@ -242,7 +242,7 @@ class UserTableSeeder extends Seeder
 
               $person = People::create([
                 'name' => $user['Nome'],
-                'birthday' => '',
+                'birthday' => now(),
                 'department_id'=> $department->id,
                 'unit_id'=> $unit->id,
                 'occupation_id'=> $occupation->id,
@@ -266,14 +266,7 @@ class UserTableSeeder extends Seeder
 
               ]);
 
-              //$user->api_token = $user->createToken('Provider')->accessToken;
-
-              //$user->profile()->save(new Profile());
               $user->attachRole($userRole);
-
-              if($adminRole->id == 1) {
-                  $user->syncPermissions($permissions);
-              }
 
               $permissionForRole = RoleDefaultPermissions::where('role_id', $userRole->id)
               ->pluck('permission_id');
@@ -282,7 +275,7 @@ class UserTableSeeder extends Seeder
 
               $user->save();
           }
-          // code...
+
         }
 
     }

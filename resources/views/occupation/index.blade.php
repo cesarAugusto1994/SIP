@@ -41,33 +41,18 @@
       </div>
       <div class="card-block">
 
-        <div class="table-responsive">
-            <table class="table table-hover table-borderless">
-                <thead>
-                    <tr>
-                        <th>Cargo</th>
-                        <th>Departamento</th>
-                        <th class="text-right">Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                  @forelse($occupations as $occupation)
-
-                      <tr>
-                          <td>{{$occupation->name}}</td>
-                          <td>{{$occupation->department->name}}</td>
-                          <td class="text-right">
-                              <a class="btn btn-primary btn-sm btn-round" href="{{ route('occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                              <button class="btn btn-danger btn-sm btn-round btnRemoveItem" data-route="{{route('occupations.destroy', ['id' => $occupation->uuid])}}"><i class="fa fa-close"></i> Remover</button>
-                          </td>
-                      </tr>
-
-                  @endforeach
-
-                </tbody>
-            </table>
-
+        <div class="row">
+          @foreach($occupations as $occupation)
+          <div class="col-md-12 col-lg-4">
+              <div class="card">
+                  <div class="card-block text-center">
+                      <h4 class="m-t-20">{{$occupation->name}}</h4>
+                      <p class="m-b-20">{{$occupation->department->name}}</p>
+                      <a class="btn btn-primary btn-sm btn-round" href="{{ route('occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                  </div>
+              </div>
+          </div>
+          @endforeach
         </div>
 
       </div>

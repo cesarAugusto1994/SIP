@@ -27,6 +27,11 @@ class People extends Model
         return $this->hasOne('App\User', 'person_id');
     }
 
+    public function unit()
+    {
+        return $this->belongsTo('App\Models\Unit');
+    }
+
     public function occupation()
     {
         return $this->belongsTo('App\Models\Department\Occupation');

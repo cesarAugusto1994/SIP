@@ -211,10 +211,12 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
     Route::post('clients/{id}/documents/upload', 'ClientController@uploadDocuments')->name('client_documents_upload');
 
-
     Route::get('client/documents/{id}/preview', 'ClientController@previewDocument')->name('document_preview');
     Route::get('client/documents/{id}/download', 'ClientController@downloadDocument')->name('document_download');
     Route::delete('client/documents/{id}/delete', 'ClientController@deleteDocument')->name('document_delete');
+
+    Route::get('contacts', 'UsersController@contacts')->name('contacts');
+    
   });
 
   });

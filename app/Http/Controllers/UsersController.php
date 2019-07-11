@@ -92,6 +92,13 @@ class UsersController extends Controller
         return view('users.index', compact('roles', 'people', 'departments', 'occupations'));
     }
 
+    public function contacts()
+    {
+        $users = Helper::users();
+
+        return view('users.contacts', compact('users'));
+    }
+
     public function permissions($id)
     {
         $permissions = Helper::permissions();
@@ -466,6 +473,8 @@ class UsersController extends Controller
         }
 
         $user->save();
+
+        Helper::drop('users');
 
         notify()->flash('Sucesso', 'success', [
           'text' => 'As informações do usuário foram alteradas com sucesso.'

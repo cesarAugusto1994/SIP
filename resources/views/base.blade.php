@@ -373,13 +373,13 @@ $(document).ready(function() {
         var self = $(this);
 
         swal({
-          title: 'Remover este item?',
+          title: 'Remover este registro?',
           text: "Não será possível recuperá-lo!",
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sim',
-          cancelButtonText: 'Cancelar'
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
+          confirmButtonText: 'Sim, Remover',
+          cancelButtonText: 'Não'
           }).then((result) => {
           if (result.value) {
 
@@ -419,13 +419,12 @@ $(document).ready(function() {
 
         swal({
           title: 'Finalizar Sessão?',
-          text: "Esta sessão será finalizada!",
-          type: 'warning',
+          type: 'question',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sim',
-          cancelButtonText: 'Cancelar'
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
+          confirmButtonText: 'Sim, Finalizar',
+          cancelButtonText: 'Não'
           }).then((result) => {
           if (result.value) {
 
