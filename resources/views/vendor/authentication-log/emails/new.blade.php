@@ -1,5 +1,5 @@
 @component('mail::message')
-# Olá!
+# Login de um novo Dispositivo
 
 Sua conta {{ config('app.name') }} foi conectada de um novo dispositivo.
 
@@ -10,5 +10,5 @@ Sua conta {{ config('app.name') }} foi conectada de um novo dispositivo.
 
 Se este era você, você pode ignorar esse alerta. Se você encontrar qualquer atividade suspeita em sua conta, altere sua senha.
 
-Agradecimentos,<br>{{ config('app.name') }}
+Esta é uma mensagem automática, favor não responder,<br>{{ config('app.name') }}
 @endcomponent
