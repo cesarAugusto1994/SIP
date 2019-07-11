@@ -167,6 +167,12 @@
                     </p>
                   </div>
                   <div class="col-sm-12 col-xl-4">
+                    <h4 class="sub-title">Ramal</h4>
+                    <p class="text-muted m-b-30">
+                        {{ $ticket->user->person->branch }}
+                    </p>
+                  </div>
+                  <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Email</h4>
                     <p class="text-muted m-b-30">
                         {{ $ticket->user->email }}

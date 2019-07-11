@@ -119,7 +119,7 @@
               <div class="card">
                   <div class="card-block text-center">
                       <h4 class="m-t-20">{{$ticket->type->name}}</h4>
-                      <p class="m-b-20">{{ $ticket->created_at->format('d/m/Y H:i') }}<br/>
+                      <p class="m-b-20">{{$ticket->type->category->name}}<br/>
                         <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label>
                       </p>
 
