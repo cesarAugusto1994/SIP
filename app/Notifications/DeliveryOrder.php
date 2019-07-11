@@ -51,7 +51,8 @@ class DeliveryOrder extends Notification implements ShouldQueue
                     ->greeting('Olá!')
                     ->subject($this->subject)
                     ->line('O seu documento esta prestes a ser entregue.')
-                    ->action('Acompanhar Entrega', route('delivery_status', $this->deliverOrder->uuid));
+                    ->action('Acompanhar Entrega', route('delivery_status', $this->deliverOrder->uuid))
+                    ->salutation('Esta é uma mensagem automática, favor não responder.');
     }
 
     public function toDatabase()

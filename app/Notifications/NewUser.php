@@ -45,9 +45,10 @@ class NewUser extends Notification
     {
         return (new MailMessage)
                     ->greeting('Olá!')
-                    ->subject('Novo Usuário Adicionado')
+                    ->subject('Novo Usuário Adicionado.')
                     ->line($this->user->person->name . ' foi adionado á aplicação.')
-                    ->action('Acessar', route('home'));
+                    ->action('Acessar', route('home'))
+                    ->salutation('Esta é uma mensagem automática, favor não responder.');
     }
 
     /**

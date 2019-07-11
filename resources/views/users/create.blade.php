@@ -104,7 +104,7 @@
                       <div class="form-group {!! $errors->has('department_id') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Departamento</label>
                           <div class="input-group">
-                            <select class="select2 select-occupations" name="department_id" data-search-occupations="{{ route('occupation_search') }}" required>
+                            <select class="form-control select-occupations" name="department_id" data-search-occupations="{{ route('occupation_search') }}" required>
                               @foreach($departments as $department)
                                   <option value="{{$department->uuid}}">{{$department->name}}</option>
                               @endforeach
@@ -118,13 +118,27 @@
                       <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Cargo</label>
                           <div class="input-group">
-                            <select class="select2 occupation" id="occupation" name="occupation_id" required>
+                            <select class="form-control occupation" id="occupation" name="occupation_id" required>
                               @foreach($occupations as $occupation)
                                   <option value="{{$occupation->uuid}}">{{$occupation->name}}</option>
                               @endforeach
                             </select>
                           </div>
                           {!! $errors->first('occupation_id', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group {!! $errors->has('unit_id') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">Unidade</label>
+                          <div class="input-group">
+                            <select class="form-control" id="unit" name="unit_id" required>
+                              @foreach($units as $unit)
+                                  <option value="{{$unit->uuid}}">{{$unit->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          {!! $errors->first('unit_id', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
 
@@ -136,7 +150,7 @@
                       <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Previlégio</label>
                           <div class="input-group">
-                            <select id="roles" name="roles" required class="select2">
+                            <select id="roles" name="roles" required class="form-control">
                               @foreach($roles as $role)
                                 <option value="{{ $role->name }}">{{ $role->name }}</option>
                               @endforeach

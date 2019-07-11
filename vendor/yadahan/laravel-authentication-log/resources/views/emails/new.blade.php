@@ -10,5 +10,5 @@ Your {{ config('app.name') }} account logged in from a new device.
 
 If this was you, you can ignore this alert. If you suspect any suspicious activity on your account, please change your password.
 
-Regards,<br>{{ config('app.name') }}
+{{ config('app.name') }}
 @endcomponent

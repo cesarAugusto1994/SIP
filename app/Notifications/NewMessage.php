@@ -6,19 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\MessageBoard;
 
 class NewMessage extends Notification
 {
     use Queueable;
+
+    protected $message;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(MessageBoard $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -29,7 +32,7 @@ class NewMessage extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -41,9 +44,12 @@ class NewMessage extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting('Novo Recado')
+                    ->subject('Recado: ' . $this->message->subject)
+                    ->line($this->message->user->person->name . ' adicionou um novo recado no Mural de Recados')
+                    ->line('Assunto: ' . $this->message->subject)
+                    ->action('Acessar', route('message-board.index'))
+                    ->salutation('Esta é uma mensagem automática, favor não responder.');
     }
 
     /**
@@ -55,7 +61,8 @@ class NewMessage extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+          'message' => $this->message->user->person->name . ' adicionou um novo recado no Mural de Recados',
+          'date' => $this->message->created_at,
         ];
     }
 }

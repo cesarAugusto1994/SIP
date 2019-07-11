@@ -7,6 +7,10 @@ use App\Models\MessageBoard;
 use App\Models\{Department,People};
 use App\Models\MessageBoard\{Category,Type, User, Attachment};
 use App\Models\Category as MessageBoardCategory;
+use App\Notifications\NewMessage;
+use Notification;
+use App\Helpers\Helper;
+use App\User as UserModel;
 
 class MessageBoardController extends Controller
 {
@@ -17,7 +21,7 @@ class MessageBoardController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = MessageBoardCategory::all();
+        $categories = Helper::messageBoardCategories();
 
         $messages = MessageBoard::whereHas('messages', function($query) use($request) {
           $query->where('user_id', $request->user()->id);
@@ -37,9 +41,9 @@ class MessageBoardController extends Controller
      */
     public function create()
     {
-        $departments = Department::all();
-        $categories = MessageBoardCategory::all();
-        $types = Type::all();
+        $departments = Helper::departments();
+        $categories = Helper::messageBoardCategories();
+        $types = Helper::messageBoardTypes();
         return view('message.board.create', compact('departments', 'categories','types'));
     }
 
@@ -82,38 +86,31 @@ class MessageBoardController extends Controller
 
 
         }
-/*
-        foreach ($data['categories'] as $key => $item) {
-            Category::create([
-              'category_id' => $item,
-              'board_id' => $messageBoard->id
-            ]);
-        }
-*/
+
         $departments = $data['departments'];
         $usersList = $data['to'];
 
         if(in_array(0, $departments) && in_array(0, $usersList)) {
 
-            $users = \App\User::all();
+            $users = Helper::users();
 
         } elseif (in_array(0, $departments) && !in_array(0, $usersList)) {
 
-            $users = \App\User::whereIn('id', $usersList)->get();
+            $users = UserModel::whereIn('id', $usersList)->get();
 
         } elseif (!in_array(0, $departments) && !in_array(0, $usersList)) {
 
             $people = People::whereIn('department_id', $departments)->pluck('id');
-            $users = \App\User::whereIn('id', $usersList)->get();
+            $users = UserModel::whereIn('id', $usersList)->get();
 
         } elseif (!in_array(0, $departments) && in_array(0, $usersList)) {
 
             $people = People::whereIn('department_id', $departments)->pluck('id');
-            $users = \App\User::whereIn('id', $people)->get();
+            $users = UserModel::whereIn('id', $people)->get();
 
         } else {
 
-            $users = \App\User::whereIn('id', $usersList)->get();
+            $users = UserModel::whereIn('id', $usersList)->get();
 
         }
 
@@ -127,6 +124,8 @@ class MessageBoardController extends Controller
         notify()->flash('Novo Recado Adicionado!', 'success', [
           'text' => 'Novo Recado adicionado com sucesso.'
         ]);
+
+        Notification::send(UserModel::where('id', 2)->get(), new NewMessage($messageBoard));
 
         return redirect()->route('message-board.index');
     }
@@ -146,7 +145,7 @@ class MessageBoardController extends Controller
             $messageBoard->save();
         }
 
-        $categories = MessageBoardCategory::all();
+        $categories = Helper::messageBoardCategories();
         return view('message.board.show', compact('messageBoard', 'categories'));
     }
 

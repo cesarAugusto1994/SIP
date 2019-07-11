@@ -185,7 +185,6 @@
                                 <span>Fluxo de atividades do usuário</span>
                                 <div class="card-header-right">
                                     <ul class="list-unstyled card-option">
-                                        <li><i class="feather icon-maximize full-card"></i></li>
                                         <li><i class="feather icon-minus minimize-card"></i></li>
                                     </ul>
                                 </div>
@@ -225,7 +224,6 @@
                                 <span>Fluxo de acessos do usuário</span>
                                 <div class="card-header-right">
                                     <ul class="list-unstyled card-option">
-                                        <li><i class="feather icon-maximize full-card"></i></li>
                                         <li><i class="feather icon-minus minimize-card"></i></li>
                                     </ul>
                                 </div>
@@ -324,7 +322,21 @@
                                         @endif
 
                                       </div>
-
+                                      @if($currentUser->isAdmin())
+                                          <div class="col-md-6">
+                                            <div class="form-group {!! $errors->has('unit_id') ? 'has-error' : '' !!}">
+                                                <label class="col-form-label">Unidade</label>
+                                                <div class="input-group">
+                                                  <select class="form-control" id="unit" name="unit_id" required>
+                                                    @foreach($units as $unit)
+                                                        <option value="{{$unit->uuid}}">{{$unit->name}}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
+                                                {!! $errors->first('unit_id', '<p class="help-block">:message</p>') !!}
+                                            </div>
+                                          </div>
+                                      @endif
                                       <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">E-mail</label>
@@ -464,7 +476,7 @@
                                         <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
                                             <label class="col-form-label">Previlégios</label>
                                             <div class="input-group">
-                                              <select id="role" name="roles" required="required" class="select2" title="Selecione">
+                                              <select id="role" name="roles" required="required" class="form-control" title="Selecione">
                                                 @foreach($roles as $role)
                                                   <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
                                                 @endforeach
@@ -506,7 +518,7 @@
 
                                       <a class="accordion-msg b-none scale_active ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-accordion-header-active ui-state-active" role="tab" id="ui-id-{{ $loop->index }}-{{ $loop->index }}" aria-controls="ui-id-{{ $loop->index }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" tabindex="0"><span class="ui-accordion-header-icon ui-icon zmdi zmdi-chevron-up"></span>{{$module->name}}</a>
                                       <div class="accordion-desc ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-{{ $loop->index }}" aria-labelledby="ui-id-{{ $loop->index }}" role="tabpanel" aria-hidden="false">
-                                        
+
                                         @forelse($module->children as $item)
 
                                           <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">

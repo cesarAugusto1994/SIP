@@ -14,6 +14,8 @@ use App\Models\Ticket\Type\Category;
 use App\Models\Unit;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use App\Models\Category as MessageBoardCategory;
+use App\Models\MessageBoard\Type as MessageBoardType;
 
 /**
  *
@@ -73,6 +75,34 @@ class Helper
         }
 
         $data = Role::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function messageBoardCategories()
+    {
+        $key = 'messageBoardCategories';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = MessageBoardCategory::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function messageBoardTypes()
+    {
+        $key = 'messageBoardTypes';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = MessageBoardType::all();
 
         self::set($key, $data);
         return self::get($key);

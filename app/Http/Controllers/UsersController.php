@@ -11,7 +11,7 @@ use Auth, Notification;
 
 use App\Models\People;
 
-use App\Models\{Department,Module, RoleDefaultPermissions};
+use App\Models\{Department,Module, RoleDefaultPermissions, Unit};
 use App\Models\Department\Occupation;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
@@ -250,8 +250,9 @@ class UsersController extends Controller
         $roles = Helper::roles();
         $departments = Helper::departments();
         $occupations = Helper::occupation($departments->first()->id);
+        $units = Helper::units();
 
-        return view('users.create', compact('roles', 'departments', 'occupations'));
+        return view('users.create', compact('roles', 'departments', 'occupations', 'units'));
     }
 
     /**
@@ -281,6 +282,7 @@ class UsersController extends Controller
 
         $department = Department::uuid($data['department_id']);
         $occupation = Occupation::uuid($data['occupation_id']);
+        $unit = Unit::uuid($data['unit_id']);
 
         $birthday = null;
         $branch = null;
@@ -306,7 +308,8 @@ class UsersController extends Controller
           'occupation_id' => $occupation->id,
           'cpf' => $data['cpf'],
           'phone' => $phone,
-          'branch' => $branch
+          'branch' => $branch,
+          'unit_id' => $unit->id
         ]);
 
         $avatar = \Avatar::create($data['name'])->toBase64();
@@ -360,8 +363,9 @@ class UsersController extends Controller
         $roles = Helper::roles();
         $permissions = Helper::permissions();
         $modules = Helper::modules();
+        $units = Helper::units();
 
-        return view('users.show', compact('user', 'occupations', 'departments', 'activities', 'roles', 'person', 'modules'));
+        return view('users.show', compact('user', 'occupations', 'departments', 'activities', 'roles', 'person', 'modules', 'units'));
     }
 
     /**
@@ -419,6 +423,11 @@ class UsersController extends Controller
         if($request->has('occupation_id')) {
           $occupation = Occupation::uuid($data['occupation_id']);
           $person->occupation_id = $occupation->id;
+        }
+
+        if($request->has('unit_id')) {
+          $unit = Unit::uuid($data['unit_id']);
+          $person->unit_id = $unit->id;
         }
 
         if($request->filled('branch')) {

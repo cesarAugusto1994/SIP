@@ -53,7 +53,7 @@ class ConcludedTicket extends Notification
                     ->line('Solicitante: ' . $this->ticket->user->person->name)
                     ->line('Data: ' . $this->ticket->created_at->format('d/m/Y H:i'))
                     ->action('Acessar', route('tickets.show', $this->ticket->uuid))
-                    ->line('SIP Notificações');
+                    ->salutation('Esta é uma mensagem automática, favor não responder.');
     }
 
     /**
