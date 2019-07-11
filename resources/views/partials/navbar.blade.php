@@ -80,21 +80,25 @@
                             <i class="feather icon-chevron-down"></i>
                         </div>
                         <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                          <!--
                             <li>
                                 <a href="#!">
                                     <i class="feather icon-settings"></i> Configurações
                                 </a>
                             </li>
+                          -->
                             <li>
                                 <a href="{{route('user')}}">
                                     <i class="feather icon-user"></i> Perfil
                                 </a>
                             </li>
+                          <!--
                             <li>
                                 <a href="#">
                                     <i class="feather icon-mail"></i> Mensagens
                                 </a>
                             </li>
+                          -->
                             <li>
                                 <a href="{{ route('lockscreen') }}">
                                     <i class="feather icon-lock"></i> Bloquear Tela
