@@ -110,7 +110,6 @@ class UserTableSeeder extends Seeder
           	13 => array('Ramal' => null, 'Cargo' => 'Coleta', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Coleta', 'Nome' => 'Coleta Vila Velha IBES', 'Email' => 'coleta.vilavelha.ibes'),
           	14 => array('Ramal' => null, 'Cargo' => 'Coleta', 'Unidade' => 'Vitória', 'Setor' => 'Coleta', 'Nome' => 'Coleta Vitória', 'Email' => 'coleta.vitoria'),
           	15 => array('Ramal' => null, 'Cargo' => 'Coleta', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Coleta', 'Nome' => 'Coleta Vila Velha Centro', 'Email' => 'coleta.vilavelha.centro'),
-          	16 => array('Ramal' => 3575, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Herlan Gonçalves', 'Email' => 'comercial'),
           	17 => array('Ramal' => 3565, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Ricardo Castro', 'Email' => 'comercial2'),
           	18 => array('Ramal' => null, 'Cargo' => 'Aprendiz', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Apoio', 'Email' => 'comercial3'),
           	20 => array('Ramal' => 3560, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Marketing', 'Nome' => 'Marketing', 'Email' => 'marketing'),
