@@ -54,7 +54,7 @@
 
                               <li>
                                   <div class="media">
-                                      <a href="{{ route('notifications.show', $notification->id) }}">
+                                      <a href="{{ route('notifications.index') }}">
                                         <div class="media-body">
                                             <p class="notification-msg">{{ $notification['data']['message'] ?? '' }}</p>
                                             <span class="notification-time">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</span>

@@ -12797,7 +12797,7 @@ body.menu-bottom #collapse-menu {
 
 .dropdown-primary .dropdown-menu a:hover,
 .dropdown-split-primary .dropdown-menu a:hover {
-    background-color: #01a9ac;
+    /*background-color: #01a9ac;*/
     color: #fff
 }
 

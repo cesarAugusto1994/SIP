@@ -35,7 +35,7 @@
     <!-- Animate.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\animate.css\css\animate.css') }}">
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}?v1.0">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}?v1.0.1">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\jquery.mCustomScrollbar.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\font-awesome\css\font-awesome.min.css') }}">
