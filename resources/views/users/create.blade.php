@@ -170,12 +170,26 @@
                       </div>
                     </div>
 
-                    <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                        <label class="col-form-label">Ativo</label>
-                        <div class="input-group">
-                          <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" {{ old('active') || !request()->has('active') ? 'checked' : '' }} name="active" class="js-switch">
-                        </div>
-                        {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                    <div class="col-md-4">
+                      <div class="form-group {!! $errors->has('password_email') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">Senha do E-mail</label>
+                          <div class="input-group">
+                            <input type="password" autocomplete="off" value="{{ old('password_email') }}" name="password_email" class="form-control">
+                          </div>
+                          {!! $errors->first('password_email', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+
+                      <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">Ativo</label>
+                          <div class="input-group">
+                            <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" {{ old('active') || !request()->has('active') ? 'checked' : '' }} name="active" class="js-switch">
+                          </div>
+                          {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                      </div>
+
                     </div>
 
                 </div>

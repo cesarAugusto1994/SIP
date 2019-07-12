@@ -330,6 +330,9 @@ class UsersController extends Controller
         $user->person_id = $person->id;
         $user->avatar = $avatar;
         $user->change_password = true;
+
+        $user->password_email = $data['password_email'];
+
         $user->save();
         $user->roles()->attach($roleUser);
 
@@ -509,6 +512,10 @@ class UsersController extends Controller
         $user->login_soc = $data['login_soc'];
         $user->password_soc = $data['password_soc'];
         $user->id_soc = $data['id_soc'];
+
+        if($request->filled('password_email') && $user->password_email != $data['password_email']) {
+            $user->password_email = $data['password_email'];
+        }
 
         if($user->id != $request->user()->id) {
 

@@ -58,6 +58,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             'Whoops\\' => 7,
             'Webmozart\\Assert\\' => 17,
+            'Webklex\\IMAP\\' => 13,
         ),
         'U' => 
         array (
@@ -208,6 +209,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Webklex\\IMAP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP',
         ),
         'Underscore\\' => 
         array (
@@ -560,6 +565,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Controllers\\DepartmentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/DepartmentsController.php',
         'App\\Http\\Controllers\\DocumentTypesController' => __DIR__ . '/../..' . '/app/Http/Controllers/DocumentTypesController.php',
         'App\\Http\\Controllers\\DocumentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/DocumentsController.php',
+        'App\\Http\\Controllers\\EmailsController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmailsController.php',
         'App\\Http\\Controllers\\EmployeesController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeesController.php',
         'App\\Http\\Controllers\\FleetCarController' => __DIR__ . '/../..' . '/app/Http/Controllers/FleetCarController.php',
         'App\\Http\\Controllers\\FleetScheduleController' => __DIR__ . '/../..' . '/app/Http/Controllers/FleetScheduleController.php',
@@ -662,6 +668,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\configuration\\Type' => __DIR__ . '/../..' . '/app/Models/Configuration/Type.php',
         'App\\Notifications\\ConcludedTicket' => __DIR__ . '/../..' . '/app/Notifications/ConcludedTicket.php',
         'App\\Notifications\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Notifications/DeliveryOrder.php',
+        'App\\Notifications\\FinishedTicket' => __DIR__ . '/../..' . '/app/Notifications/FinishedTicket.php',
         'App\\Notifications\\NewMessage' => __DIR__ . '/../..' . '/app/Notifications/NewMessage.php',
         'App\\Notifications\\NewTicket' => __DIR__ . '/../..' . '/app/Notifications/NewTicket.php',
         'App\\Notifications\\NewUser' => __DIR__ . '/../..' . '/app/Notifications/NewUser.php',
@@ -4522,6 +4529,34 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Underscore\\UnderscoreTestCase' => __DIR__ . '/..' . '/anahkiasen/underscore-php/tests/UnderscoreTestCase.php',
         'UnitsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UnitsTableSeeder.php',
         'UserTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UserTableSeeder.php',
+        'Webklex\\IMAP\\Attachment' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Attachment.php',
+        'Webklex\\IMAP\\Client' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Client.php',
+        'Webklex\\IMAP\\ClientManager' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/ClientManager.php',
+        'Webklex\\IMAP\\EncodingAliases' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/EncodingAliases.php',
+        'Webklex\\IMAP\\Exceptions\\ConnectionFailedException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/ConnectionFailedException.php',
+        'Webklex\\IMAP\\Exceptions\\GetMessagesFailedException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/GetMessagesFailedException.php',
+        'Webklex\\IMAP\\Exceptions\\InvalidImapTimeoutTypeException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/InvalidImapTimeoutTypeException.php',
+        'Webklex\\IMAP\\Exceptions\\InvalidMessageDateException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/InvalidMessageDateException.php',
+        'Webklex\\IMAP\\Exceptions\\InvalidWhereQueryCriteriaException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/InvalidWhereQueryCriteriaException.php',
+        'Webklex\\IMAP\\Exceptions\\MailboxFetchingException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/MailboxFetchingException.php',
+        'Webklex\\IMAP\\Exceptions\\MaskNotFoundException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/MaskNotFoundException.php',
+        'Webklex\\IMAP\\Exceptions\\MessageSearchValidationException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/MessageSearchValidationException.php',
+        'Webklex\\IMAP\\Exceptions\\MethodNotFoundException' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Exceptions/MethodNotFoundException.php',
+        'Webklex\\IMAP\\Facades\\Client' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Facades/Client.php',
+        'Webklex\\IMAP\\Folder' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Folder.php',
+        'Webklex\\IMAP\\IMAP' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/IMAP.php',
+        'Webklex\\IMAP\\Message' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Message.php',
+        'Webklex\\IMAP\\Providers\\LaravelServiceProvider' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Providers/LaravelServiceProvider.php',
+        'Webklex\\IMAP\\Query\\Query' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Query/Query.php',
+        'Webklex\\IMAP\\Query\\WhereQuery' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Query/WhereQuery.php',
+        'Webklex\\IMAP\\Support\\AttachmentCollection' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/AttachmentCollection.php',
+        'Webklex\\IMAP\\Support\\FlagCollection' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/FlagCollection.php',
+        'Webklex\\IMAP\\Support\\FolderCollection' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/FolderCollection.php',
+        'Webklex\\IMAP\\Support\\Masks\\AttachmentMask' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/Masks/AttachmentMask.php',
+        'Webklex\\IMAP\\Support\\Masks\\Mask' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/Masks/Mask.php',
+        'Webklex\\IMAP\\Support\\Masks\\MessageMask' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/Masks/MessageMask.php',
+        'Webklex\\IMAP\\Support\\MessageCollection' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/MessageCollection.php',
+        'Webklex\\IMAP\\Support\\PaginatedCollection' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Support/PaginatedCollection.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'Whoops\\Exception\\ErrorException' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
         'Whoops\\Exception\\Formatter' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Formatter.php',

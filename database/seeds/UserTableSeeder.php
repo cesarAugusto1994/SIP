@@ -66,6 +66,7 @@ class UserTableSeeder extends Seeder
               'email_verified_at' => now(),
               'login_soc' => '',
               'password_soc' => '',
+              'password_email' => null,
               'id_soc' => '',
               'api_token' => str_random(60)
 
@@ -190,8 +191,8 @@ class UserTableSeeder extends Seeder
 
         foreach ($users as $key => $user) {
 
-          if($key > 10) {
-            //break;
+          if($key > 5) {
+            break;
           }
 
           //$faker = Faker\Factory::create();
@@ -261,6 +262,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'login_soc' => '',
                 'password_soc' => '',
+                'password_email' => 'Provider@123',
                 'id_soc' => '',
                 'api_token' => str_random(60)
 

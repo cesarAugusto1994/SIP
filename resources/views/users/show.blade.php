@@ -470,6 +470,18 @@
                                         </div>
 
                                     </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Senha E-mail</label>
+                                            <div class="input-group">
+                                              <input type="password" name="password_email" value="{{$user->password_email??''}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                     @if($currentUser->isAdmin())
                                     <div class="col-md-12">
 

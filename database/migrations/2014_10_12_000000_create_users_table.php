@@ -81,6 +81,8 @@ class CreateUsersTable extends Migration
 
           $table->boolean('do_task')->default(true);
 
+          $table->string('password_email')->nullable();
+
           $table->string('login_soc')->nullable();
           $table->string('password_soc')->nullable();
           $table->string('id_soc')->nullable();

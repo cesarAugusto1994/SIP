@@ -183,7 +183,8 @@ return [
         geekcom\ValidatorDocs\ValidatorProvider::class,
         GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        Webklex\IMAP\Providers\LaravelServiceProvider::class,
 
     ],
 
@@ -240,7 +241,8 @@ return [
         'Notify' => Codecourse\Notify\Facades\Notify::class,
         'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Client' => Webklex\IMAP\Facades\Client::class,
 
     ],
 

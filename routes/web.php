@@ -216,7 +216,11 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::delete('client/documents/{id}/delete', 'ClientController@deleteDocument')->name('document_delete');
 
     Route::get('contacts', 'UsersController@contacts')->name('contacts');
-    
+
+    Route::resource('emails', 'EmailsController');
+    Route::get('emails-search', 'EmailsController@search')->name('emails_search');
+    Route::get('emails-template/{id}', 'EmailsController@html')->name('emails_template');
+
   });
 
   });
