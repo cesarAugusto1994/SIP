@@ -264,9 +264,9 @@
             className: 'btn-xs btn-inverse',
             placement: {
                 from: 'bottom',
-                align: 'right'
+                align: 'center'
             },
-            delay: 2500,
+            delay: 5000,
             animate: {
                     enter: 'animated fadeInRight',
                     exit: 'animated fadeOutRight'

@@ -6,10 +6,8 @@
 
     @csrf
 
-
-
-    <div class="text-center">
-        <img src="{{ asset('images\logo-provider.png') }}" style="width:40%" alt="SIP - Provider">
+    <div class="text-center m-b-30">
+        <img src="{{ asset('images\logo-provider.png') }}" style="width:30%" alt="SIP - Provider">
     </div>
     <div class="auth-box card">
         <div class="card-block">
