@@ -53,10 +53,10 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Lista de Cleintes</h5>
+          <h5>Lista de Clientes</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
-                  <li><a class="btn btn-sm btn-success btn-round" href="{{route('clients.create')}}">Novo</a></li>
+                  <li><a class="btn btn-sm btn-success btn-round" href="{{route('clients.create')}}">Novo Cliente</a></li>
               </ul>
           </div>
       </div>
@@ -69,7 +69,6 @@
                   <thead>
 
                     <tr>
-                      <th>ID</th>
                       <th>Nome</th>
                       <th>Documento</th>
                       <th>Telefone</th>
@@ -81,12 +80,8 @@
                   </thead>
 
                   <tbody>
-                      @foreach($clients as $client)
+                      @foreach($clients->sortByDesc('id') as $client)
                           <tr>
-
-                              <td>
-                                  <a>{{$client->id}}</a>
-                              </td>
 
                               <td>
                                   <a href="{{route('clients.show', ['id' => $client->uuid])}}">{{$client->name}}</a>
@@ -114,7 +109,7 @@
 
                               <td class="dropdown">
 
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                                   @permission('view.clientes')

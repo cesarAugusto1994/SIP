@@ -206,13 +206,13 @@ class ClientController extends Controller
 
       $data['active'] = $request->has('active');
 
-      Client::create($data);
+      $client = Client::create($data);
 
       notify()->flash('Sucesso!', 'success', [
         'text' => 'Novo Cliente adicionado com sucesso.'
       ]);
 
-      return redirect()->route('clients.index');
+      return redirect()->route('clients.show', $client->uuid);
     }
 
     /**

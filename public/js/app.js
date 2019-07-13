@@ -50850,6 +50850,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js");
 /* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__);
+var _this2 = undefined;
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -50907,23 +50909,20 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var _this = this;
 
       axios.get(receiver + '/messages').then(function (response) {
+        console.log('fetchMessages: ' + response);
         _this.messages = response.data;
       });
     },
     addMessage: function addMessage(message) {
-      console.log(message.message);
-
+      //console.log(message.message);
       if (message.message.trim().length > 0) {
-        var date = new Date();
-        var dt = date.toLocaleString('pt-BR');
         this.messages.push({
           message: message.message,
           user_id: message.user.id,
           created_at: new Date(),
           avatar: message.user.avatar
         });
-        axios.post(receiver + '/messages', message).then(function (response) {
-          console.log(response.data);
+        axios.post(receiver + '/messages', message).then(function (response) {//console.log(response.data);
         });
       }
     }
@@ -50939,16 +50938,15 @@ Echo["private"]('chat.' + receiver).listen('MessageSent', function (e) {
     avatar: e.user.avatar
   });
 });
-/*
-Echo.private('chat.'+privateChatInverse)
- .listen('MessageSent', (e) => {
-   this.messages.push({
-     message: e.message.message,
-     user: e.user,
-     receiver: e.receiver,
-   });
- });
-*/
+Echo["private"]('chat.' + privateChatInverse).listen('MessageSent', function (e) {
+  console.log('inverse:' + e);
+
+  _this2.messages.push({
+    message: e.message.message,
+    user: e.user,
+    receiver: e.receiver
+  });
+});
 
 /***/ }),
 

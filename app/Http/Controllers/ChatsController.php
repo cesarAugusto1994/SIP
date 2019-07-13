@@ -104,7 +104,7 @@ class ChatsController extends Controller
         $messageOnNotifications = Auth::user()->person->name . " te enviou uma mensagem.";
 
         broadcast(new MessageSent(Auth::user(), $message, $user))->toOthers();
-        broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
+        //broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }
