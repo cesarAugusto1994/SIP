@@ -275,7 +275,6 @@
 
 </div>
 
-
 @endsection
 
 @section('scripts')
@@ -288,8 +287,8 @@
           text: "O tempo de execução será contabilizado.",
           type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
           confirmButtonText: 'Sim',
           cancelButtonText: 'Cancelar'
           }).then((result) => {
@@ -309,8 +308,8 @@
           text: "Este chamado será concluído!",
           type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
           confirmButtonText: 'Sim',
           cancelButtonText: 'Cancelar'
           }).then((result) => {
@@ -330,8 +329,8 @@
           text: "Este chamado será finalizado!",
           type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
           confirmButtonText: 'Sim',
           cancelButtonText: 'Cancelar'
           }).then((result) => {
@@ -352,8 +351,8 @@
           text: "Este chamado será cancelado!",
           type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
           confirmButtonText: 'Sim',
           cancelButtonText: 'Cancelar'
           }).then((result) => {

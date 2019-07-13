@@ -74,7 +74,7 @@
                     <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="active">Ativo</label>
                         <div class="input-group">
-                            <input type="checkbox" id="active" name="active" data-plugin="switchery" {{ $client->active ? 'checked' : '' }} value="{{ 1 }}">
+                            <input class="js-switch" type="checkbox" id="active" name="active" data-plugin="switchery" {{ $client->active ? 'checked' : '' }} value="{{ 1 }}">
                         </div>
                         {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                     </div>

@@ -180,7 +180,7 @@ class MenuTableSeeder extends Seeder
           'permission' => 'view.ramais.e.telefones',
           'description' => 'Lista de Contatos',
           'parent' => null,
-          'icon' => 'fas fa-bullhorn',
+          'icon' => 'fas fa-phone-volume',
         ],
 
         ];

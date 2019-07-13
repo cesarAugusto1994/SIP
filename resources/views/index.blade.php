@@ -156,11 +156,7 @@
                 <div class="card-header">
                     <h5>Gestão à Vista</h5>
                     <span>Mural de recados com informes e anúncios da empresa ou setor</span>
-                    <div class="card-header-right">
-                        <ul class="list-unstyled card-option">
-                            <li><i class="feather icon-minus minimize-card"></i></li>
-                        </ul>
-                    </div>
+                    
                 </div>
                 <div class="card-block">
 
@@ -212,11 +208,7 @@
               <div class="card-header">
                 <h5>Atividades</h5>
                 <span>Fluxo de atividades do usuário</span>
-                <div class="card-header-right">
-                    <ul class="list-unstyled card-option">
-                        <li><i class="feather icon-minus minimize-card"></i></li>
-                    </ul>
-                </div>
+
               </div>
               <div class="card-block">
 

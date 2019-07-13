@@ -18,7 +18,7 @@ class EmailsController extends Controller
     {
         //$aFolder = $oClient->getFolder('INBOX');
 
-        $this->search();
+        //$this->search();
 
         $emailsInbox = Email::where('folder_id', 2)->get();
         $emailsSent = Email::where('folder_id', 4)->get();
@@ -103,9 +103,9 @@ class EmailsController extends Controller
                         $property->setAccessible(false);
                     }
 
-                    $hasEmail = Email::where('message_id', $msg['attributes']['message_id'])->first();
+                    $hasEmail = Email::where('message_id', $msg['attributes']['message_id'])->get();
 
-                    if(!$hasEmail) {
+                    if($hasEmail->isEmpty()) {
 
                         $hasRecent = true;
 
