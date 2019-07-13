@@ -41,6 +41,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\font-awesome\css\font-awesome.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.1/trix.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.2/css/froala_editor.pkgd.min.css" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 
     <link href="{{ asset('adminty\components\bootstrap-tagsinput\css\bootstrap-tagsinput.css') }}" rel="stylesheet" />
@@ -122,7 +125,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Warning Section Starts -->
 <!-- Older IE warning message -->
@@ -215,6 +217,21 @@
 
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.1/trix.js"></script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.2/js/froala_editor.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.2/js/plugins/font_family.min.js"></script>
+<script src="https://cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+
+<script>
+  new FroalaEditor('.editor', {
+
+  })
+</script>
+
 
 <script>
 

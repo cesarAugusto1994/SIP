@@ -156,7 +156,7 @@
                 <div class="card-header">
                     <h5>Gestão à Vista</h5>
                     <span>Mural de recados com informes e anúncios da empresa ou setor</span>
-                    
+
                 </div>
                 <div class="card-block">
 
@@ -170,12 +170,12 @@
                                   <i class="feather icon-briefcase bg-info update-icon"></i>
                               </div>
                               <div class="col">
-                                  <h6><a class="" href="{{ route('message-board.show', $message->uuid) }}">{{ $message->subject }}</a>
-
-                                  </h6>
+                                <a class="" href="{{ route('message-board.show', $message->uuid) }}">
+                                  <h6>{{ $message->subject }}</h6>
                                   <p class="text-muted m-b-0">
                                       {{ html_entity_decode(strip_tags(substr($message->content, 0, 240))) }}...
                                   </p>
+                                </a>
                                   <br/>
                                   <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
                               </div>
