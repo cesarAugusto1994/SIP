@@ -7,14 +7,14 @@
       <div class="outgoing_msg" v-if="message.user_id == user.id">
         <div class="sent_msg">
           <p>{{ message.message }}</p>
-          <span class="time_date">{{ message.created_at }}</span> </div>
+          <span class="time_date">{{ new Date(message.created_at).toLocaleString('pt-BR') }}</span> </div>
       </div>
 
       <div class="incoming_msg" v-else>
         <div class="received_msg">
           <div class="received_withd_msg">
             <p>{{ message.message }}</p>
-            <span class="time_date">{{ message.created_at }}</span></div>
+            <span class="time_date">{{ new Date(message.created_at).toLocaleString('pt-BR') }}</span></div>
         </div>
       </div>
 

@@ -1,11 +1,11 @@
 <template>
 
     <span v-if="friend.status == 'online'">
-        <i class="mdi mdi-star-circle member-star text-success" title="Ativo"></i> Online
+        <i class="fa fa-circle text-success" title="Ativo"></i> Online
     </span>
 
     <span v-else>
-        <i class="mdi mdi-alert-circle-outline member-star text-danger" title="Inativo"></i> Offline
+        <i class="fa fa-circle text-danger" title="Inativo"></i> Offline
     </span>
 
 </template>

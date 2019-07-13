@@ -77,14 +77,17 @@ import VueChatScroll from 'vue-chat-scroll'
 
               if(message.message.trim().length > 0) {
 
+                let date = new Date();
+                let dt = date.toLocaleString('pt-BR');
+
                 this.messages.push({
                     message: message.message,
                     user_id: message.user.id,
-                    created_at: Date(),
+                    created_at: new Date(),
                     avatar: message.user.avatar,
                 });
                 axios.post(receiver+'/messages', message).then(response => {
-                  //console.log(response.data);
+                  console.log(response.data);
                 });
 
               }
@@ -96,7 +99,7 @@ import VueChatScroll from 'vue-chat-scroll'
 
  Echo.private('chat.'+receiver)
   .listen('MessageSent', (e) => {
-    //console.log(e);
+    console.log(e);
     app.messages.push({
       message: e.message.message,
       user: e.user,
@@ -104,7 +107,7 @@ import VueChatScroll from 'vue-chat-scroll'
       created_at: e.message.created_at,
       avatar: e.user.avatar,
     });
-  });
+  })
 
 /*
 Echo.private('chat.'+privateChatInverse)

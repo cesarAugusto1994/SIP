@@ -15,8 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="#">
-    <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
-    <meta name="author" content="#">
+    <meta name="keywords" content="Provider">
+    <meta name="author" content="Provider">
     <!-- Favicon icon -->
     <link rel="icon" href="{{ asset('images\favicon.ico') }}" type="image/x-icon">
     <!-- Google font-->
@@ -27,7 +27,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\icon\themify-icons\themify-icons.css') }}">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\icon\icofont\css\icofont.css') }}">
-
     <!-- feather Awesome -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\icon\feather\css\feather.css') }}">
     <!-- Notification.css -->
@@ -53,10 +52,17 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    @yield('css')
+
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
 </head>
 
 <body>
-<!-- Pre-loader start -->
 <div class="theme-loader">
     <div class="ball-scale">
         <div class='contain'>
@@ -93,31 +99,21 @@
         </div>
     </div>
 </div>
-<!-- Pre-loader end -->
 <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
-    <div class="pcoded-container navbar-wrapper">
+    <div class="pcoded-container navbar-wrapper"  id="app" :user="{{ \Auth::user() }}">
 
         @include('partials.navbar')
 
-        <!-- Sidebar chat start -->
-
-        <!-- Sidebar inner chat start-->
-
-        <!-- Sidebar inner chat end-->
         <div class="pcoded-main-container">
             <div class="pcoded-wrapper">
                 @include('partials.sidebar')
                 <div class="pcoded-content">
                     <div class="pcoded-inner-content">
-                        <!-- Main-body start -->
                         <div class="main-body">
                             <div class="page-wrapper">
                                 @yield('content')
                             </div>
-                        </div>
-                        <div id="styleSelector">
-
                         </div>
                     </div>
                 </div>
@@ -126,53 +122,12 @@
     </div>
 </div>
 
-<!-- Warning Section Starts -->
-<!-- Older IE warning message -->
-<!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers
-        to access this website.</p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="../files/assets/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="../files/assets/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="../files/assets/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="../files/assets/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="../files/assets/images/browser/ie.png" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
-<![endif]-->
-<!-- Warning Section Ends -->
 <!-- Required Jquery -->
 <script type="text/javascript" src="{{ asset('adminty\components\jquery\js\jquery.min.js') }}"></script>
+<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-ui\js\jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\popper.js\js\popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\bootstrap\js\bootstrap.min.js') }}"></script>
@@ -181,7 +136,6 @@
 <!-- modernizr js -->
 <script type="text/javascript" src="{{ asset('adminty\components\modernizr\js\modernizr.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\modernizr\js\css-scrollbars.js') }}"></script>
-
 <!-- i18next.min.js -->
 <script type="text/javascript" src="{{ asset('adminty\components\i18next\js\i18next.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\i18next-xhr-backend\js\i18nextXHRBackend.min.js') }}"></script>
@@ -215,23 +169,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
-<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.1/trix.js"></script>
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.2/js/froala_editor.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.2/js/plugins/font_family.min.js"></script>
 <script src="https://cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
 
 <script>
-  new FroalaEditor('.editor', {
-
-  })
+  new FroalaEditor('.editor', {})
 </script>
-
 
 <script>
 
@@ -711,7 +655,7 @@ $(document).ready(function() {
     }
 
     // Enable pusher logging - don't include this in production
-    // Pusher.logToConsole = true;
+    Pusher.logToConsole = true;
 
     var pusher = new Pusher('fbc40aa0ff741e4532da', {
       encrypted: true,

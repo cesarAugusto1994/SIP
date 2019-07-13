@@ -17219,25 +17219,25 @@ var PusherChannel = function (_Channel) {
  * This class represents a Pusher private channel.
  */
 var PusherPrivateChannel = function (_PusherChannel) {
-    inherits(PusherPrivateChannel, _PusherChannel);
+  inherits(PusherPrivateChannel, _PusherChannel);
 
-    function PusherPrivateChannel() {
-        classCallCheck(this, PusherPrivateChannel);
-        return possibleConstructorReturn(this, (PusherPrivateChannel.__proto__ || Object.getPrototypeOf(PusherPrivateChannel)).apply(this, arguments));
+  function PusherPrivateChannel() {
+    classCallCheck(this, PusherPrivateChannel);
+    return possibleConstructorReturn(this, (PusherPrivateChannel.__proto__ || Object.getPrototypeOf(PusherPrivateChannel)).apply(this, arguments));
+  }
+
+  createClass(PusherPrivateChannel, [{
+    key: 'whisper',
+
+    /**
+     * Trigger client event on the channel.
+     */
+    value: function whisper(eventName, data) {
+      this.pusher.channels.channels[this.name].trigger('client-' + eventName, data);
+      return this;
     }
-
-    createClass(PusherPrivateChannel, [{
-        key: 'whisper',
-
-        /**
-         * Trigger client event on the channel.
-         */
-        value: function whisper(eventName, data) {
-            this.pusher.channels.channels[this.name].trigger('client-' + eventName, data);
-            return this;
-        }
-    }]);
-    return PusherPrivateChannel;
+  }]);
+  return PusherPrivateChannel;
 }(PusherChannel);
 
 /**
@@ -17816,11 +17816,11 @@ var SocketIoConnector = function (_Connector) {
     }, {
         key: 'getSocketIO',
         value: function getSocketIO() {
-            if (typeof io !== 'undefined') {
-                return io;
-            }
             if (typeof this.options.client !== 'undefined') {
                 return this.options.client;
+            }
+            if (typeof io !== 'undefined') {
+                return io;
             }
             throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
         }
@@ -38503,6 +38503,7 @@ var render = function() {
         staticClass: "write_msg form-control",
         attrs: {
           autofocus: "",
+          rows: "4",
           name: "message",
           required: "",
           placeholder: "Digite sua Mensagem..."
@@ -38536,7 +38537,7 @@ var render = function() {
         },
         [
           _c("i", {
-            staticClass: "fa fa-paper-plane-o",
+            staticClass: "far fa-paper-plane",
             attrs: { "aria-hidden": "true" }
           })
         ]
@@ -38588,7 +38589,11 @@ var render = function() {
                   _c("p", [_vm._v(_vm._s(message.message))]),
                   _vm._v(" "),
                   _c("span", { staticClass: "time_date" }, [
-                    _vm._v(_vm._s(message.created_at))
+                    _vm._v(
+                      _vm._s(
+                        new Date(message.created_at).toLocaleString("pt-BR")
+                      )
+                    )
                   ])
                 ])
               ])
@@ -38598,7 +38603,11 @@ var render = function() {
                     _c("p", [_vm._v(_vm._s(message.message))]),
                     _vm._v(" "),
                     _c("span", { staticClass: "time_date" }, [
-                      _vm._v(_vm._s(message.created_at))
+                      _vm._v(
+                        _vm._s(
+                          new Date(message.created_at).toLocaleString("pt-BR")
+                        )
+                      )
                     ])
                   ])
                 ])
@@ -38634,14 +38643,14 @@ var render = function() {
   return _vm.friend.status == "online"
     ? _c("span", [
         _c("i", {
-          staticClass: "mdi mdi-star-circle member-star text-success",
+          staticClass: "fa fa-circle text-success",
           attrs: { title: "Ativo" }
         }),
         _vm._v(" Online\n")
       ])
     : _c("span", [
         _c("i", {
-          staticClass: "mdi mdi-alert-circle-outline member-star text-danger",
+          staticClass: "fa fa-circle text-danger",
           attrs: { title: "Inativo" }
         }),
         _vm._v(" Offline\n")
@@ -50905,20 +50914,23 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       console.log(message.message);
 
       if (message.message.trim().length > 0) {
+        var date = new Date();
+        var dt = date.toLocaleString('pt-BR');
         this.messages.push({
           message: message.message,
           user_id: message.user.id,
-          created_at: Date(),
+          created_at: new Date(),
           avatar: message.user.avatar
         });
-        axios.post(receiver + '/messages', message).then(function (response) {//console.log(response.data);
+        axios.post(receiver + '/messages', message).then(function (response) {
+          console.log(response.data);
         });
       }
     }
   }
 });
 Echo["private"]('chat.' + receiver).listen('MessageSent', function (e) {
-  //console.log(e);
+  console.log(e);
   app.messages.push({
     message: e.message.message,
     user: e.user,

@@ -40,12 +40,12 @@
 
             <ul class="nav-right">
                 <li class="header-notification">
-                    <div class="dropdown-primary dropdown">
+                    <div class="dropdown-primary dropdown notification-list">
                         <div class="dropdown-toggle" data-toggle="dropdown">
                             <i class="feather icon-bell"></i>
-                            <span class="badge bg-c-pink" data-count="{{ $totalNotifications }}">{{ $totalNotifications }}</span>
+                            <span class="badge bg-c-pink noti-icon-badge" data-count="{{ $totalNotifications }}">{{ $totalNotifications }}</span>
                         </div>
-                        <ul class="show-notification notification-view dropdown-menu notification-list" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <ul class="show-notification notification-view dropdown-menu  slimscroll" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                             <li>
                                 <h6>Notificações</h6>
                             </li>

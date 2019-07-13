@@ -23,7 +23,7 @@
         "laravel/tinker": "^1.0",
         "laravolt/avatar": "^2.2",
         "okipa/laravel-table": "^1.0",
-        "pusher/pusher-php-server": "^3.4",
+        "pusher/pusher-php-server": "^4.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-activitylog": "^3.5",
         "webklex/laravel-imap": "^1.4",

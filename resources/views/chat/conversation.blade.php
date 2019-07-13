@@ -1,9 +1,5 @@
 @extends('base')
 
-
-
-@section('page-title', 'Conversa com ' . $user->person->name)
-
 @section('css')
     <style>
     .container{max-width:1170px; margin:auto;}
@@ -80,7 +76,7 @@
       }
       .received_withd_msg p {
       background: #ebebeb none repeat scroll 0 0;
-      border-radius: 3px;
+      border-radius: 15px;
       color: #646464;
       font-size: 14px;
       margin: 0;
@@ -98,15 +94,16 @@
       float: left;
       padding: 30px 15px 0 15px;
       width: 100%;
+      background-color: #cfc;
       }
 
       .sent_msg p {
-      background: #05728f none repeat scroll 0 0;
-      border-radius: 3px;
-      font-size: 14px;
-      margin: 0; color:#fff;
-      padding: 5px 10px 5px 12px;
-      width:100%;
+        background: #05728f none repeat scroll 0 0;
+        border-radius: 15px;
+        font-size: 14px;
+        margin: 0; color:#fff;
+        padding: 5px 10px 5px 12px;
+        width:100%;
       }
       .incoming_msg, .outgoing_msg{
         overflow:hidden;
@@ -165,7 +162,7 @@
       .msg-box {
         margin: 5px;
         /*padding: 20px;*/
-        background-color: #fff;
+        /*background-color: #fff;*/
         border-radius: 8px;
       }
     </style>
@@ -183,11 +180,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><img width="32" src="{{ $user->avatar }}" class="rounded-circle user_img_msg"/> {{ $user->person->name }}
+                <div class="panel-heading">
+                  <img width="32" src="{{ $user->avatar }}" class="rounded-circle user_img_msg"/> {{ $user->person->name }}
                   <receiverstatus :user="{{ Auth::user() }}" :receiver="{{ $user }}"></receiverstatus>
                 </div>
 
-                <div class="panel-body" style="background-color:smoke;position:relative;min-height:400px">
+                <div class="panel-body" style="background-color:smoke;position:relative;min-height:320px">
                     <chat-messages :messages="messages" :user="{{ Auth::user() }}" :receiver="{{ $user }}"></chat-messages>
                 </div>
                 <div class="panel-footer">
