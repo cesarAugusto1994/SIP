@@ -38514,15 +38514,20 @@ var render = function() {
         },
         domProps: { value: _vm.newMessage },
         on: {
-          keyup: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
+          keyup: [
+            function($event) {
+              return _vm.whisper()
+            },
+            function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendMessage($event)
             }
-            return _vm.sendMessage($event)
-          },
+          ],
           input: function($event) {
             if ($event.target.composing) {
               return
