@@ -229,8 +229,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
 });
 
-  Route::put('user/{user}/online', 'UserOnlineController');
-  Route::put('user/{user}/offline', 'UserOfflineController');
+  Route::put('user/{id}/online', 'UserOnlineController@online');
+  Route::put('user/{id}/offline', 'UserOfflineController@offline');
 
   Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
   Route::get('delivery-order/{id}/delivery-status', 'DeliveryOrderController@status')->name('delivery_status');
