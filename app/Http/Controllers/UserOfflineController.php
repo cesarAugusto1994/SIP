@@ -15,9 +15,9 @@ class UserOfflineController extends Controller
         $user->status = 'offline';
         $user->save();
 
-        broadcast(new UserOnline($user));
+        broadcast(new UserOffline($user));
     }
-
+/*
     public function __invoke(User $user)
     {
         $user->status = 'offline';
@@ -25,4 +25,5 @@ class UserOfflineController extends Controller
 
         broadcast(new UserOffline($user));
     }
+    */
 }

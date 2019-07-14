@@ -17,7 +17,7 @@ class UserOnlineController extends Controller
 
         broadcast(new UserOnline($user));
     }
-
+/*
     public function __invoke(User $user)
     {
         $user->status = 'online';
@@ -25,4 +25,5 @@ class UserOnlineController extends Controller
 
         broadcast(new UserOnline($user));
     }
+    */
 }
