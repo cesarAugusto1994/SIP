@@ -655,7 +655,7 @@ $(document).ready(function() {
     }
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
 
     var pusher = new Pusher('fbc40aa0ff741e4532da', {
       encrypted: true,
@@ -667,7 +667,7 @@ $(document).ready(function() {
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('App\\Events\\Notifications', function(data) {
-      console.log(data);
+      //console.log(data);
       var existingNotifications = notifications.html();
       var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
       var newNotificationHtml = `
