@@ -26,63 +26,41 @@
 </div>
 
 <div class="page-body">
-  <div class="card">
-      <div class="card-header">
-          <h5>Listagem de Ramais</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
 
-                    <li><input id="searchInput" type="text" placeholder="Pesquisar..." autofocus class="form-control form-control-round form-control-success"></li>
+  <div class="row">
 
-              </ul>
-          </div>
-      </div>
-      <div class="card-block">
+    <div class="col-md-12 m-b-20">
+        <input style="background-color:transparent" autofocus id="searchInput" type="text" placeholder="Pesquisar..." class="form-control form-control-round form-control-success">
+    </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Ramal</th>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Telefone</th>
-                    </tr>
-                </thead>
-                <tbody id="fbody">
+    @foreach($users as $user)
 
-                  @foreach($users as $user)
+        @if(!$user->person->branch)
+            @continue;
+        @endif
 
-                      @if(!$user->person->branch)
-                          @continue;
-                      @endif
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-block text-center">
+                    <h4 class="lead m-t-20">{{ $user->person->branch }}</h4>
+                    <p class="m-b-20">{{ $user->person->name ?? '' }} <br/> {{ $user->email }}</p>
 
-                      <tr>
-                          <td>{{ $user->person->branch }}</td>
-                          <td><p class="lead">{{ $user->person->name ?? '' }}</p>
-
-                            <br/>
-                            <small>
-                            <b>Unidade:</b> {{ $user->person->unit->name ?? '' }}
-                            <br/>
-                            <b>Setor:</b> {{ $user->person->department->name ?? '' }}
-                            <br/>
-                            <b>Cargo:</b> {{ $user->person->occupation->name ?? '' }}
-                            </small>
-
-                          </td>
-                          <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
-                          <td>{{ $user->person->phone }}</td>
-                      </tr>
-
-                  @endforeach
-
-                </tbody>
-            </table>
+                    <small>
+                    <b>Unidade:</b> {{ $user->person->unit->name ?? '' }}
+                    <br/>
+                    <b>Setor:</b> {{ $user->person->department->name ?? '' }}
+                    <br/>
+                    <b>Cargo:</b> {{ $user->person->occupation->name ?? '' }}
+                    </small>
+                </div>
+            </div>
         </div>
 
-      </div>
+    @endforeach
+
+
   </div>
+
 </div>
 
 @endsection
@@ -91,10 +69,10 @@
 
   <script>
       $("#searchInput").keyup(function() {
-          var rows = $("#fbody").find("tr").hide();
+          var rows = $(".card").find(".card-block").hide();
           var data = this.value.split(" ");
           $.each(data, function(i, v) {
-          rows.filter(":contains('" + v + "')").show();
+            rows.filter(":contains('" + v + "')").show();
           });
       });
   </script>
