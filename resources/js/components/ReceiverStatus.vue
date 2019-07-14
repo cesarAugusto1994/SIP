@@ -26,10 +26,10 @@
             listen() {
                 Echo.join('chat')
                     .joining((user) => {
-                        axios.put('/user/'+ user.uuid +'/online', {});
+                        axios.get('/user/'+ user.uuid +'/online', {});
                     })
                     .leaving((user) => {
-                        axios.put('/user/'+ user.uuid +'/offline', {});
+                        axios.get('/user/'+ user.uuid +'/offline', {});
                     })
                     .listen('UserOnline', (e) => {
                         this.friend = e.user;

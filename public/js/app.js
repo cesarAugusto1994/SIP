@@ -1813,9 +1813,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Echo.join('chat').joining(function (user) {
-        axios.put('/user/' + user.uuid + '/online', {});
+        axios.get('/user/' + user.uuid + '/online', {});
       }).leaving(function (user) {
-        axios.put('/user/' + user.uuid + '/offline', {});
+        axios.get('/user/' + user.uuid + '/offline', {});
       }).listen('UserOnline', function (e) {
         _this.friend = e.user;
       }).listen('UserOffline', function (e) {
