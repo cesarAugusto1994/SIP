@@ -18,7 +18,7 @@ class EmailsController extends Controller
     {
         //$aFolder = $oClient->getFolder('INBOX');
 
-        //$this->search();
+        $this->search();
 
         $emailsInbox = Email::where('folder_id', 2)->get();
         $emailsSent = Email::where('folder_id', 4)->get();
