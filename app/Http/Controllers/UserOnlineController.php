@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class UserOnlineController extends Controller
 {
-    public function online($id)
+    public function online($id, Request $request)
     {
         $user = User::uuid($id);
 

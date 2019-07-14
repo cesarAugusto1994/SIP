@@ -8,7 +8,7 @@ use App\User;
 
 class UserOfflineController extends Controller
 {
-    public function offline($id)
+    public function offline($id, Request $request)
     {
         $user = User::uuid($id);
 
