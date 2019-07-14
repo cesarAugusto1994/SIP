@@ -75,19 +75,20 @@
       /*width: 92%;*/
       }
       .received_withd_msg p {
-      background: #ebebeb none repeat scroll 0 0;
-      border-radius: 15px;
-      color: #646464;
-      font-size: 14px;
-      margin: 0;
-      padding: 5px 10px 5px 12px;
-      width: 100%;
+        background: #0ac282  none repeat scroll 0 0;
+        border-radius: 15px;
+        color: white;
+        font-size: 14px;
+        margin: 0;
+        padding: 5px 10px 5px 12px;
+        width: 100%;
       }
       .time_date {
-      color: #747474;
-      display: block;
-      font-size: 12px;
-      margin: 8px 0 0;
+        color: white;
+        font-size: 9px;
+        display: block;
+        margin: 8px 0 0;
+        text-align: right;
       }
       .received_withd_msg { width: 100%;}
       .mesgs {
@@ -124,6 +125,7 @@
 
       .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
       .msg_send_btn {
+        /*
         background: #05728f none repeat scroll 0 0;
         border: medium none;
         border-radius: 50%;
@@ -135,6 +137,18 @@
         right: 0;
         top: 11px;
         width: 33px;
+*/
+        background: #01a9ac none repeat scroll 0 0;
+        border: medium none;
+        /* border-radius: 50%; */
+        color: #fff;
+        cursor: pointer;
+        font-size: 17px;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 70px;
       }
       .messaging { padding: 0 0 0 0;}
       .messages-container {
@@ -182,7 +196,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                   <img width="32" src="{{ $user->avatar }}" class="rounded-circle user_img_msg"/> {{ $user->person->name }}
+                  <span style="float:right;margin-top:7px">
                   <receiverstatus :user="{{ Auth::user() }}" :receiver="{{ $user }}"></receiverstatus>
+                  </span>
                 </div>
 
                 <div class="panel-body" style="background-color:smoke;position:relative;min-height:320px">

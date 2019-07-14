@@ -95,9 +95,9 @@ import VueChatScroll from 'vue-chat-scroll'
      }
  });
 
- Echo.private('chat.'+receiver)
+ Echo.private('chat.'+currentUser)
   .listen('MessageSent', (e) => {
-    console.log(e);
+    console.log('Recebendo Mensagem: '+e);
     app.messages.push({
       message: e.message.message,
       user: e.user,
@@ -107,13 +107,16 @@ import VueChatScroll from 'vue-chat-scroll'
     });
   })
 
-
+/*
 Echo.private('chat.'+privateChatInverse)
  .listen('MessageSent', (e) => {
    console.log('inverse:' + e);
-   this.messages.push({
+   app.messages.push({
      message: e.message.message,
      user: e.user,
      receiver: e.receiver,
+     created_at: e.message.created_at,
+     avatar: e.user.avatar,
    });
  });
+*/

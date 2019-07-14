@@ -1767,6 +1767,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['messages', 'user', 'receiver']
 });
@@ -38586,28 +38590,30 @@ var render = function() {
           message.user_id == _vm.user.id
             ? _c("div", { staticClass: "outgoing_msg" }, [
                 _c("div", { staticClass: "sent_msg" }, [
-                  _c("p", [_vm._v(_vm._s(message.message))]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "time_date" }, [
-                    _vm._v(
-                      _vm._s(
-                        new Date(message.created_at).toLocaleString("pt-BR")
+                  _c("p", [
+                    _vm._v(_vm._s(message.message) + "\n            "),
+                    _c("small", { staticClass: "time_date" }, [
+                      _vm._v(
+                        _vm._s(
+                          new Date(message.created_at).toLocaleString("pt-BR")
+                        )
                       )
-                    )
+                    ])
                   ])
                 ])
               ])
             : _c("div", { staticClass: "incoming_msg" }, [
                 _c("div", { staticClass: "received_msg" }, [
                   _c("div", { staticClass: "received_withd_msg" }, [
-                    _c("p", [_vm._v(_vm._s(message.message))]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "time_date" }, [
-                      _vm._v(
-                        _vm._s(
-                          new Date(message.created_at).toLocaleString("pt-BR")
+                    _c("p", [
+                      _vm._v(_vm._s(message.message) + "\n            "),
+                      _c("small", { staticClass: "time_date" }, [
+                        _vm._v(
+                          _vm._s(
+                            new Date(message.created_at).toLocaleString("pt-BR")
+                          )
                         )
-                      )
+                      ])
                     ])
                   ])
                 ])
@@ -50850,8 +50856,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js");
 /* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__);
-var _this2 = undefined;
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -50922,14 +50926,15 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           created_at: new Date(),
           avatar: message.user.avatar
         });
-        axios.post(receiver + '/messages', message).then(function (response) {//console.log(response.data);
+        axios.post(receiver + '/messages', message).then(function (response) {
+          console.log(response.data);
         });
       }
     }
   }
 });
-Echo["private"]('chat.' + receiver).listen('MessageSent', function (e) {
-  console.log(e);
+Echo["private"]('chat.' + currentUser).listen('MessageSent', function (e) {
+  console.log('Recebendo Mensagem: ' + e);
   app.messages.push({
     message: e.message.message,
     user: e.user,
@@ -50938,15 +50943,19 @@ Echo["private"]('chat.' + receiver).listen('MessageSent', function (e) {
     avatar: e.user.avatar
   });
 });
-Echo["private"]('chat.' + privateChatInverse).listen('MessageSent', function (e) {
-  console.log('inverse:' + e);
-
-  _this2.messages.push({
-    message: e.message.message,
-    user: e.user,
-    receiver: e.receiver
-  });
-});
+/*
+Echo.private('chat.'+privateChatInverse)
+ .listen('MessageSent', (e) => {
+   console.log('inverse:' + e);
+   app.messages.push({
+     message: e.message.message,
+     user: e.user,
+     receiver: e.receiver,
+     created_at: e.message.created_at,
+     avatar: e.user.avatar,
+   });
+ });
+*/
 
 /***/ }),
 

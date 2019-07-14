@@ -63,7 +63,7 @@
             @permission('view.chat')
 
             <li class="">
-                <a href="https://providersadee-x6r4398.slack.com/" target="_blank">
+                <a href="{{ route('chat') }}">
                     <span class="pcoded-micon"><i class="far fa-comment-dots"></i></span>
                     <span class="pcoded-mtext">Chat</span>
                 </a>

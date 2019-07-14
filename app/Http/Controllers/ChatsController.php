@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Events\{MessageSent, Notifications};
 use Auth;
 use App\User;
+use App\Helpers\Helper;
 use App\Models\People;
 use App\Models\{Department};
 use App\Models\Department\Occupation;
@@ -25,6 +26,7 @@ class ChatsController extends Controller
     */
     public function index(Request $request)
     {
+      /*
         $people = People::where('id', '>', 0);
 
         if($request->filled('active')) {
@@ -60,12 +62,13 @@ class ChatsController extends Controller
 
         }
 
-        $people = $people->paginate();
-
-        $departments = Department::all();
+        $people = $people->all();
+*/
+        $users = Helper::users();
+        $departments = Helper::departments();
         $occupations = Occupation::where('department_id', $departments->first()->id)->get();
 
-        return view('chat.index', compact('people', 'departments', 'occupations'));
+        return view('chat.index', compact('users', 'departments', 'occupations'));
     }
 
     public function create($id)
@@ -106,6 +109,6 @@ class ChatsController extends Controller
         broadcast(new MessageSent(Auth::user(), $message, $user))->toOthers();
         //broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
 
-        return ['status' => 'Message Sent!'];
+        return ['status' => 'Mensagem Enviada!'];
     }
 }

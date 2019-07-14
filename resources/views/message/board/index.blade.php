@@ -61,8 +61,11 @@
                               {{ html_entity_decode(strip_tags(substr($message->content, 0, 240))) }}...
                           </p>
                         </a>
-                          <br/>
-                          <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
+                        <br/>
+                        <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
+                        @if($message->important)
+                            <span class="label label-danger }}">Importante</span>
+                        @endif
                       </div>
                   </div>
 
