@@ -100,7 +100,7 @@ $(document).ready(function() {
                 direction: 'right'
             };
         }
-        $('.showChat_inner').toggle('slide', options, 500);
+        //$('.showChat_inner').toggle('slide', options, 500);
     });
     //back to main chatbar
     $('.back_chatBox').on('click', function() {
@@ -114,8 +114,8 @@ $(document).ready(function() {
                 direction: 'right'
             };
         }
-        $('.showChat_inner').toggle('slide', options, 500);
-        $('.showChat').css('display', 'block');
+        //$('.showChat_inner').toggle('slide', options, 500);
+        //$('.showChat').css('display', 'block');
     });
     // /*chatbar js end*/
     $(".search-btn").on('click', function() {

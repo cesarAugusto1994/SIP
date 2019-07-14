@@ -85,8 +85,15 @@ class ChatsController extends Controller
     public function fetchMessages($id)
     {
         $user = User::uuid($id);
-        return Message::where('user_id', $user->id)->where('receiver_id', Auth::user()->id)
+        $messages = Message::where('user_id', $user->id)->where('receiver_id', Auth::user()->id)
         ->orWhere('receiver_id', $user->id)->where('user_id', Auth::user()->id)->get();
+
+        $messages->map(function($message) {
+            $message->read_at = now();
+            $message->save();
+        });
+
+        return $messages;
     }
 
     /**
@@ -111,4 +118,14 @@ class ChatsController extends Controller
 
         return ['status' => 'Mensagem Enviada!'];
     }
+
+    public function masrkAsRead($id, Request $request)
+    {
+        $message = Message::uuid($id);
+        $message->read_at = now();
+        $message->save();
+
+        return ['status' => 'read'];
+    }
+
 }

@@ -50942,6 +50942,9 @@ Echo["private"]('chat.' + currentUser).listen('MessageSent', function (e) {
     created_at: e.message.created_at,
     avatar: e.user.avatar
   });
+  axios.post('/admin/chat/message/' + e.message.uuid + '/markasread', e.message).then(function (response) {
+    console.log(response);
+  });
 });
 /*
 Echo.private('chat.'+privateChatInverse)

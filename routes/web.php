@@ -52,6 +52,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
       Route::get('conversation/{id}/messages', 'ChatsController@fetchMessages')->name('chat_messages');
       Route::post('conversation/{id}/messages', 'ChatsController@sendMessage')->name('chat_post_message');
 
+      Route::post('message/{id}/markasread', 'ChatsController@masrkAsRead')->name('chat_post_message_markasread');
+
     });
 
     Route::resource('configurations', 'ConfigurationsController');

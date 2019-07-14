@@ -12,6 +12,7 @@ use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
 use App\Models\Unit;
+use App\Models\Message;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Models\Category as MessageBoardCategory;
@@ -92,6 +93,12 @@ class Helper
 
         self::set($key, $data);
         return self::get($key);
+    }
+
+    public static function unreadChatMessages()
+    {
+        $user = auth()->user();
+        return $user->messages()->where('receiver_id', $user->id)->where('read_at', null)->count();
     }
 
     public static function messageBoardTypes()

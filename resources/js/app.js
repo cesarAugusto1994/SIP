@@ -105,6 +105,11 @@ import VueChatScroll from 'vue-chat-scroll'
       created_at: e.message.created_at,
       avatar: e.user.avatar,
     });
+
+    axios.post('/admin/chat/message/'+ e.message.uuid +'/markasread', e.message).then(response => {
+        console.log(response);
+    });
+
   })
 
 /*

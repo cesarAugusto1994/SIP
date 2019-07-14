@@ -72,6 +72,15 @@
                         </ul>
                     </div>
                 </li>
+
+                <li class="header-notification">
+                    <div class="dropdown-primary dropdown">
+                        <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
+                            <i class="feather icon-message-square"></i>
+                            <span class="badge bg-c-green">{{ \App\Helpers\Helper::unreadChatMessages() }}</span>
+                        </div>
+                    </div>
+                </li>
                 <li class="user-profile header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="dropdown-toggle" data-toggle="dropdown">
@@ -136,3 +145,108 @@
         </div>
     </div>
 </nav>
+
+
+
+<!-- Sidebar chat start -->
+<div id="sidebar" class="users p-chat-user showChat">
+    <div class="had-container">
+        <div class="card card_main p-fixed users-main">
+            <div class="user-box">
+                <div class="chat-inner-header">
+                    <div class="back_chatBoxs">
+                        <div class="right-icon-control">
+                            <input type="text" class="form-control search-text" placeholder="Pesquisar" id="search-friends">
+                            <div class="form-icon">
+                                <i class="icofont icofont-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-friend-list">
+
+                  @php
+
+                      $users = \App\Helpers\Helper::users();
+
+                  @endphp
+
+
+                  @foreach($users as $user)
+
+                    @if(Auth::user()->id == $user->id)
+                        @continue;
+                    @endif
+
+                    @php
+
+                      $countMessages = $user->messages()->where('receiver_id', auth()->user()->id)->where('read_at', null)->count();
+
+                    @endphp
+
+                    <div class="media userlist-box" data-id="{{ $user->id }}" data-status="online" data-username="{{ $user->person->name }}" data-toggle="tooltip" data-placement="left" title="" data-original-title="{{ $user->person->name }}">
+                        <a class="media-left" href="{{ route('chat_user', $user->uuid) }}">
+                            <img class="media-object img-radius img-radius" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" alt="">
+                            @if($user->status == 'online')
+                                <div class="live-status bg-success"></div>
+                            @else
+                                <div class="live-status bg-danger"></div>
+                            @endif
+                        </a>
+                        <div class="media-body">
+                          <a href="{{ route('chat_user', $user->uuid) }}">
+                            <div class="f-13 chat-header">{{ $user->person->name }}</div>
+                            @if($countMessages)
+                              <span class="badge bg-c-green">{{ $countMessages }}</span>
+                            @endif
+                          </a>
+                        </div>
+                    </div>
+
+                  @endforeach
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sidebar inner chat start-->
+<div class="showChat_inner">
+    <div class="media chat-inner-header">
+        <a class="back_chatBox">
+            <i class="feather icon-chevron-left"></i> Josephin Doe
+        </a>
+    </div>
+    <div class="media chat-messages">
+        <a class="media-left photo-table" href="#!">
+            <img class="media-object img-radius img-radius m-t-5" src="..\files\assets\images\avatar-3.jpg" alt="Generic placeholder image">
+        </a>
+        <div class="media-body chat-menu-content">
+            <div class="">
+                <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                <p class="chat-time">8:20 a.m.</p>
+            </div>
+        </div>
+    </div>
+    <div class="media chat-messages">
+        <div class="media-body chat-menu-reply">
+            <div class="">
+                <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                <p class="chat-time">8:20 a.m.</p>
+            </div>
+        </div>
+        <div class="media-right photo-table">
+            <a href="#!">
+                <img class="media-object img-radius img-radius m-t-5" src="..\files\assets\images\avatar-4.jpg" alt="Generic placeholder image">
+            </a>
+        </div>
+    </div>
+    <div class="chat-reply-box p-b-20">
+        <div class="right-icon-control">
+            <input type="text" class="form-control search-text" placeholder="Share Your Thoughts">
+            <div class="form-icon">
+                <i class="feather icon-navigation"></i>
+            </div>
+        </div>
+    </div>
+</div>
