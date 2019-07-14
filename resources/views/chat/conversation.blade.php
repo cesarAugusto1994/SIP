@@ -195,7 +195,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                  <img width="32" src="{{ $user->avatar }}" class="rounded-circle user_img_msg"/> {{ $user->person->name }}
+                  <img width="32" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" class="rounded-circle user_img_msg"/> {{ $user->person->name }}
                   <span style="float:right;margin-top:7px">
                   <receiverstatus :user="{{ Auth::user() }}" :receiver="{{ $user }}"></receiverstatus>
                   </span>

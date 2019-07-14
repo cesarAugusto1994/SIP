@@ -35,7 +35,7 @@
               <div class="card rounded-card user-card">
                   <div class="card-block">
                       <div class="img-hover" style="width:64px">
-                          <img class="img-fluid img-radius" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" alt="round-img">
+                          <img class="img-fluid img-radius" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" alt="">
                       </div>
                       <div class="user-content">
                           <h4 class="">{{ $user->person->name }}</h4>
