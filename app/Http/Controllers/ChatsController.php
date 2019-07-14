@@ -64,6 +64,7 @@ class ChatsController extends Controller
 
         $people = $people->all();
 */
+
         $users = Helper::users();
         $departments = Helper::departments();
         $occupations = Occupation::where('department_id', $departments->first()->id)->get();

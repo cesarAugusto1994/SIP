@@ -98,7 +98,9 @@ class Helper
     public static function unreadChatMessages()
     {
         $user = auth()->user();
-        return $user->messages()->where('receiver_id', $user->id)->where('read_at', null)->count();
+        return $user->messages()
+                  ->where('read_at', null)
+                  ->get();
     }
 
     public static function messageBoardTypes()

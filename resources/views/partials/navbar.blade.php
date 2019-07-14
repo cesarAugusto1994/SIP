@@ -77,7 +77,7 @@
                     <div class="dropdown-primary dropdown">
                         <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
                             <i class="feather icon-message-square"></i>
-                            <span class="badge bg-c-green">{{ \App\Helpers\Helper::unreadChatMessages() }}</span>
+                            <span class="badge bg-c-green">{{ \App\Helpers\Helper::unreadChatMessages()->count() }}</span>
                         </div>
                     </div>
                 </li>
@@ -187,11 +187,6 @@
                     <div class="media userlist-box" data-id="{{ $user->id }}" data-status="online" data-username="{{ $user->person->name }}" data-toggle="tooltip" data-placement="left" title="" data-original-title="{{ $user->person->name }}">
                         <a class="media-left" href="{{ route('chat_user', $user->uuid) }}">
                             <img class="media-object img-radius img-radius" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" alt="">
-                            @if($user->status == 'online')
-                                <div class="live-status bg-success"></div>
-                            @else
-                                <div class="live-status bg-danger"></div>
-                            @endif
                         </a>
                         <div class="media-body">
                           <a href="{{ route('chat_user', $user->uuid) }}">
@@ -200,6 +195,9 @@
                               <span class="badge bg-c-green">{{ $countMessages }}</span>
                             @endif
                           </a>
+                          <span class="float-right">
+                            <receiverstatus :user="{{ Auth::user() }}" :receiver="{{ $user }}"></receiverstatus>
+                          <span>
                         </div>
                     </div>
 
