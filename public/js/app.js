@@ -1813,9 +1813,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Echo.join('chat').joining(function (user) {
-        axios.put('/api/user/' + user.id + '/online?api_token=' + user.api_token, {});
+        axios.put('/user/' + user.id + '/online?api_token=' + user.api_token, {});
       }).leaving(function (user) {
-        axios.put('/api/user/' + user.id + '/offline?api_token=' + user.api_token, {});
+        axios.put('/user/' + user.id + '/offline?api_token=' + user.api_token, {});
       }).listen('UserOnline', function (e) {
         _this.friend = e.user;
       }).listen('UserOffline', function (e) {
