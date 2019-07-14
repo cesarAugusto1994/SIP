@@ -24,10 +24,10 @@
             listen() {
                 Echo.join('chat')
                     .joining((user) => {
-                        axios.put('/api/user/'+ user.id +'/online?api_token=' + user.api_token, {});
+                        axios.put('/user/'+ user.uuid +'/online?api_token=' + user.api_token, {});
                     })
                     .leaving((user) => {
-                        axios.put('/api/user/'+ user.id +'/offline?api_token=' + user.api_token, {});
+                        axios.put('/user/'+ user.uuid +'/offline?api_token=' + user.api_token, {});
                     })
             }
         }

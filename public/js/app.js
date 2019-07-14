@@ -1858,9 +1858,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     listen: function listen() {
       Echo.join('chat').joining(function (user) {
-        axios.put('/api/user/' + user.id + '/online?api_token=' + user.api_token, {});
+        axios.put('/user/' + user.uuid + '/online?api_token=' + user.api_token, {});
       }).leaving(function (user) {
-        axios.put('/api/user/' + user.id + '/offline?api_token=' + user.api_token, {});
+        axios.put('/user/' + user.uuid + '/offline?api_token=' + user.api_token, {});
       });
     }
   }
