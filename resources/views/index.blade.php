@@ -177,7 +177,7 @@
                                   </p>
                                 </a>
                                   <br/>
-                                  <span class="label label-{{ array_random(['info', 'success', 'primary', 'danger']) }}">{{ $message->type->name }}</span>
+                                  <span class="label label-{{ array_random(['info', 'success', 'primary', 'warning']) }}">{{ $message->type->name }}</span>
                                   @if($message->important)
                                       <span class="label label-danger }}">Importante</span>
                                   @endif
