@@ -82,10 +82,10 @@
           <div class="col-md-12 col-xl-4">
               <div class="card user-card">
                   <div class="card-header-img">
-                      <img class="img-fluid img-radius" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="card-img">
+                      <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="card-img">
                       <h4>{{ $person->name }}</h4>
                       <h5><a href="" class="__cf_email__" >{{$person->user->email}}</a></h5>
-                      <h6>{{$person->department->name}}/{{$person->occupation->name}}</h6>
+                      <p>{{$person->department->name}} / {{$person->occupation->name}}</p>
                   </div>
 
                   @if($person->active)
