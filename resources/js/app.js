@@ -67,7 +67,7 @@ import VueChatScroll from 'vue-chat-scroll'
      methods: {
          fetchMessages() {
              axios.get(receiver+'/messages').then(response => {
-                  console.log('fetchMessages: '+response);
+                 //console.log('fetchMessages: '+response);
                  this.messages = response.data;
              });
          },
@@ -85,7 +85,7 @@ import VueChatScroll from 'vue-chat-scroll'
                     avatar: message.user.avatar,
                 });
                 axios.post(receiver+'/messages', message).then(response => {
-                    console.log(response.data);
+                    //console.log(response.data);
                 });
 
               }
@@ -95,9 +95,9 @@ import VueChatScroll from 'vue-chat-scroll'
      }
  });
 
- Echo.private('chat.'+currentUser)
+ Echo.private('chat.'+privateChat)
   .listen('MessageSent', (e) => {
-    console.log('Recebendo Mensagem: '+e);
+    //console.log('Recebendo Mensagem: '+e);
     app.messages.push({
       message: e.message.message,
       user: e.user,
@@ -107,7 +107,7 @@ import VueChatScroll from 'vue-chat-scroll'
     });
 
     axios.post('/admin/chat/message/'+ e.message.uuid +'/markasread', e.message).then(response => {
-        console.log(response);
+        //console.log(response);
     });
 
   })

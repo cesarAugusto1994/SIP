@@ -50913,7 +50913,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var _this = this;
 
       axios.get(receiver + '/messages').then(function (response) {
-        console.log('fetchMessages: ' + response);
+        //console.log('fetchMessages: '+response);
         _this.messages = response.data;
       });
     },
@@ -50926,15 +50926,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           created_at: new Date(),
           avatar: message.user.avatar
         });
-        axios.post(receiver + '/messages', message).then(function (response) {
-          console.log(response.data);
+        axios.post(receiver + '/messages', message).then(function (response) {//console.log(response.data);
         });
       }
     }
   }
 });
-Echo["private"]('chat.' + currentUser).listen('MessageSent', function (e) {
-  console.log('Recebendo Mensagem: ' + e);
+Echo["private"]('chat.' + privateChat).listen('MessageSent', function (e) {
+  //console.log('Recebendo Mensagem: '+e);
   app.messages.push({
     message: e.message.message,
     user: e.user,
@@ -50942,8 +50941,7 @@ Echo["private"]('chat.' + currentUser).listen('MessageSent', function (e) {
     created_at: e.message.created_at,
     avatar: e.user.avatar
   });
-  axios.post('/admin/chat/message/' + e.message.uuid + '/markasread', e.message).then(function (response) {
-    console.log(response);
+  axios.post('/admin/chat/message/' + e.message.uuid + '/markasread', e.message).then(function (response) {//console.log(response);
   });
 });
 /*

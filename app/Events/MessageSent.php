@@ -49,7 +49,7 @@ class MessageSent implements ShouldBroadcast
         $this->user = $user;
         $this->message = $message;
         $this->receiver = $receiver;
-        $this->receiverCode = $receiver->uuid;
+        $this->receiverCode = $receiver->uuid .'.'.$user->uuid;
     }
 
     /**
@@ -59,6 +59,6 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.'.$this->receiver->uuid);
+        return new PrivateChannel('chat.'.$this->receiverCode);
     }
 }
