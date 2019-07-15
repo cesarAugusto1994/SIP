@@ -33,7 +33,7 @@
         <input style="background-color:transparent" autofocus id="searchInput" type="text" placeholder="Pesquisar..." class="form-control form-control-round form-control-success">
     </div>
 
-    @foreach($users as $user)
+    @foreach($users->sortBy('person.branch') as $user)
 
         @if(!$user->person->branch)
             @continue;

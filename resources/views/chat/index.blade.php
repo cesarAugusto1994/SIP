@@ -27,7 +27,7 @@
 <div class="page-body">
     <div class="row">
 
-        @foreach($users as $user)
+        @foreach($users->sortBy('person.name') as $user)
 
           @php
 

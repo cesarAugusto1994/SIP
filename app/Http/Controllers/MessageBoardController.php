@@ -125,7 +125,7 @@ class MessageBoardController extends Controller
           'text' => 'Novo Recado adicionado com sucesso.'
         ]);
 
-        Notification::send(UserModel::where('id', 2)->get(), new NewMessage($messageBoard));
+        Notification::send($users, new NewMessage($messageBoard));
 
         return redirect()->route('message-board.index');
     }

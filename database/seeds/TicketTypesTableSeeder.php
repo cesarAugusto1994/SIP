@@ -51,13 +51,25 @@ class TicketTypesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Problemas com a Internet',
+            'types' => [
+              [
+                  'name' => 'Não Acessa a internet',
+              ],
+              [
+                  'name' => 'Não sei a Senha do wifi',
+              ],
+              [
+                  'name' => 'Outros',
+              ],
+            ],
+          ],
+
+          [
             'name' => 'Problemas no Ramal',
             'types' => [
               [
                   'name' => 'Está mudo',
-              ],
-              [
-                  'name' => 'Não funciona',
               ],
               [
                   'name' => 'Com defeito',
