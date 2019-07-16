@@ -35,8 +35,8 @@
       </div>
       <div class="card-block">
 
-        <form method="post" action="{{route('occupations.update', $occupation->uuid)}}">
-            {{csrf_field()}}
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('occupations.update', $occupation->uuid)}}">
+            @csrf
             {{method_field('PUT')}}
 
             <div class="row m-b-30">

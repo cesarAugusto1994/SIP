@@ -35,7 +35,7 @@
       </div>
       <div class="card-block">
 
-        <form method="post" action="{{route('departments.update', ['id' => $department->uuid])}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('departments.update', ['id' => $department->uuid])}}">
             {{csrf_field()}}
             {{method_field('PUT')}}
 
@@ -57,7 +57,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Resposável</label>
                       <div class="input-group">
-                        <select class="form-control m-b select2" name="user_id" required>
+                        <select class="form-control" name="user_id" required>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}" {{ $department->user_id == $user->id ? 'selected' : '' }}>{{$user->person->name}}</option>
                             @endforeach

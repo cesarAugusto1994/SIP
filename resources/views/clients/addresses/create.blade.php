@@ -40,7 +40,7 @@
       </div>
       <div class="card-block">
 
-        <form action="{{route('client_addresses_store', [$client->uuid])}}" method="post">
+        <form class="formValidation" data-parsley-validate action="{{route('client_addresses_store', [$client->uuid])}}" method="post">
             {{csrf_field()}}
             <div class="row">
 

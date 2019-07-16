@@ -15,7 +15,7 @@ class MessageTypesController extends Controller
     public function index()
     {
         $types = Type::all();
-        return view('admin.message.types.index', compact('types'));
+        return view('message.types.index', compact('types'));
     }
 
     /**
@@ -25,7 +25,7 @@ class MessageTypesController extends Controller
      */
     public function create()
     {
-        return view('admin.message.types.create');
+        return view('message.types.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class MessageTypesController extends Controller
     public function edit($id)
     {
         $type = Type::uuid($id);
-        return view('admin.message.types.edit', compact('type'));
+        return view('message.types.edit', compact('type'));
     }
 
     /**

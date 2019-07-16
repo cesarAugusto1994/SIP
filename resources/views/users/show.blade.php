@@ -270,10 +270,10 @@
                             </div>
                             <div class="card-block">
 
-                              <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->uuid])}}" method="post">
+                              <form class="formValidation" data-parsley-validate enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->uuid])}}" method="post">
                                   {{csrf_field()}}
 
-                                  <div class="row m-b-30">
+                                  <div class="row">
 
                                       <div class="col-md-6">
                                         <div class="form-group">
@@ -416,7 +416,7 @@
                                       @endif
                                   </div>
 
-                                  <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+                                  <button type="submit" class="btn btn-success btn-sm btn-block">Salvar</button>
 
                               </form>
 
@@ -433,7 +433,7 @@
                             </div>
                             <div class="card-block">
 
-                              <form action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
+                              <form class="formValidation2" data-parsley-validate action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
                                   @csrf
 
                                   <div class="row m-b-30">
@@ -476,7 +476,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label">Senha E-mail</label>
                                             <div class="input-group">
-                                              <input type="password" name="password_email" value="{{$user->password_email??''}}" class="form-control">
+                                              <input autocomplete="off" type="password" name="password_email" value="{{$user->password_email??''}}" class="form-control">
                                             </div>
                                         </div>
 

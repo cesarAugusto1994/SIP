@@ -185,9 +185,9 @@
                     @endphp
 
                     <div class="media userlist-box" data-id="{{ $user->id }}" data-status="online" data-username="{{ $user->person->name }}" data-toggle="tooltip" data-placement="left" title="" data-original-title="{{ $user->person->name }}">
-                        <a class="media-left" href="{{ route('chat_user', $user->uuid) }}">
+                        <!--<a class="media-left" href="{{ route('chat_user', $user->uuid) }}">
                             <img class="media-object img-radius img-radius" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" alt="">
-                        </a>
+                        </a>-->
                         <div class="media-body">
                           <a href="{{ route('chat_user', $user->uuid) }}">
                             <div class="f-13 chat-header">{{ $user->person->name }}</div>

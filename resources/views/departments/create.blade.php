@@ -35,7 +35,7 @@
       </div>
       <div class="card-block">
 
-        <form method="post" action="{{route('departments.store')}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('departments.store')}}">
             @csrf
 
             <div class="row m-b-30">
@@ -56,7 +56,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Resposável</label>
                       <div class="input-group">
-                        <select class="form-control m-b select2" name="user_id" required>
+                        <select class="form-control" name="user_id" required>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->person->name}}</option>
                             @endforeach
@@ -69,7 +69,7 @@
 
             <button class="btn btn-success btn-sm">Salvar</button>
             <a class="btn btn-danger btn-outline btn-sm" href="{{ route('departments.index') }}">Cancelar</a>
-            
+
         </form>
 
       </div>

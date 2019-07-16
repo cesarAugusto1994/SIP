@@ -35,7 +35,7 @@
       </div>
       <div class="card-block">
 
-        <form method="post" action="{{route('tickets.store')}}">
+        <form class="formValidation" method="post" action="{{route('tickets.store')}}" data-parsley-validate>
             @csrf
 
             <div class="row m-b-30">
@@ -82,5 +82,27 @@
       </div>
   </div>
 </div>
+
+@endsection
+
+@section('scripts')
+
+<script>
+/*
+    $(":submit").click(function(e) {
+
+
+        return false;
+        window.swal({
+          title: 'Em progresso',
+          text: 'Aguarde enquanto os dados são salvos.',
+          type: 'success',
+          showConfirmButton: false,
+          allowOutsideClick: false
+        })
+
+    });
+*/
+</script>
 
 @endsection

@@ -55,6 +55,53 @@
 
     @yield('css')
 
+    <style>
+        input.parsley-success,
+        select.parsley-success,
+        textarea.parsley-success {
+          color: #468847;
+          background-color: #DFF0D8;
+          border: 1px solid #D6E9C6;
+        }
+
+        input.parsley-error,
+        select.parsley-error,
+        textarea.parsley-error {
+          color: #B94A48;
+          background-color: #F2DEDE;
+          border: 1px solid #EED3D7;
+        }
+
+        .parsley-errors-list {
+          margin: 2px 0 3px;
+          padding: 0;
+          list-style-type: none;
+          font-size: 0.9em;
+          line-height: 0.9em;
+          opacity: 0;
+          color: #B94A48;
+
+          transition: all .3s ease-in;
+          -o-transition: all .3s ease-in;
+          -moz-transition: all .3s ease-in;
+          -webkit-transition: all .3s ease-in;
+          }
+
+        .parsley-errors-list.filled {
+          opacity: 1;
+        }
+
+        .form-group li {
+          list-style: none;
+          background-color: #fe5d70;
+          /* border: 2px solid #dc3545; */
+          color: white;
+          padding: 10px 10px 10px 15px;
+          border-radius: 10px;
+          border-left: 12px solid #dc3545;
+        }
+    </style>
+
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -173,8 +220,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.2/js/plugins/font_family.min.js"></script>
 <script src="https://cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
 
+<script src="{{ asset('adminty\js\parsley.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.1/dist/i18n/pt-br.js"></script>
+
 <script>
   new FroalaEditor('.editor', {})
+</script>
+
+<script>
+
+  $(document).ready(function() {
+
+    var $formValid = $('.formValidation').parsley().on('form:submit', function(e) {
+      // This global callback will be called for any field that fails validation.
+      //e.preventDefault();
+      //return false;
+      window.swal({
+        title: 'Em progresso...',
+        text: 'Aguarde enquanto os dados são salvos.',
+        type: 'success',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      });
+    });;
+
+  });
+
 </script>
 
 <script>

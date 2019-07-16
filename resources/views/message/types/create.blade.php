@@ -1,28 +1,61 @@
-@extends('layouts.app')
-
-@section('page-title', 'Tipos de Recados')
+@extends('base')
 
 @section('content')
 
-<div class="card-box">
-    <h6 class="font-13 m-t-0 m-b-30">Novo Tipo de Recado</h6>
-    <form method="post" action="{{route('message-types.store')}}">
-        {{csrf_field()}}
-        <div class="row m-b-30">
-            <div class="col-md-12">
-              <div class="form-group">
-                  <label class="col-form-label">Nome</label>
-                  <div class="input-group">
-                    <input type="text" required name="name" placeholder="Informe o novo tipo de Recado" class="form-control">
-                  </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <button class="btn btn-custom">Salvar</button>
-              <a class="btn btn-default" href="{{ route('message-types.index') }}">Cancelar</a>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Novo Tipo de Recado</h4>
+                </div>
             </div>
         </div>
-    </form>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('message-types.index') }}"> Tipo de Recado </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Novo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Novo Tipo de Recado</h5>
+      </div>
+      <div class="card-block">
+
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('message-types.store')}}">
+            {{csrf_field()}}
+            <div class="row m-b-30">
+
+                <div class="col-md-4">
+
+                  <div class="form-group"><label class="col-form-label">Nome</label>
+                      <div class="input-group"><input type="text" name="name" class="form-control" autofocus required/></div>
+                  </div>
+
+                </div>
+
+            </div>
+
+            <button class="btn btn-success btn-sm">Salvar</button>
+            <a class="btn btn-outline-danger btn-sm" href="{{ route('message-types.index') }}">Cancelar</a>
+
+        </form>
+
+      </div>
+  </div>
 </div>
 
 @endsection

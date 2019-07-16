@@ -35,7 +35,7 @@
           </div>
           <div class="card-block">
 
-            <form method="post" action="{{route('users.store')}}">
+            <form class="formValidation" method="post" action="{{route('users.store')}}" data-parsley-validate>
 
                 {{csrf_field()}}
 
@@ -64,7 +64,7 @@
                       <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                           <label class="col-form-label">E-mail</label>
                           <div class="input-group">
-                            <input type="email" required autocomplete="off" value="{{ old('email') }}" name="email" class="form-control">
+                            <input type="email" required autocomplete="off" data-parsley-type="email" value="{{ old('email') }}" name="email" class="form-control">
                           </div>
                           {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                       </div>

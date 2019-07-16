@@ -40,7 +40,7 @@
       </div>
       <div class="card-block">
 
-        <form method="post" action="{{route('clients.update', $client->uuid)}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('clients.update', $client->uuid)}}">
             {{csrf_field()}}
             {{method_field('PUT')}}
 
@@ -50,14 +50,14 @@
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="name">Nome</label>
                         <div class="input-group">
-                            <input type="text" id="name" name="name" value="{{ $client->name }}" class="form-control" placeholder="Informe o nome">
+                            <input type="text" required id="name" name="name" value="{{ $client->name }}" class="form-control" placeholder="Informe o nome">
                         </div>
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                     </div>
                     <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="phone">Telefone</label>
                         <div class="input-group">
-                            <input type="text" id="phone" name="phone" value="{{ $client->phone }}" class="form-control" placeholder="Informe o Telefone">
+                            <input type="text" id="phone" required name="phone" value="{{ $client->phone }}" class="form-control" placeholder="Informe o Telefone">
                         </div>
                         {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -67,7 +67,7 @@
                     <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="document">CPF/CNPJ</label>
                         <div class="input-group">
-                            <input type="text" id="document" name="document"  value="{{ $client->document }}" class="form-control" placeholder="Informe o CPF ou CNPJ">
+                            <input type="text" required id="document" name="document"  value="{{ $client->document }}" class="form-control" placeholder="Informe o CPF ou CNPJ">
                         </div>
                         {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -85,7 +85,7 @@
                     <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="email">Email</label>
                         <div class="input-group">
-                            <input type="text" id="email" name="email"  value="{{ $client->email }}" class="form-control" placeholder="Informe o email">
+                            <input type="text" required id="email" name="email"  value="{{ $client->email }}" class="form-control" placeholder="Informe o email">
                         </div>
                         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
