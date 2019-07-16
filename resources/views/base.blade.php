@@ -91,7 +91,7 @@
           opacity: 1;
         }
 
-        .form-group li {
+        .parsley-required {
           list-style: none;
           background-color: #fe5d70;
           /* border: 2px solid #dc3545; */
@@ -233,23 +233,21 @@
 
     var $formValid = $('.formValidation').parsley();
 
-    if($formValid && $formValid.isValid()) {
+      if($('.formValidation').length > 0) {
 
-      $formValid.on('form:submit', function(e) {
-        // This global callback will be called for any field that fails validation.
-        //e.preventDefault();
-        window.swal({
-          title: 'Em progresso...',
-          text: 'Aguarde enquanto os dados são salvos.',
-          type: 'success',
-          showConfirmButton: false,
-          allowOutsideClick: false
-        });
-      });;
+        $formValid.on('form:submit', function(e) {
+          // This global callback will be called for any field that fails validation.
+          //e.preventDefault();
+          window.swal({
+            title: 'Em progresso...',
+            text: 'Aguarde enquanto os dados são salvos.',
+            type: 'success',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+        });;
 
-    }
-
-
+      }
 
   });
 
@@ -623,6 +621,14 @@ $(document).ready(function() {
 
     selectOccupations.change(function () {
 
+      swal({
+        title: 'Aguarde um instante.',
+        text: 'Carregando os dados...',
+        type: 'info',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      });
+
       let self = $(this);
       let route = self.data('search-occupations');
       let value = self.val();
@@ -645,6 +651,8 @@ $(document).ready(function() {
 
           occupation.append(html);
           occupation.selectpicker('refresh');
+
+          swal.close();
 
         }
       })

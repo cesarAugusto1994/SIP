@@ -50,6 +50,7 @@
                           @foreach(\App\Helpers\Helper::ticketCategories() as $category)
                             <optgroup label="{{ $category->name }}">
                             @foreach($category->types as $type)
+                              @if(!$type->active) @continue; @endif
                               <option value="{{$type->id}}">{{$type->name}}</option>
                             @endforeach
                             </optgroup>

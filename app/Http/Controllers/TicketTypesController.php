@@ -16,7 +16,8 @@ class TicketTypesController extends Controller
      */
     public function index()
     {
-        return view('tickets.types.index');
+        $types = Type::all();
+        return view('tickets.types.index', compact('types'));
     }
 
     /**
@@ -83,7 +84,8 @@ class TicketTypesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Type::uuid($id);
+        return view('tickets.types.edit', compact('type'));
     }
 
     /**
@@ -95,7 +97,36 @@ class TicketTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $data['active'] = $request->has('active');
+
+        $type = Type::uuid($id);
+        $type->update($data);
+
+        if($request->has('departments')) {
+
+          $type->departments->map(function($department) {
+              $department->delete();
+          });
+
+          $depts = $request->get('departments');
+
+          foreach ($depts as $key => $dept) {
+              Department::create([
+                'type_id' => $type->id,
+                'department_id' => $dept
+              ]);
+          }
+        }
+
+        Helper::drop('ticket_types');
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Tipo de chamado atualizado com sucesso.'
+        ]);
+
+        return redirect()->route('ticket-types.index');
     }
 
     /**

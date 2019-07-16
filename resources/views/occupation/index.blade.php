@@ -31,32 +31,28 @@
           <h5>Listagem de Cargos</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
-
                   @permission('create.cargos')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('occupations.create')}}">Novo Cargo</a></li>
                   @endpermission
-
               </ul>
           </div>
       </div>
-      <div class="card-block">
-
-        <div class="row">
-          @foreach($occupations as $occupation)
-          <div class="col-md-12 col-lg-4">
-              <div class="card">
-                  <div class="card-block text-center">
-                      <h4 class="m-t-20">{{$occupation->name}}</h4>
-                      <p class="m-b-20">{{$occupation->department->name}}</p>
-                      <a class="btn btn-primary btn-sm btn-round" href="{{ route('occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                  </div>
-              </div>
-          </div>
-          @endforeach
-        </div>
-
-      </div>
   </div>
+
+  <div class="row">
+    @foreach($occupations as $occupation)
+    <div class="col-md-12 col-lg-4">
+        <div class="card">
+            <div class="card-block text-center">
+                <h4 class="m-t-20">{{$occupation->name}}</h4>
+                <p class="m-b-20">{{$occupation->department->name}}</p>
+                <a class="btn btn-primary btn-sm btn-round" href="{{ route('occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+  </div>
+
 </div>
 
 @endsection

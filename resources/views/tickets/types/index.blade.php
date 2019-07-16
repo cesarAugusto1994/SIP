@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
 
-                  @foreach(\App\Helpers\Helper::ticketTypes() as $type)
+                  @foreach($types as $type)
 
                       <tr>
                           <td>{{$type->name}}</td>

@@ -34,7 +34,9 @@
 
         <form method="get" action="?">
           <div class="row">
-              <div class="col-lg-3 col-md-6"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
+              <div class="col-lg-3 col-md-6">
+                <input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control">
+              </div>
               <div class="col-lg-3 col-md-6">
                 <select class="form-control select-occupations" data-search-occupations="{{ route('occupation_search') }}" data-live-search="true" title="Departamento" data-style="btn-white" data-width="100%" placeholder="Departamento" name="department">
                   <option value="">Selecionar Departamento</option>
@@ -63,75 +65,55 @@
       </div>
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Listagem de Turmas</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-                  <li><a class="btn btn-sm btn-success btn-round" href="{{ route('users.create') }}">Novo Usuário</a></li>
+  <div class="row simple-cards users-card">
 
-              </ul>
-          </div>
-      </div>
-      <div class="card-block">
+  @forelse($people as $person)
 
-        <div class="row simple-cards users-card">
-
-        @forelse($people as $person)
-
-          <div class="col-md-12 col-xl-4">
-              <div class="card user-card">
-                  <div class="card-header-img">
-                    @if(config('app.env') == 'production')
-                      <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="card-img">
-                    @endif
-                      <h4>{{ $person->name }}</h4>
-                      <h5><a href="" class="__cf_email__" >{{$person->user->email}}</a></h5>
-                      <p>{{$person->department->name}} / {{$person->occupation->name}}</p>
-                  </div>
-
-                  @if($person->active)
-                      Ativo<i class="fa fa-circle text-success" title="Ativo"></i>
-                  @else
-                      Inativo<i class="fa fa-circle text-danger" title="Inativo"></i>
-                  @endif
-                  <br/>
-                  <small>Último Login: {{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</small>
-                  <br/>
-                  <a href="{{route('user', ['id' => $person->user->uuid])}}" class="btn btn-success btn-sm btn-round"><i class="icofont icofont-user m-r-5"></i>Perfil</a>
-
-              </div>
-          </div>
-
-        @empty
-
-          <div class="col-md-12 m-b-sm">
-            <div class="widget white-bg no-padding">
-                <div class="p-m text-center">
-                    <h1 class="m-xs"><i class="far fa-folder-open fa-4x"></i></h1>
-                    <h3 class="font-bold no-margins">
-                        Nenhum registro encontrado, para o parametros informados.
-                    </h3>
-                </div>
+    <div class="col-md-12 col-xl-4">
+        <div class="card user-card">
+            <div class="card-header-img">
+              @if(config('app.env') == 'production')
+                <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="card-img">
+              @endif
+                <h4>{{ $person->name }}</h4>
+                <h5><a href="" class="__cf_email__" >{{$person->user->email}}</a></h5>
+                <p>{{$person->department->name}} / {{$person->occupation->name}}</p>
             </div>
+
+            @if($person->active)
+                Ativo<i class="fa fa-circle text-success" title="Ativo"></i>
+            @else
+                Inativo<i class="fa fa-circle text-danger" title="Inativo"></i>
+            @endif
+            <br/>
+            <small>Último Login: {{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</small>
+            <br/>
+            <a href="{{route('user', ['id' => $person->user->uuid])}}" class="btn btn-success btn-sm btn-round"><i class="icofont icofont-user m-r-5"></i>Perfil</a>
+
+        </div>
+    </div>
+
+  @empty
+
+    <div class="col-md-12 m-b-sm">
+      <div class="widget white-bg no-padding">
+          <div class="p-m text-center">
+              <h1 class="m-xs"><i class="far fa-folder-open fa-4x"></i></h1>
+              <h3 class="font-bold no-margins">
+                  Nenhum registro encontrado, para o parametros informados.
+              </h3>
           </div>
-
-        @endforelse
-
-        </div>
-
-        <br/><br/>
-
-        <div class="text-center">
-            {{ $people->links() }}
-        </div>
-
       </div>
+    </div>
 
+  @endforelse
 
+  </div>
 
+  <br/><br/>
 
-
+  <div class="text-center">
+      {{ $people->links() }}
   </div>
 
 </div>

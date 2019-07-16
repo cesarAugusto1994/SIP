@@ -39,21 +39,21 @@
               </ul>
           </div>
       </div>
-      <div class="card-block">
-          <div class="row">
-            @foreach($types as $type)
-              <div class="col-md-12 col-lg-4">
-                  <div class="card">
-                      <div class="card-block text-center">
-                          <h4 class="m-t-20">{{$type->name}}</h4>
-                          <a class="btn btn-primary btn-sm btn-round" href="{{route('message-types.edit', ['id' => $type->uuid])}}"><i class="fa fa-edit"></i> Editar</a>
-                      </div>
-                  </div>
+  </div>
+
+  <div class="row">
+    @foreach($types as $type)
+      <div class="col-md-12 col-lg-4">
+          <div class="card">
+              <div class="card-block text-center">
+                  <h4 class="m-t-20">{{$type->name}}</h4>
+                  <a class="btn btn-primary btn-sm btn-round" href="{{route('message-types.edit', ['id' => $type->uuid])}}"><i class="fa fa-edit"></i> Editar</a>
               </div>
-            @endforeach
           </div>
       </div>
+    @endforeach
   </div>
+
 </div>
 
 @endsection

@@ -39,25 +39,23 @@
               </ul>
           </div>
       </div>
-      <div class="card-block">
-
-        <div class="row">
-          @foreach($departments as $department)
-          <div class="col-md-12 col-lg-4">
-              <div class="card">
-                  <div class="card-block text-center">
-                      <h4 class="m-t-20">{{$department->name}}</h4>
-                      <p class="m-b-20">{{$department->user->person->name ?? ''}}</p>
-                      <a class="btn btn-success btn-sm btn-round" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
-                      <a class="btn btn-primary btn-sm btn-round" href="{{ route('departments.edit', $department->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                  </div>
-              </div>
-          </div>
-          @endforeach
-        </div>
-        
-      </div>
   </div>
+
+  <div class="row">
+    @foreach($departments as $department)
+    <div class="col-md-12 col-lg-4">
+        <div class="card">
+            <div class="card-block text-center">
+                <h4 class="m-t-20">{{$department->name}}</h4>
+                <p class="m-b-20">{{$department->user->person->name ?? ''}}</p>
+                <a class="btn btn-success btn-sm btn-round" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
+                <a class="btn btn-primary btn-sm btn-round" href="{{ route('departments.edit', $department->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+  </div>
+
 </div>
 
 @endsection

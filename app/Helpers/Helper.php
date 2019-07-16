@@ -223,7 +223,7 @@ class Helper
             return self::get($key);
         }
 
-        $types = Type::all();
+        $types = Type::where('active', true)->get();
 
         self::set($key, $types);
         return self::get($key);

@@ -126,16 +126,28 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row">Telefone</th>
-                                                                    <td>{{ $person->phone ?? 'Não informado' }}</td>
+                                                                    <td>{{ $person->phone ?? '-' }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th scope="row">Email</th>
-                                                                    <td>{{ $person->user->email }}</td>
+                                                                    <th scope="row">Ramal</th>
+                                                                    <td>{{ $person->branch ?? '-' }}</td>
                                                                 </tr>
+
                                                                 <tr>
-                                                                    <th scope="row">CPF</th>
-                                                                    <td>{{ $person->cpf }}</td>
+                                                                    <th scope="row">ID Ligação Externa</th>
+                                                                    <td>{{ $person->phone_code ?? '-' }}</td>
                                                                 </tr>
+
+                                                                <tr>
+                                                                    <th scope="row">Senha Ligação Externa</th>
+                                                                    <td>{{ $person->phone_password ?? '-' }}</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <th scope="row">ID Callcenter</th>
+                                                                    <td>{{ $person->phone_callcenter_code ?? '-' }}</td>
+                                                                </tr>
+
 
                                                             </tbody>
                                                         </table>
@@ -147,6 +159,10 @@
                                                         <table class="table">
                                                             <tbody>
                                                                 <tr>
+                                                                    <th scope="row">Email</th>
+                                                                    <td>{{ $person->user->email }}</td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th scope="row">Departamento</th>
                                                                     <td>{{$person->department->name}}</td>
                                                                 </tr>
@@ -155,7 +171,7 @@
                                                                     <td>{{$person->occupation->name}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th scope="row">Ultimo Login</th>
+                                                                    <th scope="row">Último Login</th>
                                                                     <td>{{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</td>
                                                                 </tr>
                                                             </tbody>

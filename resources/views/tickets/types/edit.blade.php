@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('ticket-types.index') }}"> Tipos de Chamados </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Editar</a>
+                    <li class="breadcrumb-item"><a href="#!">Novo</a>
                     </li>
                 </ul>
             </div>
@@ -31,13 +31,13 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Editar Tipo de Chamado</h5>
+          <h5>Novo Tipo de Chamado</h5>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" method="post" method="post" action="{{route('ticket-types.store')}}">
+        <form class="formValidation" method="post" method="post" action="{{route('ticket-types.update', $type->uuid)}}">
             @csrf
-
+            {{ method_field('PUT') }}
             <div class="row m-b-30">
 
               <div class="col-md-6">
@@ -48,7 +48,7 @@
                       <select class="form-control" name="category_id" required>
                           <option value="">Informe a Categoria</option>
                           @foreach(\App\Helpers\Helper::ticketCategories() as $category)
-                              <option value="{{$category->id}}">{{$category->name}}</option>
+                              <option value="{{$category->id}}" {{$type->category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
                           @endforeach
                       </select>
 
@@ -62,7 +62,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Nome</label>
                     <div class="input-group">
-                      <input type="text" required name="name" class="form-control">
+                      <input type="text" required name="name" value="{{$type->name }}" class="form-control">
                     </div>
                 </div>
 
@@ -72,14 +72,16 @@
 
                 <div class="form-group">
                     <label class="col-form-label">Departamentos</label>
+                    <span class="text-danger">Altere este campo se tiver certeza, pois as configuraçãoes anteriores serão perdidas.</span>
                     <div class="input-group">
-                      <select class="form-control m-b select2" multiple name="departments[]" required>
+                      <select class="form-control m-b select2" multiple name="departments[]">
                           @foreach(\App\Helpers\Helper::departments() as $department)
                               <option value="{{$department->id}}">{{$department->name}}</option>
                           @endforeach
                       </select>
 
                     </div>
+
                 </div>
 
               </div>
