@@ -90,7 +90,7 @@
           </div>
 
           <div class="form-group col-md-6">
-              <input type="checkbox" name="is_default" id="is_default" value="1" {{ $address->is_default ? 'checked' : '' }}/>
+              <input class="js-switch" type="checkbox" name="is_default" id="is_default" value="1" {{ $address->is_default ? 'checked' : '' }}/>
               <label class="control-label">Endereço Principal</label>
           </div>
 

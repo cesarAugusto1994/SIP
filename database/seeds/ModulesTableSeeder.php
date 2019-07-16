@@ -85,6 +85,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Cliente Funcionários',
+            'slug' => str_slug('Funcionarios'),
+            'description' => 'Cliente Funcionários',
+            'parent' => str_slug('Clientes'),
+          ],
+
+          [
             'name' => 'Documentos',
             'slug' => str_slug('Documentos'),
             'description' => 'Documentos',

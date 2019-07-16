@@ -91,7 +91,7 @@
             </div>
 
             <div class="form-group col-md-6">
-                <input type="checkbox" name="is_default" id="is_default" value="1"/>
+                <input class="js-switch" type="checkbox" name="is_default" id="is_default" value="1"/>
                 <label class="control-label">Endereço Principal</label>
             </div>
 

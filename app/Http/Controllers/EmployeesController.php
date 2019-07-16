@@ -28,7 +28,7 @@ class EmployeesController extends Controller
      */
     public function create($id)
     {
-        if(!Auth::user()->hasPermission('create.alunos')) {
+        if(!Auth::user()->hasPermission('create.cliente.funcionarios')) {
             return abort(403, 'Unauthorized action.');
         }
 
@@ -46,7 +46,7 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::user()->hasPermission('create.alunos')) {
+        if(!Auth::user()->hasPermission('create.cliente.funcionarios')) {
             return abort(403, 'Unauthorized action.');
         }
 
@@ -97,7 +97,7 @@ class EmployeesController extends Controller
      */
     public function edit($id, $employee)
     {
-        if(!Auth::user()->hasPermission('edit.alunos')) {
+        if(!Auth::user()->hasPermission('edit.cliente.funcionarios')) {
             return abort(403, 'Unauthorized action.');
         }
 
@@ -117,7 +117,7 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id, $employee)
     {
-        if(!Auth::user()->hasPermission('edit.alunos')) {
+        if(!Auth::user()->hasPermission('edit.cliente.funcionarios')) {
             return abort(403, 'Unauthorized action.');
         }
 
@@ -158,6 +158,13 @@ class EmployeesController extends Controller
     public function destroy($id)
     {
         try {
+
+          if(!Auth::user()->hasPermission('delete.cliente.funcionarios')) {
+              return response()->json([
+                'success' => false,
+                'message' => 'Operação não autorizada'
+              ]);
+          }
 
           $employee = Employee::uuid($id);
 
