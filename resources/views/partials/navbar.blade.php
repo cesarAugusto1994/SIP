@@ -172,7 +172,7 @@
                   @endphp
 
 
-                  @foreach($users as $user)
+                  @foreach($users->sortBy('person.name') as $user)
 
                     @if(Auth::user()->id == $user->id)
                         @continue;
@@ -191,6 +191,11 @@
                         <div class="media-body">
                           <a href="{{ route('chat_user', $user->uuid) }}">
                             <div class="f-13 chat-header">{{ $user->person->name }}</div>
+                            <span>{{ $user->person->department->name }}</span>
+                            @if($user->person->branch)
+                              <br/>
+                              <span>Ramal: {{ $user->person->branch }}</span>
+                            @endif
                             @if($countMessages)
                               <span class="badge bg-c-green">{{ $countMessages }}</span>
                             @endif
