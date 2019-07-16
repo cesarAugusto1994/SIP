@@ -238,7 +238,7 @@ class TicketsController extends Controller
         Log::create([
           'status_id' => 5,
           'ticket_id' => $ticket->id,
-          'description' => 'Chamado por ' . $request->user()->person->name
+          'description' => 'Chamado cancelado por ' . $request->user()->person->name
         ]);
 
         notify()->flash('Sucesso!', 'success', [
