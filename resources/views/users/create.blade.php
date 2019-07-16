@@ -181,6 +181,36 @@
                     </div>
 
                     <div class="col-md-4">
+                      <div class="form-group {!! $errors->has('phone_code') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">ID Ligação Externa</label>
+                          <div class="input-group">
+                            <input type="text" autocomplete="off" value="{{ old('phone_code') }}" name="phone_code" class="form-control">
+                          </div>
+                          {!! $errors->first('phone_code', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group {!! $errors->has('phone_password') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">Senha Ligação Externa</label>
+                          <div class="input-group">
+                            <input type="text" autocomplete="off" value="{{ old('phone_password') }}" name="phone_password" class="form-control">
+                          </div>
+                          {!! $errors->first('phone_password', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group {!! $errors->has('phone_callcenter_code') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">ID Callcenter</label>
+                          <div class="input-group">
+                            <input type="text" autocomplete="off" value="{{ old('phone_callcenter_code') }}" name="phone_callcenter_code" class="form-control">
+                          </div>
+                          {!! $errors->first('phone_callcenter_code', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
 
                       <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Ativo</label>

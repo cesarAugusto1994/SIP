@@ -82,7 +82,9 @@
           <div class="col-md-12 col-xl-4">
               <div class="card user-card">
                   <div class="card-header-img">
+                    @if(config('app.env') == 'production')
                       <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="card-img">
+                    @endif
                       <h4>{{ $person->name }}</h4>
                       <h5><a href="" class="__cf_email__" >{{$person->user->email}}</a></h5>
                       <p>{{$person->department->name}} / {{$person->occupation->name}}</p>
@@ -93,11 +95,11 @@
                   @else
                       Inativo<i class="fa fa-circle text-danger" title="Inativo"></i>
                   @endif
+                  <br/>
+                  <small>Último Login: {{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</small>
+                  <br/>
+                  <a href="{{route('user', ['id' => $person->user->uuid])}}" class="btn btn-success btn-sm btn-round"><i class="icofont icofont-user m-r-5"></i>Perfil</a>
 
-                  <p>Ultimo Login: {{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</p>
-                  <div>
-                      <a href="{{route('user', ['id' => $person->user->uuid])}}" class="btn btn-success waves-effect waves-light"><i class="icofont icofont-user m-r-5"></i>Perfil</a>
-                  </div>
               </div>
           </div>
 

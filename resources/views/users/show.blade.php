@@ -474,15 +474,48 @@
                                     <div class="col-md-12">
 
                                         <div class="form-group">
-                                            <label class="col-form-label">Senha E-mail</label>
+                                            <label class="col-form-label">ID Ligação Externa</label>
                                             <div class="input-group">
-                                              <input autocomplete="off" type="password" name="password_email" value="{{$user->password_email??''}}" class="form-control">
+                                              <input type="text" name="phone_code" value="{{$user->person->phone_code??''}}" class="form-control">
                                             </div>
                                         </div>
 
                                     </div>
 
-                                    @if($currentUser->isAdmin())
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Senha Ligação Externa</label>
+                                            <div class="input-group">
+                                              <input type="text" name="phone_password" value="{{$user->person->phone_password??''}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">ID Callcenter</label>
+                                            <div class="input-group">
+                                              <input type="text" name="phone_callcenter_code" value="{{$user->person->phone_callcenter_code??''}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Senha E-mail</label>
+                                            <div class="input-group">
+                                              <input autocomplete="off" type="text" name="pass_email" value="{{$user->password_email??''}}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    @if($currentUser->isAdmin() && $currentUser->id != $user->id)
                                     <div class="col-md-12">
 
                                         <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">

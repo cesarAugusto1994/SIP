@@ -296,6 +296,9 @@ class UsersController extends Controller
         $birthday = null;
         $branch = null;
         $phone = null;
+        $phoneCode = null;
+        $phonePassword = null;
+        $phoneCallCenterCode = null;
 
         if($request->has('birthday')) {
             $birthday = $data['birthday'];
@@ -310,6 +313,18 @@ class UsersController extends Controller
             $branch = $data['phone'];
         }
 
+        if($request->has('phone_code')) {
+            $phoneCode = $data['phone_code'];
+        }
+
+        if($request->has('phone_password')) {
+            $phonePassword = $data['phone_password'];
+        }
+
+        if($request->has('phone_callcenter_code')) {
+            $phoneCallCenterCode = $data['phone_callcenter_code'];
+        }
+
         $person = People::create([
           'name' => $data['name'],
           'birthday' => $birthday,
@@ -317,6 +332,9 @@ class UsersController extends Controller
           'occupation_id' => $occupation->id,
           'cpf' => $data['cpf'],
           'phone' => $phone,
+          'phone_callcenter_code' => $phoneCode,
+          'phone_password' => $phonePassword,
+          'phone_callcenter_code' => $phoneCallCenterCode,
           'branch' => $branch,
           'unit_id' => $unit->id
         ]);
@@ -500,7 +518,7 @@ class UsersController extends Controller
 
         $user = User::uuid($id);
 
-        $roleUser = Role::where("name", $data['roles'])->first();
+
           /*
         $user->start_day = $data['begin'];
         $user->lunch = $data['lunch'];
@@ -517,25 +535,33 @@ class UsersController extends Controller
             $user->password_email = $data['password_email'];
         }
 
-        if($user->id != $request->user()->id) {
-
-          $user->person->save();
-
-          notify()->flash('Sucesso!', 'info', [
-            'text' => 'As configurações do usuário foram alteradas com sucesso, porém não é possivel inativar o usuário na sessão atual'
-          ]);
-
+        if($request->has('phone_code')) {
+            $user->person->phone_code = $data['phone_code'];
         }
 
-        if (!empty($password)) {
-            $user->password = bcrypt($password);
+        if($request->has('phone_password')) {
+            $user->person->phone_password = $data['phone_password'];
+        }
+
+        if($request->has('phone_callcenter_code')) {
+            $user->person->phone_callcenter_code = $data['phone_callcenter_code'];
+        }
+
+        if($request->has('roles')) {
+            $roleUser = Role::where("name", $data['roles'])->first();
+            $user->person->save();
+            $user->detachAllPermissions();
+            $user->detachAllRoles();
+            $user->attachRole($roleUser);
+            $permissionForRole = RoleDefaultPermissions::where('role_id', $roleUser->id)
+            ->pluck('permission_id');
+            $user->syncPermissions($permissionForRole);
         }
 
         $user->save();
-        $user->roles()->attach($roleUser);
 
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'As configurações do usuário foram alteradas com sucesso.'
+          'text' => 'As configurações foram alteradas com sucesso.'
         ]);
 
         return redirect()->route('user', ['id' => $id]);

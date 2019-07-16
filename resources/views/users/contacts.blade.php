@@ -39,18 +39,17 @@
             @continue;
         @endif
 
-        <div class="col-md-6 col-lg-3">
+        <div class="card-container col-md-6 col-lg-3">
             <div class="card">
                 <div class="card-block text-center">
                     <h4 class="lead m-t-20">{{ $user->person->branch }}</h4>
                     <p class="m-b-20">{{ $user->person->name ?? '' }} <br/> {{ $user->email }}</p>
-
                     <small>
-                    <b>Unidade:</b> {{ $user->person->unit->name ?? '' }}
-                    <br/>
-                    <b>Setor:</b> {{ $user->person->department->name ?? '' }}
-                    <br/>
-                    <b>Cargo:</b> {{ $user->person->occupation->name ?? '' }}
+                      <b>Unidade:</b> {{ $user->person->unit->name ?? '' }}
+                      <br/>
+                      <b>Setor:</b> {{ $user->person->department->name ?? '' }}
+                      <br/>
+                      <b>Cargo:</b> {{ $user->person->occupation->name ?? '' }}
                     </small>
                 </div>
             </div>
@@ -69,7 +68,7 @@
 
   <script>
       $("#searchInput").keyup(function() {
-          var rows = $(".card").find(".card-block").hide();
+          var rows = $(".card-container").hide();
           var data = this.value.split(" ");
           $.each(data, function(i, v) {
             rows.filter(":contains('" + v + "')").show();

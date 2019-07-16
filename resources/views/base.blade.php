@@ -231,18 +231,25 @@
 
   $(document).ready(function() {
 
-    var $formValid = $('.formValidation').parsley().on('form:submit', function(e) {
-      // This global callback will be called for any field that fails validation.
-      //e.preventDefault();
-      //return false;
-      window.swal({
-        title: 'Em progresso...',
-        text: 'Aguarde enquanto os dados são salvos.',
-        type: 'success',
-        showConfirmButton: false,
-        allowOutsideClick: false
-      });
-    });;
+    var $formValid = $('.formValidation').parsley();
+
+    if($formValid && $formValid.isValid()) {
+
+      $formValid.on('form:submit', function(e) {
+        // This global callback will be called for any field that fails validation.
+        //e.preventDefault();
+        window.swal({
+          title: 'Em progresso...',
+          text: 'Aguarde enquanto os dados são salvos.',
+          type: 'success',
+          showConfirmButton: false,
+          allowOutsideClick: false
+        });
+      });;
+
+    }
+
+
 
   });
 
