@@ -219,9 +219,18 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
     Route::get('contacts', 'UsersController@contacts')->name('contacts');
 
+    Route::resource('folders', 'FoldersController');
+    Route::resource('archives', 'ArchivesController');
+
+    Route::get('archives/{id}/download', 'ArchivesController@download')->name('archives_download');
+    Route::get('archives/{id}/preview', 'ArchivesController@preview')->name('archive_preview');
+
     Route::resource('emails', 'EmailsController');
     Route::get('emails-search', 'EmailsController@search')->name('emails_search');
     Route::get('emails-template/{id}', 'EmailsController@html')->name('emails_template');
+
+    Route::post('folders/{id}/upload', 'ArchivesController@upload')->name('file_upload');
+
 
   });
 

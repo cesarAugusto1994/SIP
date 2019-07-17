@@ -38651,15 +38651,13 @@ var render = function() {
         _c("i", {
           staticClass: "fa fa-circle text-success",
           attrs: { title: "Ativo" }
-        }),
-        _vm._v(" Online\n")
+        })
       ])
     : _c("span", [
         _c("i", {
           staticClass: "fa fa-circle text-danger",
           attrs: { title: "Inativo" }
-        }),
-        _vm._v(" Offline\n")
+        })
       ])
 }
 var staticRenderFns = []

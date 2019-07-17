@@ -38,8 +38,10 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Modulos'),
           ],
 
+
+
           [
-            'name' => 'Ramais e Telefones',
+            'name' => 'Arquivos',
             'slug' => str_slug('Ramais e Telefones'),
             'description' => 'Ramais e Telefones',
             'parent' => str_slug('Modulos'),
@@ -171,6 +173,14 @@ class ModulesTableSeeder extends Seeder
             'description' => 'Permissões',
             'parent' => str_slug('Administrativo'),
           ],
+
+          [
+            'name' => 'Ramais e E-mails',
+            'slug' => str_slug('Ramais e E-mails'),
+            'description' => 'Ramais e E-mails',
+            'parent' => str_slug('Modulos'),
+          ],
+
         ];
 
         foreach ($itens as $key => $value) {

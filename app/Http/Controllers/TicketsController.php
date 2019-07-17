@@ -8,6 +8,8 @@ use App\Models\Ticket\Status\Log;
 use Auth;
 use App\User;
 use Notification;
+use Storage;
+use File;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 
 class TicketsController extends Controller
@@ -20,6 +22,12 @@ class TicketsController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if(!File::isDirectory('archives')) {
+            $dir = Storage::makeDirectory('archives', 0777, true, true);
+            $directories = Storage::directories('archives');
+            dd($directories);
+        }
 
         if($user->hasRole('user')) {
 

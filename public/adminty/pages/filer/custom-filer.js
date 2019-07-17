@@ -1,7 +1,10 @@
 $(document).ready(function(){
 
+	var input = $("#filer");
+	var route = $("#filer").data('route');
+
 	//Example 2
-	$("#filer_input2").filer({
+	$("#filer").filer({
 		limit: null,
 		maxSize: null,
 		extensions: null,
@@ -80,22 +83,28 @@ $(document).ready(function(){
 			dragContainer: null,
 		},
 		uploadFile: {
-			url: "./php/ajax_upload_file.php",
+			url: route,
+			headers: {
+			 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			 },
 			data: null,
 			type: 'POST',
 			enctype: 'multipart/form-data',
 			synchron: true,
 			beforeSend: function(){},
 			success: function(data, itemEl, listEl, boxEl, newInputEl, inputEl, id){
-				var parent = itemEl.find(".jFiler-jProgressBar").parent(),
-					new_file_name = JSON.parse(data),
+
+					console.log(data);
+
+					var parent = itemEl.find(".jFiler-jProgressBar").parent();
+					new_file_name = JSON.stringify(data);
 					filerKit = inputEl.prop("jFiler");
 
-        		filerKit.files_list[id].name = new_file_name;
+      		filerKit.files_list[id].name = new_file_name;
 
-				itemEl.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-					$("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
-				});
+					itemEl.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+						$("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
+					});
 			},
 			error: function(el){
 				var parent = el.find(".jFiler-jProgressBar").parent();
@@ -135,10 +144,10 @@ $(document).ready(function(){
 			}
 		},
 		captions: {
-			button: "Choose Files",
+			button: "Escolher Arquivos",
 			feedback: "Choose files To Upload",
 			feedback2: "files were chosen",
-			drop: "Drop file here to Upload",
+			drop: "Arraste seus arquivos aqui para realizar o upload",
 			removeConfirmation: "Are you sure you want to remove this file?",
 			errors: {
 				filesLimit: "Only {{fi-limit}} files are allowed to be uploaded.",
