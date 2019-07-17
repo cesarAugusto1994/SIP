@@ -185,6 +185,7 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Webklex\IMAP\Providers\LaravelServiceProvider::class,
+        Chumper\Zipper\ZipperServiceProvider::class
 
     ],
 
@@ -243,6 +244,7 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Client' => Webklex\IMAP\Facades\Client::class,
+        'Zipper' => Chumper\Zipper\Zipper::class
 
     ],
 

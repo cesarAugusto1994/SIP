@@ -40,7 +40,7 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  @permission('create.tipo.de.chamados')
+                  @permission('create.arquivos')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('folders.create', ['parent_folder_id' => $folder->uuid])}}">Nova Pasta</a></li>
                   @endpermission
 
@@ -49,8 +49,8 @@
       </div>
       <div class="card-block">
 
-        <div class="table-responsive">
-            <table class="table table-hover table-borderless">
+        <div class="">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -79,7 +79,7 @@
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                               <a class="dropdown-item" href="{{ route('folders.show', $item->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
-                              <a class="dropdown-item" href="{{ route('archives_download', $item->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                              <a class="dropdown-item" href="{{route('folders_download', $item->uuid)}}"><i class="fas fa-cloud-download-alt"></i> Download</a>
                               <a class="dropdown-item" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
                               <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
 
@@ -100,6 +100,15 @@
   <div class="card">
       <div class="card-header">
           <h5>Arquivos</h5>
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+
+                  @permission('create.arquivos')
+                    <li><a class="btn btn-sm btn-primary btn-round" href="{{route('folders_download', $folder->uuid)}}">Baixar Pasta</a></li>
+                  @endpermission
+
+              </ul>
+          </div>
       </div>
       <div class="card-block">
 

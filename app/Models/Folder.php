@@ -4,14 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Folder extends Model
 {
     use Uuids;
+    use LogsActivity;
 
     protected $table = 'folders';
 
     protected $fillable = ['name', 'user_id', 'path', 'parent_id'];
+
+    protected static $logAttributes = ['name', 'user_id', 'path', 'parent_id'];
 
     public function user()
     {

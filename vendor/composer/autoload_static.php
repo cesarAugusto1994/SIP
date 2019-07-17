@@ -166,6 +166,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             'Cron\\' => 5,
             'Collective\\Html\\' => 16,
+            'Chumper\\Zipper\\' => 15,
             'Carbon\\' => 7,
             'Canducci\\Cep\\' => 13,
         ),
@@ -451,6 +452,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
         ),
+        'Chumper\\Zipper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chumper/zipper/src/Chumper/Zipper',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -549,6 +554,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Helpers\\TimesAgo' => __DIR__ . '/../..' . '/app/Helpers/TimesAgo.php',
         'App\\Http\\Controllers\\ActivitiesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActivitiesController.php',
         'App\\Http\\Controllers\\AddressesController' => __DIR__ . '/../..' . '/app/Http/Controllers/AddressesController.php',
+        'App\\Http\\Controllers\\ArchivesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArchivesController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -568,6 +574,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Controllers\\EmployeesController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeesController.php',
         'App\\Http\\Controllers\\FleetCarController' => __DIR__ . '/../..' . '/app/Http/Controllers/FleetCarController.php',
         'App\\Http\\Controllers\\FleetScheduleController' => __DIR__ . '/../..' . '/app/Http/Controllers/FleetScheduleController.php',
+        'App\\Http\\Controllers\\FoldersController' => __DIR__ . '/../..' . '/app/Http/Controllers/FoldersController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\HomeControllerDefault' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeControllerDefault.php',
         'App\\Http\\Controllers\\LockAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/LockAccountController.php',
@@ -606,7 +613,6 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Jobs\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Jobs/DeliveryOrder.php',
         'App\\Models\\Activity' => __DIR__ . '/../..' . '/app/Models/Activity.php',
-        'App\\Models\\Archive' => __DIR__ . '/../..' . '/app/Models/Archive.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
         'App\\Models\\Client\\Address' => __DIR__ . '/../..' . '/app/Models/Client/Address.php',
@@ -638,6 +644,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\Fleet\\Car\\Status' => __DIR__ . '/../..' . '/app/Models/Fleet/Car/Status.php',
         'App\\Models\\Fleet\\Schedule' => __DIR__ . '/../..' . '/app/Models/Fleet/Schedule.php',
         'App\\Models\\Fleet\\Schedule\\Status' => __DIR__ . '/../..' . '/app/Models/Fleet/Schedule/Status.php',
+        'App\\Models\\Folder' => __DIR__ . '/../..' . '/app/Models/Folder.php',
+        'App\\Models\\Folder\\Archive' => __DIR__ . '/../..' . '/app/Models/Folder/Archive.php',
         'App\\Models\\JobStatus' => __DIR__ . '/../..' . '/app/Models/JobStatus.php',
         'App\\Models\\Mapper' => __DIR__ . '/../..' . '/app/Models/Mapper.php',
         'App\\Models\\MapperStatus' => __DIR__ . '/../..' . '/app/Models/MapperStatus.php',
@@ -661,6 +669,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\TaskModels' => __DIR__ . '/../..' . '/app/Models/TaskModels.php',
         'App\\Models\\TaskPause' => __DIR__ . '/../..' . '/app/Models/TaskPause.php',
         'App\\Models\\TaskStatus' => __DIR__ . '/../..' . '/app/Models/TaskStatus.php',
+        'App\\Models\\TemporaryFile' => __DIR__ . '/../..' . '/app/Models/TemporaryFile.php',
         'App\\Models\\Ticket' => __DIR__ . '/../..' . '/app/Models/Ticket.php',
         'App\\Models\\Ticket\\Status' => __DIR__ . '/../..' . '/app/Models/Ticket/Status.php',
         'App\\Models\\Ticket\\Status\\Log' => __DIR__ . '/../..' . '/app/Models/Ticket/Status/Log.php',
@@ -775,6 +784,11 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Carbon\\Traits\\Week' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Week.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'CategoriesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CategoriesTableSeeder.php',
+        'Chumper\\Zipper\\Facades\\Zipper' => __DIR__ . '/..' . '/chumper/zipper/src/Chumper/Zipper/Facades/Zipper.php',
+        'Chumper\\Zipper\\Repositories\\RepositoryInterface' => __DIR__ . '/..' . '/chumper/zipper/src/Chumper/Zipper/Repositories/RepositoryInterface.php',
+        'Chumper\\Zipper\\Repositories\\ZipRepository' => __DIR__ . '/..' . '/chumper/zipper/src/Chumper/Zipper/Repositories/ZipRepository.php',
+        'Chumper\\Zipper\\Zipper' => __DIR__ . '/..' . '/chumper/zipper/src/Chumper/Zipper/Zipper.php',
+        'Chumper\\Zipper\\ZipperServiceProvider' => __DIR__ . '/..' . '/chumper/zipper/src/Chumper/Zipper/ZipperServiceProvider.php',
         'ClientsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ClientsTableSeeder.php',
         'Codecourse\\Notify\\Facades\\Notify' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/Facades/Notify.php',
         'Codecourse\\Notify\\Notifier' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/Notifier.php',

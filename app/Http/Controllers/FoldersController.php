@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Folder;
+use App\Models\{Folder, TemporaryFile};
 use File;
 use Storage;
+use Zipper;
 
 class FoldersController extends Controller
 {
@@ -17,8 +18,51 @@ class FoldersController extends Controller
     public function index()
     {
         $folders = Folder::with('user')->get();
-        //dd($folders);
+
+        $files = TemporaryFile::all();
+        $files->map(function($file) {
+          if($file->created_at < now()->addMinutes(1)) {
+            if(Storage::exists($file->path)) {
+                Storage::delete($file->path);
+            }
+            $file->delete();
+          }
+        });
+
         return view('folders.index', compact('folders'));
+    }
+
+    public function downloadAsZip($id, Request $request)
+    {
+        $folder = Folder::uuid($id);
+
+        $filename = $folder->name . '-arquivos-'.time().'.zip';
+
+        $path = 'app/'.$folder->path;
+        $fileRealPath = $path.'/'.$filename;
+
+        $zipper = new \Chumper\Zipper\Zipper;
+        $files = glob(storage_path($path));
+        $zipper->make(storage_path('app/zipper/'.$filename))->add($files);
+        $zipper->close();
+
+        $filePath = 'zipper/'.$filename;
+
+        if(Storage::exists($filePath)) {
+
+            TemporaryFile::create([
+              'user_id' => auth()->user()->id,
+              'path' => $filePath,
+            ]);
+
+            return Storage::download($filePath);
+        }
+
+        notify()->flash('Erro Inesperado', 'success', [
+          'text' => 'Não foi possivel encontrar o arquivo para download.'
+        ]);
+
+        return back();
     }
 
     /**

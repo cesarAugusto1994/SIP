@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\TemporaryFile;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,6 +27,26 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->call(function () {
+
+            $files = TemporaryFile::all();
+
+            $files->map(function($file) {
+
+              if($file->created_at < now()->addMinutes(1)) {
+
+                if(Storage::exists($file->path)) {
+                    Storage::delete($file->path);
+                }
+
+                $file->delete();
+
+              }
+
+            });
+
+        })->everyMinute();
     }
 
     /**

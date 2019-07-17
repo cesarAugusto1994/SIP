@@ -114,7 +114,7 @@ $(document).ready(function(){
 						$("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
 					});
 
-					window.location.reload();
+
 			},
 			error: function(el, el2, el3){
 				var parent = el.find(".jFiler-jProgressBar").parent();
@@ -137,6 +137,8 @@ $(document).ready(function(){
 			},
 			onComplete: function() {
 				//swal.close();
+
+				window.location.reload();
 			}
 		},
 		files: null,

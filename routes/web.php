@@ -225,6 +225,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::get('archives/{id}/download', 'ArchivesController@download')->name('archives_download');
     Route::get('archives/{id}/preview', 'ArchivesController@preview')->name('archive_preview');
 
+    Route::get('folders/{id}/compresss/download', 'FoldersController@downloadAsZip')->name('folders_download');
+
     Route::resource('emails', 'EmailsController');
     Route::get('emails-search', 'EmailsController@search')->name('emails_search');
     Route::get('emails-template/{id}', 'EmailsController@html')->name('emails_template');

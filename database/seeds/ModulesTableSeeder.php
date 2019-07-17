@@ -41,13 +41,6 @@ class ModulesTableSeeder extends Seeder
 
 
           [
-            'name' => 'Arquivos',
-            'slug' => str_slug('Ramais e Telefones'),
-            'description' => 'Ramais e Telefones',
-            'parent' => str_slug('Modulos'),
-          ],
-
-          [
             'name' => 'Chamados',
             'slug' => str_slug('Chamados'),
             'description' => 'Chamados',
@@ -178,6 +171,20 @@ class ModulesTableSeeder extends Seeder
             'name' => 'Ramais e E-mails',
             'slug' => str_slug('Ramais e E-mails'),
             'description' => 'Ramais e E-mails',
+            'parent' => str_slug('Modulos'),
+          ],
+
+          [
+            'name' => 'Pastas',
+            'slug' => str_slug('Pastas'),
+            'description' => 'Pastas',
+            'parent' => str_slug('Modulos'),
+          ],
+
+          [
+            'name' => 'Arquivos',
+            'slug' => str_slug('Arquivos'),
+            'description' => 'Arquivos',
             'parent' => str_slug('Modulos'),
           ],
 
