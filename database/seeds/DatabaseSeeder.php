@@ -42,6 +42,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DocumentTypesTableSeeder::class);
         $this->call(TicketStatusesTableSeeder::class);
 
+        session()->forget();
+
         Model::reguard();
     }
 }

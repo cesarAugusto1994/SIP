@@ -23,12 +23,6 @@ class TicketsController extends Controller
     {
         $user = Auth::user();
 
-        if(!File::isDirectory('archives')) {
-            $dir = Storage::makeDirectory('archives', 0777, true, true);
-            $directories = Storage::directories('archives');
-            dd($directories);
-        }
-
         if($user->hasRole('user')) {
 
             $tickets =  $user->tickets();

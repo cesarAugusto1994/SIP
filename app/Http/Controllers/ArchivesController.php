@@ -17,7 +17,11 @@ class ArchivesController extends Controller
      */
     public function index()
     {
-        //
+        if(!File::isDirectory('archives')) {
+            $dir = Storage::makeDirectory('archives', 0777, true, true);
+            $directories = Storage::directories('archives');
+            dd($directories);
+        }
     }
 
     public function upload($id, Request $request)
@@ -30,7 +34,7 @@ class ArchivesController extends Controller
 
         foreach ($request->file('files') as $key => $file) {
 
-            $extension = $file->extension();
+            $extension = $file->getClientOriginalExtension();;
             $name = $file->getClientOriginalName();
             $path = $file->storeAs($folder->path, $name);
 

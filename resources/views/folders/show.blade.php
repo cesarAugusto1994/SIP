@@ -9,7 +9,7 @@
                 <div class="d-inline">
                     <h4>Arquivos:
                         @if($folder->parent)
-                            {{$folder->parent->name}} / 
+                            {{$folder->parent->name}} /
                         @endif
 
                         {{ $folder->name }}
@@ -62,9 +62,9 @@
                   <tr>
                       <td colspan="2">
                         @if(!$folder->parent)
-                            <a href="{{ route('folders.show', $folder->uuid) }}">..\</a>
+                            <a class="label label-inverse-primary" href="{{ route('folders.show', $folder->uuid) }}">..\</a>
                         @else
-                            <a href="{{ route('folders.show', $folder->parent->uuid) }}">..\</a>
+                            <a class="label label-inverse-primary" href="{{ route('folders.show', $folder->parent->uuid) }}">..\</a>
                         @endif
                       </td>
                   </tr>
@@ -72,54 +72,16 @@
                   @foreach($folder->folders as $item)
 
                       <tr>
-                          <td><a href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a></td>
-                          <td class="text-right">
-                              <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                          </td>
-                      </tr>
-
-                  @endforeach
-
-                </tbody>
-            </table>
-        </div>
-
-      </div>
-  </div>
-
-  <div class="card">
-      <div class="card-header">
-          <h5>Arquivos</h5>
-      </div>
-      <div class="card-block">
-
-        <div class="">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Proprietário</th>
-                        <th>Adicionado Em</th>
-                        <th class="text-right">Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                  @foreach($folder->archives as $archive)
-
-                      <tr>
-                          <td><a href="{{ route('folders.show', $archive->uuid) }}">{{$archive->filename}}</a></td>
-                          <td><a href="{{ route('folders.show', $archive->uuid) }}">{{$archive->user->person->name}}</a></td>
-                          <td><a href="{{ route('folders.show', $archive->uuid) }}">{{$archive->created_at->format('d/m/Y H:i')}}</a></td>
+                          <td><a class="label label-inverse-success" href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a></td>
                           <td class="dropdown text-right">
 
                             <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                              <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
-                              <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
-                              <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                              <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                              <a class="dropdown-item" href="{{ route('folders.show', $item->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                              <a class="dropdown-item" href="{{ route('archives_download', $item->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                              <a class="dropdown-item" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                              <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
 
                             </div>
                           </td>
@@ -137,9 +99,67 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Upload</h5>
+          <h5>Arquivos</h5>
       </div>
       <div class="card-block">
+
+        @if($folder->archives->isNotEmpty())
+        <div class="">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Proprietário</th>
+                        <th>Adicionado Em</th>
+                        <th class="text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                  @foreach($folder->archives as $archive)
+
+                      <tr>
+                          <td><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a></td>
+                          <td>{{$archive->user->person->name}}</td>
+                          <td>{{$archive->created_at->format('d/m/Y H:i')}}<br/>
+                            <label class="label label-inverse-primary">{{ $archive->created_at->diffForHumans() }}</label>
+                          </td>
+                          <td class="dropdown text-right">
+
+                            <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                              <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                              <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                              <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                              <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+
+                            </div>
+                          </td>
+                      </tr>
+
+                  @endforeach
+
+                </tbody>
+            </table>
+        </div>
+        @else
+          <div class="widget white-bg no-padding">
+              <div class="p-m text-center">
+                <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
+                <p class="font-bold no-margins">Nenhum registro encontrado.</p>
+              </div>
+          </div>
+        @endif
+
+      </div>
+  </div>
+
+  <div class="card">
+      <div class="card-header">
+          <h5>Upload</h5>
+      </div>
+      <div class="card-block table-responsive">
           <div class="sub-title">Upload de Arquivos</div>
           <input type="file" name="files[]" id="filer" data-route="{{ route('file_upload', $folder->uuid) }}" multiple="multiple">
       </div>

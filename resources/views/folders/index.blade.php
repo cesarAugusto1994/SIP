@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Arquivos</h4>
+                    <h4>Porta Arquivos</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Arquivos</h5>
+          <h5>Pastas</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
@@ -86,22 +86,6 @@
       </div>
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>/</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-                  <li><i class="feather icon-maximize full-card"></i></li>
-                  <li><i class="feather icon-minus minimize-card"></i></li>
-                  <li><i class="feather icon-trash-2 close-card"></i></li>
-              </ul>
-          </div>
-      </div>
-      <div class="card-block">
-          <div class="sub-title">Upload de Arquivos</div>
-          <input type="file" name="files[]" id="filer_input1" multiple="multiple">
-      </div>
-  </div>
 </div>
 
 @endsection

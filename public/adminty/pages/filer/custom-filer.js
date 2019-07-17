@@ -8,7 +8,7 @@ $(document).ready(function(){
 		limit: null,
 		maxSize: null,
 		extensions: null,
-		changeInput: '<div class="jFiler-input-dragDrop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag&Drop files here</h3> <span style="display:inline-block; margin: 15px 0">or</span></div><a class="jFiler-input-choose-btn blue">Browse Files</a></div></div>',
+		changeInput: '<div class="jFiler-input-dragDrop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Arraste e solte os arquivos aqui</h3> <span style="display:inline-block; margin: 15px 0">ou</span></div><a class="jFiler-input-choose-btn blue">Procurar arquivos</a></div></div>',
 		showThumbs: true,
 		theme: "dragdropbox",
 		templates: {
@@ -91,10 +91,18 @@ $(document).ready(function(){
 			type: 'POST',
 			enctype: 'multipart/form-data',
 			synchron: true,
-			beforeSend: function(){},
+			beforeSend: function(){
+					window.swal({
+						title: 'Em progresso...',
+						text: 'Aguarde enquanto os dados são salvos.',
+						type: 'success',
+						showConfirmButton: false,
+						allowOutsideClick: false
+					});
+			},
 			success: function(data, itemEl, listEl, boxEl, newInputEl, inputEl, id){
 
-					console.log(data);
+					//swal.close();
 
 					var parent = itemEl.find(".jFiler-jProgressBar").parent();
 					new_file_name = JSON.stringify(data);
@@ -105,16 +113,31 @@ $(document).ready(function(){
 					itemEl.find(".jFiler-jProgressBar").fadeOut("slow", function(){
 						$("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
 					});
+
+					window.location.reload();
 			},
-			error: function(el){
+			error: function(el, el2, el3){
 				var parent = el.find(".jFiler-jProgressBar").parent();
 				el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
 					$("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
 				});
+
+				window.swal({
+					title: 'Ocorreu um erro',
+					text: 'Ocorreu um erro inesperado.',
+					type: 'error',
+					showConfirmButton: true,
+					allowOutsideClick: false
+				});
+
 			},
 			statusCode: null,
-			onProgress: null,
-			onComplete: null
+			onProgress: function(el) {
+
+			},
+			onComplete: function() {
+				//swal.close();
+			}
 		},
 		files: null,
 		addMore: false,

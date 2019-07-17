@@ -183,6 +183,15 @@ class MenuTableSeeder extends Seeder
           'icon' => 'fas fa-phone-volume',
         ],
 
+        [
+          'title' => 'Arquivos',
+          'route' => 'folders.index',
+          'permission' => 'view.arquivos',
+          'description' => 'Arquivos',
+          'parent' => null,
+          'icon' => 'far fa-folder-open',
+        ],
+
         ];
 
 
