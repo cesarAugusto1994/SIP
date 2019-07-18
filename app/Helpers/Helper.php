@@ -47,6 +47,13 @@ class Helper
         return Session::put($slug, $value);
     }
 
+    public static function create($key, $value)
+    {
+        $slug = self::slug($key);
+        Session::put($slug, $value);
+        return Session::get($slug);
+    }
+
     public static function drop($key)
     {
         $slug = self::slug($key);

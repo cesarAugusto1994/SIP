@@ -81,7 +81,7 @@
                   @foreach($folder->folders as $item)
 
                       <tr>
-                          <td><a class="label label-inverse-success" href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a></td>
+                          <td><a class="label label-inverse-success label-lg" href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a></td>
                           <td class="dropdown text-right">
 
                             <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
@@ -112,6 +112,9 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
+                  <li><a class="btn btn-sm btn-outline-danger btn-round" href="?list=list">Lista</a></li>
+                  <li><a class="btn btn-sm btn-outline-danger btn-round" href="?list=grid">Grid</a></li>
+
                   @permission('create.arquivos')
                     <li><a class="btn btn-sm btn-primary btn-round" href="{{route('folders_download', $folder->uuid)}}">Baixar Pasta</a></li>
                   @endpermission
@@ -122,7 +125,42 @@
       <div class="card-block">
 
         @if($folder->archives->isNotEmpty())
-        <div class="">
+
+          @if($listStyle == 'grid')
+
+            <div class="row">
+            @foreach($folder->archives as $archive)
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-block text-center">
+                            <h4 class="m-t-20"><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a></h4>
+
+                            <p class="">{{$archive->created_at->format('d/m/Y H:i')}}
+                                <br/>
+                                <label class="label label-inverse-primary">{{ $archive->created_at->diffForHumans() }}</label>
+                            </p>
+
+
+                        </div>
+                        <div class="card-footer bg-c-green">
+                          <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                          <div class="dropdown-menu dropdown-menu-right b-none contact-menu" style="z-index: 9999;">
+
+                            <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                            <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                            <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                            <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            </div>
+
+          @else
+
+          <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -160,6 +198,9 @@
 
                 </tbody>
             </table>
+
+          @endif
+
         </div>
         @else
           <div class="widget white-bg no-padding">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\{Folder, TemporaryFile};
 use App\Models\Folder\Permission as FolderPermission;
 use App\Models\Department;
+use App\Helpers\Helper;
 use File;
 use Storage;
 use Zipper;
@@ -17,7 +18,7 @@ class FoldersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
@@ -26,6 +27,10 @@ class FoldersController extends Controller
         if($user->isAdmin()) {
             $folders = Folder::all();
         }
+
+
+
+        #dd($listStyle);
 
 /*
         $files = TemporaryFile::all();
@@ -179,10 +184,24 @@ class FoldersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $folder = Folder::uuid($id);
-        return view('folders.show', compact('folder'));
+
+        $slug = 'list-style-folders-index';
+        $listStyle = 'list';
+
+        $has = Helper::has($slug);
+
+        if(!$has) {
+            $listStyle = Helper::create($slug, 'list');
+        }
+
+        if($request->has('list')) {
+            $listStyle = Helper::create($slug, $request->get('list'));
+        };
+
+        return view('folders.show', compact('folder', 'listStyle'));
     }
 
     /**
