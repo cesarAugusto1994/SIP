@@ -37,9 +37,19 @@ class Folder extends Model
        return $this->hasMany('App\Models\Folder', 'parent_id');
     }
 
-    public function permissions()
+    public function children()
     {
-       return $this->hasManyThrough('App\Models\Folder\Permission', 'App\User', 'folder_id', 'user_id');
+       return $this->hasMany('App\Models\Folder', 'parent_id');
+    }
+
+    public function permissionsForGroup()
+    {
+       return $this->hasManyThrough('App\Models\Folder\Group\Permission', 'App\Models\Department', 'folder_id', 'group_id');
+    }
+
+    public function permissionsForUser()
+    {
+       return $this->hasManyThrough('App\Models\Folder\User\Permission', 'App\User', 'folder_id', 'user_id');
     }
 
     public function getDescriptionForEvent(string $eventName): string

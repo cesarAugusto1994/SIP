@@ -24,7 +24,21 @@ class CreateArchivesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('folder_permission', function (Blueprint $table) {
+        Schema::create('folder_group_permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('folder_id')->unsigned()->index();
+            $table->foreign('folder_id')->references('id')->on('folders');
+            $table->integer('group_id')->unsigned()->index();
+            $table->foreign('group_id')->references('id')->on('departments');
+            $table->boolean('read')->default(false);
+            $table->boolean('edit')->default(false);
+            $table->boolean('delete')->default(false);
+            $table->boolean('share')->default(false);
+            $table->uuid('uuid');
+            $table->timestamps();
+        });
+
+        Schema::create('folder_user_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('folder_id')->unsigned()->index();
             $table->foreign('folder_id')->references('id')->on('folders');
@@ -54,7 +68,20 @@ class CreateArchivesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('archive_permissions', function (Blueprint $table) {
+        Schema::create('archive_group_permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('archive_id')->unsigned()->index();
+            $table->foreign('archive_id')->references('id')->on('archives');
+            $table->integer('group_id')->unsigned()->index();
+            $table->foreign('group_id')->references('id')->on('departments');
+            $table->boolean('read')->default(false);
+            $table->boolean('delete')->default(false);
+            $table->boolean('share')->default(false);
+            $table->uuid('uuid');
+            $table->timestamps();
+        });
+
+        Schema::create('archive_user_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('archive_id')->unsigned()->index();
             $table->foreign('archive_id')->references('id')->on('archives');

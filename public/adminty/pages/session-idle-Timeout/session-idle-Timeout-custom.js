@@ -12,5 +12,5 @@ $(document).ready(function() {
         redirUrl: 'session-idle-timeout.html',
         logoutUrl: 'session-idle-timeout.html'
     });
-    
+
 });

@@ -96,12 +96,12 @@ class User extends Authenticatable
 
     public function folders()
     {
-       return $this->hasManyThrough('App\Models\Folder', 'App\Models\Folder\Permission', 'user_id', 'user_id');
+       return $this->hasManyThrough('App\Models\Folder', 'App\Models\Folder\User\Permission', 'user_id', 'user_id');
     }
 
     public function foldersPermissions()
     {
-        return $this->hasMany('App\Models\Folder\Permission', 'user_id');
+        return $this->hasMany('App\Models\Folder\User\Permission', 'user_id');
     }
 
     /**

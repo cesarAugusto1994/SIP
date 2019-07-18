@@ -12,7 +12,7 @@ use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
 use App\Models\Unit;
-use App\Models\Message;
+use App\Models\{Message, Folder};
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Models\Category as MessageBoardCategory;
@@ -58,6 +58,20 @@ class Helper
     {
         $slug = self::slug($key);
         return Session::forget($slug);
+    }
+
+    public static function folders()
+    {
+        $key = 'folders';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Folder::all();
+
+        self::set($key, $data);
+        return self::get($key);
     }
 
     public static function courses()

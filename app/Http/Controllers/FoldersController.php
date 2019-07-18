@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Folder, TemporaryFile};
-use App\Models\Folder\Permission as FolderPermission;
+use App\Models\Folder\Group\Permission as FolderGroupPermission;
+use App\Models\Folder\User\Permission as FolderUserPermission;
 use App\Models\Department;
 use App\Helpers\Helper;
 use File;
@@ -155,12 +156,21 @@ class FoldersController extends Controller
               $department = Department::find($depto);
 
               if(!$department) {
-
+                  //
               }
+
+              FolderGroupPermission::create([
+                'group_id' => $department->id,
+                'folder_id' => $folder->id,
+                'read' => $request->has('read'),
+                'edit' => $request->has('edit'),
+                'share' => $request->has('share'),
+                'delete' => $request->has('delete'),
+              ]);
 
               foreach ($department->people as $key => $person) {
 
-                FolderPermission::create([
+                FolderUserPermission::create([
                   'user_id' => $person->user->id,
                   'folder_id' => $folder->id,
                   'read' => $request->has('read'),

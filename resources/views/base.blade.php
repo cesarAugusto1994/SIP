@@ -56,7 +56,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
-    <link rel="stylesheet" href="{{ asset('adminty\components\bootstrap-multiselect\js\bootstrap-multiselect.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('adminty\components\bootstrap-multiselect\css\bootstrap-multiselect.css') }}"/>
 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
@@ -251,8 +251,7 @@
 
   $(document).ready(function() {
 
-    $(document).ready(function() {
-      $('.summernote').summernote({
+    $('.summernote').summernote({
           placeholder: 'Digite sua mensagem',
           tabsize: 2,
           height: 300,
@@ -266,7 +265,6 @@
             ['height', ['height']]
           ]
       });
-    });
 
     var $formValid = $('.formValidation').parsley();
 

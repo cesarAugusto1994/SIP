@@ -97,6 +97,11 @@
                           <a class="nav-link" data-toggle="tab" href="#roles" role="tab">Permissões</a>
                           <div class="slide"></div>
                       </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#folders" role="tab">Pastas e Arquivos</a>
+                          <div class="slide"></div>
+                      </li>
                     @endif
                 </ul>
             </div>
@@ -615,9 +620,8 @@
                                               </tbody>
                                           </table>
                                         @empty
-                                            <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
+                                            <div class="alert alert-warning">Nenhum registro encontrado.</div>
                                         @endforelse
-
 
                                       </div>
 
@@ -631,6 +635,76 @@
 
                 </div>
                 <!-- tab pane contact end -->
+                <div class="tab-pane" id="folders" role="tabpanel">
+
+                  <div class="card">
+                      <div class="card-header">
+                          <h5 class="card-header-text">Editar Acessos</h5>
+                      </div>
+                      <div class="card-block accordion-block color-accordion-block">
+                          <div class="color-accordion ui-accordion ui-widget ui-helper-reset" id="color-accordion" role="tablist">
+
+                              @foreach(\App\Helpers\Helper::folders() as $key => $folder)
+
+                                @if(!$folder->parent)
+
+                                      <a class="accordion-msg b-none scale_active ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-accordion-header-active ui-state-active" role="tab" id="ui-id-{{ $loop->index }}-{{ $loop->index }}" aria-controls="ui-id-{{ $loop->index }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" tabindex="0"><span class="ui-accordion-header-icon ui-icon zmdi zmdi-chevron-up"></span>{{$folder->name}}</a>
+                                      <div class="accordion-desc ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-{{ $loop->index }}" aria-labelledby="ui-id-{{ $loop->index }}" role="tabpanel" aria-hidden="false">
+
+                                        @forelse($folder->children as $item)
+
+                                          <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                                            <h5>
+                                                {{$item->name}}
+                                            </h5>
+                                          </div>
+
+                                          <table class="table table-borderd">
+                                              <tbody>
+                                              @foreach($item->permissions as $permission)
+
+                                              @php
+                                                  $hasPermission = $user->hasPermission($permission->slug);
+                                              @endphp
+
+                                              <tr>
+                                                  <td class="project-actions">
+                                                      <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="js-switch checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                        data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                        data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}" value="1"/>
+                                                  </td>
+                                                  <td class="project-title">
+                                                      <p>Nome:</p>
+                                                      <a href="#">{{$permission->name}}</a>
+                                                  </td>
+                                                  <td class="project-title">
+                                                      <p>Descrição:</p>
+                                                      <a href="#">{{$permission->description}}</a>
+                                                  </td>
+                                              </tr>
+                                              @endforeach
+                                              </tbody>
+                                          </table>
+                                        @empty
+                                            <div class="alert alert-warning">Nenhuma pasta encontrada.</div>
+                                        @endforelse
+
+
+                                      </div>
+
+                                @else
+
+
+                                @endif
+
+
+                              @endforeach
+
+                          </div>
+                      </div>
+                  </div>
+
+                </div>
             </div>
             <!-- tab content end -->
         </div>
