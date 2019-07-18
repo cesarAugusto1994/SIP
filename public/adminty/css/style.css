@@ -21152,7 +21152,7 @@ tr:first-child>td>.fc-day-grid-event {
 }
 
 .email-card .user-head {
-    background-color: #01a9ac;
+    background-color: #f5f5f5;
     padding: 10px;
     min-height: 80px;
     display: -webkit-box;
@@ -21260,7 +21260,7 @@ tr:first-child>td>.fc-day-grid-event {
 }
 
 .email-card .mail-box-head {
-    background-color: #01a9ac;
+    background-color: #f5f5f5;
     min-height: 80px;
     padding: 20px 0
 }

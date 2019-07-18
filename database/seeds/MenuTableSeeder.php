@@ -192,6 +192,15 @@ class MenuTableSeeder extends Seeder
           'icon' => 'far fa-folder-open',
         ],
 
+        [
+          'title' => 'E-mail',
+          'route' => 'emails.index',
+          'permission' => 'view.email',
+          'description' => 'E-mails',
+          'parent' => null,
+          'icon' => 'far fa-envelope',
+        ],
+
         ];
 
 

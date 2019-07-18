@@ -28,8 +28,6 @@ class CreateArchivesTable extends Migration
             $table->increments('id');
             $table->integer('folder_id')->unsigned()->index();
             $table->foreign('folder_id')->references('id')->on('folders');
-            $table->string('name');
-            $table->string('path');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('read')->default(false);

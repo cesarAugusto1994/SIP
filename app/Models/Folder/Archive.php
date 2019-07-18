@@ -21,4 +21,15 @@ class Archive extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Arquivo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Arquivo Deletado";
+        }
+
+        return "Arquivo Adicionado";
+    }
 }

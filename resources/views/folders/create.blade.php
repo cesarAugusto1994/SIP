@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Arquivos</h4>
+                    <h4>Porta Arquivos</h4>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('folders.index') }}"> Arquivos </a>
+                        <a href="{{ route('folders.index') }}"> Pastas </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Nova Pasta</a>
                     </li>
@@ -64,6 +64,71 @@
                       </select>
 
                     </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-12">
+
+                <div class="form-group">
+                    <label class="col-form-label">Grupos de Acesso</label>
+                    <span class="text-danger">Informe os grupos de usuários que terão acesso à pasta.</span>
+                    <div class="input-group">
+                      <select class="form-control m-b select2" multiple name="departments[]" required>
+                          @foreach(\App\Helpers\Helper::departments() as $department)
+                              <option value="{{$department->id}}">{{$department->name}}</option>
+                          @endforeach
+                      </select>
+
+                    </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group {!! $errors->has('read') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Leitura</label>
+                    <div class="input-group">
+                      <input type="checkbox" data-plugin="switchery" checked data-switchery="true" value="1" name="read" class="js-switch">
+                    </div>
+                    {!! $errors->first('read', '<p class="help-block">:message</p>') !!}
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group {!! $errors->has('edit') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Alterar</label>
+                    <div class="input-group">
+                      <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="edit" class="js-switch">
+                    </div>
+                    {!! $errors->first('edit', '<p class="help-block">:message</p>') !!}
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group {!! $errors->has('share') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Compartilhar</label>
+                    <div class="input-group">
+                      <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="share" class="js-switch">
+                    </div>
+                    {!! $errors->first('share', '<p class="help-block">:message</p>') !!}
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group {!! $errors->has('delete') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Remover</label>
+                    <div class="input-group">
+                      <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="delete" class="js-switch">
+                    </div>
+                    {!! $errors->first('delete', '<p class="help-block">:message</p>') !!}
                 </div>
 
               </div>

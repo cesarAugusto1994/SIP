@@ -16,14 +16,13 @@ class EmailsController extends Controller
      */
     public function index()
     {
-        //$aFolder = $oClient->getFolder('INBOX');
-
-        $this->search();
-
-        $emailsInbox = Email::where('folder_id', 2)->get();
+        $emailsInbox = Email::where('folder_id', 2)->orderByDesc('id')->paginate();
         $emailsSent = Email::where('folder_id', 4)->get();
+        $emailsDraft = Email::where('folder_id', 5)->get();
+        $emailsTrash = Email::where('folder_id', 3)->get();
+        $emailsInboxUnSeen = Email::where('flag_seen', false)->count();
 
-        return view('email.index', compact('emailsInbox', 'emailsSent'));
+        return view('email.index', compact('emailsInbox', 'emailsSent', 'emailsDraft', 'emailsTrash', 'emailsInboxUnSeen'));
     }
 
     public function html($id)
@@ -327,7 +326,7 @@ class EmailsController extends Controller
      */
     public function create()
     {
-        //
+        return view('email.create');
     }
 
     /**

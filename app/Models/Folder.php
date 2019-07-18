@@ -36,4 +36,20 @@ class Folder extends Model
     {
        return $this->hasMany('App\Models\Folder', 'parent_id');
     }
+
+    public function permissions()
+    {
+       return $this->hasManyThrough('App\Models\Folder\Permission', 'App\User', 'folder_id', 'user_id');
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Pasta atualizada";
+        } elseif ($eventName == 'deleted') {
+            return "Pasta Deletada";
+        }
+
+        return "Pasta Criada";
+    }
 }

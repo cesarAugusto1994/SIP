@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Folder, TemporaryFile};
+use App\Models\Folder\Permission as FolderPermission;
+use App\Models\Department;
 use File;
 use Storage;
 use Zipper;
@@ -17,8 +19,15 @@ class FoldersController extends Controller
      */
     public function index()
     {
-        $folders = Folder::with('user')->get();
+        $user = auth()->user();
 
+        $folders = $user->folders;
+
+        if($user->isAdmin()) {
+            $folders = Folder::all();
+        }
+
+/*
         $files = TemporaryFile::all();
         $files->map(function($file) {
           if($file->created_at < now()->addMinutes(1)) {
@@ -28,7 +37,7 @@ class FoldersController extends Controller
             $file->delete();
           }
         });
-
+*/
         return view('folders.index', compact('folders'));
     }
 
@@ -86,7 +95,11 @@ class FoldersController extends Controller
     {
         $data = $request->request->all();
 
-        $data['user_id'] = $request->user()->id;
+        //dd($data);
+
+        $user = $request->user();
+
+        $data['user_id'] = $user->id;
 
         $path = 'archives';
         $parentId = null;
@@ -103,8 +116,6 @@ class FoldersController extends Controller
 
         $data['path'] = $path;
         $data['parent_id'] = $parentId;
-
-        //dd($data);
 
         if(!File::isDirectory($path)) {
             $isDir = Storage::makeDirectory($path);
@@ -132,6 +143,33 @@ class FoldersController extends Controller
 
         $folder = Folder::create($data);
 
+        if($request->has('departments')) {
+
+          foreach ($data['departments'] as $key => $depto) {
+
+              $department = Department::find($depto);
+
+              if(!$department) {
+
+              }
+
+              foreach ($department->people as $key => $person) {
+
+                FolderPermission::create([
+                  'user_id' => $person->user->id,
+                  'folder_id' => $folder->id,
+                  'read' => $request->has('read'),
+                  'edit' => $request->has('edit'),
+                  'share' => $request->has('share'),
+                  'delete' => $request->has('delete'),
+                ]);
+
+              }
+
+          }
+
+        }
+
         return redirect()->route('folders.show', $folder->uuid);
     }
 
@@ -155,7 +193,9 @@ class FoldersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $folder = Folder::uuid($id);
+        $folders = Folder::with('user')->get();
+        return view('folders.edit', compact('folders', 'folder'));
     }
 
     /**

@@ -11,9 +11,7 @@
                         @if($folder->parent)
                             {{$folder->parent->name}} /
                         @endif
-
                         {{ $folder->name }}
-
                     </h4>
                 </div>
             </div>
@@ -24,8 +22,19 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Arquivos</a>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('folders.index') }}"> Arquivos </a>
                     </li>
+
+                    @if($folder->parent)
+
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('folders.show', $folder->parent->uuid) }}"> {{$folder->parent->name}} </a>
+                        </li>
+
+                    @endif
+
+                    <li class="breadcrumb-item"><a href="#!">{{ $folder->name }}</a></li>
                 </ul>
             </div>
         </div>
@@ -40,7 +49,7 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  @permission('create.arquivos')
+                  @permission('create.pastas')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('folders.create', ['parent_folder_id' => $folder->uuid])}}">Nova Pasta</a></li>
                   @endpermission
 
@@ -62,7 +71,7 @@
                   <tr>
                       <td colspan="2">
                         @if(!$folder->parent)
-                            <a class="label label-inverse-primary" href="{{ route('folders.show', $folder->uuid) }}">..\</a>
+                            <a class="label label-inverse-primary" href="{{ route('folders.index') }}">..\</a>
                         @else
                             <a class="label label-inverse-primary" href="{{ route('folders.show', $folder->parent->uuid) }}">..\</a>
                         @endif

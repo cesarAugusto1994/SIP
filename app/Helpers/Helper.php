@@ -266,6 +266,22 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Folder') {
+
+          if($item) {
+            $route = route('folders.show', $item->uuid);
+            $html = "<a href=".$route.">".$item->name."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Folder\Archive') {
+
+          if($item) {
+            $route = route('archive_preview', $item->uuid);
+            $html = "<a target='_blank' href=".$route.">".$item->filename."</a>";
+          }
+        }
+
         if($model == 'App\Models\Documents') {
 
           if($item) {

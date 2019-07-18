@@ -94,6 +94,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Ticket');
     }
 
+    public function folders()
+    {
+       return $this->hasManyThrough('App\Models\Folder', 'App\Models\Folder\Permission', 'user_id', 'user_id');
+    }
+
+    public function foldersPermissions()
+    {
+        return $this->hasMany('App\Models\Folder\Permission', 'user_id');
+    }
+
     /**
     * @param string|array $roles
     */

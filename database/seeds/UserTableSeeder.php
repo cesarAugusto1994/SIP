@@ -39,7 +39,7 @@ class UserTableSeeder extends Seeder
             ]);
 
             $department = Department::create([
-              'name' => 'Tecnologia da Informação'
+              'name' => 'Sistema'
             ]);
 
             $occupation = Occupation::create([

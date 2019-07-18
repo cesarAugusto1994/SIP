@@ -39,52 +39,41 @@
               </ul>
           </div>
       </div>
-      <div class="card-block">
-
-        @if($folders->isNotEmpty())
-
-        <div class="table-responsive">
-            <table class="table table-hover table-borderless">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th class="text-right">Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                  @foreach($folders as $folder)
-
-                      @if($folder->parent_id)
-                        @continue;
-                      @endif
-
-                      <tr>
-                          <td><a href="{{ route('folders.show', $folder->uuid) }}">{{$folder->name}}</a></td>
-                          <td class="text-right">
-                              <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                          </td>
-                      </tr>
-
-                  @endforeach
-
-                </tbody>
-            </table>
-        </div>
-
-        @else
-
-          <div class="widget white-bg no-padding">
-              <div class="p-m text-center">
-                <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
-                <p class="font-bold no-margins">Nenhum registro encontrado.</p>
-              </div>
-          </div>
-
-        @endif
-
-      </div>
   </div>
+
+  @if($folders->isNotEmpty())
+
+  <div class="row">
+    @foreach($folders as $folder)
+
+    @if($folder->parent_id)
+      @continue;
+    @endif
+
+    <div class="col-md-12 col-lg-4">
+        <div class="card">
+            <div class="card-block text-center">
+                <h2 class="m-t-20"><a style="font-size: 2rem;" href="{{ route('folders.show', $folder->uuid) }}">{{$folder->name}}</a></h2>
+                <p class="m-b-20">{{$folder->created_at->format('d/m/Y H:i')}}<br/>
+                  <label class="label label-inverse-primary">{{ $folder->created_at->diffForHumans() }}</p>
+                <a class="btn btn-success btn-sm btn-round" href="{{ route('folders.show', $folder->uuid) }}"><i class="fa fa-go"></i> Acessar</a>
+                <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+  </div>
+
+  @else
+
+    <div class="widget white-bg no-padding">
+        <div class="p-m text-center">
+          <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
+          <p class="font-bold no-margins">Nenhum registro encontrado.</p>
+        </div>
+    </div>
+
+  @endif
 
 </div>
 

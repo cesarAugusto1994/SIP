@@ -188,6 +188,13 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Modulos'),
           ],
 
+          [
+            'name' => 'Email',
+            'slug' => str_slug('Email'),
+            'description' => 'Email',
+            'parent' => str_slug('Modulos'),
+          ],
+
         ];
 
         foreach ($itens as $key => $value) {
