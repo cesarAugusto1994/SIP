@@ -60,6 +60,18 @@ class Helper
         return Session::forget($slug);
     }
 
+    public static function formatBytes($size = 0, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
+
+        if($base < 0) {
+          return '0 Kb';
+        }
+
+        return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+    }
+
     public static function folders()
     {
         $key = 'folders';

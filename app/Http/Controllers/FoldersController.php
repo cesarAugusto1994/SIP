@@ -210,10 +210,8 @@ class FoldersController extends Controller
         $slug = 'list-style-folders-index';
         $listStyle = 'list';
 
-        $has = Helper::has($slug);
-
-        if(!$has) {
-            $listStyle = Helper::create($slug, 'list');
+        if(Helper::has($slug)) {
+            $listStyle = Helper::get($slug);
         }
 
         if($request->has('list')) {

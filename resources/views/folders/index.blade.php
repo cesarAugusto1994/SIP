@@ -56,6 +56,11 @@
         $edit = $permission->edit ?? false;
         $share = $permission->share ?? false;
         $delete = $permission->delete ?? false;
+
+        if(auth()->user()->isAdmin()) {
+            $read = $edit = $share = $download = true;
+        }
+
     @endphp
 
     @if($read)
@@ -64,12 +69,26 @@
             <div class="card">
                 <div class="card-block text-center">
                     <h2 class="m-t-20"><a style="font-size: 2rem;" href="{{ route('folders.show', $folder->uuid) }}">{{$folder->name}}</a></h2>
-                    <p class="m-b-20">{{$folder->created_at->format('d/m/Y H:i')}}<br/>
-                      <label class="label label-inverse-primary">{{ $folder->created_at->diffForHumans() }}</p>
-                    <a class="btn btn-success btn-sm btn-round" href="{{ route('folders.show', $folder->uuid) }}"><i class="fa fa-go"></i> Acessar</a>
+
+                    @if(auth()->user()->isAdmin())
+                        <p class="m-b-20">{{$folder->created_at->format('d/m/Y H:i')}}<br/>
+                          <label class="label label-inverse-primary">{{ $folder->created_at->diffForHumans() }}</p>
+                        <a class="btn btn-success btn-sm btn-round" href="{{ route('folders.show', $folder->uuid) }}"><i class="fa fa-go"></i> Acessar</a>
+                    @endif
+
                     @if($edit)
                         <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
                     @endif
+                </div>
+                <div class="card-footer bg-c-green">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <p class="text-white m-b-0">{{ $folder->archives->count() }} Arquivos</p>
+                        </div>
+                        <div class="col-6 text-right text-white">
+                            {{ \App\Helpers\Helper::formatBytes($folder->archives->sum('size')) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

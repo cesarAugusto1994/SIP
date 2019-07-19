@@ -97,7 +97,9 @@
                       @if($read)
 
                       <tr>
-                          <td><a class="label label-inverse-success label-lg" href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a></td>
+                          <td><a class="lead m-t-0" href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a><br/>
+                              <span class="text-muted">{{ \App\Helpers\Helper::formatBytes($item->archives->sum('size')) }}</span>
+                          </td>
                           <td class="dropdown text-right">
 
                             <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
@@ -131,12 +133,28 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Arquivos</h5>
+          <h5>Arquivos da Pasta</h5>
+          <span class="text-muted">{{ $folder->archives->count() }} Arquivo(s) e {{ \App\Helpers\Helper::formatBytes($folder->archives->sum('size')) }}</span>
+
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  <li><a class="btn btn-sm btn-outline-danger btn-round" href="?list=list">Lista</a></li>
-                  <li><a class="btn btn-sm btn-outline-danger btn-round" href="?list=grid">Grid</a></li>
+                  @php
+
+                      $btnListClass = 'btn-danger';
+                      $btnGridClass = 'btn-outline-danger';
+
+                      if($listStyle == 'grid') {
+
+                        $btnGridClass = 'btn-danger';
+                        $btnListClass = 'btn-outline-danger';
+
+                      }
+
+                  @endphp
+
+                  <li><a class="btn btn-sm {{ $btnListClass }} btn-round" href="?list=list">Lista</a></li>
+                  <li><a class="btn btn-sm {{ $btnGridClass }} btn-round" href="?list=grid">Grid</a></li>
 
                   @php
                       $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
@@ -166,21 +184,32 @@
                     <div class="card">
                         <div class="card-block text-center">
                             <h4 class="m-t-20"><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a></h4>
-                            <p class="">{{$archive->created_at->format('d/m/Y H:i')}}
+                            <p class="">{{$archive->created_at->format('d/m/Y H:i')}}<br/>
                                 <label class="label label-inverse-primary">{{ $archive->created_at->diffForHumans() }}</label>
                             </p>
                         </div>
+
                         <div class="card-footer bg-c-green">
-                          <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                          <div class="dropdown-menu dropdown-menu-right b-none contact-menu" style="z-index: 9999;">
+                            <div class="row align-items-center">
+                                <div class="col-6 text-white">
+                                    <span>{{ \App\Helpers\Helper::formatBytes($archive->size) }}</span>
+                                </div>
+                                <div class="col-6 text-right text-white">
 
-                            <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
-                            <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
-                            <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                            <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                                    <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu" style="z-index: 9999;">
 
-                          </div>
+                                      <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                                      <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                                      <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                                      <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             @endforeach
@@ -194,7 +223,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Proprietário</th>
-                        <th>Adicionado Em</th>
+                        <th>Upload Em</th>
                         <th class="text-right">Opções</th>
                     </tr>
                 </thead>
@@ -203,9 +232,11 @@
                   @foreach($folder->archives as $archive)
 
                       <tr>
-                          <td><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a></td>
+                          <td><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a>
+                            <br/><span class="text-muted">{{ \App\Helpers\Helper::formatBytes($archive->size) }}</span>
+                          </td>
                           <td>{{$archive->user->person->name}}</td>
-                          <td>{{$archive->created_at->format('d/m/Y H:i')}}<br/>
+                          <td><span class="text-muted">{{$archive->created_at->format('d/m/Y H:i')}}</span>
                             <label class="label label-inverse-primary">{{ $archive->created_at->diffForHumans() }}</label>
                           </td>
                           <td class="dropdown text-right">
