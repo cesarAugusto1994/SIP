@@ -105,15 +105,21 @@
                             <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                              <a class="dropdown-item" href="{{ route('folders.show', $item->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                              @if($user->hasPermission('view.pastas'))
+                                <a class="dropdown-item" href="{{ route('folders.show', $item->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                              @endif
                               @if($download)
                                 <a class="dropdown-item" href="{{route('folders_download', $item->uuid)}}"><i class="fas fa-cloud-download-alt"></i> Download</a>
                               @endif
                               @if($edit)
-                                <a class="dropdown-item" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                                @if($user->hasPermission('edit.pastas'))
+                                  <a class="dropdown-item" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                                @endif
                               @endif
                               @if($delete)
-                                <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                                @if($user->hasPermission('delete.pastas'))
+                                  <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                                @endif
                               @endif
                             </div>
                           </td>
@@ -153,33 +159,63 @@
 
                   @endphp
 
-                  <li><a class="btn btn-sm {{ $btnListClass }} btn-round" href="?list=list">Lista</a></li>
-                  <li><a class="btn btn-sm {{ $btnGridClass }} btn-round" href="?list=grid">Grid</a></li>
+                  <li><a class="btn btn-sm {{ $btnListClass }}" href="?list=list">Lista</a></li>
+                  <li><a class="btn btn-sm {{ $btnGridClass }}" href="?list=grid">Grid</a></li>
 
                   @php
                       $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
                       $download = $permission->download ?? false;
+                      $edit = $permission->edit ?? false;
+                      $delete = $permission->delete ?? false;
 
                       if(auth()->user()->isAdmin()) {
-                          $download = true;
+                          $download = $edit = $delete = true;
                       }
                   @endphp
 
-                  @if($download)
-                    <li><a class="btn btn-sm btn-primary btn-round" href="{{route('folders_download', $folder->uuid)}}">Baixar Pasta</a></li>
-                  @endif
+                  <li>
+                    <button type="button" class="btn btn-primary text-white btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções</button>
+                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+                      @if($download)
+                        <a class="dropdown-item" href="{{route('folders_download', $folder->uuid)}}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                      @endif
+                      @if($edit)
+                        @if($user->hasPermission('edit.pastas'))
+                          <a class="dropdown-item" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                        @endif
+                      @endif
+                      @if($delete)
+                        @if($user->hasPermission('delete.pastas'))
+                          <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $folder->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                        @endif
+                      @endif
+                    </div>
+                  </li>
 
               </ul>
           </div>
       </div>
       <div class="card-block">
 
-        @if($folder->archives->isNotEmpty())
+        @if($folder->archives->isNotEmpty() && $user->hasPermission('view.arquivos'))
 
           @if($listStyle == 'grid')
 
             <div class="row">
             @foreach($folder->archives as $archive)
+
+                @php
+                    $permission = $archive->permissionsForUser->where('user_id', auth()->user()->id)->first();
+
+                    $download = $permission->download ?? false;
+                    $edit = $permission->edit ?? false;
+                    $delete = $permission->delete ?? false;
+
+                    if(auth()->user()->isAdmin()) {
+                        $download = $edit = $delete = true;
+                    }
+                @endphp
+
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-block text-center">
@@ -199,11 +235,20 @@
                                     <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                     <div class="dropdown-menu dropdown-menu-right b-none contact-menu" style="z-index: 9999;">
 
-                                      <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
-                                      <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
-                                      <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                                      <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                                      @if($user->hasPermission('view.arquivos'))
+                                          <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                                      @endif
 
+                                      @if($download)
+                                      <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                                      @endif
+
+                                      @if($edit && $user->hasPermission('edit.arquivos'))
+                                          <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                                      @endif
+                                      @if($delete && $user->hasPermission('delete.arquivos'))
+                                          <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                                      @endif
                                     </div>
 
                                 </div>
@@ -244,10 +289,20 @@
                             <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                              <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                              @if($user->hasPermission('view.arquivos'))
+                                  <a class="dropdown-item" target="_blank" href="{{ route('archive_preview', $archive->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
+                              @endif
+
+                              @if($download)
                               <a class="dropdown-item" href="{{ route('archives_download', $archive->uuid) }}"><i class="fas fa-cloud-download-alt"></i> Download</a>
-                              <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                              <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                              @endif
+
+                              @if($edit && $user->hasPermission('edit.arquivos'))
+                                  <a class="dropdown-item" href="{{ route('archives.edit', $archive->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                              @endif
+                              @if($delete && $user->hasPermission('delete.arquivos'))
+                                  <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('archives.destroy', ['id' => $archive->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                              @endif
 
                             </div>
                           </td>
@@ -273,15 +328,19 @@
       </div>
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Upload</h5>
-      </div>
-      <div class="card-block table-responsive">
-          <div class="sub-title">Upload de Arquivos</div>
-          <input type="file" name="files[]" id="filer" data-route="{{ route('file_upload', $folder->uuid) }}" multiple="multiple">
-      </div>
-  </div>
+  @if($user->hasPermission('create.arquivos'))
+    <div class="card">
+        <div class="card-header">
+            <h5>Upload</h5>
+        </div>
+        <div class="card-block table-responsive">
+            <div class="sub-title">Upload de Arquivos</div>
+
+              <input type="file" name="files[]" id="filer" data-route="{{ route('file_upload', $folder->uuid) }}" multiple="multiple">
+
+        </div>
+    </div>
+  @endif
 
 </div>
 

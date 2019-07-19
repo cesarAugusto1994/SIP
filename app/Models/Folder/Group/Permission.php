@@ -19,4 +19,9 @@ class Permission extends Model
     {
        return $this->belongsTo('App\Models\Folder', 'folder_id');
     }
+
+    public function group()
+    {
+       return $this->belongsTo('App\Models\Department', 'group_id');
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Folder;
 use App\Models\Folder\Archive;
+use App\Models\Folder\Archive\Group\Permission as ArchiveGroupPermission;
+use App\Models\Folder\Archive\User\Permission as ArchiveUserPermission;
 use Storage;
 use File;
 
@@ -42,7 +44,7 @@ class ArchivesController extends Controller
               $filePath = $path;
             }
 
-            Archive::create([
+            $archive = Archive::create([
               'folder_id' => $folder->id,
               'user_id' => $request->user()->id,
               'filename' => $name,
@@ -52,6 +54,36 @@ class ArchivesController extends Controller
               'content' => base64_encode(file_get_contents($file->getRealPath())),
               'extension' => $extension,
             ]);
+
+            foreach ($folder->permissionsForGroup as $key => $folderGroupPermission) {
+
+                $groupUsers = $folderGroupPermission->group;
+                
+                ArchiveGroupPermission::create([
+                  'group_id' => $groupUsers->id,
+                  'archive_id' => $archive->id,
+                  'read' => $folderGroupPermission->read,
+                  'edit' => $folderGroupPermission->edit,
+                  'share' => $folderGroupPermission->share,
+                  'download' => $folderGroupPermission->download,
+                  'delete' => $folderGroupPermission->delete,
+                ]);
+
+                foreach ($groupUsers->people as $key => $person) {
+
+                  ArchiveUserPermission::create([
+                    'user_id' => $person->user->id,
+                    'archive_id' => $archive->id,
+                    'read' => $folderGroupPermission->read,
+                    'edit' => $folderGroupPermission->edit,
+                    'share' => $folderGroupPermission->share,
+                    'download' => $folderGroupPermission->download,
+                    'delete' => $folderGroupPermission->delete,
+                  ]);
+
+                }
+
+            }
 
         }
 
@@ -110,7 +142,7 @@ class ArchivesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //
     }
 
     /**

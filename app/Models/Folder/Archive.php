@@ -22,6 +22,16 @@ class Archive extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function permissionsForGroup()
+    {
+       return $this->hasManyThrough('App\Models\Folder\Archive\Group\Permission', 'App\Models\Department', 'archive', 'group_id');
+    }
+
+    public function permissionsForUser()
+    {
+       return $this->hasMany('App\Models\Folder\Archive\User\Permission', 'archive_id');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {

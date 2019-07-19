@@ -44,7 +44,7 @@ class Folder extends Model
 
     public function permissionsForGroup()
     {
-       return $this->hasManyThrough('App\Models\Folder\Group\Permission', 'App\Models\Department', 'folder_id', 'group_id');
+       return $this->hasMany('App\Models\Folder\Group\Permission', 'folder_id');
     }
 
     public function permissionsForUser()

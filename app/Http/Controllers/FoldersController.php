@@ -9,6 +9,7 @@ use App\Models\Folder\User\Permission as FolderUserPermission;
 use App\Models\Department;
 use App\Helpers\Helper;
 use App\User;
+use Auth;
 use File;
 use Storage;
 use Zipper;
@@ -24,6 +25,10 @@ class FoldersController extends Controller
     {
         $user = auth()->user();
 
+        if(!Auth::user()->hasPermission('view.pastas')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $folders = $user->foldersPermissions->map(function($permission) {
             return $permission->folder;
         });
@@ -38,6 +43,16 @@ class FoldersController extends Controller
     public function downloadAsZip($id, Request $request)
     {
         $folder = Folder::uuid($id);
+
+        $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
+        $donload = $permission->donload ?? false;
+
+        if(!$donload && !$request->user()->isAdmin()) {
+            notify()->flash('Erro em realizar Download', 'error', [
+              'text' => 'Você não tem permissão para esta ação.'
+            ]);
+            return back();
+        }
 
         $filename = $folder->name . '-arquivos-'.time().'.zip';
 
@@ -75,6 +90,10 @@ class FoldersController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->hasPermission('create.pastas')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $user = auth()->user();
 
         $folders = Folder::with('user')->get();
@@ -205,12 +224,18 @@ class FoldersController extends Controller
      */
     public function show($id, Request $request)
     {
+        if(!Auth::user()->hasPermission('view.pastas')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
+        $user = $request->user();
+
         $folder = Folder::uuid($id);
 
         $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
         $read = $permission->read ?? false;
 
-        if(!$read) {
+        if(!$read && !$request->user()->isAdmin()) {
             notify()->flash('Erro em acessar a Pasta', 'error', [
               'text' => 'Você não tem acesso à pasta requerida.'
             ]);
@@ -228,7 +253,7 @@ class FoldersController extends Controller
             $listStyle = Helper::create($slug, $request->get('list'));
         };
 
-        return view('folders.show', compact('folder', 'listStyle'));
+        return view('folders.show', compact('folder', 'listStyle', 'user'));
     }
 
     /**
@@ -239,6 +264,10 @@ class FoldersController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->hasPermission('edit.pastas')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $folder = Folder::uuid($id);
         $folders = Folder::with('user')->get();
         return view('folders.edit', compact('folders', 'folder'));
@@ -291,6 +320,8 @@ class FoldersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!Auth::user()->hasPermission('delete.pastas')) {
+            return abort(403, 'Unauthorized action.');
+        }
     }
 }

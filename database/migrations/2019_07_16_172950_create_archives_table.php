@@ -77,6 +77,7 @@ class CreateArchivesTable extends Migration
             $table->integer('group_id')->unsigned()->index();
             $table->foreign('group_id')->references('id')->on('departments');
             $table->boolean('read')->default(false);
+            $table->boolean('edit')->default(false);
             $table->boolean('delete')->default(false);
             $table->boolean('share')->default(false);
             $table->boolean('download')->default(false);
@@ -91,6 +92,7 @@ class CreateArchivesTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('read')->default(false);
+            $table->boolean('edit')->default(false);
             $table->boolean('delete')->default(false);
             $table->boolean('share')->default(false);
             $table->boolean('download')->default(false);

@@ -73,11 +73,11 @@
                     @if(auth()->user()->isAdmin())
                         <p class="m-b-20">{{$folder->created_at->format('d/m/Y H:i')}}<br/>
                           <label class="label label-inverse-primary">{{ $folder->created_at->diffForHumans() }}</p>
-                        <a class="btn btn-success btn-sm btn-round" href="{{ route('folders.show', $folder->uuid) }}"><i class="fa fa-go"></i> Acessar</a>
+                        <a class="btn btn-success btn-sm" href="{{ route('folders.show', $folder->uuid) }}"><i class="fas fa-check"></i> Acessar</a>
                     @endif
 
                     @if($edit)
-                        <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fas fa-edit"></i> Editar</a>
                     @endif
                 </div>
                 <div class="card-footer bg-c-green">
