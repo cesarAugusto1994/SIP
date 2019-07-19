@@ -168,16 +168,16 @@ class MenuTableSeeder extends Seeder
             [
               'title' => 'Tipos de chamados',
               'route' => 'ticket-types.index',
-              'permission' => 'view.chamados',
+              'permission' => 'view.tipo.de.chamados',
               'description' => 'Tipos de Chamados',
               'parent' => 'Administrativo',
-              'icon' => 'feather icon-home',
+              'icon' => 'fas fa-bullhorn',
             ],
 
         [
-          'title' => 'Ramais e Telefones',
+          'title' => 'Ramais e E-mails',
           'route' => 'contacts',
-          'permission' => 'view.ramais.e.telefones',
+          'permission' => 'view.ramais.e.e.mails',
           'description' => 'Lista de Contatos',
           'parent' => null,
           'icon' => 'fas fa-phone-volume',

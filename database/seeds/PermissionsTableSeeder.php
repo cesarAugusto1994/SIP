@@ -38,7 +38,7 @@ class PermissionsTableSeeder extends Seeder
             'Administrativo',
             'Treinamentos',
             'Chat',
-            'Ramais e Telefones'
+            'Ramais e E-mails'
           ])) {
             continue;
           }
