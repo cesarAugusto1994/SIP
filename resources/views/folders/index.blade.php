@@ -50,17 +50,32 @@
       @continue;
     @endif
 
-    <div class="col-md-12 col-lg-4">
-        <div class="card">
-            <div class="card-block text-center">
-                <h2 class="m-t-20"><a style="font-size: 2rem;" href="{{ route('folders.show', $folder->uuid) }}">{{$folder->name}}</a></h2>
-                <p class="m-b-20">{{$folder->created_at->format('d/m/Y H:i')}}<br/>
-                  <label class="label label-inverse-primary">{{ $folder->created_at->diffForHumans() }}</p>
-                <a class="btn btn-success btn-sm btn-round" href="{{ route('folders.show', $folder->uuid) }}"><i class="fa fa-go"></i> Acessar</a>
-                <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+    @php
+        $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
+        $read = $permission->read ?? false;
+        $edit = $permission->edit ?? false;
+        $share = $permission->share ?? false;
+        $delete = $permission->delete ?? false;
+    @endphp
+
+    @if($read)
+
+        <div class="col-md-12 col-lg-4">
+            <div class="card">
+                <div class="card-block text-center">
+                    <h2 class="m-t-20"><a style="font-size: 2rem;" href="{{ route('folders.show', $folder->uuid) }}">{{$folder->name}}</a></h2>
+                    <p class="m-b-20">{{$folder->created_at->format('d/m/Y H:i')}}<br/>
+                      <label class="label label-inverse-primary">{{ $folder->created_at->diffForHumans() }}</p>
+                    <a class="btn btn-success btn-sm btn-round" href="{{ route('folders.show', $folder->uuid) }}"><i class="fa fa-go"></i> Acessar</a>
+                    @if($edit)
+                        <a class="btn btn-primary btn-sm btn-round" href="{{ route('folders.edit', $folder->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
+
+    @endif
+
     @endforeach
 
   </div>

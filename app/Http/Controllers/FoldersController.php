@@ -24,27 +24,14 @@ class FoldersController extends Controller
     {
         $user = auth()->user();
 
-        $folders = $user->folders;
+        $folders = $user->foldersPermissions->map(function($permission) {
+            return $permission->folder;
+        });
 
         if($user->isAdmin()) {
             $folders = Folder::all();
         }
 
-
-
-        #dd($listStyle);
-
-/*
-        $files = TemporaryFile::all();
-        $files->map(function($file) {
-          if($file->created_at < now()->addMinutes(1)) {
-            if(Storage::exists($file->path)) {
-                Storage::delete($file->path);
-            }
-            $file->delete();
-          }
-        });
-*/
         return view('folders.index', compact('folders'));
     }
 
@@ -88,8 +75,17 @@ class FoldersController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+
         $folders = Folder::with('user')->get();
-        return view('folders.create', compact('folders'));
+
+        $departments = Helper::departments();
+
+        if(!$user->isAdmin()) {
+            $departments = $departments->where('id', $user->person->department_id);
+        }
+
+        return view('folders.create', compact('folders', 'departments'));
     }
 
     /**
@@ -101,8 +97,6 @@ class FoldersController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
-
-        //dd($data);
 
         $user = $request->user();
 
@@ -166,6 +160,7 @@ class FoldersController extends Controller
                 'read' => $request->has('read'),
                 'edit' => $request->has('edit'),
                 'share' => $request->has('share'),
+                'download' => $request->has('download'),
                 'delete' => $request->has('delete'),
               ]);
 
@@ -177,12 +172,25 @@ class FoldersController extends Controller
                   'read' => $request->has('read'),
                   'edit' => $request->has('edit'),
                   'share' => $request->has('share'),
+                  'download' => $request->has('download'),
                   'delete' => $request->has('delete'),
                 ]);
 
               }
 
           }
+
+        } else {
+
+            FolderUserPermission::create([
+              'user_id' => $user->id,
+              'folder_id' => $folder->id,
+              'read' => $request->has('read'),
+              'edit' => $request->has('edit'),
+              'share' => $request->has('share'),
+              'download' => $request->has('download'),
+              'delete' => $request->has('delete'),
+            ]);
 
         }
 
@@ -254,6 +262,7 @@ class FoldersController extends Controller
               'read' => $type == 'read' ? 1 : 0,
               'edit' => $type == 'edit' ? 1 : 0,
               'share' => $type == 'share' ? 1 : 0,
+              'download' => $type == 'download' ? 1 : 0,
               'delete' => $type == 'delete' ? 1 : 0,
             ]);
         } else {

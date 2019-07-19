@@ -80,6 +80,22 @@
 
                   @foreach($folder->folders as $item)
 
+                      @php
+                          $permission = $item->permissionsForUser->where('user_id', auth()->user()->id)->first();
+                          $read = $permission->read ?? false;
+                          $edit = $permission->edit ?? false;
+                          $share = $permission->share ?? false;
+                          $download = $permission->download ?? false;
+                          $delete = $permission->delete ?? false;
+
+                          if(auth()->user()->isAdmin()) {
+                              $read = $edit = $share = $download = true;
+                          }
+
+                      @endphp
+
+                      @if($read)
+
                       <tr>
                           <td><a class="label label-inverse-success label-lg" href="{{ route('folders.show', $item->uuid) }}">{{$item->name}}</a></td>
                           <td class="dropdown text-right">
@@ -88,14 +104,21 @@
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                               <a class="dropdown-item" href="{{ route('folders.show', $item->uuid) }}"><i class="fas fa-file"></i> Visualizar</a>
-                              <a class="dropdown-item" href="{{route('folders_download', $item->uuid)}}"><i class="fas fa-cloud-download-alt"></i> Download</a>
-                              <a class="dropdown-item" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-                              <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
-
+                              @if($download)
+                                <a class="dropdown-item" href="{{route('folders_download', $item->uuid)}}"><i class="fas fa-cloud-download-alt"></i> Download</a>
+                              @endif
+                              @if($edit)
+                                <a class="dropdown-item" href="{{ route('folders.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+                              @endif
+                              @if($delete)
+                                <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                              @endif
                             </div>
                           </td>
 
                       </tr>
+
+                      @endif
 
                   @endforeach
 
@@ -115,9 +138,18 @@
                   <li><a class="btn btn-sm btn-outline-danger btn-round" href="?list=list">Lista</a></li>
                   <li><a class="btn btn-sm btn-outline-danger btn-round" href="?list=grid">Grid</a></li>
 
-                  @permission('create.arquivos')
+                  @php
+                      $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
+                      $download = $permission->download ?? false;
+
+                      if(auth()->user()->isAdmin()) {
+                          $download = true;
+                      }
+                  @endphp
+
+                  @if($download)
                     <li><a class="btn btn-sm btn-primary btn-round" href="{{route('folders_download', $folder->uuid)}}">Baixar Pasta</a></li>
-                  @endpermission
+                  @endif
 
               </ul>
           </div>
@@ -134,13 +166,9 @@
                     <div class="card">
                         <div class="card-block text-center">
                             <h4 class="m-t-20"><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a></h4>
-
                             <p class="">{{$archive->created_at->format('d/m/Y H:i')}}
-                                <br/>
                                 <label class="label label-inverse-primary">{{ $archive->created_at->diffForHumans() }}</label>
                             </p>
-
-
                         </div>
                         <div class="card-footer bg-c-green">
                           <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>

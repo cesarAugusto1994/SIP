@@ -673,21 +673,25 @@
                                 @endphp
 
                                 <div class="row align-items-center m-l-0">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <h6 class="text-muted m-b-10">Visualizar</h6>
                                         <input {{ $read ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'read']) }}" type="checkbox" class="js-switch changeUserPermission" value="1"/>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <h6 class="text-muted m-b-10">Editar</h6>
-                                        <input {{ $edit ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'edit']) }}" type="checkbox" class="js-switch" value="1"/>
+                                        <input {{ $edit ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'edit']) }}" type="checkbox" class="js-switch changeUserPermission" value="1"/>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <h6 class="text-muted m-b-10">Compartilhar</h6>
-                                        <input {{ $share ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'share']) }}" type="checkbox" class="js-switch" value="1"/>
+                                        <input {{ $share ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'share']) }}" type="checkbox" class="js-switch changeUserPermission" value="1"/>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <h6 class="text-muted m-b-10">Baixar</h6>
+                                        <input {{ $share ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'download']) }}" type="checkbox" class="js-switch changeUserPermission" value="1"/>
+                                    </div>
+                                    <div class="col-md-2">
                                         <h6 class="text-muted m-b-10">Deletar</h6>
-                                        <input {{ $delete ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'delete']) }}" type="checkbox" class="js-switch" value="1"/>
+                                        <input {{ $delete ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'delete']) }}" type="checkbox" class="js-switch changeUserPermission" value="1"/>
                                     </div>
                                 </div>
 

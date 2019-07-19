@@ -200,9 +200,11 @@
                               <span class="badge bg-c-green">{{ $countMessages }}</span>
                             @endif
                           </a>
+                          @if(config('app.env') == 'production')
                           <span class="float-right">
                             <receiverstatus :user="{{ Auth::user() }}" :receiver="{{ $user }}"></receiverstatus>
                           <span>
+                          @endif
                         </div>
                     </div>
 

@@ -34,6 +34,7 @@ class CreateArchivesTable extends Migration
             $table->boolean('edit')->default(false);
             $table->boolean('delete')->default(false);
             $table->boolean('share')->default(false);
+            $table->boolean('download')->default(false);
             $table->uuid('uuid');
             $table->timestamps();
         });
@@ -48,6 +49,7 @@ class CreateArchivesTable extends Migration
             $table->boolean('edit')->default(false);
             $table->boolean('delete')->default(false);
             $table->boolean('share')->default(false);
+            $table->boolean('download')->default(false);
             $table->uuid('uuid');
             $table->timestamps();
         });
@@ -77,6 +79,7 @@ class CreateArchivesTable extends Migration
             $table->boolean('read')->default(false);
             $table->boolean('delete')->default(false);
             $table->boolean('share')->default(false);
+            $table->boolean('download')->default(false);
             $table->uuid('uuid');
             $table->timestamps();
         });
@@ -90,6 +93,7 @@ class CreateArchivesTable extends Migration
             $table->boolean('read')->default(false);
             $table->boolean('delete')->default(false);
             $table->boolean('share')->default(false);
+            $table->boolean('download')->default(false);
             $table->uuid('uuid');
             $table->timestamps();
         });

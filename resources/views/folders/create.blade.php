@@ -75,7 +75,7 @@
                     <span class="text-danger">Informe os grupos de usuários que terão acesso à pasta.</span>
                     <div class="input-group">
                       <select class="form-control m-b select2" multiple name="departments[]" required>
-                          @foreach(\App\Helpers\Helper::departments() as $department)
+                          @foreach($departments as $department)
                               <option value="{{$department->id}}">{{$department->name}}</option>
                           @endforeach
                       </select>
@@ -85,7 +85,7 @@
 
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
 
                 <div class="form-group {!! $errors->has('read') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Leitura</label>
@@ -97,7 +97,7 @@
 
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
 
                 <div class="form-group {!! $errors->has('edit') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Alterar</label>
@@ -109,7 +109,7 @@
 
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
 
                 <div class="form-group {!! $errors->has('share') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Compartilhar</label>
@@ -121,7 +121,19 @@
 
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
+
+                <div class="form-group {!! $errors->has('download') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Baixar</label>
+                    <div class="input-group">
+                      <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="download" class="js-switch">
+                    </div>
+                    {!! $errors->first('download', '<p class="help-block">:message</p>') !!}
+                </div>
+
+              </div>
+
+              <div class="col-md-2">
 
                 <div class="form-group {!! $errors->has('delete') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Remover</label>
