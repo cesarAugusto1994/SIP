@@ -32,7 +32,7 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  @permission('create.tipo.de.chamados')
+                  @permission('create.pastas')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('folders.create')}}">Nova Pasta</a></li>
                   @endpermission
 
