@@ -232,6 +232,9 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::get('emails-template/{id}', 'EmailsController@html')->name('emails_template');
 
     Route::post('folders/{id}/upload', 'ArchivesController@upload')->name('file_upload');
+    Route::post('folders/{id}/user/{user}/permission/{type}/change', 'FoldersController@changePermission')->name('folder_user_permission_change');
+
+
 
 
   });

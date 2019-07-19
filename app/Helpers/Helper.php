@@ -65,10 +65,10 @@ class Helper
         $key = 'folders';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
-        $data = Folder::all();
+        return Folder::all();
 
         self::set($key, $data);
         return self::get($key);

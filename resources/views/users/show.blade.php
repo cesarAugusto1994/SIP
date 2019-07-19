@@ -639,67 +639,60 @@
 
                   <div class="card">
                       <div class="card-header">
-                          <h5 class="card-header-text">Editar Acessos</h5>
+                          <h5 class="card-header-text">Editar Acessos às Pastas</h5>
                       </div>
-                      <div class="card-block accordion-block color-accordion-block">
-                          <div class="color-accordion ui-accordion ui-widget ui-helper-reset" id="color-accordion" role="tablist">
+                      <div class="card-block accordion-block">
+                          <div class="accordion-box" id="single-open">
+                            @foreach(\App\Helpers\Helper::folders()->sortBy('id') as $folder)
 
-                              @foreach(\App\Helpers\Helper::folders() as $key => $folder)
-
-                                @if(!$folder->parent)
-
-                                      <a class="accordion-msg b-none scale_active ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-accordion-header-active ui-state-active" role="tab" id="ui-id-{{ $loop->index }}-{{ $loop->index }}" aria-controls="ui-id-{{ $loop->index }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" tabindex="0"><span class="ui-accordion-header-icon ui-icon zmdi zmdi-chevron-up"></span>{{$folder->name}}</a>
-                                      <div class="accordion-desc ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-{{ $loop->index }}" aria-labelledby="ui-id-{{ $loop->index }}" role="tabpanel" aria-hidden="false">
-
-                                        @forelse($folder->children as $item)
-
-                                          <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                                            <h5>
-                                                {{$item->name}}
-                                            </h5>
-                                          </div>
-
-                                          <table class="table table-borderd">
-                                              <tbody>
-                                              @foreach($item->permissions as $permission)
-
-                                              @php
-                                                  $hasPermission = $user->hasPermission($permission->slug);
-                                              @endphp
-
-                                              <tr>
-                                                  <td class="project-actions">
-                                                      <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="js-switch checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
-                                                        data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
-                                                        data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}" value="1"/>
-                                                  </td>
-                                                  <td class="project-title">
-                                                      <p>Nome:</p>
-                                                      <a href="#">{{$permission->name}}</a>
-                                                  </td>
-                                                  <td class="project-title">
-                                                      <p>Descrição:</p>
-                                                      <a href="#">{{$permission->description}}</a>
-                                                  </td>
-                                              </tr>
-                                              @endforeach
-                                              </tbody>
-                                          </table>
-                                        @empty
-                                            <div class="alert alert-warning">Nenhuma pasta encontrada.</div>
-                                        @endforelse
-
-
-                                      </div>
-
-                                @else
-
-
+                              <a class="accordion-msg">
+                                @if($folder->parent)
+                                    @if($folder->parent->parent)
+                                        @if($folder->parent->parent->parent)
+                                            @if($folder->parent->parent->parent->parent)
+                                                {{ $folder->parent->parent->parent->parent->name }} >
+                                            @endif
+                                            {{ $folder->parent->parent->parent->name }} >
+                                        @endif
+                                        {{ $folder->parent->parent->name }} >
+                                    @endif
+                                    {{ $folder->parent->name }} >
                                 @endif
 
+                              {{ $folder->name }}</a>
+                              <div class="accordion-desc">
 
-                              @endforeach
+                                @php
 
+                                    $permission = $folder->permissionsForUser->where('user_id', $user->id)->first();
+                                    $read = $permission->read ?? false;
+                                    $edit = $permission->edit ?? false;
+                                    $share = $permission->share ?? false;
+                                    $delete = $permission->delete ?? false;
+
+                                @endphp
+
+                                <div class="row align-items-center m-l-0">
+                                    <div class="col-md-3">
+                                        <h6 class="text-muted m-b-10">Visualizar</h6>
+                                        <input {{ $read ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'read']) }}" type="checkbox" class="js-switch changeUserPermission" value="1"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="text-muted m-b-10">Editar</h6>
+                                        <input {{ $edit ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'edit']) }}" type="checkbox" class="js-switch" value="1"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="text-muted m-b-10">Compartilhar</h6>
+                                        <input {{ $share ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'share']) }}" type="checkbox" class="js-switch" value="1"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="text-muted m-b-10">Deletar</h6>
+                                        <input {{ $delete ? 'checked' : '' }} data-route="{{ route('folder_user_permission_change',[$folder->uuid, $user->uuid, 'delete']) }}" type="checkbox" class="js-switch" value="1"/>
+                                    </div>
+                                </div>
+
+                              </div>
+                            @endforeach
                           </div>
                       </div>
                   </div>

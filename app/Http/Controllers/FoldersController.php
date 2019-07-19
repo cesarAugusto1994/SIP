@@ -8,6 +8,7 @@ use App\Models\Folder\Group\Permission as FolderGroupPermission;
 use App\Models\Folder\User\Permission as FolderUserPermission;
 use App\Models\Department;
 use App\Helpers\Helper;
+use App\User;
 use File;
 use Storage;
 use Zipper;
@@ -237,6 +238,32 @@ class FoldersController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function changePermission($id, $user, $type = 'read', Request $request)
+    {
+        $folder = Folder::uuid($id);
+        $user = User::uuid($user);
+
+        $permission = $folder->permissionsForUser->where('user_id', $user->id)->first();
+
+        if(!$permission) {
+            $permission = FolderUserPermission::create([
+              'user_id' => $user->id,
+              'folder_id' => $folder->id,
+              'read' => $type == 'read' ? 1 : 0,
+              'edit' => $type == 'edit' ? 1 : 0,
+              'share' => $type == 'share' ? 1 : 0,
+              'delete' => $type == 'delete' ? 1 : 0,
+            ]);
+        } else {
+            $permission->update([$type => !$permission->{$type}]);
+        }
+
+        return response()->json([
+          'success' => true,
+          'message' => 'Acesso modificado com sucesso',
+        ]);
     }
 
     /**

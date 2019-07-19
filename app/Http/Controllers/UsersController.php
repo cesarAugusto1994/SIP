@@ -383,7 +383,11 @@ class UsersController extends Controller
         } else {
           $user = $request->user();
         }
+        /*
+        $p = auth()->user()->foldersPermissions;
 
+        dd($p);
+        */
         $users = Helper::users();
         $person = $user->person;
         $departments = Helper::departments();

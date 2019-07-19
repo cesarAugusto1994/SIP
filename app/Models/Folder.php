@@ -49,7 +49,7 @@ class Folder extends Model
 
     public function permissionsForUser()
     {
-       return $this->hasManyThrough('App\Models\Folder\User\Permission', 'App\User', 'folder_id', 'user_id');
+       return $this->hasMany('App\Models\Folder\User\Permission', 'folder_id');
     }
 
     public function getDescriptionForEvent(string $eventName): string

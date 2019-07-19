@@ -239,6 +239,8 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
+<script type="text/javascript" src="{{ asset('adminty\pages\accordion\accordion.js') }}"></script>
+
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
 </script>
@@ -545,6 +547,53 @@ $(document).ready(function() {
       if(isChecked !== true) {
         route = _self.data('route-revoke');
       }
+
+      $.ajax({
+        headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         },
+        url: route,
+        type: 'POST',
+        dataType: 'json',
+        data: {}
+      }).done(function(data) {
+
+        if(data.success) {
+
+          const toast = swal.mixin({
+            toast: true,
+            position: 'top-center',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          toast({
+            type: 'success',
+            title: data.message
+          });
+
+        } else {
+
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: data.message,
+          })
+
+        }
+
+      });
+
+    });
+
+    let checkboxUserFolderPermission = $('.changeUserPermission');
+
+    checkboxUserFolderPermission.change(function() {
+
+      var _self = $(this);
+      var isChecked = _self[0].checked;
+
+      var route = _self.data('route');
 
       $.ajax({
         headers: {
