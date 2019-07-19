@@ -207,6 +207,16 @@ class FoldersController extends Controller
     {
         $folder = Folder::uuid($id);
 
+        $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
+        $read = $permission->read ?? false;
+
+        if(!$read) {
+            notify()->flash('Erro em acessar a Pasta', 'error', [
+              'text' => 'Você não tem acesso à pasta requerida.'
+            ]);
+            return back();
+        }
+
         $slug = 'list-style-folders-index';
         $listStyle = 'list';
 

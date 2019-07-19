@@ -186,7 +186,7 @@ class MenuTableSeeder extends Seeder
         [
           'title' => 'Arquivos',
           'route' => 'folders.index',
-          'permission' => 'view.arquivos',
+          'permission' => 'view.pastas',
           'description' => 'Arquivos',
           'parent' => null,
           'icon' => 'far fa-folder-open',
