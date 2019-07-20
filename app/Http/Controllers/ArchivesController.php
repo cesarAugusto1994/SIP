@@ -58,7 +58,7 @@ class ArchivesController extends Controller
             foreach ($folder->permissionsForGroup as $key => $folderGroupPermission) {
 
                 $groupUsers = $folderGroupPermission->group;
-                
+
                 ArchiveGroupPermission::create([
                   'group_id' => $groupUsers->id,
                   'archive_id' => $archive->id,
@@ -192,6 +192,14 @@ class ArchivesController extends Controller
         try {
 
           $archive = Archive::uuid($id);
+
+          $archive->permissionsForUser->map(function($archive) {
+            $archive->delete();
+          });
+
+          $archive->permissionsForGroup->map(function($archive) {
+            $archive->delete();
+          });
 
           if(Storage::exists($archive->path)) {
               Storage::delete($archive->path);

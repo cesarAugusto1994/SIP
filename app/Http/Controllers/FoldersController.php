@@ -323,5 +323,57 @@ class FoldersController extends Controller
         if(!Auth::user()->hasPermission('delete.pastas')) {
             return abort(403, 'Unauthorized action.');
         }
+
+        try {
+
+          $folder = Folder::uuid($id);
+
+          $folder->archives->map(function($archive) {
+
+            $archive->permissionsForUser->map(function($archive) {
+              $archive->delete();
+            });
+
+            $archive->permissionsForGroup->map(function($archive) {
+              $archive->delete();
+            });
+
+            if(Storage::exists($archive->path)) {
+                Storage::delete($archive->path);
+            }
+
+            $archive->delete();
+
+          });
+
+          $folder->permissionsForUser->map(function($folder) {
+            $folder->delete();
+          });
+
+          $folder->permissionsForGroup->map(function($folder) {
+            $folder->delete();
+          });
+
+          if(Storage::exists($folder->path)) {
+              Storage::deleteDirectory($folder->path);
+          }
+
+          $route = $folder->parent ? route('folders.show', $folder->parent->uuid) : route('folders.index');
+
+          $folder->delete();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Pasta removida com sucesso.',
+            'route' => $route
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'route' => $route
+          ]);
+        }
     }
 }

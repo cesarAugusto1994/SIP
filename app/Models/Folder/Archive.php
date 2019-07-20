@@ -24,7 +24,7 @@ class Archive extends Model
 
     public function permissionsForGroup()
     {
-       return $this->hasManyThrough('App\Models\Folder\Archive\Group\Permission', 'App\Models\Department', 'archive', 'group_id');
+       return $this->hasMany('App\Models\Folder\Archive\Group\Permission', 'group_id');
     }
 
     public function permissionsForUser()

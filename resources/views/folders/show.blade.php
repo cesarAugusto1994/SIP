@@ -45,7 +45,7 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Pastas</h5>
+          <h5>Pastas de Diretória Atual: {{$folder->name}}</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
@@ -118,7 +118,7 @@
                               @endif
                               @if($delete)
                                 @if($user->hasPermission('delete.pastas'))
-                                  <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                                  <a class="dropdown-item text-danger btnRemoveFolder" href="#!" data-route="{{route('folders.destroy', ['id' => $item->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
                                 @endif
                               @endif
                             </div>
@@ -186,7 +186,7 @@
                       @endif
                       @if($delete)
                         @if($user->hasPermission('delete.pastas'))
-                          <a class="dropdown-item text-danger btnRemoveItem" href="#!" data-route="{{route('folders.destroy', ['id' => $folder->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
+                          <a class="dropdown-item text-danger btnRemoveFolder" href="#!" data-route="{{route('folders.destroy', ['id' => $folder->uuid])}}"><i class="fas fa-trash"></i> Remover </a>
                         @endif
                       @endif
                     </div>
