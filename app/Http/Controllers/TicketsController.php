@@ -45,7 +45,7 @@ class TicketsController extends Controller
         $low =  $tickets->where('priority', 'Baixa')->count();
         $normal =  $tickets->where('priority', 'Normal')->count();
         $high =  $tickets->where('priority', 'Alta')->count();
-        $highest =  $tickets->where('priority', 'Altissima')->count();
+        $highest =  $tickets->where('priority', 'Altíssima')->count();
 
         $low = number_format(($low/$total) * 100, 2);
         $normal = number_format(($normal/$total) * 100, 2);
