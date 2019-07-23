@@ -181,16 +181,18 @@
                           <a class="dropdown-item" href="?priority=Baixa">Baixa</a>
                       </div>
                   </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Usuário</a>
-                      <div class="dropdown-menu" aria-labelledby="bystatus">
-                          <a class="dropdown-item" href="?user=">Todos</a>
-                          <div class="dropdown-divider"></div>
-                          @foreach(\App\Helpers\Helper::users() as $user)
-                              <a class="dropdown-item" href="?user={{$user->id}}">{{$user->person->name}}</a>
-                          @endforeach
-                      </div>
-                  </li>
+                  @if(auth()->user()->isAdmin())
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Usuário</a>
+                          <div class="dropdown-menu" aria-labelledby="bystatus">
+                              <a class="dropdown-item" href="?user=">Todos</a>
+                              <div class="dropdown-divider"></div>
+                              @foreach(\App\Helpers\Helper::users() as $user)
+                                  <a class="dropdown-item" href="?user={{$user->id}}">{{$user->person->name}}</a>
+                              @endforeach
+                          </div>
+                      </li>
+                  @endif
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-automation"></i>Tipo</a>
                       <div class="dropdown-menu" aria-labelledby="bystatus">

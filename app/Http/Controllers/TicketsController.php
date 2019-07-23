@@ -23,26 +23,11 @@ class TicketsController extends Controller
     {
         $user = Auth::user();
 
-        if($user->hasRole('user')) {
-
-            $tickets =  $user->tickets();
-
-            $opened = $user->tickets->filter(function($ticket, $key) {
-              return $ticket->logs->last()->status_id == 1 || $ticket->logs->last()->status_id == 2 || $ticket->logs->last()->status_id == 3;
-            })->count();
-
-            $finished = $user->tickets->filter(function($ticket, $key) {
-              return $ticket->logs->last()->status_id == 4;
-            })->count();
-
-            $canceled = $user->tickets->filter(function($ticket, $key) {
-              return $ticket->logs->last()->status_id == 5;
-            })->count();
-
-            return view('tickets.index-user', compact('tickets', 'opened', 'finished', 'canceled'));
+        if(!$user->isAdmin()) {
+            $tickets = $user->tickets()->get();
+        } else {
+            $tickets = Ticket::all();
         }
-
-        $tickets = Ticket::all();
 
         $opened = $tickets->filter(function($ticket, $key) {
           return $ticket->logs->last()->status_id == 1 || $ticket->logs->last()->status_id == 2 || $ticket->logs->last()->status_id == 3;
