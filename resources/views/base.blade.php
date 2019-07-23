@@ -487,6 +487,7 @@ $(document).ready(function() {
 
                 self.parents('tr').hide();
                 self.parents('.cardMessageTypes').hide();
+                self.parents('.cardRemove').hide();
 
                 notify(data.message, 'inverse');
 
@@ -538,8 +539,6 @@ $(document).ready(function() {
             }).done(function(data) {
 
               swal.close();
-
-              console.log(data);
 
               if(data.success) {
 

@@ -13,8 +13,6 @@ class Permission extends Model
 
     protected $fillable = ['archive_id', 'user_id', 'read', 'edit', 'delete', 'share', 'download'];
 
-    protected static $logAttributes = ['archive_id', 'user_id', 'read', 'edit', 'delete', 'share', 'download'];
-
     public function archive()
     {
        return $this->belongsTo('App\Models\Folder\Archive', 'archive_id');

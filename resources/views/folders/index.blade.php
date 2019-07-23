@@ -51,6 +51,7 @@
     @endif
 
     @php
+    
         $permission = $folder->permissionsForUser->where('user_id', auth()->user()->id)->first();
         $read = $permission->read ?? false;
         $edit = $permission->edit ?? false;

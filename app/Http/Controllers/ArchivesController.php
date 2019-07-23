@@ -193,13 +193,9 @@ class ArchivesController extends Controller
 
           $archive = Archive::uuid($id);
 
-          $archive->permissionsForUser->map(function($archive) {
-            $archive->delete();
-          });
+          $archive->permissionsForGroup()->delete();
 
-          $archive->permissionsForGroup->map(function($archive) {
-            $archive->delete();
-          });
+          $archive->permissionsForUser()->delete();
 
           if(Storage::exists($archive->path)) {
               Storage::delete($archive->path);

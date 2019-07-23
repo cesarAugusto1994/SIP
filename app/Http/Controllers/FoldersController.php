@@ -125,7 +125,24 @@ class FoldersController extends Controller
         $parentId = null;
 
         if($request->has('folder_id') && $request->get('folder_id') !== null) {
+
             $folderParent = Folder::find($data['folder_id']);
+
+            if($folderParent->parent) {
+              if($folderParent->parent->parent) {
+                if($folderParent->parent->parent->parent) {
+                  if($folderParent->parent->parent->parent->parent) {
+                    if($folderParent->parent->parent->parent->parent->parent) {
+                      notify()->flash('Operação não permitida', 'error', [
+                        'text' => 'Não é possível criar mais de 5 subpastas por diretório.'
+                      ]);
+                      return back();
+                    }
+                  }
+                }
+              }
+            }
+
             $actualPath = $folderParent->path;
             $realPath = $actualPath != '/' ? $actualPath : '';
             $path = $realPath .'/'. $data['name'];
@@ -264,11 +281,18 @@ class FoldersController extends Controller
      */
     public function edit($id)
     {
-        if(!Auth::user()->hasPermission('edit.pastas')) {
+        $folder = Folder::uuid($id);
+
+        $permission = $folder->permissionsForUser
+        ->where('user_id', auth()->user()->id)
+        ->first();
+
+        $edit = $permission->edit ?? false;
+
+        if(!$edit && !Auth::user()->isAdmin()) {
             return abort(403, 'Unauthorized action.');
         }
 
-        $folder = Folder::uuid($id);
         $folders = Folder::with('user')->get();
         return view('folders.edit', compact('folders', 'folder'));
     }
@@ -282,7 +306,113 @@ class FoldersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $folder = Folder::uuid($id);
+
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        $data['user_id'] = $user->id;
+        $data['name'] = $folder->name;
+
+        $path = 'archives';
+        $parentId = null;
+
+        if($request->has('folder_id') && $request->get('folder_id') !== null) {
+            $folderParent = Folder::find($data['folder_id']);
+
+            if($folderParent->parent) {
+
+              if($folder->id == $folderParent->parent->id) {
+                notify()->flash('Operação não permitida', 'error', [
+                  'text' => 'Não é possível esta pasta para seu subdiretório.'
+                ]);
+                return back();
+              }
+
+              if($folderParent->parent->parent) {
+
+                if($folder->id == $folderParent->parent->parent->id) {
+                  notify()->flash('Operação não permitida', 'error', [
+                    'text' => 'Não é possível esta pasta para seu subdiretório.'
+                  ]);
+                  return back();
+                }
+
+                if($folderParent->parent->parent->parent) {
+
+                  if($folder->id == $folderParent->parent->parent->parent->id) {
+                    notify()->flash('Operação não permitida', 'error', [
+                      'text' => 'Não é possível esta pasta para seu subdiretório.'
+                    ]);
+                    return back();
+                  }
+
+                  if($folderParent->parent->parent->parent->parent) {
+
+                    if($folder->id == $folderParent->parent->parent->parent->parent->id) {
+                      notify()->flash('Operação não permitida', 'error', [
+                        'text' => 'Não é possível esta pasta para seu subdiretório.'
+                      ]);
+                      return back();
+                    }
+
+                    if($folderParent->parent->parent->parent->parent->parent) {
+                      notify()->flash('Operação não permitida', 'error', [
+                        'text' => 'Não é possível criar mais de 5 subpastas por diretório.'
+                      ]);
+                      return back();
+                    }
+                  }
+                }
+              }
+            }
+
+            $actualPath = $folderParent->path;
+            $realPath = $actualPath != '/' ? $actualPath : '';
+            $path = $realPath .'/'. $data['name'];
+            $parentId = $folderParent->id;
+        } elseif($request->get('folder_id') == null) {
+            $path = $path.'/'. $data['name'];
+        }
+
+        $data['path'] = $path;
+        $data['parent_id'] = $parentId;
+
+        if(!File::isDirectory($path)) {
+
+            if($folder->path != $path) {
+              $hasMoved = Storage::move($folder->path, $path);
+              if(!$hasMoved) {
+
+                notify()->flash('Operação não permitida', 'error', [
+                  'text' => 'Não é possivel mover a pasta para o destino informado.'
+                ]);
+
+                return back();
+
+              }
+            }
+
+        }
+
+        notify()->flash('Sucesso', 'error', [
+          'text' => 'Pasta editada com sucesso.'
+        ]);
+
+        $folder->update($data);
+
+        return redirect()->route('folders.show', $folder->uuid);
+    }
+
+    public function verifyParentPath($value1, $value2)
+    {
+        if($value1 == $value2) {
+          notify()->flash('Operação não permitida', 'error', [
+            'text' => 'Não é possível criar mais de 5 subpastas por diretório.'
+          ]);
+          return back();
+        }
     }
 
     public function changePermission($id, $user, $type = 'read', Request $request)
@@ -372,7 +502,7 @@ class FoldersController extends Controller
           return response()->json([
             'success' => false,
             'message' => $e->getMessage(),
-            'route' => $route
+            'route' => route('folders.index')
           ]);
         }
     }

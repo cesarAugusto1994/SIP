@@ -59,7 +59,20 @@
                       <select class="form-control" name="folder_id">
                           <option value="">\</option>
                           @foreach($folders as $folder)
-                              <option value="{{$folder->id ??''}}" {{ $folder->uuid == \Request::get('parent_folder_id') ? 'selected' : '' }}>{{$folder->name}}</option>
+                              <option value="{{$folder->id ??''}}" {{ $folder->uuid == \Request::get('parent_folder_id') ? 'selected' : '' }}>
+                                @if($folder->parent)
+                                    @if($folder->parent->parent)
+                                        @if($folder->parent->parent->parent)
+                                            @if($folder->parent->parent->parent->parent)
+                                                {{$folder->parent->parent->parent->parent->name}} /
+                                            @endif
+                                            {{$folder->parent->parent->parent->name}} /
+                                        @endif
+                                        {{$folder->parent->parent->name}} /
+                                    @endif
+                                    {{$folder->parent->name}} /
+                                @endif
+                                {{$folder->name}}</option>
                           @endforeach
                       </select>
 

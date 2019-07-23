@@ -35,9 +35,9 @@
       </div>
       <div class="card-block">
 
-        <form class="formValidation" method="post" action="{{route('folders.store')}}">
+        <form class="formValidation" method="post" action="{{route('folders.update', $folder->uuid)}}">
             @csrf
-
+            {{ method_field('PUT') }}
             <div class="row m-b-30">
 
               <div class="col-md-6">
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Nome</label>
                     <div class="input-group">
-                      <input type="text" required name="name" value="{{ $folder->name }}" class="form-control">
+                      <input type="text" required name="name" readonly value="{{ $folder->name }}" class="form-control">
                     </div>
                 </div>
 
@@ -62,59 +62,25 @@
                               @if($item->id == $folder->id)
                                   @continue;
                               @endif
-                              <option value="{{$item->id ??''}}" {{ $item->parent_id == $folder->id ? 'selected' : '' }}>{{$item->name}}</option>
+                              <option value="{{$item->id ??''}}" {{ $folder->parent && $folder->parent->id == $item->id ? 'selected' : '' }}>
+                                @if($item->parent)
+                                    @if($item->parent->parent)
+                                        @if($item->parent->parent->parent)
+                                            @if($item->parent->parent->parent->parent)
+                                                {{$item->parent->parent->parent->parent->name}} /
+                                            @endif
+                                            {{$item->parent->parent->parent->name}} /
+                                        @endif
+                                        {{$item->parent->parent->name}} /
+                                    @endif
+                                    {{$item->parent->name}} /
+                                @endif
+                                {{$item->name}}
+                              </option>
                           @endforeach
                       </select>
 
                     </div>
-                </div>
-
-              </div>
-
-              <div class="col-md-3">
-
-                <div class="form-group {!! $errors->has('read') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Leitura</label>
-                    <div class="input-group">
-                      <input type="checkbox" data-plugin="switchery" {{ $folder->read ? 'checked' : '' }} data-switchery="true" value="1" name="read" class="js-switch">
-                    </div>
-                    {!! $errors->first('read', '<p class="help-block">:message</p>') !!}
-                </div>
-
-              </div>
-
-              <div class="col-md-3">
-
-                <div class="form-group {!! $errors->has('edit') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Alterar</label>
-                    <div class="input-group">
-                      <input type="checkbox" data-plugin="switchery" {{ $folder->edit ? 'checked' : '' }} data-switchery="true" value="1" name="edit" class="js-switch">
-                    </div>
-                    {!! $errors->first('edit', '<p class="help-block">:message</p>') !!}
-                </div>
-
-              </div>
-
-              <div class="col-md-3">
-
-                <div class="form-group {!! $errors->has('share') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Compartilhar</label>
-                    <div class="input-group">
-                      <input type="checkbox" data-plugin="switchery" {{ $folder->share ? 'checked' : '' }} data-switchery="true" value="1" name="share" class="js-switch">
-                    </div>
-                    {!! $errors->first('share', '<p class="help-block">:message</p>') !!}
-                </div>
-
-              </div>
-
-              <div class="col-md-3">
-
-                <div class="form-group {!! $errors->has('delete') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Remover</label>
-                    <div class="input-group">
-                      <input type="checkbox" data-plugin="switchery" {{ $folder->delete ? 'checked' : '' }} data-switchery="true" value="1" name="delete" class="js-switch">
-                    </div>
-                    {!! $errors->first('delete', '<p class="help-block">:message</p>') !!}
                 </div>
 
               </div>

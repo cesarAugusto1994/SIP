@@ -7,12 +7,10 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Arquivos:
-                        @if($folder->parent)
-                            {{$folder->parent->name}} /
-                        @endif
+                    <h4>Arquivos:</h4>
+
                         {{ $folder->name }}
-                    </h4>
+
                 </div>
             </div>
         </div>
@@ -27,12 +25,34 @@
                     </li>
 
                     @if($folder->parent)
+                        @if($folder->parent->parent)
+                            @if($folder->parent->parent->parent)
+                                @if($folder->parent->parent->parent->parent)
+
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ route('folders.show', $folder->parent->parent->parent->parent->uuid) }}"> {{$folder->parent->parent->parent->parent->name}} </a>
+                                    </li>
+
+                                @endif
+
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('folders.show', $folder->parent->parent->parent->uuid) }}"> {{$folder->parent->parent->parent->name}} </a>
+                                </li>
+
+                            @endif
+
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('folders.show', $folder->parent->parent->uuid) }}"> {{$folder->parent->parent->name}} </a>
+                            </li>
+
+                        @endif
 
                         <li class="breadcrumb-item">
                             <a href="{{ route('folders.show', $folder->parent->uuid) }}"> {{$folder->parent->name}} </a>
                         </li>
 
                     @endif
+
 
                     <li class="breadcrumb-item"><a href="#!">{{ $folder->name }}</a></li>
                 </ul>
@@ -45,7 +65,7 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Pastas de Diretória Atual: {{$folder->name}}</h5>
+          <h5>Pastas de Diretória Atual</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
@@ -73,7 +93,7 @@
                         @if(!$folder->parent)
                             <a class="label label-inverse-primary" href="{{ route('folders.index') }}">..\</a>
                         @else
-                            <a class="label label-inverse-primary" href="{{ route('folders.show', $folder->parent->uuid) }}">..\</a>
+                            <a class="label label-inverse-primary" href="{{ route('folders.show', $folder->parent->uuid) }}">..\ {{$folder->parent->name}}</a>
                         @endif
                       </td>
                   </tr>
@@ -216,7 +236,7 @@
                     }
                 @endphp
 
-                <div class="col-md-4">
+                <div class="col-md-4 cardRemove">
                     <div class="card">
                         <div class="card-block text-center">
                             <h4 class="m-t-20"><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a></h4>
