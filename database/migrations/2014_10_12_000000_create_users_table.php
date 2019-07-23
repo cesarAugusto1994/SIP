@@ -16,6 +16,17 @@ class CreateUsersTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('address')->nullable();
+            $table->string('workload')->nullable();
+            $table->uuid('uuid')->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('unit_phones', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('number');
+            $table->integer('unit_id')->unsigned();
+            $table->foreign('unit_id')->references('id')->on('units');
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });

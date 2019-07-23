@@ -19,7 +19,7 @@ class TicketsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
@@ -38,19 +38,7 @@ class TicketsController extends Controller
             $canceled = $user->tickets->filter(function($ticket, $key) {
               return $ticket->logs->last()->status_id == 5;
             })->count();
-/*
-            $opened = $user->tickets()->whereHas('logs', function($query) {
-              $query->where('status_id', 1);
-            })->count();
 
-            $finished = $user->tickets()->whereHas('logs', function($query) {
-              $query->where('status_id', 4);
-            })->count();
-
-            $canceled = $user->tickets()->whereHas('logs', function($query) {
-              $query->where('status_id', 5);
-            })->count();
-*/
             return view('tickets.index-user', compact('tickets', 'opened', 'finished', 'canceled'));
         }
 
@@ -68,7 +56,69 @@ class TicketsController extends Controller
           return $ticket->logs->last()->status_id == 5;
         })->count();
 
-        return view('tickets.index', compact('tickets', 'opened', 'finished', 'canceled'));
+        $total = $tickets->count() > 0 ? $tickets->count() : 1;
+        $low =  $tickets->where('priority', 'Baixa')->count();
+        $normal =  $tickets->where('priority', 'Normal')->count();
+        $high =  $tickets->where('priority', 'Alta')->count();
+        $highest =  $tickets->where('priority', 'Altissima')->count();
+
+        $low = number_format(($low/$total) * 100, 2);
+        $normal = number_format(($normal/$total) * 100, 2);
+        $high = number_format(($high/$total) * 100, 2);
+        $highest = number_format(($highest/$total) * 100, 2);
+
+        if($request->filled('status')) {
+            $status = $request->get('status');
+            $tickets = $tickets->where('status_id', $status);
+        }
+
+        if($request->filled('priority')) {
+            $priority = $request->get('priority');
+            $tickets = $tickets->where('priority', $priority);
+        }
+
+        if($request->filled('date')) {
+            $date = $request->get('date');
+            $tickets = $tickets->filter(function($ticket, $key) use ($date) {
+
+              $datePeriod = now()->subDays(0);
+
+              if($date == 'hoje') {
+                  return $ticket->created_at > now()->setTime(0,0,0) &&
+                  $ticket->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'ontem') {
+                  return $ticket->created_at > now()->subDays(1)->setTime(0,0,0) &&
+                  $ticket->created_at < now()->subDays(1)->setTime(23,59,59);
+              } elseif($date == 'semana') {
+                  return $ticket->created_at > now()->subDays(7)->setTime(0,0,0) &&
+                  $ticket->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'mes') {
+                  return $ticket->created_at > now()->subDays(30)->setTime(0,0,0) &&
+                  $ticket->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'ano') {
+                  return $ticket->created_at > now()->subDays(365)->setTime(0,0,0) &&
+                  $ticket->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'recente') {
+                  return $ticket->created_at > now()->subHours(2)->setTime(0,0,0) &&
+                  $ticket->created_at < now()->setTime(23,59,59);
+              }
+
+              return $ticket->created_at == $datePeriod;
+
+            });
+        }
+
+        if($request->filled('user')) {
+            $user = $request->get('user');
+            $tickets = $tickets->where('user.id', $user);
+        }
+
+        if($request->filled('type')) {
+            $type = $request->get('type');
+            $tickets = $tickets->where('type.id', $type);
+        }
+
+        return view('tickets.index', compact('tickets', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest'));
     }
 
     /**
@@ -94,6 +144,7 @@ class TicketsController extends Controller
         $user = $request->user();
 
         $data['user_id'] = $user->id;
+        $data['status_id'] = 1;
 
         $ticket = Ticket::create($data);
 
@@ -152,6 +203,8 @@ class TicketsController extends Controller
           'description' => 'Chamado atribuído à ' . $request->user()->person->name
         ]);
 
+        $data['status_id'] = 2;
+
         $ticket->update($data);
 
         notify()->flash('Sucesso!', 'success', [
@@ -180,6 +233,8 @@ class TicketsController extends Controller
           'ticket_id' => $ticket->id,
           'description' => 'Chamado concluído por ' . $request->user()->person->name
         ]);
+
+        $data['status_id'] = 3;
 
         $ticket->update($data);
 
@@ -212,6 +267,8 @@ class TicketsController extends Controller
           'description' => 'Chamado finalizado por ' . $request->user()->person->name
         ]);
 
+        $data['status_id'] = 4;
+
         $ticket->update($data);
 
         notify()->flash('Sucesso!', 'success', [
@@ -243,6 +300,9 @@ class TicketsController extends Controller
           'description' => 'Chamado cancelado por ' . $request->user()->person->name
         ]);
 
+        $data['status_id'] = 4;
+        $ticket->update($data);
+
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Chamado cancelado com sucesso.'
         ]);
@@ -271,7 +331,8 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::uuid($id);
+        return view('tickets.edit', compact('ticket'));
     }
 
     /**
@@ -283,7 +344,16 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $ticket = Ticket::uuid($id);
+        $ticket->update($data);
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Chamado atualizado com sucesso.'
+        ]);
+
+        return redirect()->route('tickets.index');
     }
 
     /**

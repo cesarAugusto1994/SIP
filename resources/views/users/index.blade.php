@@ -73,7 +73,7 @@
         <div class="card user-card">
             <div class="card-header-img">
               @if(config('app.env') == 'production')
-                <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="card-img">
+                <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="">
               @endif
                 <h4>{{ $person->name }}</h4>
                 <h5><a href="" class="__cf_email__" >{{$person->user->email}}</a></h5>

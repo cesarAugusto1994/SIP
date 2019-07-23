@@ -24,10 +24,8 @@ class CreateTicketsTable extends Migration
         Schema::create('ticket_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('ticket_type_categories');
-
             $table->boolean('active')->default(true);
             $table->uuid('uuid');
             $table->timestamps();
@@ -43,17 +41,14 @@ class CreateTicketsTable extends Migration
 
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('ticket_types');
-
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
-
             $table->text('description');
-
+            $table->integer('status_id')->unsigned();
+            $table->enum('priority', ['Baixa', 'Normal', 'Alta', 'Altíssima'])->default('Normal');
             $table->integer('assigned_to')->nullable();
-
             $table->datetime('solved_at')->nullable();
             $table->uuid('uuid');
             $table->timestamps();

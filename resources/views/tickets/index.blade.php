@@ -34,7 +34,7 @@
             <div class="card-block">
                 <div class="row align-items-center">
                     <div class="col-8">
-                        <h4 class="text-c-yellow f-w-600">{{ $tickets->count() }}</h4>
+                        <h4 class="text-c-yellow f-w-600">{{ $total }}</h4>
                         <h6 class="text-muted m-b-0">Total</h6>
                     </div>
                     <div class="col-4 text-right">
@@ -99,110 +99,227 @@
 
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Listagem de Chamados</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
+  <div class="row">
+      <!-- Right column start -->
+      <div class="col-xl-3 col-lg-12 push-xl-9">
+          <!-- Search box card start -->
+          <div class="card">
 
-                  @permission('create.chamados')
-                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('tickets.create')}}">Novo Chamado</a></li>
-                  @endpermission
+              <div class="card-block p-t-10">
+                  <div class="task-right">
+                      <div class="task-right-header-status">
+                          <span data-toggle="collapse">Prioridades</span>
+                          <i class="icofont icofont-rounded-down f-right"></i>
+                      </div>
 
+                      <div class="taskboard-right-progress">
+                          <h6>Altissima</h6>
+                          <div class="faq-progress">
+                              <div class="progress">
+                                  <div class="faq-bar3 text-white progress-lg" style="width: {{ $highest }}%;">{{ $highest }}%</div>
+                              </div>
+                          </div>
+                          <h6>Alta</h6>
+                          <div class="faq-progress">
+                              <div class="progress">
+                                  <div class="faq-bar1 text-white progress-lg" style="width: {{$high}}%;">{{$high}}%</div>
+                              </div>
+                          </div>
+                          <h6>Normal</h6>
+                          <div class="faq-progress">
+                              <div class="progress">
+                                  <div class="faq-bar2 progress-bar-striped text-white progress-lg" style="width: {{$normal}}%;">{{$normal}}%</div>
+                              </div>
+                          </div>
+                          <h6>Baixa</h6>
+                          <div class="faq-progress">
+                              <div class="progress">
+                                  <div class="faq-bar4 text-white progress-lg" style="width: {{$low}}%;">{{$low}}%</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-9 col-lg-12 pull-xl-3 filter-bar">
+          <nav class="navbar navbar-light bg-faded m-b-30 p-10">
+              <ul class="nav navbar-nav">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="#!">Filtros: <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#!" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-clock-time"></i> Data</a>
+                      <div class="dropdown-menu" aria-labelledby="bydate">
+                          <a class="dropdown-item" href="?date=recente">Recente</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="?date=hoje">Hoje</a>
+                          <a class="dropdown-item" href="?date=ontem">Ontem</a>
+                          <a class="dropdown-item" href="?date=semana">Nesta Semana</a>
+                          <a class="dropdown-item" href="?date=mes">Neste Mês</a>
+                          <a class="dropdown-item" href="?date=ano">Neste Ano</a>
+                      </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-chart-histogram-alt"></i>Situação</a>
+                      <div class="dropdown-menu" aria-labelledby="bystatus">
+                          <a class="dropdown-item" href="?status=">Todos</a>
+                          <div class="dropdown-divider"></div>
+                          @foreach(\App\Helpers\Helper::ticketStatus() as $status)
+                              <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
+                          @endforeach
+                      </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Prioridade</a>
+                      <div class="dropdown-menu" aria-labelledby="bypriority">
+                          <a class="dropdown-item" href="?priority=">Todas</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="?priority=Altissima">Altissima</a>
+                          <a class="dropdown-item" href="?priority=Alta">Alta</a>
+                          <a class="dropdown-item" href="?priority=Normal">Normal</a>
+                          <a class="dropdown-item" href="?priority=Baixa">Baixa</a>
+                      </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Usuário</a>
+                      <div class="dropdown-menu" aria-labelledby="bystatus">
+                          <a class="dropdown-item" href="?user=">Todos</a>
+                          <div class="dropdown-divider"></div>
+                          @foreach(\App\Helpers\Helper::users() as $user)
+                              <a class="dropdown-item" href="?user={{$user->id}}">{{$user->person->name}}</a>
+                          @endforeach
+                      </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-automation"></i>Tipo</a>
+                      <div class="dropdown-menu" aria-labelledby="bystatus">
+                          <a class="dropdown-item" href="?type=">Todos</a>
+                          <div class="dropdown-divider"></div>
+                          @foreach(\App\Helpers\Helper::ticketCategories() as $category)
+                            @foreach($category->types as $type)
+                              @if(!$type->active) @continue; @endif
+                              <a class="dropdown-item" href="?type={{$type->id}}">{{$type->name}}</a>
+                            @endforeach
+                            <div class="dropdown-divider"></div>
+                          @endforeach
+                      </div>
+                  </li>
               </ul>
-          </div>
-      </div>
-      <div class="card-block">
+              <div class="nav-item nav-grid">
+                  @permission('create.chamados')
+                    <a class="btn btn-sm btn-success btn-round" href="{{route('tickets.create')}}">Novo Chamado</a>
+                  @endpermission
+              </div>
 
-        @if($tickets->isNotEmpty())
+          </nav>
+          <!-- Nav Filter tab end -->
+          <!-- Task board design block start-->
+          <div class="row">
 
-        <div class="table-responsive">
-            <table class="table table-hover table-borderless">
-                <thead>
-                    <tr>
-                        <th>Assunto</th>
-                        <th>Situação</th>
-                        <th>Solicitante</th>
-                        <th>Criado em</th>
-                        <th class="text-right">Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
+            @forelse($tickets->sortByDesc('id') as $ticket)
 
-                  @foreach($tickets->sortByDesc('id') as $ticket)
+                @php
 
-                      @php
+                  $status = $ticket->logs->last()->status->id;
+                  $priority = $ticket->priority;
 
-                        $status = $ticket->logs->last()->status->id;
+                  $bgColor = 'success';
 
-                        $bgColor = 'success';
+                  switch($status) {
+                    case '2':
+                      $bgColor = 'warning';
+                      break;
+                    case '3':
+                      $bgColor = 'primary';
+                      break;
+                    case '4':
+                      $bgColor = 'primary';
+                      break;
+                    case '5':
+                      $bgColor = 'danger';
+                      break;
+                  }
 
-                        switch($status) {
-                          case '2':
-                            $bgColor = 'warning';
-                            break;
-                          case '3':
-                            $bgColor = 'primary';
-                            break;
-                          case '4':
-                            $bgColor = 'primary';
-                            break;
-                          case '5':
-                            $bgColor = 'danger';
-                            break;
-                        }
+                  switch($priority) {
+                    case 'Baixa':
+                      $priority = 'info';
+                      break;
+                    case 'Normal':
+                      $priority = 'primary';
+                      break;
+                    case 'Alta':
+                      $priority = 'warning';
+                      break;
+                    case 'Altíssima':
+                      $priority = 'danger';
+                      break;
+                  }
 
-                      @endphp
+                @endphp
 
-                      <tr>
-                          <td><a href="{{ route('tickets.show', $ticket->uuid) }}"><b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}</a></td>
-                          <td><label class="label label-lg label-{{ $bgColor }}">{{ $ticket->logs->last()->status->name }}</label></td>
-                          <td>{{$ticket->user->person->name}}</td>
-                          <td>
-                            {{ $ticket->created_at->format('d/m/Y H:i') }}
-                            <br/>
-                            <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label>
-                          </td>
-
-                          <td class="dropdown">
-
-                            <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                <a class="dropdown-item" href="{{ route('tickets.show', $ticket->uuid) }}"><i class="icofont icofont-check"></i>Visualizar</a>
-
+                <div class="col-sm-6">
+                    <div class="card card-border-{{ $bgColor }}">
+                        <div class="card-header">
+                            <a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ $ticket->id }} </a>
+                            <a href="{{ route('tickets.show', $ticket->uuid) }}"><b>{{$ticket->type->category->name}}</b></a>
+                            <a href="{{ route('tickets.show', $ticket->uuid) }}">
+                              <span class="label label-{{$bgColor}} f-right"> {{ $ticket->logs->last()->status->name }} </span></a>
+                        </div>
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                  <a href="{{ route('tickets.show', $ticket->uuid) }}">
+                                    <p class="task-detail"><b>{{$ticket->type->name}}</b>: {{substr($ticket->description,0,150)}}...</p>
+                                    <br/>
+                                    <p class="task-due"><strong> Aberto em : </strong>
+                                    <label class="label label-inverse-success">{{$ticket->created_at->format('d/m/Y H:i')}}</label></a>
+                                    <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label></p>
+                                </div>
                             </div>
-
-                          </td>
-
-                      </tr>
-
-                  @endforeach
-
-                </tbody>
-            </table>
-        </div>
-
-        @else
-
-          <div class="col-md-12 col-lg-12">
-
-            <div class="widget white-bg no-padding">
-                <div class="p-m text-center">
-                    <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
-                    <br/>
-                    <h6 class="font-bold no-margins">
-                        Nenhum chamado registrado até o momento.
-                    </h6>
+                        </div>
+                        <div class="card-footer">
+                            <div class="task-list-table">
+                                <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $ticket->user->uuid, 'link' => $ticket->user->avatar, 'avatar' => true])}}" title="{{ $ticket->user->person->name }}" alt="{{ $ticket->user->person->name }}"></a>
+                            </div>
+                            <div class="task-board">
+                                <label class="label label-{{ $priority }}">{{ $ticket->priority }}</label>
+                                <div class="dropdown-secondary dropdown">
+                                    <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                        <a class="dropdown-item waves-light waves-effect" href="{{route('tickets.edit', $ticket->uuid)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+            @empty
+
+                <div class="col-md-12 col-lg-12">
+
+                  <div class="widget white-bg no-padding">
+                      <div class="p-m text-center">
+                          <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
+                          <br/>
+                          <h6 class="font-bold no-margins">
+                              Nenhum chamado encontrado.
+                          </h6>
+                      </div>
+                  </div>
+
+                </div>
+
+            @endforelse
 
           </div>
-
-        @endif
-
+          <!-- Task board design block end -->
       </div>
+      <!-- Left column end -->
   </div>
+</div>
 </div>
 
 @endsection

@@ -13,9 +13,9 @@ class Ticket extends Model
 
     protected $table = 'tickets';
 
-    protected $fillable = ['type_id', 'user_id', 'description', 'assigned_to', 'solved_at'];
+    protected $fillable = ['type_id', 'user_id', 'description', 'status_id', 'assigned_to', 'solved_at', 'priority'];
 
-    protected static $logAttributes = ['type_id', 'user_id', 'description', 'assigned_to', 'solved_at'];
+    protected static $logAttributes = ['type_id', 'user_id', 'status_id', 'description', 'assigned_to', 'solved_at', 'priority'];
 
     public function type()
     {

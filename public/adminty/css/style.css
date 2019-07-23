@@ -187,7 +187,9 @@ p {
 }
 
 .filter-bar .navbar .navbar-nav .dropdown-menu {
-    position: absolute
+    position: absolute;
+    overflow: auto;
+    height: 250px;
 }
 
 .wrapper {

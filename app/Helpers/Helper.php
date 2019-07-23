@@ -7,7 +7,7 @@ use Session;
 use App\User;
 use App\Models\Training\Course;
 use App\Models\{People, Menu};
-use App\Models\Ticket\Type;
+use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
@@ -70,6 +70,20 @@ class Helper
         }
 
         return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+    }
+
+    public static function ticketStatus()
+    {
+        $key = 'ticket-status';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Status::all();
+
+        self::set($key, $data);
+        return self::get($key);
     }
 
     public static function folders()

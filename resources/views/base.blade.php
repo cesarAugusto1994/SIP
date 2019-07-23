@@ -241,6 +241,8 @@
 
 <script type="text/javascript" src="{{ asset('adminty\pages\accordion\accordion.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('adminty\components\jquery-bar-rating\js\jquery.barrating.js') }}"></script>
+
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
 </script>
@@ -252,6 +254,18 @@
 <script>
 
   $(document).ready(function() {
+
+    $('#example-pill').barrating('show', {
+        theme: 'bars-pill',
+        initialRating: 'A',
+        showValues: true,
+        showSelectedRating: false,
+        allowEmpty: true,
+        emptyValue: '-- no rating selected --',
+        onSelect: function(value, text) {
+            alert('Selected rating: ' + value);
+        }
+    });
 
     $('.summernote').summernote({
           placeholder: 'Digite sua mensagem',

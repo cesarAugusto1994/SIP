@@ -63,6 +63,15 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('client_phones', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('number');
+            $table->integer('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->uuid('uuid')->unique();
+            $table->timestamps();
+        });
+
     }
 
     /**

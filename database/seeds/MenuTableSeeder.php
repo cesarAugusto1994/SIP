@@ -201,6 +201,15 @@ class MenuTableSeeder extends Seeder
           'icon' => 'far fa-envelope',
         ],
 
+        [
+          'title' => 'Unidades',
+          'route' => 'units.index',
+          'permission' => 'view.unidades',
+          'description' => 'Unidades',
+          'parent' => 'Administrativo',
+          'icon' => 'far fa-building',
+        ],
+
         ];
 
 

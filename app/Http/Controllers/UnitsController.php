@@ -2,25 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
-use App\Models\Process;
-use App\User;
 use Illuminate\Http\Request;
-use Request as Req;
+use App\Models\Unit;
 use Auth;
 
-class DepartmentsController extends Controller
+class UnitsController extends Controller
 {
-
-     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -28,12 +15,12 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        if(!Auth::user()->hasPermission('view.departamentos')) {
+        if(!Auth::user()->hasPermission('view.unidades')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        $departments = Department::all();
-        return view('departments.index')->with('departments', $departments);
+        $units = Unit::all();
+        return view('units.index')->with('units', $units);
     }
 
     /**
@@ -43,7 +30,7 @@ class DepartmentsController extends Controller
      */
     public function create()
     {
-        return view('departments.create')->with('users', User::all());
+        return view('units.create');
     }
 
     /**
@@ -54,15 +41,15 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
-         $data = $request->request->all();
+        $data = $request->request->all();
 
-         Department::create($data);
+        Unit::create($data);
 
-         notify()->flash('Sucesso!', 'success', [
-           'text' => 'Departamento adicionado com sucesso.'
-         ]);
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Unidade adicionada com sucesso.'
+        ]);
 
-        return redirect()->action('DepartmentsController@index');
+        return redirect()->route('units.index');
     }
 
     /**
@@ -73,12 +60,7 @@ class DepartmentsController extends Controller
      */
     public function show($id)
     {
-        $department = Department::uuid($id);
-        $processes = Process::where('department_id', $id)->get();
-
-        return view('departments.show')
-            ->with('department', $department)
-            ->with('processes', $processes);
+        //
     }
 
     /**
@@ -89,9 +71,8 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
-        return view('departments.edit')
-            ->with('department', Department::uuid($id))
-            ->with('users', User::all());
+        $unit = Unit::uuid($id);
+        return view('units.edit')->with('unit', $unit);
     }
 
     /**
@@ -105,14 +86,14 @@ class DepartmentsController extends Controller
     {
         $data = $request->request->all();
 
-        $department = Department::uuid($id);
-        $department->update($data);
+        $unit = Unit::uuid($id);
+        $unit->update($data);
 
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'Departamento atualizado com sucesso.'
+          'text' => 'Unidade atualizada com sucesso.'
         ]);
 
-        return redirect()->route('departments.index');;
+        return redirect()->route('units.index');
     }
 
     /**

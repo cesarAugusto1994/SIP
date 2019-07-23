@@ -202,7 +202,7 @@ class UserTableSeeder extends Seeder
 
         foreach ($users as $key => $user) {
 
-          if($key > 5) {
+          if($key > 15) {
             break;
           }
 
@@ -260,7 +260,6 @@ class UserTableSeeder extends Seeder
                 'occupation_id'=> $occupation->id,
                 'cpf' => '',
                 'branch' => $user['Ramal'],
-
                 'phone_code' => $user['PHONE_CODE'],
                 'phone_password' => $user['PHONE_PASS'],
                 'phone_callcenter_code' => $user['PHONE_CALL'],

@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('departments.index') }}"> Chamados </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Novo</a>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a>
                     </li>
                 </ul>
             </div>
@@ -31,13 +31,13 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Novo Chamado</h5>
+          <h5>Editar Chamado</h5>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" method="post" action="{{route('tickets.store')}}" data-parsley-validate>
+        <form class="formValidation" method="post" action="{{route('tickets.update', $ticket->uuid)}}" data-parsley-validate>
             @csrf
-
+            {{ method_field('PUT') }}
             <div class="row m-b-30">
 
               <div class="col-md-6">
@@ -51,7 +51,7 @@
                             <optgroup label="{{ $category->name }}">
                             @foreach($category->types as $type)
                               @if(!$type->active) @continue; @endif
-                              <option value="{{$type->id}}">{{$type->name}}</option>
+                              <option value="{{$type->id}}" {{ $ticket->type_id == $type->id ? 'selected' : '' }}>{{$type->name}}</option>
                             @endforeach
                             </optgroup>
                           @endforeach
@@ -68,11 +68,10 @@
                     <div class="input-group">
 
                       <select class="form-control m-b" name="priority" required>
-                          <option value="">Informe a Prioridade</option>
-                          <option value="Baixa">Baixa</option>
-                          <option value="Normal" selected>Normal</option>
-                          <option value="Alta">Alta</option>
-                          <option value="Altissima">Altissíma</option>
+                          <option value="Baixa" {{ $ticket->priority == 'Baixa' ? 'selected' : '' }}>Baixa</option>
+                          <option value="Normal"  {{ $ticket->priority == 'Normal' ? 'selected' : '' }}>Normal</option>
+                          <option value="Alta" {{ $ticket->priority == 'Alta' ? 'selected' : '' }}>Alta</option>
+                          <option value="Altissima" {{ $ticket->priority == 'Altissima' ? 'selected' : '' }}>Altissíma</option>
                       </select>
 
                     </div>
@@ -85,7 +84,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
-                      <textarea rows="5" required name="description" class="form-control ckeditor1"></textarea>
+                      <textarea rows="5" required name="description" class="form-control ckeditor1">{{ $ticket->description }}</textarea>
                     </div>
                 </div>
 
