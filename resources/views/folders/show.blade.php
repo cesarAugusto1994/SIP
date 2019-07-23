@@ -284,14 +284,6 @@
 
           <div class="table-responsive">
             <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Proprietário</th>
-                        <th>Upload Em</th>
-                        <th class="text-right">Opções</th>
-                    </tr>
-                </thead>
                 <tbody>
 
                   @foreach($folder->archives as $archive)
@@ -299,10 +291,8 @@
                       <tr>
                           <td><a target="_blank" href="{{ route('archive_preview', $archive->uuid) }}">{{$archive->filename}}</a>
                             <br/><span class="text-muted">{{ \App\Helpers\Helper::formatBytes($archive->size) }}</span>
-                          </td>
-                          <td>{{$archive->user->person->name}}</td>
-                          <td><span class="text-muted">{{$archive->created_at->format('d/m/Y H:i')}}</span>
-                            <label class="label label-inverse-primary">{{ $archive->created_at->diffForHumans() }}</label>
+                            <br/><small class="text-muted">Proprietário: {{$archive->user->person->name}}</small>
+                            <br/><small class="text-muted">Upload Em: {{$archive->created_at->format('d/m/Y H:i')}}, {{ $archive->created_at->diffForHumans() }}</small>
                           </td>
                           <td class="dropdown text-right">
 

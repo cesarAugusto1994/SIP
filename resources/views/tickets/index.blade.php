@@ -100,11 +100,8 @@
   </div>
 
   <div class="row">
-      <!-- Right column start -->
       <div class="col-xl-3 col-lg-12 push-xl-9">
-          <!-- Search box card start -->
           <div class="card">
-
               <div class="card-block p-t-10">
                   <div class="task-right">
                       <div class="task-right-header-status">

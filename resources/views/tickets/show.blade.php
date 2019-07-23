@@ -230,7 +230,7 @@
     </div>
 
 
-    <div class="col-md-3 col-sm-12">
+    <div class="col-lg-3 col-sm-12">
 
       <div class="card user-activity-card">
           <div class="card-header">
