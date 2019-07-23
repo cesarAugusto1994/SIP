@@ -373,25 +373,12 @@
 <script>
 
 $(document).ready(function() {
-/*
-    $(":submit").click(function(e) {
 
-        window.swal({
-          title: 'Em progresso',
-          text: 'Aguarde enquanto os dados são salvos.',
-          type: 'info',
-          showConfirmButton: false,
-          allowOutsideClick: false
-        })
-
-    });
-*/
     $('.select2').select2({
 			width: '100%',
       placeholder: "Selecione"
 		});
 
-    // Multiple swithces
     var elem = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
     elem.forEach(function(html) {

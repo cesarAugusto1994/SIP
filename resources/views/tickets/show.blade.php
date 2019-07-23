@@ -285,7 +285,7 @@
         swal({
           title: 'Iniciar Chamado?',
           text: "O tempo de execução será contabilizado.",
-          type: 'warning',
+          type: 'question',
           showCancelButton: true,
           confirmButtonColor: '#0ac282',
           cancelButtonColor: '#D46A6A',
@@ -293,6 +293,14 @@
           cancelButtonText: 'Cancelar'
           }).then((result) => {
           if (result.value) {
+
+            swal({
+              title: 'Aguarde um instante.',
+              text: 'Carregando os dados...',
+              type: 'info',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
 
             $("#ticket-start").submit();
 
@@ -306,7 +314,7 @@
         swal({
           title: 'Concluir Chamado?',
           text: "Este chamado será concluído!",
-          type: 'warning',
+          type: 'question',
           showCancelButton: true,
           confirmButtonColor: '#0ac282',
           cancelButtonColor: '#D46A6A',
@@ -314,6 +322,14 @@
           cancelButtonText: 'Cancelar'
           }).then((result) => {
           if (result.value) {
+
+            swal({
+              title: 'Aguarde um instante.',
+              text: 'Carregando os dados...',
+              type: 'info',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
 
             $("#ticket-conclude").submit();
 
@@ -327,7 +343,7 @@
         swal({
           title: 'Finalizar Chamado?',
           text: "Este chamado será finalizado!",
-          type: 'warning',
+          type: 'question',
           showCancelButton: true,
           confirmButtonColor: '#0ac282',
           cancelButtonColor: '#D46A6A',
@@ -335,6 +351,14 @@
           cancelButtonText: 'Cancelar'
           }).then((result) => {
           if (result.value) {
+
+            swal({
+              title: 'Aguarde um instante.',
+              text: 'Carregando os dados...',
+              type: 'info',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
 
             $("#ticket-conclude").submit();
 
@@ -349,7 +373,7 @@
         swal({
           title: 'Cancelar Chamado?',
           text: "Este chamado será cancelado!",
-          type: 'warning',
+          type: 'question',
           showCancelButton: true,
           confirmButtonColor: '#0ac282',
           cancelButtonColor: '#D46A6A',
@@ -357,6 +381,14 @@
           cancelButtonText: 'Cancelar'
           }).then((result) => {
           if (result.value) {
+
+            swal({
+              title: 'Aguarde um instante.',
+              text: 'Carregando os dados...',
+              type: 'info',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
 
             $("#ticket-cancel").submit();
 
