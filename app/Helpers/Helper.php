@@ -448,4 +448,36 @@ class Helper
         );
     }
 
+    public static function getColorFromValue($value)
+    {
+          switch ($value) {
+            case 2:
+                return 'primary';
+            case 3:
+                return 'success';
+            case 4:
+                return 'warning';
+            case 5:
+                return 'danger';
+            default:
+                return 'info';
+          }
+    }
+
+    public static function getStatusCollor($value)
+    {
+          switch ($value) {
+            case 2:
+                return 'primary';
+            case 3:
+                return 'success';
+            case 4:
+                return 'warning';
+            case 5:
+                return 'danger';
+            default:
+                return 'info';
+          }
+    }
+
 }

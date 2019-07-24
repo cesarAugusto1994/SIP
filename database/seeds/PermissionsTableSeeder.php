@@ -38,7 +38,8 @@ class PermissionsTableSeeder extends Seeder
             'Administrativo',
             'Treinamentos',
             'Chat',
-            'Ramais e E-mails'
+            'Ramais e E-mails',
+            'Gestão de Tarefas'
           ])) {
             continue;
           }

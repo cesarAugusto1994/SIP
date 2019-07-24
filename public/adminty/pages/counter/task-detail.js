@@ -1,7 +1,11 @@
   'use strict';
   $(document).ready(function() {
+
+      var container = $('.yourCountdownContainer');
+      var time = container.data('time');
+
       $('.yourCountdownContainer').countdown({
-          date: "23 mar,2017 15:03:26"
+          date: time
       });
       ! function(e) {
           if ("object" == typeof exports && "undefined" != typeof module) module.exports = e();
@@ -28,7 +32,7 @@
               return s })({
               1: [function(require, module, exports) {
                   var defaultOptions = {
-                      date: "June 31, 2018 15:03:25",
+                      date: "June 31, 2020 15:03:25",
                       refresh: 1000,
                       offset: 0,
                       onEnd: function() {
@@ -39,11 +43,11 @@
                               date.days + '</h2><p class="f-18 f-w-400"> Days ' +
                               '</p></div><div class="col-xs-3"><h2 class="f-20 f-w-400">' +
                               this.leadingZeros(date.hours) +
-                              '</h2><p class="f-18 f-w-400">Hours</p></div><div class="col-xs-3"><h2 class="f-20 f-w-400">' +
+                              '</h2><p class="f-18 f-w-400">Horas</p></div><div class="col-xs-3"><h2 class="f-20 f-w-400">' +
                               this.leadingZeros(date.min) +
-                              '</h2><p class="f-18 f-w-400">Minutes</p></div><div class="col-xs-3"><h2 class="f-20 f-w-400">' +
+                              '</h2><p class="f-18 f-w-400">Minutos</p></div><div class="col-xs-3"><h2 class="f-20 f-w-400">' +
                               this.leadingZeros(date.sec) +
-                              '</h2><p class="f-18 f-w-400">Seconds</p></div></div>';
+                              '</h2><p class="f-18 f-w-400">Segundos</p></div></div>';
                       }
                   };
 

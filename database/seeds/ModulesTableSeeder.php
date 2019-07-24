@@ -32,6 +32,12 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Modulos'),
           ],
           [
+            'name' => 'Gestão de Tarefas',
+            'slug' => str_slug('Gestao de Tarefas'),
+            'description' => 'Gestão de Tarefas',
+            'parent' => str_slug('Modulos'),
+          ],
+          [
             'name' => 'Chat',
             'slug' => str_slug('Chat'),
             'description' => 'Chat',
@@ -97,6 +103,20 @@ class ModulesTableSeeder extends Seeder
             'slug' => str_slug('Ordem Entrega'),
             'description' => 'Ordem Entrega',
             'parent' => str_slug('Gestao de Entregas'),
+          ],
+
+          [
+            'name' => 'Tarefas',
+            'slug' => str_slug('Tarefas'),
+            'description' => 'Tarefas',
+            'parent' => str_slug('Gestao de Tarefas'),
+          ],
+
+          [
+            'name' => 'Processos',
+            'slug' => str_slug('Processos'),
+            'description' => 'Processos',
+            'parent' => str_slug('Gestao de Tarefas'),
           ],
 /*
           [

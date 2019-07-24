@@ -243,6 +243,9 @@
 
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-bar-rating\js\jquery.barrating.js') }}"></script>
 
+<script src="{{ asset('adminty\components\countdown\js\jquery.countdown.js') }}"></script>
+<script src="{{ asset('adminty\pages\counter\task-detail.js') }}"></script>
+
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
 </script>

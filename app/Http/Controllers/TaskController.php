@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
-use App\Models\Task;
-use App\Models\TaskModels;
-use App\Models\TaskMessages;
-use App\Models\Process;
-use App\Models\SubProcesses;
 use App\User;
-use App\Models\TaskLogs;
-use App\Models\TaskDelay;
-use App\Models\TaskPause;
+use App\Models\{Task, Department, Mapper};
+use App\Models\Task\{Message, Log, Delay, Pause, Archive as FileUpload};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Request as Req;
-use App\Models\Mapper;
+use Storage;
 
 class TaskController extends Controller
 {
@@ -37,7 +30,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::where('is_model', false);
+        $tasks = Task::where('id', '>', 0);
 
         if(!\Auth::user()->isAdmin()) {
             $tasks->where('user_id', \Auth::user()->id);
@@ -55,16 +48,16 @@ class TaskController extends Controller
             $tasks->where('user_id', Req::get('user'));
         }
 
-        $tasks = $tasks->paginate(10);
+        $tasks = $tasks->paginate();
 
-        return view('admin.tasks.index')->with('tasks', $tasks);
+        return view('tasks.index')->with('tasks', $tasks);
     }
 
     public function calendar()
     {
         $tasks = Task::all();
 
-        return view('admin.tasks.calendar')
+        return view('tasks.calendar')
         ->with('tasks', $tasks);
     }
 
@@ -93,7 +86,7 @@ class TaskController extends Controller
 
     public function showBoard()
     {
-        return view('admin.tasks.board')->with('tasks', Task::all());
+        return view('tasks.board')->with('tasks', Task::all());
     }
 
     /**
@@ -103,18 +96,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        /*if(!Auth::user()->isAdmin()) {
-            $mapings = Mapper::where('user_id', Auth::user()->id)->orderBy('id')->get();
-            $subprocesses = SubProcesses::where('process_id', Auth::user()->department_id)->get();
-        } else {
-            $mapings = Mapper::orderBy('id')->get();
-
-        }*/
-
-        $subprocesses = SubProcesses::all();
-
-        return view('admin.tasks.create')
-            ->with('subprocesses', $subprocesses)
+        return view('tasks.create')
             ->with('users', User::all())
             ->with('departments', Department::all());
     }
@@ -147,11 +129,9 @@ class TaskController extends Controller
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
           'description' => 'required|max:255',
-          'sub_process_id' => 'required',
           'user_id' => 'required',
           'time' => 'required',
           'client_id' => 'required',
-          'vendor_id' => 'required',
           'severity' => 'required',
           'urgency' => 'required',
           'trend' => 'required',
@@ -161,55 +141,78 @@ class TaskController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $subprocess = SubProcesses::findOrFail($data['sub_process_id']);
-
-        $taskmodel = TaskModels::where('description', $data['description'])->where('sub_process_id', $data['sub_process_id'])->get();
-
-        $name = $subprocess->name;
-
-        #if($taskmodel->isEmpty()) {
-            $data = [
-                'name' => $name,
-                'description' => $data['description'],
-                'sub_process_id' => $data['sub_process_id'],
-                'process_id' => $subprocess->process->id,
-                'user_id' => $data['user_id'],
-                'time' => $this->hourToMinutes($data['time']),
-                'method' => $data['method'],
-                'indicator' => $data['indicator'],
-                'client_id' => $data['client_id'],
-                'vendor_id' => $data['vendor_id'],
-                'severity' => $data['severity'],
-                'urgency' => $data['urgency'],
-                'trend' => $data['trend'],
-                'status_id' => Task::STATUS_PENDENTE,
-                'created_by' => Auth::user()->id,
-            ];
-
-            #TaskModels::create($data);
-        #}
-
-        if($subprocess->is_model) {
-          $data['is_model'] = true;
-        }
+        $data['status_id'] = Task::STATUS_PENDENTE;
+        $data['created_by'] = Auth::user()->id;
 
         $task = Task::create($data);
 
-        if(!$subprocess->is_model) {
-          $log = new TaskLogs();
-          $log->task_id = $task->id;
-          $log->user_id = Auth::user()->id;
-          $log->message = 'Criou a tarefa ' . $task->description;
-          $log->save();
+        Log::create([
+          'task_id' => $task->id,
+          'user_id' => Auth::user()->id,
+          'message' => 'Criou a tarefa ' . $task->name
+        ]);
+
+        //flash('Nova tarefa adicionada com sucesso.')->success()->important();
+        return redirect()->route('tasks.index');
+    }
+
+    public function upload(Request $request, $id)
+    {
+        $task = Task::uuid($id);
+
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+
+            $file = $request->file;
+            $name = $file->getClientOriginalName();
+            $size = $request->file->getSize();
+            $path = $file->store('tasks');
+
+            FileUpload::create([
+                'task_id' => $task->id,
+                'filename' => $name,
+                'path' => $path,
+                'size' => $size,
+                'user_id' => $request->user()->id,
+            ]);
         }
 
-        flash('Nova tarefa adicionada com sucesso.')->success()->important();
+        notify()->flash('Upload com sucesso', 'success', [
+          'text' => 'O upload do arquivo foi realizado com sucesso.'
+        ]);
 
-        if($subprocess->is_model) {
-          return redirect()->route('processes');
+        return redirect()->route('tasks.show', $task->uuid);
+
+    }
+
+    public function preview($id)
+    {
+        $file = FileUpload::uuid($id);
+
+        $link = $file->path;
+
+        $file = Storage::exists($link) ? Storage::get($link) : false;
+
+        if(!$file) {
+          $file = null;
         }
 
-        return redirect()->route('tasks');
+        $mimetype = Storage::disk('local')->mimeType($link);
+
+        return response($file, 200)->header('Content-Type', $mimetype);
+    }
+
+    public function download($id)
+    {
+        $file = FileUpload::uuid($id);
+
+        if(!Storage::exists($file->path)) {
+            notify()->flash('Arquivo não encontrado', 'error', [
+              'text' => 'Download Indisponível: Este arquivo não foi encontrado nesta pasta.'
+            ]);
+            return back();
+        }
+
+        return Storage::download($file->path);
     }
 
     /**
@@ -223,9 +226,9 @@ class TaskController extends Controller
 
         try {
 
-            $task = Task::findOrFail($id);
+            $task = Task::uuid($id);
 
-            $horaAtual = new \DateTime('now');
+            $horaAtual = now();
             $horaCorte = new \DateTime($task->begin);
 
             $diff = $horaAtual->diff($horaCorte);
@@ -233,23 +236,19 @@ class TaskController extends Controller
 
             $remainTime = ($task->time*60) - $segundos;
 
-            $taskPause = TaskPause::where('task_id', $task->id)->first();
+            $taskPause = Pause::where('task_id', $task->id)->first();
 
             if(!empty($taskPause)) {
 
               if(empty($taskPause->end)) {
-                $diff2 = $horaAtual->diff(new \DateTime($taskPause->begin));
+                $remainTime = $horaAtual->diff(new \DateTime($taskPause->begin));
               } else {
                 $base = new \DateTime($taskPause->end);
-                $diff2 = $base->diff(new \DateTime($taskPause->begin));
+                $remainTime = $base->diff(new \DateTime($taskPause->begin));
               }
-
-                $segundos2 = $diff2->s + ($diff2->i * 60) + ($diff2->h * 60 * 60);
-
-                $remainTime = $remainTime + $segundos2;
+              $segundos2 = $diff2->s + ($diff2->i * 60) + ($diff2->h * 60 * 60);
+              $remainTime = $remainTime + $segundos2;
             }
-
-            //echo $remainTime;
 
             $gut = ($task->severity * $task->urgency * $task->trend);
 
@@ -260,16 +259,17 @@ class TaskController extends Controller
                 }
 
                 $task->status_id = Task::STATUS_EM_ANDAMENTO;
-                $task->begin = new \DateTime('now');
+                $task->begin = now();
                 $task->save();
 
-                $log = new TaskLogs();
+                $log = new Log();
                 $log->task_id = $task->id;
                 $log->user_id = Auth::user()->id;
-                $log->message = 'Alterou o status da tarefa ' . $task->description . ' para Em Andamento.';
+                $log->message = 'Alterou o status da tarefa ' . $task->name . ' para Em Andamento.';
                 $log->save();
 
-                return redirect()->route('task', ['id' => $task->id]);
+                return redirect()->route('tasks.show', ['id' => $task->uuid]);
+
             } elseif (Req::get('status') == Task::STATUS_FINALIZADO && $task->status_id != Task::STATUS_FINALIZADO) {
 
                 $task->status_id = Task::STATUS_FINALIZADO;
@@ -282,20 +282,20 @@ class TaskController extends Controller
 
                 $task->save();
 
-                $log = new TaskLogs();
+                $log = new Log();
                 $log->task_id = $task->id;
                 $log->user_id = Auth::user()->id;
 
                 if (0 > $remainTime) {
-                  $msg = 'Finalizou a tarefa ' . $task->description . ' com atraso.';
+                  $msg = 'Finalizou a tarefa ' . $task->name . ' com atraso.';
                 } else {
-                  $msg = 'Alterou o status da tarefa ' . $task->description . ' para Finalizado.';
+                  $msg = 'Alterou o status da tarefa ' . $task->name . ' para Finalizado.';
                 }
 
                 $log->message = $msg;
                 $log->save();
 
-                return redirect()->route('task', ['id' => $task->id]);
+                return redirect()->route('tasks.show', ['id' => $task->uuid]);
             }
 
             if (Req::get('cancel')) {
@@ -303,31 +303,26 @@ class TaskController extends Controller
                 $task->begin = $task->end = new \DateTime('now');
                 $task->save();
 
-                $log = new TaskLogs();
+                $log = new Log();
                 $log->task_id = $task->id;
                 $log->user_id = Auth::user()->id;
-                $log->message = 'Alterou o status da tarefa ' . $task->description . ' para Cancelado.';
+                $log->message = 'Alterou o status da tarefa ' . $task->name . ' para Cancelado.';
                 $log->save();
 
-                return redirect()->route('task', ['id' => $task->id]);
+                return redirect()->route('tasks.show', ['id' => $task->uuid]);
             }
 
              if (Req::has('duplicate')) {
 
                 $user = Auth::user()->isAdmin() ? $task->user_id : Auth::user()->id;
 
-                $subprocess = SubProcesses::find($task->sub_process_id);
-
                 $data = [
-                    'name' => $subprocess->name,
-                    'sub_process_id' => $task->sub_process_id,
+                    'name' => $task->name,
+                    'description' => $task->description,
                     'user_id' => $user,
                     'frequency' => $task->frequency,
                     'time' => $task->time,
-                    'method' => $task->method,
-                    'indicator' => $task->indicator,
                     'client_id' => $task->client_id,
-                    'vendor_id' => $task->vendor_id,
                     'severity' => $task->severity,
                     'urgency' => $task->urgency,
                     'trend' => $task->trend,
@@ -337,15 +332,15 @@ class TaskController extends Controller
 
                 $newTask = Task::create($data);
 
-                $this->log($task, 'Duplicou a tarefa ' . $task->description);
+                $this->log($task, 'Duplicou a tarefa ' . $task->name);
 
-                $this->log($newTask, 'Criou a tarefa ' . $newTask->description);
+                $this->log($newTask, 'Criou a tarefa ' . $newTask->name);
 
-                return redirect()->route('task', ['id' => $newTask->id]);
+                return redirect()->route('tasks.show', ['id' => $newTask->uuid]);
             }
 
-            $taskDelay = TaskDelay::where('task_id', $task->id)->first();
-            $pausedTask = TaskPause::where('task_id', $task->id)->where("end", null)->first();
+            $taskDelay = Delay::where('task_id', $task->id)->first();
+            $pausedTask = Pause::where('task_id', $task->id)->where("end", null)->first();
 
         } catch(Exception $e) {
 
@@ -353,20 +348,21 @@ class TaskController extends Controller
 
         }
 
-        return view('admin.tasks.details')
+        $remainTime = now()->addSeconds($remainTime);
+
+        return view('tasks.show')
             ->with('task', $task)
             ->with('gut', $gut)
             ->with('taskDelay', $taskDelay)
             ->with('pausedTask', $pausedTask)
             ->with('remainTime', $remainTime)
-            ->with('processes', Process::all())
-            ->with('logs', TaskLogs::where('task_id', $id)->orderBy('id', 'DESC')->get())
-            ->with('messages', TaskMessages::where('task_id', $id)->get());
+            ->with('logs', Log::where('task_id', $id)->orderBy('id', 'DESC')->get())
+            ->with('messages', Message::where('task_id', $id)->get());
     }
 
     public function log(Task $task, $message)
     {
-        $log = new TaskLogs();
+        $log = new Log();
         $log->task_id = $task->id;
         $log->user_id = Auth::user()->id;
         $log->message = $message;
@@ -384,7 +380,7 @@ class TaskController extends Controller
         $taskPause->begin = new \DateTime('now');
         $taskPause->save();
 
-        $this->log($task, 'Pausou a tarefa ' . $task->description);
+        $this->log($task, 'Pausou a tarefa ' . $task->name);
     }
 
     public function unPause($id)
@@ -405,9 +401,9 @@ class TaskController extends Controller
 
         $task->save();
 
-        $this->log($task, ' Finalizou a tarefa a tarefa ' . $task->description);
+        $this->log($task, ' Finalizou a tarefa a tarefa ' . $task->name);
 
-        flash('A tarefa foi finalizada com sucesso.')->success()->important();
+        //flash('A tarefa foi finalizada com sucesso.')->success()->important();
 
         return redirect()->back();
     }
@@ -436,8 +432,6 @@ class TaskController extends Controller
         $task->begin = new \DateTime();
 
         $task->save();
-
-        flash('A tarefa foi iniciada com sucesso.')->success()->important();
 
         return redirect()->back();
     }
@@ -468,7 +462,7 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $task = Task::findOrFail($id);
+        $task = Task::uuid($id);
 
         $time = 0;
 
@@ -479,15 +473,9 @@ class TaskController extends Controller
             $hours = str_pad($hours, 2, "0", STR_PAD_LEFT);
          }
 
-         $subprocesses = SubProcesses::all();
-
-         return view('admin.tasks.edit')
+         return view('tasks.edit')
             ->with('task', $task)
-            ->with('time', "{$hours}:{$minutes}")
-            ->with('subprocesses', $subprocesses)
-            ->with('processes', Process::all())
-            ->with('users', User::all())
-            ->with('departments', Department::all());
+            ->with('time', "{$hours}:{$minutes}");
     }
 
     /**
@@ -501,9 +489,7 @@ class TaskController extends Controller
     {
         $data = $request->request->all();
 
-        $task = Task::findOrFail($id);
-
-        $subprocess = SubProcesses::findOrFail($data['sub_process_id']);
+        $task = Task::uuid($id);
 
         $userId = $data['user_id'];
 
@@ -513,42 +499,34 @@ class TaskController extends Controller
         }
 
         $data = [
-            'name' => $subprocess->name,
+            'name' => $task->name,
             'description' => $data['description'],
-            'sub_process_id' => $data['sub_process_id'],
             'user_id' => $userId,
             'time' => $this->hourToMinutes($data['time']),
-            'method' => $data['method'],
-            'indicator' => $data['indicator'],
             'client_id' => $data['client_id'],
-            'vendor_id' => $data['vendor_id'],
             'severity' => $data['severity'],
             'urgency' => $data['urgency'],
             'trend' => $data['trend']
         ];
 
         $task->description = $data['description'];
-        $task->sub_process_id = $data['sub_process_id'];
         $task->user_id = $data['user_id'];
         $task->time = $data['time'];
-        $task->method = $data['method'];
-        $task->indicator = $data['indicator'];
         $task->client_id = $data['client_id'];
-        $task->vendor_id = $data['vendor_id'];
         $task->severity = $data['severity'];
         $task->urgency = $data['urgency'];
         $task->trend = $data['trend'];
         $task->save();
 
-        $log = new TaskLogs();
+        $log = new Log();
         $log->task_id = $task->id;
         $log->user_id = Auth::user()->id;
-        $log->message = 'Editou a tarefa ' . $task->description;
+        $log->message = 'Editou a tarefa ' . $task->name;
         $log->save();
 
-        flash('A tarefa foi editada com sucesso.')->success()->important();
+        //flash('A tarefa foi editada com sucesso.')->success()->important();
 
-        return redirect()->route('task', ['id' => $task->id]);
+        return redirect()->route('tasks.show', ['id' => $task->uuid]);
     }
 
     public function delay(Request $request, $id)
@@ -558,13 +536,13 @@ class TaskController extends Controller
 
         $task = Task::find($id);
 
-        $taskDelay = new TaskDelay();
+        $taskDelay = new Delay();
         $taskDelay->user_id = Auth::user()->id;
         $taskDelay->message = $data['message'];
         $taskDelay->task_id = $id;
         $taskDelay->save();
 
-        $log = new TaskLogs();
+        $log = new Log();
         $log->task_id = $task->id;
         $log->user_id = Auth::user()->id;
         $log->message = 'Adicionou o motivo do atraso com a tarefa ' .
@@ -671,7 +649,7 @@ class TaskController extends Controller
 
     public static function existsTaskByProcess($process)
     {
-        $hasTasks = Task::where('process_id', $process->id)->get();
+        $hasTasks = Task::where('sub_process_id', $process->id)->get();
 
         return $hasTasks->isNotEmpty();
     }

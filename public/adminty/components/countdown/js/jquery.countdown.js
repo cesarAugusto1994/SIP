@@ -7,11 +7,11 @@ var defaultOptions = {
     return;
   },
   render: function (date) {
-    this.el.innerHTML = date.years + " years, " +
-                        date.days  + " days, " +
-                        this.leadingZeros(date.hours) + " hours, " +
+    this.el.innerHTML = date.years + " anos, " +
+                        date.days  + " dias, " +
+                        this.leadingZeros(date.hours) + " horas, " +
                         this.leadingZeros(date.min) + " min and " +
-                        this.leadingZeros(date.sec) + " sec";
+                        this.leadingZeros(date.sec) + " seg";
   }
 };
 
@@ -62,7 +62,7 @@ var Countdown = function(el, options) {
   }.bind(this);
 
   this.mergeOptions(options);
-  
+
 
   /**
    * Get the difference between now and the end date

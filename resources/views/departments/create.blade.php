@@ -35,7 +35,7 @@
       </div>
       <div class="card-block">
 
-        <form class="formValidation" data-parsley-validate method="post" action="{{route('departments.store')}}">
+        <form class="formValidation" data-parsley-validate method="post" enctype="multipart/form-data" action="{{route('departments.store')}}">
             @csrf
 
             <div class="row m-b-30">

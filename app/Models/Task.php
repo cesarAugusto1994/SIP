@@ -77,5 +77,23 @@ class Task extends Model
         return $this->belongsTo(Client::class, 'owner_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
+    public function logs()
+    {
+        return $this->hasMany('App\Models\Task\log');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Task\Message');
+    }
+
+    public function files()
+    {
+        return $this->hasMany('App\Models\Task\Archive');
+    }
 }

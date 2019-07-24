@@ -88,6 +88,24 @@ class MenuTableSeeder extends Seeder
               ],
 
           [
+            'title' => 'Gestão de Tarefas',
+            'route' => null,
+            'permission' => 'view.gestao.de.tarefas',
+            'description' => 'Gestão de Tarefas',
+            'parent' => null,
+            'icon' => 'far fa-building',
+          ],
+
+              [
+                'title' => 'Tarefas',
+                'route' => 'tasks.index',
+                'permission' => 'view.tarefas',
+                'description' => 'Tarefas',
+                'parent' => 'Gestão de Tarefas',
+                'icon' => 'fas fa-boxes',
+              ],
+
+          [
             'title' => 'Mural de Recados',
             'route' => 'message-board.index',
             'permission' => 'view.mural.de.recados',
@@ -209,6 +227,8 @@ class MenuTableSeeder extends Seeder
           'parent' => 'Administrativo',
           'icon' => 'far fa-building',
         ],
+
+
 
         ];
 
