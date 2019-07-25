@@ -41,7 +41,7 @@
                     <a href="{{route('mapping', ['id' => $map->id])}}">{{$map->name}}</a>
                 </td>
                 <td class="project-completion">
-                    <span>Tempo Tarefas {{ App\Http\Controllers\HomeController::minutesToHour($map->tasks->sum('time')) }}</span>
+                    <span>Tempo Tarefas {{ App\Helpers\Helper::taskTimeToHour($map->tasks) }}</span>
                 </td>
                 <td class="project-completion">
                     <span>Tarefas: {{ $map->tasks->count() }}<a></span>
@@ -49,9 +49,10 @@
                 <td class="project-completion">
                     <span>Tempo Trabalhado: {{App\Helpers\Mapper::getDoneTimeByUser($map->user->id) }}<a></span>
                 </td>
+                <!--
                 <td class="project-completion">
-                    <span>Tempo Ocioso: {{ App\Http\Controllers\TaskController::ociousTime($map->id) }}<a></span>
-                </td>
+                    <span>Tempo Corrido: {{ App\Helpers\Helper::ociousTime($map->id) }}<a></span>
+                </td>-->
                 <td class="project-people hidden-xs">
                     <a href="{{route('user', ['id' => $map->user->id])}}" title="{{ $map->user->name }}">
                     <img width="32" class="img-fluid" src="{{ route('image', ['user' => $map->user->uuid, 'link' => $map->user->avatar, 'avatar' => true])}}" alt=""></a>

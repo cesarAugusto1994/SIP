@@ -89,6 +89,99 @@ class Helper
         return $time . ' ' . $stringFormat;
     }
 
+    public static function ociousTime($mapperID)
+    {
+        $mapper = \App\Models\Mapper::find($mapperID);
+
+        $user = User::find($mapper->user->id);
+
+        $week = 44;
+        $days = 5;
+
+        $time = ($week) * 60;
+
+        $minutes = 0;
+
+        $tasks = $mapper->tasks->filter(function($task) {
+            return $task->status->id == 2 || $task->status->id == 3;
+        });
+
+        foreach ($tasks as $key => $task) {
+
+          switch($task->time_type) {
+            case 'day':
+                $minutes += $task->time % 24;
+            break;
+            case 'minute':
+                $minutes += $task->time % 60;
+            break;
+            default:
+                $minutes += $task->time % 60;
+            break;
+          }
+
+        }
+
+        $rest = $minutes;
+
+        if(0 > $rest) {
+          echo '<span class="label label-primary"><i class="fa fa-thumbs-up"></i> Sem tempo ocioso.</span>';
+          return;
+        }
+
+        return self::minutesToHour($rest);
+    }
+
+    public static function minutesToHour($time)
+    {
+        $hours = floor($time / 60);
+        $minutes = ($time % 60);
+
+        $minutes = str_pad($minutes, 2, "0", STR_PAD_LEFT);
+
+        if ($hours < 10) {
+           $hours = str_pad($hours, 2, "0", STR_PAD_LEFT);
+        }
+
+        return "{$hours}:{$minutes}:00";
+    }
+
+    public static function taskTimeToHour($tasks)
+    {
+        $hour = 0;
+        $minutes = 0;
+        $seconds = 0;
+
+        foreach ($tasks as $key => $task) {
+
+          switch($task->time_type) {
+            case 'day':
+                $hour += $task->time*24;
+            break;
+            case 'minute':
+
+                if($task->time < 60) {
+
+                    $minutes += $task->time;
+
+                } else {
+
+                    $hour += floor($task->time/60);
+                    $minutes += $task->time % 60;
+
+                }
+
+            break;
+            default:
+                $hour += $task->time;
+            break;
+          }
+
+        }
+
+        return $hour . ':' . $minutes;
+    }
+
     public static function ticketsTotal()
     {
         $key = 'tickets-total';
