@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\{Task, Department, Mapper};
+use App\Models\{Ticket, Task, Department, Mapper};
+use App\Models\Ticket\Status\Log as TicketLog;
 use App\Models\Task\{Message, Log, Delay, Pause, Archive as FileUpload};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Request as Req;
+use Notification;
 use Storage;
+use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 
 class TaskController extends Controller
 {
@@ -327,6 +330,28 @@ class TaskController extends Controller
                 $msg = 'Alterou o status da tarefa ' . $task->name . ' para Finalizado.';
                 $log->message = $msg;
                 $log->save();
+
+                if($task->ticket) {
+
+                  $ticket = $task->ticket;
+
+                  TicketLog::create([
+                    'status_id' => 3,
+                    'ticket_id' => $ticket->id,
+                    'description' => 'Chamado concluído por ' . auth()->user()->person->name
+                  ]);
+
+                  $data['status_id'] = 3;
+
+                  $ticket->update($data);
+
+                  notify()->flash('Sucesso!', 'success', [
+                    'text' => 'Sua tarefa foi finalizada e o chamado foi concluído pelo responsável.'
+                  ]);
+
+                  Notification::send($ticket->user, new ConcludedTicket($ticket));
+
+                }
 
                 return redirect()->route('tasks.show', ['id' => $task->uuid]);
             }

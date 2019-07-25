@@ -235,7 +235,7 @@ class TicketsController extends Controller
         $ticket->update($data);
 
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'O chamado foi conclído pelo responsávelcom sucesso.'
+          'text' => 'O chamado foi concluído pelo responsável.'
         ]);
 
         Notification::send($ticket->user, new ConcludedTicket($ticket));

@@ -279,7 +279,7 @@
 							<div class="card-footer">
 									<div class="f-left">
 											<span class=" txt-primary"> <i class="icofont icofont-chart-line-alt"></i>Status:</span>&nbsp;
-											<span class="label label-bg label-inverse-{{\App\Helpers\Helper::getStatusCollor($task->status->name)}} f-right"> {{ $task->status->name }} </span></a>
+											<span class="label label-bg label-{{\App\Helpers\Helper::getStatusCollor($task->status->name)}} f-right"> {{ $task->status->name }} </span></a>
 									</div>
 
 							</div>
