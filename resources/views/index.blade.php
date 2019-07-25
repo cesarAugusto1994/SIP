@@ -48,7 +48,7 @@
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">Chamados Finalizados</p>
+                            <p class="m-b-5">Cham. Realizados</p>
                             <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsClosedTotal() }}</h4>
                         </div>
                         <div class="col col-auto text-right">

@@ -243,12 +243,7 @@
                           @endif
 
                           @if($task->status_id == 2)
-  														@if(count($pausedTask??[]) > 0)
-                                  <a class="btn-unpause dropdown-item waves-light waves-effect"><i class="fa fa-play"></i> Continuar</a>
-  														@elseif(empty($taskDelay))
-                                  <a class="btn-pause dropdown-item waves-light waves-effect"><i class="fa fa-pause"></i> Pausar</a>
-  														@endif
-                                  <a class="dropdown-item waves-light waves-effect" href="?status=3"> <i class="fa fa-stop"></i> Finalizar</a>
+                              <a class="dropdown-item waves-light waves-effect" href="?status=3"> <i class="fa fa-stop"></i> Finalizar</a>
 
                           @elseif($task->status_id == 1)
                               <li>
