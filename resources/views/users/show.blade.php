@@ -464,7 +464,7 @@
                             </div>
                             <div class="card-block">
 
-                              <form class="formValidation2" data-parsley-validate action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
+                              <form data-parsley-validate action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
                                   @csrf
 
                                   <div class="row m-b-30">
@@ -566,6 +566,27 @@
 
                                   </div>
 
+                                  <button type="submit" class="btn btn-success btn-block btn-sm">Salvar</button>
+                              </form>
+
+                            </div>
+                        </div>
+
+                      </div>
+
+                      <div class="col-lg-4">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-header-text">Alterar Senha</h5>
+                            </div>
+                            <div class="card-block">
+
+                              <form data-parsley-validate action="{{route('user_update_password', ['id' => auth()->user()->uuid])}}" method="post">
+                                  @csrf
+                                  <div class="form-group"><label>Nova Senha</label>
+                                    <input type="password" minlength="6" maxlength="18" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
+                                  </div>
                                   <button type="submit" class="btn btn-success btn-block btn-sm">Salvar</button>
                               </form>
 

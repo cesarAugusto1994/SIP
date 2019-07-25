@@ -187,7 +187,7 @@
                 {{csrf_field()}}
                 <div class="modal-body">
                     <div class="form-group"><label>Nova Senha</label>
-                      <input type="password" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
+                      <input type="password" minlength="6" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
