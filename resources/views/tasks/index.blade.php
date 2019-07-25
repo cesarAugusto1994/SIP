@@ -52,20 +52,47 @@
                   <div class="dropdown-menu" aria-labelledby="bystatus">
                       <a class="dropdown-item" href="?status=">Todos</a>
                       <div class="dropdown-divider"></div>
-                      @foreach(\App\Helpers\Helper::ticketStatus() as $status)
+                      @foreach(\App\Helpers\Helper::taskStatus() as $status)
                           <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
                       @endforeach
                   </div>
               </li>
               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Prioridade</a>
+                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Gravidade</a>
                   <div class="dropdown-menu" aria-labelledby="bypriority">
-                      <a class="dropdown-item" href="?priority=">Todas</a>
+                      <a class="dropdown-item" href="?severity=">Todas</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?priority=Altissima">Altissima</a>
-                      <a class="dropdown-item" href="?priority=Alta">Alta</a>
-                      <a class="dropdown-item" href="?priority=Normal">Normal</a>
-                      <a class="dropdown-item" href="?priority=Baixa">Baixa</a>
+                      <a class="dropdown-item" href="?severity=1">1</a>
+                      <a class="dropdown-item" href="?severity=2">2</a>
+                      <a class="dropdown-item" href="?severity=3">3</a>
+                      <a class="dropdown-item" href="?severity=4">4</a>
+                      <a class="dropdown-item" href="?severity=5">5</a>
+                  </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Urgencia</a>
+                  <div class="dropdown-menu" aria-labelledby="bypriority">
+                      <a class="dropdown-item" href="?urgency=">Todas</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="?urgency=1">1</a>
+                      <a class="dropdown-item" href="?urgency=2">2</a>
+                      <a class="dropdown-item" href="?urgency=3">3</a>
+                      <a class="dropdown-item" href="?urgency=4">4</a>
+                      <a class="dropdown-item" href="?urgency=5">5</a>
+                  </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Tendencia</a>
+                  <div class="dropdown-menu" aria-labelledby="bypriority">
+                      <a class="dropdown-item" href="?trend=">Todas</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="?trend=1">1</a>
+                      <a class="dropdown-item" href="?trend=2">2</a>
+                      <a class="dropdown-item" href="?trend=3">3</a>
+                      <a class="dropdown-item" href="?trend=4">4</a>
+                      <a class="dropdown-item" href="?trend=5">5</a>
                   </div>
               </li>
               @if(auth()->user()->isAdmin())
@@ -80,20 +107,7 @@
                       </div>
                   </li>
               @endif
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-automation"></i>Tipo</a>
-                  <div class="dropdown-menu" aria-labelledby="bystatus">
-                      <a class="dropdown-item" href="?type=">Todos</a>
-                      <div class="dropdown-divider"></div>
-                      @foreach(\App\Helpers\Helper::ticketCategories() as $category)
-                        @foreach($category->types as $type)
-                          @if(!$type->active) @continue; @endif
-                          <a class="dropdown-item" href="?type={{$type->id}}">{{$type->name}}</a>
-                        @endforeach
-                        <div class="dropdown-divider"></div>
-                      @endforeach
-                  </div>
-              </li>
+
           </ul>
           <div class="nav-item nav-grid">
               @permission('create.chamados')
@@ -107,7 +121,7 @@
   </div>
 
   <div class="row">
-    @foreach ($tasks as $task)
+    @forelse ($tasks as $task)
 
     @php
 
@@ -179,7 +193,23 @@
         </div>
     </div>
 
-    @endforeach
+    @empty
+
+      <div class="col-md-12 col-lg-12">
+
+        <div class="widget white-bg no-padding">
+            <div class="p-m text-center">
+                <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
+                <br/>
+                <h6 class="font-bold no-margins">
+                    Nenhuma tarefa encontrada.
+                </h6>
+            </div>
+        </div>
+
+      </div>
+
+    @endforelse
   </div>
 </div>
 

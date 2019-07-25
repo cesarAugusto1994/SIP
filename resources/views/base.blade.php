@@ -177,6 +177,28 @@
     </div>
 </div>
 
+<div class="modal inmodal" id="editar-senha" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+              <h4 class="modal-title">Alterar Senha</h4>
+            </div>
+            <form action="{{route('user_update_password', ['id' => auth()->user()->uuid])}}" method="post">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <div class="form-group"><label>Nova Senha</label>
+                      <input type="password" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Required Jquery -->
 <script type="text/javascript" src="{{ asset('adminty\components\jquery\js\jquery.min.js') }}"></script>
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
@@ -355,6 +377,14 @@
 </script>
 
 @yield('scripts')
+
+@if(\Auth::user()->change_password)
+  <script>
+      $(function() {
+        $("#editar-senha").modal({ show: true, backdrop: 'static', keyboard: false  });
+      });
+  </script>
+@endif
 
 @if (notify()->ready())
     <script>

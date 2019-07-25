@@ -46,6 +46,7 @@
                     <div class="input-group">
                       <input type="text" required name="name" value="{{$task->name}}" class="form-control">
                     </div>
+                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
@@ -55,8 +56,9 @@
                     <div class="input-group">
                       <textarea type="text" required name="description" id="description" rows="3"
                              placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{$task->description}}</textarea>
-                             {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+
                     </div>
+                    {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 

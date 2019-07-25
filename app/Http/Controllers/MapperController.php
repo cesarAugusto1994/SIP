@@ -46,7 +46,7 @@ class MapperController extends Controller
                 }
 
                 $mapper = new Mapper();
-                $mapper->name = $user->name;
+                $mapper->name = $user->person->name;
                 $mapper->user_id = $user->id;
                 $mapper->status_id = 2;
                 $mapper->save();
@@ -61,7 +61,7 @@ class MapperController extends Controller
             $mappings =  Mapper::where('user_id', Auth::user()->id)->get();
         }
 
-        return view('admin.mappings.index', compact('mappings'));
+        return view('mappings.index', compact('mappings'));
     }
 
     public function setTasks($mapper)
@@ -92,7 +92,7 @@ class MapperController extends Controller
             $users =  User::where('id', Auth::user()->id)->get();
         }
 
-        return view('admin.mappings.create')
+        return view('mappings.create')
         ->with('users', $users);
     }
 
@@ -162,7 +162,7 @@ class MapperController extends Controller
 
         $doneTime = MapperHelper::getDoneTime($mapper);
 
-        return view('admin.mappings.details', compact('mapper', 'doneTime'));
+        return view('mappings.details', compact('mapper', 'doneTime'));
     }
 
     public function addTask($id)
@@ -172,7 +172,7 @@ class MapperController extends Controller
 
       //dd($tasks->toArray());
 
-        return view('admin.mappings.add-task')
+        return view('mappings.add-task')
         ->with('mapper', $mapper)
         ->with('tasks', $tasks);
     }

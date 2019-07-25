@@ -425,13 +425,23 @@
 
                                       </div>
                                       @if($currentUser->isAdmin())
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                           <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                                               <label class="col-form-label" for="active">Ativo</label>
                                               <div class="input-group">
                                                   <input class="js-switch" type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
                                               </div>
                                               {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                                          </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                          <div class="form-group {!! $errors->has('do_task') ? 'has-error' : '' !!}">
+                                              <label class="col-form-label" for="active">Realiza Tarefas</label>
+                                              <div class="input-group">
+                                                  <input class="js-switch" type="checkbox" id="active" name="do_task" {{ $user->do_task ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
+                                              </div>
+                                              {!! $errors->first('do_task', '<p class="help-block">:message</p>') !!}
                                           </div>
                                         </div>
                                       @endif
@@ -704,29 +714,6 @@
                 </div>
             </div>
             <!-- tab content end -->
-        </div>
-    </div>
-</div>
-
-<div class="modal inmodal" id="editar-senha" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-    <div class="modal-content animated bounceInRight">
-            <div class="modal-header">
-              <h4 class="modal-title">Alterar Senha</h4>
-            </div>
-            <form action="{{route('user_update_password', ['id' => $user->uuid])}}" method="post">
-                {{csrf_field()}}
-                <div class="modal-body">
-                    <div class="form-group"><label>Nova Senha</label>
-                      <input type="password" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

@@ -470,6 +470,8 @@ class UsersController extends Controller
             $person->phone = $data['phone'];
         }
 
+
+
         $person->save();
 
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
@@ -495,6 +497,7 @@ class UsersController extends Controller
         if(auth()->user()->isAdmin()) {
             $user->active = $request->has('active');
             $user->person->active = $request->has('active');
+            $user->do_task = $request->has('do_task');
         }
 
         $user->save();
@@ -583,6 +586,7 @@ class UsersController extends Controller
             $user->password = bcrypt($password);
         }
 
+        $user->change_password = false;
         $user->save();
 
         notify()->flash('Sucesso!', 'success', [

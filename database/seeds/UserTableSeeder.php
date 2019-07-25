@@ -278,8 +278,8 @@ class UserTableSeeder extends Seeder
                 'password_soc' => '',
                 'password_email' => 'Provider@123',
                 'id_soc' => '',
-                'api_token' => str_random(60)
-
+                'api_token' => str_random(60),
+                'change_password' => true
               ]);
 
               $user->attachRole($userRole);

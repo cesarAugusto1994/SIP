@@ -7,6 +7,7 @@ use Session;
 use App\User;
 use App\Models\Training\Course;
 use App\Models\{People, Menu};
+use App\Models\Task\Status as TicketStatus;
 use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
@@ -81,6 +82,20 @@ class Helper
         }
 
         $data = Status::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function taskStatus()
+    {
+        $key = 'task-status';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = TicketStatus::all();
 
         self::set($key, $data);
         return self::get($key);
@@ -477,6 +492,32 @@ class Helper
                 return 'danger';
             default:
                 return 'info';
+          }
+    }
+
+    public static function percent($value)
+    {
+          switch ($value) {
+            case 1:
+                return '0%';
+            case 2:
+                return '50%';
+            case 3:
+                return '100%';
+            default:
+                return '100%';
+          }
+    }
+
+    public static function progressBarCollor($value)
+    {
+          switch ($value) {
+            case 2:
+                return 'progress-bar-warning';
+            case 4:
+                return 'progress-bar-danger';
+            default:
+                return 'progress-bar-success';
           }
     }
 

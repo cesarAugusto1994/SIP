@@ -12,8 +12,7 @@ use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use Emadadly\LaravelUuid\Uuids;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-use App\Models\Department;
-use App\Models\MessageBoard;
+use App\Models\{Department, Task, MessageBoard};
 
 use Lab404\Impersonate\Models\Impersonate;
 
@@ -81,7 +80,7 @@ class User extends Authenticatable
 
     public function logs()
     {
-        return $this->hasMany(TaskLogs::class);
+        return $this->hasMany('App\Models\Task\Log');
     }
 
     public function messageBoard()

@@ -24,7 +24,7 @@ class BoardController extends Controller
      */
     public function index()
     {
-        return view('admin.board.index')
+        return view('board.index')
         ->with('users', User::all());
     }
 

@@ -87,23 +87,24 @@ class MenuTableSeeder extends Seeder
                 'icon' => 'fas fa-boxes',
               ],
 
+
           [
-            'title' => 'Gestão de Tarefas',
-            'route' => null,
-            'permission' => 'view.gestao.de.tarefas',
-            'description' => 'Gestão de Tarefas',
-            'parent' => null,
-            'icon' => 'far fa-building',
+            'title' => 'Painel de Tarefas',
+            'route' => 'boards',
+            'permission' => 'view.painel.de.tarefas',
+            'description' => 'Painel de Tarefas',
+            'parent' => 'Painel de Tarefas',
+            'icon' => 'fas fa-tasks',
           ],
 
-              [
-                'title' => 'Tarefas',
-                'route' => 'tasks.index',
-                'permission' => 'view.tarefas',
-                'description' => 'Tarefas',
-                'parent' => 'Gestão de Tarefas',
-                'icon' => 'fas fa-boxes',
-              ],
+          [
+            'title' => 'Tarefas',
+            'route' => 'tasks.index',
+            'permission' => 'view.tarefas',
+            'description' => 'Tarefas',
+            'parent' => 'Gestão de Tarefas',
+            'icon' => 'fas fa-tasks',
+          ],
 
           [
             'title' => 'Mural de Recados',

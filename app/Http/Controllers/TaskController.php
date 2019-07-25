@@ -28,27 +28,69 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::where('id', '>', 0);
+        $tasks = Task::where('id', '>', 0)->get();
 
         if(!\Auth::user()->isAdmin()) {
             $tasks->where('user_id', \Auth::user()->id);
         }
 
-        if (Req::has('filter')) {
-            $tasks->where('description', 'like', '%' . Req::get('filter') . '%');
+        if($request->filled('status')) {
+            $status = $request->get('status');
+            $tasks = $tasks->where('status_id', $status);
         }
 
-        if (Req::has('process_id')) {
-            $tasks->where('process_id', Req::get('process_id'));
+        if($request->filled('severity')) {
+            $priority = $request->get('severity');
+            $tasks = $tasks->where('severity', $priority);
         }
 
-        if (Req::has('user')) {
-            $tasks->where('user_id', Req::get('user'));
+        if($request->filled('urgency')) {
+            $priority = $request->get('urgency');
+            $tasks = $tasks->where('urgency', $priority);
         }
 
-        $tasks = $tasks->paginate();
+        if($request->filled('trend')) {
+            $priority = $request->get('trend');
+            $tasks = $tasks->where('trend', $priority);
+        }
+
+        if($request->filled('date')) {
+            $date = $request->get('date');
+            $tasks = $tasks->filter(function($task, $key) use ($date) {
+
+              $datePeriod = now()->subDays(0);
+
+              if($date == 'hoje') {
+                  return $task->created_at > now()->setTime(0,0,0) &&
+                  $task->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'ontem') {
+                  return $task->created_at > now()->subDays(1)->setTime(0,0,0) &&
+                  $task->created_at < now()->subDays(1)->setTime(23,59,59);
+              } elseif($date == 'semana') {
+                  return $task->created_at > now()->subDays(7)->setTime(0,0,0) &&
+                  $task->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'mes') {
+                  return $task->created_at > now()->subDays(30)->setTime(0,0,0) &&
+                  $task->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'ano') {
+                  return $task->created_at > now()->subDays(365)->setTime(0,0,0) &&
+                  $task->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'recente') {
+                  return $task->created_at > now()->subHours(2)->setTime(0,0,0) &&
+                  $task->created_at < now()->setTime(23,59,59);
+              }
+
+            });
+        }
+
+        if($request->filled('user')) {
+            $user = $request->get('user');
+            $tasks = $tasks->where('user_id', $user);
+        }
+
+        //$tasks = $tasks->paginate();
 
         return view('tasks.index')->with('tasks', $tasks);
     }
@@ -94,11 +136,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('tasks.create')
-            ->with('users', User::all())
-            ->with('departments', Department::all());
+        return view('tasks.create');
     }
 
     public static function hourToMinutes($hours)

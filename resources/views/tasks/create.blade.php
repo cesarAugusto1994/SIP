@@ -41,101 +41,116 @@
             <div class="row m-b-30">
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Nome</label>
                     <div class="input-group">
                       <input type="text" required name="name" class="form-control">
+
                     </div>
+                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
                       <textarea type="text" required name="description" id="description" rows="3"
                              placeholder="Descreva a tarefa e informações relevantes." class="form-control"></textarea>
+
                     </div>
+                    {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('user_id') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Responsável</label>
                     <div class="input-group">
-                      <select class="form-control" data-style="btn-white" title="Selecione um Resposável" data-live-search="true" show-tick show-menu-arrow data-width="100%"  name="user_id" required>
-                          @foreach($users as $user)
+                      <select class="form-control" data-style="btn-white" name="user_id" required>
+                          @foreach(\App\Helpers\Helper::users() as $user)
                               <option value="{{$user->id}}" {{ $user->id == Auth::user()->id ? 'selected' : '' }}>{{$user->person->name}}</option>
                           @endforeach
                       </select>
+                      {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Tempo</label>
                     <div class="input-group">
                       <input type="time" required name="time" id="time" class="form-control" value="00:30">
+
                     </div>
+                    {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Cliente</label>
                     <div class="input-group">
-                      <select class="form-control" title="Selecione um Cliente" data-style="btn-white" required data-live-search="true" show-tick show-menu-arrow data-width="100%"  name="client_id">
-                            @foreach($departments as $department)
+                      <select class="form-control" name="client_id">
+                            @foreach(\App\Helpers\Helper::departments() as $department)
                                 <option value="{{$department->id}}">{{$department->name}}</option>
                             @endforeach
-                        </select>
+                      </select>
+
                     </div>
+                    {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('severity') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Gravidade</label>
                     <div class="input-group">
-                      <select class="form-control" data-live-search="true" data-style="btn-white" show-tick show-menu-arrow data-width="100%"  name="severity">
+                      <select class="form-control" name="severity">
                           <option value="1" data-content="<span class='label label-default'>1 (baixissima)</span>">1 (baixissima)</option>
                           <option value="2" data-content="<span class='label label-primary'>2 (baixa)</span>">2 (baixa)</option>
                           <option value="3" data-content="<span class='label label-success'>3 (moderada)</span>">3 (moderada)</option>
                           <option value="4" data-content="<span class='label label-warning'>4 (alta)</span>">4 (alta)</option>
                           <option value="5" data-content="<span class='label label-danger'>5 (altissima)</span>">5 (altissima)</option>
                       </select>
+
                     </div>
+                    {!! $errors->first('severity', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('urgency') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Urgencia</label>
                     <div class="input-group">
-                      <select class="form-control" data-live-search="true" data-style="btn-white" show-tick show-menu-arrow data-width="100%"  name="urgency">
+                      <select class="form-control" name="urgency">
                         <option value="1" data-content="<span class='label label-default'>1 (baixissima)</span>">1 (baixissima)</option>
                         <option value="2" data-content="<span class='label label-primary'>2 (baixa)</span>">2 (baixa)</option>
                         <option value="3" data-content="<span class='label label-success'>3 (moderada)</span>">3 (moderada)</option>
                         <option value="4" data-content="<span class='label label-warning'>4 (alta)</span>">4 (alta)</option>
                         <option value="5" data-content="<span class='label label-danger'>5 (altissima)</span>">5 (altissima)</option>
                       </select>
+
                     </div>
+                    {!! $errors->first('urgency', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group {!! $errors->has('trend') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Tendencia</label>
                     <div class="input-group">
-                      <select class="form-control" data-live-search="true" data-style="btn-white" show-tick show-menu-arrow data-width="100%"  name="trend">
+                      <select class="form-control" name="trend">
                         <option value="1" data-content="<span class='label label-default'>1 (baixissima)</span>">1 (baixissima)</option>
                         <option value="2" data-content="<span class='label label-primary'>2 (baixa)</span>">2 (baixa)</option>
                         <option value="3" data-content="<span class='label label-success'>3 (moderada)</span>">3 (moderada)</option>
                         <option value="4" data-content="<span class='label label-warning'>4 (alta)</span>">4 (alta)</option>
                         <option value="5" data-content="<span class='label label-danger'>5 (altissima)</span>">5 (altissima)</option>
                       </select>
+
                     </div>
+                    {!! $errors->first('trend', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
