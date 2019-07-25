@@ -40,6 +40,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Mapeamentos',
+            'slug' => str_slug('Mapeamentos'),
+            'description' => 'Mapeamentos',
+            'parent' => str_slug('Modulos'),
+          ],
+
+          [
             'name' => 'Chat',
             'slug' => str_slug('Chat'),
             'description' => 'Chat',

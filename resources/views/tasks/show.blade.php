@@ -77,6 +77,12 @@
 															<td><i class="icofont icofont-contrast"></i> Tarefa:</td>
 															<td class="text-right"><span class="f-right">#{{ $task->id }}</span></td>
 													</tr>
+
+                          <tr>
+															<td><i class="icofont icofont-clock"></i> Tempo Previsto:</td>
+															<td class="text-right"><span class="f-right">{{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}</span></td>
+													</tr>
+
 													<tr>
 															<td><i class="icofont icofont-meeting-add"></i> Atualizado:</td>
 															<td class="text-right">{{ $task->updated_at->format('d/m/Y H:i') }}</td>

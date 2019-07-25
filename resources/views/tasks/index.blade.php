@@ -159,12 +159,11 @@
                     <div class="col-sm-12">
                       <a href="{{ route('tickets.show', $task->uuid) }}">
                         <p class="task-detail">{{substr($task->description,0,150)}}...</p>
-                        <br/>
+                        <hr/>
 
                         <small>Tempo Previsto:  <b>
-                          {{ App\Http\Controllers\HomeController::minutesToHour($task->time) }}
+                          {{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}
                         </b></small>
-
 
                         <p class="task-due"><strong> Aberto em : </strong>
                         <label class="label label-inverse-success">{{ $task->created_at->format('d/m/Y H:i') }}</label></a>
@@ -175,18 +174,14 @@
             <div class="card-footer">
                 <div class="task-list-table">
 
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->severity); !!}">G {{$task->severity}}</span>
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->urgency); !!}">U {{$task->urgency}}</span>
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">T {{$task->trend}}</span>
+                  <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $task->user->uuid, 'link' => $task->user->avatar, 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""></a>
 
                 </div>
                 <div class="task-board">
 
-                  @if ($task->status_id == 1)
-                    <a href="{{ route('task_initiate', ['id' => $task->id]) }}" class="btn btn-primary btn-sm"> Iniciar </a>
-                  @elseif ($task->status_id == 2)
-                    <a href="{{route('task_finish', ['id' => $task->id])}}" class="btn btn-success btn-sm"> Finalizar </a>
-                  @endif
+                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->severity); !!}">G {{$task->severity}}</span>
+                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->urgency); !!}">U {{$task->urgency}}</span>
+                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">T {{$task->trend}}</span>
 
                 </div>
             </div>

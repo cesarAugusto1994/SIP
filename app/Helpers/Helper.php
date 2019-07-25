@@ -13,7 +13,7 @@ use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
 use App\Models\Unit;
-use App\Models\{Message, Folder};
+use App\Models\{Message, Folder, Ticket, Task};
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Models\Category as MessageBoardCategory;
@@ -72,6 +72,104 @@ class Helper
 
         return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
     }
+
+    public static function formatTime($time = 1, $format = 'hour')
+    {
+        $stringFormat = 'Hora(s)';
+
+        switch($format) {
+          case 'day':
+            $stringFormat = 'Dia(s)';
+          break;
+          case 'minute':
+            $stringFormat = 'Minuto(s)';
+          break;
+        }
+
+        return $time . ' ' . $stringFormat;
+    }
+
+    public static function ticketsTotal()
+    {
+        $key = 'tickets-total';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $user = auth()->user();
+
+        if($user->isAdmin()) {
+            $data = Ticket::count();
+        } else {
+            $data = Ticket::where('user_id', $user->id)->count();
+        }
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function ticketsClosedTotal()
+    {
+        $key = 'tickets-closed-total';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $user = auth()->user();
+
+        if($user->isAdmin()) {
+            $data = Ticket::where('status_id', 4)->count();
+        } else {
+            $data = Ticket::where('status_id', 4)->where('user_id', $user->id)->count();
+        }
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function tasksTotal()
+    {
+        $key = 'tasks-total';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $user = auth()->user();
+
+        if($user->isAdmin()) {
+            $data = Task::count();
+        } else {
+            $data = Task::where('user_id', $user->id)->count();
+        }
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function tasksClosedTotal()
+    {
+        $key = 'tasks-closed-total';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $user = auth()->user();
+
+        if($user->isAdmin()) {
+            $data = Task::where('status_id', 4)->count();
+        } else {
+            $data = Task::where('status_id', 4)->where('user_id', $user->id)->count();
+        }
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+
 
     public static function ticketStatus()
     {

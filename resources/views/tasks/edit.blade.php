@@ -77,12 +77,36 @@
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Tempo</label>
-                    <div class="input-group">
-                      <input type="time" required name="time" id="time" class="form-control" value="00:30">
+
+                <div class="row">
+                  <div class="col-md-4">
+
+                    <div class="form-group {!! $errors->has('time_type') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Tipo de Tempo</label>
+                        <div class="input-group">
+                          <select class="form-control" name="time_type">
+                              <option value="day" {{ $task->time == 'day' ? 'selected' : '' }}>Dia(s)</option>
+                              <option value="hour" {{ $task->time == 'hour' ? 'selected' : '' }}>Hora(s)</option>
+                              <option value="minute" {{ $task->time == 'minute' ? 'selected' : '' }}>Minuto(s)</option>
+                          </select>
+                        </div>
+                        {!! $errors->first('time_type', '<p class="help-block">:message</p>') !!}
                     </div>
+
+                  </div>
+                  <div class="col-md-8">
+
+                    <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Tempo</label>
+                        <div class="input-group">
+                          <input type="number" required value="{{ $task->time }}" name="time" id="time" class="form-control" value="1">
+                        </div>
+                        {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                  </div>
                 </div>
+
               </div>
 
               <div class="col-md-6">

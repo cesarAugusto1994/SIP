@@ -168,9 +168,10 @@ class TaskController extends Controller
         $data = $request->request->all();
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
-          'description' => 'required|max:255',
+          'description' => 'required',
           'user_id' => 'required',
           'time' => 'required',
+          'time_type' => 'required',
           'client_id' => 'required',
           'severity' => 'required',
           'urgency' => 'required',
@@ -183,6 +184,8 @@ class TaskController extends Controller
 
         $data['status_id'] = Task::STATUS_PENDENTE;
         $data['created_by'] = Auth::user()->id;
+
+        //$data['time'] = $this->hourToMinutes($data['time']);
 
         $task = Task::create($data);
 
@@ -268,13 +271,12 @@ class TaskController extends Controller
 
             $task = Task::uuid($id);
 
-            $horaAtual = now();
-            $horaCorte = new \DateTime($task->begin);
+            //$horaAtual = now();
+            //$remainTime = $task->begin;
 
-            $diff = $horaAtual->diff($horaCorte);
-            $segundos = $diff->s + ($diff->i * 60) + ($diff->h * 60);
-
-            $remainTime = ($task->time*60) - $segundos;
+            //$diff = $horaAtual->diff($horaCorte);
+            //$segundos = $diff->s + ($diff->i * 60) + ($diff->h * 60);
+            //$remainTime = ($task->time*60) - $segundos;
 
             $taskPause = Pause::where('task_id', $task->id)->first();
 
@@ -325,13 +327,7 @@ class TaskController extends Controller
                 $log = new Log();
                 $log->task_id = $task->id;
                 $log->user_id = Auth::user()->id;
-
-                if (0 > $remainTime) {
-                  $msg = 'Finalizou a tarefa ' . $task->name . ' com atraso.';
-                } else {
-                  $msg = 'Alterou o status da tarefa ' . $task->name . ' para Finalizado.';
-                }
-
+                $msg = 'Alterou o status da tarefa ' . $task->name . ' para Finalizado.';
                 $log->message = $msg;
                 $log->save();
 
@@ -388,7 +384,19 @@ class TaskController extends Controller
 
         }
 
-        $remainTime = now()->addSeconds($remainTime);
+        $remainTime = null;
+
+        if($task->begin) {
+
+          if($task->time_type == 'day') {
+              $remainTime = $task->begin->addDays($task->time);
+          } elseif ($task->time_type == 'hour') {
+              $remainTime = $task->begin->addHours($task->time);
+          } elseif ($task->time_type == 'minute') {
+              $remainTime = $task->begin->addMinutes($task->time);
+          }
+
+        }
 
         return view('tasks.show')
             ->with('task', $task)
@@ -542,7 +550,8 @@ class TaskController extends Controller
             'name' => $task->name,
             'description' => $data['description'],
             'user_id' => $userId,
-            'time' => $this->hourToMinutes($data['time']),
+            'time_type' => $data['time_type'],
+            'time' => $data['time'],
             'client_id' => $data['client_id'],
             'severity' => $data['severity'],
             'urgency' => $data['urgency'],

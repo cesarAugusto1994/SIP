@@ -23,50 +23,54 @@
 <div class="page-body">
     <div class="row">
 
-      <!--
+
 
         <div class="col-xl-3 col-md-6">
             <div class="card bg-c-yellow text-white">
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">New Customer</p>
-                            <h4 class="m-b-0">852</h4>
+                            <p class="m-b-5">Chamados</p>
+                            <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsTotal() }}</h4>
                         </div>
                         <div class="col col-auto text-right">
-                            <i class="feather icon-user f-50 text-c-yellow"></i>
+                            <i class="feather icon-bookmark f-50 text-c-yellow"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
 
         <div class="col-xl-3 col-md-6">
             <div class="card bg-c-green text-white">
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">Income</p>
-                            <h4 class="m-b-0">$5,852</h4>
+                            <p class="m-b-5">Chamados Finalizados</p>
+                            <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsClosedTotal() }}</h4>
                         </div>
                         <div class="col col-auto text-right">
-                            <i class="feather icon-credit-card f-50 text-c-green"></i>
+                            <i class="feather icon-check-square f-50 text-c-green"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+
+
         <div class="col-xl-3 col-md-6">
             <div class="card bg-c-pink text-white">
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">Ticket</p>
-                            <h4 class="m-b-0">42</h4>
+                            <p class="m-b-5">Tarefas</p>
+                            <h4 class="m-b-0">{{ \App\Helpers\Helper::tasksTotal() }}</h4>
                         </div>
                         <div class="col col-auto text-right">
-                            <i class="feather icon-book f-50 text-c-pink"></i>
+                            <i class="feather icon-layers f-50 text-c-pink"></i>
                         </div>
                     </div>
                 </div>
@@ -78,16 +82,18 @@
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">Orders</p>
-                            <h4 class="m-b-0">$5,242</h4>
+                            <p class="m-b-5">Tarefas Finalizadas</p>
+                            <h4 class="m-b-0">{{ \App\Helpers\Helper::tasksClosedTotal() }}</h4>
                         </div>
                         <div class="col col-auto text-right">
-                            <i class="feather icon-shopping-cart f-50 text-c-blue"></i>
+                            <i class="feather icon-bell f-50 text-c-blue"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--
 
         <div class="col-md-6 col-xl-3">
             <div class="card widget-card-1">

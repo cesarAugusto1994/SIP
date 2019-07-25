@@ -7,8 +7,7 @@ var defaultOptions = {
     return;
   },
   render: function (date) {
-    this.el.innerHTML = date.years + " anos, " +
-                        date.days  + " dias, " +
+    this.el.innerHTML = date.days  + " dias, " +
                         this.leadingZeros(date.hours) + " horas, " +
                         this.leadingZeros(date.min) + " min and " +
                         this.leadingZeros(date.sec) + " seg";

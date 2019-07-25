@@ -24,7 +24,10 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+
+            $table->enum('time_type', ['day', 'hour', 'minute'])->default('hour');
             $table->integer('time');
+
             $table->dateTime('begin')->nullable();
             $table->dateTime('end')->nullable();
             $table->enum('frequency', ['Exporadicamente', 'Diariamente', 'Semanalmente', 'Mensalmente'])->default('Exporadicamente');

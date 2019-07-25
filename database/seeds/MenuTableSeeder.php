@@ -94,7 +94,16 @@ class MenuTableSeeder extends Seeder
             'permission' => 'view.painel.de.tarefas',
             'description' => 'Painel de Tarefas',
             'parent' => 'Painel de Tarefas',
-            'icon' => 'fas fa-tasks',
+            'icon' => 'feather icon-check-square',
+          ],
+
+          [
+            'title' => 'Mapeamentos',
+            'route' => 'mappings',
+            'permission' => 'view.mapeamentos',
+            'description' => 'Mapeamentos',
+            'parent' => null,
+            'icon' => 'far fa-clock',
           ],
 
           [

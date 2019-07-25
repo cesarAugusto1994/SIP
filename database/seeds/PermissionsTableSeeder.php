@@ -39,7 +39,8 @@ class PermissionsTableSeeder extends Seeder
             'Treinamentos',
             'Chat',
             'Ramais e E-mails',
-            'Painel de Tarefas'
+            'Painel de Tarefas',
+            'Mapeamentos'
           ])) {
             continue;
           }

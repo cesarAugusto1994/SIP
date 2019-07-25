@@ -18,21 +18,19 @@ class Task extends Model
     const STATUS_CANCELADO = 4;
 
     protected $fillable = [
-        'name', 'description', 'process_id',
-        'sub_process_id', 'user_id',
-        'frequency', 'time', 'method',
-        'indicator', 'client_id', 'vendor_id',
+        'name', 'description', 'user_id',
+        'frequency', 'time',
+        'client_id',
         'severity', 'urgency', 'trend', 'owner_id',
-        'status_id', 'created_by', 'active', 'is_model'
+        'status_id', 'created_by', 'active', 'time_type'
     ];
 
     protected static $logAttributes = [
-      'name', 'description', 'process_id',
-      'sub_process_id', 'user_id',
-      'frequency', 'time', 'method',
-      'indicator', 'client_id', 'vendor_id',
+      'name', 'description', 'user_id',
+      'frequency', 'time',
+      'client_id',
       'severity', 'urgency', 'trend', 'owner_id',
-      'status_id', 'created_by', 'active', 'is_model'
+      'status_id', 'created_by', 'active', 'time_type'
     ];
 
     protected $dates = ['begin', 'end'];
