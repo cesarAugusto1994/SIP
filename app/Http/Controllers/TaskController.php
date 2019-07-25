@@ -172,7 +172,6 @@ class TaskController extends Controller
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
           'description' => 'required',
-          'user_id' => 'required',
           'time' => 'required',
           'time_type' => 'required',
           'severity' => 'required',
@@ -380,12 +379,12 @@ class TaskController extends Controller
                     'user_id' => $user,
                     'frequency' => $task->frequency,
                     'time' => $task->time,
-                    'client_id' => $task->client_id,
                     'severity' => $task->severity,
                     'urgency' => $task->urgency,
                     'trend' => $task->trend,
                     'status_id' => Task::STATUS_PENDENTE,
-                    'created_by' => Auth::user()->id,
+                    'sponsor_id' => $user,
+                    'requester_id' => $user,
                 ];
 
                 $newTask = Task::create($data);

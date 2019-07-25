@@ -44,7 +44,7 @@
                 <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Titulo</label>
                     <div class="input-group">
-                      <input type="text" required name="name" class="form-control">
+                      <input type="text" required name="name" class="form-control" value="{{ old('name') }}">
 
                     </div>
                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
@@ -56,7 +56,7 @@
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
                       <textarea type="text" required name="description" id="description" rows="3"
-                             placeholder="Descreva a tarefa e informações relevantes." class="form-control"></textarea>
+                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ old('description') }}</textarea>
 
                     </div>
                     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
