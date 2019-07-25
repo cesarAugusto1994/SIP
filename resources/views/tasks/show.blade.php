@@ -42,25 +42,7 @@
 							<div class="card-block">
 									<div class="counter">
 											<div class="yourCountdownContainer" data-time="{{ $remainTime }}">
-													<div class="row">
-															<div class="col-xs-3">
-																	<h2>25</h2>
-																	<p>Days</p>
-															</div>
-															<div class="col-xs-3">
-																	<h2>24</h2>
-																	<p>Hours</p>
-															</div>
-															<div class="col-xs-3">
-																	<h2>38</h2>
-																	<p>Minutes</p>
-															</div>
-															<div class="col-xs-3">
-																	<h2>56</h2>
-																	<p>Seconds</p>
-															</div>
-													</div>
-													<!-- end of row -->
+
 											</div>
 									</div>
 							</div>
@@ -78,8 +60,15 @@
 															<td class="text-right"><span class="f-right">#{{ $task->id }}</span></td>
 													</tr>
 
+                          @if($task->ticket)
+                              <tr>
+    															<td><i class="icofont icofont-meeting-add"></i> Chamado:</td>
+    															<td class="text-right"><span class="f-right">#{{ $task->ticket->id }}</span></td>
+    													</tr>
+                          @endif
+
                           <tr>
-															<td><i class="icofont icofont-clock"></i> Tempo Previsto:</td>
+															<td><i class="icofont icofont-meeting-add"></i> Tempo Previsto:</td>
 															<td class="text-right"><span class="f-right">{{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}</span></td>
 													</tr>
 
@@ -107,9 +96,19 @@
 															<td class="text-right"><span class="f-right label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">{{ $task->trend }}</span></td>
 													</tr>
 
-													<tr>
+                          <tr>
 															<td><i class="icofont icofont-ui-love-add"></i> Adicionado Por:</td>
+															<td class="text-right"><a href="#">{{ $task->user->person->name }}</a></td>
+													</tr>
+
+                          <tr>
+															<td><i class="icofont icofont-ui-love-add"></i> Responsável:</td>
 															<td class="text-right"><a href="#">{{ $task->sponsor->person->name }}</a></td>
+													</tr>
+
+													<tr>
+															<td><i class="icofont icofont-ui-love-add"></i> Solicitante:</td>
+															<td class="text-right"><a href="#">{{ $task->requester->person->name }}</a></td>
 													</tr>
 													<tr>
 															<td><i class="icofont icofont-washing-machine"></i> Status:</td>
@@ -240,7 +239,7 @@
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
 
                           @if($task->status_id != 3 && $task->status_id != 4)
-                              <a class="dropdown-item waves-light waves-effect active" href="{{ route('tasks.edit', ['id' => $task->uuid]) }}">Editar</a>
+                              <a class="dropdown-item waves-light waves-effect active" href="{{ route('tasks.edit', ['id' => $task->uuid]) }}"><i class="fa fa-edit"></i> Editar</a>
                           @endif
 
                           @if($task->status_id == 2)
@@ -268,7 +267,7 @@
                               <a class="dropdown-item waves-light waves-effect" href="?cancel=1">Cancelar</a>
                           @endif
                           <div class="dropdown-divider"></div>
-                          <a class="dropdown-item waves-light waves-effect" href="?duplicate=1">Duplicar</a>
+                          <a class="dropdown-item waves-light waves-effect" href="?duplicate=1"><i class="fas fa-file"></i> Duplicar</a>
 
                       </div>
                   </div>

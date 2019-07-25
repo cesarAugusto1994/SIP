@@ -42,7 +42,7 @@
 
               <div class="col-md-6">
                 <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Nome</label>
+                    <label class="col-form-label">Titulo</label>
                     <div class="input-group">
                       <input type="text" required name="name" class="form-control">
 
@@ -64,15 +64,15 @@
               </div>
 
               <div class="col-md-6">
-                <div class="form-group {!! $errors->has('user_id') ? 'has-error' : '' !!}">
+                <div class="form-group {!! $errors->has('sponsor_id') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Responsável</label>
                     <div class="input-group">
-                      <select class="form-control" data-style="btn-white" name="user_id" required>
+                      <select class="form-control" data-style="btn-white" name="sponsor_id" required>
                           @foreach(\App\Helpers\Helper::users() as $user)
                               <option value="{{$user->id}}" {{ $user->id == Auth::user()->id ? 'selected' : '' }}>{{$user->person->name}}</option>
                           @endforeach
                       </select>
-                      {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
+                      {!! $errors->first('sponsor_id', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
               </div>
@@ -111,17 +111,17 @@
               </div>
 
               <div class="col-md-6">
-                <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Cliente</label>
+                <div class="form-group {!! $errors->has('requester_id') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Solicitante</label>
                     <div class="input-group">
-                      <select class="form-control" name="client_id">
-                            @foreach(\App\Helpers\Helper::departments() as $department)
-                                <option value="{{$department->id}}">{{$department->name}}</option>
-                            @endforeach
+                      <select class="form-control" name="requester_id">
+                          <option value="">Informe o Solicitante</option>
+                          @foreach(\App\Helpers\Helper::users() as $user)
+                              <option value="{{$user->id}}">{{$user->person->name}}</option>
+                          @endforeach
                       </select>
-
                     </div>
-                    {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
+                    {!! $errors->first('requester_id', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 

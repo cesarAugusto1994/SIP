@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('tasks.index') }}"> Tarefas </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Nova</a>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a>
                     </li>
                 </ul>
             </div>
@@ -31,7 +31,7 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Nova Tarefa</h5>
+          <h5>Editar Tarefa</h5>
       </div>
       <div class="card-block">
 
@@ -66,10 +66,9 @@
                 <div class="form-group">
                     <label class="col-form-label">Responsável</label>
                     <div class="input-group">
-                      <select class="form-control" data-style="btn-white" title="Selecione um Resposável" data-live-search="true" show-tick show-menu-arrow data-width="100%"  name="user_id" required>
-
+                      <select class="form-control" name="sponsor_id" required>
                           @foreach(\App\Helpers\Helper::users() as $user)
-                              <option value="{{$user->id}}" {{ $user->id == $task->user_id ? 'selected' : '' }}>{{$user->person->name}}</option>
+                              <option value="{{$user->id}}" {{ $user->id == $task->sponsor_id ? 'selected' : '' }}>{{$user->person->name}}</option>
                           @endforeach
                       </select>
                     </div>
@@ -84,10 +83,11 @@
                     <div class="form-group {!! $errors->has('time_type') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo de Tempo</label>
                         <div class="input-group">
-                          <select class="form-control" name="time_type">
-                              <option value="day" {{ $task->time == 'day' ? 'selected' : '' }}>Dia(s)</option>
-                              <option value="hour" {{ $task->time == 'hour' ? 'selected' : '' }}>Hora(s)</option>
-                              <option value="minute" {{ $task->time == 'minute' ? 'selected' : '' }}>Minuto(s)</option>
+                          <select class="form-control" name="time_type" required>
+                              <option value="">Selecione um item</option>
+                              <option value="day" {{ $task->time_type == 'day' ? 'selected' : '' }}>Dia(s)</option>
+                              <option value="hour" {{ $task->time_type == 'hour' ? 'selected' : '' }}>Hora(s)</option>
+                              <option value="minute" {{ $task->time_type == 'minute' ? 'selected' : '' }}>Minuto(s)</option>
                           </select>
                         </div>
                         {!! $errors->first('time_type', '<p class="help-block">:message</p>') !!}
@@ -99,7 +99,7 @@
                     <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tempo</label>
                         <div class="input-group">
-                          <input type="number" required value="{{ $task->time }}" name="time" id="time" class="form-control" value="1">
+                          <input type="number" min="1" max="100" required value="{{ $task->time }}" name="time" id="time" class="form-control" value="1">
                         </div>
                         {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -111,14 +111,14 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                    <label class="col-form-label">Cliente</label>
+                    <label class="col-form-label">Solicitante</label>
                     <div class="input-group">
-                      <select class="form-control" title="Selecione um Cliente" data-style="btn-white" required data-live-search="true" show-tick show-menu-arrow data-width="100%"  name="client_id">
-                            @foreach(\App\Helpers\Helper::departments() as $department)
-                                <option value="{{$department->id}}" {{ $department->id == $task->client_id ? 'selected' : '' }}>{{$department->name}}</option>
+                      <select class="form-control" name="requester_id">
+                            @foreach(\App\Helpers\Helper::users() as $user)
+                                <option value="{{$user->id}}" {{ $user->id == $task->requester_id ? 'selected' : '' }}>{{$user->person->name}}</option>
                             @endforeach
                         </select>
-                      {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
+                      {!! $errors->first('requester_id', '<p class="help-block">:message</p>') !!}
                     </div>
                     </div>
                 </div>

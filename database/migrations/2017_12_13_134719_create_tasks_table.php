@@ -24,10 +24,8 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-
             $table->enum('time_type', ['day', 'hour', 'minute'])->default('hour');
             $table->integer('time');
-
             $table->dateTime('begin')->nullable();
             $table->dateTime('end')->nullable();
             $table->enum('frequency', ['Exporadicamente', 'Diariamente', 'Semanalmente', 'Mensalmente'])->default('Exporadicamente');
@@ -38,12 +36,16 @@ class CreateTasksTable extends Migration
             $table->enum('urgency', [1,2,3,4,5])->default(1);
             $table->enum('trend', [1,2,3,4,5])->default(1);
             $table->integer('ticket_id')->nullable();
+            $table->integer('requester_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('mapper_id')->nullable();
+
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('task_status');
-            $table->integer('created_by')->unsigned();
-            $table->foreign('created_by')->references('id')->on('users');
+
+            $table->integer('sponsor_id')->unsigned();
+            $table->foreign('sponsor_id')->references('id')->on('users');
+
             $table->boolean('active')->default(true);
             $table->uuid('uuid')->unique();
             $table->timestamps();

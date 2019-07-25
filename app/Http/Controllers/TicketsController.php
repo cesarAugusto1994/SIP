@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Ticket;
+use App\Models\{Ticket, Task};
 use App\Models\Ticket\Status\Log;
 use Auth;
 use App\User;
@@ -172,9 +172,17 @@ class TicketsController extends Controller
     {
         $user = $request->user();
 
-        $data['assigned_to'] = $user->id;
-
         $ticket = Ticket::uuid($id);
+
+        $task = Task::create([
+          'ticket_id' => $ticket->id,
+          'name' => $ticket->type->name,
+          'description' => $ticket->type->category->name . ' ' . $ticket->description,
+          'user_id' => $user->id,
+          'status_id' => 1,
+          'requester_id' => $ticket->user_id,
+          'sponsor_id' => $user->id,
+        ]);
 
         $alreadyExists = Log::where('ticket_id', $ticket->id)->where('status_id', 2)->get();
 
@@ -189,12 +197,15 @@ class TicketsController extends Controller
         ]);
 
         $data['status_id'] = 2;
+        $data['assigned_to'] = $user->id;
 
         $ticket->update($data);
 
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'O chamado está em andamento.'
+          'text' => 'O chamado está em andamento e uma tarefa foi criada.'
         ]);
+
+        return redirect()->route('tasks.edit', $task->uuid);
 
         return redirect()->route('tickets.show', $ticket->uuid);
     }

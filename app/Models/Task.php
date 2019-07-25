@@ -20,17 +20,17 @@ class Task extends Model
     protected $fillable = [
         'name', 'description', 'user_id',
         'frequency', 'time',
-        'client_id',
-        'severity', 'urgency', 'trend', 'owner_id',
-        'status_id', 'created_by', 'active', 'time_type'
+        'client_id', 'ticket_id',
+        'severity', 'urgency', 'trend', 'sponsor_id',
+        'status_id', 'requester_id', 'active', 'time_type'
     ];
 
     protected static $logAttributes = [
       'name', 'description', 'user_id',
       'frequency', 'time',
-      'client_id',
-      'severity', 'urgency', 'trend', 'owner_id',
-      'status_id', 'created_by', 'active', 'time_type'
+      'client_id', 'ticket_id',
+      'severity', 'urgency', 'trend', 'sponsor_id',
+      'status_id', 'requester_id', 'active', 'time_type'
     ];
 
     protected $dates = ['begin', 'end'];
@@ -43,6 +43,11 @@ class Task extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function ticket()
+    {
+        return $this->belongsTo('App\Models\Ticket', 'ticket_id');
     }
 
     public function client()
@@ -62,7 +67,12 @@ class Task extends Model
 
     public function sponsor()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'sponsor_id');
+    }
+
+    public function requester()
+    {
+        return $this->belongsTo(User::class, 'requester_id');
     }
 
     public function mapper()

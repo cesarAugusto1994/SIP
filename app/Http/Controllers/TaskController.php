@@ -172,7 +172,6 @@ class TaskController extends Controller
           'user_id' => 'required',
           'time' => 'required',
           'time_type' => 'required',
-          'client_id' => 'required',
           'severity' => 'required',
           'urgency' => 'required',
           'trend' => 'required',
@@ -183,9 +182,7 @@ class TaskController extends Controller
         }
 
         $data['status_id'] = Task::STATUS_PENDENTE;
-        $data['created_by'] = Auth::user()->id;
-
-        //$data['time'] = $this->hourToMinutes($data['time']);
+        $data['user_id'] = Auth::user()->id;
 
         $task = Task::create($data);
 
@@ -539,32 +536,16 @@ class TaskController extends Controller
 
         $task = Task::uuid($id);
 
-        $userId = $data['user_id'];
-
-        if($data['user_id'] == 'random') {
-            $user = User::where('do_task', true)->get()->random();
-            $userId = $user->id;
-        }
-
-        $data = [
-            'name' => $task->name,
-            'description' => $data['description'],
-            'user_id' => $userId,
-            'time_type' => $data['time_type'],
-            'time' => $data['time'],
-            'client_id' => $data['client_id'],
-            'severity' => $data['severity'],
-            'urgency' => $data['urgency'],
-            'trend' => $data['trend']
-        ];
-
         $task->description = $data['description'];
-        $task->user_id = $data['user_id'];
         $task->time = $data['time'];
-        $task->client_id = $data['client_id'];
+        $task->time_type = $data['time_type'];
         $task->severity = $data['severity'];
         $task->urgency = $data['urgency'];
         $task->trend = $data['trend'];
+
+        $task->sponsor_id = $data['sponsor_id'];
+        $task->requester_id = $data['requester_id'];
+
         $task->save();
 
         $log = new Log();
