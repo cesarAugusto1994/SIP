@@ -27,6 +27,7 @@
         "pusher/pusher-php-server": "^4.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-activitylog": "^3.5",
+        "unicodeveloper/laravel-password": "^1.0",
         "webklex/laravel-imap": "^1.4",
         "yadahan/laravel-authentication-log": "^1.1"
     },

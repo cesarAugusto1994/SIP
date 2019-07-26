@@ -185,7 +185,8 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Webklex\IMAP\Providers\LaravelServiceProvider::class,
-        Chumper\Zipper\ZipperServiceProvider::class
+        Chumper\Zipper\ZipperServiceProvider::class,
+        Unicodeveloper\DumbPassword\DumbPasswordServiceProvider::class
 
     ],
 

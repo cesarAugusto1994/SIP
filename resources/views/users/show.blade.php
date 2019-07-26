@@ -62,7 +62,7 @@
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                         <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                                          <a href="#!" class="dropdown-item" data-toggle="modal" data-target="#editar-senha">Alterar Senha</a>
+                                          <a href="{{ route('change_password') }}" class="dropdown-item">Alterar Senha</a>
                                           @if(auth()->user()->id !== $person->user->id)
                                             <a class="dropdown-item" href="{{ route('impersonate', $person->user->id) }}">logar como</a>
                                           @endif
@@ -566,27 +566,6 @@
 
                                   </div>
 
-                                  <button type="submit" class="btn btn-success btn-block btn-sm">Salvar</button>
-                              </form>
-
-                            </div>
-                        </div>
-
-                      </div>
-
-                      <div class="col-lg-4">
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-header-text">Alterar Senha</h5>
-                            </div>
-                            <div class="card-block">
-
-                              <form data-parsley-validate action="{{route('user_update_password', ['id' => auth()->user()->uuid])}}" method="post">
-                                  @csrf
-                                  <div class="form-group"><label>Nova Senha</label>
-                                    <input type="password" minlength="6" maxlength="18" required autofocus name="password" placeholder="Informe a sua nova senha" autocomplete="off" class="form-control">
-                                  </div>
                                   <button type="submit" class="btn btn-success btn-block btn-sm">Salvar</button>
                               </form>
 

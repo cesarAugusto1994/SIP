@@ -62,6 +62,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         ),
         'U' => 
         array (
+            'Unicodeveloper\\DumbPassword\\' => 28,
             'Underscore\\' => 11,
         ),
         'T' => 
@@ -214,6 +215,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Webklex\\IMAP\\' => 
         array (
             0 => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP',
+        ),
+        'Unicodeveloper\\DumbPassword\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/unicodeveloper/laravel-password/src',
         ),
         'Underscore\\' => 
         array (
@@ -589,7 +594,6 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php',
         'App\\Http\\Controllers\\TaskController' => __DIR__ . '/../..' . '/app/Http/Controllers/TaskController.php',
         'App\\Http\\Controllers\\TaskMessagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TaskMessagesController.php',
-        'App\\Http\\Controllers\\TeachersController' => __DIR__ . '/../..' . '/app/Http/Controllers/TeachersController.php',
         'App\\Http\\Controllers\\TeamsController' => __DIR__ . '/../..' . '/app/Http/Controllers/TeamsController.php',
         'App\\Http\\Controllers\\TicketTypeDepartmentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketTypeDepartmentsController.php',
         'App\\Http\\Controllers\\TicketTypesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketTypesController.php',
@@ -670,6 +674,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\TaskMessages' => __DIR__ . '/../..' . '/app/Models/TaskMessages.php',
         'App\\Models\\TaskPause' => __DIR__ . '/../..' . '/app/Models/TaskPause.php',
         'App\\Models\\TaskStatus' => __DIR__ . '/../..' . '/app/Models/TaskStatus.php',
+        'App\\Models\\Task\\Archive' => __DIR__ . '/../..' . '/app/Models/Task/Archive.php',
         'App\\Models\\Task\\Delay' => __DIR__ . '/../..' . '/app/Models/Task/Delay.php',
         'App\\Models\\Task\\Log' => __DIR__ . '/../..' . '/app/Models/Task/Log.php',
         'App\\Models\\Task\\Message' => __DIR__ . '/../..' . '/app/Models/Task/Message.php',
@@ -4560,6 +4565,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Underscore\\Underscore' => __DIR__ . '/..' . '/anahkiasen/underscore-php/src/Underscore.php',
         'Underscore\\UnderscoreTest' => __DIR__ . '/..' . '/anahkiasen/underscore-php/tests/UnderscoreTest.php',
         'Underscore\\UnderscoreTestCase' => __DIR__ . '/..' . '/anahkiasen/underscore-php/tests/UnderscoreTestCase.php',
+        'Unicodeveloper\\DumbPassword\\DumbPasswordServiceProvider' => __DIR__ . '/..' . '/unicodeveloper/laravel-password/src/DumbPasswordServiceProvider.php',
         'UnitsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UnitsTableSeeder.php',
         'UserTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UserTableSeeder.php',
         'Webklex\\IMAP\\Attachment' => __DIR__ . '/..' . '/webklex/laravel-imap/src/IMAP/Attachment.php',

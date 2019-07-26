@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2bbd203fa357c2f0c0d73c620be6f64",
+    "content-hash": "fa54242738328ec0d80ddc00821784bb",
     "packages": [
         {
             "name": "alexpechkarev/geometry-library",
@@ -4261,6 +4261,66 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "unicodeveloper/laravel-password",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/unicodeveloper/laravel-password.git",
+                "reference": "c2e532cbbb0c579f5a9fabd105edb4185b192cf2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/unicodeveloper/laravel-password/zipball/c2e532cbbb0c579f5a9fabd105edb4185b192cf2",
+                "reference": "c2e532cbbb0c579f5a9fabd105edb4185b192cf2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.6|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0||~5.0",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Unicodeveloper\\DumbPassword\\DumbPasswordServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Unicodeveloper\\DumbPassword\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": ":Prosper Otemuyiwa",
+                    "email": "prosperotemuyiwa@gmail.com",
+                    "homepage": "http://goodheads.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Protect your users from entering dumb and common passwords",
+            "homepage": "https://github.com/unicodeveloper/laravel-password",
+            "keywords": [
+                "dumb",
+                "passwords",
+                "security",
+                "unicodeveloper"
+            ],
+            "time": "2018-01-25T18:03:37+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

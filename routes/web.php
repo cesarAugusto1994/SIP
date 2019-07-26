@@ -48,6 +48,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
   Route::prefix('admin')->group(function () {
 
+
+
     Route::impersonate();
 
     Route::prefix('chat')->group(function() {
@@ -61,9 +63,6 @@ Route::middleware('auth')->middleware('status')->group(function () {
     });
 
     Route::resource('configurations', 'ConfigurationsController');
-
-    # Tasks
-
     Route::resource('tasks', 'TaskController');
 
     //Route::get('tasks', 'TaskController@index')->name('tasks');
@@ -101,7 +100,10 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::post('users/create/store', 'UsersController@store')->name('user_store');
     Route::post('user/{id}/update', 'UsersController@update')->name('user_update');
     Route::post('user/{id}/update/configs', 'UsersController@updateConfigs')->name('user_update_configurations');
-    Route::post('user/{id}/update/password', 'UsersController@updatePassword')->name('user_update_password');
+
+    Route::get('/password', 'UsersController@password')->name('change_password');
+    Route::post('/password/update', 'UsersController@updatePassword')->name('update_password');
+
     Route::post('user/{id}/update/password/first-access', 'UsersController@updatePasswordFirstAccess')->name('user_update_password_home');
     Route::get('boards', 'BoardController@index')->name('boards');
 
