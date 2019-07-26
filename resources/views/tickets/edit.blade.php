@@ -71,7 +71,7 @@
                           <option value="Baixa" {{ $ticket->priority == 'Baixa' ? 'selected' : '' }}>Baixa</option>
                           <option value="Normal"  {{ $ticket->priority == 'Normal' ? 'selected' : '' }}>Normal</option>
                           <option value="Alta" {{ $ticket->priority == 'Alta' ? 'selected' : '' }}>Alta</option>
-                          <option value="Altissima" {{ $ticket->priority == 'Altissima' ? 'selected' : '' }}>Altissíma</option>
+                          <option value="Altissima" {{ $ticket->priority == 'Altíssima' ? 'selected' : '' }}>Altissíma</option>
                       </select>
 
                     </div>

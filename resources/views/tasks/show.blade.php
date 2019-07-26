@@ -108,7 +108,7 @@
 
 													<tr>
 															<td><i class="icofont icofont-ui-love-add"></i> Solicitante:</td>
-															<td class="text-right"><a href="#">{{ $task->requester->person->name }}</a></td>
+															<td class="text-right"><a href="#">{{ $task->requester ? $task->requester->person->name : '-' }}</a></td>
 													</tr>
 													<tr>
 															<td><i class="icofont icofont-washing-machine"></i> Status:</td>

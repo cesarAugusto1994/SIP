@@ -6,7 +6,7 @@ use Auth;
 use Session;
 use App\User;
 use App\Models\Training\Course;
-use App\Models\{People, Menu};
+use App\Models\{People, Menu, Client};
 use App\Models\Task\Status as TicketStatus;
 use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
@@ -61,16 +61,34 @@ class Helper
         return Session::forget($slug);
     }
 
-    public static function formatBytes($size = 0, $precision = 2)
+    public static function usedSpace()
+    {
+        $used = disk_total_space('/') - disk_free_space('/');
+        return self::formatBytesToSize($used);
+    }
+
+    public static function totalSpace()
+    {
+        return self::formatBytes(disk_total_space('/'));
+    }
+
+    public static function formatBytesToSize($size = 0, $precision = 2)
     {
         $base = log($size, 1024);
-        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
 
         if($base < 0) {
           return '0 Kb';
         }
 
-        return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+        return round(pow(1024, $base - floor($base)), $precision);
+    }
+
+    public static function formatBytes($size = 0, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
+
+        return self::formatBytesToSize($size, $precision) .' '. $suffixes[floor($base)];
     }
 
     public static function formatTime($time = 1, $format = 'hour')
@@ -494,6 +512,42 @@ class Helper
 
         self::set($key, $menus);
         return self::get($key);
+    }
+
+    public static function countClients()
+    {
+        $key = 'count-clients';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Client::count();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function messages()
+    {
+        $key = 'messages';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Message::count();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+
+    public static function onlineUsers()
+    {
+        $onlineUsers = self::users()->where('status', 'online')->count();
+
+        return $onlineUsers;
     }
 
     public static function getRouteForModel($model, $subject)

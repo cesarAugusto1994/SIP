@@ -157,7 +157,7 @@
             <div class="card-block">
                 <div class="row">
                     <div class="col-sm-12">
-                      <a href="{{ route('tickets.show', $task->uuid) }}">
+                      <a href="{{ route('tasks.show', $task->uuid) }}">
                         <p class="task-detail">{{substr($task->description,0,150)}}...</p>
                         <hr/>
 
