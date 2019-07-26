@@ -742,6 +742,42 @@ class Helper
           }
     }
 
+    public static function statusTaskCollor($value)
+    {
+          switch ($value) {
+            case 2:
+                return 'warning';
+            case 3:
+                return 'primary';
+            case 4:
+                return 'primary';
+            case 5:
+                return 'danger';
+            default:
+                return 'info';
+          }
+    }
+
+    public static function statusTaskPriorityCollor($priority)
+    {
+        switch($priority) {
+          case 'Baixa':
+            $priority = 'info';
+            break;
+          case 'Normal':
+            $priority = 'primary';
+            break;
+          case 'Alta':
+            $priority = 'warning';
+            break;
+          case 'Altíssima':
+            $priority = 'danger';
+            break;
+        }
+
+        return $priority;
+    }
+
     public static function percent($value)
     {
           switch ($value) {
@@ -767,5 +803,40 @@ class Helper
                 return 'progress-bar-success';
           }
     }
+
+    public static function getTaskPercentage($userUuid)
+    {
+        $user = User::uuid($userUuid);
+
+        $total = $user->tasks->isNotEmpty() ? count($user->tasks->filter(function($task) {
+            return $task->status_id != Task::STATUS_CANCELADO && !$task->is_model;
+        })) : 1;
+
+        $concludedTasks = count($user->tasks->filter(function($task) {
+            return $task->status_id == Task::STATUS_FINALIZADO && !$task->is_model;
+        }));
+
+        $inProgressTasks = count($user->tasks->filter(function($task) {
+            return $task->status_id == Task::STATUS_EM_ANDAMENTO && !$task->is_model;
+        }));
+
+        if($total <= 0) {
+          $total = 1;
+        }
+
+        if(!$inProgressTasks && !$inProgressTasks && !$total) {
+          return 0;
+        }
+
+        if(!$concludedTasks) {
+          $inProgressTasks = $inProgressTasks*0.50;
+        }
+
+        $porcent = round((($concludedTasks + $inProgressTasks) / $total) * 100);
+
+        return $porcent;
+    }
+
+
 
 }

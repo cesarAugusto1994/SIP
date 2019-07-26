@@ -44,6 +44,10 @@ class TaskController extends Controller
             $tasks = $tasks->where('status_id', $status);
         }
 
+        if(!$request->has('status')) {
+            $tasks = $tasks->whereIn('status_id', [1,2]);
+        }
+
         if($request->filled('severity')) {
             $priority = $request->get('severity');
             $tasks = $tasks->where('severity', $priority);

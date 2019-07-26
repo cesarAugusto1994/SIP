@@ -218,52 +218,13 @@
 
             @forelse($tickets->sortByDesc('id') as $ticket)
 
-                @php
-
-                  $status = $ticket->logs->last()->status->id;
-                  $priority = $ticket->priority;
-
-                  $bgColor = 'success';
-
-                  switch($status) {
-                    case '2':
-                      $bgColor = 'warning';
-                      break;
-                    case '3':
-                      $bgColor = 'primary';
-                      break;
-                    case '4':
-                      $bgColor = 'primary';
-                      break;
-                    case '5':
-                      $bgColor = 'danger';
-                      break;
-                  }
-
-                  switch($priority) {
-                    case 'Baixa':
-                      $priority = 'info';
-                      break;
-                    case 'Normal':
-                      $priority = 'primary';
-                      break;
-                    case 'Alta':
-                      $priority = 'warning';
-                      break;
-                    case 'Altíssima':
-                      $priority = 'danger';
-                      break;
-                  }
-
-                @endphp
-
                 <div class="col-sm-6">
-                    <div class="card card-border-{{ $bgColor }}">
+                    <div class="card card-border-{{ \App\Helpers\Helper::statusTaskCollor($ticket->status->id) }}">
                         <div class="card-header">
                             <a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ $ticket->id }} </a>
                             <a href="{{ route('tickets.show', $ticket->uuid) }}"><b>{{$ticket->type->category->name}}</b></a>
                             <a href="{{ route('tickets.show', $ticket->uuid) }}">
-                              <span class="label label-{{$bgColor}} f-right"> {{ $ticket->logs->last()->status->name }} </span></a>
+                              <span class="label label-{{ \App\Helpers\Helper::statusTaskCollor($ticket->status->id) }} f-right"> {{ $ticket->status->name }} </span></a>
                         </div>
                         <div class="card-block">
                             <div class="row">
@@ -282,7 +243,7 @@
                                 <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $ticket->user->uuid, 'link' => $ticket->user->avatar, 'avatar' => true])}}" title="{{ $ticket->user->person->name }}" alt="{{ $ticket->user->person->name }}"></a>
                             </div>
                             <div class="task-board">
-                                <label class="label label-{{ $priority }}">{{ $ticket->priority }}</label>
+                                <label class="label label-{{ \App\Helpers\Helper::statusTaskPriorityCollor($ticket->priority) }}">{{ $ticket->priority }}</label>
                                 @if($ticket->status_id != 4)
                                     <div class="dropdown-secondary dropdown">
                                         <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>

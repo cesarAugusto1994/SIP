@@ -28,9 +28,9 @@
 
 
   <div class="row">
-      @foreach($users as $user)
+      @foreach($users->sortBy('person.name') as $user)
 
-      @if($user->do_task && $user->active)
+      @if($user->do_task && $user->active && $user->tasks->isNotEmpty())
 
       <div class="col-md-6 col-xl-3">
           <div class="card user-card">

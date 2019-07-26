@@ -57,6 +57,10 @@ class TicketsController extends Controller
             $tickets = $tickets->where('status_id', $status);
         }
 
+        if(!$request->has('status')) {
+            $tickets = $tickets->whereIn('status_id', [1,2]);
+        }
+
         if($request->filled('priority')) {
             $priority = $request->get('priority');
             $tickets = $tickets->where('priority', $priority);
@@ -176,8 +180,8 @@ class TicketsController extends Controller
 
         $task = Task::create([
           'ticket_id' => $ticket->id,
-          'name' => $ticket->type->name,
-          'description' => $ticket->type->category->name . ' ' . $ticket->description,
+          'name' => $ticket->type->category->name,
+          'description' => $ticket->type->name . ': ' . $ticket->description,
           'user_id' => $user->id,
           'status_id' => 1,
           'requester_id' => $ticket->user_id,

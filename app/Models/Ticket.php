@@ -27,6 +27,11 @@ class Ticket extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Ticket\Status');
+    }
+
     public function responsible()
     {
         return $this->belongsTo('App\User', 'assigned_to');
