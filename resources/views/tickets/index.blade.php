@@ -111,28 +111,37 @@
 
                       <div class="taskboard-right-progress">
                           <h6>Altissima</h6>
-                          <div class="faq-progress">
-                              <div class="progress">
-                                  <div class="faq-bar3 text-white progress-lg" style="width: {{ $highest }}%;">{{ $highest }}%</div>
-                              </div>
+                          <div class="progress progress-striped progress-mini">
+                            <div style="width:{{ $highest }}%;background-color: #fe5d70;"
+                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('highest') }}">
+                              {{ $highest }}</div>
                           </div>
+
+                          <hr/>
+
                           <h6>Alta</h6>
-                          <div class="faq-progress">
-                              <div class="progress">
-                                  <div class="faq-bar1 text-white progress-lg" style="width: {{$high}}%;">{{$high}}%</div>
-                              </div>
+                          <div class="progress progress-striped progress-mini">
+                            <div style="width:{{ $high }}%;background-color: #fe9365;"
+                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('high') }}">
+                              {{ $high }}</div>
                           </div>
+
+                          <hr/>
+
                           <h6>Normal</h6>
-                          <div class="faq-progress">
-                              <div class="progress">
-                                  <div class="faq-bar2 progress-bar-striped text-white progress-lg" style="width: {{$normal}}%;">{{$normal}}%</div>
-                              </div>
+                          <div class="progress progress-striped progress-mini">
+                            <div style="width:{{ $normal }}%;background-color: #0ac282;"
+                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('normal') }}">
+                              {{ $normal }}</div>
                           </div>
+
+                          <hr/>
+
                           <h6>Baixa</h6>
-                          <div class="faq-progress">
-                              <div class="progress">
-                                  <div class="faq-bar4 text-white progress-lg" style="width: {{$low}}%;">{{$low}}%</div>
-                              </div>
+                          <div class="progress progress-striped progress-mini">
+                            <div style="width:{{ $low }}%;background-color: #01a9ac;"
+                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('low') }}">
+                              {{ $low }}</div>
                           </div>
                       </div>
                   </div>
