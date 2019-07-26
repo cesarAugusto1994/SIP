@@ -99,7 +99,7 @@
           opacity: 1;
         }
 
-        .parsley-required, .parsley-maxlength, .parsley-minlength {
+        .parsley-required, .parsley-maxlength, .parsley-minlength, .help-block {
           list-style: none;
           background-color: #fe5d70;
           /* border: 2px solid #dc3545; */

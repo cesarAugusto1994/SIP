@@ -54,7 +54,7 @@
                       <div class="input-group">
                         <select class="form-control" name="department_id">
                             @foreach($departments as $department)
-                                <option value="{{$department->uuid}}">{{$department->name}}</option>
+                                <option value="{{$department->uuid}}" {{ request()->has('department') && request()->get('department') == $department->uuid ? 'selected' : '' }}>{{$department->name}}</option>
                             @endforeach
                         </select>
                       </div>

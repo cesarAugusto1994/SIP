@@ -32,7 +32,11 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
                   @permission('create.cargos')
-                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('occupations.create')}}">Novo Cargo</a></li>
+                    @if(request()->has('department'))
+                      <li><a class="btn btn-sm btn-success btn-round" href="{{route('occupations.create', ['department' => request()->get('department')])}}">Novo Cargo</a></li>
+                    @else
+                      <li><a class="btn btn-sm btn-success btn-round" href="{{route('occupations.create')}}">Novo Cargo</a></li>
+                    @endif
                   @endpermission
               </ul>
           </div>

@@ -117,10 +117,10 @@
 
                 <div class="widget white-bg no-padding">
                     <div class="p-m text-center">
-                        <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
-                        <h4 class="font-bold no-margins">
+                        <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
+                        <h6 class="font-bold no-margins">
                             Nenhum documento encontrado.
-                        </h4>
+                        </h6>
                     </div>
                 </div>
 

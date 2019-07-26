@@ -67,7 +67,7 @@
 
   <div class="row simple-cards users-card">
 
-  @forelse($people as $person)
+  @forelse($people->sortBy('name') as $person)
 
     <div class="col-md-12 col-xl-4">
         <div class="card user-card">

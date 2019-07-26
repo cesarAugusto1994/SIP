@@ -90,7 +90,6 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                          <th>ID</th>
                           <th>Nome</th>
                           <th>Email</th>
                           <th>CPF</th>
@@ -101,10 +100,6 @@
                     <tbody>
                         @foreach($client->employees as $employee)
                             <tr>
-
-                                <td>
-                                    <a>{{$employee->id}}</a>
-                                </td>
 
                                 <td>
                                     <a>{{$employee->name}}</a>
@@ -181,7 +176,6 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                          <th>ID</th>
                           <th>Descrição</th>
                           <th>Endereço</th>
                           <th>Principal</th>
@@ -191,10 +185,6 @@
                     <tbody>
                         @foreach($client->addresses as $address)
                             <tr>
-
-                                <td>
-                                    <a>{{$address->id}}</a>
-                                </td>
 
                                 <td>
                                     <a>{{$address->description}}</a>
