@@ -174,7 +174,7 @@
             <div class="card-footer">
                 <div class="task-list-table">
 
-                  <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $task->user->uuid, 'link' => $task->user->avatar, 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""></a>
+                  <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""></a>
 
                 </div>
                 <div class="task-board">
