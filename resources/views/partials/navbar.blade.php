@@ -202,7 +202,7 @@
                           </a>
                           @if(config('app.env') == 'production')
                           <span class="float-right">
-                            <receiverstatus :user="{{ Auth::user() }}" :receiver="{{ $user }}"></receiverstatus>
+                            <receiverstatus :user="{{ $user }}" :receiver="{{ Auth::user() }}"></receiverstatus>
                           <span>
                           @endif
                         </div>

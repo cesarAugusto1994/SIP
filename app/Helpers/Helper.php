@@ -63,14 +63,14 @@ class Helper
 
     public static function usedSpace()
     {
-        $path = '/home/defaultwebsite/';
+        $path = config('app.env') == 'production' ? '/home/defaultwebsite/' : '/';
         $used = disk_total_space($path) - disk_free_space($path);
         return self::formatBytesToSize($used);
     }
 
     public static function totalSpace()
     {
-        $path = '/home/defaultwebsite/';
+        $path = config('app.env') == 'production' ? '/home/defaultwebsite/' : '/';
         return self::formatBytes(disk_total_space($path));
     }
 
