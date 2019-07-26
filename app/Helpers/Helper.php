@@ -63,13 +63,15 @@ class Helper
 
     public static function usedSpace()
     {
-        $used = disk_total_space('/') - disk_free_space('/');
+        $path = '/home/defaultwebsite/';
+        $used = disk_total_space($path) - disk_free_space($path);
         return self::formatBytesToSize($used);
     }
 
     public static function totalSpace()
     {
-        return self::formatBytes(disk_total_space('/'));
+        $path = '/home/defaultwebsite/';
+        return self::formatBytes(disk_total_space($path));
     }
 
     public static function formatBytesToSize($size = 0, $precision = 2)
