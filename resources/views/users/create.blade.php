@@ -82,14 +82,14 @@
                       <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Telefone</label>
                           <div class="input-group">
-                            <input type="text" required autocomplete="off" value="{{ old('phone') }}" name="phone" class="form-control inputPhone">
+                            <input placeholder="Campo Opcional" type="text" autocomplete="off" value="{{ old('phone') }}" name="phone" class="form-control inputPhone">
                           </div>
                           {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                       </div>
                       <div class="form-group {!! $errors->has('branch') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Ramal</label>
                           <div class="input-group">
-                            <input type="text" required autocomplete="off" value="{{ old('branch') }}" name="branch" class="form-control">
+                            <input placeholder="Campo Opcional" type="text" autocomplete="off" value="{{ old('branch') }}" name="branch" class="form-control">
                           </div>
                           {!! $errors->first('branch', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -105,6 +105,7 @@
                           <label class="col-form-label">Departamento</label>
                           <div class="input-group">
                             <select class="form-control select-occupations" name="department_id" data-search-occupations="{{ route('occupation_search') }}" required>
+                              <option value="" selected>Selecione o Departamento do usuário</option>
                               @foreach($departments as $department)
                                   <option value="{{$department->uuid}}">{{$department->name}}</option>
                               @endforeach
@@ -119,6 +120,7 @@
                           <label class="col-form-label">Cargo</label>
                           <div class="input-group">
                             <select class="form-control occupation" id="occupation" name="occupation_id" required>
+                              <option value="" selected>Selecione o cargo do usuário</option>
                               @foreach($occupations as $occupation)
                                   <option value="{{$occupation->uuid}}">{{$occupation->name}}</option>
                               @endforeach
@@ -133,6 +135,7 @@
                           <label class="col-form-label">Unidade</label>
                           <div class="input-group">
                             <select class="form-control" id="unit" name="unit_id" required>
+                              <option value="" selected>Selecione a unidade do usuário</option>
                               @foreach($units as $unit)
                                   <option value="{{$unit->uuid}}">{{$unit->name}}</option>
                               @endforeach
@@ -151,6 +154,7 @@
                           <label class="col-form-label">Previlégio</label>
                           <div class="input-group">
                             <select id="roles" name="roles" required class="form-control">
+                              <option value="" selected>Selecione o nível de Privilégios do usuário</option>
                               @foreach($roles as $role)
                                 <option value="{{ $role->name }}">{{ $role->name }}</option>
                               @endforeach
@@ -164,7 +168,7 @@
                       <div class="form-group {!! $errors->has('password') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Senha de Acesso</label>
                           <div class="input-group">
-                            <input type="password" autocomplete="off" value="{{ old('password') }}" name="password" class="form-control">
+                            <input placeholder="Informe a senha de acesso" type="password" required minlength="6" maxlength="16" autocomplete="off" value="{{ old('password') }}" name="password" class="form-control">
                           </div>
                           {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -174,7 +178,7 @@
                       <div class="form-group {!! $errors->has('password_email') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Senha do E-mail</label>
                           <div class="input-group">
-                            <input type="password" autocomplete="off" value="{{ old('password_email') }}" name="password_email" class="form-control">
+                            <input placeholder="Campo Opcional" type="password" autocomplete="off" value="{{ old('password_email') }}" name="password_email" class="form-control">
                           </div>
                           {!! $errors->first('password_email', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -184,7 +188,7 @@
                       <div class="form-group {!! $errors->has('phone_code') ? 'has-error' : '' !!}">
                           <label class="col-form-label">ID Ligação Externa</label>
                           <div class="input-group">
-                            <input type="text" autocomplete="off" value="{{ old('phone_code') }}" name="phone_code" class="form-control">
+                            <input placeholder="Campo Opcional" type="text" autocomplete="off" value="{{ old('phone_code') }}" name="phone_code" class="form-control">
                           </div>
                           {!! $errors->first('phone_code', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -194,7 +198,7 @@
                       <div class="form-group {!! $errors->has('phone_password') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Senha Ligação Externa</label>
                           <div class="input-group">
-                            <input type="text" autocomplete="off" value="{{ old('phone_password') }}" name="phone_password" class="form-control">
+                            <input placeholder="Campo Opcional" type="text" autocomplete="off" value="{{ old('phone_password') }}" name="phone_password" class="form-control">
                           </div>
                           {!! $errors->first('phone_password', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -204,7 +208,7 @@
                       <div class="form-group {!! $errors->has('phone_callcenter_code') ? 'has-error' : '' !!}">
                           <label class="col-form-label">ID Callcenter</label>
                           <div class="input-group">
-                            <input type="text" autocomplete="off" value="{{ old('phone_callcenter_code') }}" name="phone_callcenter_code" class="form-control">
+                            <input placeholder="Campo Opcional" type="text" autocomplete="off" value="{{ old('phone_callcenter_code') }}" name="phone_callcenter_code" class="form-control">
                           </div>
                           {!! $errors->first('phone_callcenter_code', '<p class="help-block">:message</p>') !!}
                       </div>

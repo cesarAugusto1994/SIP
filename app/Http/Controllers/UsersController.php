@@ -310,7 +310,7 @@ class UsersController extends Controller
         }
 
         if($request->has('phone')) {
-            $branch = $data['phone'];
+            $phone = $data['phone'];
         }
 
         if($request->has('phone_code')) {
@@ -367,7 +367,7 @@ class UsersController extends Controller
           'text' => 'Novo usuário adicionado com sucesso.'
         ]);
 
-        return redirect()->action('UsersController@index');
+        return redirect()->route('user', ['id' => $user->uuid]);
     }
 
     /**
@@ -378,16 +378,12 @@ class UsersController extends Controller
      */
     public function show(Request $request)
     {
-        if($request->has('id')) {
-          $user = User::uuid($request->get('id'));
-        } else {
-          $user = $request->user();
-        }
-        /*
-        $p = auth()->user()->foldersPermissions;
+        $user = $request->user();
 
-        dd($p);
-        */
+        if($request->has('id') && $request->user()->isAdmin()) {
+          $user = User::uuid($request->get('id'));
+        }
+
         $users = Helper::users();
         $person = $user->person;
         $departments = Helper::departments();

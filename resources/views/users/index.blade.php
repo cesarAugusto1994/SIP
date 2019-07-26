@@ -29,6 +29,15 @@
   <div class="card">
       <div class="card-header">
           <h5>Pesquisa</h5>
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+
+                  @permission('create.usuarios')
+                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('users.create')}}">Novo Usuário</a></li>
+                  @endpermission
+
+              </ul>
+          </div>
       </div>
       <div class="card-block">
 
@@ -57,7 +66,7 @@
                     <option value="1">Ativo</option>
                 </select>
               </div>
-              <div class="col-lg-2 col-md-12"><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Buscar</button></div>
+              <div class="col-lg-2 col-md-12"><button type="submit" class="btn btn-primary btn-round btn-block"><i class="fas fa-search"></i> Buscar</button></div>
 
           </div>
         </form>

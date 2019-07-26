@@ -784,9 +784,9 @@ $(document).ready(function() {
         async: true,
         success: function(response) {
 
-          let html = "";
+          let html = "<option value=''>Selecione um cargo</option>";
           occupation.html("");
-          occupation.selectpicker('refresh');
+          //occupation.selectpicker('refresh');
 
           $.each(response.data, function(idx, item) {
 
@@ -795,7 +795,7 @@ $(document).ready(function() {
           });
 
           occupation.append(html);
-          occupation.selectpicker('refresh');
+          //occupation.selectpicker('refresh');
 
           swal.close();
 
