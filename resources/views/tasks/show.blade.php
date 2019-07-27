@@ -234,38 +234,7 @@
 							<div class="card-header">
 									<h5><i class="icofont icofont-tasks-alt m-r-5"></i>{{ $task->name }}</h5>
 
-                  <div class="dropdown-secondary dropdown  f-right">
-                      <button class="btn btn-sm btn-primary dropdown-toggle waves-light" type="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções</button>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-
-                          @if($task->status_id != 3 && $task->status_id != 4)
-                              <a class="dropdown-item waves-light waves-effect active" href="{{ route('tasks.edit', ['id' => $task->uuid]) }}"><i class="fa fa-edit"></i> Editar</a>
-                          @endif
-
-                          @if($task->status_id == 2)
-                              <a class="dropdown-item waves-light waves-effect" href="?status=3"> <i class="fa fa-stop"></i> Finalizar</a>
-
-                          @elseif($task->status_id == 1)
-                              <li>
-  																@if(($task->mapper && $task->mapper->active == 1) || !$task->mapper)
-                                      <a class="dropdown-item waves-light waves-effect" href="?status=2"><i class="fa fa-play"></i> Iniciar</a>
-  																@else
-                                      <a disabled class="btn-task-start-blocked dropdown-item waves-light waves-effect"><i class="fa fa-play"></i> Iniciar</a>
-  																@endif
-                              </li>
-  														@if(($task->mapper) && $task->mapper->active != 1)
-                                  <a class="dropdown-item waves-light waves-effect" href="{{ route('mapping', ['id' => $task->mapper->id]) }}">Mapeamento</a>
-                              @endif
-                          @endif
-                          @if($task->status_id != 3 && $task->status_id != 4)
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item waves-light waves-effect" href="?cancel=1">Cancelar</a>
-                          @endif
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item waves-light waves-effect" href="?duplicate=1"><i class="fas fa-file"></i> Duplicar</a>
-
-                      </div>
-                  </div>
+                  <span class="label label-lg label-{{\App\Helpers\Helper::getStatusCollor($task->status->name)}} f-right"> {{ $task->status->name }} </span></a>
 
 							</div>
 							<div class="card-block">
@@ -278,9 +247,31 @@
 							</div>
 							<div class="card-footer">
 									<div class="f-left">
-											<span class=" txt-primary"> <i class="icofont icofont-chart-line-alt"></i>Status:</span>&nbsp;
-											<span class="label label-bg label-{{\App\Helpers\Helper::getStatusCollor($task->status->name)}} f-right"> {{ $task->status->name }} </span></a>
-									</div>
+
+                      <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Situação</label>
+                          <div class="col-sm-8">
+                              <select id="select-status" name="select" class="form-control"
+                              data-route="{{ route('task_status', $task->uuid) }}">
+                                @foreach(\App\Helpers\Helper::taskStatus() as $status)
+                                  <option value="{{$status->id}}" {{ $task->status_id == $status->id ? 'selected' : '' }}>{{$status->name}}</option>
+                                @endforeach
+                              </select>
+                          </div>
+                      </div>
+
+                  </div>
+
+                  <div class="f-right d-flex">
+
+                    <div class="btn-group " role="group">
+
+                        <a href="{{ route('tasks.edit', ['id' => $task->uuid]) }}" class="btn btn-primary btn-sm waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar"><i class="icofont icofont-edit"></i>Editar</a>
+                        <a href="#!" data-route="{{ route('task_duplicate', $task->uuid) }}" class="btn btn-danger btn-sm waves-effect waves-light btn-duplicate-task" data-toggle="tooltip" data-placement="top" title="" data-original-title="Duplicar"><i class="icofont icofont-copy"></i>Duplicar</a>
+
+                    </div>
+
+                  </div>
 
 							</div>
 					</div>
@@ -313,9 +304,9 @@
                         <form method="post" action="{{route('task_message_store')}}">
                           {{csrf_field()}}
                           <input name="task" type="hidden" value="{{$task->uuid}}"/>
-                          <textarea name="message" class="form-control" required placeholder="Insira um Comentário"></textarea>
+                          <textarea rows="5" name="message" class="form-control" required placeholder="Insira um Comentário"></textarea>
                           <br/>
-                          <button class="btn btn-primary">Enviar</button>
+                          <button class="btn btn-success">Enviar</button>
                         </form>
 
 											</div>
@@ -334,224 +325,153 @@
 @endsection @section('scripts')
 
 <script>
+
 	$(document).ready(function() {
 
-				var options = {
-						"start": true,
-						"fg_width": 0.05,
-            "time": {
-            "Days": {
-                "text": "Days",
-                "color": "#FFCC66",
-                "show": false
-            },
-            "Hours": {
-                "text": "Hora(s)",
-                "color": "#1ab394",
-                "show": true
-            },
-            "Minutes": {
-                "text": "Minutos",
-                "color": "#1ab394",
-                "show": true
-            },
-            "Seconds": {
-                "text": "Segundos",
-                "color": "#1ab394",
-                "show": true
-            }
-					}};
+        $("#select-status").change(function() {
 
-        $(".example").TimeCircles(options).addListener(countdownComplete);
+          var self = $(this);
+          var statusValue = self.val();
+          const ipAPI = self.data('route');
 
-				var pausedTask = $('#pausedTask').val();
+          if(statusValue == 5) {
 
-				if(pausedTask > 0) {
-					$(".example").TimeCircles(options).stop();
-				}
+            swal({
+  							title: 'Informe o motivo para pausar a tarefa.',
+  							customClass: 'bounceInLeft',
+  							input: 'textarea',
+  							confirmButtonText: 'Enviar',
+  							showLoaderOnConfirm: true,
+  							showCancelButton: true,
+  							preConfirm: (text) => {
+  								return new Promise((resolve) => {
+  									setTimeout(() => {
+  										if (text === '') {
+  											swal.showValidationError(
+  												'Por Favor Informe o motivo do atraso.'
+  											)
+  										}
+  										resolve()
+  									}, 1000)
+  								})
+  							},
+  							allowOutsideClick: () => false
+  						}).then((result) => {
+  							if (result.value) {
 
-        function countdownComplete(unit, value, total){
-            if(total<=0){
-                $(".example").TimeCircles().destroy();
-                $(this).fadeOut('slow').replaceWith("<div class='alert alert-danger'>Tempo Expirado!</div>");
+  								swal({
+  									type: 'success',
+  									title: 'O motivo foi enviado!',
+  									html: 'Motivo: ' + result.value,
+  									preConfirm: () => {
+  										 return $.ajax({
+                         headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                          },
+                         url: ipAPI,
+                         type: 'POST',
+                         dataType: 'json',
+                         data: {
+                           message : result.value,
+                           status: statusValue
+                         }
+                       }).done(function(data) {
 
-								if($('#motivoEnviado').val() > 0) {
-										return false;
-								}
+                         window.location.reload();
 
-								if($('#task_user').val() != $('#session_user').val()) {
-									return false;
-								}
+                       });
 
-								swal({
-									  title: 'Informe o motivo do Atraso',
-										customClass: 'bounceInLeft',
-									  input: 'textarea',
-									  confirmButtonText: 'Enviar',
-									  showLoaderOnConfirm: true,
-									  preConfirm: (text) => {
-									    return new Promise((resolve) => {
-									      setTimeout(() => {
-									        if (text === '') {
-									          swal.showValidationError(
-									            'Por Favor Informe o motivo do atraso.'
-									          )
-									        }
-									        resolve()
-									      }, 2000)
-									    })
-									  },
-									  allowOutsideClick: () => false
-									}).then((result) => {
-									  if (result.value) {
+  									 }
+  								})
+  							}
+  						})
 
-											const ipAPI = $('#urlAPI').val();
+          } else {
 
-									    swal({
-									      type: 'success',
-									      title: 'O motivo foi enviado!',
-									      html: 'Motivo: ' + result.value,
-												preConfirm: () => {
-													 return $.post(ipAPI, { message : result.value, _token : "{{ csrf_token() }}" }).then((data) => {
-														 setTimeout(function() {
-																 toastr.options = {
-																		 closeButton: true,
-																		 progressBar: true,
-																		 showMethod: 'slideDown',
-																		 timeOut: 4000
-																 };
-																 toastr.success('Mapeador de Processos', data.message);
+                window.swal({
+                  title: 'Em progresso...',
+                  text: 'Atualizando status da tarefa.',
+                  type: 'success',
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+                });
 
-																 setTimeout(function() {
-																	 	window.location.reload();
-																 }, 4000)
+                $.ajax({
+                  headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                   },
+                  url: ipAPI,
+                  type: 'POST',
+                  dataType: 'json',
+                  data: {
+                    status: statusValue
+                  }
+                }).done(function(data) {
 
-														 }, 1300);
-													 })
-												 }
-									    })
-									  }
-									})
-            }
+                  window.location.reload();
 
-            if(value>(total/1000)){
-                $('.example').css({
-                    'background-color' : '#fff'
-                })
-            }
-        }
+                });
+
+          }
 
         });
 
-				$(".btn-pause").click(function() {
-					swal({
-							title: 'Informe o motivo para pausar a tarefa.',
-							customClass: 'bounceInLeft',
-							input: 'textarea',
-							confirmButtonText: 'Enviar',
-							showLoaderOnConfirm: true,
-							showCancelButton: true,
-							preConfirm: (text) => {
-								return new Promise((resolve) => {
-									setTimeout(() => {
-										if (text === '') {
-											swal.showValidationError(
-												'Por Favor Informe o motivo do atraso.'
-											)
-										}
-										resolve()
-									}, 2000)
-								})
-							},
-							allowOutsideClick: () => false
-						}).then((result) => {
-							if (result.value) {
+        $(".btn-duplicate-task").click(function(e) {
+            var self = $(this);
 
-								const ipAPI = $('#urlTaskPause').val();
+            swal({
+              title: 'Duplicar tarefa?',
+              text: "Deseja duplicar esta tarefa?",
+              showCancelButton: true,
+              confirmButtonColor: '#0ac282',
+              cancelButtonColor: '#D46A6A',
+              confirmButtonText: 'Sim',
+              cancelButtonText: 'Não'
+              }).then((result) => {
+              if (result.value) {
 
-								swal({
-									type: 'success',
-									title: 'O motivo foi enviado!',
-									html: 'Motivo: ' + result.value,
-									preConfirm: () => {
-										 return $.post(ipAPI, { id: {{ $task->id }}, message : result.value, _token : "{{ csrf_token() }}" }).then((data) => {
-											 setTimeout(function() {
-													 toastr.options = {
-															 closeButton: true,
-															 progressBar: true,
-															 showMethod: 'slideDown',
-															 timeOut: 4000
-													 };
-													 toastr.success('Mapeador de Processos', data.message);
+                e.preventDefault();
 
-													 setTimeout(function() {
-															window.location.reload();
-													 }, 2000)
+                window.swal({
+                  title: 'Em progresso...',
+                  text: 'Aguarde enquanto a requisição é processada.',
+                  type: 'success',
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+                });
 
-											 }, 1300);
-										 })
-									 }
-								})
-							}
-						})
-				});
+                $.ajax({
+                  headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                   },
+                  url: self.data('route'),
+                  type: 'POST',
+                  dataType: 'json',
+                  data: {}
+                }).done(function(data) {
 
-				$(".btn-unpause").click(function() {
-					swal({
-						  title: 'Deseja Continuar a tarefa?',
-						  type: 'warning',
-						  showCancelButton: true,
-						  confirmButtonColor: '#3085d6',
-						  cancelButtonColor: '#d33',
-						  confirmButtonText: 'Sim',
-						  cancelButtonText: 'Cancelar',
-						  confirmButtonClass: 'btn btn-success',
-						  cancelButtonClass: 'btn btn-danger',
-						  buttonsStyling: true,
-						  reverseButtons: true
-						}).then((result) => {
-						  if (result.value) {
+                  if(data.success) {
 
-								const urlAPITaskStart = $('#urlTaskStart').val();
+                    notify(data.message, 'inverse');
 
-								$.post(urlAPITaskStart, { id: {{ $task->id }}, message : result.value, _token : "{{ csrf_token() }}" }).then((data) => {
-									setTimeout(function() {
-											toastr.options = {
-													closeButton: true,
-													progressBar: true,
-													showMethod: 'slideDown',
-													timeOut: 4000
-											};
-											toastr.success('Mapeador de Processos', data.message);
+                    window.location.href = data.route;
 
-											setTimeout(function() {
-												 window.location.reload();
-											}, 2000)
+                  } else {
 
-									}, 1300);
-								})
+                    swal.close();
+
+                    notify(data.message, 'danger');
+
+                  }
 
 
-						    swal(
-						      'OK!',
-						      'Agora é só continuar na tarefa.',
-						      'success'
-						    )
-						  // result.dismiss can be 'cancel', 'overlay',
-						  // 'close', and 'timer'
-						  }
-						})
-				});
 
-				$("#btn-task-start-blocked").click(function() {
-					toastr.options = {
-							closeButton: true,
-							progressBar: true,
-							showMethod: 'slideDown',
-							timeOut: 6000
-					};
-					toastr.warning('Esta tarefa Pertence a um mapeamento, deve primeiro iniciá-lo.', 'Alerta');
-				});
+                });
+              }
+            });
+        });
+
+  });
 
 </script>
 

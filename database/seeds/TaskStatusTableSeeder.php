@@ -12,7 +12,7 @@ class TaskStatusTableSeeder extends Seeder
      */
     public function run()
     {
-        $itens = ['Pendente', 'Em Andamento', 'Finalizado', 'Cancelado'];
+        $itens = ['Pendente', 'Em Andamento', 'Finalizado', 'Cancelado', 'Em Pausa'];
 
         foreach ($itens as $key => $item) {
             Status::create([

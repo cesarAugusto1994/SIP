@@ -8,11 +8,11 @@ use Emadadly\LaravelUuid\Uuids;
 class Log extends Model
 {
     use Uuids;
-    
+
     protected $table = 'task_logs';
 
     protected $fillable = [
-        'task_id', 'user_id', 'message',
+        'task_id', 'user_id', 'message', 'status_id',
     ];
 
     public function user()

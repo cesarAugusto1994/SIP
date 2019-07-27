@@ -78,7 +78,12 @@ Route::middleware('auth')->middleware('status')->group(function () {
     //Route::post('task/store', 'TaskController@store')->name('task_store');
     //Route::post('task/{id}/update', 'TaskController@update')->name('task_update');
     Route::post('task/{id}/pause', 'TaskController@pause')->name('task_pause');
+
     Route::post('task/{id}/start', 'TaskController@unPause')->name('task_start');
+
+    Route::post('task/{id}/status', 'TaskController@status')->name('task_status');
+
+    Route::post('task/{id}/duplicate', 'TaskController@duplicate')->name('task_duplicate');
 
     Route::post('task/message/store', 'TaskMessagesController@store')->name('task_message_store');
     Route::post('task/{id}/delay', 'TaskController@delay')->name('task_delay');

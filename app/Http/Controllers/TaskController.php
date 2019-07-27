@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\{Ticket, Task, Department, Mapper};
 use App\Models\Ticket\Status\Log as TicketLog;
-use App\Models\Task\{Message, Log, Delay, Pause, Archive as FileUpload};
+use App\Models\Task\{Message, Status, Log, Delay, Pause, Archive as FileUpload};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Request as Req;
@@ -195,7 +195,8 @@ class TaskController extends Controller
         Log::create([
           'task_id' => $task->id,
           'user_id' => Auth::user()->id,
-          'message' => 'Criou a tarefa ' . $task->name
+          'message' => 'Criou a tarefa ' . $task->name,
+          'status_id' => Task::STATUS_PENDENTE
         ]);
 
         //flash('Nova tarefa adicionada com sucesso.')->success()->important();
@@ -437,14 +438,94 @@ class TaskController extends Controller
     {
         $log = new Log();
         $log->task_id = $task->id;
+        $log->status_id = $task->status_id;
         $log->user_id = Auth::user()->id;
         $log->message = $message;
         $log->save();
     }
 
-    public function pause($id)
+    public function status($id, Request $request)
     {
-        $task = Task::find($id);
+        $task = Task::uuid($id);
+
+        $status = Status::find($request->get('status'));
+
+        $motive = "";
+
+        if($request->has('message')) {
+            $motive = $request->get('message');
+        }
+
+        switch ($status->id) {
+          case 1:
+            $message = "Adicionou uma nova tarefa";
+            break;
+          case 2:
+            $message = "Atualizou o status da tarefa";
+            break;
+          case 3:
+            $message = "Finalizou a tarefa";
+            break;
+          case 4:
+            $message = "Cancelou a tarefa";
+            break;
+          case 5:
+            $message = "Pausou a tarefa, motivo: " . $motive;
+            break;
+        }
+
+        Log::create([
+          'status_id' => $status->id,
+          'task_id' => $task->id,
+          'user_id' => Auth::user()->id,
+          'message' => $message
+        ]);
+
+        $data['status_id'] = $status->id;
+
+        $task->update($data);
+
+        return response()->json([
+          'success' => true,
+          'message' => 'Status da tarefa atualizado com sucesso.'
+        ]);
+    }
+
+    public function duplicate($id, Request $request)
+    {
+        $task = Task::uuid($id);
+
+        $user = Auth::user()->isAdmin() ? $task->user_id : Auth::user()->id;
+
+        $data = [
+            'name' => $task->name,
+            'description' => $task->description,
+            'user_id' => $user,
+            'frequency' => $task->frequency,
+            'time' => $task->time,
+            'severity' => $task->severity,
+            'urgency' => $task->urgency,
+            'trend' => $task->trend,
+            'status_id' => Task::STATUS_PENDENTE,
+            'sponsor_id' => $user,
+            'requester_id' => $user,
+        ];
+
+        $newTask = Task::create($data);
+
+        $this->log($task, 'Duplicou a tarefa ' . $task->name);
+        $this->log($newTask, 'Criou a tarefa ' . $newTask->name);
+
+        return response()->json([
+          'success' => true,
+          'message' => 'Uma nova tarefa foi criada.',
+          'route' => route('tasks.show', ['id' => $newTask->uuid])
+        ]);
+    }
+
+    public function pause($id, Request $request)
+    {
+        $task = Task::uuid($id);
 
         $taskPause = new TaskPause();
         $taskPause->task_id = $task->id;

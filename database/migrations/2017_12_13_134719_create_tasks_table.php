@@ -81,6 +81,8 @@ class CreateTasksTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks');
+            $table->integer('status_id')->unsigned();
+            $table->foreign('status_id')->references('id')->on('task_status');
             $table->text('message');
             $table->uuid('uuid')->unique();
             $table->timestamps();
