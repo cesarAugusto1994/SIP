@@ -61,6 +61,11 @@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.print.css') }}" media='print'>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css" integrity="sha256-SMGbWcp5wJOVXYlZJyAXqoVWaE/vgFA5xfrH3i/jVw0=" crossorigin="anonymous" />
+
     @yield('css')
 
     <style>
@@ -246,6 +251,12 @@
 <script src="{{ asset('adminty\components\countdown\js\jquery.countdown.js') }}"></script>
 <script src="{{ asset('adminty\pages\counter\task-detail.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('adminty\components\moment\js\moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\components\fullcalendar\js\fullcalendar.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.0/locale/pt-br.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
 </script>
@@ -256,7 +267,22 @@
 
 <script>
 
+  function ignoreTour(url) {
+
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          url: url,
+          dataType: 'json',
+      })
+
+  }
+
   $(document).ready(function() {
+
+    $(".datetimepicker").datetimepicker();
 
     $('.summernote').summernote({
           placeholder: 'Digite sua mensagem',
@@ -292,6 +318,208 @@
       }
 
   });
+
+  let $calendar = $('#calendar');
+
+  $calendar.fullCalendar({
+      height: 380,
+      contentHeight: 590,
+      views: {
+        listDay: {
+          buttonText: 'list day',
+          titleFormat: "dddd, DD MMMM YYYY",
+          columnFormat: "",
+          timeFormat: "HH:mm"
+        },
+
+        listWeek: {
+          buttonText: 'list week',
+          columnFormat: "ddd D",
+          timeFormat: "HH:mm"
+        },
+
+        listMonth: {
+          buttonText: 'list month',
+          titleFormat: "MMMM YYYY",
+          timeFormat: "HH:mm"
+        },
+
+        month: {
+          buttonText: 'month',
+          titleFormat: 'MMMM YYYY',
+          columnFormat: "ddd",
+          timeFormat: "HH:mm"
+        },
+
+        agendaWeek: {
+          buttonText: 'agendaWeek',
+          columnFormat: "ddd D",
+          timeFormat: "HH:mm"
+        },
+
+        agendaDay: {
+          buttonText: 'agendaDay',
+          titleFormat: 'dddd, DD MMMM YYYY',
+          columnFormat: "",
+          timeFormat: "HH:mm"
+        },
+      },
+      lang: 'pt-br',
+      defaultView: 'month',
+      eventBorderColor: "#de1f1f",
+      eventColor: "#AC1E23",
+      slotLabelFormat: 'HH:mm',
+      eventLimitText: 'Compromissos',
+      borderColor: '#FC6180',
+      backgroundColor: '#FC6180',
+      droppable: true,
+      businessHours: true,
+      editable: true,
+      allDaySlot: true,
+      eventLimit: false,
+      minTime: '06:00:00',
+      maxTime: '22:00:00',
+      header: {
+          left: 'prev,next,today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth,listWeek,listDay'
+      },
+      navLinks: true,
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end, jsEvent, view) {
+          var view = $('.calendar').fullCalendar('getView');
+          $("#sechedule-modal").modal('show');
+          $("#start").val(start.format('DD/MM/YYYY HH:mm'));
+          $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+      },
+      eventClick: function(event, element, view) {
+          //popularModalAndShow(event);
+
+          window.swal({
+            title: 'Em progresso...',
+            text: 'Aguarde enquanto carregamos o compromisso.',
+            type: 'success',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+
+          window.location.href = event.route;
+      },
+
+      dayClick: function(date, jsEvent, view) {
+
+          jsEvent.preventDefault();
+
+          setTimeout(function() {
+
+              $("#formConsultaModal").prop('action', $("#consultas-store").val());
+
+          }, 100);
+
+      },
+      events: $("#schedule-json").val(),
+      //color: 'black', // an option!
+      //textColor: 'yellow', // an option!
+      //When u drop an event in the calendar do the following:
+      eventDrop: function(event, delta, revertFunc) {
+          //console.log(event);
+          popularModal(event);
+      },
+      //When u resize an event in the calendar do the following:
+      eventResize: function(event, delta, revertFunc) {
+          //console.log(event);
+          popularModal(event);
+      },
+      eventRender: function(event, element) {
+          $(element).tooltip({
+              title: event.title
+          });
+      },
+      ignoreTimezone: false,
+      allDayText: 'Dia Inteiro',
+      monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+      dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      axisFormat: 'HH:mm',
+      buttonText: {
+          prev: "<",
+          next: ">",
+          prevYear: "Ano anterior",
+          nextYear: "Proximo ano",
+          today: "Hoje",
+          month: "Mês",
+          week: "Semana",
+          day: "Dia",
+          listMonth: "Lista Mensal",
+          listWeek: "Lista Semanal",
+          listDay: "Lista Diária"
+      }
+
+  });
+
+  function popularModal(event) {
+
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          url: event.update,
+          data: {
+            id: event.id,
+            uuid: event.uuid,
+            title: event.title,
+            description: event.description,
+            start: event.start.format('DD/MM/YYYY HH:mm'),
+            end: event.end.format('DD/MM/YYYY HH:mm'),
+            _method: 'PUT',
+          },
+          dataType: 'json',
+          success: function(data) {
+              //console.log(data);
+              //openSwalScreenProgress();
+          },
+          error: function(data) {
+              //alert(data.message);
+              //openSwalMessage('Erro ao Processar Requisição', data.message);
+          }
+      })
+
+
+  }
+
+  function popularModalAndShow(event) {
+      $("#formConsultaModal").prop('action', '/consults/' + event.id + '/update');
+
+      $("#cadastra-consulta-modal").modal('show');
+      $("#cadastra-consulta-modal").find('#title').val(event.title);
+
+      $("#consulta-inicio").val(event.start.format('DD/MM/YYYY HH:mm'));
+      $("#consulta-fim").val(event.end.format('DD/MM/YYYY HH:mm'));
+
+      $('#consulta-status option')
+          .removeAttr('selected')
+          .filter('[value="' + event.status + '"]')
+          .attr('selected', true)
+
+      $('#consulta-paciente').selectpicker('val', event.paciente);
+
+      $("#consulta-notas").val(event.notas);
+
+      if (event.status_id == 3 || event.status_id == 4) {
+          $("#btnConsulta").hide();
+          $("#formConsultaModal input, select, textarea").attr('disabled', true);
+      } else if (event.status_id == 2) {
+          $("#btnConsulta").html('Editar Consulta').show();
+          $("#formConsultaModal input, select, textarea").attr('disabled', false);
+      } else {
+          $("#btnConsulta").show();
+          $("#formConsultaModal input, select, textarea").attr('disabled', false);
+      }
+
+  }
 
 </script>
 

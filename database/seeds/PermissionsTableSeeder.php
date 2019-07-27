@@ -40,7 +40,8 @@ class PermissionsTableSeeder extends Seeder
             'Chat',
             'Ramais e E-mails',
             'Painel de Tarefas',
-            'Mapeamentos'
+            'Mapeamentos',
+            'Agenda'
           ])) {
             continue;
           }

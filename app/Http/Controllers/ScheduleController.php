@@ -1,0 +1,223 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Schedule;
+use App\Models\Schedule\Guest;
+use App\Models\Task;
+use App\Models\Task\Log;
+use DateTime;
+
+class ScheduleController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('schedules.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        $start = DateTime::createFromFormat('d/m/Y H:i', $data['start']);
+        $end = DateTime::createFromFormat('d/m/Y H:i', $data['end']);
+
+        $dateDiff = $end->diff($start);
+
+        $timeTask = $dateDiff->i;
+
+        if($dateDiff->d > 0) {
+            $timeTask = $dateDiff->d;
+        } elseif ($dateDiff->h > 0) {
+            $timeTask = $dateDiff->h;
+
+            if($dateDiff->h > 0) {
+              $timeTask++;
+            }
+
+        }
+
+        $schedule = Schedule::create([
+          'title' => $data['title'],
+          'description' => $data['description'],
+          'type_id' => $data['event_type'],
+          'user_id' => $user->id,
+          'start' => $start,
+          'end' => $end,
+        ]);
+
+        if($request->has('do_task')) {
+
+          $data = [
+              'name' => $schedule->title,
+              'description' => $schedule->description,
+              'user_id' => $user->id,
+              'time' => $timeTask,
+              'severity' => 1,
+              'urgency' => 1,
+              'trend' => 1,
+              'status_id' => Task::STATUS_PENDENTE,
+              'sponsor_id' => $user->id,
+              'schedule_id' => $schedule->id,
+          ];
+
+          $task = Task::create($data);
+
+          Log::create([
+            'task_id' => $task->id,
+            'status_id' => $task->status_id,
+            'user_id' => $user->id,
+            'message' => 'Tarefa Criada através da de agendamento',
+          ]);
+
+        }
+
+        if($request->has('guests')) {
+
+          foreach ($request->get('guests') as $key => $guest) {
+              Guest::create([
+                'schedule_id' => $schedule->id,
+                'user_id' => $guest
+              ]);
+          }
+
+        }
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Novo compromissio adicionado.'
+        ]);
+
+        return redirect()->route('schedules.index');
+    }
+
+    public function schedule(Request $request)
+    {
+        $user = auth()->user();
+
+        $cardCollor = "#1ab394";
+        $editable = false;
+
+        $result = $user->schedules->map(function($schedule) use($cardCollor, $editable) {
+
+            switch($schedule->type_id) {
+              case 1:
+                $cardCollor = "#23c6c8";
+                $editable = true;
+              break;
+              case 2:
+                $cardCollor = "#f8ac59";
+                $editable = true;
+              break;
+              case 3:
+                $cardCollor = "#23c6c8";
+              break;
+              case 4:
+                $cardCollor = "#ed5565";
+              break;
+            }
+
+            return [
+                'id' => $schedule->id,
+                'uuid' => $schedule->uuid,
+                'type_id' => $schedule->type_id,
+                'title' => $schedule->title,
+                'description' => $schedule->description,
+                'start' => $schedule->start ? $schedule->start->format('Y-m-d H:i') : null,
+                'end' => $schedule->end ? $schedule->end->format('Y-m-d H:i') : null,
+                'color' => $cardCollor,
+                'editable' => $editable,
+                'route' => route('schedules.show', $schedule->uuid),
+                'update' => route('schedules.update', $schedule->uuid)
+            ];
+
+        });
+
+        return json_encode($result);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $schedule = Schedule::uuid($id);
+
+        $start = DateTime::createFromFormat('d/m/Y H:i', $data['start']);
+        $end = DateTime::createFromFormat('d/m/Y H:i', $data['end']);
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        $schedule->update($data);
+
+        return response()->json([
+          'success' => true,
+          'message' => 'Compromisso atualizado com sucesso.'
+        ]);
+
+        dd($schedule, $data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

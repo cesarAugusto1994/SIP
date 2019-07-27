@@ -231,6 +231,9 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::post('folders/{id}/user/{user}/permission/{type}/change', 'FoldersController@changePermission')->name('folder_user_permission_change');
 
     Route::resource('units', 'UnitsController');
+    Route::resource('schedules', 'ScheduleController');
+
+    Route::get('schedule/list', 'ScheduleController@schedule')->name('schedule_list');
 
   });
 

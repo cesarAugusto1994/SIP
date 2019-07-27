@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Task\Log');
     }
 
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Schedule');
+    }
+
     public function messageBoard()
     {
         return $this->hasMany('App\Models\MessageBoard\User');

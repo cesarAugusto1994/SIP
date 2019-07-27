@@ -47,6 +47,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Agenda',
+            'slug' => str_slug('Agenda'),
+            'description' => 'Agenda',
+            'parent' => str_slug('Modulos'),
+          ],
+
+          [
             'name' => 'Chat',
             'slug' => str_slug('Chat'),
             'description' => 'Chat',

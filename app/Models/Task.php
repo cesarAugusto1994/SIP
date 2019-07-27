@@ -19,7 +19,7 @@ class Task extends Model
 
     protected $fillable = [
         'name', 'description', 'user_id',
-        'frequency', 'time',
+        'frequency', 'time', 'schedule_id',
         'client_id', 'ticket_id',
         'severity', 'urgency', 'trend', 'sponsor_id',
         'status_id', 'requester_id', 'active', 'time_type'
@@ -27,7 +27,7 @@ class Task extends Model
 
     protected static $logAttributes = [
       'name', 'description', 'user_id',
-      'frequency', 'time',
+      'frequency', 'time', 'schedule_id',
       'client_id', 'ticket_id',
       'severity', 'urgency', 'trend', 'sponsor_id',
       'status_id', 'requester_id', 'active', 'time_type'
@@ -103,5 +103,16 @@ class Task extends Model
     public function files()
     {
         return $this->hasMany('App\Models\Task\Archive');
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Tarefa atualizada";
+        } elseif ($eventName == 'deleted') {
+            return "Tarefa removida";
+        }
+
+        return "Tarefa adicionada";
     }
 }

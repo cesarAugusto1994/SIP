@@ -87,13 +87,22 @@ class MenuTableSeeder extends Seeder
                 'icon' => 'fas fa-boxes',
               ],
 
+          [
+            'title' => 'Tarefas',
+            'route' => null,
+            'permission' => 'view.tarefas',
+            'description' => 'Tarefas',
+            'parent' => null,
+            'icon' => 'fas fa-tasks',
+          ],
+
 
           [
             'title' => 'Painel de Tarefas',
             'route' => 'boards',
             'permission' => 'view.painel.de.tarefas',
             'description' => 'Painel de Tarefas',
-            'parent' => 'Painel de Tarefas',
+            'parent' => 'Tarefas',
             'icon' => 'feather icon-check-square',
           ],
 
@@ -102,7 +111,7 @@ class MenuTableSeeder extends Seeder
             'route' => 'mappings',
             'permission' => 'view.mapeamentos',
             'description' => 'Mapeamentos',
-            'parent' => null,
+            'parent' => 'Tarefas',
             'icon' => 'far fa-clock',
           ],
 
@@ -111,7 +120,7 @@ class MenuTableSeeder extends Seeder
             'route' => 'tasks.index',
             'permission' => 'view.tarefas',
             'description' => 'Tarefas',
-            'parent' => 'Gestão de Tarefas',
+            'parent' => 'Tarefas',
             'icon' => 'fas fa-tasks',
           ],
 
@@ -131,6 +140,15 @@ class MenuTableSeeder extends Seeder
             'description' => 'Lista de Chamados',
             'parent' => null,
             'icon' => 'fas fa-ticket-alt',
+          ],
+
+          [
+            'title' => 'Agenda',
+            'route' => 'schedules.index',
+            'permission' => 'view.agenda',
+            'description' => 'Agenda',
+            'parent' => null,
+            'icon' => 'far fa-calendar-alt',
           ],
 
 

@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DeliveryOrderStatusesTableSeeder::class);
         $this->call(DeliveryDocumentTypesTableSeeder::class);
         $this->call(TicketTypesTableSeeder::class);
-        //$this->call(TicketsTableSeeder::class);
+        $this->call(ScheduleTypesTableSeeder::class);
         //$this->call(MapperStatusTableSeeder::class);
         //$this->call(ClientsTableSeeder::class);
         $this->call(MessageTypesTableSeeder::class);

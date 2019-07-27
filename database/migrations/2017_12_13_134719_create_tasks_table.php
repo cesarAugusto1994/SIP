@@ -37,6 +37,7 @@ class CreateTasksTable extends Migration
             $table->enum('trend', [1,2,3,4,5])->default(1);
             $table->integer('ticket_id')->nullable();
             $table->integer('requester_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('mapper_id')->nullable();
 

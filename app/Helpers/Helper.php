@@ -13,6 +13,7 @@ use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
 use App\Models\Unit;
+use App\Models\Schedule\Type as ScheduleType;
 use App\Models\{Message, Folder, Ticket, Task};
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
@@ -293,6 +294,20 @@ class Helper
         }
 
         $data = Status::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function scheduleTypes()
+    {
+        $key = 'schedule-types';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ScheduleType::all();
 
         self::set($key, $data);
         return self::get($key);
@@ -605,6 +620,14 @@ class Helper
           if($item) {
             $route = route('courses.edit', $item->uuid);
             $html = "<a href=".$route.">".$item->title."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Task') {
+
+          if($item) {
+            $route = route('tasks.show', $item->uuid);
+            $html = "<a href=".$route.">".$item->name."</a>";
           }
         }
 
