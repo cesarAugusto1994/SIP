@@ -1168,7 +1168,7 @@ $(document).ready(function() {
 
     var notificationsWrapper   = $('.notification-list');
     var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
-    var notificationsCountElem = notificationsToggle.find('.noti-icon-badge');
+    var notificationsCountElem = notificationsWrapper.find('.noti-icon-badge');
     var notificationsCount     = parseInt(notificationsCountElem.data('count'));
     var notifications          = notificationsWrapper.find('.slimscroll span');
 
@@ -1177,7 +1177,7 @@ $(document).ready(function() {
     }
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
 
     var pusher = new Pusher('fbc40aa0ff741e4532da', {
       encrypted: true,

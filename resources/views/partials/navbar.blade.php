@@ -43,7 +43,7 @@
                     <div class="dropdown-primary dropdown notification-list">
                         <div class="dropdown-toggle" data-toggle="dropdown">
                             <i class="feather icon-bell"></i>
-                            <span class="badge bg-c-pink noti-icon-badge" data-count="{{ $totalNotifications }}">{{ $totalNotifications }}</span>
+                            <span class="badge bg-c-pink noti-icon-badge notif-count" data-count="{{ $totalNotifications }}">{{ $totalNotifications }}</span> 
                         </div>
                         <ul class="show-notification notification-view dropdown-menu  slimscroll" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                             <li>

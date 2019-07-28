@@ -163,13 +163,16 @@ class TicketsController extends Controller
                 $department = $department->department;
                 foreach ($department->people as $key => $person) {
                     $usersCollection->push($person->user);
-                    broadcast(new Notifications($person->user, 'Novo Chamado aberto por ' . $user->person->name))->toOthers();
                 }
             }
           }
         }
 
         Notification::send($usersCollection, new NewTicket($ticket));
+
+        foreach ($usersCollection as $key => $userA) {
+            broadcast(new Notifications($userA, 'Novo Chamado aberto por ' . $user->person->name))->toOthers();
+        }
 
         return redirect()->route('tickets.index');
     }
