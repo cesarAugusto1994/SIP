@@ -631,6 +631,14 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Schedule') {
+
+          if($item) {
+            $route = route('schedules.show', $item->uuid);
+            $html = "<a href=".$route.">".$item->title."</a>";
+          }
+        }
+
         if($model == 'App\User') {
 
           if($item) {

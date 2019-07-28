@@ -33,4 +33,15 @@ class Schedule extends Model
     {
         return $this->hasMany('App\Models\Task', 'schedule_id');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Compromisso atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Compromisso removido";
+        }
+
+        return "Compromisso adicionado";
+    }
 }
