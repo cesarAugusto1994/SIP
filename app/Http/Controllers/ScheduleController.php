@@ -8,6 +8,7 @@ use App\Models\Schedule\Guest;
 use App\Models\Task;
 use App\Models\Task\Log;
 use DateTime;
+use Auth;
 
 class ScheduleController extends Controller
 {
@@ -167,7 +168,9 @@ class ScheduleController extends Controller
      */
     public function show($id)
     {
-        //
+        $schedule = Schedule::uuid($id);
+
+        return view('schedules.show', compact('schedule'));
     }
 
     /**
@@ -206,8 +209,6 @@ class ScheduleController extends Controller
           'success' => true,
           'message' => 'Compromisso atualizado com sucesso.'
         ]);
-
-        dd($schedule, $data);
     }
 
     /**
@@ -218,6 +219,32 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!Auth::user()->hasPermission('delete.agenda')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
+        try {
+
+          $schedule = Schedule::uuid($id);
+
+          $schedule->guests()->delete();
+
+          $route = route('schedules.index');
+
+          $schedule->delete();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Compromisso removido com sucesso.',
+            'route' => $route
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'route' => route('schedules.index')
+          ]);
+        }
     }
 }

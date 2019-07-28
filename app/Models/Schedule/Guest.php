@@ -14,4 +14,9 @@ class Guest extends Model
     protected $table = 'schedule_guests';
 
     protected $fillable = ['user_id', 'schedule_id'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
