@@ -11,6 +11,7 @@ use Notification;
 use Storage;
 use File;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
+use App\Events\Notifications;
 
 class TicketsController extends Controller
 {
@@ -162,6 +163,7 @@ class TicketsController extends Controller
                 $department = $department->department;
                 foreach ($department->people as $key => $person) {
                     $usersCollection->push($person->user);
+                    broadcast(new Notifications($person->user, 'Novo Chamado aberto por ' . $user->person->name))->toOthers();
                 }
             }
           }
