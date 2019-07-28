@@ -63,6 +63,7 @@ class NewMessage extends Notification
         return [
           'message' => $this->message->user->person->name . ' adicionou um novo recado no Mural de Recados',
           'date' => $this->message->created_at,
+          'url' => route('notifications.index')
         ];
     }
 }

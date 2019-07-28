@@ -67,6 +67,7 @@ class ConcludedTicket extends Notification
         return [
           'message' => 'Seu chamado foi concluído. Agora verifique se a sua solicitação foi atendida como esperado, caso sim finalize o seu chamado.',
           'date' => $this->ticket->created_at,
+          'url' => route('notifications.index')
         ];
     }
 }

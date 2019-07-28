@@ -16,4 +16,9 @@ class Guest extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Schedule', 'user_id');
+    }
 }

@@ -27,7 +27,7 @@ class Notifications implements ShouldBroadcast
     public function __construct(User $user, $message)
     {
         $this->message = $message;
-        $this->time = $user->created_at;
+        $this->time = $user->created_at->format('d/m/Y H:i');
     }
 
     /**

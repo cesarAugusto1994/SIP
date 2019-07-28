@@ -12,7 +12,7 @@ class ScheduleTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $itens = ['Reunião', 'Visita à Cliente'];
+        $itens = ['Reunião', 'Visita à Cliente', 'Aniversário', 'Feriado', 'Férias'];
 
         foreach ($itens as $key => $value) {
             Type::create(['name' => $value]);

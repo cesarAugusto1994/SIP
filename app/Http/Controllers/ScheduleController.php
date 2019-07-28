@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Schedule\Guest;
+use App\Notifications\ScheduleInvite;
 use App\Models\Task;
 use App\Models\Task\Log;
+use App\Events\Notifications;
+use Notification;
 use DateTime;
+use App\User;
 use Auth;
 
 class ScheduleController extends Controller
@@ -19,6 +23,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+
         return view('schedules.index');
     }
 
@@ -106,6 +112,12 @@ class ScheduleController extends Controller
               ]);
           }
 
+          $users = User::whereIn('id', $request->get('guests'))->get();
+          Notification::send($users, new ScheduleInvite($schedule));
+
+          foreach ($users as $key => $user) {
+              broadcast(new Notifications($user, 'Você foi marcado em um compromisso'))->toOthers();
+          }
         }
 
         notify()->flash('Sucesso', 'success', [
@@ -122,42 +134,60 @@ class ScheduleController extends Controller
         $cardCollor = "#1ab394";
         $editable = false;
 
-        $result = $user->schedules->map(function($schedule) use($cardCollor, $editable) {
+        $data = [];
 
-            switch($schedule->type_id) {
-              case 1:
-                $cardCollor = "#23c6c8";
-                $editable = true;
-              break;
-              case 2:
-                $cardCollor = "#f8ac59";
-                $editable = true;
-              break;
-              case 3:
-                $cardCollor = "#23c6c8";
-              break;
-              case 4:
-                $cardCollor = "#ed5565";
-              break;
+        foreach ($user->schedules as $key => $schedule) {
+          switch($schedule->type_id) {
+            case 1:
+              $cardCollor = "#23c6c8";
+              $editable = true;
+            break;
+            case 2:
+              $cardCollor = "#f8ac59";
+              $editable = true;
+            break;
+            case 3:
+              $cardCollor = "#23c6c8";
+            break;
+            case 4:
+              $cardCollor = "#ed5565";
+            break;
+          }
+
+          $data[] = [
+              'id' => $schedule->id,
+              'uuid' => $schedule->uuid,
+              'type_id' => $schedule->type_id,
+              'title' => $schedule->title,
+              'description' => $schedule->description,
+              'start' => $schedule->start ? $schedule->start->format('Y-m-d H:i') : null,
+              'end' => $schedule->end ? $schedule->end->format('Y-m-d H:i') : null,
+              'color' => $cardCollor,
+              'editable' => $editable,
+              'route' => route('schedules.show', $schedule->uuid),
+              'update' => route('schedules.update', $schedule->uuid)
+          ];
+        }
+
+        foreach ($user->guest as $key => $guest) {
+            foreach ($guest->schedules as $keya => $schedule) {
+              $data[] = [
+                  'id' => $schedule->id,
+                  'uuid' => $schedule->uuid,
+                  'type_id' => $schedule->type_id,
+                  'title' => $schedule->title,
+                  'description' => $schedule->description,
+                  'start' => $schedule->start ? $schedule->start->format('Y-m-d H:i') : null,
+                  'end' => $schedule->end ? $schedule->end->format('Y-m-d H:i') : null,
+                  'color' => $cardCollor,
+                  'editable' => false,
+                  'route' => route('schedules.show', $schedule->uuid),
+                  'update' => route('schedules.update', $schedule->uuid)
+              ];
             }
+        }
 
-            return [
-                'id' => $schedule->id,
-                'uuid' => $schedule->uuid,
-                'type_id' => $schedule->type_id,
-                'title' => $schedule->title,
-                'description' => $schedule->description,
-                'start' => $schedule->start ? $schedule->start->format('Y-m-d H:i') : null,
-                'end' => $schedule->end ? $schedule->end->format('Y-m-d H:i') : null,
-                'color' => $cardCollor,
-                'editable' => $editable,
-                'route' => route('schedules.show', $schedule->uuid),
-                'update' => route('schedules.update', $schedule->uuid)
-            ];
-
-        });
-
-        return json_encode($result);
+        return json_encode($data);
     }
 
     /**

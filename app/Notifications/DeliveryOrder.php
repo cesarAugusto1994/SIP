@@ -77,6 +77,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
         return [
           'notification_id' => $notifiable->id,
           'mensagem' => 'Documento esta a caminho do destino.'
+          'url' => route('notifications.index')
         ];
     }
 }

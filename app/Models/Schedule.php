@@ -19,6 +19,11 @@ class Schedule extends Model
 
     protected $dates = ['start', 'end'];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function type()
     {
         return $this->belongsTo('App\Models\Schedule\Type');

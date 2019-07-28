@@ -62,6 +62,7 @@ class NewUser extends Notification
         return [
           'message' => $this->user->person->name .' foi adicionado a aplicação',
           'date' => $this->user->created_at,
+          'url' => route('notifications.index')
         ];
     }
 }

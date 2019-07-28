@@ -50,11 +50,12 @@
                                 <h6>Notificações</h6>
                             </li>
 
+                            <span>
                             @foreach($user->unreadNotifications as $notification)
 
                               <li>
                                   <div class="media">
-                                      <a href="{{ route('notifications.index') }}">
+                                      <a href="{{ $notification['data']['url'] ?? route('notifications.index') }}">
                                         <div class="media-body">
                                             <p class="notification-msg">{{ $notification['data']['message'] ?? '' }}</p>
                                             <span class="notification-time">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</span>
@@ -64,6 +65,7 @@
                               </li>
 
                             @endforeach
+                            </span>
 
                             <li>
                                 <a href="{{ route('notifications.index') }}">Todas notificações</a>

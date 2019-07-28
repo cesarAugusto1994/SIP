@@ -88,6 +88,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Schedule');
     }
 
+    public function guest()
+    {
+        return $this->hasMany('App\Models\Schedule\Guest');
+    }
+
     public function messageBoard()
     {
         return $this->hasMany('App\Models\MessageBoard\User');

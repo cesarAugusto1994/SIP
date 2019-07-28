@@ -117,7 +117,7 @@ class ChatsController extends Controller
         Helper::drop('messages');
 
         broadcast(new MessageSent(Auth::user(), $message, $user))->toOthers();
-        //broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
+        broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
 
         return ['status' => 'Mensagem Enviada!'];
     }

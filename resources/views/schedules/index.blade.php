@@ -93,6 +93,7 @@
                                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
                                 <select class="form-control select2" multiple title="Selecione um paciente" data-style="btn-white" data-live-search="true" show-tick show-menu-arrow data-width="100%" name="guests[]" id="guests">
                                   @foreach(App\Helpers\Helper::users() as $user)
+                                      @if($user->id == auth()->user()->id) @continue; @endif
                                       <option value="{{$user->id}}">{{$user->person->name}}</option>
                                   @endforeach
                                 </select>

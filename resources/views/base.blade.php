@@ -1164,14 +1164,14 @@ $(document).ready(function() {
     var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
     var notificationsCountElem = notificationsToggle.find('.noti-icon-badge');
     var notificationsCount     = parseInt(notificationsCountElem.data('count'));
-    var notifications          = notificationsWrapper.find('.slimscroll');
+    var notifications          = notificationsWrapper.find('.slimscroll span');
 
     if (notificationsCount <= 0) {
       //notificationsWrapper.hide();
     }
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = false;
+    Pusher.logToConsole = true;
 
     var pusher = new Pusher('fbc40aa0ff741e4532da', {
       encrypted: true,
@@ -1187,10 +1187,17 @@ $(document).ready(function() {
       var existingNotifications = notifications.html();
       var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
       var newNotificationHtml = `
-        <a href="javascript:void(0);" class="dropdown-item notify-item">
-            <div class="notify-icon bg-success"><i class="mdi mdi-account-plus"></i></div>
-            <p class="notify-details">`+data.message+`<small class="text-muted">`+data.time+`</small></p>
-        </a>
+        <li>
+            <div class="media">
+                <a href="#">
+                  <div class="media-body">
+                      <p class="notification-msg">`+data.message+`</p>
+                      <span class="notification-time">` +data.time+ `</span>
+                  </div>
+                </a>
+            </div>
+        </li>
+
       `;
       notifications.html(newNotificationHtml + existingNotifications);
 

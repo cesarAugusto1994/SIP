@@ -65,6 +65,7 @@ class NewTicket extends Notification
         return [
           'message' => 'Novo chamado aberto por ' . $this->ticket->user->person->name . ' em ' . now()->format('d/m/Y H:i'),
           'date' => $this->ticket->created_at,
+          'url' => route('notifications.index')
         ];
     }
 }

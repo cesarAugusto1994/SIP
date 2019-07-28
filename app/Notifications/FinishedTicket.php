@@ -62,6 +62,7 @@ class FinishedTicket extends Notification
         return [
           'message' => $this->ticket->user->person->name . ' finalizou o chamado ' . $this->ticket->id,
           'date' => $this->ticket->created_at,
+          'url' => route('notifications.index')
         ];
     }
 }
