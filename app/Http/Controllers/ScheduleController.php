@@ -8,6 +8,7 @@ use App\Models\Schedule\Guest;
 use App\Notifications\ScheduleInvite;
 use App\Models\Task;
 use App\Models\Task\Log;
+use App\Helpers\Helper;
 use App\Events\Notifications;
 use Notification;
 use DateTime;
@@ -147,10 +148,10 @@ class ScheduleController extends Controller
               $editable = true;
             break;
             case 3:
-              $cardCollor = "#23c6c8";
+              $cardCollor = "#0ac282";
             break;
-            case 4:
-              $cardCollor = "#ed5565";
+            default:
+              $cardCollor = "#0ac282";
             break;
           }
 
@@ -171,6 +172,24 @@ class ScheduleController extends Controller
 
         foreach ($user->guest as $key => $guest) {
             foreach ($guest->schedules as $keya => $schedule) {
+
+              switch($schedule->type_id) {
+                case 1:
+                  $cardCollor = "#23c6c8";
+                  $editable = true;
+                break;
+                case 2:
+                  $cardCollor = "#f8ac59";
+                  $editable = true;
+                break;
+                case 3:
+                  $cardCollor = "#0ac282";
+                break;
+                default:
+                  $cardCollor = "#0ac282";
+                break;
+              }
+
               $data[] = [
                   'id' => $schedule->id,
                   'uuid' => $schedule->uuid,
@@ -199,7 +218,6 @@ class ScheduleController extends Controller
     public function show($id)
     {
         $schedule = Schedule::uuid($id);
-
         return view('schedules.show', compact('schedule'));
     }
 
@@ -211,7 +229,8 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $schedule = Schedule::uuid($id);
+        return view('schedules.edit', compact('schedule'));
     }
 
     /**
@@ -234,6 +253,14 @@ class ScheduleController extends Controller
         $data['end'] = $end;
 
         $schedule->update($data);
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Compromissio atualizado com sucesso.'
+        ]);
+
+        if($request->has('updateByForm')) {
+           return redirect()->route('schedules.show', $schedule->uuid);
+        }
 
         return response()->json([
           'success' => true,

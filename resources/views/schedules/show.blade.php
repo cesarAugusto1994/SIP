@@ -68,7 +68,7 @@
 
           <div class="f-left">
 
-              <a data-route="{{ route('schedules.destroy', ['id' => $schedule->uuid]) }}" class="btn btn-danger text-white btn-sm waves-effect waves-light btnRemoveItemToBack" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remover"><i class="icofont icofont-close"></i>Remover</a>
+              <a data-route="{{ route('schedules.destroy', $schedule->uuid) }}" class="btn btn-danger text-white btn-sm waves-effect waves-light btnRemoveItemToBack" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remover"><i class="icofont icofont-close"></i>Remover</a>
 
           </div>
 

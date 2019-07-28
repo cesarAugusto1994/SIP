@@ -868,6 +868,49 @@ class Helper
         return $porcent;
     }
 
+    public static function listNextSchedules()
+    {
+        $user = auth()->user();
 
+        $cardCollor = "#1ab394";
+        $editable = false;
 
+        $data = [];
+        $schedules = $user->schedules->where('start', '>', now());
+
+        foreach ($schedules as $key => $schedule) {
+
+          $data[] = [
+              'id' => $schedule->id,
+              'uuid' => $schedule->uuid,
+              'title' => $schedule->title,
+              'description' => $schedule->description,
+              'start' => $schedule->start ? $schedule->start->format('d/m/Y H:i') : null,
+              'end' => $schedule->end ? $schedule->end->format('d/m/Y H:i') : null,
+              'created' => $schedule->created_at,
+              'route' => route('schedules.show', $schedule->uuid),
+          ];
+        }
+
+        foreach ($user->guest as $key => $guest) {
+
+            $schedules = $guest->schedules->where('start', '>', now());
+
+            foreach ($schedules as $keya => $schedule) {
+
+              $data[] = [
+                  'id' => $schedule->id,
+                  'uuid' => $schedule->uuid,
+                  'title' => $schedule->title,
+                  'description' => $schedule->description,
+                  'start' => $schedule->start ? $schedule->start->format('d/m/Y H:i') : null,
+                  'end' => $schedule->end ? $schedule->end->format('d/m/Y H:i') : null,
+                  'created' => $schedule->created_at,
+                  'route' => route('schedules.show', $schedule->uuid),
+              ];
+            }
+        }
+
+        return $data;
+    }
 }

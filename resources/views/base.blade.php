@@ -282,7 +282,12 @@
 
   $(document).ready(function() {
 
-    $(".datetimepicker").datetimepicker();
+    $(".datetimepicker").datetimepicker({
+      locale: 'pt-BR',
+      daysOfWeekDisabled: [0, 6],
+      format: 'dd/mm/yyyy hh:ii',
+      showTodayButton: true,
+    });
 
     $('.summernote').summernote({
           placeholder: 'Digite sua mensagem',
@@ -605,6 +610,7 @@ $(document).ready(function() {
     });
 
     $('.inputDate').mask('00/00/0000');
+    $('.inputDateTime').mask('00/00/0000 00:00');
 	  $('.inputCep').mask('00000-000');
 		$('.inputPhone').mask('(00)00000-0000');
 	  $('.inputCpf').mask('000.000.000-00', {reverse: true});

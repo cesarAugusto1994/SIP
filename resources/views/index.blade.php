@@ -134,7 +134,7 @@
             </div>
         </div>
         @endif
-        
+
         <div class="col-md-8 col-sm-12">
             <div class="card latest-update-card">
                 <div class="card-header">
@@ -189,52 +189,81 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-sm-12">
+        <div class="col-xl-4 col-md-12">
 
-          <div class="card user-activity-card">
-              <div class="card-header">
-                <h5>Atividades</h5>
-                <span>Fluxo de atividades do usuário</span>
+          <div class="row">
 
-              </div>
-              <div class="card-block">
-
-                @if($activities->isNotEmpty())
-
-                  @foreach($activities->take(4) as $activity)
-
-                    <div class="row m-b-25">
-                        <div class="col">
-                            <h6 class="m-b-5">{{ $activity->created_at->format('H:i') }}</h6>
-                            <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
-                            <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
-                        </div>
+            <div class="col-xl-12 col-md-12">
+                <div class="card feed-card">
+                    <div class="card-header">
+                        <h5>Próximos Compromissos</h5>
                     </div>
+                    <div class="card-block">
+                      @foreach(\App\Helpers\Helper::listNextSchedules() as $schedule)
+                        <div class="row m-b-30">
+                            <div class="col-auto p-r-0">
+                                <i class="feather icon-bell bg-simple-c-blue feed-icon"></i>
+                            </div>
+                            <div class="col">
+                                <h6 class="m-b-5"><a href="{{ route('schedules.show', $schedule['uuid']) }}">{{ $schedule['title'] }} </a><span class="text-muted f-right f-13">{{ $schedule['start'] }}</span></h6>
+                            </div>
+                        </div>
+                      @endforeach
+                    </div>
+                </div>
+            </div>
 
-                  @endforeach
+            <div class="col-md-12 col-sm-12">
 
-                  <div class="text-center">
-                      <a href="{{ route('activities.index') }}" class="b-b-primary text-primary">Visualizar todas atividades</a>
+              <div class="card user-activity-card">
+                  <div class="card-header">
+                    <h5>Atividades</h5>
+                    <span>Fluxo de atividades do usuário</span>
+
                   </div>
+                  <div class="card-block">
 
-                @else
+                    @if($activities->isNotEmpty())
 
-                  <div class="widget white-bg no-padding">
-                      <div class="p-m text-center">
-                          <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
-                          <br/>
-                          <h6 class="font-bold no-margins">
-                              Nenhum log registrado até o momento.
-                          </h6>
+                      @foreach($activities->take(4) as $activity)
+
+                        <div class="row m-b-25">
+                            <div class="col">
+                                <h6 class="m-b-5">{{ $activity->created_at->format('H:i') }}</h6>
+                                <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
+                                <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
+                            </div>
+                        </div>
+
+                      @endforeach
+
+                      <div class="text-center">
+                          <a href="{{ route('activities.index') }}" class="b-b-primary text-primary">Visualizar todas atividades</a>
                       </div>
+
+                    @else
+
+                      <div class="widget white-bg no-padding">
+                          <div class="p-m text-center">
+                              <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
+                              <br/>
+                              <h6 class="font-bold no-margins">
+                                  Nenhum log registrado até o momento.
+                              </h6>
+                          </div>
+                      </div>
+
+                    @endif
+
                   </div>
-
-                @endif
-
               </div>
+
+            </div>
+
           </div>
 
         </div>
+
     </div>
 </div>
 
