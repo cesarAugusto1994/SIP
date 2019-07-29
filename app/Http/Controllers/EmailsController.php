@@ -89,9 +89,11 @@ class EmailsController extends Controller
                     ]);
                 }
 
-                //$messages = $folder->query()->since(now()->subDays(1))->get();
-
-                $messages = $folder->messages()->all()->get();
+                if(config('app.env') == 'production') {
+                  $messages = $folder->query()->since(now()->subDays(1))->get();
+                } else {
+                  $messages = $folder->messages()->all()->get();
+                }
 
                 foreach ($messages as $key => $message) {
 
@@ -353,14 +355,15 @@ class EmailsController extends Controller
     public function show($id)
     {
         $email = Email::uuid($id);
+        $user = auth()->user();
 
         $oClient = new Client([
             'host'          => 'imap.umbler.com',
             'port'          => 143,
             'encryption'    => 'tls',
             'validate_cert' => false,
-            'username'      => 'cesar.sousa@provider-es.com.br',
-            'password'      => 'Provider@123',
+            'username'      => $user->email,
+            'password'      => $user->password_email,
             'protocol'      => 'imap'
         ]);
 
@@ -368,12 +371,13 @@ class EmailsController extends Controller
 
         $oFolder = $oClient->getFolder('INBOX');
 
-        $email->flag_seen = 1;
-        $email->save();
-
         $oMessage = $oFolder->getMessage($email->uid);
 
-        $oMessage->setFlag(['Seen']);
+        if($oMessage) {
+            $oMessage->setFlag(['Seen']);
+            $email->flag_seen = 1;
+            $email->save();
+        }
 
         $from = $email->from->first();
 
