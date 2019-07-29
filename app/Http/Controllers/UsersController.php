@@ -339,16 +339,16 @@ class UsersController extends Controller
           'unit_id' => $unit->id
         ]);
 
-        $avatar = \Avatar::create($data['name'])->toBase64();
+        $avatar = 'defaults/avatar.jpg';
 
         $user = new User();
         $user->email = $data['email'];
         $user->nick = str_slug($data['name'], '.');
         $user->password = bcrypt($data['password']);
         $user->person_id = $person->id;
+        $user->avatar_type = 'upload';
         $user->avatar = $avatar;
         $user->change_password = true;
-
         $user->password_email = $data['password_email'];
 
         $user->save();
@@ -475,7 +475,6 @@ class UsersController extends Controller
             $file = $request->file('avatar');
 
             $path = $file->hashName('avatar');
-            // avatars/bf5db5c75904dac712aea27d45320403.jpeg
 
             $image = Image::make($file);
 
@@ -485,7 +484,10 @@ class UsersController extends Controller
 
             Storage::put($path, (string) $image->encode());
 
-            //$path = $request->avatar->store('avatar');
+            if(Storage::exists($user->avatar) && $user->avatar != 'defaults/avatar.jpg') {
+                Storage::delete($user->avatar);
+            }
+            
             $user->avatar = $path;
             $user->avatar_type = 'upload';
         }

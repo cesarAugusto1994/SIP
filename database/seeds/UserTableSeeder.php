@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
 
             $name = 'Administrador';
 
-            $avatar = \Avatar::create($name)->toBase64();
+            $avatar = 'defaults/avatar.jpg';
 
             $unit = Unit::create([
               'name' => 'Vitória'
@@ -60,6 +60,7 @@ class UserTableSeeder extends Seeder
               'nick'                           => 'admin',
               'email'                          => $seededAdminEmail,
               'password'                       => Hash::make('Provider@123'),
+              'avatar_type' => 'upload',
               'avatar' => $avatar,
               'do_task' => false,
               'person_id' => $person->id,
@@ -219,7 +220,9 @@ class UserTableSeeder extends Seeder
 
               echo 'creating user '. $user['Nome'] . PHP_EOL;
 
-              $avatar = \Avatar::create($user['Nome'])->toBase64();
+              //$avatar = \Avatar::create($user['Nome'])->toBase64();
+
+              $avatar = 'defaults/avatar.jpg';
 
               $hasDepto = Department::where('name', $user['Setor'])->first();
 
@@ -271,6 +274,7 @@ class UserTableSeeder extends Seeder
                 'nick'                           => $user['Email'],
                 'email'                          => $emailFormated,
                 'password'                       => Hash::make('Provider@123'),
+                'avatar_type' => 'upload',
                 'avatar' => $avatar,
                 'person_id' => $person->id,
                 'email_verified_at' => now(),

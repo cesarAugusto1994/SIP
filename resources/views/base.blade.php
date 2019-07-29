@@ -257,6 +257,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
+
+<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\jquery.tabledit.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\editable.js') }}"></script>
+
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();
 </script>

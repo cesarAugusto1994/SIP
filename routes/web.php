@@ -235,6 +235,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
     Route::get('schedule/list', 'ScheduleController@schedule')->name('schedule_list');
 
+    Route::resource('purchasing', 'PurchasingController');
+
   });
 
   });
