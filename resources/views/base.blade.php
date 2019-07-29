@@ -1207,10 +1207,14 @@ $(document).ready(function() {
       `;
       notifications.html(newNotificationHtml + existingNotifications);
 
+      var audio = new Audio("{{ asset('media/sounds/light.mp3') }}");
+      audio.play();
+
       notificationsCount += 1;
       notificationsCountElem.attr('data-count', notificationsCount);
       notificationsWrapper.find('.notif-count').text(notificationsCount);
       notificationsWrapper.show();
+
     });
 
 
