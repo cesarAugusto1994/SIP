@@ -89,7 +89,7 @@ class Helper
     public static function formatBytes($size = 0, $precision = 2)
     {
         $base = log($size, 1024);
-        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
+        $suffixes = array('bytes', 'Kb', 'Mb', 'Gb', 'Tb');
 
         return self::formatBytesToSize($size, $precision) .' '. $suffixes[floor($base)];
     }
@@ -483,7 +483,7 @@ class Helper
             return self::get($key);
         }
 
-        $data = User::all();
+        $data = User::whereNotIn('id', [1])->get();
 
         self::set($key, $data);
         return self::get($key);

@@ -98,19 +98,7 @@
 
               </div>
 
-              <div class="col-md-2">
-
-                <div class="form-group {!! $errors->has('read') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Leitura</label>
-                    <div class="input-group">
-                      <input type="checkbox" data-plugin="switchery" checked data-switchery="true" value="1" name="read" class="js-switch">
-                    </div>
-                    {!! $errors->first('read', '<p class="help-block">:message</p>') !!}
-                </div>
-
-              </div>
-
-              <div class="col-md-2">
+              <div class="col-md-3">
 
                 <div class="form-group {!! $errors->has('edit') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Alterar</label>
@@ -122,7 +110,7 @@
 
               </div>
 
-              <div class="col-md-2">
+              <div class="col-md-3">
 
                 <div class="form-group {!! $errors->has('share') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Compartilhar</label>
@@ -134,7 +122,7 @@
 
               </div>
 
-              <div class="col-md-2">
+              <div class="col-md-3">
 
                 <div class="form-group {!! $errors->has('download') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Baixar</label>
@@ -146,7 +134,7 @@
 
               </div>
 
-              <div class="col-md-2">
+              <div class="col-md-3">
 
                 <div class="form-group {!! $errors->has('delete') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Remover</label>
