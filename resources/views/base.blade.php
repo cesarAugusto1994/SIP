@@ -113,6 +113,12 @@
           border-radius: 10px;
           border-left: 12px solid #dc3545;
         }
+
+        .pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+        z-index: 99999;
+        }
     </style>
 
     <script>
@@ -257,9 +263,48 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
+<script>
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\jquery.tabledit.js') }}"></script>
-<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\editable.js') }}"></script>
+  function initMap() {
+
+    var input = document.getElementById('pac-input');
+
+    var options = {
+        componentRestrictions: {
+            country : "BR"
+        }
+    };
+
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    autocomplete.setFields(
+            ['address_components', 'geometry', 'icon', 'name']);
+
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+    });
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-CeVILuddTrCi4EcPcpXAMN6rj_5Je3k&libraries=places&callback=initMap" async defer></script>
 
 <script type="text/javascript">
     $('#example-multiple-selected').multiselect();

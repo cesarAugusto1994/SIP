@@ -103,6 +103,16 @@
               </div>
 
               <div class="col-md-12">
+                  <div class="form-group" id="pac-card">
+                      <label>Localização</label>
+                      <div class="input-group" id="pac-container">
+                          <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+                          <input class="form-control" name="localization" value="{{ $schedule->localization }}" id="pac-input">
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12">
                   <div class="form-group">
                       <label>Adicionar uma descrição</label>
                       <div class="input-group">

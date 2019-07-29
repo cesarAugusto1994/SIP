@@ -72,6 +72,7 @@ class ScheduleController extends Controller
         $schedule = Schedule::create([
           'title' => $data['title'],
           'description' => $data['description'],
+          'localization' => $data['localization'],
           'type_id' => $data['event_type'],
           'user_id' => $user->id,
           'start' => $start,
@@ -108,7 +109,7 @@ class ScheduleController extends Controller
 
           if(in_array('todos', $request->get('guests')) !== false) {
 
-            $users = User::whereNotIn('id', [auth()->user()->id])->get();
+            $users = User::whereNotIn('id', [auth()->user()->id, 1])->get();
 
             foreach ($users as $key => $user) {
 

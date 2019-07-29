@@ -81,31 +81,65 @@
   </div>
 
   <div class="col-lg-4">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-header-text"><i class="icofont icofont-users-alt-4"></i> Participantes</h5>
-        </div>
-        <div class="card-block user-box assign-user">
 
-          @foreach($schedule->guests as $guest)
-            <div class="media">
-                <div class="media-left media-middle photo-table">
-                    <a href="#">
-                        <img class="img-radius" src="{{ route('image', ['user' => $guest->user->uuid, 'link' => $guest->user->avatar, 'avatar' => true])}}" alt="chat-user">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h6>{{ $guest->user->person->name }}</h6>
-                    <p>{{ $guest->user->person->department->name }}</p>
-                </div>
-                <div>
-                    <a href="#!" class="text-muted"> <i class="icon-options-vertical"></i></a>
-                </div>
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-header-text"><i class="icofont icofont-users-alt-4"></i> Agenda de</h5>
             </div>
-          @endforeach
+            <div class="card-block user-box assign-user">
 
+                <div class="media">
+                    <div class="media-left media-middle photo-table">
+                        <a href="#">
+                            <img class="img-radius" src="{{ route('image', ['user' => $schedule->user->uuid, 'link' => $schedule->user->avatar, 'avatar' => true])}}" alt="">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h6>{{ $schedule->user->person->name }}</h6>
+                        <span class="text-muted">{{ $schedule->user->person->department->name }}</span>
+                    </div>
+                    <div>
+                        <a href="#!" class="text-muted"> <i class="icon-options-vertical"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-header-text"><i class="icofont icofont-users-alt-4"></i> Participantes</h5>
+            </div>
+            <div class="card-block user-box assign-user">
+
+              @foreach($schedule->guests as $guest)
+                <div class="media">
+                    <div class="media-left media-middle photo-table">
+                        <a href="#">
+                            <img class="img-radius" src="{{ route('image', ['user' => $guest->user->uuid, 'link' => $guest->user->avatar, 'avatar' => true])}}" alt="">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h6>{{ $guest->user->person->name }}</h6>
+                        <p class="text-muted">{{ $guest->user->person->department->name }}</p>
+                    </div>
+                    <div>
+                        <a href="#!" class="text-muted"> <i class="icon-options-vertical"></i></a>
+                    </div>
+                </div>
+              @endforeach
+
+            </div>
+        </div>
+      </div>
+
     </div>
+
   </div>
 
   </div>

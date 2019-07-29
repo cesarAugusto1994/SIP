@@ -99,16 +99,7 @@
 
 @push('scripts')
 
-  <script>
-
-      $('.clockpicker').clockpicker();
-
-      $(document).ready(function() {
-        $('#select-processes').change(function() {
-            //$('#description').val($('#select-processes option:selected').text());
-        });
-        //$('#description').val($('#select-processes option:selected').text());
-      });
-  </script>
+<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\jquery.tabledit.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\editable.js') }}"></script>
 
 @endpush
