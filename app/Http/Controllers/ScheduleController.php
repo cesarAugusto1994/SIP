@@ -304,10 +304,6 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        if(!Auth::user()->hasPermission('delete.agenda')) {
-            return abort(403, 'Unauthorized action.');
-        }
-
         try {
 
           $schedule = Schedule::uuid($id);
