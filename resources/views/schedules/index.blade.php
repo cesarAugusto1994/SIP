@@ -50,7 +50,7 @@
               <h4 class="modal-title">Novo Compromisso</h4>
             </div>
 
-            <form data-parsley-validate id="formConsultaModal" method="POST" action="{{ route('schedules.store') }}">
+            <form class="formValidation" data-parsley-validate method="POST" action="{{ route('schedules.store') }}">
             <div class="modal-body">
 
                   {{  csrf_field() }}
@@ -92,6 +92,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
                                 <select class="form-control select2" multiple title="Selecione um paciente" data-style="btn-white" data-live-search="true" show-tick show-menu-arrow data-width="100%" name="guests[]" id="guests">
+                                  <option value="todos">Todos</option>
                                   @foreach(App\Helpers\Helper::users() as $user)
                                       @if($user->id == auth()->user()->id) @continue; @endif
                                       <option value="{{$user->id}}">{{$user->person->name}}</option>

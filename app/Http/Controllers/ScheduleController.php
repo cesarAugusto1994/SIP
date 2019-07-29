@@ -106,19 +106,41 @@ class ScheduleController extends Controller
 
         if($request->has('guests')) {
 
-          foreach ($request->get('guests') as $key => $guest) {
-              Guest::create([
-                'schedule_id' => $schedule->id,
-                'user_id' => $guest
-              ]);
+          if(in_array('todos', $request->get('guests')) !== false) {
+
+            $users = User::whereNotIn('id', [auth()->user()->id])->get();
+
+            foreach ($users as $key => $user) {
+
+                Guest::create([
+                  'schedule_id' => $schedule->id,
+                  'user_id' => $user->id
+                ]);
+
+                broadcast(new Notifications($user, 'Você foi marcado em um compromisso.'))->toOthers();
+
+            }
+
+            Notification::send($users, new ScheduleInvite($schedule));
+
+          } else {
+
+            foreach ($request->get('guests') as $key => $guest) {
+                Guest::create([
+                  'schedule_id' => $schedule->id,
+                  'user_id' => $guest
+                ]);
+            }
+
+            $users = User::whereIn('id', $request->get('guests'))->get();
+            Notification::send($users, new ScheduleInvite($schedule));
+
+            foreach ($users as $key => $user) {
+                broadcast(new Notifications($user, 'Você foi marcado em um compromisso.'))->toOthers();
+            }
+
           }
 
-          $users = User::whereIn('id', $request->get('guests'))->get();
-          Notification::send($users, new ScheduleInvite($schedule));
-
-          foreach ($users as $key => $user) {
-              broadcast(new Notifications($user, 'Você foi marcado em um compromisso'))->toOthers();
-          }
         }
 
         notify()->flash('Sucesso', 'success', [

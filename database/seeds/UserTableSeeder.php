@@ -33,11 +33,11 @@ class UserTableSeeder extends Seeder
             $name = 'Administrador';
 
             $avatar = 'defaults/avatar.jpg';
-
+/*
             $unit = Unit::create([
               'name' => 'Vitória'
             ]);
-
+*/
             $department = Department::create([
               'name' => 'Sistema'
             ]);
@@ -50,7 +50,7 @@ class UserTableSeeder extends Seeder
             $person = People::create([
               'name' => 'Administrador',
               'department_id'=> $department->id,
-              'unit_id'=> $unit->id,
+              'unit_id'=> 1,
               'occupation_id'=> $occupation->id,
               'birthday' => '1994-07-15',
               'cpf' => '12345678987'
@@ -112,36 +112,28 @@ class UserTableSeeder extends Seeder
           	17 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3565, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Ricardo Castro', 'Email' => 'comercial'),
           	18 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Aprendiz', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Apoio', 'Email' => 'comercial3'),
           	20 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3560, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Marketing', 'Nome' => 'Marketing', 'Email' => 'marketing'),
-
           	21 => array('PHONE_CODE' => 137, 'PHONE_PASS' => 55317, 'PHONE_CALL' => 106,'Ramal' => 3574, 'Cargo' => 'Supervidor', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Simone Coelho', 'Email' => 'simone.coelho'),
           	22 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3580, 'Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'Diretoria', 'Nome' => 'Carlos César Sad', 'Email' => 'cesar.sad'),
           	23 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3562, 'Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'Documentação', 'Nome' => 'Deyvd Soares', 'Email' => 'deyvd.soares'),
-          	24 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'RH', 'Nome' => 'Wesley Damásio', 'Email' => 'wesley.damasio'),
+          	24 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Diretor', 'Unidade' => 'Vitória', 'Setor' => 'Recursos Humanos', 'Nome' => 'Wesley Damásio', 'Email' => 'wesley.damasio'),
           	25 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Enfermeiro', 'Unidade' => 'Vitória', 'Setor' => 'Enfermagem', 'Nome' => 'Cristinete Silva', 'Email' => 'cristinete.silva'),
           	26 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3601, 'Cargo' => 'Enfermeiro', 'Unidade' => 'Vitória', 'Setor' => 'Enfermagem', 'Nome' => 'Ana Florentino', 'Email' => 'enfermagem.trabalho'),
           	27 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Enfermeiro', 'Unidade' => 'Cariacica', 'Setor' => 'Enfermagem', 'Nome' => 'Fernando Rodrigues', 'Email' => 'enfermagem.cariacica'),
-
           	28 => array('PHONE_CODE' => 117, 'PHONE_PASS' => 39137, 'PHONE_CALL' => null,'Ramal' => 3555, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Ariane Pina', 'Email' => 'ariane.pina'),
           	29 => array('PHONE_CODE' => 116, 'PHONE_PASS' => 38328, 'PHONE_CALL' => null,'Ramal' => 3555, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Sara Tavares', 'Email' => 'sara.tavares'),
           	30 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3584, 'Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Larissa Brandão', 'Email' => 'financeiro2'),
-
           	31 => array('PHONE_CODE' => 108, 'PHONE_PASS' => 31856, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Karoline', 'Email' => 'credenciamento2'),
           	32 => array('PHONE_CODE' => 106, 'PHONE_PASS' => 30238, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Thais Bragança', 'Email' => 'credenciamento3'),
           	33 => array('PHONE_CODE' => 107, 'PHONE_PASS' => 31047, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Gierke', 'Email' => 'credenciamento4'),
           	34 => array('PHONE_CODE' => 109, 'PHONE_PASS' => 32665, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Credenciamento', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Lucas Castelan', 'Email' => 'credenciamento5'),
-
             35 => array('PHONE_CODE' => 104, 'PHONE_PASS' => 28620, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Expedição', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Stela Oliveira', 'Email' => 'expedicao'),
-
           	36 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Débora Spadetto', 'Email' => 'liberacao'),
           	37 => array('PHONE_CODE' => 105, 'PHONE_PASS' => 29429, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Nathiely Mello', 'Email' => 'liberacao2'),
           	38 => array('PHONE_CODE' => 136, 'PHONE_PASS' => 54508, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Hevillin Dourado', 'Email' => 'liberacao3'),
           	39 => array('PHONE_CODE' => 102, 'PHONE_PASS' => 27002, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Charles Barbosa', 'Email' => 'liberacao4'),
           	40 => array('PHONE_CODE' => 103, 'PHONE_PASS' => 27811, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Liberação', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Alex Sander Santos', 'Email' => 'liberacao5'),
-
           	42 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'UMAP', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'UMAP', 'Email' => 'umap'),
-
             43 => array('PHONE_CODE' => 100, 'PHONE_PASS' => 25384, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Triagem', 'Unidade' => 'Vitória', 'Setor' => 'Exames', 'Nome' => 'Ana Carolina', 'Email' => 'ana.carolina'),
-
           	44 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Comercial', 'Nome' => 'Carlos Eduardo', 'Email' => 'carlos.eduardo'),
           	45 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Atendente', 'Unidade' => 'Vitória', 'Setor' => 'Atendimento', 'Nome' => 'Joseth Cardozo', 'Email' => 'joseth.cardoso'),
           	46 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3584, 'Cargo' => 'Diretor', 'Unidade' => 'Vila Velha Centro', 'Setor' => 'Financeiro', 'Nome' => 'Mariana Pazolini', 'Email' => 'mariana.pazolini'),
@@ -157,14 +149,12 @@ class UserTableSeeder extends Seeder
           	58 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3589, 'Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Administrativo', 'Nome' => 'Mariana Coelho', 'Email' => 'mariana.coelho'),
           	59 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3590, 'Cargo' => 'Administrativo', 'Unidade' => 'Vila Velha Ibes', 'Setor' => 'Administrativo', 'Nome' => 'Paola neves', 'Email' => 'paola.neves'),
           	60 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Instrutor de Treinamentos', 'Unidade' => 'Vitória', 'Setor' => 'Treinamentos', 'Nome' => 'Aeliton Silva', 'Email' => 'aeliton.silva'),
-
           	61 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Advogado', 'Unidade' => 'Vitória', 'Setor' => 'Juridico', 'Nome' => 'Andréia Botelho', 'Email' => 'juridico'),
           	62 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3601, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Laboratório', 'Nome' => 'Daniele', 'Email' => 'laboratorio'),
           	63 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3561, 'Cargo' => 'Psicologo', 'Unidade' => 'Vitória', 'Setor' => 'Psicologia', 'Nome' => 'Psicologia', 'Email' => 'psicologia'),
           	64 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3561, 'Cargo' => 'Psicologo', 'Unidade' => 'Vitória', 'Setor' => 'Psicologia', 'Nome' => 'Flávia Cypreste', 'Email' => 'flavia.cypreste'),
           	65 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3602, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Recursos Humanos', 'Nome' => 'Edilson Lima', 'Email' => 'dp'),
           	66 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3602, 'Cargo' => 'Administrativo', 'Unidade' => 'Vitória', 'Setor' => 'Recursos Humanos', 'Nome' => 'Luciana Rocha', 'Email' => 'dp2'),
-
           	68 => array('PHONE_CODE' => 132, 'PHONE_PASS' => 51272, 'PHONE_CALL' => null,'Ramal' => 3606, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Diego Souza', 'Email' => 'diego.souza'),
           	69 => array('PHONE_CODE' => 127, 'PHONE_PASS' => 47227, 'PHONE_CALL' => null,'Ramal' => 3606, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Fellipe Freitas', 'Email' => 'fellipe.freitas'),
           	70 => array('PHONE_CODE' => 129, 'PHONE_PASS' => 48845, 'PHONE_CALL' => null,'Ramal' => 3606, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Geovani Charpinel', 'Email' => 'geovani.charpinel'),
@@ -174,12 +164,9 @@ class UserTableSeeder extends Seeder
           	74 => array('PHONE_CODE' => 120, 'PHONE_PASS' => 41564, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Inspeção', 'Unidade' => 'Serra', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Rebeca Senara', 'Email' => 'rebeca.senara'),
           	75 => array('PHONE_CODE' => 115, 'PHONE_PASS' => 37519, 'PHONE_CALL' => null,'Ramal' => 3562, 'Cargo' => 'Documentação', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Dávila Souza', 'Email' => 'davila.souza'),
           	76 => array('PHONE_CODE' => 119, 'PHONE_PASS' => 40755, 'PHONE_CALL' => null,'Ramal' => 3551, 'Cargo' => 'Inspeção', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Emyle Almeida', 'Email' => 'emyle.almeida'),
-
           	77 => array('PHONE_CODE' => 127, 'PHONE_PASS' => 47227, 'PHONE_CALL' => null,'Ramal' => 3606, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Felipe Batista', 'Email' => 'felipe.batista'),
             77 => array('PHONE_CODE' => 127, 'PHONE_PASS' => 47227, 'PHONE_CALL' => null,'Ramal' => 3606, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Weberson Santos', 'Email' => 'weberson.santos'),
-
             78 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3551, 'Cargo' => 'Inspeção', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Igor Bianchi', 'Email' => 'igor.bianchi'),
-
           	79 => array('PHONE_CODE' => 134, 'PHONE_PASS' => 52890, 'PHONE_CALL' => null,'Ramal' => 3557, 'Cargo' => 'Agendamento', 'Unidade' => 'Vitória', 'Setor' => 'Treinamentos', 'Nome' => 'Beatriz Crespo', 'Email' => 'beatriz.crespo'),
           	80 => array('PHONE_CODE' => 133, 'PHONE_PASS' => 52081, 'PHONE_CALL' => null,'Ramal' => 3606, 'Cargo' => 'Higiene Ocupacional', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Débora Monteiro', 'Email' => 'deborah.monteiro'),
           	81 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Inspeção', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Ingrid Rubenich', 'Email' => 'ingrid.rubenich'),
@@ -187,15 +174,10 @@ class UserTableSeeder extends Seeder
           	83 => array('PHONE_CODE' => 123, 'PHONE_PASS' => 43991, 'PHONE_CALL' => null,'Ramal' => 3607, 'Cargo' => 'Laudo', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Karla Marques', 'Email' => 'karla.marques'),
           	84 => array('PHONE_CODE' => 113, 'PHONE_PASS' => 35901, 'PHONE_CALL' => null,'Ramal' => 3607, 'Cargo' => 'Documentação', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Amanda Rodrigues', 'Email' => 'amanda.rodrigues'),
           	85 => array('PHONE_CODE' => 111, 'PHONE_PASS' => 34283, 'PHONE_CALL' => null,'Ramal' => 3562, 'Cargo' => 'Documentação', 'Unidade' => 'Vitória', 'Setor' => 'Técnico em Segurança do Trabalho', 'Nome' => 'Júlio Félix', 'Email' => 'julio.felix'),
-
           	86 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3551, 'Cargo' => 'Enfermeiro', 'Unidade' => 'Vitória', 'Setor' => 'Enfermagem', 'Nome' => 'Igor Rocha', 'Email' => 'igor.rocha'),
-
             88 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3578, 'Cargo' => 'Suporte SOC', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Ely Reis', 'Email' => 'ely.reis'),
           	90 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3579, 'Cargo' => 'Infraestrutura', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Vinycius Alves', 'Email' => 'vinycius.alves'),
-
-            91 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3579, 'Cargo' => 'Infraestrutura', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'André Tavares', 'Email' => 'andre.tavares'),
             92 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3578, 'Cargo' => 'Suporte SOC', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Arthur Gonçalves', 'Email' => 'arthur.goncalves'),
-
             93 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3557, 'Cargo' => 'Agendamento', 'Unidade' => 'Vitória', 'Setor' => 'Treinamentos', 'Nome' => 'Sabrina Oliveira', 'Email' => 'treinamentos'),
           );
 
