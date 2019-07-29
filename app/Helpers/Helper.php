@@ -916,7 +916,7 @@ class Helper
 
     public static function unSeenEmailsCount()
     {
-        return Email::where('flag_seen', false)->count();
+        return Email::where('user_id', auth()->user()->id)->where('flag_seen', false)->count();
     }
 
 }
