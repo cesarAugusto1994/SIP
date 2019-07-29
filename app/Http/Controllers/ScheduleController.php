@@ -122,7 +122,9 @@ class ScheduleController extends Controller
 
             }
 
-            Notification::send($users, new ScheduleInvite($schedule));
+            if($request->has('send_notification_mail')) {
+                Notification::send($users, new ScheduleInvite($schedule));
+            }
 
           } else {
 
@@ -134,7 +136,10 @@ class ScheduleController extends Controller
             }
 
             $users = User::whereIn('id', $request->get('guests'))->get();
-            Notification::send($users, new ScheduleInvite($schedule));
+
+            if($request->has('send_notification_mail')) {
+                Notification::send($users, new ScheduleInvite($schedule));
+            }
 
             foreach ($users as $key => $user) {
                 broadcast(new Notifications($user, 'Você foi marcado em um compromisso.'))->toOthers();

@@ -136,13 +136,20 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Criar Nova tarefa</label>
                             <div class="input-group">
-
                               <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="do_task" class="js-switch">
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Enviar e-mail de Notificação</label>
+                            <div class="input-group">
+                              <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="send_notification_mail" class="js-switch">
                             </div>
                         </div>
                     </div>
