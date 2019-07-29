@@ -316,7 +316,10 @@ class EmailsController extends Controller
 
         }
 
-        return $hasRecent;
+        return response()->json([
+          'success' => true,
+          'novos E-mails encontrados'
+        ]);
     }
 
     /**

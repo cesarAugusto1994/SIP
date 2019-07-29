@@ -213,7 +213,23 @@
 
       $(document).ready(function() {
 
-          var emails = $('#load-emails');
+          setTimeout(function() {
+
+            var emails = $('#load-emails').val();
+
+            $.ajax({
+              type: 'GET',
+              url: emails,
+              done: function(data) {
+
+                console.log(data);
+
+              }
+            });
+
+          }, 5000);
+
+
 
       });
 
