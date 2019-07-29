@@ -24,7 +24,7 @@ class Documents extends Model
 
     public function document()
     {
-        return $this->belongsTo('App\Models\Documents');
+        return $this->belongsTo('App\Models\Delivery\Document');
     }
 
     public function deliveryOrder()

@@ -48,12 +48,11 @@ class DocumentsController extends Controller
     {
         $data = $request->request->all();
 
-        //dd($data);
+        #dd($data);
 
         $user = $request->user();
 
         $data['created_by'] = $user->id;
-
         $data['status_id'] = 1;
 
         $client = Client::uuid($data['client_id']);
@@ -77,6 +76,35 @@ class DocumentsController extends Controller
         } else {
 
           $document = Document::create($data);
+
+        }
+
+        if($request->has('indexes')) {
+
+            $indexes = $data['indexes'];
+
+            foreach (range(0, $indexes) as $key => $value) {
+
+              $fieldType = 'type_id-'.$value;
+              $fieldClient = 'client_id-'.$value;
+              $fieldReference = 'reference-'.$value;
+
+              if($request->has($fieldType)) {
+
+                  $client = Client::uuid($request->get($fieldClient));
+                  $type = Type::uuid($request->get($fieldType));
+
+                  Document::create([
+                    'type_id' => $type->id,
+                    'client_id' => $client->id,
+                    'reference' => $request->get($fieldReference),
+                    'created_by' => $user->id,
+                    'status_id' => 1
+                  ]);
+
+              }
+
+            }
 
         }
 

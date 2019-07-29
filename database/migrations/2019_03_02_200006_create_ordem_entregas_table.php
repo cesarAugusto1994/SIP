@@ -42,8 +42,10 @@ class CreateOrdemEntregasTable extends Migration
             $table->increments('id');
             $table->integer('delivery_order_id')->unsigned();
             $table->foreign('delivery_order_id')->references('id')->on('delivery_order');
+
             $table->integer('document_id')->unsigned();
-            $table->foreign('document_id')->references('id')->on('documents');
+            $table->foreign('document_id')->references('id')->on('delivery_documents');
+
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->uuid('uuid')->unique();

@@ -39,8 +39,10 @@
       </div>
       <div class="card-block">
 
-        <form method="post" action="{{route('documents.store')}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('documents.store')}}">
             {{csrf_field()}}
+
+            <input type="hidden" name="indexes" id="indexes" value=""/>
 
             <div class="row m-b-30">
 
@@ -49,7 +51,8 @@
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo</label>
                         <div class="input-group">
-                          <select class="select2" title="Selecione" name="type_id" required>
+                          <select class="form-control" title="Selecione" name="type_id" required>
+                              <option value="">Selecione...</option>
                               @foreach($types as $type)
                                   <option value="{{$type->uuid}}">{{$type->name}}</option>
                               @endforeach
@@ -61,12 +64,20 @@
                 </div>
 
                 <div class="col-md-4">
+                    <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Referencia</label>
+                        <div class="input-group">
+                          <input type="text" name="reference" class="form-control" placeholder="Código de referencia do documento"/>
+                        </div>
+                        {!! $errors->first('type_id', '<p class="help-block">:message</p>') !!}
+                    </div>
+                </div>
 
+                <div class="col-md-4">
                   <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="select2 select-client-employees"
-                          data-search-employees="{{ route('client_employees_search') }}"
+                        <select class="form-control"
                           name="client_id" required>
                               <option value="">Selecione um Cliente</option>
                               @foreach($clients as $client)
@@ -79,34 +90,11 @@
 
                 </div>
 
-                <div class="col-md-4">
-
-                  <div class="form-group {!! $errors->has('employee_id') ? 'has-error' : '' !!}">
-                      <label class="col-form-label">Funcionário</label>
-                      <div class="input-group">
-                        <select class="select2" id="select-employee" name="employees[]" multiple>
-                              <option value="">Selecione um Cliente</option>
-                        </select>
-                      </div>
-                      {!! $errors->first('employee_id', '<p class="help-block">:message</p>') !!}
-                  </div>
-
-                </div>
-
-                <div class="col-md-12">
-
-                  <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
-                      <label class="col-form-label">Anotações</label>
-                      <div class="input-group">
-                        <textarea class="form-control" rows="4" name="annotations">{{ old('annotations') }}</textarea>
-                      </div>
-                      {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
-                  </div>
-
-                </div>
-
             </div>
 
+            <div id="rowForm"></div>
+
+            <button type="button" id="btnAddRows" class="btn btn-primary btn-sm">Adicionar Linha</button>
             <button class="btn btn-success btn-sm">Salvar</button>
             <a class="btn btn-danger btn-sm" href="{{ route('documents.index') }}">Cancelar</a>
 
@@ -115,5 +103,81 @@
       </div>
   </div>
 </div>
+
+@endsection
+
+@section('scripts')
+
+  <script>
+
+      var row = $("#rowForm");
+      var btnAddRows = $("#btnAddRows");
+      var indexes = $("#indexes");
+
+      var index = 0;
+
+      function renderCols(index) {
+
+        return '<div class="row" id="row-'+index+'">'
+            + '<div class="col-md-1">'
+              +   '<div class="form-group">'
+              + '<label class="col-form-label">Opç</label>'
+                    + '<button type="button" class="btn btn-danger btn-sm btnRmItem" data-item="'+index+'"><i class="fa fa-ban"></i></button>'
+                + '</div>'
+            + '</div>'
+             + '<div class="col-md-4">'
+                 + '<div class="form-group">'
+                     + '<label class="col-form-label">Tipo</label>'
+                     + '<div class="input-group">'
+                       + '<select class="form-control" title="Selecione" name="type_id-'+index+'" required>'
+                          + '<option value="">Selecione...</option>'
+                           @foreach($types as $type)
+                               + '<option value="{{$type->uuid}}">{{$type->name}}</option>'
+                           @endforeach
+                      + '</select>'
+                    + '</div>'
+                + '</div>'
+            + '</div>'
+            + '<div class="col-md-3">'
+              +   '<div class="form-group">'
+                    + '<label class="col-form-label">Referencia</label>'
+                    + '<div class="input-group">'
+                      + '<input type="text" name="reference-'+index+'" class="form-control" placeholder="Código de referencia do documento"/>'
+                    + '</div>'
+                + '</div>'
+            + '</div>'
+            + '<div class="col-md-4">'
+              + '<div class="form-group">'
+                  + '<label class="col-form-label">Cliente</label>'
+                  + '<div class="input-group">'
+                    + '<select class="form-control"'
+                      + 'name="client_id-'+index+'" required>'
+                          + '<option value="">Selecione um Cliente</option>'
+                          @foreach($clients as $client)
+                              + '<option value="{{$client->uuid}}">{{$client->name}}</option>'
+                          @endforeach
+                    + '</select>'
+                  + '</div>'
+              + '</div>'
+            + '</div>'
+        + '</div>';
+
+      }
+
+      btnAddRows.click(function() {
+        index++;
+        row.append(renderCols(index));
+        indexes.val(index);
+      });
+
+      var btnRmItem = $(".btnRmItem");
+
+      $(document).on('click','.btnRmItem',function(){
+        console.log('item');
+        var self = $(this);
+        $("#row-" + self.data('item')).remove();
+      });
+
+  </script>
 
 @endsection

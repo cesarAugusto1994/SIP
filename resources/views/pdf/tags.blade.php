@@ -102,7 +102,7 @@
                       <thead>
                         <tr>
                             <th>Tipo</th>
-                            <th>Funcionário</th>
+                            <th>Referência</th>
                             <th>Anotações</th>
                             <th>Entregue?</th>
                         </tr>
@@ -116,7 +116,7 @@
                         @endphp
                           <tr>
                               <td>{{ $document->type->name }}</td>
-                              <td>{{ $document->employee->name }}</td>
+                              <td>{{ $document->reference ?? '' }}</td>
                               <td>{{ $document->annotations }}</td>
                               <td>
                                   Sim <input type="checkbox"/>

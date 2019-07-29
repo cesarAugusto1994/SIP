@@ -68,6 +68,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('delivery_documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('annotations')->nullable();
+            $table->string('reference')->nullable();
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('employee_id')->nullable();

@@ -119,13 +119,9 @@
                                           </div>
                                       </div>
                                   </div>
-                                  <!-- end of row -->
                               </div>
-                              <!-- end of general info -->
                           </div>
-                          <!-- end of col-lg-12 -->
                       </div>
-                      <!-- end of row -->
                   </div>
 
               </div>
@@ -213,7 +209,7 @@
                             <tr>
                               <th>Tipo</th>
                               <th>Cliente</th>
-                              <th>Funcionário</th>
+                              <th>Referência</th>
                               <th>Status</th>
                               <th>Anotações</th>
                             </tr>
@@ -234,7 +230,7 @@
                             </td>
 
                             <td>
-                                <a>{{$document->employee->name ?? '-'}}</a>
+                                <a>{{$document->reference ?? '-'}}</a>
                             </td>
 
                             <td>

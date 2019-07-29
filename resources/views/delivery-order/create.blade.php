@@ -29,7 +29,7 @@
 
 <div class="page-body">
 
-    <form method="post" action="{{route('delivery-order.store')}}">
+    <form class="formValidation" data-parsley-validate method="post" action="{{route('delivery-order.store')}}">
         {{csrf_field()}}
 
         <div class="row">
@@ -38,11 +38,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Nova Ordem de Entrega</h5>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="feather icon-maximize full-card"></i></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="card-block">
 
@@ -138,11 +133,6 @@
                   <div class="card">
                       <div class="card-header">
                           <h5>Documentos</h5>
-                          <div class="card-header-right">
-                              <ul class="list-unstyled card-option">
-                                  <li><i class="feather icon-maximize full-card"></i></li>
-                              </ul>
-                          </div>
                       </div>
                       <div class="card-block">
 
@@ -156,7 +146,6 @@
                                   <th>Tipo</th>
                                   <th>Cliente</th>
                                   <th>Status</th>
-                                  <th>Anotações</th>
                                 </tr>
                             </thead>
 
@@ -178,7 +167,6 @@
                                     <td>{{ $document->type->name }}</td>
                                     <td>{{ $document->client->name }}</td>
                                     <td>{{ $document->status->name }}</td>
-                                    <td>{{ $document->annotations }}</td>
                                 </tr>
                                 @endforeach
 

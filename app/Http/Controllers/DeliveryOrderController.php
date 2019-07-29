@@ -259,8 +259,6 @@ class DeliveryOrderController extends Controller
 
         $deliveryDate = $data['delivery_date'] ? \DateTime::createFromFormat('d/m/Y', $data['delivery_date']) : null;
 
-        #dd($deliveryDate);
-
         foreach ($documents as $key => $document) {
 
             $hasDocument = DeliveryOrderDocuments::where('document_id', $document->id)->get();
@@ -282,6 +280,8 @@ class DeliveryOrderController extends Controller
 
         foreach ($documentsGroupedByClients as $keyClient => $documentsGroupedByClient) {
 
+            //dd($documentsGroupedByClient);
+
             $deliveryOrder = DeliveryOrder::create([
               'client_id' => $keyClient,
               'status_id' => 1,
@@ -291,6 +291,7 @@ class DeliveryOrderController extends Controller
             ]);
 
             foreach ($documentsGroupedByClient as $key => $document) {
+
                 DeliveryOrderDocuments::create([
                   'document_id' => $document->id,
                   'delivery_order_id' => $deliveryOrder->id,

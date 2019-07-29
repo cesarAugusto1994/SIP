@@ -50,7 +50,6 @@
                       <th>Tipo</th>
                       <th>Cliente</th>
                       <th>Status</th>
-                      <th>Adicionado por</th>
                       <th>Adicionado em</th>
                       <th>Opções</th>
                     </tr>
@@ -60,7 +59,7 @@
                 @foreach($documents as $document)
                 <tr>
                     <td>
-                        <a class="label label-{{ array_random(['info', 'success', 'primary', 'danger', 'warning']) }}">{{ $document->type->name ?? '-' }}</a>
+                        <a class="label label-primary">{{ $document->type->name ?? '-' }}</a>
                     </td>
 
                     <td>
@@ -75,10 +74,6 @@
                       @else
                           <label class="label label-inverse-success">{{ $document->status->name }}</label>
                       @endif
-                    </td>
-
-                    <td>
-                        <p><a>{{ $document->creator->person->name }}</a></p>
                     </td>
 
                     <td>

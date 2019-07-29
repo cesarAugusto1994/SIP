@@ -16,14 +16,14 @@ class Document extends Model
       'annotations', 'client_id',
       'employee_id', 'created_by',
       'status_id', 'type_id',
-      'price', 'extra_value'
+      'price', 'extra_value', 'reference'
     ];
 
     protected static $logAttributes = [
       'annotations', 'client_id',
       'employee_id', 'created_by',
       'status_id', 'type_id',
-      'price', 'extra_value'
+      'price', 'extra_value', 'reference'
     ];
 
     public function client()
