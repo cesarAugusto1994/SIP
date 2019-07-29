@@ -54,7 +54,7 @@
 
                                         <div class="media-left photo-table">
                                             <a href="#">
-                                                <img class="media-object img-radius" src="{{ \Avatar::create($from->contact->personal ?? $from->contact->mailbox)->toBase64() }}" alt="">
+                                                <img class="media-object img-radius" src="{{ $avatar }}" alt="">
                                             </a>
                                         </div>
                                         <div class="media-body photo-contant">

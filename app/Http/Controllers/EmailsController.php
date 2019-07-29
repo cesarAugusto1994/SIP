@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Webklex\IMAP\Client;
 use App\Models\Email;
 use App\Models\Email\{From,To,Cc,Bcc,ReplayTo,Sender,Contact,Attachment,Folder};
+use App\User;
 
 class EmailsController extends Controller
 {
@@ -88,9 +89,9 @@ class EmailsController extends Controller
                     ]);
                 }
 
-                $messages = $folder->query()->since(now()->subDays(1))->get();
+                //$messages = $folder->query()->since(now()->subDays(1))->get();
 
-                //$messages = $folder->messages()->all()->get();
+                $messages = $folder->messages()->all()->get();
 
                 foreach ($messages as $key => $message) {
 
@@ -374,7 +375,23 @@ class EmailsController extends Controller
 
         $oMessage->setFlag(['Seen']);
 
-        return view('email.show', compact('email'));
+        $from = $email->from->first();
+
+        $avatar = "";
+
+        if($from) {
+
+          $from->contact->mail;
+
+          $user = User::where('email', $from->contact->mail)->first();
+
+          if($user) {
+            $avatar = route('image', ['user' => $user->uuid, 'link' => $user->avatar, 'avatar' => true]);
+          }
+
+        }
+
+        return view('email.show', compact('email', 'avatar'));
     }
 
     /**
