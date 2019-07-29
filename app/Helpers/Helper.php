@@ -12,7 +12,7 @@ use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
-use App\Models\Unit;
+use App\Models\{Unit,Email};
 use App\Models\Schedule\Type as ScheduleType;
 use App\Models\{Message, Folder, Ticket, Task};
 use jeremykenedy\LaravelRoles\Models\Role;
@@ -913,4 +913,10 @@ class Helper
 
         return $data;
     }
+
+    public static function unSeenEmailsCount()
+    {
+        return Email::where('flag_seen', false)->count();
+    }
+
 }

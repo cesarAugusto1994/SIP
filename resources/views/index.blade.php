@@ -82,8 +82,8 @@
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">Tarefas Finalizadas</p>
-                            <h4 class="m-b-0">{{ \App\Helpers\Helper::tasksClosedTotal() }}</h4>
+                            <p class="m-b-5">Emails Recentes</p>
+                            <h4 class="m-b-0">{{ \App\Helpers\Helper::unSeenEmailsCount() }}</h4>
                         </div>
                         <div class="col col-auto text-right">
                             <i class="feather icon-bell f-50 text-c-blue"></i>
