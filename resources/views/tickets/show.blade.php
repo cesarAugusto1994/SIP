@@ -219,7 +219,7 @@
                   <div class="col-sm-12 col-xl-12">
                       <h4 class="sub-title">Descrição</h4>
                       <p class="text-muted m-b-30">
-                          {!! $ticket->description  !!}
+                          {{ $ticket->description  }}
                       </p>
                   </div>
               </div>
