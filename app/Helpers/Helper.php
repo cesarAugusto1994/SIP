@@ -7,6 +7,7 @@ use Session;
 use App\User;
 use App\Models\Training\Course;
 use App\Models\{People, Menu, Client};
+use App\Models\Client\Employee;
 use App\Models\Task\Status as TicketStatus;
 use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
@@ -561,6 +562,20 @@ class Helper
         }
 
         $data = Client::count();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function employees()
+    {
+        $key = 'employees';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Employee::all();
 
         self::set($key, $data);
         return self::get($key);

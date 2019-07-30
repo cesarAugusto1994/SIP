@@ -94,7 +94,7 @@
   </div>
 
   <div class="row">
-    @forelse ($orders as $order)
+    @forelse ($orders->sortBy('status_id') as $order)
 
     @php
 
@@ -103,16 +103,16 @@
       $bgColor = 'success';
 
       switch($status) {
+        case '1':
+          $bgColor = 'primary';
+          break;
         case '2':
           $bgColor = 'warning';
           break;
         case '3':
-          $bgColor = 'primary';
+          $bgColor = 'success';
           break;
         case '4':
-          $bgColor = 'primary';
-          break;
-        case '5':
           $bgColor = 'danger';
           break;
       }
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -168,6 +168,9 @@
       </div>
 
     @endforelse
+
+    {{ $orders->links() }}
+
   </div>
 
 </div>

@@ -34,7 +34,7 @@
 
         <div class="row">
 
-              <div class="col-lg-7">
+              <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         <h5>Nova Ordem de Entrega</h5>
@@ -43,33 +43,32 @@
 
                         <div class="row m-b-30">
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
-                            <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
-                                <label class="col-form-label">Cliente</label>
-                                <div class="input-group">
-                                  <select class="select2 select-client-addresses select-client-documents"
-                                    data-search-addresses="{{ route('client_addresses_search') }}"
-                                    data-search-documents="{{ route('client_documents_search') }}"
-                                    name="client_id" required>
-                                        <option value="">Selecione um Cliente</option>
-                                        @foreach($clients as $client)
-                                            <option value="{{$client->uuid}}" {{ request()->get('client') == $client->uuid ? 'selected' : '' }}>{{$client->name}}</option>
-                                        @endforeach
-                                  </select>
+                                <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
+                                    <label class="col-form-label">Cliente</label>
+                                    <div class="input-group">
+                                      <select class="select2 select-client-addresses select-client-documents"
+                                        data-search-addresses="{{ route('client_addresses_search') }}"
+                                        data-search-documents="{{ route('client_documents_search') }}"
+                                        name="client_id" required>
+                                            <option value="">Selecione um Cliente</option>
+                                            @foreach($clients as $client)
+                                                <option value="{{$client->uuid}}" {{ request()->get('client') == $client->uuid ? 'selected' : '' }}>{{$client->name}}</option>
+                                            @endforeach
+                                      </select>
+                                    </div>
+                                    {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
                                 </div>
-                                {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
+
                             </div>
 
-                          </div>
-
-                            <div class="col-md-6">
-
+                            <div class="col-md-12">
                               <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Endereço</label>
                                   <div class="input-group">
                                     <select class="form-control" id="select-address" name="address_id" required>
-                                        <option value="">Selecione um Cliente</option>
+                                        <option value="">Selecione um Endereço</option>
                                         @foreach($addresses as $address)
                                             <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}}</option>
                                         @endforeach
@@ -80,7 +79,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                                 <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entregador</label>
@@ -97,7 +96,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                                 <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entrega</label>
@@ -123,13 +122,13 @@
 
                         </div>
 
-                        <button class="btn btn-success btn-sm">Salvar</button>
+                        <button class="btn btn-success btn-sm btn-block">Salvar</button>
 
                       </div>
                   </div>
               </div>
 
-              <div class="col-lg-5">
+              <div class="col-lg-8">
                   <div class="card">
                       <div class="card-header">
                           <h5>Documentos</h5>
@@ -145,6 +144,8 @@
                                   <th>#</th>
                                   <th>Tipo</th>
                                   <th>Cliente</th>
+                                  <th>Funcionário</th>
+                                  <th>Referencia</th>
                                   <th>Status</th>
                                 </tr>
                             </thead>
@@ -166,6 +167,8 @@
                                     <td><input class="js-switch" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
                                     <td>{{ $document->type->name }}</td>
                                     <td>{{ $document->client->name }}</td>
+                                    <td>{{ $document->employee->name ?? '-' }}</td>
+                                    <td>{{ $document->reference }}</td>
                                     <td>{{ $document->status->name }}</td>
                                 </tr>
                                 @endforeach

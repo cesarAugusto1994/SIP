@@ -49,6 +49,8 @@
                     <tr>
                       <th>Tipo</th>
                       <th>Cliente</th>
+                      <th>Funcionário</th>
+                      <th>Referência</th>
                       <th>Status</th>
                       <th>Adicionado em</th>
                       <th>Opções</th>
@@ -64,6 +66,14 @@
 
                     <td>
                         <p><a href="{{route('clients.edit', ['id' => $document->client->uuid])}}">{{ $document->client->name }}</a></p>
+                    </td>
+
+                    <td>
+                        {{ $document->employee->name ?? '' }}
+                    </td>
+
+                    <td>
+                        {{ $document->reference }}
                     </td>
 
                     <td>

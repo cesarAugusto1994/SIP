@@ -31,6 +31,10 @@ class CreateOrdemEntregasTable extends Migration
             $table->foreign('delivered_by')->references('id')->on('users');
             $table->date('delivered_at')->nullable();
             $table->date('delivery_date')->nullable();
+
+            $table->date('finished_at')->nullable();
+            $table->integer('finished_by')->nullable();
+
             $table->text('annotations')->nullable();
             $table->uuid('uuid')->unique();
             $table->string('receipt')->nullable();

@@ -46,7 +46,7 @@
 
             <div class="row m-b-30">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
 
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo</label>
@@ -63,7 +63,7 @@
 
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Referencia</label>
                         <div class="input-group">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
@@ -87,7 +87,21 @@
                       </div>
                       {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
                   </div>
+                </div>
 
+                <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="col-form-label">Funcionário</label>
+                      <div class="input-group">
+                        <select class="form-control"
+                          name="employee_id">
+                              <option value="">Selecione um Funcionário</option>
+                              @foreach(\App\Helpers\Helper::employees()->sortBy('name') as $emloyee)
+                                  <option value="{{$emloyee->uuid}}">{{$emloyee->name}}</option>
+                              @endforeach
+                        </select>
+                      </div>
+                  </div>
                 </div>
 
             </div>
@@ -122,10 +136,10 @@
             + '<div class="col-md-1">'
               +   '<div class="form-group">'
               + '<label class="col-form-label">Opç</label>'
-                    + '<button type="button" class="btn btn-danger btn-sm btnRmItem" data-item="'+index+'"><i class="fa fa-ban"></i></button>'
+                    + '<button type="button" class="btn btn-danger btn-sm btn-block btnRmItem" data-item="'+index+'"><i class="fa fa-ban"></i></button>'
                 + '</div>'
             + '</div>'
-             + '<div class="col-md-4">'
+             + '<div class="col-md-3">'
                  + '<div class="form-group">'
                      + '<label class="col-form-label">Tipo</label>'
                      + '<div class="input-group">'
@@ -138,7 +152,7 @@
                     + '</div>'
                 + '</div>'
             + '</div>'
-            + '<div class="col-md-3">'
+            + '<div class="col-md-2">'
               +   '<div class="form-group">'
                     + '<label class="col-form-label">Referencia</label>'
                     + '<div class="input-group">'
@@ -146,7 +160,7 @@
                     + '</div>'
                 + '</div>'
             + '</div>'
-            + '<div class="col-md-4">'
+            + '<div class="col-md-3">'
               + '<div class="form-group">'
                   + '<label class="col-form-label">Cliente</label>'
                   + '<div class="input-group">'
@@ -155,6 +169,20 @@
                           + '<option value="">Selecione um Cliente</option>'
                           @foreach($clients as $client)
                               + '<option value="{{$client->uuid}}">{{$client->name}}</option>'
+                          @endforeach
+                    + '</select>'
+                  + '</div>'
+              + '</div>'
+            + '</div>'
+            + '<div class="col-md-3">'
+              + '<div class="form-group">'
+                  + '<label class="col-form-label">Funcionário</label>'
+                  + '<div class="input-group">'
+                    + '<select class="form-control"'
+                      + 'name="employee_id-'+index+'">'
+                          + '<option value="">Selecione um Funcionário</option>'
+                          @foreach(\App\Helpers\Helper::employees()->sortBy('name') as $emloyee)
+                              + '<option value="{{$emloyee->uuid}}">{{$emloyee->name}}</option>'
                           @endforeach
                     + '</select>'
                   + '</div>'

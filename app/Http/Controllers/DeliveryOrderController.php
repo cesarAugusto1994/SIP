@@ -33,7 +33,7 @@ class DeliveryOrderController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        $orders = DeliveryOrder::where('id', '>', 0)->get();
+        $orders = DeliveryOrder::where('id', '>', 0);
 
         if($request->filled('status')) {
             $status = $request->get('status');
@@ -87,6 +87,8 @@ class DeliveryOrderController extends Controller
             $client = $request->get('client');
             $orders = $orders->where('client_id', $client);
         }
+
+        $orders = $orders->paginate(10);
 
         //$orders = DeliveryOrder::all();
         return view('delivery-order.index', compact('orders'));
@@ -190,6 +192,69 @@ class DeliveryOrderController extends Controller
         $mimetype = \Storage::disk('local')->mimeType($link);
 
         return response($file, 200)->header('Content-Type', $mimetype);
+    }
+
+    public function cancel($id)
+    {
+        try {
+
+          $delivery = DeliveryOrder::uuid($id);
+
+          $delivery->documents->map(function($document) {
+              $document->document->status_id = 1;
+              $document->document->save();
+              $document->delete();
+          });
+
+          $delivery->status_id = 4;
+          $delivery->save();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Ordem de Entrega cancelada com sucesso.',
+            'route' => route('delivery-order.show', $delivery->uuid)
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado',
+            'route' => null
+          ]);
+        }
+
+    }
+
+    public function confirm($id)
+    {
+        try {
+
+          $delivery = DeliveryOrder::uuid($id);
+
+          $delivery->documents->map(function($document) {
+              $document->document->status_id = 5;
+              $document->document->save();
+          });
+
+          $delivery->status_id = 5;
+          $delivery->finished_by = auth()->user()->id;
+          $delivery->finished_at = now();
+          $delivery->save();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Ordem de Entrega finalizada com sucesso.',
+            'route' => route('delivery-order.show', $delivery->uuid)
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado',
+            'route' => null
+          ]);
+        }
+
     }
 
     /**

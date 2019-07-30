@@ -1179,6 +1179,7 @@ $(document).ready(function() {
               html += "<td><input class='js-switch' type='checkbox' name='documents[]' value='"+ item.id +"'/></td>";
               html += "<td>"+ item.type +"</td>";
               html += "<td>"+ item.client +"</td>";
+              html += "<td>"+ item.employee +"</td>";
               html += "<td>"+ item.reference +"</td>";
               html += "<td>"+ item.status +"</td>";
               html += "</tr>";

@@ -36,17 +36,52 @@
         <div class="card">
             <div class="card-block">
 
-              @permission('edit.documentos')
+              @permission('view.ordem.entrega')
                 <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-sm"> Imprimir Etiqueta </a>
               @endpermission
 
-              @permission('edit.documentos')
-                <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm"> Editar </a>
-              @endpermission
+              @if($order->status_id == 1 || $order->status_id == 2)
+
+                  @permission('edit.ordem.entrega')
+                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm"> Editar </a>
+                  @endpermission
+
+                  @permission('delete.ordem.entrega')
+                    <a data-route="{{route('delivery_cancel', $order->uuid)}}" class="btn btn-danger text-white btn-sm pull-right btnCancel"> Cancelar </a>
+                  @endpermission
+
+              @endif
+
+              @if($order->status_id == 3)
+
+                  @permission('edit.ordem.entrega')
+                    <a data-route="{{route('delivery_confirm', $order->uuid)}}" class="btn btn-primary text-white btn-sm pull-right btnConfirm"> Finalizar </a>
+                  @endpermission
+
+              @endif
 
             </div>
-
         </div>
+
+        @if($order->status_id == 4)
+
+            <div class="card text-center text-white bg-c-pink">
+                <div class="card-block text-center">
+                  <h4>Ordem de Entrega Cancelada.</h4>
+                </div>
+            </div>
+
+        @endif
+
+        @if($order->status_id == 5)
+
+            <div class="card text-center text-white bg-c-green">
+                <div class="card-block text-center">
+                  <h4>Ordem de Entrega Finalizada.</h4>
+                </div>
+            </div>
+
+        @endif
 
       </div>
 
@@ -95,16 +130,16 @@
                                                         $bgColor = 'success';
 
                                                         switch($status) {
+                                                          case '1':
+                                                            $bgColor = 'primary';
+                                                            break;
                                                           case '2':
                                                             $bgColor = 'warning';
                                                             break;
                                                           case '3':
-                                                            $bgColor = 'primary';
+                                                            $bgColor = 'success';
                                                             break;
                                                           case '4':
-                                                            $bgColor = 'primary';
-                                                            break;
-                                                          case '5':
                                                             $bgColor = 'danger';
                                                             break;
                                                         }
@@ -212,6 +247,7 @@
                         <thead>
                             <tr>
                               <th>Tipo</th>
+                              <th>Funcionário</th>
                               <th>Referência</th>
                               <th>Status</th>
                             </tr>
@@ -228,7 +264,11 @@
                             </td>
 
                             <td>
-                                <a>{{$document->reference ?? '-'}}</a>
+                                {{ $document->employee->name ?? '' }}
+                            </td>
+
+                            <td>
+                                {{ $document->reference }}
                             </td>
 
                             <td>
@@ -271,6 +311,117 @@
 
       $(document).ready(function() {
 
+          var cancel = $(".btnCancel");
+
+          cancel.click(function(e) {
+
+              var self = $(this);
+
+              swal({
+                title: 'Cancelar Ordem de Entrega?',
+                text: "Os documentos voltarão a ficar disponiveis para serem incluídos em outra Ordem.",
+                showCancelButton: true,
+                confirmButtonColor: '#0ac282',
+                cancelButtonColor: '#D46A6A',
+                confirmButtonText: 'Sim, Cancelar',
+                cancelButtonText: 'Não'
+                }).then((result) => {
+                if (result.value) {
+
+                  e.preventDefault();
+
+                  window.swal({
+                    title: 'Em progresso...',
+                    text: 'Aguarde enquanto a requisição é processada.',
+                    type: 'success',
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                  });
+
+                  $.ajax({
+                    headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                     },
+                    url: self.data('route'),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {}
+                  }).done(function(data) {
+
+                    swal.close();
+
+                    if(data.success) {
+
+                      notify(data.message, 'inverse');
+
+                      window.location.href = data.route;
+
+                    } else {
+
+                      notify(data.message, 'danger');
+
+                    }
+
+                  });
+                }
+              });
+          });
+
+          var finish = $(".btnConfirm");
+
+          finish.click(function(e) {
+
+              var self = $(this);
+
+              swal({
+                title: 'Finalizar Ordem de Entrega?',
+                text: "Esta Ordem de entrega será finalizada, e não poderá sofrer alterações após a sua confirmação.",
+                showCancelButton: true,
+                confirmButtonColor: '#0ac282',
+                cancelButtonColor: '#D46A6A',
+                confirmButtonText: 'Sim, Finalizar',
+                cancelButtonText: 'Não'
+                }).then((result) => {
+                if (result.value) {
+
+                  e.preventDefault();
+
+                  window.swal({
+                    title: 'Em progresso...',
+                    text: 'Aguarde enquanto a requisição é processada.',
+                    type: 'success',
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                  });
+
+                  $.ajax({
+                    headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                     },
+                    url: self.data('route'),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {}
+                  }).done(function(data) {
+
+                    swal.close();
+
+                    if(data.success) {
+
+                      notify(data.message, 'inverse');
+
+                      window.location.href = data.route;
+
+                    } else {
+
+                      notify(data.message, 'danger');
+
+                    }
+
+                  });
+                }
+              });
+          });
 
       });
 

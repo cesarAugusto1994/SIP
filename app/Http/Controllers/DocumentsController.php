@@ -87,16 +87,25 @@ class DocumentsController extends Controller
 
               $fieldType = 'type_id-'.$value;
               $fieldClient = 'client_id-'.$value;
+              $fieldEmployee = 'employee_id-'.$value;
               $fieldReference = 'reference-'.$value;
 
               if($request->has($fieldType)) {
 
                   $client = Client::uuid($request->get($fieldClient));
+
+                  $employee = null;
+
+                  if($request->filled($fieldEmployee)) {
+                      $employee = Employee::uuid($request->get($fieldEmployee));
+                  }
+
                   $type = Type::uuid($request->get($fieldType));
 
                   Document::create([
                     'type_id' => $type->id,
                     'client_id' => $client->id,
+                    'employee_id' => $employee->id ?? null,
                     'reference' => $request->get($fieldReference),
                     'created_by' => $user->id,
                     'status_id' => 1

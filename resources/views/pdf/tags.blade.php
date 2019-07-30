@@ -32,6 +32,9 @@
       p:last-child { page-break-after: auto; }
       .wrapper-content { padding: 2em 2em;}
 
+      .font-10 {
+        font-size: 10px;
+      }
 
     </style>
 
@@ -94,21 +97,28 @@
                     <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:5em"></div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                        <h4>Informações</h4>
+                        <h4>Comprovante de Entrega de Documentos</h4>
                     </div>
 
                     <table class="table table-bordered">
 
                       <thead>
                         <tr>
+                            <td class="text-center">Empresa</td>
+                            <td class="text-center" colspan="2"><b>{{ $delivery->client->name }}</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
                             <th>Tipo</th>
+                            <th>Funcionário</th>
                             <th>Referência</th>
-                            <th>Anotações</th>
                             <th>Entregue?</th>
                         </tr>
                       </thead>
 
                       <tbody>
+
+
 
                         @foreach($delivery->documents as $document)
                         @php
@@ -116,8 +126,8 @@
                         @endphp
                           <tr>
                               <td>{{ $document->type->name }}</td>
+                              <td>{{ $document->employee->name ?? '' }}</td>
                               <td>{{ $document->reference ?? '' }}</td>
-                              <td>{{ $document->annotations }}</td>
                               <td>
                                   Sim <input type="checkbox"/>
                                   Não <input type="checkbox"/>
@@ -126,7 +136,7 @@
                         @endforeach
 
                         <tr>
-                            <td colspan="4" class="text-center"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
+                            <td colspan="4" class="text-center font-10"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
                             DATADOS E CARIMBADOS.</b></td>
                         </tr>
 
@@ -136,43 +146,23 @@
                         </tr>
 
                       </tbody>
+                      <tfoot>
+                        <tr>
+                            <td colspan="4">Ordem Entrega: #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><small>Etiqueta gerada por: {{ \Auth::user()->id }} - {{ \Auth::user()->person->name }}</small></td>
+                        </tr>
+                      </tfoot>
 
                     </table>
-
-
 
                   </div>
                 </div>
               </div>
-
-
-              <div class="panel-body">
-
-              <div class="col-lg-4 col-md-4 col-sm-12">
-                <p>Ordem Entrega: #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</p>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-12">
-                <p>Etiqueta gerada por: {{ \Auth::user()->id }} - {{ \Auth::user()->person->name }}</p>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-12">
-                <p>www.provider-es.com.br</p>
-              </div>
-
-              </div>
-
           </div>
-
-          <div class="row">
-
-
-
-          </div>
-
       </div>
   </div>
-
-
-
 
 </body>
 
