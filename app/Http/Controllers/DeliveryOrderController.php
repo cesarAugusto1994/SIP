@@ -13,6 +13,7 @@ use App\Helpers\Constants;
 use App\Notifications\DeliveryOrder as DeliveryOrderNotification;
 use App\Mail\DeliveryOrder as DeliveryOrderMail;
 use App\Jobs\DeliveryOrder as DeliveryOrderJob;
+use Illuminate\Support\Facades\Validator;
 use Notification;
 use Auth;
 use PDF;
@@ -50,15 +51,13 @@ class DeliveryOrderController extends Controller
 
         return view('pdf.tags', compact('delivery', 'file'));
 
-        $pdf = PDF::loadView('pdf.tags', compact('delivery', 'file'));
-        return $pdf->stream($titulo. ".pdf");
+        //$pdf = PDF::loadView('pdf.tags', compact('delivery', 'file'));
+        //return $pdf->stream($titulo. ".pdf");
     }
 
     public function start($id, Request $request)
     {
         $delivery = DeliveryOrder::uuid($id);
-
-        //dd($delivery->status_id);
 
         if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
 
@@ -67,49 +66,61 @@ class DeliveryOrderController extends Controller
 
             $message = 'Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' está em Transito.';
 
-            $client = $delivery->client;
+            $users = User::where('id', 2)->get();
 
-            $users = User::where('id', 1)->get();
-/*
-            Notification::send($users, new DeliveryOrderNotification($delivery, 'Ordem de Entrega', $message));
+            $subject = 'Ordem de Entrega';
 
-            Mail::to([$client->name => $client->email])
-            ->queue(new DeliveryOrderMail($delivery, 'Ordem de Entrega', $message));
-*/
+            //dispatch(new DeliveryOrderJob($delivery, $subject, $message))->onQueue('emails');
 
-            //$job = dispatch(new DeliveryOrderJob($delivery, 'Ordem de Entrega', $message));
+            DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega', $message)->onQueue('emails');
 
-            //dd($job);
-
-            return response($message, 200);
+            return view('delivery-order.scan-transit', compact('message'));
 
         } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO) {
 
             $delivery->status_id = Constants::STATUS_DELIVERY_ENTREGUE;
-            //$delivery->save();
+            $delivery->save();
 
-            return response('A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.', 200);
+            $message = 'A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.';
+
+            return view('delivery-order.scan-delivered', compact('message', 'delivery'));
+        } else {
+            return abort(404);
         }
-
-        try {
-
-            DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega')->onQueue('emails');
-
-        } catch(\Exception $e) {
-
-        }
-
-        return abort(403);
-    }
-
-    public function status($id, Request $request)
-    {
 
     }
 
-    public function statsByDocument($id, Request $request)
+    public function receipt($id, Request $request)
     {
+        $data = $request->request->all();
 
+        $validator = Validator::make($request->all(), [
+            'document' => 'required|image|mimes:jpeg,png,jpg|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $delivery = DeliveryOrder::uuid($id);
+
+        if ($request->hasFile('document') && $request->file('document')->isValid()) {
+            $path = $request->document->store('receipt');
+            $delivery->receipt = $path;
+            $delivery->status_id = Constants::STATUS_DELIVERY_ENTREGUE;
+            $delivery->save();
+        }
+
+        return redirect()->route('delivery_done', $delivery->uuid);
+    }
+
+    public function done($id, Request $request)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+
+        $message = 'O comprovante da  Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi enviado com sucesso.';
+
+        return view('delivery-order.scan-done', compact('message', 'delivery'));
     }
 
     /**

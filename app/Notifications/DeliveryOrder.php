@@ -36,7 +36,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'slack'];
+        return ['database', 'slack', 'mail'];
     }
 
     /**

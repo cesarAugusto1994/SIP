@@ -63,7 +63,7 @@
                               <div class="general-info">
                                   <div class="row">
                                       <div class="col-lg-12 col-xl-12">
-                                          <div class="">
+                                          <div class="table-responsive">
                                               <table class="table m-0">
                                                   <tbody>
                                                       <tr>
@@ -243,7 +243,7 @@
 
       $(document).ready(function() {
 
-    
+
       });
 
     </script>
