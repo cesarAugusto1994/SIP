@@ -325,21 +325,21 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
-        if($request->has('delivered_by')) {
+        if(!$request->has('delivered_by')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum entregador foi informado.',
             ]);
             return back();
         }
 
-        if($request->has('address_id')) {
+        if(!$request->has('address_id')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum endereço foi informado.',
             ]);
             return back();
         }
 
-        if($request->has('documents')) {
+        if(!$request->has('documents')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum documento foi informado.',
             ]);
