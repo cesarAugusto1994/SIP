@@ -19,6 +19,8 @@ class Notifications implements ShouldBroadcast
 
     public $time;
 
+    private $user;
+
     /**
      * Create a new event instance.
      *
@@ -26,6 +28,7 @@ class Notifications implements ShouldBroadcast
      */
     public function __construct(User $user, $message)
     {
+        $this->user = $user;
         $this->message = $message;
         $this->time = $user->created_at->format('d/m/Y H:i');
     }
@@ -37,6 +40,7 @@ class Notifications implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notifications');
+        return new Channel('notifications.'.$this->user->id);
+        //return new PrivateChannel('notifications.'.$this->user->id);
     }
 }

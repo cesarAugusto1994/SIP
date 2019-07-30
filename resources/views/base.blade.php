@@ -1241,7 +1241,7 @@ $(document).ready(function() {
     });
 
     // Subscribe to the channel we specified in our Laravel Event
-    var channel = pusher.subscribe('notifications');
+    var channel = pusher.subscribe('notifications.'+{{ auth()->user()->id }});
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('App\\Events\\Notifications', function(data) {
