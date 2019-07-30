@@ -220,6 +220,8 @@ class Helper
             $data = Ticket::where('user_id', $user->id)->count();
         }
 
+        return $data;
+
         self::set($key, $data);
         return self::get($key);
     }
@@ -239,6 +241,8 @@ class Helper
         } else {
             $data = Ticket::where('status_id', 4)->where('user_id', $user->id)->count();
         }
+
+        return $data;
 
         self::set($key, $data);
         return self::get($key);
@@ -260,6 +264,8 @@ class Helper
             $data = Task::where('user_id', $user->id)->count();
         }
 
+        return $data;
+
         self::set($key, $data);
         return self::get($key);
     }
@@ -280,11 +286,11 @@ class Helper
             $data = Task::where('status_id', 4)->where('user_id', $user->id)->count();
         }
 
+        return $data;
+
         self::set($key, $data);
         return self::get($key);
     }
-
-
 
     public static function ticketStatus()
     {
