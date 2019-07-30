@@ -102,7 +102,7 @@
                                 <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entrega</label>
                                     <div class="input-group">
-                                        <input type="text" autocomplete="off" class="form-control inputDate" name="delivery_date"/>
+                                        <input type="text" autocomplete="off" class="form-control inputDate" name="delivery_date" required/>
                                         {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
