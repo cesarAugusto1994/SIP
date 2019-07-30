@@ -209,7 +209,7 @@ class Helper
         $key = 'tickets-total';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
         $user = auth()->user();
@@ -231,7 +231,7 @@ class Helper
         $key = 'tickets-closed-total';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
         $user = auth()->user();
@@ -253,7 +253,7 @@ class Helper
         $key = 'tasks-total';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
         $user = auth()->user();
@@ -275,7 +275,7 @@ class Helper
         $key = 'tasks-closed-total';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
         $user = auth()->user();
