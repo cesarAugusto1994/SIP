@@ -124,10 +124,6 @@
                           <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="dropdown-item"> Editar </a>
                         @endpermission
 
-                        @permission('delete.documentos')
-                          <a href="#!" data-route="{{route('documents.destroy', ['id' => $order->uuid])}}" class="dropdown-item text-danger btnRemoveItem"> Cancelar </a>
-                        @endpermission
-
                       </div>
 
                     </td>
