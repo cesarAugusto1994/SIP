@@ -243,37 +243,7 @@
 
       $(document).ready(function() {
 
-        let selectEntregador = $(".select-entregador");
-        let entregador = $("#entregador");
-
-        selectEntregador.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-
-          let self = $(this);
-          let route = self.data('search-user');
-          let value = self.val();
-
-          $.ajax({
-            type: 'GET',
-            url: route + '?param=' + value,
-            async: true,
-            success: function(response) {
-
-              if(response.success) {
-
-                let result = response.data;
-
-                entregador.html("");
-                let html = result.name + " - " + result.cpf;
-                entregador.append(html);
-              }
-
-
-            }
-          })
-
-
-        });
-
+    
       });
 
     </script>

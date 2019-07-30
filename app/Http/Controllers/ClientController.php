@@ -296,7 +296,7 @@ class ClientController extends Controller
                 'type' => $document->type->name,
                 'client' => $document->client->name,
                 'status' => $document->status->name,
-                'annotations' => $document->annotations,
+                'reference' => $document->reference,
               ];
           }
 
