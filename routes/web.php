@@ -134,6 +134,7 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::get('delivery-order/{id}/print/tags', 'DeliveryOrderController@printTags')->name('print_tags');
     Route::get('delivery-order/document/{id}/status', 'DeliveryOrderController@statsByDocument')->name('delivery_status_by_document');
 
+    Route::get('delivery-order/{id}/get-receipt', 'DeliveryOrderController@getReceipt')->name('delivery_get_receipt');
 
     Route::resource('message-board', 'MessageBoardController');
     Route::resource('message-types', 'MessageTypesController');

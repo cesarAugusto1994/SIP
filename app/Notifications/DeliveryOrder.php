@@ -36,7 +36,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'slack', 'mail'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -55,11 +55,6 @@ class DeliveryOrder extends Notification implements ShouldQueue
                     ->salutation('Esta é uma mensagem automática, favor não responder.');
     }
 
-    public function toDatabase()
-    {
-
-    }
-
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
@@ -76,7 +71,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
     {
         return [
           'notification_id' => $notifiable->id,
-          'mensagem' => 'Documento esta a caminho do destino.'
+          'mensagem' => 'Documento esta a caminho do destino.',
           'url' => route('notifications.index')
         ];
     }

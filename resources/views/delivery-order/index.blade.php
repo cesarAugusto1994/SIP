@@ -70,8 +70,31 @@
                         <label class="label label-inverse-primary">{{$order->address->street}}, {{$order->address->number}} - {{$order->address->district}}, {{$order->address->city}}</label>
                     </td>
 
+                    @php
+
+                      $status = $order->status->id;
+
+                      $bgColor = 'success';
+
+                      switch($status) {
+                        case '2':
+                          $bgColor = 'warning';
+                          break;
+                        case '3':
+                          $bgColor = 'primary';
+                          break;
+                        case '4':
+                          $bgColor = 'primary';
+                          break;
+                        case '5':
+                          $bgColor = 'danger';
+                          break;
+                      }
+
+                    @endphp
+
                     <td>
-                        <label class="label label-inverse-success">{{ $order->status->name }}</label>
+                        <label class="label label-{{ $bgColor }}">{{ $order->status->name }}</label>
                     </td>
 
                     <td>

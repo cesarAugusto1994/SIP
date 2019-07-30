@@ -88,9 +88,32 @@
                                                           <td>{{ $order->client->email }}</td>
                                                       </tr>
 
+                                                      @php
+
+                                                        $status = $order->status->id;
+
+                                                        $bgColor = 'success';
+
+                                                        switch($status) {
+                                                          case '2':
+                                                            $bgColor = 'warning';
+                                                            break;
+                                                          case '3':
+                                                            $bgColor = 'primary';
+                                                            break;
+                                                          case '4':
+                                                            $bgColor = 'primary';
+                                                            break;
+                                                          case '5':
+                                                            $bgColor = 'danger';
+                                                            break;
+                                                        }
+
+                                                      @endphp
+
                                                       <tr>
                                                           <th scope="row">Situação</th>
-                                                          <td><label class="label label-inverse-success">{{ $order->status->name ?? '-' }}</label></td>
+                                                          <td><label class="label label-{{ $bgColor }} label-lg">{{ $order->status->name ?? '-' }}</label></td>
                                                       </tr>
                                                       <tr>
                                                           <th scope="row">Data Agendamento</th>
@@ -176,7 +199,7 @@
         </div>
       </div>
 
-      <div class="col-lg-12">
+      <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
                   <h5>Documentos</h5>
@@ -189,10 +212,8 @@
                         <thead>
                             <tr>
                               <th>Tipo</th>
-                              <th>Cliente</th>
                               <th>Referência</th>
                               <th>Status</th>
-                              <th>Anotações</th>
                             </tr>
                         </thead>
 
@@ -207,10 +228,6 @@
                             </td>
 
                             <td>
-                                <p><a href="{{route('clients.edit', ['id' => $order->client->uuid])}}">{{ $order->client->name }}</a></p>
-                            </td>
-
-                            <td>
                                 <a>{{$document->reference ?? '-'}}</a>
                             </td>
 
@@ -218,15 +235,26 @@
                                 <a>{{ $document->status->name }}</a>
                             </td>
 
-                            <td>
-                                <a>{{$document->annotations}}</a>
-                            </td>
-
                         </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
+
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-6">
+          <div class="card">
+              <div class="card-header">
+                  <h5>Comprovante</h5>
+              </div>
+              <div class="card-block">
+
+                @if($order->receipt)
+                    <a target="_blank" href="{{ route('delivery_get_receipt', $order->uuid) }}">Visualizar Comprovante</a>
+                @endif
 
               </div>
           </div>

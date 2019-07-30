@@ -78,12 +78,10 @@ class DeliveryOrderController extends Controller
 
         } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO) {
 
-            $delivery->status_id = Constants::STATUS_DELIVERY_ENTREGUE;
-            $delivery->save();
-
-            $message = 'A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.';
+            $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
 
             return view('delivery-order.scan-delivered', compact('message', 'delivery'));
+
         } else {
             return abort(404);
         }
@@ -95,7 +93,7 @@ class DeliveryOrderController extends Controller
         $data = $request->request->all();
 
         $validator = Validator::make($request->all(), [
-            'document' => 'required|image|mimes:jpeg,png,jpg|max:100',
+            'document' => 'required|image|mimes:jpeg,png,jpg|max:5024',
         ]);
 
         if ($validator->fails()) {
@@ -108,6 +106,7 @@ class DeliveryOrderController extends Controller
             $path = $request->document->store('receipt');
             $delivery->receipt = $path;
             $delivery->status_id = Constants::STATUS_DELIVERY_ENTREGUE;
+            $delivery->delivered_at = now();
             $delivery->save();
         }
 
@@ -117,10 +116,25 @@ class DeliveryOrderController extends Controller
     public function done($id, Request $request)
     {
         $delivery = DeliveryOrder::uuid($id);
-
-        $message = 'O comprovante da  Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi enviado com sucesso.';
-
+        $message = 'A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.';
         return view('delivery-order.scan-done', compact('message', 'delivery'));
+    }
+
+    public function getReceipt($id)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+
+        $link = $delivery->receipt;
+
+        $file = \Storage::exists($link) ? \Storage::get($link) : false;
+
+        if(!$file) {
+          $file = null;
+        }
+
+        $mimetype = \Storage::disk('local')->mimeType($link);
+
+        return response($file, 200)->header('Content-Type', $mimetype);
     }
 
     /**
