@@ -62,7 +62,7 @@
                             $route = route('start_delivery', $delivery->uuid);
                         @endphp
 
-                          {!! QrCode::size(145)->color(46,139,87)->generate($route); !!}
+                          {!! QrCode::size(145)->generate($route); !!}
 
                       </div>
 
