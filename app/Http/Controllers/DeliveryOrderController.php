@@ -35,18 +35,18 @@ class DeliveryOrderController extends Controller
 
         $orders = DeliveryOrder::where('id', '>', 0)->get();
 
-        if($request->filled('q')) {
-            $search = $request->get('q');
-            $orders = $orders->where('id', $search);
-        }
-
         if($request->filled('status')) {
             $status = $request->get('status');
             $orders = $orders->where('status_id', $status);
         }
 
         if(!$request->has('status')) {
-            $orders = $orders->whereIn('status_id', [1,2]);
+            //$orders = $orders->whereIn('status_id', [1,2]);
+        }
+
+        if($request->filled('q') && !$request->has('status')) {
+            $search = $request->get('q');
+            $orders = $orders->where('id', $search);
         }
 
         if($request->filled('date')) {
