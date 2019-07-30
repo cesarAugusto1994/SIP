@@ -28,127 +28,148 @@
 <div class="page-body">
 
 
+  <div class="row">
 
-  <div class="card">
-      <div class="card-header">
-          <h5>OEs</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
+    <div class="col-xl-12 col-lg-12 filter-bar">
+      <nav class="navbar navbar-light bg-faded m-b-30 p-10">
+          <ul class="nav navbar-nav">
+              <li class="nav-item active">
+                  <a class="nav-link" href="#!">Filtros: <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#!" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-clock-time"></i> Data</a>
+                  <div class="dropdown-menu" aria-labelledby="bydate">
+                      <a class="dropdown-item" href="?date=recente">Recente</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="?date=hoje">Hoje</a>
+                      <a class="dropdown-item" href="?date=ontem">Ontem</a>
+                      <a class="dropdown-item" href="?date=semana">Nesta Semana</a>
+                      <a class="dropdown-item" href="?date=mes">Neste Mês</a>
+                      <a class="dropdown-item" href="?date=ano">Neste Ano</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-chart-histogram-alt"></i>Situação</a>
+                  <div class="dropdown-menu" aria-labelledby="bystatus">
+                      <a class="dropdown-item" href="?status=">Todos</a>
+                      <div class="dropdown-divider"></div>
+                      @foreach(\App\Helpers\Helper::deliveryStatus() as $status)
+                          <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
+                      @endforeach
+                  </div>
+              </li>
 
-                  @permission('create.documentos')
-                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('delivery-order.create')}}">Novo</a></li>
-                  @endpermission
-
-              </ul>
-          </div>
-      </div>
-      <div class="card-block">
-
-        <div class="table-responsive">
-            @if($orders->isNotEmpty())
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Cliente</th>
-                      <th>Status</th>
-                      <th>Entregador</th>
-                      <th>Adicionado em</th>
-                      <th>Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($orders->sortByDesc('id') as $order)
-                <tr>
-                    <td>
-                        <a href="{{route('delivery-order.show', ['id' => $order->uuid])}}">#{{ str_pad($order->id, 6, "0", STR_PAD_LEFT)  }}</a>
-                    </td>
-
-                    <td>
-                        <a href="{{ route('clients.show', $order->client->uuid) }}"><b>{{ $order->client->name }}</b></a>
-                        <br/>
-                        <label class="label label-inverse-primary">{{$order->address->street}}, {{$order->address->number}} - {{$order->address->district}}, {{$order->address->city}}</label>
-                    </td>
-
-                    @php
-
-                      $status = $order->status->id;
-
-                      $bgColor = 'success';
-
-                      switch($status) {
-                        case '2':
-                          $bgColor = 'warning';
-                          break;
-                        case '3':
-                          $bgColor = 'primary';
-                          break;
-                        case '4':
-                          $bgColor = 'primary';
-                          break;
-                        case '5':
-                          $bgColor = 'danger';
-                          break;
-                      }
-
-                    @endphp
-
-                    <td>
-                        <label class="label label-{{ $bgColor }}">{{ $order->status->name }}</label>
-                    </td>
-
-                    <td>
-                        {{ $order->user->person->name }}
-                    </td>
-
-                    <td>
-                        {{ $order->created_at->format('d/m/Y H:i') }}
-                        <br/>
-                        <label class="label label-inverse-danger">{{ $order->created_at->diffForHumans() }}</label>
-                    </td>
-
-                    <td class="dropdown">
-
-                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                      <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                        @permission('edit.documentos')
-                          <a href="{{route('delivery-order.show', ['id' => $order->uuid])}}" class="dropdown-item"> Visualizar </a>
-                        @endpermission
-
-                        @permission('edit.documentos')
-                          <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="dropdown-item"> Imprimir Etiqueta </a>
-                        @endpermission
-
-                        @permission('edit.documentos')
-                          <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="dropdown-item"> Editar </a>
-                        @endpermission
-
+              @if(auth()->user()->isAdmin())
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Cliente</a>
+                      <div class="dropdown-menu" aria-labelledby="bystatus">
+                          <a class="dropdown-item" href="?client=">Todos</a>
+                          <div class="dropdown-divider"></div>
+                          @foreach(\App\Helpers\Helper::clients() as $client)
+                              <a class="dropdown-item" href="?client={{$client->id}}">{{$client->name}}</a>
+                          @endforeach
                       </div>
+                  </li>
+              @endif
 
-                    </td>
+              <li class="nav-item">
+                <form action="?">
+                <div class="input-group" style="margin-top: 5px;margin-bottom: 5px;">
+                  <input type="text" name="q" class="form-control" style="width: 200px;" placeholder="Pesquisar"/>
+                  <span class="input-group-addon"><i class="feather icon-search"></i>
+                  </span>
+                </div>
+              </li>
 
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
-            @else
+          </ul>
+          <div class="nav-item nav-grid">
+              @permission('create.ordem.entrega')
+                <a class="btn bottom-right btn-primary btn-sm" href="{{route('delivery-order.create')}}">Nova OE</a>
+              @endpermission
+          </div>
 
-                <div class="widget white-bg no-padding">
-                    <div class="p-m text-center">
-                        <h1 class="m-md"><i class="far fa-bell-slash fa-2x"></i></h1>
-                        <br/>
-                        <h4 class="font-bold no-margins">
-                            Nenhuma ordem de entrega foi registrada até o momento.
-                        </h4>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="row">
+    @forelse ($orders as $order)
+
+    @php
+
+      $status = $order->status->id;
+
+      $bgColor = 'success';
+
+      switch($status) {
+        case '2':
+          $bgColor = 'warning';
+          break;
+        case '3':
+          $bgColor = 'primary';
+          break;
+        case '4':
+          $bgColor = 'primary';
+          break;
+        case '5':
+          $bgColor = 'danger';
+          break;
+      }
+
+    @endphp
+
+    <div class="col-sm-4">
+        <div class="card card-border-{{ $bgColor }}">
+            <div class="card-header">
+                <a href="{{ route('delivery-order.show', $order->uuid) }}" class="card-title">#{{ str_pad($order->id, 6, "0", STR_PAD_LEFT) }}</a>
+                <a href="{{ route('delivery-order.show', $order->uuid) }}"><b>{{$order->name}}</b></a>
+                <a href="{{ route('delivery-order.show', $order->uuid) }}">
+                  <span class="label label-{{$bgColor}} f-right"> {{$order->status->name}} </span></a>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="task-detail">Cliente: <b>{{ $order->client->name }}</b>
+                          <br/>
+                          <label class="label label-inverse-primary">{{$order->address->street}}, {{$order->address->number}} - {{$order->address->district}}, {{$order->address->city}}</label>
+                        </p>
+                        <p class="task-detail">Entregador: {{ $order->user ? $order->user->person->name : '-' }}</p>
+                        <hr/>
+
+                        <p class="task-due">Adicionado:
+                        <label class="label label-inverse-success pull-right">{{ $order->created_at->format('d/m/Y H:i') }} {{ $order->created_at->diffForHumans() }}</label></p>
+                        <hr/>
+                        @if( $order->delivered_at)
+                        <p class="task-due">Entregue:
+                        <label class="label label-inverse-primary pull-right">{{ $order->delivered_at->format('d/m/Y H:i') }} {{ $order->delivered_at->diffForHumans() }}</label></p>
+                        @endif
                     </div>
                 </div>
+            </div>
+            
+        </div>
+    </div>
 
-            @endif
+    @empty
+
+      <div class="col-md-12 col-lg-12">
+
+        <div class="widget white-bg no-padding">
+            <div class="p-m text-center">
+                <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
+                <br/>
+                <h6 class="font-bold no-margins">
+                    Nenhuma ordem de entrega foi registrada até o momento.
+                </h6>
+            </div>
         </div>
 
       </div>
+
+    @endforelse
   </div>
+
 </div>
 
 @endsection

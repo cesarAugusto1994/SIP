@@ -70,8 +70,8 @@ class DeliveryOrder extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-          'notification_id' => $notifiable->id,
-          'mensagem' => 'Documento esta a caminho do destino.',
+          'message' => 'Documento esta a caminho do destino.',
+          'date' => $this->deliverOrder->created_at,
           'url' => route('notifications.index')
         ];
     }

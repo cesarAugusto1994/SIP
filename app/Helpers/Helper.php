@@ -19,6 +19,7 @@ use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Models\Category as MessageBoardCategory;
 use App\Models\MessageBoard\Type as MessageBoardType;
+use App\Models\DeliveryOrder\Status as DeliveryStatus;
 
 /**
  *
@@ -531,6 +532,20 @@ class Helper
         return self::get($key);
     }
 
+    public static function clients()
+    {
+        $key = 'clients';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Client::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
     public static function countClients()
     {
         $key = 'count-clients';
@@ -559,6 +574,19 @@ class Helper
         return self::get($key);
     }
 
+    public static function deliveryStatus()
+    {
+        $key = 'delivery-orider-status';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = DeliveryStatus::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
 
     public static function onlineUsers()
     {

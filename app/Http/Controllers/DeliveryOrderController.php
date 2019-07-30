@@ -27,13 +27,68 @@ class DeliveryOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if(!Auth::user()->hasPermission('view.ordem.entrega')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        $orders = DeliveryOrder::all();
+        $orders = DeliveryOrder::where('id', '>', 0)->get();
+
+        if($request->filled('q')) {
+            $search = $request->get('q');
+            $orders = $orders->where('id', $search);
+        }
+
+        if($request->filled('status')) {
+            $status = $request->get('status');
+            $orders = $orders->where('status_id', $status);
+        }
+
+        if(!$request->has('status')) {
+            $orders = $orders->whereIn('status_id', [1,2]);
+        }
+
+        if($request->filled('date')) {
+            $date = $request->get('date');
+            $orders = $orders->filter(function($order, $key) use ($date) {
+
+              $datePeriod = now()->subDays(0);
+
+              if($date == 'hoje') {
+                  return $order->created_at > now()->setTime(0,0,0) &&
+                  $order->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'ontem') {
+                  return $order->created_at > now()->subDays(1)->setTime(0,0,0) &&
+                  $order->created_at < now()->subDays(1)->setTime(23,59,59);
+              } elseif($date == 'semana') {
+                  return $order->created_at > now()->subDays(7)->setTime(0,0,0) &&
+                  $order->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'mes') {
+                  return $order->created_at > now()->subDays(30)->setTime(0,0,0) &&
+                  $order->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'ano') {
+                  return $order->created_at > now()->subDays(365)->setTime(0,0,0) &&
+                  $order->created_at < now()->setTime(23,59,59);
+              } elseif($date == 'recente') {
+                  return $order->created_at > now()->subHours(2)->setTime(0,0,0) &&
+                  $order->created_at < now()->setTime(23,59,59);
+              }
+
+            });
+        }
+
+        if($request->filled('user')) {
+            $user = $request->get('user');
+            $orders = $orders->where('user_id', $user);
+        }
+
+        if($request->filled('client')) {
+            $client = $request->get('client');
+            $orders = $orders->where('client_id', $client);
+        }
+
+        //$orders = DeliveryOrder::all();
         return view('delivery-order.index', compact('orders'));
     }
 

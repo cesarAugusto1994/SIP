@@ -17,7 +17,7 @@ class DeliveryOrder extends Model
 
     protected static $logAttributes = ['status_id', 'client_id', 'address_id', 'delivered_by', 'delivered_at', 'delivery_date', 'receipt', 'annotations', 'delivery_date'];
 
-    protected $dates = ['delivery_date', 'delivery_at'];
+    protected $dates = ['delivery_date', 'delivery_at', 'delivered_at'];
 
     public function client()
     {
