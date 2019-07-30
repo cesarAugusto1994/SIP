@@ -186,7 +186,7 @@ class UserTableSeeder extends Seeder
         foreach ($users as $key => $user) {
 
           if($key > 5) {
-            //break;
+            break;
           }
 
           //$faker = Faker\Factory::create();

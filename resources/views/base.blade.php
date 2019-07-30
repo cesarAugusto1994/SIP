@@ -104,7 +104,7 @@
           opacity: 1;
         }
 
-        .parsley-required, .parsley-maxlength, .parsley-minlength, .help-block {
+        .parsley-required, .parsley-maxlength, .parsley-minlength, .help-block, .parsley-errors-list {
           list-style: none;
           background-color: #fe5d70;
           /* border: 2px solid #dc3545; */
@@ -1153,7 +1153,13 @@ $(document).ready(function() {
       let route = self.data('search-documents');
       let value = self.val();
 
-      tableDocuments.html("");
+      swal({
+        title: 'Carregando',
+        text: 'Procurando documentos do Cliente.',
+        type: 'success',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      })
 
       $.ajax({
         type: 'GET',
@@ -1161,24 +1167,24 @@ $(document).ready(function() {
         async: true,
         success: function(response) {
 
+          tableDocuments.html("");
+
+          swal.close();
+
           let html = "";
 
           $.each(response.data, function(idx, item) {
 
               html += "<tr>";
-              html += "<td><input type='checkbox' name='documents[]' value='"+ item.id +"'/></td>";
+              html += "<td><input class='js-switch' type='checkbox' name='documents[]' value='"+ item.id +"'/></td>";
               html += "<td>"+ item.type +"</td>";
               html += "<td>"+ item.client +"</td>";
               html += "<td>"+ item.status +"</td>";
-              html += "<td>"+ item.annotations +"</td>";
               html += "</tr>";
-
-              tableDocuments.append(html);
 
           });
 
-
-
+          tableDocuments.append(html);
         }
       })
 

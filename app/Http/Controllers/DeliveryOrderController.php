@@ -120,7 +120,7 @@ class DeliveryOrderController extends Controller
     public function create(Request $request)
     {
         $data = $request->request->all();
-
+/*
         if(!$request->has('document')) {
 
           notify()->flash('Documento não informado!', 'error', [
@@ -129,7 +129,7 @@ class DeliveryOrderController extends Controller
 
           return back();
         }
-
+*/
         $occupation = Occupation::where('name', 'Entregador')->get();
 
         if($occupation->isEmpty()) {
@@ -153,13 +153,13 @@ class DeliveryOrderController extends Controller
         }
 
         $clients = Client::all();
-        $addresses = [];
+        $addresses = $documents = [];
 
         if($request->has('client')) {
             $client = Client::uuid($request->get('client'));
             $documents = $client->documents->where('status_id', 1);
             $addresses = $client->addresses;
-        } else {
+        } elseif($request->has('document')) {
             $documents = Document::whereIn('uuid', $data['document'])->get();
         }
 
@@ -280,13 +280,12 @@ class DeliveryOrderController extends Controller
 
         foreach ($documentsGroupedByClients as $keyClient => $documentsGroupedByClient) {
 
-            //dd($documentsGroupedByClient);
-
             $deliveryOrder = DeliveryOrder::create([
               'client_id' => $keyClient,
               'status_id' => 1,
               'delivered_by' => $data['delivered_by'],
               'address_id' => $data['address_id'],
+              'annotations' => $data['annotations'],
               'delivery_date' => $deliveryDate,
             ]);
 

@@ -68,7 +68,7 @@
                               <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Endereço</label>
                                   <div class="input-group">
-                                    <select class="select2" id="select-address" name="address_id" required>
+                                    <select class="form-control" id="select-address" name="address_id" required>
                                         <option value="">Selecione um Cliente</option>
                                         @foreach($addresses as $address)
                                             <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}}</option>
@@ -85,7 +85,7 @@
                                 <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entregador</label>
                                     <div class="input-group">
-                                      <select class="select2 select-entregador" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
+                                      <select class="form-control select-entregador" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
                                           <option value="">Selecione um entregador</option>
                                           @foreach($delivers as $deliver)
                                               <option value="{{$deliver->uuid}}">{{$deliver->name}}</option>
@@ -102,7 +102,7 @@
                                 <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entrega</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control inputDate" name="delivery_date"/>
+                                        <input type="text" autocomplete="off" class="form-control inputDate" name="delivery_date"/>
                                         {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                         }
                                     @endphp
 
-                                    <td><input type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
+                                    <td><input class="js-switch" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
                                     <td>{{ $document->type->name }}</td>
                                     <td>{{ $document->client->name }}</td>
                                     <td>{{ $document->status->name }}</td>
@@ -189,37 +189,6 @@
     <script>
 
       $(document).ready(function() {
-
-        let selectEntregador = $(".select-entregador");
-        let entregador = $("#entregador");
-
-        selectEntregador.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-
-          let self = $(this);
-          let route = self.data('search-user');
-          let value = self.val();
-
-          $.ajax({
-            type: 'GET',
-            url: route + '?param=' + value,
-            async: true,
-            success: function(response) {
-
-              if(response.success) {
-
-                let result = response.data;
-
-                entregador.html("");
-                let html = result.name + " - " + result.cpf;
-                entregador.append(html);
-              }
-
-
-            }
-          })
-
-
-        });
 
       });
 

@@ -37,15 +37,11 @@
             <div class="card-block">
 
               @permission('edit.documentos')
-                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-round btn-sm"> Imprimir Etiqueta </a>
+                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-sm"> Imprimir Etiqueta </a>
               @endpermission
 
               @permission('edit.documentos')
-                <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-round btn-sm"> Editar </a>
-              @endpermission
-
-              @permission('delete.documentos')
-                <a href="#!" data-route="{{route('documents.destroy', ['id' => $order->uuid])}}" class="btn btn-danger btn-round btn-sm"> Cancelar </a>
+                <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm"> Editar </a>
               @endpermission
 
             </div>
@@ -58,11 +54,6 @@
           <div class="card">
               <div class="card-header">
                   <h5>Informações Gerais</h5>
-                  <div class="card-header-right">
-                      <ul class="list-unstyled card-option">
-                          <li><i class="feather icon-maximize full-card"></i></li>
-                      </ul>
-                  </div>
               </div>
               <div class="card-block">
 
@@ -132,11 +123,6 @@
         <div class="card">
             <div class="card-header">
                 <h5>Endereço</h5>
-                <div class="card-header-right">
-                    <ul class="list-unstyled card-option">
-                        <li><i class="feather icon-maximize full-card"></i></li>
-                    </ul>
-                </div>
             </div>
             <div class="card-block">
 
@@ -194,11 +180,6 @@
           <div class="card">
               <div class="card-header">
                   <h5>Documentos</h5>
-                  <div class="card-header-right">
-                      <ul class="list-unstyled card-option">
-                          <li><i class="feather icon-maximize full-card"></i></li>
-                      </ul>
-                  </div>
               </div>
               <div class="card-block">
 
