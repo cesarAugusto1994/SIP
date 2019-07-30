@@ -30,28 +30,22 @@ class TicketsController extends Controller
             $tickets = Ticket::all();
         }
 
-        $opened = $tickets->filter(function($ticket, $key) {
-          return $ticket->logs->last()->status_id == 1 || $ticket->logs->last()->status_id == 2 || $ticket->logs->last()->status_id == 3;
-        })->count();
+        $opened = $tickets->whereIn('status_id', [1,2,3])->count();
+        $finished = $tickets->whereIn('status_id', [4])->count();
+        $canceled = $tickets->whereIn('status_id', [5])->count();
 
-        $finished = $tickets->filter(function($ticket, $key) {
-          return $ticket->logs->last()->status_id == 4;
-        })->count();
-
-        $canceled = $tickets->filter(function($ticket, $key) {
-          return $ticket->logs->last()->status_id == 5;
-        })->count();
-
-        $total = $tickets->count() > 0 ? $tickets->count() : 1;
+        $total = $tickets->count();
         $low =  $tickets->where('priority', 'Baixa')->count();
         $normal =  $tickets->where('priority', 'Normal')->count();
         $high =  $tickets->where('priority', 'Alta')->count();
         $highest =  $tickets->where('priority', 'Altíssima')->count();
 
-        $low = number_format(($low/$total) * 100, 2);
-        $normal = number_format(($normal/$total) * 100, 2);
-        $high = number_format(($high/$total) * 100, 2);
-        $highest = number_format(($highest/$total) * 100, 2);
+        $totalTickets = $total > 0 ? $total : 1;
+
+        $low = number_format(($low/$totalTickets) * 100, 2);
+        $normal = number_format(($normal/$totalTickets) * 100, 2);
+        $high = number_format(($high/$totalTickets) * 100, 2);
+        $highest = number_format(($highest/$totalTickets) * 100, 2);
 
         if($request->filled('status')) {
             $status = $request->get('status');
@@ -59,7 +53,7 @@ class TicketsController extends Controller
         }
 
         if(!$request->has('status')) {
-            $tickets = $tickets->whereIn('status_id', [1,2]);
+            //$tickets = $tickets->whereIn('status_id', [1,2]);
         }
 
         if($request->filled('priority')) {

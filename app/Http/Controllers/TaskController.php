@@ -45,7 +45,7 @@ class TaskController extends Controller
         }
 
         if(!$request->has('status')) {
-            $tasks = $tasks->whereIn('status_id', [1,2]);
+            //$tasks = $tasks->whereIn('status_id', [1,2]);
         }
 
         if($request->filled('severity')) {
@@ -96,8 +96,6 @@ class TaskController extends Controller
             $user = $request->get('user');
             $tasks = $tasks->where('user_id', $user);
         }
-
-        //$tasks = $tasks->paginate();
 
         return view('tasks.index')->with('tasks', $tasks);
     }

@@ -19,13 +19,13 @@ class TicketTypesTableSeeder extends Seeder
             'name' => 'Problemas no SOC',
             'types' => [
               [
-                  'name' => 'Não consigo acessar',
-              ],
-              [
                   'name' => 'Esqueci minha senha',
               ],
               [
                   'name' => 'Bloqueio por errar minha senha',
+              ],
+              [
+                  'name' => 'Minhas Permissões estão erradas',
               ],
               [
                   'name' => 'Dúvidas',
@@ -42,7 +42,13 @@ class TicketTypesTableSeeder extends Seeder
                   'name' => 'Não Liga',
               ],
               [
-                  'name' => 'Não consigo acessar',
+                  'name' => 'Não consigo acessar os programas',
+              ],
+              [
+                  'name' => 'Problemas com mouse',
+              ],
+              [
+                  'name' => 'Problemas com teclado',
               ],
               [
                   'name' => 'Outros',
@@ -55,9 +61,6 @@ class TicketTypesTableSeeder extends Seeder
             'types' => [
               [
                   'name' => 'Não Acessa a internet',
-              ],
-              [
-                  'name' => 'Não sei a Senha do wifi',
               ],
               [
                   'name' => 'Outros',
@@ -139,6 +142,9 @@ class TicketTypesTableSeeder extends Seeder
               ],
               [
                   'name' => 'Solicitação de Notebook',
+              ],
+              [
+                  'name' => 'Novo Prestador',
               ],
               [
                   'name' => 'Solicitação de acesso ao E-mail',
