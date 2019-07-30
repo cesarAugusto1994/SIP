@@ -41,6 +41,11 @@ class Document extends Model
         return $this->belongsTo('App\Models\Client\Employee');
     }
 
+    public function delivery()
+    {
+        return $this->belongsTo('App\Models\DeliveryOrder');
+    }
+
     public function status()
     {
         return $this->belongsTo('App\Models\Delivery\Document\Status', 'status_id');
@@ -49,5 +54,16 @@ class Document extends Model
     public function type()
     {
         return $this->belongsTo('App\Models\Delivery\Document\Type', 'type_id');
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Documento atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Documento removido";
+        }
+
+        return "Documento Adicionado";
     }
 }

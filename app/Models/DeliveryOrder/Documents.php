@@ -31,4 +31,15 @@ class Documents extends Model
     {
         return $this->belongsTo('App\Models\DeliveryOrder');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Documento da Ordem de Entrega foi atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Documento da Ordem de Entrega foi removido";
+        }
+
+        return "Documento Adicionado à Ordem de Entrega";
+    }
 }

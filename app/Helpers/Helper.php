@@ -631,6 +631,22 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\DeliveryOrder') {
+
+          if($item) {
+            $route = route('delivery-order.show', $item->uuid);
+            $html = "<a href=".$route.">#".$item->id."</a>";
+          }
+        }
+
+        if($model == 'App\Models\DeliveryOrder\Documents') {
+
+          if($item) {
+            $route = route('delivery-order.show', $item->deliveryOrder->uuid);
+            $html = "<a href=".$route.">#".$item->deliveryOrder->id."</a>";
+          }
+        }
+
         if($model == 'App\Models\Schedule') {
 
           if($item) {

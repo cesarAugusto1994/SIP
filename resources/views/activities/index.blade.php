@@ -33,11 +33,11 @@
 
         @if($activities->isNotEmpty())
 
-          @foreach($activities->take(4) as $activity)
+          @foreach($activities as $activity)
 
             <div class="row m-b-25">
                 <div class="col">
-                    <h6 class="m-b-5">{{ $activity->created_at->format('H:i') }}</h6>
+                    <h6 class="m-b-5">{{ $activity->created_at->format('d/m/Y H:i') }}</h6>
                     <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
                     <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
                 </div>

@@ -15,7 +15,6 @@ class ActivitiesController extends Controller
     public function index()
     {
         $activities = Auth::user()->activities->sortByDesc('id');
-
         return view('activities.index', compact('activities'));
     }
 

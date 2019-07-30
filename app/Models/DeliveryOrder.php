@@ -43,4 +43,15 @@ class DeliveryOrder extends Model
     {
         return $this->belongsTo('App\User', 'delivered_by');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Ordem de Entrega foi atualizada";
+        } elseif ($eventName == 'deleted') {
+            return "Ordem de Entrega removida";
+        }
+
+        return "Ordem de Entrega adicionada";
+    }
 }
