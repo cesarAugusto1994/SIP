@@ -95,17 +95,25 @@
                       <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                       <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                        @permission('edit.documentos')
-                          @if($document->status_id == 1)
+                        @if($document->status_id == 1)
+
+                            @permission('edit.documentos')
                               <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
-                          @endif
-                        @endpermission
-                        @permission('edit.documentos')
-                          <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-edit"></i> Editar</a>
-                        @endpermission
-                        @permission('delete.documentos')
-                          <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                        @endpermission
+                            @endpermission
+
+                        @endif
+
+                        @if($document->status_id == 1 || $document->status_id == 2)
+
+                                @permission('edit.documentos')
+                                  <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-edit"></i> Editar</a>
+                                @endpermission
+                                @permission('delete.documentos')
+                                  <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
+                                @endpermission
+
+                        @endif
+
 
                       </div>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Delivery\Documents\Type;
+use App\Models\Delivery\Document\Type;
 
 class DocumentTypesController extends Controller
 {
@@ -15,7 +15,7 @@ class DocumentTypesController extends Controller
     public function index()
     {
         $types = Type::all();
-        return view('admin.documents.types.index', compact('types'));
+        return view('documents.types.index', compact('types'));
     }
 
     /**
@@ -25,7 +25,7 @@ class DocumentTypesController extends Controller
      */
     public function create()
     {
-        return view('admin.documents.types.create');
+        return view('documents.types.create');
     }
 
     /**
@@ -47,7 +47,13 @@ class DocumentTypesController extends Controller
           return redirect()->route('types.index');
         }
 
-        $data['price'] = number_format(str_replace(',', '.', $data['price']), 2);
+        $value = 0.00;
+
+        if($request->filled('price')) {
+            $value = number_format(str_replace(',', '.', $data['price']), 2);
+        }
+
+        $data['price'] = $value;
 
         Type::create($data);
 
@@ -78,7 +84,7 @@ class DocumentTypesController extends Controller
     public function edit($id)
     {
         $type = Type::uuid($id);
-        return view('admin.documents.types.edit', compact('type'));
+        return view('documents.types.edit', compact('type'));
     }
 
     /**
@@ -93,7 +99,9 @@ class DocumentTypesController extends Controller
         $data = $request->request->all();
         $type = Type::uuid($id);
 
-        $data['price'] = number_format(str_replace(',', '.', $data['price']), 2);
+        if($request->filled('price')) {
+            $data['price'] = number_format(str_replace(',', '.', $data['price']), 2);
+        }
 
         $type->update($data);
 

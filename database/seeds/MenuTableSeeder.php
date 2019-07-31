@@ -87,6 +87,15 @@ class MenuTableSeeder extends Seeder
                 'icon' => 'fas fa-boxes',
               ],
 
+              [
+                'title' => 'Faturamento',
+                'route' => 'delivery_billing',
+                'permission' => 'view.entrega.faturamento',
+                'description' => 'Faturamento',
+                'parent' => 'Gestão de Entregas',
+                'icon' => 'fas fa-receipt',
+              ],
+
           [
             'title' => 'Tarefas',
             'route' => null,
@@ -196,7 +205,7 @@ class MenuTableSeeder extends Seeder
             [
               'title' => 'Tipos de Documentos',
               'route' => 'types.index',
-              'permission' => 'view.tipo.documento',
+              'permission' => 'view.tipo.de.documentos',
               'description' => 'Tipos de Documentos',
               'parent' => 'Administrativo',
               'icon' => 'far fa-file-alt',

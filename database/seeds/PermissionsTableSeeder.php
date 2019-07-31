@@ -41,7 +41,8 @@ class PermissionsTableSeeder extends Seeder
             'Ramais e E-mails',
             'Painel de Tarefas',
             'Mapeamentos',
-            'Agenda'
+            'Agenda',
+            'Entrega Faturamento'
           ])) {
             continue;
           }

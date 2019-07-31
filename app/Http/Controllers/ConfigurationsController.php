@@ -19,7 +19,7 @@ class ConfigurationsController extends Controller
     public function index()
     {
         $configs = Configuration::all();
-        return view('admin.configurations.index', compact('configs'));
+        return view('configurations.index', compact('configs'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ConfigurationsController extends Controller
     public function create()
     {
         $types = Type::where('active', true)->get();
-        return view('admin.configurations.create', compact('types'));
+        return view('configurations.create', compact('types'));
     }
 
 
@@ -81,7 +81,7 @@ class ConfigurationsController extends Controller
     {
         $config = Configuration::findOrFail($id);
         $types = Type::where('active', true)->get();
-        return view('admin.configurations.edit', compact('config', 'types'));
+        return view('configurations.edit', compact('config', 'types'));
     }
 
     /**

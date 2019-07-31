@@ -12,58 +12,59 @@ class DeliveryDocumentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $list = [
-          [
-            'name' => 'Admissional',
-            'price' => 6.00,
-
-          ],
-          [
-            'name' => 'Periódico',
-            'price' => 5.00,
-
-          ],
-          [
-            'name' => 'Demissional',
-            'price' => 10.00,
-
-          ],
-          [
-            'name' => 'Nota Fiscal',
-            'price' => 0.00,
-
-          ],
-          [
-            'name' => 'Outros',
-            'price' => 1.00,
-
-          ],
-          [
-            'name' => 'Documento',
-            'price' => 0.00,
-
-          ],
-          [
-            'name' => 'Contrato',
-            'price' => 0.00,
-
-          ],
-          [
-            'name' => 'Contrato Aditivo',
-            'price' => 0.00,
-
-          ],
-          [
-            'name' => 'Boleto',
-            'price' => 0.00,
-
-          ],
-        ];
+      $list = [
+        [
+          'name' => 'Admissional',
+          'price' => 2.00,
+          'can_delivery' => true,
+        ],
+        [
+          'name' => 'Periódico',
+          'price' => 5.00,
+          'can_delivery' => true,
+        ],
+        [
+          'name' => 'Demissional',
+          'price' => 10.00,
+          'can_delivery' => true,
+        ],
+        [
+          'name' => 'Nota Fiscal',
+          'price' => 5.00,
+          'can_delivery' => true,
+        ],
+        [
+          'name' => 'Outros',
+          'price' => 1.00,
+          'can_delivery' => true,
+        ],
+        [
+          'name' => 'Documento',
+          'price' => 5.00,
+          'can_delivery' => false,
+        ],
+        [
+          'name' => 'Contrato',
+          'price' => 7.00,
+          'can_delivery' => false,
+        ],
+        [
+          'name' => 'Contrato Aditivo',
+          'price' => 15.00,
+          'can_delivery' => false,
+        ],
+        [
+          'name' => 'Boleto',
+          'price' => 20.00,
+          'can_delivery' => false,
+        ],
+      ];
 
         foreach ($list as $item) {
-            Type::create([
-              'name' => $item['name'],
-            ]);
+          Type::create([
+            'name' => $item['name'],
+            'price' => $item['price']
+          ]);
         }
     }
 }

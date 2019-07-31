@@ -31,7 +31,7 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Novo Cargos</h5>
+          <h5>Novo Departamento</h5>
       </div>
       <div class="card-block">
 

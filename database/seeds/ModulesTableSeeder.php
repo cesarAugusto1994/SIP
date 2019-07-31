@@ -122,6 +122,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Entrega Faturamento',
+            'slug' => str_slug('Entrega Faturamento'),
+            'description' => 'Entrega Faturamento',
+            'parent' => str_slug('Gestao de Entregas'),
+          ],
+
+          [
             'name' => 'Tarefas',
             'slug' => str_slug('Tarefas'),
             'description' => 'Tarefas',
@@ -184,9 +191,23 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Tipo de Documentos',
+            'slug' => str_slug('Tipo de Documentos'),
+            'description' => 'Tipo de Documentos',
+            'parent' => str_slug('Administrativo'),
+          ],
+
+          [
             'name' => 'Privilégios',
             'slug' => str_slug('Privilegios'),
             'description' => 'Privilégios',
+            'parent' => str_slug('Administrativo'),
+          ],
+
+          [
+            'name' => 'Configurações',
+            'slug' => str_slug('Configuracoes'),
+            'description' => 'Configurações',
             'parent' => str_slug('Administrativo'),
           ],
 

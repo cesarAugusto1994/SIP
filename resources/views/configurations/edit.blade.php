@@ -1,12 +1,41 @@
-@extends('layouts.app')
-
-@section('page-title', 'Configurações')
+@extends('base')
 
 @section('content')
 
-        <div class="card-box">
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Configurações</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('configurations.index') }}"> Configurações </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <form role="form" method="post" action="{{ route('configurations.update', $config->id) }}" enctype="multipart/form-data">
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Editar Configuração</h5>
+      </div>
+      <div class="card-block">
+
+        <form class="formValidation" data-parsley-validate role="form" method="post" action="{{ route('configurations.update', $config->id) }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <div class="box-body">
@@ -28,10 +57,10 @@
                   @endforeach
                 </select>
                 @if ($errors->has('type_id'))
-    							<span class="help-block">
-    								<strong>{{ $errors->first('type_id') }}</strong>
-    							</span>
-    						@endif
+                  <span class="help-block">
+                    <strong>{{ $errors->first('type_id') }}</strong>
+                  </span>
+                @endif
               </div>
 
               @if($config->type_id == 1)
@@ -59,21 +88,25 @@
                 </div>
               @endif
 
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="active" value="1" data-plugin="switchery" {{ $config->active ? 'checked' : '' }}> active
-                </label>
-              </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="active" value="1" data-plugin="switchery" {{ $config->active ? 'checked' : '' }}> active
+                  </label>
+                </div>
             </div>
 
-            <br/>
-            <br/>
+            <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+            <a class="btn btn-danger btn-sm" href="{{ route('configurations.index') }}">Cancelar</a>
 
-            <div class="box-footer">
-              <button type="submit" class="btn btn-custom">Salvar</button>
-              <a class="btn btn-default" href="{{ route('configurations.index') }}">Cancelar</a>
-            </div>
-          </form>
+        </form>
+
+      </div>
+  </div>
+</div>
+
+        <div class="card-box">
+
+
 
         </div>
 

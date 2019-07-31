@@ -165,11 +165,16 @@ class DocumentsController extends Controller
 
         $client = Client::uuid($data['client_id']);
         $type = Type::uuid($data['type_id']);
-        $employee = Employee::uuid($data['employee_id']);
+
+        $employee = null;
+
+        if($request->filled('employee_id')) {
+            $employee = Employee::uuid($data['employee_id']);
+        }
 
         $data['client_id'] = $client->id;
         $data['type_id'] = $type->id;
-        $data['employee_id'] = $employee->id;
+        $data['employee_id'] = $employee->id ?? null;
 
         $document->update($data);
 

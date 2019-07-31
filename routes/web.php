@@ -139,6 +139,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::post('delivery-order/{id}/cancel', 'DeliveryOrderController@cancel')->name('delivery_cancel');
     Route::post('delivery-order/{id}/confirm', 'DeliveryOrderController@confirm')->name('delivery_confirm');
 
+    Route::get('delivery-order/report/billing', 'DeliveryOrderController@billing')->name('delivery_billing');
+
     Route::resource('message-board', 'MessageBoardController');
     Route::resource('message-types', 'MessageTypesController');
 

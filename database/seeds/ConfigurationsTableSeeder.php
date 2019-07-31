@@ -24,7 +24,7 @@ class ConfigurationsTableSeeder extends Seeder
            'name' => 'Nome Aplicação',
            'description' => 'Nome da aplicação',
            'slug' => str_slug('Nome Aplicacao', '.'),
-           'value' => 'Imobiliária',
+           'value' => 'SIP',
            'type_id' => 1,
            'can_drop' => false
          ],
@@ -32,38 +32,6 @@ class ConfigurationsTableSeeder extends Seeder
            'name' => 'Logo Aplicação',
            'description' => 'Logo da Aplicação',
            'slug' => str_slug('Logo Aplicacao', '.'),
-           'value' => '/',
-           'type_id' => 3,
-           'can_drop' => false
-         ],
-         [
-           'name' => 'Background Login Aplicação',
-           'description' => 'Background do Login da Aplicação',
-           'slug' => str_slug('Background login Aplicacao', '.'),
-           'value' => '/',
-           'type_id' => 3,
-           'can_drop' => false
-         ],
-         [
-           'name' => 'Background Aplicação',
-           'description' => 'Background da Aplicação',
-           'slug' => str_slug('Background Aplicacao', '.'),
-           'value' => '/',
-           'type_id' => 3,
-           'can_drop' => false
-         ],
-         [
-           'name' => 'Logo Minificado Aplicação',
-           'description' => 'Logo Minificado da Aplicação',
-           'slug' => str_slug('Logo Min Aplicacao', '.'),
-           'value' => '/',
-           'type_id' => 3,
-           'can_drop' => false
-         ],
-         [
-           'name' => 'Logo Footer',
-           'description' => 'Logo Footer',
-           'slug' => str_slug('Logo Footer', '.'),
            'value' => '/',
            'type_id' => 3,
            'can_drop' => false
@@ -96,22 +64,6 @@ class ConfigurationsTableSeeder extends Seeder
            'name' => 'Mail Port',
            'description' => 'Porta do Host',
            'slug' => str_slug('Mail Port', '.'),
-           'value' => null,
-           'type_id' => 1,
-           'can_drop' => false
-         ],
-         [
-           'name' => 'Mail Username',
-           'description' => 'Usuário do Email',
-           'slug' => str_slug('Mail Username', '.'),
-           'value' => null,
-           'type_id' => 1,
-           'can_drop' => false
-         ],
-         [
-           'name' => 'Mail Password',
-           'description' => 'Senha do Email',
-           'slug' => str_slug('Mail Password', '.'),
            'value' => null,
            'type_id' => 1,
            'can_drop' => false

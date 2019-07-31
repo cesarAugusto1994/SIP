@@ -94,6 +94,51 @@ class DeliveryOrderController extends Controller
         return view('delivery-order.index', compact('orders'));
     }
 
+    public function billing(Request $request)
+    {
+        $deliveries = DeliveryOrder::all();
+
+        $first = new \DateTime('first day of this month');
+        $last = new \DateTime('last day of this month');
+
+        if($request->filled('start') && $request->filled('end')) {
+          $first = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+          $last = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+        }
+
+        $dias = $first->diff($last)->days;
+
+        $data = [];
+
+        $date = $first;
+
+        foreach (range(0, $dias) as $key3 => $dia) {
+
+            $total = 0;
+
+            if($dia > 0) {
+                $date = (new \DateTime($date->format('Y-m-d')))->modify('+1 day');
+            }
+
+            $dateA = $date->format('d/m/Y');
+
+            foreach ($deliveries as $key => $delivery) {
+
+                $client = $delivery->client;
+                $value = $delivery->documents->sum('document.type.price');
+
+                print_r($value);
+
+                $data[$client->name][$dateA] = $value;
+            }
+
+        }
+
+        dd($data);
+
+        return view('delivery-order.billing');
+    }
+
     public function printTags($id, Request $request)
     {
         $delivery = DeliveryOrder::uuid($id);

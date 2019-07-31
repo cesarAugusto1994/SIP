@@ -1,52 +1,58 @@
-@extends('layouts.app')
-
-@section('page-title', 'Tipos de Documentos')
+@extends('base')
 
 @section('content')
 
-    <div class="card-box">
-        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
-
-        @permission('create.cargos')
-          <a href="{{route('types.create')}}" class="btn btn-custom dim m-t-lg">Novo Tipo</a>
-        @endpermission
-
-    </div>
-
-    <div class="row">
-
-        @forelse($types as $type)
-
-            <div class="col-sm-3">
-                <div class="card-box">
-                    <h6 class="text-muted font-13 m-t-0 text-uppercase"><i class="fa fa-money"></i> {{number_format($type->price, 2, ',', '')}}</h6>
-                    <h3 class="m-b-20 mt-3">{{$type->name}}</h3>
-
-                    <div class="row text-center m-t-30">
-                      <div class="col-12">
-                          <a class="btn btn-default" href="{{route('types.edit', ['id' => $type->uuid])}}"><i class="fa fa-pencil"></i> Editar</a>
-                      </div>
-                  </div>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Tipos de Documentos</h4>
                 </div>
             </div>
-
-        @empty
-
-        <div class="col-sm-12">
-
-          <div class="widget white-bg no-padding m-t-30">
-              <div class="p-m text-center">
-                  <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
-                  <h4 class="font-bold no-margins">
-                      Nenhum registro encontrado.
-                  </h4>
-              </div>
-          </div>
-
         </div>
-
-        @endforelse
-
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Tipos de Documentos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+</div>
+
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Listagem</h5>
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+                @permission('create.tipo.de.documentos')
+                  <a href="{{route('types.create')}}" class="btn btn-success">Novo Tipo</a>
+                @endpermission
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+    @foreach($types as $type)
+    <div class="col-md-12 col-lg-4">
+        <div class="card">
+            <div class="card-block text-center">
+                <h4 class="m-t-20">{{$type->name}}</h4>
+                <p class="m-b-20">{{number_format($type->price, 2, ',', '')}}</p>
+                <a class="btn btn-primary btn-sm btn-round" href="{{route('types.edit', ['id' => $type->uuid])}}"><i class="fa fa-edit"></i> Editar</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+  </div>
+
+</div>
 
 @endsection

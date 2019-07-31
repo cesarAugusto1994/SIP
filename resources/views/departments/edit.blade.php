@@ -31,7 +31,7 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Listagem de Departamentos</h5>
+          <h5>Editar Departamentos</h5>
       </div>
       <div class="card-block">
 

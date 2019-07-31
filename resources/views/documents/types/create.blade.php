@@ -1,46 +1,73 @@
-@extends('layouts.app')
-
-@section('page-title', 'Tipos de Documentos')
+@extends('base')
 
 @section('content')
-
-<div class="card-box">
-    <h6 class="font-13 m-t-0 m-b-30">Novo Documento</h6>
-
-    <form method="post" action="{{route('types.store')}}">
-        {{csrf_field()}}
-
-        <div class="row m-b-30">
-
-            <div class="col-md-4">
-
-              <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
-                  <label class="col-form-label">Nome</label>
-                  <div class="input-group">
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" autofocus required/>
-                  </div>
-                  {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-              </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-              <div class="form-group {!! $errors->has('price') ? 'has-error' : '' !!}">
-                  <label class="col-form-label">Valor Cobrado (R$)</label>
-                  <div class="input-group">
-                    <input type="text" name="price" value="{{ old('price') }}" class="form-control inputMoney" required/>
-                  </div>
-                  {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
-              </div>
-
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Tipos de Documentos</h4>
+                </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('types.index') }}"> Tipos de Documentos </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!"> Novo </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <button class="btn btn-custom">Salvar</button>
-        <a class="btn btn-default" href="{{ route('types.index') }}">Cancelar</a>
-    </form>
+<div class="page-body">
+  <div class="card">
+      <div class="card-header">
+          <h5>Adicionar Tipos de Documentos</h5>
+      </div>
+      <div class="card-block">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('types.store')}}">
+            {{csrf_field()}}
 
+            <div class="row m-b-30">
+
+                <div class="col-md-4">
+
+                  <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Nome</label>
+                      <div class="input-group">
+                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" autofocus required/>
+                      </div>
+                      {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <div class="form-group {!! $errors->has('price') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Valor Cobrado (R$)</label>
+                      <div class="input-group">
+                        <input type="text" name="price" value="{{ old('price') }}" class="form-control inputMoney"/>
+                      </div>
+                      {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+                  </div>
+
+                </div>
+            </div>
+
+            <button class="btn btn-success btn-sm">Salvar</button>
+            <a class="btn btn-danger btn-sm" href="{{ route('types.index') }}">Cancelar</a>
+        </form>
+      </div>
+  </div>
 </div>
 
 @endsection

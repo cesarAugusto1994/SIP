@@ -35,6 +35,11 @@ class Client extends Model
         return $this->hasMany('App\Models\Client\Employee', 'company_id');
     }
 
+    public function deliveries()
+    {
+        return $this->hasMany('App\Models\DeliveryOrder', 'client_id');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {
