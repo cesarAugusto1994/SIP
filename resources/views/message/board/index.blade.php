@@ -58,7 +58,7 @@
                           <h6>{{ $message->subject }}</h6>
                           <p class="text-muted m-b-0 d-inline">{{ $message->created_at->format('d/m/Y H:i') }}</p>
                           <p class="text-muted m-b-0">
-                              {{ html_entity_decode(strip_tags(substr($message->content, 0, 240))) }}...
+                              {{ html_entity_decode(strip_tags(substr($message->content, 0, 800))) }}...
                           </p>
                         </a>
                         <br/>

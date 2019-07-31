@@ -96,9 +96,13 @@ class MessageBoardController extends Controller
 
         } elseif (in_array(0, $departments) && !in_array(0, $usersList)) {
 
+            array_push($usersList, auth()->user()->id);
+
             $users = UserModel::whereIn('id', $usersList)->get();
 
         } elseif (!in_array(0, $departments) && !in_array(0, $usersList)) {
+
+            array_push($usersList, auth()->user()->id);
 
             $people = People::whereIn('department_id', $departments)->pluck('id');
             $users = UserModel::whereIn('id', $usersList)->get();
@@ -106,9 +110,13 @@ class MessageBoardController extends Controller
         } elseif (!in_array(0, $departments) && in_array(0, $usersList)) {
 
             $people = People::whereIn('department_id', $departments)->pluck('id');
-            $users = UserModel::whereIn('id', $people)->get();
+            $people->push(auth()->user()->person->id);
+
+            $users = UserModel::whereIn('person_id', $people)->get();
 
         } else {
+
+            array_push($usersList, auth()->user()->id);
 
             $users = UserModel::whereIn('id', $usersList)->get();
 

@@ -67,13 +67,15 @@
         <div class="card-footer">
 
           <div class="f-left">
-
+            @if(auth()->user()->id == $schedule->user->id)
               <a data-route="{{ route('schedules.destroy', $schedule->uuid) }}" class="btn btn-danger text-white btn-sm waves-effect waves-light btnRemoveItemToBack" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remover"><i class="icofont icofont-close"></i>Remover</a>
-
+            @endif
           </div>
 
           <div class="f-right d-flex">
+            @if(auth()->user()->id == $schedule->user->id)
               <a href="{{ route('schedules.edit', ['id' => $schedule->uuid]) }}" class="btn btn-primary btn-sm waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar"><i class="icofont icofont-edit"></i>Editar</a>
+            @endif
           </div>
 
         </div>

@@ -157,7 +157,7 @@
                                 <a class="" href="{{ route('message-board.show', $message->uuid) }}">
                                   <h6>{{ $message->subject }}</h6>
                                   <p class="text-muted m-b-0">
-                                      {{ html_entity_decode(strip_tags(substr($message->content, 0, 240))) }}...
+                                      {{ html_entity_decode(strip_tags(substr($message->content, 0, 500))) }} ...
                                   </p>
                                 </a>
                                   <br/>
