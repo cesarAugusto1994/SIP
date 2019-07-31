@@ -11,9 +11,24 @@ class Client extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name', 'email', 'phone', 'document', 'active'];
+    protected $fillable = ['name', 'code', 'contract_id', 'document', 'active'];
 
-    protected static $logAttributes = ['name', 'email', 'phone', 'document', 'active'];
+    protected static $logAttributes = ['name', 'code', 'contract_id', 'document', 'active'];
+
+    public function contract()
+    {
+        return $this->belongsTo('App\Models\Contract');
+    }
+
+    public function phones()
+    {
+        return $this->hasMany('App\Models\Client\Phone', 'client_id');
+    }
+
+    public function emails()
+    {
+        return $this->hasMany('App\Models\Client\Email', 'client_id');
+    }
 
     public function documents()
     {

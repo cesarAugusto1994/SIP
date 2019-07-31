@@ -6,7 +6,7 @@ use Auth;
 use Session;
 use App\User;
 use App\Models\Training\Course;
-use App\Models\{People, Menu, Client};
+use App\Models\{People, Menu, Client, Contract};
 use App\Models\Client\Employee;
 use App\Models\Task\Status as TicketStatus;
 use App\Models\Ticket\{Type,Status};
@@ -360,6 +360,20 @@ class Helper
         $courses = Course::all();
 
         self::set($key, $courses);
+        return self::get($key);
+    }
+
+    public static function contracts()
+    {
+        $key = 'contracts';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Contract::all();
+
+        self::set($key, $data);
         return self::get($key);
     }
 

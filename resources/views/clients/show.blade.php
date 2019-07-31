@@ -49,31 +49,90 @@
       </div>
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Informações do Cliente</h5>
-      </div>
-      <div class="card-block">
 
-
-        <h2>{{ $client->name}} </h2>
-        <p>
-
-          @if($client->active)
-              <i class="fa fa-circle text-success"></i> Ativo
-          @else
-              <i class="fa fa-circle text-danger"></i> Inativo
-          @endif
-
-        </p>
-        <p>CPF/CNPJ: {{ $client->document }}</p>
-        <p>Email: {{ $client->email }}</p>
-        <p>Telefone: {{ $client->phone }}</p>
-
-      </div>
-  </div>
 
   <div class="row">
+
+    <div class="col-md-6">
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Informações do Cliente</h5>
+            </div>
+            <div class="card-block">
+
+
+              <h2>{{ $client->name}} </h2>
+              <p>
+
+                @if($client->active)
+                    <i class="fa fa-circle text-success"></i> Ativo
+                @else
+                    <i class="fa fa-circle text-danger"></i> Inativo
+                @endif
+
+              </p>
+              <p>CPF/CNPJ: {{ $client->document }}</p>
+              <p>Contrato: {{ $client->contract->name }}</p>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+          <div class="card-header">
+              <h5>Telefone</h5>
+              <div class="card-header-right">
+                  <ul class="list-unstyled card-option">
+                      <li><a class="btn btn-sm btn-success" href="{{route('occupations.create')}}">Novo</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="card-block">
+            <ul class="scroll-list wave">
+              @foreach($client->phones as $phone)
+                <li>
+                    <h6>{{ $phone->number }}</h6>
+                    <hr/>
+                    <p>
+                      <a class="btn btn-sm btn-outline-success" href="{{route('occupations.create')}}">Editar</a>
+                      <a class="btn btn-sm btn-outline-danger" href="{{route('occupations.create')}}">Remover</a>
+                    </p>
+                </li>
+              @endforeach
+            </ul>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h5>E-mail</h5>
+                <div class="card-header-right">
+                    <ul class="list-unstyled card-option">
+                        <li><a class="btn btn-sm btn-success" href="{{route('occupations.create')}}">Novo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-block">
+              <ul class="scroll-list wave">
+                @foreach($client->emails as $email)
+                  <li>
+                      <h6>{{ $email->email }}</h6>
+                      <hr/>
+                      <p>
+                        <a class="btn btn-sm btn-outline-success" href="{{route('occupations.create')}}">Editar</a>
+                        <a class="btn btn-sm btn-outline-danger" href="{{route('occupations.create')}}">Remover</a>
+                      </p>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+        </div>
+    </div>
 
     <div class="col-md-12">
 

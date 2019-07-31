@@ -53,13 +53,6 @@
                         </div>
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                     </div>
-                    <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="phone">Telefone</label>
-                        <div class="input-group">
-                            <input type="text" required id="phone" name="phone" value="{{ old('phone') }}" class="form-control inputPhone" placeholder="Informe o Telefone">
-                        </div>
-                        {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
-                    </div>
                 </div>
 
                 <div class="col-md-4">
@@ -70,24 +63,30 @@
                         </div>
                         {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
                     </div>
-                    <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="active">Ativo</label>
-                        <div class="input-group">
-                            <input class="js-switch" type="checkbox" id="active" name="active" data-plugin="switchery" checked value="{{ 1 }}">
-                        </div>
-                        {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
-                    </div>
-
                 </div>
 
                 <div class="col-md-4">
-                    <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="email">Email</label>
+                    <div class="form-group {!! $errors->has('contract_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="document">Contrato</label>
                         <div class="input-group">
-                            <input type="text" required id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Informe o email">
+                          <select class="form-control" name="contract_id">
+                              @foreach(\App\Helpers\Helper::contracts() as $contract)
+                                  <option value="{{$contract->id}}">{{$contract->name}}</option>
+                              @endforeach
+                          </select>
                         </div>
-                        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('contract_id', '<p class="help-block">:message</p>') !!}
                     </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="active">Ativo</label>
+                      <div class="input-group">
+                          <input class="js-switch" type="checkbox" id="active" name="active" data-plugin="switchery" checked value="{{ 1 }}">
+                      </div>
+                      {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                  </div>
                 </div>
 
             </div>

@@ -41,9 +41,7 @@ class ClientController extends Controller
 
           $clients->where('id', $search)
           ->orWhere('name', 'like', "%$search%")
-          ->orWhere('phone', 'like', "%$search%")
-          ->orWhere('document', 'like', "%$search%")
-          ->orWhere('email', 'like', "%$search%");
+          ->orWhere('document', 'like', "%$search%");
 
         }
 
@@ -195,8 +193,7 @@ class ClientController extends Controller
 
       $validator = Validator::make($request->all(), [
           'name' => 'required|string|max:255',
-          'email' => 'required|string|email|max:255|unique:clients',
-          'phone' => 'required|string|max:20',
+          'contract_id' => 'required',
           'document' => 'required|unique:clients|'.$documentType,
       ]);
 
@@ -380,8 +377,6 @@ class ClientController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:clients,email,'.$client->id,
-            'phone' => 'required|string|max:20',
             'document' => 'required|unique:clients,document,'.$client->id.'|'.$documentType,
         ]);
 

@@ -64,7 +64,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.print.css') }}" media='print'>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css" integrity="sha256-SMGbWcp5wJOVXYlZJyAXqoVWaE/vgFA5xfrH3i/jVw0=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\pages\list-scroll\list.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\stroll\css\stroll.css') }}">
 
     @yield('css')
 
@@ -261,7 +262,8 @@
 <script type="text/javascript" src="{{ asset('adminty\components\fullcalendar\js\fullcalendar.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.0/locale/pt-br.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
+<script src="{{ asset('adminty\components\stroll\js\stroll.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\pages\list-scroll\list-custom.js') }}"></script>
 
 <script>
   // This example requires the Places library. Include the libraries=places
@@ -330,13 +332,6 @@
   }
 
   $(document).ready(function() {
-
-    $(".datetimepicker").datetimepicker({
-      locale: 'pt-BR',
-      daysOfWeekDisabled: [0, 6],
-      format: 'dd/mm/yyyy hh:ii',
-      showTodayButton: true,
-    });
 
     $('.summernote').summernote({
           placeholder: 'Digite sua mensagem',

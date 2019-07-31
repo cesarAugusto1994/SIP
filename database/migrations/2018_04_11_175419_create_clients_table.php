@@ -13,12 +13,41 @@ class CreateClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->uuid('uuid')->unique();
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::create('clients', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code')->nullable();
+            $table->string('name');
             $table->string('document', 20)->nullable();
-            $table->string('phone', 20)->nullable();
-            $table->string('email')->nullable();
+            $table->integer('contract_id')->unsigned();
+            $table->foreign('contract_id')->references('id')->on('contracts');
+            $table->uuid('uuid')->unique();
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::create('client_phones', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('number');
+            $table->integer('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->uuid('uuid')->unique();
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::create('client_emails', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('email');
+            $table->integer('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->uuid('uuid')->unique();
             $table->boolean('active')->default(true);
             $table->timestamps();
@@ -63,9 +92,10 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('client_phones', function (Blueprint $table) {
+        Schema::create('client_documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('number');
+            $table->integer('file_id');
+            $table->enum('type', ['file', 'directory'])->default('file');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->uuid('uuid')->unique();
