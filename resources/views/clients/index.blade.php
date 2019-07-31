@@ -71,8 +71,6 @@
                     <tr>
                       <th>Nome</th>
                       <th>Documento</th>
-                      <th>Telefone</th>
-                      <th>Email</th>
                       <th>Status</th>
                       <th>Opções</th>
                     </tr>
@@ -89,14 +87,6 @@
 
                               <td>
                                   <a>{{$client->document}}</a>
-                              </td>
-
-                              <td>
-                                  <a>{{$client->phone}}</a>
-                              </td>
-
-                              <td>
-                                  <a>{{$client->email}}</a>
                               </td>
 
                               <td>

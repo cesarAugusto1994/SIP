@@ -754,6 +754,7 @@ $(document).ready(function() {
 
               if(data.success) {
 
+                self.parents('.list-phones').remove();
                 self.parents('tr').hide();
                 self.parents('.cardMessageTypes').hide();
                 self.parents('.cardRemove').hide();

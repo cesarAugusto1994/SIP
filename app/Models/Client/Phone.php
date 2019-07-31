@@ -16,4 +16,9 @@ class Phone extends Model
     protected $fillable = ['number', 'client_id', 'active'];
 
     protected static $logAttributes = ['number', 'client_id', 'active'];
+
+    public function client()
+    {
+        return $this->belongsTo('App\Models\Client');
+    }
 }

@@ -49,8 +49,6 @@
       </div>
   </div>
 
-
-
   <div class="row">
 
     <div class="col-md-6">
@@ -60,11 +58,8 @@
                 <h5>Informações do Cliente</h5>
             </div>
             <div class="card-block">
-
-
               <h2>{{ $client->name}} </h2>
               <p>
-
                 @if($client->active)
                     <i class="fa fa-circle text-success"></i> Ativo
                 @else
@@ -86,18 +81,18 @@
               <h5>Telefone</h5>
               <div class="card-header-right">
                   <ul class="list-unstyled card-option">
-                      <li><a class="btn btn-sm btn-success" href="{{route('occupations.create')}}">Novo</a></li>
+                      <li><a class="btn btn-sm btn-success" href="{{route('phones.create', ['client' => $client->uuid])}}">Novo</a></li>
                   </ul>
               </div>
           </div>
           <div class="card-block">
             <ul class="scroll-list fan">
                 @foreach($client->phones as $phone)
-                <li class="">
-                    <h6>{{ $phone->number }}</h6>
-                    <a class="text-primary" href="{{route('occupations.create')}}">Editar</a>
-                    <a class="text-danger" href="{{route('occupations.create')}}">Remover</a>
-                </li>
+                  <li class="list-phones">
+                      <h6>{{ $phone->number }}</h6>
+                      <a class="text-primary" href="{{route('phones.edit', $phone->uuid)}}">Editar</a>
+                      <a class="text-danger btnRemoveItem" style="cursor:pointer" data-route="{{route('phones.destroy', $phone->uuid)}}">Remover</a>
+                  </li>
                 @endforeach
             </ul>
           </div>
@@ -110,17 +105,17 @@
                 <h5>E-mail</h5>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
-                        <li><a class="btn btn-sm btn-success" href="{{route('occupations.create')}}">Novo</a></li>
+                        <li><a class="btn btn-sm btn-success" href="{{route('email.create', ['client' => $client->uuid])}}">Novo</a></li>
                     </ul>
                 </div>
             </div>
             <div class="card-block">
               <ul class="scroll-list fan">
                   @foreach($client->emails as $email)
-                  <li class="">
+                  <li class="list-phones">
                       <h6>{{ $email->email }}</h6>
-                      <a class="text-primary" href="{{route('occupations.create')}}">Editar</a>
-                      <a class="text-danger" href="{{route('occupations.create')}}">Remover</a>
+                      <a class="text-primary" href="{{route('email.edit', $email->uuid)}}">Editar</a>
+                      <a class="text-danger btnRemoveItem" data-route="{{route('email.destroy', $email->uuid)}}">Remover</a>
                   </li>
                   @endforeach
               </ul>

@@ -48,8 +48,6 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
   Route::prefix('admin')->group(function () {
 
-
-
     Route::impersonate();
 
     Route::prefix('chat')->group(function() {
@@ -97,6 +95,12 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::resource('departments', 'DepartmentsController');
 
     Route::resource('clients', 'ClientController');
+
+    Route::prefix('clients')->group(function() {
+        Route::resource('phones', 'ClientPhonesController');
+        Route::resource('email', 'ClientEmailsController');
+    });
+
     Route::resource('employees', 'EmployeesController');
 
     Route::get('user/{id}/avatar', 'UsersController@editAvatar')->name('user_avatar');

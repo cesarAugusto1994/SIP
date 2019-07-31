@@ -16,4 +16,9 @@ class Email extends Model
     protected $fillable = ['email', 'client_id', 'active'];
 
     protected static $logAttributes = ['email', 'client_id', 'active'];
+
+    public function client()
+    {
+        return $this->belongsTo('App\Models\Client');
+    }
 }
