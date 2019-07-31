@@ -91,17 +91,14 @@
               </div>
           </div>
           <div class="card-block">
-            <ul class="scroll-list wave">
-              @foreach($client->phones as $phone)
-                <li>
+            <ul class="scroll-list fan">
+                @foreach($client->phones as $phone)
+                <li class="">
                     <h6>{{ $phone->number }}</h6>
-                    <hr/>
-                    <p>
-                      <a class="btn btn-sm btn-outline-success" href="{{route('occupations.create')}}">Editar</a>
-                      <a class="btn btn-sm btn-outline-danger" href="{{route('occupations.create')}}">Remover</a>
-                    </p>
+                    <a class="text-primary" href="{{route('occupations.create')}}">Editar</a>
+                    <a class="text-danger" href="{{route('occupations.create')}}">Remover</a>
                 </li>
-              @endforeach
+                @endforeach
             </ul>
           </div>
       </div>
@@ -118,18 +115,16 @@
                 </div>
             </div>
             <div class="card-block">
-              <ul class="scroll-list wave">
-                @foreach($client->emails as $email)
-                  <li>
+              <ul class="scroll-list fan">
+                  @foreach($client->emails as $email)
+                  <li class="">
                       <h6>{{ $email->email }}</h6>
-                      <hr/>
-                      <p>
-                        <a class="btn btn-sm btn-outline-success" href="{{route('occupations.create')}}">Editar</a>
-                        <a class="btn btn-sm btn-outline-danger" href="{{route('occupations.create')}}">Remover</a>
-                      </p>
+                      <a class="text-primary" href="{{route('occupations.create')}}">Editar</a>
+                      <a class="text-danger" href="{{route('occupations.create')}}">Remover</a>
                   </li>
-                @endforeach
+                  @endforeach
               </ul>
+
             </div>
         </div>
     </div>
