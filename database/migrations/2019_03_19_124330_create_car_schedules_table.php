@@ -47,6 +47,7 @@ class CreateCarSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('fleet_schedule_statuses');
+        Schema::dropIfExists('fleet_schedules');
     }
 }
