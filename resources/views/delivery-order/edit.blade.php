@@ -29,7 +29,7 @@
 
 <div class="page-body">
 
-    <form method="post" action="{{route('delivery-order.update', $delivery->uuid)}}">
+    <form class="formValidation" data-parsley-validate method="post" action="{{route('delivery-order.update', $delivery->uuid)}}">
         {{csrf_field()}}
         {{method_field('PUT')}}
         <div class="row">
@@ -61,7 +61,7 @@
                                   <div class="input-group">
                                     <select class="select2" id="select-address" name="address_id" required>
                                         @foreach($addresses as $address)
-                                            <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}}</option>
+                                            <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}} - {{$address->zip}} - {{$address->street}}</option>
                                         @endforeach
                                     </select>
                                   </div>
@@ -140,8 +140,8 @@
                                   <th>#</th>
                                   <th>Tipo</th>
                                   <th>Cliente</th>
-                                  <th>Status</th>
-                                  <th>Anotações</th>
+                                  <th>Funcionário</th>
+                                  <th>Referencia</th>
                                 </tr>
                             </thead>
 
@@ -163,8 +163,8 @@
                                     <td><input type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
                                     <td>{{ $document->type->name }}</td>
                                     <td>{{ $document->client->name }}</td>
-                                    <td>{{ $document->status->name }}</td>
-                                    <td>{{ $document->annotations }}</td>
+                                    <td>{{ $document->employee->name ?? '-' }}</td>
+                                    <td>{{ $document->reference }}</td>
                                 </tr>
                                 @endforeach
 

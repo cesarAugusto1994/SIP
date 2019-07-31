@@ -115,7 +115,7 @@
                   <li class="list-phones">
                       <h6>{{ $email->email }}</h6>
                       <a class="text-primary" href="{{route('email.edit', $email->uuid)}}">Editar</a>
-                      <a class="text-danger btnRemoveItem" data-route="{{route('email.destroy', $email->uuid)}}">Remover</a>
+                      <a class="text-danger btnRemoveItem" style="cursor:pointer" data-route="{{route('email.destroy', $email->uuid)}}">Remover</a>
                   </li>
                   @endforeach
               </ul>

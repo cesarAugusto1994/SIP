@@ -586,10 +586,10 @@ class Helper
         $key = 'employees';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
-        $data = Employee::all();
+        return Employee::all();
 
         self::set($key, $data);
         return self::get($key);
@@ -723,6 +723,22 @@ class Helper
           if($item) {
             $route = route('user', $item->uuid);
             $html = "<a href=".$route.">".$item->person->name."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Client\Phone') {
+
+          if($item) {
+            $route = route('clients.show', $item->client->uuid);
+            $html = "<a href=".$route.">".$item->number."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Client\Email') {
+
+          if($item) {
+            $route = route('clients.show', $item->client->uuid);
+            $html = "<a href=".$route.">".$item->email."</a>";
           }
         }
 

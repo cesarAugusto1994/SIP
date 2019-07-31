@@ -18,7 +18,7 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('clients.show', $company->uuid) }}"> Cliente: {{ $company->name }}</a>
+                        <a href="{{ route('clients.show', $company->uuid) }}"> Cliente </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Editar Funcionário</a></li>
                 </ul>

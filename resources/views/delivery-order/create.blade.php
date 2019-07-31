@@ -166,9 +166,9 @@
 
                                     <td><input class="js-switch" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
                                     <td>{{ $document->type->name }}</td>
-                                    <td>{{ $document->client->name }}</td>
+                                    <td>{{ $document->client->name ?? '' }}</td>
                                     <td>{{ $document->employee->name ?? '-' }}</td>
-                                    <td>{{ $document->reference }}</td>
+                                    <td>{{ $document->reference ?? '' }}</td>
                                     <td>{{ $document->status->name }}</td>
                                 </tr>
                                 @endforeach

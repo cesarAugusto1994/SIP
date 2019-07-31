@@ -48,8 +48,6 @@ class DocumentsController extends Controller
     {
         $data = $request->request->all();
 
-        #dd($data);
-
         $user = $request->user();
 
         $data['created_by'] = $user->id;
@@ -58,9 +56,16 @@ class DocumentsController extends Controller
         $client = Client::uuid($data['client_id']);
         $type = Type::uuid($data['type_id']);
 
+        $emp = null;
+
+        if($request->filled('employee_id')) {
+          $emp = Employee::uuid($data['employee_id']);
+        }
+
         $data['client_id'] = $client->id;
         $data['type_id'] = $type->id;
         $data['price'] = $type->price;
+        $data['employee_id'] = $emp->id ?? null;
 
         if($request->filled('employees')) {
 

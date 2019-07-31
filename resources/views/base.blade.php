@@ -679,6 +679,14 @@ $(document).ready(function() {
 
           if(value) {
 
+            window.swal({
+              title: 'Em progresso...',
+              text: 'Aguarde enquanto a requisição é processada.',
+              type: 'success',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+
             $.ajax({
               type: 'GET',
               async: true,
@@ -706,7 +714,10 @@ $(document).ready(function() {
                   $("#long").val(dataResponseCoodenadas.lng);
                   $("#lat").val(dataResponseCoodenadas.lat);
 
-                  $('.ibox-loading').children('.ibox-content').removeClass('sk-loading');
+                  swal.close();
+              },
+              done: function() {
+                swal.close();
               }
             })
 

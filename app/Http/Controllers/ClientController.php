@@ -294,7 +294,7 @@ class ClientController extends Controller
                 'client' => $document->client->name,
                 'employee' => $document->employee->name ?? '',
                 'status' => $document->status->name,
-                'reference' => $document->reference,
+                'reference' => $document->reference ?? '',
               ];
           }
 

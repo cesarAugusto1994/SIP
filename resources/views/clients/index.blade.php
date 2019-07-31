@@ -86,7 +86,7 @@
                               </td>
 
                               <td>
-                                  <a>{{$client->document}}</a>
+                                  <p>{{$client->document}}</p>
                               </td>
 
                               <td>

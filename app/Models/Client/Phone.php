@@ -21,4 +21,15 @@ class Phone extends Model
     {
         return $this->belongsTo('App\Models\Client');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Telefone do Cliente atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Telefone do Cliente Removido";
+        }
+
+        return "Novo Telefone do Cliente Adicionado";
+    }
 }

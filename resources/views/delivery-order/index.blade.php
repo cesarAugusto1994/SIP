@@ -148,6 +148,17 @@
                 </div>
             </div>
 
+            <div class="card-footer bg-c-blue">
+                <div class="row align-items-center">
+                    <div class="col-9">
+                        <p class="text-white m-b-0">Previsão Entrega: {{ $order->delivery_date->format('d/m/Y') }}</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

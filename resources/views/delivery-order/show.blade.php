@@ -163,6 +163,11 @@
                                                           <td>{{ $order->user->person->name ?? '-' }}</td>
                                                       </tr>
 
+                                                      <tr>
+                                                          <th scope="row">Anotações</th>
+                                                          <td>{{ $order->annotations ?? '-' }}</td>
+                                                      </tr>
+
                                                   </tbody>
                                               </table>
                                           </div>

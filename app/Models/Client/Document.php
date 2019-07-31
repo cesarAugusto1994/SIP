@@ -16,4 +16,15 @@ class Document extends Model
     protected $fillable = ['file_id', 'type', 'client_id'];
 
     protected static $logAttributes = ['file_id', 'type', 'client_id'];
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Documento do Cliente atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Documento do Cliente Removido";
+        }
+
+        return "Novo Documento do Cliente Adicionado";
+    }
 }

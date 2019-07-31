@@ -21,4 +21,15 @@ class Email extends Model
     {
         return $this->belongsTo('App\Models\Client');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "E-mail do Cliente atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "E-mail do Cliente Removido";
+        }
+
+        return "Novo E-mail do Cliente Adicionado";
+    }
 }

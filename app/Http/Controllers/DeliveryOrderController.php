@@ -519,7 +519,7 @@ class DeliveryOrderController extends Controller
           'text' => 'Nova Ordem de Entrega Gerada com sucesso.'
         ]);
 
-        return redirect()->route('delivery-order.index');
+        return redirect()->route('delivery-order.show', $deliveryOrder->uuid);
     }
 
     /**
@@ -570,7 +570,9 @@ class DeliveryOrderController extends Controller
 
         $client = $delivery->client;
 
-        $documents = $client->documents;
+        $documents = $delivery->documents->map(function($document) {
+          return $document->document;
+        });
         $addresses = $client->addresses;
 
         return view('delivery-order.edit', compact('documents', 'delivers', 'delivery', 'addresses'));
@@ -586,6 +588,27 @@ class DeliveryOrderController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->request->all();
+
+        if(!$request->has('delivered_by')) {
+            notify()->flash('Erro de Envio', 'error', [
+              'text' => 'Nenhum entregador foi informado.',
+            ]);
+            return back();
+        }
+
+        if(!$request->has('address_id')) {
+            notify()->flash('Erro de Envio', 'error', [
+              'text' => 'Nenhum endereço foi informado.',
+            ]);
+            return back();
+        }
+
+        if(!$request->has('documents')) {
+            notify()->flash('Erro de Envio', 'error', [
+              'text' => 'Nenhum documento foi informado.',
+            ]);
+            return back();
+        }
 
         $deliverUuid = $data['delivered_by'];
 
@@ -628,7 +651,7 @@ class DeliveryOrderController extends Controller
           'text' => 'Ordem de Entrega Atualizada com sucesso.'
         ]);
 
-        return redirect()->route('delivery-order.index');
+        return redirect()->route('delivery-order.show', $deliveryOrder->uuid);
     }
 
     /**
