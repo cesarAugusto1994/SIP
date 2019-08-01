@@ -262,7 +262,6 @@
                               </h6>
                           </div>
                       </div>
-
                     @endif
 
                   </div>
