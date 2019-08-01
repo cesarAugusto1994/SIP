@@ -186,7 +186,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Webklex\IMAP\Providers\LaravelServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
-        Unicodeveloper\DumbPassword\DumbPasswordServiceProvider::class
+        Unicodeveloper\DumbPassword\DumbPasswordServiceProvider::class,
+        Thomasjohnkane\ScheduledNotifications\ServiceProvider::class,
 
     ],
 
@@ -245,7 +246,8 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Client' => Webklex\IMAP\Facades\Client::class,
-        'Zipper' => Chumper\Zipper\Zipper::class
+        'Zipper' => Chumper\Zipper\Zipper::class,
+        'ScheduledNotifications' => Thomasjohnkane\ScheduledNotifications\Facades\ScheduledNotifications::class,
 
     ],
 

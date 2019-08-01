@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Thomasjohnkane\Snooze\Models\ScheduledNotification;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Schedule\Guest;
@@ -77,6 +78,13 @@ class ScheduleController extends Controller
           'user_id' => $user->id,
           'start' => $start,
           'end' => $end,
+        ]);
+
+        ScheduledNotification::create([
+            'user_id' => Auth::id(),
+            'send_at' => $schedule->start->subMinutes(15)->format('Y-m-d H:i:s'),
+            'type'    => 'App\Notifications\ScheduleReminder',
+            'data'    => ['url' => route('schedules.show', $schedule->uuid)]
         ]);
 
         if($request->has('do_task')) {

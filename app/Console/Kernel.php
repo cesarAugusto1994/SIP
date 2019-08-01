@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\ScheduleReminder',
     ];
 
     /**
@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-
+        $schedule->command('snooze:send')->everyMinute();
+        $schedule->command('schedule:reminder')->everyMinute();
+/*
         $schedule->call(function () {
 
             $files = TemporaryFile::all();
@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
 
             });
 
-        })->everyMinute();
+        })->everyMinute();*/
     }
 
     /**

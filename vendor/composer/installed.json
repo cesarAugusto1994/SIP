@@ -6125,6 +6125,62 @@
         "description": "A small library for converting tokenized PHP source code into XML and potentially other formats"
     },
     {
+        "name": "thomasjohnkane/laravel-snooze",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thomasjohnkane/laravel-snooze.git",
+            "reference": "c8292d1483c5f6298f198b4e70ad1c825e5068e7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thomasjohnkane/laravel-snooze/zipball/c8292d1483c5f6298f198b4e70ad1c825e5068e7",
+            "reference": "c8292d1483c5f6298f198b4e70ad1c825e5068e7",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+            "php": ">=7.0"
+        },
+        "require-dev": {
+            "orchestra/testbench": "~3.8.0",
+            "phpunit/phpunit": "^7.0"
+        },
+        "time": "2019-03-16T19:05:54+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Thomasjohnkane\\Snooze\\ServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Thomasjohnkane\\Snooze\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Thomas Kane",
+                "email": "thomasjohnkane@gmail.com"
+            }
+        ],
+        "description": "Schedule future notifications and reminders in Laravel",
+        "keywords": [
+            "delayed notifications",
+            "notifications",
+            "scheduled",
+            "snooze"
+        ]
+    },
+    {
         "name": "tijsverkoyen/css-to-inline-styles",
         "version": "2.2.1",
         "version_normalized": "2.2.1.0",
