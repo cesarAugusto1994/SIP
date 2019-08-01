@@ -38,4 +38,15 @@ class Team extends Model
     {
         return $this->hasMany('App\Models\Training\Team\Lessons');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Turma atualizada";
+        } elseif ($eventName == 'deleted') {
+            return "Turma Removida";
+        }
+
+        return "Turma Adicionada";
+    }
 }

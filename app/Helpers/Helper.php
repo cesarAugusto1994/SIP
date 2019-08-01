@@ -756,6 +756,22 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Training\Team\Employee') {
+
+          if($item) {
+            $route = route('employees.show', $item->uuid);
+            $html = "<a href=".$route.">".$item->employee->name."</a>";
+          }
+        }
+
+        if($model == 'App\Models\Training\Team') {
+
+          if($item) {
+            $route = route('teams.show', $item->uuid);
+            $html = "<a href=".$route.">#".$item->id."</a>";
+          }
+        }
+
         if($model == 'App\Models\MessageBoard\Type') {
           if($item) {
             $route = route('message-types.edit', $item->uuid);
