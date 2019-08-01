@@ -25,7 +25,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('snooze:send')->everyMinute();
         $schedule->command('schedule:reminder')->everyMinute();
 /*
         $schedule->call(function () {

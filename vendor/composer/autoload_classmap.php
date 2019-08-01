@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\ScheduleReminder' => $baseDir . '/app/Console/Commands/ScheduleReminder.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\MessageSent' => $baseDir . '/app/Events/MessageSent.php',
     'App\\Events\\Notifications' => $baseDir . '/app/Events/Notifications.php',
@@ -79,6 +80,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Jobs\\DeliveryOrder' => $baseDir . '/app/Jobs/DeliveryOrder.php',
+    'App\\Mail\\ScheduleReminderMailable' => $baseDir . '/app/Mail/ScheduleReminderMailable.php',
     'App\\Models\\Activity' => $baseDir . '/app/Models/Activity.php',
     'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Client' => $baseDir . '/app/Models/Client.php',
@@ -175,6 +177,7 @@ return array(
     'App\\Notifications\\NewTicket' => $baseDir . '/app/Notifications/NewTicket.php',
     'App\\Notifications\\NewUser' => $baseDir . '/app/Notifications/NewUser.php',
     'App\\Notifications\\ScheduleInvite' => $baseDir . '/app/Notifications/ScheduleInvite.php',
+    'App\\Notifications\\ScheduleReminder' => $baseDir . '/app/Notifications/ScheduleReminder.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
@@ -4000,13 +4003,6 @@ return array(
     'TheSeer\\Tokenizer\\TokenCollectionException' => $vendorDir . '/theseer/tokenizer/src/TokenCollectionException.php',
     'TheSeer\\Tokenizer\\Tokenizer' => $vendorDir . '/theseer/tokenizer/src/Tokenizer.php',
     'TheSeer\\Tokenizer\\XMLSerializer' => $vendorDir . '/theseer/tokenizer/src/XMLSerializer.php',
-    'Thomasjohnkane\\Snooze\\Console\\Commands\\MailMakeCommand' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/Console/Commands/MailMakeCommand.php',
-    'Thomasjohnkane\\Snooze\\Console\\Commands\\NotificationMakeCommand' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/Console/Commands/NotificationMakeCommand.php',
-    'Thomasjohnkane\\Snooze\\Console\\Commands\\SendScheduledNotifications' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/Console/Commands/SendScheduledNotifications.php',
-    'Thomasjohnkane\\Snooze\\Facades\\Snooze' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/Facades/Snooze.php',
-    'Thomasjohnkane\\Snooze\\Models\\ScheduledNotification' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/Models/ScheduledNotification.php',
-    'Thomasjohnkane\\Snooze\\ServiceProvider' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/ServiceProvider.php',
-    'Thomasjohnkane\\Snooze\\Snooze' => $vendorDir . '/thomasjohnkane/laravel-snooze/src/Snooze.php',
     'TicketStatusesTableSeeder' => $baseDir . '/database/seeds/TicketStatusesTableSeeder.php',
     'TicketTypesTableSeeder' => $baseDir . '/database/seeds/TicketTypesTableSeeder.php',
     'TicketsTableSeeder' => $baseDir . '/database/seeds/TicketsTableSeeder.php',

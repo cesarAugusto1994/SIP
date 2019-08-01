@@ -68,7 +68,6 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'T' => 
         array (
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
-            'Thomasjohnkane\\Snooze\\' => 22,
             'Tests\\' => 6,
         ),
         'S' => 
@@ -229,10 +228,6 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
-        ),
-        'Thomasjohnkane\\Snooze\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src',
         ),
         'Tests\\' => 
         array (
@@ -552,6 +547,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\ScheduleReminder' => __DIR__ . '/../..' . '/app/Console/Commands/ScheduleReminder.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\MessageSent' => __DIR__ . '/../..' . '/app/Events/MessageSent.php',
         'App\\Events\\Notifications' => __DIR__ . '/../..' . '/app/Events/Notifications.php',
@@ -625,6 +621,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Jobs\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Jobs/DeliveryOrder.php',
+        'App\\Mail\\ScheduleReminderMailable' => __DIR__ . '/../..' . '/app/Mail/ScheduleReminderMailable.php',
         'App\\Models\\Activity' => __DIR__ . '/../..' . '/app/Models/Activity.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
@@ -721,6 +718,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Notifications\\NewTicket' => __DIR__ . '/../..' . '/app/Notifications/NewTicket.php',
         'App\\Notifications\\NewUser' => __DIR__ . '/../..' . '/app/Notifications/NewUser.php',
         'App\\Notifications\\ScheduleInvite' => __DIR__ . '/../..' . '/app/Notifications/ScheduleInvite.php',
+        'App\\Notifications\\ScheduleReminder' => __DIR__ . '/../..' . '/app/Notifications/ScheduleReminder.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -4546,13 +4544,6 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
-        'Thomasjohnkane\\Snooze\\Console\\Commands\\MailMakeCommand' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/Console/Commands/MailMakeCommand.php',
-        'Thomasjohnkane\\Snooze\\Console\\Commands\\NotificationMakeCommand' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/Console/Commands/NotificationMakeCommand.php',
-        'Thomasjohnkane\\Snooze\\Console\\Commands\\SendScheduledNotifications' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/Console/Commands/SendScheduledNotifications.php',
-        'Thomasjohnkane\\Snooze\\Facades\\Snooze' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/Facades/Snooze.php',
-        'Thomasjohnkane\\Snooze\\Models\\ScheduledNotification' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/Models/ScheduledNotification.php',
-        'Thomasjohnkane\\Snooze\\ServiceProvider' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/ServiceProvider.php',
-        'Thomasjohnkane\\Snooze\\Snooze' => __DIR__ . '/..' . '/thomasjohnkane/laravel-snooze/src/Snooze.php',
         'TicketStatusesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketStatusesTableSeeder.php',
         'TicketTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketTypesTableSeeder.php',
         'TicketsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketsTableSeeder.php',
