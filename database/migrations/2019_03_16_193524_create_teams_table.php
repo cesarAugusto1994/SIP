@@ -23,6 +23,8 @@ class CreateTeamsTable extends Migration
             $table->integer('vacancies')->nullable();
             $table->datetime('start')->nullable();
             $table->datetime('end')->nullable();
+            $table->text('description')->nullable();
+            $table->string('localization')->nullable();
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });

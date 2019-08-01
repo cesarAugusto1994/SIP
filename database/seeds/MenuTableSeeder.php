@@ -30,7 +30,7 @@ class MenuTableSeeder extends Seeder
             'parent' => null,
             'icon' => 'fas fa-users',
           ],
-          /*[
+          [
             'title' => 'Treinamentos',
             'route' => null,
             'permission' => 'view.treinamentos',
@@ -56,12 +56,12 @@ class MenuTableSeeder extends Seeder
               ],
               [
                 'title' => 'Agenda',
-                'route' => 'teams.index',
+                'route' => 'team_schedules',
                 'permission' => 'view.agenda',
                 'description' => 'Agenda',
                 'parent' => 'Treinamentos',
                 'icon' => 'far fa-calendar-alt',
-              ],*/
+              ],
           [
             'title' => 'Gestão de Entregas',
             'route' => null,

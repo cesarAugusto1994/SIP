@@ -238,11 +238,10 @@
     <div class="card">
         <div class="card-header">
             <h5>Adicionar Funcionário </h5>
-
         </div>
         <div class="card-block">
 
-          <form method="post" action="{{route('teams_add_employees', ['id' => $team->uuid])}}">
+          <form class="formValidation" data-parsley-validate method="post" action="{{route('teams_add_employees', ['id' => $team->uuid])}}">
 
             {{csrf_field()}}
             {{method_field('PUT')}}
@@ -250,7 +249,7 @@
             <div class="form-group {!! $errors->has('employees') ? 'has-error' : '' !!}">
                   <label class="col-form-label" for="employees">Funcionários</label>
                   <div class="input-group">
-                    <select style="z-index:99999" class="form-control m-b select2 selectEmployee" data-route="{{ route('employees_find') }}" name="employees[]" multiple placeholder="Informe os Funcionários" required>
+                    <select required style="z-index:99999" class="form-control m-b select2 selectEmployee" data-route="{{ route('employees_find') }}" name="employees[]" multiple placeholder="Informe os Funcionários" required>
                         @foreach($companies->sortBy('name') as $company)
                           <optgroup label="{{ $company->name }}">
                             @foreach($company->employees as $employee)

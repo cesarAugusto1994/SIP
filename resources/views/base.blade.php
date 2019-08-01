@@ -67,6 +67,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\pages\list-scroll\list.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\stroll\css\stroll.css') }}">
 
+    <!-- Date-time picker css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\pages\advance-elements\css\bootstrap-datetimepicker.css') }}">
+    <!-- Date-range picker css  -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\bootstrap-daterangepicker\css\daterangepicker.css') }}">
+    <!-- Date-Dropper css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\datedropper\css\datedropper.min.css') }}">
+
     @yield('css')
 
     <style>
@@ -264,6 +271,16 @@
 
 <script src="{{ asset('adminty\components\stroll\js\stroll.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\list-scroll\list-custom.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\moment-with-locales.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\components\bootstrap-datepicker\js\bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\bootstrap-datetimepicker.min.js') }}"></script>
+<!-- Date-range picker js -->
+<script type="text/javascript" src="{{ asset('adminty\components\bootstrap-daterangepicker\js\daterangepicker.js') }}"></script>
+
+
+<script type="text/javascript" src="{{ asset('adminty\components\datedropper\js\datedropper.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\custom-picker.js') }}"></script>
 
 <script>
   // This example requires the Places library. Include the libraries=places

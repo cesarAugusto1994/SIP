@@ -7,7 +7,6 @@ use App\Models\Training\Course;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\Helper;
 use Auth;
-use Kris\LaravelFormBuilder\FormBuilder;
 
 class CoursesController extends Controller
 {
@@ -47,20 +46,13 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FormBuilder $formBuilder)
+    public function create()
     {
         if(!Auth::user()->hasPermission('create.cursos')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        $form = $formBuilder->create(\App\Forms\CourseForm::class, [
-            'method' => 'POST',
-            'url' => route('courses.store')
-        ]);
-
-        return view('training.courses.create', compact('form'));
-
-        return view('admin.training.courses.create');
+        return view('training.courses.create');
     }
 
     /**

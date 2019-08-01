@@ -13,11 +13,11 @@ class Team extends Model
 
     protected $table = 'teams';
 
-    protected $fillable = ['course_id', 'teacher_id', 'status', 'vacancies', 'start', 'end'];
+    protected $fillable = ['course_id', 'teacher_id', 'status', 'vacancies', 'start', 'end', 'description', 'localization'];
 
     protected $dates = ['start', 'end'];
 
-    protected static $logAttributes = ['course_id', 'teacher_id', 'status', 'vacancies', 'start', 'end'];
+    protected static $logAttributes = ['course_id', 'teacher_id', 'status', 'vacancies', 'start', 'end', 'description', 'localization'];
 
     public function course()
     {

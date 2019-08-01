@@ -60,6 +60,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
     });
 
+    Route::get('/search', 'SearchController@search')->name('search');
+
     Route::resource('configurations', 'ConfigurationsController');
     Route::resource('tasks', 'TaskController');
 
@@ -210,7 +212,10 @@ Route::middleware('auth')->middleware('status')->group(function () {
 
     Route::get('notifications-read', 'NotificationsController@markAsRead')->name('notifications_markasread');
 
-    Route::get('team/{id}/schedules', 'TeamsController@schedule')->name('team_schedules');
+    Route::get('training/schedules', 'TeamsController@schedule')->name('team_schedules');
+    Route::get('training/schedule/list', 'TeamsController@list')->name('team_schedule_list');
+
+    //Route::get('team/{id}/schedules', 'TeamsController@schedule')->name('team_schedules');
     Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');
     Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');
 

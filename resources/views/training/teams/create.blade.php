@@ -35,13 +35,12 @@
         <div class="card-header-right">
             <ul class="list-unstyled card-option">
                 <li><a class="btn btn-sm btn-success btn-round" href="{{route('teams.create')}}">Novo</a></li>
-                <li><i class="feather icon-maximize full-card"></i></li>
             </ul>
         </div>
     </div>
     <div class="card-block">
 
-      <form method="post" action="{{route('teams.store')}}">
+      <form class="formValidation" data-parsley-validate method="post" action="{{route('teams.store')}}">
 
           {{csrf_field()}}
 
@@ -99,7 +98,6 @@
                           <label class="col-form-label" for="vacancies">Vagas</label>
                           <div class="input-group">
                               <input type="number" id="vacancies" name="vacancies" class="form-control" value="20" required>
-
                           </div>
                           {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
                       </div>

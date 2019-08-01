@@ -19,11 +19,13 @@
             <ul class="nav-left">
                 <li class="header-search">
                     <div class="main-search morphsearch-search">
+                      <form method="get" action="{{ route('search') }}">
                         <div class="input-group">
                             <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
-                            <input type="text" class="form-control">
+                            <input name="q" type="text" class="form-control">
                             <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
                         </div>
+                      </form>
                     </div>
                 </li>
                 <li>

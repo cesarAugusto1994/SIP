@@ -2,319 +2,314 @@
 
 @section('content')
 
-<div class="card-box">
-    <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
-
-    @permission('create.clientes')
-        <a class="btn btn-default text-success m-t-lg" data-toggle="modal" data-target=".addEmployee"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
-
-        <div class="modal fade addEmployee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="mySmallModalLabel">Adicionar Funcionário</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-
-                    <form method="post" action="{{route('teams_add_employees', ['id' => $team->uuid])}}">
-
-                    <div class="modal-body">
-
-                          {{csrf_field()}}
-                          {{method_field('PUT')}}
-
-                          <div class="form-group {!! $errors->has('employees') ? 'has-error' : '' !!}">
-                              <label class="col-form-label" for="employees">Funcionários</label>
-                              <div class="input-group">
-                                <select class="form-control m-b select2" name="employees[]" multiple placeholder="Informe os Funcionários" required>
-                                    @foreach($companies->sortBy('name') as $company)
-                                      <optgroup label="{{ $company->name }}">
-                                        @foreach($company->employees as $employee)
-
-                                          @if(in_array($employee->id, $employeesSelected))
-                                              @continue;
-                                          @endif
-
-                                          <option value="{{$employee->uuid}}">{{$employee->name}}</option>
-                                        @endforeach
-                                      </optgroup>
-                                    @endforeach
-                                </select>
-                              </div>
-                              {!! $errors->first('employees', '<p class="help-block">:message</p>') !!}
-                          </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">Salvar</button>
-                    </div>
-
-                    </form>
-
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Agenda</h4>
                 </div>
             </div>
         </div>
-
-    @endpermission
-
-    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target=".editTeam"><i class="far fa-edit"></i> Editar Informações</button>
-
-    <div class="modal fade editTeam" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mySmallModalLabel">Editar Informações</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-
-                <form method="post" action="{{route('teams.update', ['id' => $team->uuid])}}">
-
-                <div class="modal-body">
-
-                      {{csrf_field()}}
-                      {{method_field('PUT')}}
-
-                      <div class="row">
-
-                          <div class="col-md-6">
-
-                            <div class="form-group {!! $errors->has('course_id') ? 'has-error' : '' !!}">
-                                <label class="col-form-label" for="course_id">Curso</label>
-                                <div class="input-group">
-                                  <select class="form-control m-b select2" name="course_id" required>
-                                      @foreach($courses->sortBy('name') as $course)
-                                            <option value="{{$course->uuid}}" {{ $team->course_id == $course->id ? 'selected' : '' }}>{{$course->title}}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
-                                {!! $errors->first('course_id', '<p class="help-block">:message</p>') !!}
-                            </div>
-
-                          </div>
-
-                          <div class="col-md-6">
-
-                            <div class="form-group {!! $errors->has('teacher_id') ? 'has-error' : '' !!}">
-                                <label class="col-form-label" for="teacher_id">Instrutor</label>
-                                <div class="input-group">
-                                  <select class="form-control m-b select2" name="teacher_id" required>
-                                      @foreach($teachers->sortBy('name') as $teacher)
-                                            <option value="{{$teacher->user->uuid}}" {{ $team->teacher_id == $teacher->id ? 'selected' : '' }}>{{$teacher->name}}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
-                                {!! $errors->first('teacher_id', '<p class="help-block">:message</p>') !!}
-                            </div>
-
-                          </div>
-
-                          <div class="col-md-12" id="sandbox-container">
-                            <label class="col-form-label" for="course_id">Data</label>
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-md form-control inputDate" name="start" value="{{ $team->start->format('d/m/Y') }}"/>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Até</span>
-                                </div>
-                                <input type="text" class="input-md form-control inputDate" name="end" value="{{ $team->end->format('d/m/Y') }}"/>
-                            </div>
-                          </div>
-
-                          <div class="col-md-6">
-
-                            <div class="form-group {!! $errors->has('status') ? 'has-error' : '' !!}">
-                                <label class="col-form-label" for="status">Status</label>
-                                <div class="input-group">
-                                  <select class="form-control m-b select2" name="status" required>
-                                      <option value="RESERVADO" {{ $team->status == 'RESERVADO' ? 'selected' : '' }}>RESERVADO</option>
-                                      <option value="EM ANDAMENTO" {{ $team->status == 'EM ANDAMENTO' ? 'selected' : '' }}>EM ANDAMENTO</option>
-                                      <option value="FINALIZADA" {{ $team->status == 'FINALIZADA' ? 'selected' : '' }}>FINALIZADA</option>
-                                      <option value="CANCELADA" {{ $team->status == 'CANCELADA' ? 'selected' : '' }}>CANCELADA</option>
-                                  </select>
-                                </div>
-                                {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-                            </div>
-
-                          </div>
-
-                          <div class="col-md-6">
-
-                            <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
-                                <label class="col-form-label" for="vacancies">Vagas</label>
-                                <div class="input-group">
-                                    <input type="number" id="vacancies" name="vacancies" class="form-control" value="{{ $team->vacancies }}" required>
-
-                                </div>
-                                {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
-                            </div>
-
-                          </div>
-
-                      </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Salvar</button>
-                </div>
-
-                </form>
-
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Agenda</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-
 </div>
 
-<div class="card-box">
-  <div class="row widget style1">
-      <div class="col-lg-6">
-          <div class="m-b-md">
+<div class="page-body">
 
-              <h3>{{ $teamCode }} </h3>
-              <p>Curso: {{ $team->course->title }}</p>
-              <p>Instrutor: {{ $team->teacher->person->name }}</p>
-              <p class="text-primary">Data: {{ $team->start->format('d/m') }} à {{ $team->end->format('d/m') }}</p>
-              <p class="text-muted">Situação: {{ $team->status }}</p>
-              <p class="text-danger ">Carga horaria: {{ $team->course->workload }} hora(s)</p>
-
-          </div>
+  <div class="card">
+      <div class="card-header">
+          <h5>Calendário</h5>
       </div>
-
-      <div class="col-lg-6">
-
-          <p class="lead text-success title">{{$team->employees->count()}} de {{$team->vacancies}} vagas</p>
-          <p class="">{{ round(($team->employees->count() / intval($team->vacancies)) * 100, 2) }}% de vagas preenchidas</p>
-
-      </div>
-
-  </div>
-</div>
-
-<div class="row">
-
-  <div class="col-md-12">
-    <div class="card-box">
-        <h6 class="font-13 m-t-0 m-b-30">Funcionários</h6>
-
-        @if($team->employees->isNotEmpty())
-          <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                      <th>Empresa</th>
-                      <th>Nome</th>
-                      <th>Situação</th>
-                      <th>Opções</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($team->employees as $employeeItem)
-
-                        @php
-                            $employee = $employeeItem->employee;
-                        @endphp
-
-                        <tr>
-
-                            <td class="project-title">
-                                <a>{{$employee->company->name}}</a>
-                            </td>
-
-                            <td class="project-title">
-                                <a>{{$employee->name}}</a>
-                            </td>
-
-                            <td class="project-title">
-                                <span class="badge badge-custom">{{ $employeeItem->status }}</span>
-                            </td>
-
-                            <td class="project-actions" style="min-width:100px">
-
-                              <button type="button" class="btn btn-default waves-effect waves-light btn-sm" data-toggle="modal"
-                               data-target=".editStatus-{{ $loop->index }}"><i class="far fa-edit"></i></button>
-
-                              @permission('delete.clientes')
-                                <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1" class="btn btn-default text-danger btn-sm btnRemoveItem"><i class="fas fa-close"></i> </a>
-                              @endpermission
-                            </td>
-
-                        </tr>
-
-                        <div class="modal fade editStatus-{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="mySmallModalLabel">{{$employee->name}}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    </div>
-
-                                    <form method="post" action="{{route('teams.store')}}">
-
-                                    <div class="modal-body">
-
-                                          {{csrf_field()}}
-
-                                          <div class="row m-b-30">
-                                              <div class="col-md-12">
-                                                  <div class="form-group">
-                                                      <label class="col-form-label" for="status">Situação</label>
-                                                      <div class="input-group">
-                                                        <select class="form-control m-b select2" name="status" required>
-                                                              <option value="PRE-AGENDADO">PRE-AGENDADO</option>
-                                                              <option value="AGENDADO">AGENDADO</option>
-                                                              <option value="CONFIRMADO">CONFIRMADO</option>
-                                                              <option value="CANCELADO">CANCELADO</option>
-                                                              <option value="FALTA">FALTA</option>
-                                                        </select>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Salvar</button>
-                                    </div>
-
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    @endforeach
-                </tbody>
-            </table>
-          </div>
-        @else
-          <div class="widget white-bg no-padding">
-              <div class="p-m text-center">
-                  <h1 class="m-md"><i class="far fa-folder-open fa-4x"></i></h1>
-                  <h3 class="font-bold no-margins">
-                      Nenhum registro encontrado.
-                  </h3>
-
-                  @permission('create.clientes')
-                      <a href="{{route('client_employee_create', $team->uuid)}}" class="btn btn-default text-success p-m"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
-                  @endpermission
+      <div class="card-block">
+          <div class="row">
+              <div class="col-xl-12 col-md-12">
+                  <div id='calendar-teams'></div>
               </div>
           </div>
-        @endif
-
-    </div>
+      </div>
   </div>
 
 </div>
 
+<div class="modal inmodal" id="calendar-modal" tabindex="-1" role="dialog" aria-hidden="true"  style="z-index:1041">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+              <h4 class="modal-title">Nova Turma</h4>
+            </div>
 
+            <form class="formValidation" data-parsley-validate method="POST" action="{{ route('teams.store') }}">
+            <div class="modal-body">
+
+                  {{  csrf_field() }}
+                  <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Curso</label>
+                            <div class="input-group">
+                              <select class="form-control" name="course_id" required>
+                                  @foreach($courses->sortBy('name') as $course)
+                                        <option value="{{$course->uuid}}">{{$course->title}}</option>
+                                  @endforeach
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Instrutor</label>
+                            <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                              <select class="form-control" name="teacher_id" required>
+                                  @foreach($teachers->sortBy('name') as $teacher)
+                                        <option value="{{$teacher->user->uuid}}">{{$teacher->name}}</option>
+                                  @endforeach
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label>Inicio</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" id="start" name="start" required readonly class="form-control datetimepicker" data-date-format="dd/mm/yyyy hh:ii" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label>Fim</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                  <input type="text" id="end" name="end" required readonly class="form-control datetimepicker" data-date-format="dd/mm/yyyy hh:ii" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Vagas</label>
+                            <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                              <input type="number" id="vacancies" name="vacancies" class="form-control" value="20" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Adicionar Funcionários</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                                <select class="form-control select2" multiple name="employees[]" id="employees">
+                                  @foreach(App\Helpers\Helper::employees() as $employee)
+                                      <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group" id="pac-card">
+                            <label>Localização</label>
+                            <div class="input-group" id="pac-container">
+                                <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+                                <input class="form-control" name="localization" id="pac-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Adicionar uma descrição</label>
+                            <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-edit"></i></span>
+                              <textarea class="form-control" rows="6" id="description" name="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                  </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="btnConsulta" class="btn btn-success">Salvar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="schedule-json" value="{{ route('team_schedule_list') }}"/>
 
 @endsection
 
-@section('js')
+@section('scripts')
 
-@endsection
+<script>
+
+$(document).ready(function() {
+
+let $calendar = $('#calendar-teams');
+
+$calendar.fullCalendar({
+    height: 380,
+    contentHeight: 590,
+    views: {
+      listDay: {
+        buttonText: 'list day',
+        titleFormat: "dddd, DD MMMM YYYY",
+        columnFormat: "",
+        timeFormat: "HH:mm"
+      },
+
+      listWeek: {
+        buttonText: 'list week',
+        columnFormat: "ddd D",
+        timeFormat: "HH:mm"
+      },
+
+      listMonth: {
+        buttonText: 'list month',
+        titleFormat: "MMMM YYYY",
+        timeFormat: "HH:mm"
+      },
+
+      month: {
+        buttonText: 'month',
+        titleFormat: 'MMMM YYYY',
+        columnFormat: "ddd",
+        timeFormat: "HH:mm"
+      },
+
+      agendaWeek: {
+        buttonText: 'agendaWeek',
+        columnFormat: "ddd D",
+        timeFormat: "HH:mm"
+      },
+
+      agendaDay: {
+        buttonText: 'agendaDay',
+        titleFormat: 'dddd, DD MMMM YYYY',
+        columnFormat: "",
+        timeFormat: "HH:mm"
+      },
+    },
+    lang: 'pt-br',
+    defaultView: 'month',
+    eventBorderColor: "#de1f1f",
+    eventColor: "#AC1E23",
+    slotLabelFormat: 'HH:mm',
+    eventLimitText: 'Compromissos',
+    borderColor: '#FC6180',
+    backgroundColor: '#FC6180',
+    droppable: true,
+    businessHours: true,
+    editable: true,
+    allDaySlot: true,
+    eventLimit: false,
+    minTime: '06:00:00',
+    maxTime: '22:00:00',
+    header: {
+        left: 'prev,next,today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listMonth,listWeek,listDay'
+    },
+    navLinks: true,
+    selectable: true,
+    selectHelper: true,
+    select: function(start, end, jsEvent, view) {
+        var view = $('.calendar').fullCalendar('getView');
+        $("#calendar-modal").modal('show');
+        $("#start").val(start.format('DD/MM/YYYY HH:mm'));
+        $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+    },
+    eventClick: function(event, element, view) {
+        //popularModalAndShow(event);
+
+        window.swal({
+          title: 'Em progresso...',
+          text: 'Aguarde enquanto carregamos o compromisso.',
+          type: 'success',
+          showConfirmButton: false,
+          allowOutsideClick: false
+        });
+
+        window.location.href = event.route;
+    },
+
+    dayClick: function(date, jsEvent, view) {
+
+        jsEvent.preventDefault();
+
+        setTimeout(function() {
+
+            $("#formConsultaModal").prop('action', $("#consultas-store").val());
+
+        }, 100);
+
+    },
+    events: $("#schedule-json").val(),
+    //color: 'black', // an option!
+    //textColor: 'yellow', // an option!
+    //When u drop an event in the calendar do the following:
+    eventDrop: function(event, delta, revertFunc) {
+        //console.log(event);
+        popularModal(event);
+    },
+    //When u resize an event in the calendar do the following:
+    eventResize: function(event, delta, revertFunc) {
+        //console.log(event);
+        popularModal(event);
+    },
+    eventRender: function(event, element) {
+        $(element).tooltip({
+            title: event.title
+        });
+    },
+    ignoreTimezone: false,
+    allDayText: 'Dia Inteiro',
+    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    axisFormat: 'HH:mm',
+    buttonText: {
+        prev: "<",
+        next: ">",
+        prevYear: "Ano anterior",
+        nextYear: "Proximo ano",
+        today: "Hoje",
+        month: "Mês",
+        week: "Semana",
+        day: "Dia",
+        listMonth: "Lista Mensal",
+        listWeek: "Lista Semanal",
+        listDay: "Lista Diária"
+    }
+
+});
+
+});
+
+</script>
+
+@stop

@@ -32,7 +32,6 @@
         <div class="card-header-right">
             <ul class="list-unstyled card-option">
                 <li><a class="btn btn-sm btn-success btn-round" href="{{route('courses.create')}}">Novo</a></li>
-                <li><i class="feather icon-maximize full-card"></i></li>
             </ul>
         </div>
     </div>

@@ -23,7 +23,7 @@
                     </li>
                     <li class="breadcrumb-item"><a href="{{ route('courses.index') }}">Cursos</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Adicionar</a>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a>
                     </li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h5>Novo Curso</h5>
+            <h5>Editar Curso</h5>
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">
                     <li><i class="feather icon-maximize full-card"></i></li>
@@ -44,7 +44,7 @@
         </div>
         <div class="card-block">
 
-              <form method="post" action="{{route('courses.update', $course->uuid)}}">
+              <form class="formValidation" data-parsley-validate method="post" action="{{route('courses.update', $course->uuid)}}">
 
                 {{csrf_field()}}
                 {{method_field('PUT')}}
@@ -59,7 +59,7 @@
                             <div class="form-group {!! $errors->has('title') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="title">Titulo</label>
                                 <div class="input-group">
-                                    <input type="text" id="title" name="title" value="{{ $course->title }}" class="form-control" autofocus placeholder="Informe o titulo">
+                                    <input type="text" id="title" name="title" required value="{{ $course->title }}" class="form-control" autofocus placeholder="Informe o titulo">
                                 </div>
                                 {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
                             </div>
@@ -71,7 +71,7 @@
                             <div class="form-group {!! $errors->has('workload') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="workload">Carga Horária</label>
                                 <div class="input-group">
-                                    <input type="number" id="workload" name="workload" value="{{ $course->workload }}" class="form-control" value="10">
+                                    <input type="number" id="workload" required name="workload" value="{{ $course->workload }}" class="form-control" value="10">
 
                                 </div>
                                 {!! $errors->first('workload', '<p class="help-block">:message</p>') !!}
@@ -85,7 +85,7 @@
                         <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
                             <label class="col-form-label" for="description">Descrição</label>
                             <div class="input-group">
-                                <textarea name="description" rows="4" class="form-control ckeditor">{{ $course->description }}</textarea>
+                                <textarea name="description" required rows="4" class="form-control ckeditor">{{ $course->description }}</textarea>
                             </div>
                             {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                         </div>
@@ -105,8 +105,6 @@
                 <button class="btn btn-success">Salvar</button>
                 <a class="btn btn-danger" href="{{ route('courses.index') }}">Cancelar</a>
             </form>
-
-
         </div>
     </div>
 

@@ -44,7 +44,7 @@
         </div>
         <div class="card-block">
 
-          <form method="post" action="{{route('courses.store')}}">
+          <form class="formValidation" data-parsley-validate method="post" action="{{route('courses.store')}}">
 
               {{csrf_field()}}
 
@@ -59,7 +59,7 @@
                               <label class="col-form-label" for="title">Titulo</label>
                               <div class="input-group">
 
-                                  <input type="text" id="title" name="title" class="form-control" autofocus placeholder="Informe o titulo">
+                                  <input type="text" id="title" required name="title" class="form-control" autofocus placeholder="Informe o titulo">
 
                               </div>
                               {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
@@ -70,9 +70,9 @@
                         <div class="col-md-6">
 
                           <div class="form-group {!! $errors->has('workload') ? 'has-error' : '' !!}">
-                              <label class="col-form-label" for="workload">Carga Horária</label>
+                              <label class="col-form-label"  for="workload">Carga Horária</label>
                               <div class="input-group">
-                                  <input type="number" id="workload" name="workload" class="form-control" value="10">
+                                  <input type="number" required id="workload" name="workload" class="form-control" value="10">
 
                               </div>
                               {!! $errors->first('workload', '<p class="help-block">:message</p>') !!}
@@ -86,7 +86,7 @@
                       <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="description">Descrição</label>
                           <div class="input-group">
-                              <textarea name="description" rows="4" class="form-control ckeditor"></textarea>
+                              <textarea name="description" required rows="4" class="form-control ckeditor"></textarea>
                           </div>
                           {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                       </div>

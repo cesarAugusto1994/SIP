@@ -68,14 +68,14 @@ class ModulesTableSeeder extends Seeder
             'description' => 'Chamados',
             'parent' => str_slug('Modulos'),
           ],
-/*
+
           [
             'name' => 'Treinamentos',
             'slug' => str_slug('Treinamentos'),
             'description' => 'Gestão de Treinamentos',
             'parent' => str_slug('Modulos'),
           ],
-          */
+
           [
             'name' => 'Mural de Recados',
             'slug' => str_slug('Mural de Recados'),
@@ -135,7 +135,7 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Modulos'),
           ],
 
-/*
+
           [
             'name' => 'Cursos',
             'slug' => str_slug('Cursos'),
@@ -155,7 +155,7 @@ class ModulesTableSeeder extends Seeder
             'description' => 'Agenda',
             'parent' => str_slug('Treinamentos'),
           ],
-*/
+
 
           [
             'name' => 'Departamentos',

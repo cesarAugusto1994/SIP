@@ -11,6 +11,7 @@ use App\Models\Client\Employee;
 use App\Models\Client as Company;
 use App\Models\People;
 use App\User;
+use DateTime;
 
 class TeamsController extends Controller
 {
@@ -23,6 +24,13 @@ class TeamsController extends Controller
     {
         $teams = Team::all();
         return view('training.teams.index', compact('teams'));
+    }
+
+    public function schedule()
+    {
+        $courses = Course::where('active', true)->get();
+        $teachers = People::where('occupation_id', 9)->get();
+        return view('training.teams.schedule', compact('courses', 'teachers'));
     }
 
     /**
@@ -122,19 +130,75 @@ class TeamsController extends Controller
         $data['course_id'] = $course->id;
         $data['teacher_id'] = $teacher->id;
 
-        $data['start'] = \DateTime::createFromFormat('d/m/Y', $data['start']);
-        $data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
+        $start = DateTime::createFromFormat('d/m/Y H:i', $data['start']);
+        $end = DateTime::createFromFormat('d/m/Y H:i', $data['end']);
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        //$data['start'] = \DateTime::createFromFormat('d/m/Y', $data['start']);
+        //$data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
 
         $team = Team::create($data);
-/*
-        foreach ($data['employees'] as $key => $employeeID) {
-          TeamEmployees::create([
-            'team_id' => $team->id,
-            'employee_id' => Employee::uuid($employeeID)->id,
-          ]);
+
+        if($request->has('employees')) {
+
+          foreach ($data['employees'] as $key => $employeeID) {
+            TeamEmployees::create([
+              'team_id' => $team->id,
+              'employee_id' => $employeeID,
+            ]);
+          }
+
         }
-*/
+
         return redirect()->route('teams.show', $team->uuid);
+    }
+
+    public function list()
+    {
+        $user = auth()->user();
+
+        $teams = Team::all();
+
+        $cardCollor = "#1ab394";
+        $editable = false;
+
+        $data = [];
+
+        foreach ($teams as $key => $team) {
+          switch($team->course_id) {
+            case 1:
+              $cardCollor = "#23c6c8";
+              $editable = true;
+            break;
+            case 2:
+              $cardCollor = "#f8ac59";
+              $editable = true;
+            break;
+            case 3:
+              $cardCollor = "#0ac282";
+            break;
+            default:
+              $cardCollor = "#0ac282";
+            break;
+          }
+
+          $data[] = [
+              'id' => $team->id,
+              'uuid' => $team->uuid,
+              'course_id' => $team->course_id,
+              'title' => $team->course->title,
+              'description' => $team->course->description,
+              'start' => $team->start ? $team->start->format('Y-m-d H:i') : null,
+              'end' => $team->end ? $team->end->format('Y-m-d H:i') : null,
+              'color' => $cardCollor,
+              'editable' => $editable,
+              'route' => route('teams.show', $team->uuid),
+          ];
+        }
+
+        return json_encode($data);
     }
 
     public function addEmployes($id, Request $request)

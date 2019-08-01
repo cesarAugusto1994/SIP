@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\{Client, Contract};
-use App\Models\Client\{Email, Phone};
+use App\Models\Client\{Email, Phone, Employee};
 
 class ClientsTableSeeder extends Seeder
 {
@@ -6812,7 +6812,17 @@ class ClientsTableSeeder extends Seeder
                 ]);
             }
 
-            //exit;
+            $faker = Faker\Factory::create();
+
+            Employee::create([
+              'company_id' => $client->id,
+              'name' => $faker->name,
+              'email' => $faker->freeEmail,
+              'phone' => $faker->phoneNumber,
+              'cpf' => $faker->phoneNumber,
+              'created_by' => 1,
+              'active' => true
+            ]);
 
         }
 
