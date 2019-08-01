@@ -47,9 +47,10 @@
 
                 <thead>
                     <tr>
-                      <th>Tipo</th>
+
                       <th>Cliente</th>
                       <th>Funcionário</th>
+                      <th>Tipo</th>
                       <th>Referência</th>
                       <th>Status</th>
                       <th>Adicionado em</th>
@@ -60,16 +61,17 @@
                 <tbody>
                 @foreach($documents as $document)
                 <tr>
-                    <td>
-                        <a class="label label-primary">{{ $document->type->name ?? '-' }}</a>
-                    </td>
-
+                  
                     <td>
                         <p><a href="{{route('clients.edit', ['id' => $document->client->uuid])}}">{{ $document->client->name }}</a></p>
                     </td>
 
                     <td>
                         {{ $document->employee->name ?? '' }}
+                    </td>
+
+                    <td>
+                        <a class="label label-primary">{{ $document->type->name ?? '-' }}</a>
                     </td>
 
                     <td>
