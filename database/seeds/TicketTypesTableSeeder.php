@@ -176,9 +176,14 @@ class TicketTypesTableSeeder extends Seeder
                     'category_id' => $category->id,
                 ]);
 
-                Department::create([
+                Department::updateOrcreate([
                   'type_id' => $type2->id,
                   'department_id' => 1
+                ]);
+
+                Department::updateOrcreate([
+                  'type_id' => $type2->id,
+                  'department_id' => 2
                 ]);
             }
 

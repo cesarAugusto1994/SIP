@@ -25,7 +25,18 @@ class TicketsController extends Controller
         $user = Auth::user();
 
         if(!$user->isAdmin()) {
+
             $tickets = $user->tickets()->get();
+            $ticketTypeDepts = $user->person->department->ticketTypesDepartments;
+
+            foreach ($ticketTypeDepts as $key => $ticketTypeDept) {
+                foreach ($ticketTypeDept->type->tickets as $key => $ticket) {
+                  if(!$tickets->contains($ticket)) {
+                      $tickets->push($ticket);
+                  }
+                }
+            }
+
         } else {
             $tickets = Ticket::all();
         }

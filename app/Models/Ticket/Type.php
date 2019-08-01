@@ -19,9 +19,12 @@ class Type extends Model
 
     public function departments()
     {
-        //return $this->hasManyThrough('App\Models\Ticket\Type\Department', 'App\Models\Department', 'id', 'department_id');
-
         return $this->hasMany('App\Models\Ticket\Type\Department', 'type_id');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany('App\Models\Ticket', 'type_id');
     }
 
     public function category()

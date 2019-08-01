@@ -21,6 +21,11 @@ class Department extends Model
         return $this->hasMany('App\Models\Person', 'department_id');
     }
 
+    public function ticketTypesDepartments()
+    {
+        return $this->hasMany('App\Models\Ticket\Type\Department', 'department_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
