@@ -659,6 +659,7 @@ class TaskController extends Controller
         $log->task_id = $task->id;
         $log->user_id = Auth::user()->id;
         $log->message = 'Editou a tarefa ' . $task->name;
+        $log->status_id = $task->status_id;
         $log->save();
 
         //flash('A tarefa foi editada com sucesso.')->success()->important();
