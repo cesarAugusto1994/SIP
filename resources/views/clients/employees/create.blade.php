@@ -17,9 +17,15 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('clients.show', $company->uuid) }}"> Cliente </a>
-                    </li>
+                    @if($company)
+                      <li class="breadcrumb-item">
+                          <a href="{{ route('clients.show', $company->uuid) }}"> Cliente </a>
+                      </li>
+                    @else
+                      <li class="breadcrumb-item">
+                          <a href="{{ route('employees.index') }}"> Funcionários </a>
+                      </li>
+                    @endif
                     <li class="breadcrumb-item"><a href="#!">Funcionários</a></li>
                 </ul>
             </div>
@@ -40,7 +46,7 @@
       </div>
       <div class="card-block">
 
-        <form class="formValidation" data-parsley-validate method="post" action="{{route('client_employee_store', $company->uuid)}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('employees.store')}}">
 
             {{csrf_field()}}
 
@@ -64,6 +70,19 @@
                         </div>
                         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
+
+                    <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="company_id">Função</label>
+                        <div class="input-group">
+                            <select class="form-control" name="occupation_id" required>
+                                  @foreach(\App\Helpers\Helper::clientOccupation() as $occupation)
+                                      <option value="{{$occupation->uuid}}" {{ old('occupation_id') == $occupation->uuid ? 'selected' : '' }}>{{$occupation->name}}</option>
+                                  @endforeach
+                            </select>
+                        </div>
+                        {!! $errors->first('occupation_id', '<p class="help-block">:message</p>') !!}
+                    </div>
+
                 </div>
 
                 <div class="col-md-4">
@@ -94,7 +113,7 @@
                         <div class="input-group">
                             <select class="form-control" name="company_id" required>
                                   @foreach($companies as $companyItem)
-                                      <option value="{{$company->uuid}}" {{ $company->uuid == $companyItem->uuid || old('company_id') == $companyItem->uuid ? 'selected' : '' }}>{{$companyItem->name}}</option>
+                                      <option value="{{$companyItem->uuid ?? ''}}" {{ !empty($company) && $company->uuid == $companyItem->uuid || old('company_id') == $companyItem->uuid ? 'selected' : '' }}>{{$companyItem->name}}</option>
                                   @endforeach
                             </select>
                         </div>
@@ -109,14 +128,15 @@
                         </div>
                         {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                     </div>
-
-
                 </div>
-
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-sm" href="{{ route('clients.show', $company->uuid) }}">Cancelar</a>
+            @if($company)
+              <a class="btn btn-danger btn-sm" href="{{ route('clients.show', $company->uuid) }}">Cancelar</a>
+            @else
+              <a class="btn btn-danger btn-sm" href="{{ route('employees.index') }}">Cancelar</a>
+            @endif
         </form>
 
       </div>

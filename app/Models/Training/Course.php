@@ -17,6 +17,11 @@ class Course extends Model
 
     protected static $logAttributes = ['title', 'description', 'workload', 'created_by', 'grade', 'active'];
 
+    public function teams()
+    {
+        return $this->hasMany('App\Models\Training\Team', 'course_id');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {

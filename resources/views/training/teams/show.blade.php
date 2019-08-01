@@ -290,7 +290,6 @@
                       <tr>
 
                         <th>Nome</th>
-                        <th>Empresa</th>
                         <th>Situação</th>
                         <th>Opções</th>
                       </tr>
@@ -305,15 +304,11 @@
                           <tr>
 
                               <td>
-                                  <a>{{$employee->name}}</a>
+                                  <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                   <br/>
-                                  @if(!$employee->biometric)
-                                      <small class="badge badge-danger">Sem biometria registrada!</small>
-                                  @endif
-                              </td>
 
-                              <td>
-                                  <a>{{$employee->company->name}}</a>
+                                  <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
+
                               </td>
 
                               <td>
@@ -333,6 +328,11 @@
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
+                                    @permission('delete.clientes')
+                                      <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
+                                        class="dropdown-item text-success">Gerar Certificado</a>
+                                    @endpermission
+
                                    @permission('delete.clientes')
                                      <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
                                        class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
@@ -351,10 +351,10 @@
           @else
             <div class="widget white-bg no-padding">
                 <div class="p-m text-center">
-                    <h1 class="m-md"><i class="far fa-folder-open fa-4x"></i></h1>
-                    <h3 class="font-bold no-margins">
+                    <h1 class="m-md"><i class="fas fa-users fa-2x"></i></h1>
+                    <h6 class="font-bold no-margins">
                         Nenhum registro encontrado.
-                    </h3>
+                    </h6>
                 </div>
             </div>
           @endif

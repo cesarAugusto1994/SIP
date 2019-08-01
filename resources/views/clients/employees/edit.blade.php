@@ -18,7 +18,7 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('clients.show', $company->uuid) }}"> Cliente </a>
+                        <a href="{{ route('clients.show', $employee->company->uuid) }}"> Cliente </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Editar Funcionário</a></li>
                 </ul>
@@ -40,7 +40,7 @@
       </div>
       <div class="card-block">
 
-        <form class="formValidation" data-parsley-validate method="post" action="{{route('client_employee_update', [$company->uuid, $employee->uuid])}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('employees.update', $employee->uuid)}}">
 
             {{csrf_field()}}
             {{method_field('PUT')}}
@@ -64,6 +64,19 @@
                         </div>
                         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
+
+                    <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="company_id">Função</label>
+                        <div class="input-group">
+                            <select class="form-control" name="occupation_id" required>
+                                  @foreach(\App\Helpers\Helper::clientOccupation() as $occupation)
+                                      <option value="{{$occupation->uuid}}" {{ $employee->occupation_id == $occupation->uuid ? 'selected' : '' }}>{{$occupation->name}}</option>
+                                  @endforeach
+                            </select>
+                        </div>
+                        {!! $errors->first('occupation_id', '<p class="help-block">:message</p>') !!}
+                    </div>
+
                 </div>
 
                 <div class="col-md-4">

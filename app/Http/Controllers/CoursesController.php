@@ -160,6 +160,14 @@ class CoursesController extends Controller
         try {
 
           $cursos = Course::uuid($id);
+
+          if($cursos->teams->isNotEmpty()) {
+            return response()->json([
+              'success' => false,
+              'message' => 'Curso não removido, existem turmas vinculadas ao curso.'
+            ]);
+          }
+
           $cursos->delete();
 
           Helper::drop('courses');

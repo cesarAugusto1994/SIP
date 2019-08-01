@@ -45,7 +45,6 @@
               <thead>
                 <tr>
                   <th>Titulo</th>
-                  <th>Descrição</th>
                   <th>Carga Horária</th>
                   <th>Adicionado em</th>
                   <th>Opções</th>
@@ -57,11 +56,7 @@
                       <tr>
 
                           <td>
-                              <a>{{$course->title}}</a>
-                          </td>
-
-                          <td>
-                              <a>{{substr(strip_tags($course->description), 0, 50)}}...</a>
+                              <a>{{substr(($course->title), 0, 50)}}</a>
                           </td>
 
                           <td>
@@ -103,10 +98,10 @@
 
             <div class="widget white-bg no-padding m-t-30">
                 <div class="p-m text-center">
-                    <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
-                    <h4 class="font-bold no-margins">
+                    <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
+                    <h6 class="font-bold no-margins">
                         Nenhum registro encontrado.
-                    </h4>
+                    </h6>
                 </div>
             </div>
 

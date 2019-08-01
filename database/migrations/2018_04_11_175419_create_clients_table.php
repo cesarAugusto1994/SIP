@@ -76,6 +76,14 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('client_occupations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->uuid('uuid')->unique();
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -83,6 +91,8 @@ class CreateClientsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('biometric')->nullable();
+            $table->integer('occupation_id')->unsigned();
+            $table->foreign('occupation_id')->references('id')->on('client_occupations');
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
             $table->integer('company_id')->unsigned();
@@ -111,7 +121,14 @@ class CreateClientsTable extends Migration
      */
     public function down()
     {
+
+        Schema::dropIfExists('client_documents');
+        Schema::dropIfExists('employees');
+        Schema::dropIfExists('client_occupations');
         Schema::dropIfExists('addresses');
+        Schema::dropIfExists('client_emails');
+        Schema::dropIfExists('client_phones');
         Schema::dropIfExists('clients');
+        Schema::dropIfExists('contracts');
     }
 }

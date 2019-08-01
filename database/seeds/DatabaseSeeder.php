@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ClientsTableSeeder::class);
         $this->call(MessageTypesTableSeeder::class);
         $this->call(DocumentTypesTableSeeder::class);
-
+        $this->call(CoursesTableSeeder::class);
+        
         session()->flush();
 
         Model::reguard();

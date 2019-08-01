@@ -11,15 +11,20 @@ class Employee extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name', 'email', 'phone', 'cpf', 'biometric', 'company_id', 'created_by', 'active'];
+    protected $fillable = ['name', 'email', 'phone', 'cpf', 'biometric', 'occupation_id','company_id', 'created_by', 'active'];
 
-    protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'biometric', 'company_id', 'created_by', 'active'];
+    protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'biometric', 'occupation_id', 'company_id', 'created_by', 'active'];
 
     protected $table = 'employees';
 
     public function company()
     {
         return $this->belongsTo('App\Models\Client', 'company_id');
+    }
+
+    public function occupation()
+    {
+        return $this->belongsTo('App\Models\Client\Occupation', 'occupation_id');
     }
 
     public function getDescriptionForEvent(string $eventName): string

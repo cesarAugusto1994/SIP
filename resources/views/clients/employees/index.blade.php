@@ -1,128 +1,148 @@
-@extends('layouts.app')
-
-@push('stylesheets')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.3/chosen.min.css">
-@endpush
+@extends('base')
 
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Funcionários</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li class="active">
-                    <strong>Funcionários</strong>
-                </li>
-            </ol>
-        </div>
-
-        <div class="col-lg-2">
-            @permission('create.clientes')
-                <a href="{{ route('employees.create') }}" class="btn btn-primary btn-block dim m-t-lg">Novo Funcionário</a>
-            @endpermission
-        </div>
-
-    </div>
-
-
-    <div class="row">
-            <div class="wrapper wrapper-content animated fadeInUp">
-
-                <div class="col-lg-12">
-
-                    <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Listagem</h5>
-                    </div>
-                    <div class="ibox-content">
-
-                        <div class="project-list">
-                            {{ $table }}
-                        </div>
-
-                    </div>
-
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Funcionários</h4>
                 </div>
-
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Funcionários</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+
+  <div class="card">
+      <div class="card-header">
+          <h5>Pesquisa</h5>
+      </div>
+      <div class="card-block">
+
+        <form method="get" action="?">
+          <div class="row">
+              <div class="col-md-5"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
+              <div class="col-md-2">
+                <select class="form-control" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="status">
+                    <option value="">Situação</option>
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                </select>
+              </div>
+              <div class="col-md-3"><input name="address" type="text" placeholder="CEP, Endereço" class="form-control"></div>
+              <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-search"></i>  Buscar</button></div>
+
+          </div>
+        </form>
+
+      </div>
+  </div>
+
+  <div class="card">
+      <div class="card-header">
+          <h5>Lista de Funcionários</h5>
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+                  <li><a class="btn btn-sm btn-success btn-round" href="{{route('employees.create')}}">Novo Funcionário</a></li>
+              </ul>
+          </div>
+      </div>
+      <div class="card-block">
+
+          @if($employees->isNotEmpty())
+            <div class="table-responsive">
+
+              <table class="table table-hover">
+                  <thead>
+
+                    <tr>
+                      <th>Nome</th>
+                      <th>Função</th>
+                      <th>Documento</th>
+                      <th>Status</th>
+                      <th>Opções</th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                      @foreach($employees->sortByDesc('id') as $employee)
+                          <tr>
+
+                              <td>
+                                  <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
+                                  <br/>
+
+                                  <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
+
+                              </td>
+
+                              <td>
+                                  <p>{{$employee->occupation->name}}</p>
+                              </td>
+
+                              <td>
+                                  <p>{{$employee->cpf}}</p>
+                              </td>
+
+                              <td>
+                                  <p class="text-{{$employee->active ? 'success' : 'danger'}}">{{$employee->active ? 'Ativo' : 'Inativo'}}</p>
+                              </td>
+
+                              <td class="dropdown">
+
+                                <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                  @permission('view.clientes')
+                                    <a href="{{route('employees.show', ['id' => $employee->uuid])}}" class="dropdown-item">Visualizar </a>
+                                  @endpermission
+
+                                  @permission('edit.clientes')
+                                    <a href="{{route('employees.edit', ['id' => $employee->uuid])}}" class="dropdown-item">Editar </a>
+                                  @endpermission
+
+                                </div>
+                              </td>
+
+                          </tr>
+                      @endforeach
+                  </tbody>
+              </table>
+
+              <div class="text-center">
+              {{ $employees->links() }}
+              </div>
+            </div>
+          @else
+
+              <div class="widget white-bg no-padding text-center">
+                  <div class="p-m text-center">
+                      <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
+                      <h6 class="font-bold no-margins">
+                          Nenhum registro encontrado para o parametros informados.
+                      </h6>
+                  </div>
+              </div>
+
+          @endif
+
+      </div>
+  </div>
+
+</div>
 
 @endsection
-
-@push('scripts')
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.3/chosen.jquery.min.js"></script>
-
-  <script>
-
-      var periodo = $(".periodo");
-      var semana = $(".semana");
-      var horario = $(".horario");
-
-      periodo.hide();
-      semana.hide();
-      horario.hide();
-
-      $('.clockpicker').clockpicker();
-
-      $(".select-date").chosen();
-
-      $(document).ready(function() {
-          $(".btnCopiarProcesso").click(function() {
-              console.log($(this).data('id'));
-              $("#processId").val($(this).data('id'));
-          });
-
-          $('.input-daterange').datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true,
-            language: "pt-BR"
-          });
-      });
-
-      var tempo = new Date();
-      var hora = tempo.getHours();
-      var minutos = tempo.getMinutes();
-
-      $("#frequencia").change(function() {
-
-          var self = $(this);
-          var frequencia = self.val();
-
-          if(self.val() === '2') {
-
-              horario.show();
-              $("#time").val(hora + ':' + minutos);
-
-          } else {
-              horario.hide();
-              $("#time").val("");
-          }
-
-          if(self.val() === '3') {
-              semana.show();
-              horario.show();
-              $("#time").val(hora + ':' + minutos);
-          } else {
-              semana.hide();
-          }
-
-          if(self.val() === '4') {
-              periodo.show();
-          } else {
-              periodo.hide();
-          }
-
-      });
-
-  </script>
-
-@endpush

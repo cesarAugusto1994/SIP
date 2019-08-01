@@ -24,12 +24,40 @@ class MenuTableSeeder extends Seeder
 
           [
             'title' => 'Clientes',
-            'route' => 'clients.index',
+            'route' => null,
             'permission' => 'view.clientes',
             'description' => 'Clientes',
             'parent' => null,
             'icon' => 'fas fa-users',
           ],
+
+          [
+            'title' => 'Lista de Clientes',
+            'route' => 'clients.index',
+            'permission' => 'view.clientes',
+            'description' => 'Clientes',
+            'parent' => 'Clientes',
+            'icon' => 'fas fa-users',
+          ],
+
+          [
+            'title' => 'Cargos',
+            'route' => 'client-occupations.index',
+            'permission' => 'view.clientes',
+            'description' => 'Clientes',
+            'parent' => 'Clientes',
+            'icon' => 'fas fa-users',
+          ],
+
+          [
+            'title' => 'Funcionários',
+            'route' => 'employees.index',
+            'permission' => 'view.clientes',
+            'description' => 'Clientes',
+            'parent' => 'Clientes',
+            'icon' => 'fas fa-users',
+          ],
+
           [
             'title' => 'Treinamentos',
             'route' => null,

@@ -103,6 +103,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
         Route::resource('email', 'ClientEmailsController');
     });
 
+    Route::resource('client-occupations', 'ClientOccupationsController');
+
     Route::resource('employees', 'EmployeesController');
 
     Route::get('user/{id}/avatar', 'UsersController@editAvatar')->name('user_avatar');
@@ -215,7 +217,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::get('training/schedules', 'TeamsController@schedule')->name('team_schedules');
     Route::get('training/schedule/list', 'TeamsController@list')->name('team_schedule_list');
 
-    //Route::get('team/{id}/schedules', 'TeamsController@schedule')->name('team_schedules');
+    Route::get('training/teams/{id}/employees/{employee}/certified', 'TeamsController@certified')->name('team_certified');
+
     Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');
     Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');
 

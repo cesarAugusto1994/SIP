@@ -140,7 +140,7 @@
                     <thead>
                         <tr>
                           <th>Nome</th>
-                          <th>Email</th>
+                          <th>Função</th>
                           <th>CPF</th>
                           <th>Ativo</th>
                           <th>Opções</th>
@@ -151,11 +151,11 @@
                             <tr>
 
                                 <td>
-                                    <a>{{$employee->name}}</a>
+                                    <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                 </td>
 
                                 <td>
-                                    <a>{{$employee->email}}</a>
+                                    <a>{{$employee->occupation->name}}</a>
                                 </td>
 
                                 <td>
@@ -176,10 +176,6 @@
 
                                     @permission('edit.clientes')
                                       <a href="{{route('client_employee_edit', [$client->uuid, $employee->uuid])}}" class="dropdown-item"><i class="far fa-edit"></i> Editar</a>
-                                    @endpermission
-
-                                    @permission('delete.clientes')
-                                      <a href="#!" data-route="{{route('client_employee_destroy', ['id' => $employee->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fas fa-trash-alt"></i> Remover</a>
                                     @endpermission
 
                                   </div>

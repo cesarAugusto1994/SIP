@@ -7,7 +7,7 @@ use Session;
 use App\User;
 use App\Models\Training\Course;
 use App\Models\{People, Menu, Client, Contract};
-use App\Models\Client\Employee;
+use App\Models\Client\{Employee, Occupation as ClientOccupation};
 use App\Models\Task\Status as TicketStatus;
 use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
@@ -497,6 +497,20 @@ class Helper
         return self::get($key);
     }
 
+    public static function clientOccupation()
+    {
+        $key = 'client-occupation';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ClientOccupation::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
     public static function users()
     {
         $key = 'users';
@@ -589,7 +603,7 @@ class Helper
             //return self::get($key);
         }
 
-        return Employee::all();
+        return Employee::where('active', true)->get();
 
         self::set($key, $data);
         return self::get($key);

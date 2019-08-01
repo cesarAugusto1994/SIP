@@ -31,8 +31,6 @@ class ClientController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        $clients = [];
-
         $clients = Client::where('id', '>', 0);
 
         if($request->filled('search')) {

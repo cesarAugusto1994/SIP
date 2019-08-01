@@ -29,7 +29,7 @@ class TeamsController extends Controller
     public function schedule()
     {
         $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 9)->get();
+        $teachers = People::where('occupation_id', 28)->get();
         return view('training.teams.schedule', compact('courses', 'teachers'));
     }
 
@@ -42,8 +42,15 @@ class TeamsController extends Controller
     {
         $companies = Company::whereHas('employees')->get();
         $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 9)->get();
+        $teachers = People::where('occupation_id', 28)->get();
         return view('training.teams.create', compact('companies', 'courses', 'teachers'));
+    }
+
+    public function certified($id, $employee)
+    {
+        $employee = Employee::uuid($employee);
+        $team = Team::uuid($id);
+        return view('training.certified', compact('team', 'employee'));
     }
 
     public function start($id, Request $request)

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\{Client, Contract};
-use App\Models\Client\{Email, Phone, Employee};
+use App\Models\Client\{Email, Phone, Employee, Occupation};
 
 class ClientsTableSeeder extends Seeder
 {
@@ -6749,10 +6749,14 @@ class ClientsTableSeeder extends Seeder
 
         $data = [];
 
+        $occupation = Occupation::create([
+          'name' => 'ADM'
+        ]);
+
         foreach ($array as $key => $item) {
 
-            if($key < 16) {
-              //continue;
+            if($key > 10 && config('app.env') == 'local') {
+              break;
             }
 
             $emailArray = explode(' ', str_replace(',', '', $item['E-mail.Contato']));
@@ -6821,6 +6825,7 @@ class ClientsTableSeeder extends Seeder
               'phone' => $faker->phoneNumber,
               'cpf' => $faker->phoneNumber,
               'created_by' => 1,
+              'occupation_id' => $occupation->id,
               'active' => true
             ]);
 

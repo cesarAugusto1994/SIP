@@ -59,7 +59,7 @@ class UserTableSeeder extends Seeder
             $user = User::create([
               'nick'                           => 'admin',
               'email'                          => $seededAdminEmail,
-              'password'                       => Hash::make('Provider@123'),
+              'password'                       => Hash::make('123'),
               'avatar_type' => 'upload',
               'avatar' => $avatar,
               'do_task' => false,
@@ -185,9 +185,9 @@ class UserTableSeeder extends Seeder
 
         foreach ($users as $key => $user) {
 
-          if($key > 5) {
+          //if($key > 5 && config('app.env') == 'local') {
             //break;
-          }
+          //}
 
           //$faker = Faker\Factory::create();
 
