@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function notifyMe(title, message, url) {
   if (!Notification) {
-    cnsole.log('Desktop notifications not available in your browser. Try Chromium.');
+    console.log('Desktop notifications not available in your browser. Try Chromium.');
     return;
   }
 
