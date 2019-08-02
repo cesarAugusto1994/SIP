@@ -42,7 +42,8 @@ class PermissionsTableSeeder extends Seeder
             'Painel de Tarefas',
             'Mapeamentos',
             'Agenda',
-            'Entrega Faturamento'
+            'Entrega Faturamento',
+            'Gestão de Frotas'
           ])) {
             continue;
           }

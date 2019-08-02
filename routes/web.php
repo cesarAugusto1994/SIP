@@ -162,6 +162,11 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::resource('students', 'StudentsController');
     Route::resource('teams', 'TeamsController');
 
+    Route::resource('vehicles', 'VahiclesController');
+    Route::resource('vehicle-schedule', 'VahicleScheduleController');
+
+    Route::get('vehicle-schedule/list/json', 'VahicleScheduleController@schedule')->name('vehicle_schedule_list');
+
     Route::resource('tickets', 'TicketsController');
     Route::resource('ticket-types', 'TicketTypesController');
     Route::resource('ticket-type-departments', 'TicketTypeDepartmentsController');

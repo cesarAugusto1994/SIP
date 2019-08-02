@@ -21,6 +21,7 @@ use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Models\Category as MessageBoardCategory;
 use App\Models\MessageBoard\Type as MessageBoardType;
 use App\Models\DeliveryOrder\Status as DeliveryStatus;
+use App\Models\Fleet\Vehicle\Status as VehicleStatus;
 
 /**
  *
@@ -618,6 +619,20 @@ class Helper
         }
 
         $data = Message::count();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function vehicleStatus()
+    {
+        $key = 'vehicle-status';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = VehicleStatus::all();
 
         self::set($key, $data);
         return self::get($key);

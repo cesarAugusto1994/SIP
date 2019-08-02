@@ -11,5 +11,9 @@ class Status extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $table = 'fleet_schedule_statuses';
+    protected $table = 'fleet_schedule_status';
+    
+    protected $fillable = ['name'];
+
+    protected static $logAttributes = ['name'];
 }

@@ -273,7 +273,6 @@
 <script type="text/javascript" src="{{ asset('adminty\pages\list-scroll\list-custom.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\moment-with-locales.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('adminty\components\bootstrap-datepicker\js\bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\bootstrap-datetimepicker.min.js') }}"></script>
 <!-- Date-range picker js -->
 <script type="text/javascript" src="{{ asset('adminty\components\bootstrap-daterangepicker\js\daterangepicker.js') }}"></script>
@@ -679,10 +678,11 @@ $(document).ready(function() {
 		$('.inputMoney').mask('000.000.000.000.000,00', {reverse: true});
 
     $('.inputDate').datepicker({
+        language: "pt-BR",
   	    format: "dd/mm/yyyy",
   	    todayBtn: "linked",
   	    clearBtn: true,
-  	    language: "pt-BR",
+
   	    calendarWeeks: true,
   	    autoclose: true,
   	    todayHighlight: true,

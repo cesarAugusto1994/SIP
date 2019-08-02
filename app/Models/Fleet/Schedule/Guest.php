@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Schedule;
+namespace App\Models\Fleet\Schedule;
 
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
@@ -9,7 +9,7 @@ class Guest extends Model
 {
     use Uuids;
 
-    protected $table = 'schedule_guests';
+    protected $table = 'fleet_schedule_guests';
 
     protected $fillable = ['user_id', 'schedule_id'];
 
@@ -20,6 +20,6 @@ class Guest extends Model
 
     public function schedules()
     {
-        return $this->hasMany('App\Models\Schedule', 'user_id');
+        return $this->hasMany('App\Models\Fleet\Schedule', 'user_id');
     }
 }

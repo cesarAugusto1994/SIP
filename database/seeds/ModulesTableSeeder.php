@@ -33,6 +33,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Gestão de Frotas',
+            'slug' => str_slug('Gestão de Frotas'),
+            'description' => 'Gestão de Frotas',
+            'parent' => str_slug('Modulos'),
+          ],
+
+          [
             'name' => 'Painel de Tarefas',
             'slug' => str_slug('Painel de Tarefas'),
             'description' => 'Painel de Tarefas',
@@ -154,6 +161,21 @@ class ModulesTableSeeder extends Seeder
             'slug' => str_slug('Agenda'),
             'description' => 'Agenda',
             'parent' => str_slug('Treinamentos'),
+          ],
+
+
+          [
+            'name' => 'Veiculos',
+            'slug' => str_slug('Veiculos'),
+            'description' => 'Veículos',
+            'parent' => str_slug('Gestão de Frotas'),
+          ],
+
+          [
+            'name' => 'Agenda Frota',
+            'slug' => str_slug('Agenda Frota'),
+            'description' => 'Agenda',
+            'parent' => str_slug('Gestão de Frotas'),
           ],
 
 

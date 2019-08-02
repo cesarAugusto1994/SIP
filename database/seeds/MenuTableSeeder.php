@@ -124,6 +124,34 @@ class MenuTableSeeder extends Seeder
                 'icon' => 'fas fa-receipt',
               ],
 
+
+          [
+            'title' => 'Gestão de Frotas',
+            'route' => null,
+            'permission' => 'view.gestao.de.entregas',
+            'description' => 'Gestão de Frotas',
+            'parent' => null,
+            'icon' => 'fas fa-truck',
+          ],
+
+          [
+            'title' => 'Veículos',
+            'route' => 'vehicles.index',
+            'permission' => 'view.veiculos',
+            'description' => 'Veículos',
+            'parent' => 'Gestão de Frotas',
+            'icon' => 'far fa-file-alt',
+          ],
+
+          [
+            'title' => 'Agenda',
+            'route' => 'vehicle-schedule.index',
+            'permission' => 'view.agenda.frota',
+            'description' => 'Agenda',
+            'parent' => 'Gestão de Frotas',
+            'icon' => 'far fa-file-alt',
+          ],
+
           [
             'title' => 'Tarefas',
             'route' => null,

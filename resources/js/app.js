@@ -90,9 +90,8 @@ import VueChatScroll from 'vue-chat-scroll'
 
               }
 
-
-         }
-     }
+         },
+     },
  });
 
  Echo.private('chat.'+privateChat)
