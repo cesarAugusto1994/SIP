@@ -27,37 +27,44 @@
 
 <div class="page-body">
 
-  <div class="row">
+  <div class="card">
+      <div class="card-header">
+          <h5>Listagem de Ramais e Telefones</h5>
+      </div>
+      <div class="card-block">
 
-    <div class="col-md-12 m-b-20">
-        <input style="background-color:transparent" autofocus id="searchInput" type="text" placeholder="Pesquisar..." class="form-control form-control-round form-control-success">
-    </div>
-
-    @foreach($users->sortBy('person.branch') as $user)
-
-        @if(!$user->person->branch)
-            @continue;
-        @endif
-
-        <div class="card-container col-md-6 col-lg-3">
-            <div class="card">
-                <div class="card-block text-center">
-                    <h4 class="lead m-t-20">{{ $user->person->branch }}</h4>
-                    <p class="m-b-20">{{ $user->person->name ?? '' }} <br/> {{ $user->email }}</p>
-                    <small>
-                      <b>Unidade:</b> {{ $user->person->unit->name ?? '' }}
-                      <br/>
-                      <b>Setor:</b> {{ $user->person->department->name ?? '' }}
-                      <br/>
-                      <b>Cargo:</b> {{ $user->person->occupation->name ?? '' }}
-                    </small>
-                </div>
-            </div>
+        <div class="col-md-12 m-b-20">
+            <input style="background-color:transparent" autofocus id="searchInput" type="text" placeholder="Pesquisar..." class="form-control form-control-round form-control-success">
         </div>
 
-    @endforeach
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Ramal</th>
+                        <th>E-mail</th>
+                        <th>Unidade</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
 
+                  @foreach($users->sortBy('person.name') as $user)
 
+                      <tr>
+                          <td>{{$user->person->name}}<br/><small>{{ $user->person->department->name ?? '' }}</small></td>
+                          <td>{{$user->person->branch}}</td>
+                          <td>{{$user->email}}</td>
+                          <td>{{$user->person->unit->name}}</td>
+                      </tr>
+
+                  @endforeach
+
+                </tbody>
+            </table>
+        </div>
+
+      </div>
   </div>
 
 </div>
@@ -68,7 +75,7 @@
 
   <script>
       $("#searchInput").keyup(function() {
-          var rows = $(".card-container").hide();
+          var rows = $("#tbody").find('tr').hide();
           var data = this.value.split(" ");
           $.each(data, function(i, v) {
             rows.filter(":contains('" + v + "')").show();
