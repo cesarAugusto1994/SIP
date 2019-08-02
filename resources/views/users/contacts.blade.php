@@ -33,7 +33,7 @@
       </div>
       <div class="card-block">
 
-        <div class="col-md-12 m-b-20">
+        <div class="m-b-20">
             <input style="background-color:transparent" autofocus id="searchInput" type="text" placeholder="Pesquisar..." class="form-control form-control-round form-control-success">
         </div>
 
