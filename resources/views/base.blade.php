@@ -656,6 +656,33 @@
 
 <script>
 
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe(title, message, url) {
+  if (!Notification) {
+    cnsole.log('Desktop notifications not available in your browser. Try Chromium.');
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(title, {
+      icon: '{{ asset("images/favicon.ico") }}',
+      body: message,
+    });
+
+    notification.onclick = function () {
+      window.open(url);
+    };
+
+  }
+}
+
 $(document).ready(function() {
 
     $('.select2').select2({
@@ -1270,6 +1297,8 @@ $(document).ready(function() {
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('App\\Events\\Notifications', function(data) {
+
+      notifyMe('Notificação', data.message, '/admin/notifications');
       //console.log(data);
       var existingNotifications = notifications.html();
       var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
@@ -1288,8 +1317,8 @@ $(document).ready(function() {
       `;
       notifications.html(newNotificationHtml + existingNotifications);
 
-      var audio = new Audio("{{ asset('media/sounds/light.mp3') }}");
-      audio.play();
+      //var audio = new Audio("{{ asset('media/sounds/light.mp3') }}");
+      //audio.play();
 
       notificationsCount += 1;
       notificationsCountElem.attr('data-count', notificationsCount);

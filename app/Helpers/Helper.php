@@ -520,7 +520,7 @@ class Helper
             return self::get($key);
         }
 
-        $data = User::whereNotIn('id', [1])->get();
+        $data = User::whereNotIn('id', [0])->get();
 
         self::set($key, $data);
         return self::get($key);
