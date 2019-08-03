@@ -8,8 +8,8 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #f8fafc;
-    color: #74787e;
+    background-color: #009688;
+    color: white;
     height: 100%;
     hyphens: auto;
     line-height: 1.4;
@@ -84,7 +84,7 @@ img {
 /* Layout */
 
 .wrapper {
-    background-color: #f8fafc;
+    background-color: #009688;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -110,19 +110,19 @@ img {
 }
 
 .header a {
-    color: #bbbfc3;
-    font-size: 19px;
+    color: #ffffff;
+    font-size: 23px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0 1px 0 white;
+    /*text-shadow: 0 1px 0 white;*/
 }
 
 /* Body */
 
 .body {
-    background-color: #ffffff;
-    border-bottom: 1px solid #edeff2;
-    border-top: 1px solid #edeff2;
+    background-color: #009688;
+    /*border-bottom: 1px solid #edeff2;*/
+    /*border-top: 1px solid #edeff2;*/
     margin: 0;
     padding: 0;
     width: 100%;
@@ -166,8 +166,8 @@ img {
 }
 
 .footer p {
-    color: #aeaeae;
-    font-size: 12px;
+    color: #fbfbfb;
+    font-size: 15px;
     text-align: center;
 }
 

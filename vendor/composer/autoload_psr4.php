@@ -17,6 +17,7 @@ return array(
     'Unicodeveloper\\DumbPassword\\' => array($vendorDir . '/unicodeveloper/laravel-password/src'),
     'Underscore\\' => array($vendorDir . '/anahkiasen/underscore-php/src', $vendorDir . '/anahkiasen/underscore-php/tests'),
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
+    'Themsaid\\MailPreview\\' => array($vendorDir . '/themsaid/laravel-mail-preview/src'),
     'Tests\\' => array($baseDir . '/tests'),
     'Symfony\\Polyfill\\Php73\\' => array($vendorDir . '/symfony/polyfill-php73'),
     'Symfony\\Polyfill\\Php72\\' => array($vendorDir . '/symfony/polyfill-php72'),

@@ -69,6 +69,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'T' => 
         array (
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
+            'Themsaid\\MailPreview\\' => 21,
             'Tests\\' => 6,
         ),
         'S' => 
@@ -236,6 +237,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
+        ),
+        'Themsaid\\MailPreview\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src',
         ),
         'Tests\\' => 
         array (
@@ -2613,6 +2618,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'League\\Flysystem\\Util\\ContentListingFormatter' => __DIR__ . '/..' . '/league/flysystem/src/Util/ContentListingFormatter.php',
         'League\\Flysystem\\Util\\MimeType' => __DIR__ . '/..' . '/league/flysystem/src/Util/MimeType.php',
         'League\\Flysystem\\Util\\StreamHasher' => __DIR__ . '/..' . '/league/flysystem/src/Util/StreamHasher.php',
+        'MailPreviewTest' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/tests/MailPreviewTest.php',
         'MapperStatusTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MapperStatusTableSeeder.php',
         'MenuTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MenuTableSeeder.php',
         'MessageTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MessageTypesTableSeeder.php',
@@ -4638,6 +4644,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Symfony\\Polyfill\\Php72\\Php72' => __DIR__ . '/..' . '/symfony/polyfill-php72/Php72.php',
         'Symfony\\Polyfill\\Php73\\Php73' => __DIR__ . '/..' . '/symfony/polyfill-php73/Php73.php',
         'TaskStatusTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TaskStatusTableSeeder.php',
+        'TestCase' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/tests/TestCase.php',
         'TestModel' => __DIR__ . '/..' . '/kris/laravel-form-builder/tests/FormBuilderTestCase.php',
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
@@ -4652,6 +4659,11 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
+        'Themsaid\\MailPreview\\MailPreviewController' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/MailPreviewController.php',
+        'Themsaid\\MailPreview\\MailPreviewMiddleware' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/MailPreviewMiddleware.php',
+        'Themsaid\\MailPreview\\MailPreviewServiceProvider' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/MailPreviewServiceProvider.php',
+        'Themsaid\\MailPreview\\MailProvider' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/MailProvider.php',
+        'Themsaid\\MailPreview\\PreviewTransport' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/PreviewTransport.php',
         'TicketStatusesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketStatusesTableSeeder.php',
         'TicketTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketTypesTableSeeder.php',
         'TicketsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketsTableSeeder.php',
