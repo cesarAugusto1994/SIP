@@ -40,6 +40,27 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'realtime-stack' => [
+            'driver' => 'stack',
+            'channels' => ['single', 'realtime'],
+        ],
+
+        'realtime' => [
+            'driver' => 'monolog',
+            'handler' => \Shalvah\MonologPusher\PusherHandler::class,
+            'with' => [
+                'pusher' => [
+                    env('PUSHER_APP_KEY'),
+                    env('PUSHER_APP_SECRET'),
+                    env('PUSHER_APP_ID'),
+                    [
+                        'cluster' => env('PUSHER_APP_CLUSTER')
+                    ]
+                ],
+                'level' => \Monolog\Logger::DEBUG
+            ],
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

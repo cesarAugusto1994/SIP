@@ -19,11 +19,11 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '298946589c8e980580c22399a4f81c53' => __DIR__ . '/..' . '/okipa/laravel-html-helper/app/Helpers/HtmlHelper.php',
-        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'e91d0dc994644828154ae2387ede1ca8' => __DIR__ . '/..' . '/spatie/string/src/string_functions.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
@@ -92,6 +92,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
             'Stringy\\' => 8,
             'Spatie\\String\\' => 14,
             'Spatie\\Activitylog\\' => 19,
+            'Shalvah\\MonologPusher\\' => 22,
             'Seedster\\' => 9,
         ),
         'R' => 
@@ -312,6 +313,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Spatie\\Activitylog\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-activitylog/src',
+        ),
+        'Shalvah\\MonologPusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/shalvah/monolog-pusher/src',
         ),
         'Seedster\\' => 
         array (
@@ -658,6 +663,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\Email\\Sender' => __DIR__ . '/../..' . '/app/Models/Email/Sender.php',
         'App\\Models\\Email\\To' => __DIR__ . '/../..' . '/app/Models/Email/To.php',
         'App\\Models\\Fleet\\Schedule' => __DIR__ . '/../..' . '/app/Models/Fleet/Schedule.php',
+        'App\\Models\\Fleet\\Schedule\\Guest' => __DIR__ . '/../..' . '/app/Models/Fleet/Schedule/Guest.php',
         'App\\Models\\Fleet\\Schedule\\Status' => __DIR__ . '/../..' . '/app/Models/Fleet/Schedule/Status.php',
         'App\\Models\\Fleet\\Vehicle' => __DIR__ . '/../..' . '/app/Models/Fleet/Vehicle.php',
         'App\\Models\\Fleet\\Vehicle\\Status' => __DIR__ . '/../..' . '/app/Models/Fleet/Vehicle/Status.php',
@@ -3879,6 +3885,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Seedster\\Commands\\SeedCommand' => __DIR__ . '/..' . '/eklundkristoffer/seedster/src/Commands/SeedCommand.php',
         'Seedster\\Handlers\\SeedHandler' => __DIR__ . '/..' . '/eklundkristoffer/seedster/src/Handlers/SeedHandler.php',
         'Seedster\\SeedsterServiceProvider' => __DIR__ . '/..' . '/eklundkristoffer/seedster/src/SeedsterServiceProvider.php',
+        'Shalvah\\MonologPusher\\PusherHandler' => __DIR__ . '/..' . '/shalvah/monolog-pusher/src/PusherHandler.php',
         'SimpleSoftwareIO\\QrCode\\BaconQrCodeGenerator' => __DIR__ . '/..' . '/simplesoftwareio/simple-qrcode/src/SimpleSoftwareIO/QrCode/BaconQrCodeGenerator.php',
         'SimpleSoftwareIO\\QrCode\\DataTypes\\BTC' => __DIR__ . '/..' . '/simplesoftwareio/simple-qrcode/src/SimpleSoftwareIO/QrCode/DataTypes/BTC.php',
         'SimpleSoftwareIO\\QrCode\\DataTypes\\DataTypeInterface' => __DIR__ . '/..' . '/simplesoftwareio/simple-qrcode/src/SimpleSoftwareIO/QrCode/DataTypes/DataTypeInterface.php',

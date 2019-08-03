@@ -38,6 +38,7 @@ return array(
     'Stringy\\' => array($vendorDir . '/danielstjules/stringy/src'),
     'Spatie\\String\\' => array($vendorDir . '/spatie/string/src'),
     'Spatie\\Activitylog\\' => array($vendorDir . '/spatie/laravel-activitylog/src'),
+    'Shalvah\\MonologPusher\\' => array($vendorDir . '/shalvah/monolog-pusher/src'),
     'Seedster\\' => array($vendorDir . '/eklundkristoffer/seedster/src'),
     'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'Pusher\\' => array($vendorDir . '/pusher/pusher-php-server/src'),

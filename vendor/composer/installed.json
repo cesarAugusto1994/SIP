@@ -4716,6 +4716,57 @@
         "homepage": "https://github.com/sebastianbergmann/version"
     },
     {
+        "name": "shalvah/monolog-pusher",
+        "version": "1.2",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/shalvah/monolog-pusher.git",
+            "reference": "d24ac67a716b2308882881b4dc0ccbe0bed1a3d4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/shalvah/monolog-pusher/zipball/d24ac67a716b2308882881b4dc0ccbe0bed1a3d4",
+            "reference": "d24ac67a716b2308882881b4dc0ccbe0bed1a3d4",
+            "shasum": ""
+        },
+        "require": {
+            "monolog/monolog": "^1.23",
+            "php": "^7.1",
+            "pusher/pusher-php-server": "^4.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "^1.1",
+            "phpunit/phpunit": "^7.2"
+        },
+        "time": "2019-06-27T13:12:03+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Shalvah\\MonologPusher\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Shalvah A",
+                "email": "shalvah.adebayo@gmail.com"
+            }
+        ],
+        "description": "Monolog handler for sending logs to Pusher",
+        "keywords": [
+            "error",
+            "logging",
+            "logs",
+            "monolog",
+            "pusher"
+        ]
+    },
+    {
         "name": "simplesoftwareio/simple-qrcode",
         "version": "2.0.0",
         "version_normalized": "2.0.0.0",

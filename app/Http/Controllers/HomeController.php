@@ -16,6 +16,7 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
 use App\Models\MessageBoard;
 use Webklex\IMAP\Client;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {

@@ -27,6 +27,9 @@ class CheckStatus
             return Redirect::route('login')->withErrors('Desculpe, mas o Usuário está desativado, entre em contato com o Administrador.');
         }
 
+        \Log::channel('realtime')
+        ->info(Auth::user()->person->name . ' - ' . $request->fullUrl());
+
         return $next($request);
     }
 }
