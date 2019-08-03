@@ -24,10 +24,10 @@
             listen() {
                 Echo.join('chat')
                     .joining((user) => {
-                        axios.put('/api/user/'+ user.uuid +'/online', {});
+                        axios.put('/api/user/'+ user.id +'/online', {});
                     })
                     .leaving((user) => {
-                        axios.put('/api/user/'+ user.uuid +'/offline', {});
+                        axios.put('/api/user/'+ user.id +'/offline', {});
                     })
                     .listen('UserOnline', (e) => {
                         this.user = e.user;

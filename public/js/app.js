@@ -1813,15 +1813,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Echo.join('chat').joining(function (user) {
-        axios.put('/api/user/' + friend.id + '/online', {}, {
+        axios.put('/api/user/' + user.id + '/online', {}, {
           headers: {
-            'Authorization': 'Bearer ' + friend.api_token
+            'Authorization': 'Bearer ' + user.api_token
           }
         });
       }).leaving(function (user) {
-        axios.put('/api/user/' + friend.id + '/offline', {}, {
+        axios.put('/api/user/' + user.id + '/offline', {}, {
           headers: {
-            'Authorization': 'Bearer ' + friend.api_token
+            'Authorization': 'Bearer ' + user.api_token
           }
         });
       }).listen('UserOnline', function (e) {
@@ -1870,9 +1870,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Echo.join('chat').joining(function (user) {
-        axios.put('/api/user/' + user.uuid + '/online', {});
+        axios.put('/api/user/' + user.id + '/online', {});
       }).leaving(function (user) {
-        axios.put('/api/user/' + user.uuid + '/offline', {});
+        axios.put('/api/user/' + user.id + '/offline', {});
       }).listen('UserOnline', function (e) {
         _this.user = e.user;
       }).listen('UserOffline', function (e) {
