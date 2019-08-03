@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class UserOnlineController extends Controller
 {
-    public function online($id, Request $request)
+    /*public function online($id, Request $request)
     {
         $user = User::uuid($id);
 
@@ -16,8 +16,8 @@ class UserOnlineController extends Controller
         $user->save();
 
         broadcast(new UserOnline($user));
-    }
-/*
+    }*/
+
     public function __invoke(User $user)
     {
         $user->status = 'online';
@@ -25,5 +25,5 @@ class UserOnlineController extends Controller
 
         broadcast(new UserOnline($user));
     }
-    */
+
 }

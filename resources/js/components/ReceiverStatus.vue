@@ -20,16 +20,24 @@
         },
         mounted() {
             this.listen();
-            //this.listenForWhisper();
         },
         methods: {
+
             listen() {
                 Echo.join('chat')
                     .joining((user) => {
-                        axios.get('/user/'+ user.uuid +'/online', {});
+                        axios.put('/api/user/'+ user.id +'/online', {}, {
+                            headers: {
+                                'Authorization':'Bearer ' + user.api_token,
+                            }
+                        });
                     })
                     .leaving((user) => {
-                        axios.get('/user/'+ user.uuid +'/offline', {});
+                        axios.put('/api/user/'+ user.id +'/offline', {}, {
+                            headers: {
+                                'Authorization':'Bearer ' + user.api_token,
+                            }
+                        });
                     })
                     .listen('UserOnline', (e) => {
                         this.friend = e.user;

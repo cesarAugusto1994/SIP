@@ -8,7 +8,7 @@ use App\User;
 
 class UserOfflineController extends Controller
 {
-    public function offline($id, Request $request)
+    /*public function offline($id, Request $request)
     {
         $user = User::uuid($id);
 
@@ -16,8 +16,8 @@ class UserOfflineController extends Controller
         $user->save();
 
         broadcast(new UserOffline($user));
-    }
-/*
+    }*/
+
     public function __invoke(User $user)
     {
         $user->status = 'offline';
@@ -25,5 +25,4 @@ class UserOfflineController extends Controller
 
         broadcast(new UserOffline($user));
     }
-    */
 }

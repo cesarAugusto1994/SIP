@@ -1806,16 +1806,24 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.listen(); //this.listenForWhisper();
+    this.listen();
   },
   methods: {
     listen: function listen() {
       var _this = this;
 
       Echo.join('chat').joining(function (user) {
-        axios.get('/user/' + user.uuid + '/online', {});
+        axios.put('/api/user/' + friend.id + '/online', {}, {
+          headers: {
+            'Authorization': 'Bearer ' + friend.api_token
+          }
+        });
       }).leaving(function (user) {
-        axios.get('/user/' + user.uuid + '/offline', {});
+        axios.put('/api/user/' + friend.id + '/offline', {}, {
+          headers: {
+            'Authorization': 'Bearer ' + friend.api_token
+          }
+        });
       }).listen('UserOnline', function (e) {
         _this.friend = e.user;
       }).listen('UserOffline', function (e) {
@@ -1848,19 +1856,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: ['user', 'user2'],
   data: function data() {
-    return {};
+    return {
+      friend: this.user2
+    };
   },
   mounted: function mounted() {
     this.listen();
   },
   methods: {
     listen: function listen() {
+      var _this = this;
+
       Echo.join('chat').joining(function (user) {
-        axios.get('/user/' + user.uuid + '/online', {});
+        axios.put('/api/user/' + user.uuid + '/online', {});
       }).leaving(function (user) {
-        axios.get('/user/' + user.uuid + '/offline', {});
+        axios.put('/api/user/' + user.uuid + '/offline', {});
+      }).listen('UserOnline', function (e) {
+        _this.user = e.user;
+      }).listen('UserOffline', function (e) {
+        _this.user = e.user;
       });
     }
   }

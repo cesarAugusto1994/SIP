@@ -11,10 +11,10 @@
 
 <script>
     export default {
-        props: ['user'],
+        props: ['user', 'user2'],
         data() {
             return {
-
+                friend: this.user2
             }
         },
         mounted() {
@@ -24,11 +24,17 @@
             listen() {
                 Echo.join('chat')
                     .joining((user) => {
-                        axios.get('/user/'+ user.uuid +'/online', {});
+                        axios.put('/api/user/'+ user.uuid +'/online', {});
                     })
                     .leaving((user) => {
-                        axios.get('/user/'+ user.uuid +'/offline', {});
+                        axios.put('/api/user/'+ user.uuid +'/offline', {});
                     })
+                    .listen('UserOnline', (e) => {
+                        this.user = e.user;
+                    })
+                    .listen('UserOffline', (e) => {
+                        this.user = e.user;
+                    });
             }
         }
     }

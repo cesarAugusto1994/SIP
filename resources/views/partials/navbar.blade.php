@@ -204,9 +204,9 @@
                               <span class="badge bg-c-green">{{ $countMessages }}</span>
                             @endif
                           </a>
-                          @if(config('app.env') == 'test')
+                          @if(config('app.env') == 'local')
                           <span class="float-right">
-                            <receiverstatus :user="{{ $user }}" :receiver="{{ Auth::user() }}"></receiverstatus>
+                            
                           <span>
                           @endif
                         </div>
