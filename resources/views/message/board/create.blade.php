@@ -93,7 +93,7 @@
 
               <div class="form-group row">
                   <div class="col-sm-12">
-                    <textarea class="form-control summernote" name="content"></textarea>
+                    <textarea class="form-control ckeditor" name="content"></textarea>
                   </div>
               </div>
 

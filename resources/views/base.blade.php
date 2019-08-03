@@ -58,9 +58,6 @@
 
     <link rel="stylesheet" href="{{ asset('adminty\components\bootstrap-multiselect\css\bootstrap-multiselect.css') }}"/>
 
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.print.css') }}" media='print'>
 
@@ -255,9 +252,6 @@
 
 <script src="{{ asset('adminty\components\bootstrap-multiselect\js\bootstrap-multiselect.js') }}"></script>
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-
 <script type="text/javascript" src="{{ asset('adminty\pages\accordion\accordion.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-bar-rating\js\jquery.barrating.js') }}"></script>
@@ -348,21 +342,6 @@
   }
 
   $(document).ready(function() {
-
-    $('.summernote').summernote({
-          placeholder: 'Digite sua mensagem',
-          tabsize: 2,
-          height: 300,
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']]
-          ]
-      });
 
     var $formValid = $('.formValidation').parsley();
 
