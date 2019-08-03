@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/Okipa/laravel-table/releases/tag/1.1.0)
+
+2019-08-02
+
+- Added the possibility to add an identifier to a table with `->identifier('your identifier')`. This identifier will be used for several things :
+  - It will be added as an id (formatted as a slug string) to the table itself.
+  - It will be used to automatically customize the following interaction fields sent to the table, in order to be able to interact with a specific table if you have several of them on a single view : `rows`, `search`, `sort_by`, `sort_dir`.
+- :warning: if you have published the views, you will have to re-publish them.  
+
 ## [1.0.13](https://github.com/Okipa/laravel-table/releases/tag/1.0.13)
 
 2019-05-14
@@ -21,7 +30,7 @@
 - Added Spanish translation. - _[@Dranthos](https://github.com/Dranthos)_
 - Wrapped sortable columns titles in order to avoid line jump between the sort icon and the column title (Issue #14).
 - Improved rows number selection and search bar template to fix wrong display the rows number is disabled for example (Issue #15).
-- Added possibility to show all the models contained in database with `->rowsNumber(false)` chained on the `Table` instance (Issue #16).
+- Added possibility to show all the models contained in database with `->rowsNumber(null)` chained on the `Table` instance (Issue #16).
 
 ## [1.0.10](https://github.com/Okipa/laravel-table/releases/tag/1.0.10)
 

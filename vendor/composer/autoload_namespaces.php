@@ -8,12 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'URLify' => array($vendorDir . '/jbroadway/urlify'),
     'SimpleSoftwareIO\\QrCode\\' => array($vendorDir . '/simplesoftwareio/simple-qrcode/src'),
-    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Kris\\LaravelFormBuilder' => array($vendorDir . '/kris/laravel-form-builder/src'),
-    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Codecourse\\Notify\\' => array($vendorDir . '/codecourse/notify/src'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );
