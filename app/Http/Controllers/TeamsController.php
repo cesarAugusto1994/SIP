@@ -42,7 +42,7 @@ class TeamsController extends Controller
     {
         $companies = Company::whereHas('employees')->get();
         $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 28)->get();
+        $teachers = People::where('occupation_id', 28)->where('active', true)->get();
         return view('training.teams.create', compact('companies', 'courses', 'teachers'));
     }
 
@@ -57,7 +57,7 @@ class TeamsController extends Controller
     {
         $team = Team::uuid($id);
 
-        if($team->start > now()) {
+        /*if($team->start > now()) {
 
           notify()->flash('Aula não iniciada!', 'warning', [
             'text' => 'A data de início deve ser igual a data agendada.'
@@ -65,10 +65,10 @@ class TeamsController extends Controller
 
           return back();
 
-        }
+        }*/
 
         $preReservados = $team->whereHas('employees', function($query) {
-            $query->where('status', 'PRE-AGENDADO');
+            $query->where('status', 'AGENDADO');
         })->get();
 
         if($preReservados) {
@@ -95,6 +95,34 @@ class TeamsController extends Controller
         return redirect()->route('teams.show', $team->uuid);
 
         //dd($teams);
+    }
+
+    public function employeePresence($id, Request $request)
+    {
+        $data = $request->request->all();
+
+        $team = Team::uuid($id);
+
+        foreach ($data['employees'] as $key => $employee) {
+
+            $teamEmployee = TeamEmployees::uuid($employee);
+
+            $status = 'FALTA';
+
+            if($request->has('employee-'.$employee)) {
+                $status = 'PRESENTE';
+            }
+
+            $teamEmployee->status = $status;
+            $teamEmployee->save();
+
+        }
+
+        notify()->flash('Preseça Confirmada', 'success', [
+          'text' => 'A presença dos alunos foi confirmada.'
+        ]);
+
+        return back();
     }
 
     public function employeeChangeStatus($id, Request $request)
@@ -257,7 +285,8 @@ class TeamsController extends Controller
         $employeesSelected = $team->employees->pluck('employee.id')->toArray();
 
         $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 9)->get();
+        //$teachers = People::where('occupation_id', 9)->get();
+        $teachers = People::where('occupation_id', 28)->where('active', true)->get();
 
         return view('training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected'));
     }
@@ -292,8 +321,14 @@ class TeamsController extends Controller
         $data['course_id'] = $course->id;
         $data['teacher_id'] = $teacher->id;
 
-        $data['start'] = \DateTime::createFromFormat('d/m/Y', $data['start']);
-        $data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
+        $start = DateTime::createFromFormat('d/m/Y H:i', $data['start']);
+        $end = DateTime::createFromFormat('d/m/Y H:i', $data['end']);
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        //$data['start'] = \DateTime::createFromFormat('d/m/Y', $data['start']);
+        //$data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
 
         $team->update($data);
 

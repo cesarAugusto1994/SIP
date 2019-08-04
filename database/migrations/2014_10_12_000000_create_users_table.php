@@ -94,6 +94,8 @@ class CreateUsersTable extends Migration
           $table->timestamp('email_verified_at')->nullable();
           $table->string('api_token')->nullable();
           $table->string('status')->default('offline');
+          $table->string('email_usage')->nullable();
+          $table->string('email_limit')->nullable();
           $table->boolean('active')->default(true);
           $table->uuid('uuid')->unique();
           $table->rememberToken();

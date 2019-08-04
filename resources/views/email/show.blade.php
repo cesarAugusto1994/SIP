@@ -81,11 +81,10 @@
                                                 <div class="row mail-img">
                                                   @foreach($email->attachments as $attachment)
                                                     <div class="col-sm-4 col-md-2 col-xs-12">
-                                                        <a href="#">{{ $attachment->name }}</a>
+                                                        <a target="_blank" href="{{ route('email_attachment_download', $attachment->uuid) }}">{{ $attachment->name }}</a>
                                                     </div>
                                                   @endforeach
                                                 </div>
-                                                <textarea class="form-control m-t-30 col-xs-12 email-textarea ckeditor" id="exampleTextarea-1" placeholder="Responder" rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div>

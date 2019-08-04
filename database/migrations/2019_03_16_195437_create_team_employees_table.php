@@ -19,7 +19,7 @@ class CreateTeamEmployeesTable extends Migration
             $table->foreign('team_id')->references('id')->on('teams');
             $table->integer('employee_id')->unsigned();
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->enum('status', ['PRE-AGENDADO', 'AGENDADO', 'CONFIRMADO', 'CANCELADO', 'FALTA'])->default('PRE-AGENDADO');
+            $table->enum('status', ['AGENDADO', 'PRESENTE', 'FALTA'])->default('AGENDADO');
             $table->integer('approved')->default(false);
             $table->uuid('uuid')->unique();
             $table->timestamps();

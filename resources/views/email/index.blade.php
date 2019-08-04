@@ -213,23 +213,29 @@
 
       $(document).ready(function() {
 
-          setTimeout(function() {
+        swal({
+          title: 'Em progresso...',
+          text: 'Aguarde enquanto os e-mails são carregados.',
+          type: 'success',
+          showConfirmButton: false,
+          allowOutsideClick: false
+        });
 
-            var emails = $('#load-emails').val();
+        var emails = $('#load-emails').val();
 
-            $.ajax({
-              type: 'GET',
-              url: emails,
-              done: function(data) {
+        $.ajax({
+          type: 'GET',
+          url: emails,
+          success: function(data) {
 
-                console.log(data);
+            swal.close();
 
-              }
-            });
+            //window.location.reload();
 
-          }, 5000);
+            console.log(data);
 
-
+          }
+        });
 
       });
 

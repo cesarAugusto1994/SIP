@@ -55,7 +55,7 @@
                           <tr>
 
                               <td>
-                                  <a>{{$team->course->title}}</a>
+                                  <a>{{substr($team->course->title,0,45)}}</a>
                               </td>
 
                               <td>

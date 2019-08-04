@@ -1,103 +1,5 @@
 @extends('base')
 
-@section('css')
-
-  <style>
-
-      html, body, #app {
-    max-height: 100vh;
-    height: 100vh;
-    }
-    #header {
-    background: rgba(0,0,0,.15);
-    overflow: hidden;
-    padding: 5px 8px;
-    position: relative;
-    height: 40px;
-    text-align: center;
-    margin: 0 0 20px;
-    .header-logo {
-        background-position: top right;
-        background-repeat: no-repeat;
-        background-size: 5pc 30px;
-        right: 0;
-        top: 0;
-        height: 30px;
-        width: 5pc;
-        position: absolute;
-        text-align: center;
-        bottom: 0;
-        display: block;
-        left: 50%;
-        margin-left: -40px;
-        top: 5px;
-        text-align: center;
-        -webkit-transition: .1s ease;
-        transition: .1s ease;
-        z-index: 2;
-    }
-    }
-    #boards {
-    .board {
-        width: 304px;
-        padding-left: 5px;
-        padding-right: 5px;
-        float: left;
-        .kanban-wrapper {
-            background-color: #E2E4E6;
-            border-radius: 5px;
-            overflow: hidden;
-            .board-title {
-                padding: 10px;
-                h2 {
-                    margin: 0;
-                    font-size: 14px;
-                    font-weight: 600;
-                    color: #272727;
-                }
-            }
-            .cards {
-                list-style: none;
-                margin: 0;
-                padding: 0 10px;
-                > div {
-                    min-height: 5px;
-                    padding: 5px 0;
-                }
-                .card {
-                    overflow: hidden;
-                    padding: 8px;
-                    background-color: #fff;
-                    border-bottom: 1px solid #ccc;
-                    border-radius: 3px;
-                    cursor: pointer;
-                    margin-bottom: 6px;
-                    max-width: 300px;
-                    min-height: 20px;
-                    &:hover {
-                        background-color: #edeff0;
-                    }
-                }
-            }
-            .add-card {
-                color: #838c91;
-                display: block;
-                flex: 0 0 auto;
-                padding: 8px 10px;
-                position: relative;
-                &[disabled], &[disabled]:hover {
-                    cursor: not-allowed;
-                    text-decoration: none;
-                }
-            }
-        }
-    }
-    }
-
-  </style>
-
-@stop
-
 @section('content')
 
 <div class="page-header">
@@ -124,99 +26,193 @@
 
 <div class="page-body">
 
-
   <div class="row">
-      @foreach($users->sortBy('person.name') as $user)
 
-      @if($user->do_task && $user->active && $user->tasks->isNotEmpty())
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+      <div class="card">
+          <div class="card-header">
+              <h5>Pendente</h5>
+          </div>
+          <div class="card-block">
+            <ul class="scroll-list wave basic-list list-icons-img" style="height:600px">
+              @foreach($tasks->where('status_id', 1) as $task)
 
-      <div class="col-md-6 col-xl-3">
-          <div class="card user-card">
-              <div class="card-header-img">
-                @if(config('app.env') == 'production')
-                  <img class="img-fluid img-radius" width="128" src="{{ route('image', ['user' => $user->uuid, 'link' => $user->avatar, 'avatar' => true])}}" alt="">
-                @endif
-                  <h4>{{ $user->person->name }}</h4>
-              </div>
+                @php
 
-              <br/>
+                  $status = $task->status->id;
 
-              <div class="card-block">
+                  $bgColor = 'success';
 
-                  <h2>{!! App\Http\Controllers\UsersController::getTaskPercentage($user->id) !!}%</h2>
-                  <div class="progress progress-mini">
-                      <div style="width: {!! App\Http\Controllers\UsersController::getTaskPercentage($user->id) !!}%;" class="progress-bar {!! App\Http\Controllers\UsersController::getTaskPercentageProgress($user->id) !!}"></div>
-                  </div>
+                  switch($status) {
+                    case '2':
+                      $bgColor = 'warning';
+                      break;
+                    case '3':
+                      $bgColor = 'primary';
+                      break;
+                    case '4':
+                      $bgColor = 'primary';
+                      break;
+                    case '5':
+                      $bgColor = 'danger';
+                      break;
+                  }
 
-                  <br/>
+                @endphp
 
-                  @forelse($user->tasks->sortBy('status_id') as $task)
-
-                    @if($task->status_id == 4)
-                      @continue
-                    @endif
-
-                      <span><a href="{{ route('tasks.show', ['id' => $task->uuid]) }}" class="text-navy">{{ substr($task->name, 0, 26) }}</a>:<br/>
-                          <small>{{ $task->owner->name ?? '' }}</small>
-                      </span>
-                      <div class="progress progress-striped active progress-mini">
-                        <div style="width:{{ \App\Helpers\Helper::percent($task->status_id) }}"
-                          class="progress-bar {{ \App\Helpers\Helper::progressBarCollor($task->status_id) }}">
-                          {{ \App\Helpers\Helper::percent($task->status_id) }}</div>
-                      </div>
-
-                  @empty
-
-                  @endforelse
-
-                  <hr/>
-
-                  @if($user->logs->isNotEmpty())
-                  <div class="feed-activity-list text-center">
-
+                <li>
+                    <img style="left: -50px;" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" class="img-fluid p-absolute d-block text-center" alt="">
+                    <h6 style="margin-bottom: .5rem;"><b><a href="{{ route('tasks.show', $task->uuid) }}">{{ $task->name }}</a></b></h6>
+                    <p>{{substr($task->description,0,150)}}...</p>
                     <hr/>
+                    <span class="label label-{{$bgColor}}"> {{$task->status->name}} </span>
+                </li>
+              @endforeach
 
-                    <h3>Histórico</h3>
-
-                      <div>
-
-                          @forelse(App\Http\Controllers\UsersController::getTodayLogs($user->id) as $log)
-                          <div class="feed-element">
-                              <a href="{{ route('user', ['id' => $log->user->uuid]) }}" class="pull-left">
-                                  <img width="32" alt="" class="img" src="{{ route('image', ['user' => $log->user->uuid, 'link' => $log->user->avatar, 'avatar' => true])}}">
-                              </a>
-                              <div class="media-body ">
-                                  <small class="pull-right"></small>
-                                  <strong>{{$log->user->name == Auth::user()->name ? 'Você' : $log->user->name}}</strong> {{ $log->message }} <br>
-                                  <small class="text-muted">{{ $log->created_at->format('H:i - d.m.Y') }}</small>
-
-                              </div>
-                          </div>
-                          @empty
-                          <div class="text-center">
-                              <p>Nenhum registro encontrado.</p>
-                          </div>
-                          @endforelse
-
-                      </div>
-
-                  </div>
-                  @endif
-                  <br/>
-
-
-              </div>
-
-              <a href="{{ route('tasks.index', ['user' => $user->id]) }}" class="btn btn-success btn-sm btn-round">Tarefas</a>
-
+            </ul>
           </div>
       </div>
-
-
-      @endif
-
-      @endforeach
     </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+      <div class="card">
+          <div class="card-header">
+              <h5>Em Andamento</h5>
+          </div>
+          <div class="card-block">
+            <ul class="scroll-list wave basic-list list-icons-img" style="height:600px">
+              @foreach($tasks->where('status_id', 2) as $task)
+
+                @php
+
+                  $status = $task->status->id;
+
+                  $bgColor = 'success';
+
+                  switch($status) {
+                    case '2':
+                      $bgColor = 'warning';
+                      break;
+                    case '3':
+                      $bgColor = 'primary';
+                      break;
+                    case '4':
+                      $bgColor = 'primary';
+                      break;
+                    case '5':
+                      $bgColor = 'danger';
+                      break;
+                  }
+
+                @endphp
+
+                <li>
+                    <img style="left: -50px;" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" class="img-fluid p-absolute d-block text-center" alt="">
+                    <h6 style="margin-bottom: .5rem;"><b><a href="{{ route('tasks.show', $task->uuid) }}">{{ $task->name }}</a></b></h6>
+                    <p>{{substr($task->description,0,150)}}...</p>
+                    <hr/>
+                    <span class="label label-{{$bgColor}}"> {{$task->status->name}} </span>
+                </li>
+              @endforeach
+
+            </ul>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+      <div class="card">
+          <div class="card-header">
+              <h5>Em Pausa</h5>
+          </div>
+          <div class="card-block">
+            <ul class="scroll-list wave basic-list list-icons-img" style="height:600px">
+              @foreach($tasks->where('status_id', 5) as $task)
+
+                @php
+
+                  $status = $task->status->id;
+
+                  $bgColor = 'success';
+
+                  switch($status) {
+                    case '2':
+                      $bgColor = 'warning';
+                      break;
+                    case '3':
+                      $bgColor = 'primary';
+                      break;
+                    case '4':
+                      $bgColor = 'primary';
+                      break;
+                    case '5':
+                      $bgColor = 'danger';
+                      break;
+                  }
+
+                @endphp
+
+                <li>
+                    <img style="left: -50px;" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" class="img-fluid p-absolute d-block text-center" alt="">
+                    <h6 style="margin-bottom: .5rem;"><b><a href="{{ route('tasks.show', $task->uuid) }}">{{ $task->name }}</a></b></h6>
+                    <p>{{substr($task->description,0,150)}}...</p>
+                    <hr/>
+                    <span class="label label-{{$bgColor}}"> {{$task->status->name}} </span>
+                </li>
+              @endforeach
+
+            </ul>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+      <div class="card">
+          <div class="card-header">
+              <h5>Finalizados</h5>
+          </div>
+          <div class="card-block">
+            <ul class="scroll-list wave basic-list list-icons-img" style="height:600px">
+              @foreach($tasks->where('status_id', 3) as $task)
+
+                @php
+
+                  $status = $task->status->id;
+
+                  $bgColor = 'success';
+
+                  switch($status) {
+                    case '2':
+                      $bgColor = 'warning';
+                      break;
+                    case '3':
+                      $bgColor = 'primary';
+                      break;
+                    case '4':
+                      $bgColor = 'primary';
+                      break;
+                    case '5':
+                      $bgColor = 'danger';
+                      break;
+                  }
+
+                @endphp
+
+                <li>
+                    <img style="left: -50px;" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" class="img-fluid p-absolute d-block text-center" alt="">
+                    <h6 style="margin-bottom: .5rem;"><b><a href="{{ route('tasks.show', $task->uuid) }}">{{ $task->name }}</a></b></h6>
+                    <p>{{substr($task->description,0,150)}}...</p>
+                    <hr/>
+                    <span class="label label-{{$bgColor}}"> {{$task->status->name}} </span>
+                </li>
+              @endforeach
+
+            </ul>
+          </div>
+      </div>
+    </div>
+
+  </div>
 
 </div>
 

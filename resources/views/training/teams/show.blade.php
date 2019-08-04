@@ -54,7 +54,7 @@
                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                       </div>
 
-                      <form method="post" action="{{route('teams.update', ['id' => $team->uuid])}}">
+                      <form class="formValidation" data-parsley-validate method="post" action="{{route('teams.update', ['id' => $team->uuid])}}">
 
                       <div class="modal-body">
 
@@ -95,14 +95,21 @@
 
                                 </div>
 
-                                <div class="col-md-12" id="sandbox-container">
-                                  <label class="col-form-label" for="course_id">Data</label>
-                                  <div class="input-daterange input-group" id="datepicker">
-                                      <input type="text" class="input-md form-control inputDate" name="start" value="{{ $team->start->format('d/m/Y') }}"/>
-                                      <div class="input-group-append">
-                                          <span class="input-group-text">Até</span>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label class="col-form-label" for="teacher_id">Data</label>
+                                      <div class="input-group">
+                                          <input type="text" class="input-md form-control inputDateTime" name="start" value="{{ $team->start->format('d/m/Y H:i') }}"/>
                                       </div>
-                                      <input type="text" class="input-md form-control inputDate" name="end" value="{{ $team->end->format('d/m/Y') }}"/>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label class="col-form-label" for="teacher_id">Data</label>
+                                      <div class="input-group">
+                                          <input type="text" class="input-md form-control inputDateTime" name="end" value="{{ $team->end->format('d/m/Y H:i') }}"/>
+                                      </div>
                                   </div>
                                 </div>
 
@@ -280,6 +287,75 @@
         <div class="card-header">
             <h5>Lista Funcionários para a Turma </h5>
             <span>({{ $team->employees->count() }}) registros encontrados.</span>
+            <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                  @if($team->employees->where('status', 'PRE-AGENDADO')->first())
+                    <li><button type="button" class="btn btn-success btn-sm waves-effect waves-light" data-toggle="modal" data-target=".statusTeam">Presença</button></li>
+                  @endif
+                </ul>
+            </div>
+
+            <div class="modal fade statusTeam" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="mySmallModalLabel">Presença</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+
+                        <form class="formValidation" data-parsley-validate method="post" action="{{route('team_employee_presence', $team->uuid)}}">
+
+                        <div class="modal-body">
+
+                              {{csrf_field()}}
+
+                              <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+
+                                          <th>Presente?</th>
+                                          <th>Nome</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($team->employees as $employeeItem)
+
+                                            @php
+                                                $employee = $employeeItem->employee;
+                                            @endphp
+
+                                            <input name="employees[]" value="{{ $employeeItem->uuid }}" type="hidden"/>
+
+                                            <tr>
+
+                                                <td><input class="js-switch" type="checkbox" name="employee-{{ $employeeItem->uuid }}" value="1"/></td>
+                                                <td>
+                                                    <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
+                                                    <br/>
+                                                    <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
+                                                </td>
+
+                                            </tr>
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                              </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary btnChangeStatus waves-effect waves-light">Salvar</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="card-block">
 
@@ -317,7 +393,7 @@
                                 @elseif($employeeItem->status == 'AGENDADO')
                                   <span class="badge badge-success">{{ $employeeItem->status }}</span>
                                 @elseif($employeeItem->status == 'CONFIRMADO')
-                                  <span class="badge badge-custom">{{ $employeeItem->status }}</span>
+                                  <span class="badge badge-success">{{ $employeeItem->status }}</span>
                                 @elseif($employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA')
                                   <span class="badge badge-danger">{{ $employeeItem->status }}</span>
                                 @endif
@@ -327,6 +403,9 @@
 
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                     <a data-toggle="modal" data-target="#editStatus-{{ $loop->index }}"
+                                     class="dropdown-item" style="cursor:pointer">Editar Situação</a>
 
                                     @permission('delete.clientes')
                                       <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
@@ -343,6 +422,54 @@
                               </td>
 
                           </tr>
+
+                          <div class="modal fade" id="editStatus-{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="editStatus" style="display: none;" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="mySmallModalLabel">{{$employee->name}}</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                      </div>
+
+                                      <form method="post" action="{{route('team_employee_change_status', [$employeeItem->uuid])}}">
+
+                                        <div class="modal-body">
+
+                                              {{csrf_field()}}
+
+                                              <div class="row m-b-30">
+                                                  <div class="col-md-12">
+                                                      <div class="form-group">
+                                                          <label class="col-form-label" for="status">Situação</label>
+                                                          <div class="input-group">
+                                                            <select class="form-control" name="status" id="status-employee-{{$loop->index}}" required>
+                                                                  <option value="PRE-AGENDADO">PRE-AGENDADO</option>
+                                                                  <option value="AGENDADO">AGENDADO</option>
+                                                                  <option value="CONFIRMADO">CONFIRMADO</option>
+                                                                  <option value="CANCELADO">CANCELADO</option>
+                                                                  <option value="FALTA">FALTA</option>
+                                                            </select>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
+                                            @php
+                                                $url = route('team_employee_change_status', [$employeeItem->uuid]);
+                                                $target = '#status-employee-' . $loop->index;
+                                            @endphp
+                                            <button type="submit" onclick="return sendForm('{{ $employeeItem->uuid }}', '{{ $url }}', '{{$target}}')" data-item="{{ $employeeItem->uuid }}" class="btn btn-primary waves-effect waves-light">Salvar</button>
+                                        </div>
+
+                                      </form>
+
+                                  </div>
+                              </div>
+                          </div>
 
                       @endforeach
                   </tbody>

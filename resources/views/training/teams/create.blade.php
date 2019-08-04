@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('teams.index') }}"> Turmas</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Adicionar</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Nova</a></li>
                 </ul>
             </div>
         </div>
@@ -31,12 +31,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h5>Listagem de Turmas</h5>
-        <div class="card-header-right">
-            <ul class="list-unstyled card-option">
-                <li><a class="btn btn-sm btn-success btn-round" href="{{route('teams.create')}}">Novo</a></li>
-            </ul>
-        </div>
+        <h5>Nova Turma</h5>
     </div>
     <div class="card-block">
 
@@ -81,14 +76,21 @@
 
                     </div>
 
-                    <div class="span5 col-md-6" id="sandbox-container">
-                      <label class="col-form-label" for="course_id">Data</label>
-                      <div class="input-daterange input-group" id="datepicker">
-                          <input type="text" class="input-md form-control inputDate" name="start" value="{{ now()->modify('+1 day')->format('d/m/Y') }}"/>
-                          <div class="input-group-append">
-                              <span class="input-group-text">Até</span>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                          <label class="col-form-label" for="teacher_id">Data Inicio</label>
+                          <div class="input-group">
+                              <input type="text" class="input-md form-control inputDateTime" value="{{ now()->format('d/m/Y H:i') }}" name="start"/>
                           </div>
-                          <input type="text" class="input-md form-control inputDate" name="end" value="{{ now()->modify('+2 day')->format('d/m/Y') }}"/>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                          <label class="col-form-label" for="teacher_id">Data Fim</label>
+                          <div class="input-group">
+                              <input type="text" class="input-md form-control inputDateTime" value="{{ now()->addHours(2)->format('d/m/Y H:i') }}" name="end"/>
+                          </div>
                       </div>
                     </div>
 

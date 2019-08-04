@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('lockscreen', 'LockAccountController@lockscreen')->name('lockscreen');
         Route::post('lockscreen', 'LockAccountController@unlock')->name('post_lockscreen');
-      
+
         Route::middleware('lock')->group(function () {
 
         Route::get('/', 'HomeController@index')->name('home');
@@ -169,6 +169,8 @@ Route::middleware('auth')->group(function () {
           Route::resource('students', 'StudentsController');
           Route::resource('teams', 'TeamsController');
 
+          Route::post('teams/{id}/employee/presence', 'TeamsController@employeePresence')->name('team_employee_presence');
+
           Route::resource('vehicles', 'VahiclesController');
           Route::resource('vehicle-schedule', 'VahicleScheduleController');
 
@@ -256,6 +258,8 @@ Route::middleware('auth')->group(function () {
           Route::resource('emails', 'EmailsController');
           Route::get('emails-search', 'EmailsController@search')->name('emails_search');
           Route::get('emails-template/{id}', 'EmailsController@html')->name('emails_template');
+
+          Route::get('emails/attachment/{id}/download', 'EmailsController@downloadAttachment')->name('email_attachment_download');
 
           Route::post('folders/{id}/upload', 'ArchivesController@upload')->name('file_upload');
           Route::post('folders/{id}/user/{user}/permission/{type}/change', 'FoldersController@changePermission')->name('folder_user_permission_change');

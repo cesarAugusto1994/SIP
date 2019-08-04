@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DocumentTypesTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
         $this->call(VehicleTableSeeder::class);
+        $this->call(TicketsTableSeeder::class);
+
 
         session()->flush();
 

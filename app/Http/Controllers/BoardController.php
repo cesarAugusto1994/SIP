@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Task;
+use App\Helpers\Helper;
 use App\User;
 
 class BoardController extends Controller
@@ -24,7 +26,9 @@ class BoardController extends Controller
      */
     public function index()
     {
-        return view('board.index')
-        ->with('users', User::all());
+        $tasks = Task::all();
+        $users = Helper::users();
+
+        return view('board.index', compact('users', 'tasks'));
     }
 }

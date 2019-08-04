@@ -67,7 +67,13 @@ class EmailsController extends Controller
             $property->setAccessible(false);
         }
 
-        if($cennection['connected']) {
+        if($connected->isConnected()) {
+
+            $quota = $connected->getQuota();
+
+            $user->email_usage = $quota['usage'];
+            $user->email_limit = $quota['limit'];
+            $user->save();
 
             $folders = $oClient->getFolders();
 
@@ -90,9 +96,11 @@ class EmailsController extends Controller
                 }
 
                 if(config('app.env') == 'production') {
-                  $messages = $folder->query()->since(now()->subDays(1))->get();
+                  //$messages = $folder->messages()->all()->get();
+                  $messages = $folder->getUnseenMessages();
                 } else {
-                  $messages = $folder->messages()->all()->get();
+                  $messages = $folder->query()->since(now()->subDays(1))->get();
+                  //$messages = $folder->getUnseenMessages();
                 }
 
                 foreach ($messages as $key => $message) {
@@ -289,7 +297,7 @@ class EmailsController extends Controller
 
                         foreach ($attachments as $key => $attachment) {
 
-                          $attachment->save();
+                          //$attachment->save();
 
                           $attach = Attachment::where('name', $attachment->name)->first();
 
@@ -321,7 +329,7 @@ class EmailsController extends Controller
 
         return response()->json([
           'success' => true,
-          'novos E-mails encontrados'
+          'message' => 'novos E-mails encontrados'
         ]);
     }
 
@@ -396,6 +404,45 @@ class EmailsController extends Controller
         }
 
         return view('email.show', compact('email', 'avatar'));
+    }
+
+    public function downloadAttachment($id)
+    {
+        $user = auth()->user();
+
+        $attachment = Attachment::uuid($id);
+
+        //$attachment = base64_encode($attachment->content);
+
+        //$file = \File::get($attachment->content);
+
+        //return \Storage::download($attachment->content);
+
+        //dd($file);
+
+        $email = $attachment->email;
+        //getMessage
+
+
+        $oClient = new Client([
+            'host'          => 'imap.umbler.com',
+            'port'          => 143,
+            'encryption'    => 'tls',
+            'validate_cert' => false,
+            'username'      => $user->email,
+            'password'      => $user->password_email,
+            'protocol'      => 'imap'
+        ]);
+
+        $oClient->connect();
+
+        $oFolder = $oClient->getFolder('INBOX');
+
+        $oMessage = $oFolder->getMessage($email->uid);
+
+        $attachments = $oMessage->getAttachments();
+
+        dd($attachments);
     }
 
     /**

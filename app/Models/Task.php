@@ -62,7 +62,7 @@ class Task extends Model
 
     public function status()
     {
-        return $this->belongsTo(TaskStatus::class, 'status_id');
+        return $this->belongsTo('App\Models\Ticket\Status', 'status_id');
     }
 
     public function sponsor()

@@ -15,4 +15,9 @@ class Attachment extends Model
       'email_id', 'id', 'name', 'content',
       'type', 'content_type', 'part_number', 'disposition', 'img_src',
     ];
+
+    public function email()
+    {
+       return $this->belongsTo('App\Models\Email');
+    }
 }
