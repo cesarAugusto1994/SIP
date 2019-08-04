@@ -1,6 +1,6 @@
 <nav class="pcoded-navbar">
     <div class="pcoded-inner-navbar main-menu">
-        <div class="pcoded-navigatio-lavel">Navigation</div>
+        <div class="pcoded-navigatio-lavel">Navegação</div>
         <ul class="pcoded-item pcoded-left-item">
 
             @permission('view.painel.principal')
