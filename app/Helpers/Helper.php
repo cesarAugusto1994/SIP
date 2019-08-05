@@ -826,9 +826,18 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Fleet\Vehicle') {
+          if($item) {
+            $route = route('vehicles.index');
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
+        }
+
         if($model == 'App\Models\People') {
-          $route = route('user', $item->uuid);
-          $html = '<a href='.$route.'>'.$item->name.'</a>';
+          if($item) {
+            $route = route('user', $item->uuid);
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
         }
 
         if($model == 'App\Models\Client\Address') {
@@ -850,7 +859,7 @@ class Helper
         }
 
         if($model == 'App\Models\MessageBoard') {
-          
+
           if($item) {
             $route = route('message-board.show', $item->uuid);
             $html = '<a href='.$route.'>'.$item->subject.'</a>';
