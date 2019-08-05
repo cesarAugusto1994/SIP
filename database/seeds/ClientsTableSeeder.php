@@ -139,7 +139,7 @@ class ClientsTableSeeder extends Seeder
         array(
             "Código" => 502539,
             "Empresa" => "HOSPITAL SANTA RITA DE CASSIA ",
-            "E-mail.Contato" => "sesmt@santarita.org.brafecc@santarita.org.br",
+            "E-mail.Contato" => "sesmt@santarita.org.br, afecc@santarita.org.br",
             "CNPJ" => "28.137.925/0001-06",
             "Tel.Contato" => "(27) 3334-8104, (27) 3334-8058",
             "Sub Grupo" => "CONTRATOS AVULSO"),
@@ -6815,7 +6815,7 @@ class ClientsTableSeeder extends Seeder
                   'client_id' => $client->id
                 ]);
             }
-
+/*
             $faker = Faker\Factory::create();
 
             Employee::create([
@@ -6828,6 +6828,7 @@ class ClientsTableSeeder extends Seeder
               'occupation_id' => $occupation->id,
               'active' => true
             ]);
+            */
 
         }
 
