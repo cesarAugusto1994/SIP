@@ -61,9 +61,9 @@
                 <tbody>
                 @foreach($documents as $document)
                 <tr>
-                  
+
                     <td>
-                        <p><a href="{{route('clients.edit', ['id' => $document->client->uuid])}}">{{ $document->client->name }}</a></p>
+                        <p><a href="{{route('clients.show', ['id' => $document->client->uuid])}}">{{ $document->client->name }}</a></p>
                     </td>
 
                     <td>

@@ -53,7 +53,7 @@
 
               </p>
               <p>CPF/CNPJ: {{ $employee->cpf }}</p>
-              <p>Contrato: {{ $employee->company->name }}</p>
+              <p>Empresa: <a href="{{route('clients.show', $employee->company->uuid)}}"><b>{{ $employee->company->name }}</b></a></p>
               <p>Função: {{ $employee->occupation->name }}</p>
 
             </div>

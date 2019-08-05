@@ -189,6 +189,7 @@ Route::middleware('auth')->group(function () {
           Route::get('clients/{id}/addresses', 'AddressesController@show')->name('client_addresses');
           Route::get('clients/{id}/addresses/create', 'AddressesController@create')->name('client_addresses_create');
           Route::post('clients/{id}/addresses', 'AddressesController@store')->name('client_addresses_store');
+          Route::post('clients/addresses/store', 'AddressesController@storeWithoutClientId')->name('client_addresses_store_modal');
           Route::delete('clients/{id}/addresses/destroy', 'AddressesController@destroy')->name('client_address_destroy');
           Route::get('clients/{id}/addresses/{address}/edit', 'AddressesController@edit')->name('client_addresses_edit');
           Route::put('clients/{id}/addresses/{address}/update', 'AddressesController@update')->name('client_addresses_update');

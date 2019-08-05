@@ -59,6 +59,36 @@ class AddressesController extends Controller
         return redirect()->route('clients.show', $client->uuid);
     }
 
+    public function storeWithoutClientId(Request $request)
+    {
+        $data = $request->request->all();
+        $user = $request->user();
+
+        if(!$request->has('client_id')) {
+
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Cliente não informado.'
+          ]);
+
+          return back();
+        }
+
+        $id = $data['client_id'];
+
+        $client = Client::uuid($id);
+        $data['client_id'] = $client->id;
+        $data['user_id'] = $user->id;
+        $data['is_default'] = $request->has('is_default');
+
+        Address::create($data);
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'O Endereço do Cliente foi adicionado com sucesso.'
+        ]);
+
+        return redirect()->route('clients.show', $client->uuid);
+    }
+
     /**
      * Display the specified resource.
      *

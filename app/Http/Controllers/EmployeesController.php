@@ -21,7 +21,7 @@ class EmployeesController extends Controller
 
           $employees->where('id', $search)
           ->orWhere('name', 'like', "%$search%")
-          ->orWhere('document', 'like', "%$search%");
+          ->orWhere('cpf', 'like', "%$search%");
 
         }
 
@@ -174,7 +174,7 @@ class EmployeesController extends Controller
           'text' => 'Funcionário atualizado com sucesso.'
         ]);
 
-        return redirect()->route('clients.show', $company->uuid);
+        return redirect()->route('employees.show', $employee->uuid);
     }
 
     /**

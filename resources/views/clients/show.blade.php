@@ -175,7 +175,7 @@
                                   <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                                     @permission('edit.clientes')
-                                      <a href="{{route('client_employee_edit', [$client->uuid, $employee->uuid])}}" class="dropdown-item"><i class="far fa-edit"></i> Editar</a>
+                                      <a href="{{route('employees.edit', ['id' => $employee->uuid])}}" class="dropdown-item"><i class="far fa-edit"></i> Editar</a>
                                     @endpermission
 
                                   </div>
@@ -287,34 +287,13 @@
 
       <div class="card">
           <div class="card-header">
-              <h5>Upload de Arquivos</h5>
+              <h5>Upload</h5>
           </div>
           <div class="card-block">
-
-            <form id="formUpload" method="post" action="{{route('client_documents_upload', [$client->uuid])}}" enctype="multipart/form-data">
-
-                @csrf
-
-                <div class="row m-b-10">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="input-group">
-
-                              <input required name="files[]" data-buttonText="Selecionar Arquivos" data-dragdrop="true"  data-buttonName="btn btn-warning" data-badge="true" type="file" data-input="false" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                      <button type="submit" class="btn btn-primary btnFormUpload">Salvar</button>
-                    </div>
-                </div>
-
-
-            </form>
-
+                <input type="file" name="files[]" id="filer" data-route="{{ route('client_documents_upload', $client->uuid) }}" multiple="multiple">
           </div>
       </div>
+
     </div>
 
     <div class="col-md-8">
@@ -342,7 +321,7 @@
                             <tr>
 
                                 <td>
-                                    <a target="_blank" href="{{ route('document_preview', $document->uuid) }}">{{$document->filename}}</a>
+                                    <a target="_blank" href="{{ route('document_preview', ['id' => $document->uuid, 'filename' => $document->filename]) }}">{{$document->filename}}</a>
                                 </td>
 
                                 <td>

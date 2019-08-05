@@ -34,15 +34,14 @@
 
         <form method="get" action="?">
           <div class="row">
-              <div class="col-md-5"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
-              <div class="col-md-2">
+              <div class="col-md-7"><input name="search" type="text" placeholder="ID, Nome, Documento" class="form-control"></div>
+              <div class="col-md-3">
                 <select class="form-control" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="status">
                     <option value="">Situação</option>
                     <option value="1">Ativo</option>
                     <option value="0">Inativo</option>
                 </select>
               </div>
-              <div class="col-md-3"><input name="address" type="text" placeholder="CEP, Endereço" class="form-control"></div>
               <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-search"></i>  Buscar</button></div>
 
           </div>

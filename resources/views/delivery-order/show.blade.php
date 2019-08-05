@@ -152,7 +152,7 @@
                                                       </tr>
                                                       <tr>
                                                           <th scope="row">Data Agendamento</th>
-                                                          <td>{{ $order->delivery_date ? $order->delivery_date : '-' }}</td>
+                                                          <td>{{ $order->delivery_date ? $order->delivery_date->format('d/m/Y') : '-' }}</td>
                                                       </tr>
                                                       <tr>
                                                           <th scope="row">Data Entrega</th>
