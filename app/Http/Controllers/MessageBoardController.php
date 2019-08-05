@@ -188,6 +188,38 @@ class MessageBoardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+          $messageBoard = MessageBoard::uuid($id);
+
+          $messageBoard->messages()->delete();
+
+          $messageBoard->attachments->map(function($attach) {
+
+            if(Storage::exists($attach->link)) {
+                Storage::delete($attach->link);
+            }
+
+            $attach->delete();
+
+          });
+
+          $route = route('message-board.index');
+
+          $messageBoard->delete();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Mensagem removida com sucesso.',
+            'route' => $route
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'route' => route('message-board.index')
+          ]);
+        }
     }
 }

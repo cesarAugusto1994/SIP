@@ -850,8 +850,12 @@ class Helper
         }
 
         if($model == 'App\Models\MessageBoard') {
-          $route = route('message-board.show', $item->uuid);
-          $html = '<a href='.$route.'>'.$item->subject.'</a>';
+          
+          if($item) {
+            $route = route('message-board.show', $item->uuid);
+            $html = '<a href='.$route.'>'.$item->subject.'</a>';
+          }
+
         }
 
         return [

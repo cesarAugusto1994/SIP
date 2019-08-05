@@ -51,14 +51,23 @@
                                           <img class="media-object img-radius" src="{{ route('image', ['user' => $messageBoard->user->uuid, 'link' => $messageBoard->user->avatar, 'avatar' => true])}}" alt="E-mail User">
                                       </a>
                                   </div>
-                                  <div class="media-body photo-contant table-responsive">
+                                  <div class="media-body photo-contant">
                                       <a href="#">
                                           <h6 class="user-name txt-primary">{{ $messageBoard->user->person->name }} </h6>
                                       </a>
+
+                                      <div class="f-right">
+                                        @if(auth()->user()->isAdmin() || auth()->user()->id == $messageBoard->user->id)
+                                          <a data-route="{{ route('message-board.destroy', $messageBoard->uuid) }}" class="btn btn-danger text-white btn-sm waves-effect waves-light btnRemoveItemToBack" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remover"><i class="icofont icofont-close"></i>Remover</a>
+                                        @endif
+                                      </div>
+
                                       <small>{{ $messageBoard->created_at->format('d/m/Y H:i:s') }}</small>
-                                      <p class="email-content">
-                                            {!! $messageBoard->content !!}
-                                      </p>
+                                      <div class="table-responsive">
+                                        <p class="email-content">
+                                              {!! $messageBoard->content !!}
+                                        </p>
+                                      </div>
                                       <div class="m-t-15">
                                           <i class="icofont icofont-clip f-20 m-r-10"></i>Anexos <b>({{ $messageBoard->attachments->count() }})</b>
                                           <div class="row mail-img">
