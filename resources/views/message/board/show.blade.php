@@ -67,11 +67,6 @@
 
                                               <div class="col-sm-4 col-md-2 col-xs-12">
                                                   <a target="_blank" href="{{ route('image', ['link'=>$file->link]) }}">
-                                                    @if(in_array($file->extension, ['jpeg','jpg', 'png', 'PNG']))
-                                                        <img class="card-img-top img-fluid img-thumbnail" src="{{ route('image', ['link'=>$file->link]) }}" alt="Anexo">
-                                                    @else
-                                                        <i class="fa fa-file fa-5x"></i>
-                                                    @endif
                                                     <div class="file-name">
                                                         {{ $file->filename }}
                                                         <br>
