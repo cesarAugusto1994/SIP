@@ -64,7 +64,7 @@
 
                               <td>
                                   <a>{{$team->employees->count()}} de {{$team->vacancies}}</a>
-                                  <p class="lead text-danger">{{ ($team->employees->count() / intval($team->vacancies)) * 100 }}%</p>
+                                  <p class="lead text-danger">{{ round(($team->employees->count() / intval($team->vacancies)) * 100, 2) }}%</p>
                               </td>
 
                               <td>
