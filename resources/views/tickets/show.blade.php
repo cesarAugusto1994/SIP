@@ -86,19 +86,19 @@
           <div class="card-header">
               <h5>Solicitação</h5>
               <div class="card-header-right">
-                @if($ticket->logs->last()->status->id != 4 && $ticket->logs->last()->status->id != 5)
+                @if($ticket->status_id != 4 && $ticket->status_id != 5)
                   <div class="dropdown-inverse dropdown open">
                       <button class="btn btn-inverse btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
 
-                        @if(auth()->user()->isAdmin() && $ticket->logs->last()->status->id == 1)
+                        @if($ticket->status_id == 1)
                           <a class="dropdown-item waves-light waves-effect" onclick="startTicket()" href="#">Executar Chamado</a>
-                        @elseif(auth()->user()->isAdmin() && $ticket->logs->last()->status->id == 2)
+                        @elseif($ticket->status_id == 2)
                           <a class="dropdown-item waves-light waves-effect" onclick="concludeTicket()" href="#">Concluir Chamado</a>
-                        @elseif($ticket->logs->last()->status->id == 3 && $ticket->user_id == auth()->user()->id)
+                        @elseif($ticket->status_>id == 3 && $ticket->user_id == auth()->user()->id)
                           <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
                         @endif
-                        @if($ticket->logs->last()->status->id == 1 || $ticket->logs->last()->status->id == 2 || $ticket->logs->last()->status->id == 3)
+                        @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
                           <a class="dropdown-item waves-light waves-effect" onclick="cancelTicket()" href="#">Cancelar Chamado</a>
                         @endif
                       </div>
