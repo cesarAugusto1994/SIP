@@ -43,4 +43,15 @@ class Schedule extends Model
     {
         return $this->hasMany('App\Models\Fleet\Schedule\Guest');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Agendamento de veículo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Agendamento de veículo cancelado";
+        }
+
+        return "Agendamento de veículo adicionado";
+    }
 }

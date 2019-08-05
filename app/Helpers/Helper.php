@@ -810,6 +810,14 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Fleet\Schedule') {
+
+          if($item) {
+            $route = route('vehicle-schedule.show', $item->uuid);
+            $html = '<a href='.$route.'>#'.$item->id.'</a>';
+          }
+        }
+
         if($model == 'App\Models\Department\Occupation') {
 
           if($item) {

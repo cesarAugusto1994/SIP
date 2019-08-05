@@ -156,6 +156,12 @@ class TicketTypesTableSeeder extends Seeder
                   'name' => 'Solicitação de acesso ao Alterdata',
               ],
               [
+                  'name' => 'Solicitação de Cartão de Transporte',
+              ],
+              [
+                  'name' => 'Solicitação de Cartão de Abastecimento',
+              ],
+              [
                   'name' => 'Outros',
               ],
             ],
