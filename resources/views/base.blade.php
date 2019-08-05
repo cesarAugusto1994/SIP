@@ -810,8 +810,8 @@ $(document).ready(function() {
         var self = $(this);
 
         swal({
-          title: 'Remover compromisso?',
-          text: "Deseja remover este compromisso?",
+          title: 'Remover registro?',
+          text: "Deseja remover este registro?",
           showCancelButton: true,
           confirmButtonColor: '#0ac282',
           cancelButtonColor: '#D46A6A',

@@ -9,6 +9,7 @@ use App\Models\MessageBoard\{Category,Type, User, Attachment};
 use App\Models\Category as MessageBoardCategory;
 use App\Notifications\NewMessage;
 use Notification;
+use Storage;
 use App\Helpers\Helper;
 use App\User as UserModel;
 
