@@ -288,7 +288,7 @@
             <span>({{ $team->employees->count() }}) registros encontrados.</span>
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">
-                  @if($team->employees->where('status', 'PRE-AGENDADO')->first())
+                  @if($team->employees->where('status', 'AGENDADO')->first())
                     <li><button type="button" class="btn btn-success btn-sm waves-effect waves-light" data-toggle="modal" data-target=".statusTeam">Presença</button></li>
                   @endif
                 </ul>
