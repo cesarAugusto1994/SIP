@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Request as Req;
 use Notification;
 use Storage;
+use DateTime;
+use DateInterval;
+use DatePeriod;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 
 class TaskController extends Controller
@@ -173,7 +176,7 @@ class TaskController extends Controller
         $data = $request->request->all();
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
-          'description' => 'required',
+          'name' => 'required',
           'time' => 'required',
           'time_type' => 'required',
           'severity' => 'required',
@@ -185,17 +188,112 @@ class TaskController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+        $start = $end = null;
+
+        if($request->has('start')) {
+            $start = DateTime::createFromFormat('d/m/Y', $data['start']);
+        }
+
+        if($request->has('end')) {
+            $end = DateTime::createFromFormat('d/m/Y', $data['end']);
+        }
+
+        $timeType = $data['time_type'];
+        $time = $data['time'];
+
+        if($data['frequency'] == 'Diariamente') {
+
+          if(!$start) {
+            return back()->withErrors(['start' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
+          }
+
+          if($timeType == 'day' && $time > 1) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 1 dia.'])->withInput();
+          }
+
+          if($timeType == 'hour' && $time > 24) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 24 horas.'])->withInput();
+          }
+
+          if($timeType == 'minute' && $time > 1440) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 1440 minutos.'])->withInput();
+          }
+
+          $interval = DateInterval::createFromDateString('1 day');
+
+        } elseif($data['frequency'] == 'Semanalmente') {
+
+          if(!$start) {
+            return back()->withErrors(['frequency' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
+          }
+
+          if($timeType == 'day' && $time > 7) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 7 dias.'])->withInput();
+          }
+
+          if($timeType == 'hour' && $time > 168) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 7 dias.'])->withInput();
+          }
+
+          if($timeType == 'minute' && $time > 10080) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 7 dias.'])->withInput();
+          }
+
+          $interval = DateInterval::createFromDateString('1 week');
+
+        } elseif($data['frequency'] == 'Mensalmente') {
+
+          if(!$start) {
+            return back()->withErrors(['frequency' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
+          }
+
+          if($timeType == 'day' && $time > 31) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 31 dias.'])->withInput();
+          }
+
+          if($timeType == 'hour' && $time > 744) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 31 dias.'])->withInput();
+          }
+
+          if($timeType == 'minute' && $time > 44640) {
+              return back()->withErrors(['time' => 'Tempo inválido para a frequencia selecionada, deve ser menor ou igual a 31 dias.'])->withInput();
+          }
+
+          $interval = DateInterval::createFromDateString('1 month');
+
+        }
+
+        if(!$end) {
+          //TODO
+        }
+
+        $period = new DatePeriod($start, $interval, $end);
+
         $data['status_id'] = Task::STATUS_PENDENTE;
         $data['user_id'] = Auth::user()->id;
 
-        $task = Task::create($data);
+        $data['start'] = $start;
+        $data['end'] = $end;
 
-        Log::create([
-          'task_id' => $task->id,
-          'user_id' => Auth::user()->id,
-          'message' => 'Criou a tarefa ' . $task->name,
-          'status_id' => Task::STATUS_PENDENTE
-        ]);
+        $invalidaDates = ['Saturday', 'Sunday'];
+
+        foreach ($period as $dt) {
+
+            if(in_array($dt->format('l'), $invalidaDates)) {
+              continue;
+            }
+
+            $data['created_at'] = $dt;
+            $data['start'] = $dt;
+            $task = Task::create($data);
+
+            Log::create([
+              'task_id' => $task->id,
+              'user_id' => Auth::user()->id,
+              'message' => 'Criou a tarefa ' . $task->name,
+              'status_id' => Task::STATUS_PENDENTE
+            ]);
+        }
 
         //flash('Nova tarefa adicionada com sucesso.')->success()->important();
         return redirect()->route('tasks.index');
@@ -303,7 +401,7 @@ class TaskController extends Controller
                 }
 
                 $task->status_id = Task::STATUS_EM_ANDAMENTO;
-                $task->begin = now();
+                $task->start = now();
                 $task->save();
 
                 $log = new Log();
@@ -318,7 +416,7 @@ class TaskController extends Controller
 
                 $task->status_id = Task::STATUS_FINALIZADO;
                 $task->end = new \DateTime('now');
-                $horaInicio = new \DateTime($task->begin);
+                $horaInicio = new \DateTime($task->start);
                 $diff = $task->end->diff($horaInicio);
                 $minutos = $diff->i + ($diff->h * 60);
 
@@ -360,7 +458,7 @@ class TaskController extends Controller
 
             if (Req::get('cancel')) {
                 $task->status_id = Task::STATUS_CANCELADO;
-                $task->begin = $task->end = new \DateTime('now');
+                $task->start = $task->end = new \DateTime('now');
                 $task->save();
 
                 $log = new Log();
@@ -410,14 +508,14 @@ class TaskController extends Controller
 
         $remainTime = null;
 
-        if($task->begin) {
+        if($task->start) {
 
           if($task->time_type == 'day') {
-              $remainTime = $task->begin->addDays($task->time);
+              $remainTime = $task->start->addDays($task->time);
           } elseif ($task->time_type == 'hour') {
-              $remainTime = $task->begin->addHours($task->time);
+              $remainTime = $task->start->addHours($task->time);
           } elseif ($task->time_type == 'minute') {
-              $remainTime = $task->begin->addMinutes($task->time);
+              $remainTime = $task->start->addMinutes($task->time);
           }
 
         }
@@ -529,7 +627,7 @@ class TaskController extends Controller
         $taskPause->task_id = $task->id;
         $taskPause->user_id = Auth::user()->id;
         $taskPause->message = Req::input('message');
-        $taskPause->begin = new \DateTime('now');
+        $taskPause->start = new \DateTime('now');
         $taskPause->save();
 
         $this->log($task, 'Pausou a tarefa ' . $task->name);
@@ -581,7 +679,7 @@ class TaskController extends Controller
         $task = Task::findOrfail($id);
 
         $task->status_id = Task::STATUS_EM_ANDAMENTO;
-        $task->begin = new \DateTime();
+        $task->start = new \DateTime();
 
         $task->save();
 
@@ -591,7 +689,7 @@ class TaskController extends Controller
     public static function taskDelayed($task)
     {
         $dateTime = new \DateTime('now');
-        $start = $task->begin;
+        $start = $task->start;
 
         if($task->status->id != 2) {
           return;

@@ -55,7 +55,7 @@
                 <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
-                      <textarea type="text" required name="description" id="description" rows="3"
+                      <textarea type="text" name="description" id="description" rows="3"
                              placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ old('description') }}</textarea>
 
                     </div>
@@ -87,7 +87,7 @@
                         <div class="input-group">
                           <select class="form-control" name="time_type">
                               <option value="day">Dia(s)</option>
-                              <option value="hour">Hora(s)</option>
+                              <option value="hour" selected>Hora(s)</option>
                               <option value="minute">Minuto(s)</option>
                           </select>
                         </div>
@@ -95,17 +95,42 @@
                     </div>
 
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-4">
 
                     <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tempo</label>
                         <div class="input-group">
-                          <input type="number" required name="time" id="time" class="form-control" value="1">
+                          <input type="number" min="1" required name="time" id="time" class="form-control" value="1">
                         </div>
                         {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
                     </div>
 
                   </div>
+
+                  <div class="col-md-4">
+
+                    <div class="form-group {!! $errors->has('percent_conclusion') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">% Conclusão</label>
+                        <div class="input-group">
+                          <select class="form-control" name="percent_conclusion">
+                              <option value="0">0</option>
+                              <option value="10">10</option>
+                              <option value="20">20</option>
+                              <option value="30">30</option>
+                              <option value="40">40</option>
+                              <option value="50">50</option>
+                              <option value="60">60</option>
+                              <option value="70">70</option>
+                              <option value="80">80</option>
+                              <option value="90">90</option>
+                              <option value="100">100</option>
+                          </select>
+                        </div>
+                        {!! $errors->first('percent_conclusion', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                  </div>
+
                 </div>
 
               </div>
@@ -126,15 +151,65 @@
               </div>
 
               <div class="col-md-6">
+
+                <div class="row">
+
+                  <div class="col-md-4">
+                    <div class="form-group {!! $errors->has('start') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Data de Início</label>
+                        <div class="input-group">
+                          <input autocomplete="off" type="text" name="start" class="form-control inputDate" value="{{ old('start') }}">
+                        </div>
+                        {!! $errors->first('start', '<p class="help-block">:message</p>') !!}
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group {!! $errors->has('end') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Data de Término</label>
+                        <div class="input-group">
+                          <input autocomplete="off" type="text" name="end" class="form-control inputDate" value="{{ old('end') }}">
+                        </div>
+                        {!! $errors->first('end', '<p class="help-block">:message</p>') !!}
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+
+                    <div class="form-group {!! $errors->has('frequency') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Frequencia</label>
+                        <div class="input-group">
+                          <select class="form-control" name="frequency">
+                              <option value="Nao se repete">Não se repete</option>
+                              <option value="Diariamente">Diariamente</option>
+                              <option value="Semanalmente">Semanalmente</option>
+                              <option value="Mensalmente">Mensalmente</option>
+                              <option value="Segunda">Segunda-Feira</option>
+                              <option value="Terca">Terça-Feira</option>
+                              <option value="Quarta">Quarta-Feira</option>
+                              <option value="Quinta">Quinta-Feira</option>
+                              <option value="Sexta">Sexta-Feira</option>
+                              <option value="Sabado">Sábado</option>
+                          </select>
+                        </div>
+                        {!! $errors->first('frequency', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
                 <div class="form-group {!! $errors->has('severity') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Gravidade</label>
+                    <label class="col-form-label">Gravidade (Risco)</label>
                     <div class="input-group">
                       <select class="form-control" name="severity">
-                          <option value="1" data-content="<span class='label label-default'>1 (baixissima)</span>">1 (baixissima)</option>
-                          <option value="2" data-content="<span class='label label-primary'>2 (baixa)</span>">2 (baixa)</option>
-                          <option value="3" data-content="<span class='label label-success'>3 (moderada)</span>">3 (moderada)</option>
-                          <option value="4" data-content="<span class='label label-warning'>4 (alta)</span>">4 (alta)</option>
-                          <option value="5" data-content="<span class='label label-danger'>5 (altissima)</span>">5 (altissima)</option>
+                          <option value="1">1 (baixissima)</option>
+                          <option value="2">2 (baixa)</option>
+                          <option value="3">3 (moderada)</option>
+                          <option value="4">4 (alta)</option>
+                          <option value="5">5 (altissima)</option>
                       </select>
 
                     </div>
@@ -142,16 +217,16 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group {!! $errors->has('urgency') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Urgencia</label>
+                    <label class="col-form-label">Urgência (Prioridade)</label>
                     <div class="input-group">
                       <select class="form-control" name="urgency">
-                        <option value="1" data-content="<span class='label label-default'>1 (baixissima)</span>">1 (baixissima)</option>
-                        <option value="2" data-content="<span class='label label-primary'>2 (baixa)</span>">2 (baixa)</option>
-                        <option value="3" data-content="<span class='label label-success'>3 (moderada)</span>">3 (moderada)</option>
-                        <option value="4" data-content="<span class='label label-warning'>4 (alta)</span>">4 (alta)</option>
-                        <option value="5" data-content="<span class='label label-danger'>5 (altissima)</span>">5 (altissima)</option>
+                        <option value="1">1 (baixissima)</option>
+                        <option value="2">2 (baixa)</option>
+                        <option value="3">3 (moderada)</option>
+                        <option value="4">4 (alta)</option>
+                        <option value="5">5 (altissima)</option>
                       </select>
 
                     </div>
@@ -159,16 +234,16 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group {!! $errors->has('trend') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Tendencia</label>
+                    <label class="col-form-label">Tendência (Importância)</label>
                     <div class="input-group">
                       <select class="form-control" name="trend">
-                        <option value="1" data-content="<span class='label label-default'>1 (baixissima)</span>">1 (baixissima)</option>
-                        <option value="2" data-content="<span class='label label-primary'>2 (baixa)</span>">2 (baixa)</option>
-                        <option value="3" data-content="<span class='label label-success'>3 (moderada)</span>">3 (moderada)</option>
-                        <option value="4" data-content="<span class='label label-warning'>4 (alta)</span>">4 (alta)</option>
-                        <option value="5" data-content="<span class='label label-danger'>5 (altissima)</span>">5 (altissima)</option>
+                        <option value="1">1 (baixissima)</option>
+                        <option value="2">2 (baixa)</option>
+                        <option value="3">3 (moderada)</option>
+                        <option value="4">4 (alta)</option>
+                        <option value="5">5 (altissima)</option>
                       </select>
 
                     </div>

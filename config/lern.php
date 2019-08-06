@@ -80,7 +80,7 @@ return [
         /**
          * mail, pushover, slack, etc...
          */
-        'drivers'=>['mail', 'slack'],
+        'drivers'=>['slack'],
 
         /**
          * Mail settings

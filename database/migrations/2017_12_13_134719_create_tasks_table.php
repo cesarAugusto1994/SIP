@@ -23,12 +23,13 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->enum('time_type', ['day', 'hour', 'minute'])->default('hour');
-            $table->integer('time');
-            $table->dateTime('begin')->nullable();
-            $table->dateTime('end')->nullable();
-            $table->enum('frequency', ['Exporadicamente', 'Diariamente', 'Semanalmente', 'Mensalmente'])->default('Exporadicamente');
+            $table->integer('time')->nullable();
+            $table->date('start')->nullable();
+            $table->date('end')->nullable();
+            $table->float('percent_conclusion')->default(0.00);
+            $table->enum('frequency', ['Nao se repete', 'Diariamente', 'Semanalmente', 'Mensalmente', 'Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado'])->default('Nao se repete');
             $table->integer('spent_time')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -38,6 +39,7 @@ class CreateTasksTable extends Migration
             $table->integer('ticket_id')->nullable();
             $table->integer('requester_id')->nullable();
             $table->integer('schedule_id')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('mapper_id')->nullable();
 

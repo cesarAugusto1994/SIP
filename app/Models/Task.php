@@ -20,20 +20,22 @@ class Task extends Model
     protected $fillable = [
         'name', 'description', 'user_id',
         'frequency', 'time', 'schedule_id',
-        'client_id', 'ticket_id',
+        'client_id', 'ticket_id', 'created_at',
         'severity', 'urgency', 'trend', 'sponsor_id',
-        'status_id', 'requester_id', 'active', 'time_type'
+        'status_id', 'requester_id', 'active', 'time_type',
+        'percent_conclusion', 'start', 'end', 'parent_id'
     ];
 
     protected static $logAttributes = [
       'name', 'description', 'user_id',
       'frequency', 'time', 'schedule_id',
-      'client_id', 'ticket_id',
+      'client_id', 'ticket_id', 'created_at',
       'severity', 'urgency', 'trend', 'sponsor_id',
-      'status_id', 'requester_id', 'active', 'time_type'
+      'status_id', 'requester_id', 'active', 'time_type',
+      'percent_conclusion', 'start', 'end', 'parent_id'
     ];
 
-    protected $dates = ['begin', 'end'];
+    protected $dates = ['start', 'end'];
 
     public function subprocess()
     {

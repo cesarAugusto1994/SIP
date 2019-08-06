@@ -159,15 +159,17 @@
                     <div class="col-sm-12">
                       <a href="{{ route('tasks.show', $task->uuid) }}">
                         <p class="task-detail">{{substr($task->description,0,150)}}...</p>
-                        <hr/>
-
+                      </a>
                         <small>Tempo Previsto:  <b>
                           {{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}
                         </b></small>
-
-                        <p class="task-due"><strong> Aberto em : </strong>
-                        <label class="label label-inverse-success">{{ $task->created_at->format('d/m/Y H:i') }}</label></a>
-                        <label class="label label-inverse-primary">{{ $task->created_at->diffForHumans() }}</label></p>
+                        
+                        @if($task->start)
+                        <hr/>
+                        <p class="task-due"><strong> Agendada para : </strong>
+                        {{ $task->start->format('d/m/Y') }}
+                        <label class="label label-inverse-primary">{{ $task->start->diffForHumans() }}</label></p>
+                        @endif
                     </div>
                 </div>
             </div>
