@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (!\App::environment('local')) {
+          \URL::forceScheme('https');
+        }
+
         $this->app->singleton(FakerGenerator::class, function () {
             return FakerFactory::create('pt_BR');
         });
