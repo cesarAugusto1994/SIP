@@ -11,9 +11,9 @@ class Client extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name', 'code', 'contract_id', 'document', 'active'];
+    protected $fillable = ['name', 'code', 'charge_delivery', 'contract_id', 'document', 'active'];
 
-    protected static $logAttributes = ['name', 'code', 'contract_id', 'document', 'active'];
+    protected static $logAttributes = ['name', 'code', 'charge_delivery', 'contract_id', 'document', 'active'];
 
     public function contract()
     {

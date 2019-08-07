@@ -32,11 +32,6 @@
   <div class="card">
       <div class="card-header">
           <h5>Editar Cliente</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-                  <li><i class="feather icon-maximize full-card"></i></li>
-              </ul>
-          </div>
       </div>
       <div class="card-block">
 
@@ -93,6 +88,16 @@
                       {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                   </div>
 
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('charge_delivery') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="charge_delivery">Cobrar Entrega</label>
+                      <div class="input-group">
+                          <input class="js-switch" type="checkbox" id="charge_delivery" name="charge_delivery" data-plugin="switchery" {{ $client->charge_delivery ? 'checked' : '' }} value="{{ 1 }}">
+                      </div>
+                      {!! $errors->first('charge_delivery', '<p class="help-block">:message</p>') !!}
+                  </div>
                 </div>
 
             </div>

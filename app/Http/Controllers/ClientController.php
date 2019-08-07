@@ -200,6 +200,7 @@ class ClientController extends Controller
       }
 
       $data['active'] = $request->has('active');
+      $data['charge_delivery'] = $request->has('charge_delivery');
 
       $client = Client::create($data);
 
@@ -383,6 +384,7 @@ class ClientController extends Controller
         }
 
         $data['active'] = $request->has('active');
+        $data['charge_delivery'] = $request->has('charge_delivery');
 
         $client->update($data);
 

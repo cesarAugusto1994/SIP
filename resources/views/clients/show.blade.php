@@ -69,7 +69,8 @@
               </p>
               <p>CPF/CNPJ: {{ $client->document }}</p>
               <p>Contrato: {{ $client->contract->name }}</p>
-
+              <p>Cobrar Entrega?: {{ $client->charge_delivery ? 'Sim' : 'Não' }}</p>
+              
             </div>
         </div>
 
