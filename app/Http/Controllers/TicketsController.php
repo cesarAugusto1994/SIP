@@ -222,7 +222,7 @@ class TicketsController extends Controller
         $ticket->update($data);
 
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'O chamado está em andamento e uma tarefa foi criada.'
+          'text' => 'O chamado está em andamento.'
         ]);
 
         //return redirect()->route('tasks.edit', $task->uuid)->with('ticket', $ticket->uuid);
@@ -318,7 +318,7 @@ class TicketsController extends Controller
           'description' => 'Chamado cancelado por ' . $request->user()->person->name
         ]);
 
-        $data['status_id'] = 4;
+        $data['status_id'] = 5;
         $ticket->update($data);
 
         notify()->flash('Sucesso!', 'success', [
