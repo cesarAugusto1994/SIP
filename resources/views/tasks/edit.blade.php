@@ -94,17 +94,42 @@
                     </div>
 
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-4">
 
                     <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tempo</label>
                         <div class="input-group">
-                          <input type="number" min="1" max="100" required value="{{ $task->time }}" name="time" id="time" class="form-control" value="1">
+                          <input type="number" min="1" max="100" required value="{{ $task->time ?? 1 }}" name="time" id="time" class="form-control" value="1">
                         </div>
                         {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
                     </div>
 
                   </div>
+
+                  <div class="col-md-4">
+
+                    <div class="form-group {!! $errors->has('percent_conclusion') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">% Conclusão</label>
+                        <div class="input-group">
+                          <select class="form-control" name="percent_conclusion">
+                              <option value="0" {{ $task->percent_conclusion == '0' ? 'selected' : '' }}>0</option>
+                              <option value="10" {{ $task->percent_conclusion == '10' ? 'selected' : '' }}>10</option>
+                              <option value="20" {{ $task->percent_conclusion == '20' ? 'selected' : '' }}>20</option>
+                              <option value="30" {{ $task->percent_conclusion == '30' ? 'selected' : '' }}>30</option>
+                              <option value="40" {{ $task->percent_conclusion == '40' ? 'selected' : '' }}>40</option>
+                              <option value="50" {{ $task->percent_conclusion == '50' ? 'selected' : '' }}>50</option>
+                              <option value="60" {{ $task->percent_conclusion == '60' ? 'selected' : '' }}>60</option>
+                              <option value="70" {{ $task->percent_conclusion == '70' ? 'selected' : '' }}>70</option>
+                              <option value="80" {{ $task->percent_conclusion == '80' ? 'selected' : '' }}>80</option>
+                              <option value="90" {{ $task->percent_conclusion == '90' ? 'selected' : '' }}>90</option>
+                              <option value="100" {{ $task->percent_conclusion == '100' ? 'selected' : '' }}>100</option>
+                          </select>
+                        </div>
+                        {!! $errors->first('percent_conclusion', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                  </div>
+
                 </div>
 
               </div>
@@ -124,6 +149,34 @@
                 </div>
 
               <div class="col-md-6">
+
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group {!! $errors->has('start') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Data de Início</label>
+                        <div class="input-group">
+                          <input autocomplete="off" type="text" name="start" class="form-control inputDate" value="{{ $task->start ? $task->start->format('d/m/Y') : '' }}">
+                        </div>
+                        {!! $errors->first('start', '<p class="help-block">:message</p>') !!}
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group {!! $errors->has('end') ? 'has-error' : '' !!}">
+                        <label class="col-form-label">Data de Término</label>
+                        <div class="input-group">
+                          <input autocomplete="off" type="text" name="end" class="form-control inputDate" value="{{ $task->end ? $task->end->format('d/m/Y') : '' }}">
+                        </div>
+                        {!! $errors->first('end', '<p class="help-block">:message</p>') !!}
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
                 <div class="form-group">
                     <label class="col-form-label">Gravidade</label>
                     <div class="input-group">
@@ -140,7 +193,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                     <label class="col-form-label">Urgencia</label>
                     <div class="input-group">
@@ -155,7 +208,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                     <label class="col-form-label">Tendencia</label>
                     <div class="input-group">

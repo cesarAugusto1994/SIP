@@ -29,6 +29,7 @@ class CreateClientsTable extends Migration
             $table->integer('contract_id')->unsigned();
             $table->foreign('contract_id')->references('id')->on('contracts');
             $table->uuid('uuid')->unique();
+            $table->boolean('charge_delivery')->default(true);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

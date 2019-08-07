@@ -68,14 +68,42 @@
                           @endif
 
                           <tr>
+															<td><i class="icofont icofont-meeting-add"></i> % Concluído:</td>
+															<td class="text-right"><span class="f-right"><select class="form-control input-sm" data-route="{{ route('task_update_conclusion_percente', $task->uuid) }}" name="percent_conclusion" id="percent_conclusion">
+                                  <option value="0" {{ $task->percent_conclusion == '0' ? 'selected' : '' }}>0%</option>
+                                  <option value="10" {{ $task->percent_conclusion == '10' ? 'selected' : '' }}>10%</option>
+                                  <option value="20" {{ $task->percent_conclusion == '20' ? 'selected' : '' }}>20%</option>
+                                  <option value="30" {{ $task->percent_conclusion == '30' ? 'selected' : '' }}>30%</option>
+                                  <option value="40" {{ $task->percent_conclusion == '40' ? 'selected' : '' }}>40%</option>
+                                  <option value="50" {{ $task->percent_conclusion == '50' ? 'selected' : '' }}>50%</option>
+                                  <option value="60" {{ $task->percent_conclusion == '60' ? 'selected' : '' }}>60%</option>
+                                  <option value="70" {{ $task->percent_conclusion == '70' ? 'selected' : '' }}>70%</option>
+                                  <option value="80" {{ $task->percent_conclusion == '80' ? 'selected' : '' }}>80%</option>
+                                  <option value="90" {{ $task->percent_conclusion == '90' ? 'selected' : '' }}>90%</option>
+                                  <option value="100" {{ $task->percent_conclusion == '100' ? 'selected' : '' }}>100%</option>
+                              </select></span></td>
+													</tr>
+
+                          <tr>
 															<td><i class="icofont icofont-meeting-add"></i> Tempo Previsto:</td>
 															<td class="text-right"><span class="f-right">{{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}</span></td>
+													</tr>
+
+                          <tr>
+															<td><i class="icofont icofont-meeting-add"></i> Data de Início:</td>
+															<td class="text-right">{{ $task->start ? $task->start->format('d/m/Y') : '-' }}</td>
+													</tr>
+
+                          <tr>
+															<td><i class="icofont icofont-meeting-add"></i> Data de Término:</td>
+															<td class="text-right">{{ $task->end ? $task->end->format('d/m/Y') : '-' }}</td>
 													</tr>
 
 													<tr>
 															<td><i class="icofont icofont-meeting-add"></i> Atualizado:</td>
 															<td class="text-right">{{ $task->updated_at->format('d/m/Y H:i') }}</td>
 													</tr>
+
 													<tr>
 															<td><i class="icofont icofont-id-card"></i> Criado:</td>
 															<td class="text-right">{{ $task->created_at->format('d/m/Y H:i') }}</td>
@@ -126,7 +154,7 @@
 									<div class="form-group">
 											<div class="row">
 													<ul class="media-list revision-blc">
-                            @foreach($task->logs as $log)
+                            @foreach($task->logs->sortByDesc('id') as $log)
 															<li class="media d-flex m-b-15">
 																	<div class="p-l-15 p-r-20 d-inline-block v-middle">
                                     <img width="40" class="img-radius" src="{{ route('image', ['user' => $log->user->uuid, 'link' => $log->user->avatar, 'avatar' => true])}}" alt="chat-user">
@@ -145,27 +173,15 @@
 					<div class="card">
 							<div class="card-header">
 									<h5 class="card-header-text"><i class="icofont icofont-attachment"></i> Arquivos Anexados</h5>
-
-
 							</div>
 							<div class="card-block task-attachment">
 
-                <form class="formValidation" enctype="multipart/form-data" method="post" action="{{ route('task_upload', $task->uuid) }}">
-                    @csrf
-                    <div class="col-md-12 btn-add-task">
-                        <div class="input-group input-group-button">
-                            <input required type="file" name="file" class="form-control" placeholder="Adicionar um Arquivo">
-                            <button class="input-group-addon btn btn-primary" id="basic-addon1">
-                                <i class="icofont icofont-plus f-w-600"></i> Add Arquivo
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                  <input type="file" name="files[]" id="filer" data-route="{{ route('task_upload', $task->uuid) }}">
 
 									<ul class="media-list">
 
                     @foreach($task->files as $file)
-											<li class="media d-flex m-b-10">
+											<li class="media d-flex m-b-10 mediaFile">
 													<div class="m-r-20 v-middle">
 															<i class="icofont icofont-file-pdf f-28 text-muted"></i>
 													</div>
@@ -182,6 +198,11 @@
                             <a href="{{ route('task_download', $file->uuid) }}">
 															<i class="icofont icofont-download-alt f-18"></i>
                             </a>
+                            @if($task->user_id == auth()->user()->id || auth()->user()->isAdmin())
+                              <a class="btnRemoveItem" data-route="{{ route('task_file_remove', $file->uuid) }}">
+  															<i class="icofont icofont-trash f-18"></i>
+                              </a>
+                            @endif
 													</div>
 											</li>
                     @endforeach
@@ -327,6 +348,28 @@
 <script>
 
 	$(document).ready(function() {
+
+        var percent = $("#percent_conclusion");
+
+            percent.change(function() {
+              var self = $(this);
+              var url = self.data('route');
+              var value = self.val();
+
+              $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                 },
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                  value: value
+                }
+
+              });
+
+        });
 
         $("#select-status").change(function() {
 

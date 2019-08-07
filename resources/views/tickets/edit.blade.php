@@ -40,7 +40,7 @@
             {{ method_field('PUT') }}
             <div class="row m-b-30">
 
-              <div class="col-md-6">
+              <div class="col-md-4">
 
                 <div class="form-group">
                     <label class="col-form-label">Tipo</label>
@@ -61,25 +61,7 @@
 
               </div>
 
-              <div class="col-md-6">
-
-                <div class="form-group">
-                    <label class="col-form-label">Prioridade</label>
-                    <div class="input-group">
-
-                      <select class="form-control m-b" name="priority" required>
-                          <option value="Baixa" {{ $ticket->priority == 'Baixa' ? 'selected' : '' }}>Baixa</option>
-                          <option value="Normal"  {{ $ticket->priority == 'Normal' ? 'selected' : '' }}>Normal</option>
-                          <option value="Alta" {{ $ticket->priority == 'Alta' ? 'selected' : '' }}>Alta</option>
-                          <option value="Altissima" {{ $ticket->priority == 'Altíssima' ? 'selected' : '' }}>Altissíma</option>
-                      </select>
-
-                    </div>
-                </div>
-
-              </div>
-
-              <div class="col-md-12">
+              <div class="col-md-8">
 
                 <div class="form-group">
                     <label class="col-form-label">Descrição</label>

@@ -40,10 +40,10 @@
 
             <div class="row m-b-30">
 
-              <div class="col-md-6">
+              <div class="col-md-4">
 
                 <div class="form-group">
-                    <label class="col-form-label">Tipo</label>
+                    <label class="col-form-label">Qual é o problema?</label>
                     <div class="input-group">
                       <select class="form-control m-b" name="type_id" required>
                           <option value="">Informe o tipo de chamado</option>
@@ -61,26 +61,7 @@
 
               </div>
 
-              <div class="col-md-6">
-
-                <div class="form-group">
-                    <label class="col-form-label">Prioridade</label>
-                    <div class="input-group">
-
-                      <select class="form-control m-b" name="priority" required>
-                          <option value="">Informe a Prioridade</option>
-                          <option value="Baixa">Baixa</option>
-                          <option value="Normal" selected>Normal</option>
-                          <option value="Alta">Alta</option>
-                          <option value="Altissima">Altissíma</option>
-                      </select>
-
-                    </div>
-                </div>
-
-              </div>
-
-              <div class="col-md-12">
+              <div class="col-md-8">
 
                 <div class="form-group">
                     <label class="col-form-label">Descrição</label>
@@ -90,7 +71,6 @@
                 </div>
 
               </div>
-
 
             </div>
 

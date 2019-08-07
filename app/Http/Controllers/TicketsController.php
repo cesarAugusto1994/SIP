@@ -184,16 +184,19 @@ class TicketsController extends Controller
 
     public function startTicket($id, Request $request)
     {
+        $data = $request->request->all();
+
         $user = $request->user();
 
         $ticket = Ticket::uuid($id);
-
+/*
         $task = Task::create([
           'ticket_id' => $ticket->id,
           'name' => $ticket->type->category->name,
           'description' => $ticket->type->name . ': ' . $ticket->description,
           'user_id' => $user->id,
           'status_id' => 1,
+          'priority' => $data['priority'],
           'requester_id' => $ticket->user_id,
           'sponsor_id' => $user->id,
         ]);
@@ -209,7 +212,7 @@ class TicketsController extends Controller
           'ticket_id' => $ticket->id,
           'description' => 'Chamado atribuído à ' . $request->user()->person->name
         ]);
-
+*/
         $data['status_id'] = 2;
         $data['assigned_to'] = $user->id;
 
@@ -219,7 +222,9 @@ class TicketsController extends Controller
           'text' => 'O chamado está em andamento e uma tarefa foi criada.'
         ]);
 
-        return redirect()->route('tasks.edit', $task->uuid);
+        //return redirect()->route('tasks.edit', $task->uuid)->with('ticket', $ticket->uuid);
+
+        //return view('tasks.edit', compact('task', 'ticket'));
 
         return redirect()->route('tickets.show', $ticket->uuid);
     }

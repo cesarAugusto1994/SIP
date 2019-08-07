@@ -96,6 +96,8 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
+        exit('Em Desenvolvimento.');
+
         $deliveries = DeliveryOrder::all();
 
         $first = new \DateTime('first day of this month');
@@ -310,16 +312,7 @@ class DeliveryOrderController extends Controller
     public function create(Request $request)
     {
         $data = $request->request->all();
-/*
-        if(!$request->has('document')) {
 
-          notify()->flash('Documento não informado!', 'error', [
-            'text' => 'Um documento deve ser informado para a geração da Ordem de entrega.'
-          ]);
-
-          return back();
-        }
-*/
         $occupation = Occupation::where('name', 'Entregador')->get();
 
         if($occupation->isEmpty()) {

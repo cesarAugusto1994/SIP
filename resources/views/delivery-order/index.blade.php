@@ -27,6 +27,77 @@
 
 <div class="page-body">
 
+  <div class="row">
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-yellow f-w-600">{{ \App\Helpers\Helper::totalDelivery() }}</h4>
+                        <h6 class="text-muted m-b-0">Total</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-bar-chart f-28"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-green f-w-600">{{ \App\Helpers\Helper::openedDeliveries() }}</h4>
+                        <h6 class="text-muted m-b-0">Abertos</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-file-text f-28"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+      <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-blue f-w-600">{{ \App\Helpers\Helper::delivered() }}</h4>
+                        <h6 class="text-muted m-b-0">Entregues</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-calendar f-28"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h4 class="text-c-pink f-w-600">{{ \App\Helpers\Helper::finishedDeliveries() }}</h4>
+                        <h6 class="text-muted m-b-0">Finalizados</h6>
+                    </div>
+                    <div class="col-4 text-right">
+                        <i class="feather icon-download f-28"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  </div>
 
   <div class="row">
 
@@ -154,7 +225,7 @@
                         <p class="text-white m-b-0">Previsão Entrega: {{ $order->delivery_date->format('d/m/Y') }}</p>
                     </div>
                     <div class="col-3 text-right">
-                        
+
                     </div>
                 </div>
             </div>

@@ -120,6 +120,8 @@
 
   </div>
 
+  <h4 class="m-b-20"><b>{{ $quantity }}</b> Registros Encontrados</h4>
+
   <div class="row">
     @forelse ($tasks as $task)
 
@@ -163,7 +165,7 @@
                         <small>Tempo Previsto:  <b>
                           {{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}
                         </b></small>
-                        
+
                         @if($task->start)
                         <hr/>
                         <p class="task-due"><strong> Agendada para : </strong>
@@ -207,7 +209,13 @@
       </div>
 
     @endforelse
+
   </div>
+
+  <div class="row">
+      {{ $tasks->links() }}
+  </div>
+
 </div>
 
 @endsection

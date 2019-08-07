@@ -789,9 +789,10 @@ $(document).ready(function() {
               if(data.success) {
 
                 self.parents('.list-phones').remove();
-                self.parents('tr').hide();
-                self.parents('.cardMessageTypes').hide();
-                self.parents('.cardRemove').hide();
+                self.parents('tr').remove();
+                self.parents('.cardMessageTypes').remove();
+                self.parents('.cardRemove').remove();
+                self.parents('.mediaFile').remove();
 
                 notify(data.message, 'inverse');
 

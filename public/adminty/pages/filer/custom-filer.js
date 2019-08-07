@@ -138,7 +138,7 @@ $(document).ready(function(){
 			onComplete: function() {
 				//swal.close();
 
-				window.location.reload();
+				//window.location.reload();
 			}
 		},
 		files: null,

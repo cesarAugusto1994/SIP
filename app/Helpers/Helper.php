@@ -22,6 +22,7 @@ use App\Models\Category as MessageBoardCategory;
 use App\Models\MessageBoard\Type as MessageBoardType;
 use App\Models\DeliveryOrder\Status as DeliveryStatus;
 use App\Models\Fleet\Vehicle\Status as VehicleStatus;
+use App\Models\DeliveryOrder;
 
 /**
  *
@@ -1078,6 +1079,69 @@ class Helper
     public static function unSeenEmailsCount()
     {
         return Email::where('user_id', auth()->user()->id)->where('flag_seen', false)->count();
+    }
+
+    public function recurringTasks()
+    {
+        $tasks = Task::whereNull('end')->get();
+    }
+
+    public static function convertToEnglish($string)
+    {
+        switch($string) {
+          case 'Segunda':
+              return 'Monday';
+              break;
+          case 'Terca':
+              return 'Tuesday';
+              break;
+          case 'Quarta':
+              return 'Wednesday';
+              break;
+          case 'Quinta':
+              return 'Thursday';
+              break;
+          case 'Sexta':
+              return 'Friday';
+              break;
+          case 'Sabado':
+              return 'Saturday';
+              break;
+          break;
+          default:
+              return 'Sunday';
+        }
+    }
+
+    public static function delivery()
+    {
+        return DeliveryOrder::all();
+    }
+
+    public static function totalDelivery()
+    {
+        return self::delivery()->count();
+    }
+
+    public static function openedDeliveries()
+    {
+        return self::delivery()->filter(function($delivery, $index) {
+            return $delivery->status_id == 1;
+        })->count();
+    }
+
+    public static function delivered()
+    {
+        return self::delivery()->filter(function($delivery, $index) {
+            return $delivery->status_id == 3;
+        })->count();
+    }
+
+    public static function finishedDeliveries()
+    {
+        return self::delivery()->filter(function($delivery, $index) {
+            return $delivery->status_id == 5;
+        })->count();
     }
 
 }

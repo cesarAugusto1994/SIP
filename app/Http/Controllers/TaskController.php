@@ -14,6 +14,7 @@ use Storage;
 use DateTime;
 use DateInterval;
 use DatePeriod;
+use App\Helpers\Helper;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 
 class TaskController extends Controller
@@ -36,10 +37,10 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = Task::where('id', '>', 0)->get();
+        $tasks = Task::where('id', '>', 0);
 
         if(!\Auth::user()->isAdmin()) {
-            $tasks->where('user_id', \Auth::user()->id);
+            $tasks->where('sponsor', \Auth::user()->id);
         }
 
         if($request->filled('status')) {
@@ -68,31 +69,38 @@ class TaskController extends Controller
 
         if($request->filled('date')) {
             $date = $request->get('date');
-            $tasks = $tasks->filter(function($task, $key) use ($date) {
 
-              $datePeriod = now()->subDays(0);
+            if($date == 'hoje') {
 
-              if($date == 'hoje') {
-                  return $task->created_at > now()->setTime(0,0,0) &&
-                  $task->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'ontem') {
-                  return $task->created_at > now()->subDays(1)->setTime(0,0,0) &&
-                  $task->created_at < now()->subDays(1)->setTime(23,59,59);
-              } elseif($date == 'semana') {
-                  return $task->created_at > now()->subDays(7)->setTime(0,0,0) &&
-                  $task->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'mes') {
-                  return $task->created_at > now()->subDays(30)->setTime(0,0,0) &&
-                  $task->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'ano') {
-                  return $task->created_at > now()->subDays(365)->setTime(0,0,0) &&
-                  $task->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'recente') {
-                  return $task->created_at > now()->subHours(2)->setTime(0,0,0) &&
-                  $task->created_at < now()->setTime(23,59,59);
-              }
+                $tasks->where('created_at', '>' , now()->setTime(0,0,0))
+                ->where('created_at', '<', now()->setTime(23,59,59));
 
-            });
+            } elseif($date == 'ontem') {
+
+                $tasks->where('created_at', '>' , now()->subDays(1)->setTime(0,0,0))
+                ->where('created_at', '<', now()->subDays(1)->setTime(23,59,59));
+
+            } elseif($date == 'semana') {
+
+                $tasks->where('created_at', '>' , now()->subDays(7)->setTime(0,0,0))
+                ->where('created_at', '<', now()->subDays(7)->setTime(23,59,59));
+
+            } elseif($date == 'mes') {
+
+                $tasks->where('created_at', '>' , now()->subDays(30)->setTime(0,0,0))
+                ->where('created_at', '<', now()->subDays(30)->setTime(23,59,59));
+
+            } elseif($date == 'ano') {
+
+                $tasks->where('created_at', '>' , now()->subDays(365)->setTime(0,0,0))
+                ->where('created_at', '<', now()->subDays(365)->setTime(23,59,59));
+
+            } elseif($date == 'recente') {
+
+                $tasks->where('created_at', '>' , now()->subHours(2)->setTime(0,0,0))
+                ->where('created_at', '<', now()->setTime(23,59,59));
+
+            }
         }
 
         if($request->filled('user')) {
@@ -100,7 +108,13 @@ class TaskController extends Controller
             $tasks = $tasks->where('user_id', $user);
         }
 
-        return view('tasks.index')->with('tasks', $tasks);
+        $tasks->orderByDesc('id');
+
+        $quantity = $tasks->count();
+
+        $tasks = $tasks->paginate();
+
+        return view('tasks.index', compact('quantity', 'tasks'));
     }
 
     public function calendar()
@@ -190,18 +204,38 @@ class TaskController extends Controller
 
         $start = $end = null;
 
-        if($request->has('start')) {
+        if($request->filled('start')) {
             $start = DateTime::createFromFormat('d/m/Y', $data['start']);
         }
 
-        if($request->has('end')) {
+        if($request->filled('end')) {
             $end = DateTime::createFromFormat('d/m/Y', $data['end']);
+            $end->setTime(23,59,59);
         }
 
         $timeType = $data['time_type'];
         $time = $data['time'];
 
-        if($data['frequency'] == 'Diariamente') {
+        $data['status_id'] = Task::STATUS_PENDENTE;
+        $data['user_id'] = Auth::user()->id;
+
+        $interval = new DateInterval('P1D');
+
+        $weekDays = ['Segunda','Terca','Quarta','Quinta','Sexta'];
+
+        if(in_array($data['frequency'], $weekDays)) {
+
+          if(!$start) {
+            return back()->withErrors(['frequency' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
+          }
+
+          $dayName = Helper::convertToEnglish($data['frequency']);
+
+          $start->modify('next ' . $dayName);
+
+          $interval = DateInterval::createFromDateString('7 day');
+
+        } elseif($data['frequency'] == 'Diariamente') {
 
           if(!$start) {
             return back()->withErrors(['start' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
@@ -261,6 +295,26 @@ class TaskController extends Controller
 
           $interval = DateInterval::createFromDateString('1 month');
 
+        } else {
+
+          $data['start'] = $start;
+
+          if($start) {
+            $endTask = $start;
+            $data['end'] = $endTask->modify('+' . $data['time'] . ' ' . $data['time_type']);
+          }
+
+          $task = Task::create($data);
+
+          Log::create([
+            'task_id' => $task->id,
+            'user_id' => Auth::user()->id,
+            'message' => 'Criou a tarefa ' . $task->name,
+            'status_id' => Task::STATUS_PENDENTE
+          ]);
+
+          return redirect()->route('tasks.index');
+
         }
 
         if(!$end) {
@@ -269,12 +323,6 @@ class TaskController extends Controller
 
         $period = new DatePeriod($start, $interval, $end);
 
-        $data['status_id'] = Task::STATUS_PENDENTE;
-        $data['user_id'] = Auth::user()->id;
-
-        $data['start'] = $start;
-        $data['end'] = $end;
-
         $invalidaDates = ['Saturday', 'Sunday'];
 
         foreach ($period as $dt) {
@@ -282,6 +330,10 @@ class TaskController extends Controller
             if(in_array($dt->format('l'), $invalidaDates)) {
               continue;
             }
+
+            $data['start'] = $start;
+            $endTask = $start;
+            $data['end'] = $endTask->modify('+' . $data['time'] . ' ' . $data['time_type']);
 
             $data['created_at'] = $dt;
             $data['start'] = $dt;
@@ -295,7 +347,6 @@ class TaskController extends Controller
             ]);
         }
 
-        //flash('Nova tarefa adicionada com sucesso.')->success()->important();
         return redirect()->route('tasks.index');
     }
 
@@ -303,20 +354,23 @@ class TaskController extends Controller
     {
         $task = Task::uuid($id);
 
-        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+        if ($request->hasFile('files')) {
 
-            $file = $request->file;
-            $name = $file->getClientOriginalName();
-            $size = $request->file->getSize();
-            $path = $file->store('tasks');
+            foreach ($request->file('files') as $key => $file) {
 
-            FileUpload::create([
-                'task_id' => $task->id,
-                'filename' => $name,
-                'path' => $path,
-                'size' => $size,
-                'user_id' => $request->user()->id,
-            ]);
+              $name = $file->getClientOriginalName();
+              $path = $file->store('tasks');
+
+              FileUpload::create([
+                  'task_id' => $task->id,
+                  'filename' => $name,
+                  'path' => $path,
+                  'size' => $file->getSize(),
+                  'user_id' => $request->user()->id,
+              ]);
+
+            }
+
         }
 
         notify()->flash('Upload com sucesso', 'success', [
@@ -357,6 +411,32 @@ class TaskController extends Controller
 
         return Storage::download($file->path);
     }
+
+    public function fileRemove($id)
+    {
+        try {
+          $file = FileUpload::uuid($id);
+
+          if(Storage::exists($file->path)) {
+              Storage::delete($file->path);
+          }
+
+          $file->delete();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'O Arquivo foi removido com sucesso.'
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado'
+          ]);
+        }
+      }
+
+
 
     /**
      * Display the specified resource.
@@ -557,7 +637,7 @@ class TaskController extends Controller
             $message = "Adicionou uma nova tarefa";
             break;
           case 2:
-            $message = "Atualizou o status da tarefa";
+            $message = "Atualizou o status da tarefa para Em Andamento";
             break;
           case 3:
             $message = "Finalizou a tarefa";
@@ -710,7 +790,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $task = Task::uuid($id);
 
@@ -723,8 +803,7 @@ class TaskController extends Controller
             $hours = str_pad($hours, 2, "0", STR_PAD_LEFT);
          }
 
-         return view('tasks.edit')
-            ->with('task', $task)
+         return view('tasks.edit', compact('task'))
             ->with('time', "{$hours}:{$minutes}");
     }
 
@@ -741,17 +820,21 @@ class TaskController extends Controller
 
         $task = Task::uuid($id);
 
-        $task->description = $data['description'];
-        $task->time = $data['time'];
-        $task->time_type = $data['time_type'];
-        $task->severity = $data['severity'];
-        $task->urgency = $data['urgency'];
-        $task->trend = $data['trend'];
+        $start = $end = null;
 
-        $task->sponsor_id = $data['sponsor_id'];
-        $task->requester_id = $data['requester_id'];
+        if($request->filled('start')) {
+            $start = DateTime::createFromFormat('d/m/Y', $data['start']);
+        }
 
-        $task->save();
+        if($request->filled('end')) {
+            $end = DateTime::createFromFormat('d/m/Y', $data['end']);
+            $end->setTime(23,59,59);
+        }
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        $task->update($data);
 
         $log = new Log();
         $log->task_id = $task->id;
@@ -760,14 +843,43 @@ class TaskController extends Controller
         $log->status_id = $task->status_id;
         $log->save();
 
-        //flash('A tarefa foi editada com sucesso.')->success()->important();
-
         return redirect()->route('tasks.show', ['id' => $task->uuid]);
+    }
+
+    public function updateConclusioPercente($id, Request $request)
+    {
+      try {
+
+        $task = Task::uuid($id);
+
+        $task->update([
+          'percent_conclusion' => $request->get('value')
+        ]);
+
+        $log = new Log();
+        $log->task_id = $task->id;
+        $log->user_id = Auth::user()->id;
+        $log->message = 'Atualizou o Progresso da tarefa ' . $task->name . ' para ' . $task->percent_conclusion .'%';
+        $log->status_id = $task->status_id;
+        $log->save();
+
+        return response()->json([
+          'success' => true,
+          'message' => 'Progresso atualizado com sucesso.',
+        ]);
+
+      } catch(\Exception $e) {
+        return response()->json([
+          'success' => false,
+          'message' => 'Ocorreu um erro inesperado',
+        ]);
+      }
     }
 
     public function delay(Request $request, $id)
     {
       try {
+
         $data = $request->request->all();
 
         $task = Task::find($id);

@@ -189,7 +189,6 @@
                               <option value="Quarta">Quarta-Feira</option>
                               <option value="Quinta">Quinta-Feira</option>
                               <option value="Sexta">Sexta-Feira</option>
-                              <option value="Sabado">Sábado</option>
                           </select>
                         </div>
                         {!! $errors->first('frequency', '<p class="help-block">:message</p>') !!}

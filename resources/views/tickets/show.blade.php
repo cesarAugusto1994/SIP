@@ -109,6 +109,7 @@
 
           <form style="display:none" id="ticket-start" class="dropdown-item waves-light waves-effect" action="{{ route('ticket_start', $ticket->uuid) }}" method="POST">
               @csrf
+              <input type="hidden" name="priority" id="priority"/>
               <button class="btn btn-success btn-sm btn-round"><i class="fa fa-tag"></i>  Executar Chamado</button>
           </form>
           <form style="display:none" id="ticket-finish" class="dropdown-item waves-light waves-effect" style="display:inline" action="{{ route('ticket_finish', $ticket->uuid) }}" method="POST">
@@ -280,8 +281,43 @@
 @section('scripts')
 
 <script>
+
     function startTicket() {
 
+       Swal.fire({
+          title: 'Selecione a Prioridade para iniciar o Chamado.',
+          input: 'select',
+          inputOptions: {
+            'Normal': 'Normal',
+            'Baixa': 'Baixa',
+            'Alta': 'Alta',
+            'Altissima': 'Altissíma'
+          },
+          showCancelButton: true,
+          inputValidator: (value) => {
+            return new Promise((resolve) => {
+              if (value) {
+
+                $("#priority").val(value);
+
+                swal({
+                  title: 'Aguarde um instante.',
+                  text: 'Carregando os dados...',
+                  type: 'info',
+                  showConfirmButton: false,
+                  allowOutsideClick: false
+                });
+
+                $("#ticket-start").submit();
+
+                resolve();
+              } else {
+                resolve('You need to select oranges :)')
+              }
+            })
+          }
+        });
+/*
         swal({
           title: 'Iniciar Chamado?',
           text: "O tempo de execução será contabilizado.",
@@ -306,7 +342,7 @@
 
           }
         });
-
+*/
     }
 
     function concludeTicket() {

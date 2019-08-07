@@ -100,6 +100,10 @@ Route::middleware('auth')->group(function () {
           Route::get('task/{id}/download', 'TaskController@download')->name('task_download');
           Route::get('task/{id}/preview', 'TaskController@preview')->name('task_preview');
 
+          Route::delete('task/file/{id}/remove', 'TaskController@fileRemove')->name('task_file_remove');
+
+          Route::post('task/{id}/update/conclusion-percente', 'TaskController@updateConclusioPercente')->name('task_update_conclusion_percente');
+
           # Departments
           Route::resource('departments', 'DepartmentsController');
 
