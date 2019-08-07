@@ -57,7 +57,7 @@
         </div>
         <!-- List type card end -->
     </div>
-    @elseif($ticket->logs->last()->status->id == 4)
+    @elseif($ticket->status_id == 4)
       <div class="col-sm-12">
           <!-- List type card start -->
           <div class="card bg-c-green update-card">
@@ -67,7 +67,7 @@
           </div>
           <!-- List type card end -->
       </div>
-    @elseif($ticket->logs->last()->status->id == 5)
+    @elseif($ticket->status_id == 5)
       <div class="col-sm-12">
           <!-- List type card start -->
           <div class="card bg-c-pink update-card">
