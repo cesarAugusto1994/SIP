@@ -34,7 +34,7 @@
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">
 
-                    @permission('create.chamados')
+                    @permission('create.mural.de.recados')
                       <li><a class="btn btn-sm btn-success btn-round" href="{{route('message-board.create')}}">Novo Recado</a></li>
                     @endpermission
 
