@@ -282,6 +282,63 @@ class ScheduleController extends Controller
 
         $schedule->update($data);
 
+        if($request->has('guests')) {
+
+          if(in_array('todos', $request->get('guests')) !== false) {
+
+            $users = User::whereNotIn('id', [auth()->user()->id, 1])->get();
+
+            foreach ($users as $key => $user) {
+
+                $hasInvited = Guest::where('schedule_id', $schedule->id)->where('user_id', $user->id)->get();
+
+                if($hasInvited->isNotEmpty()) {
+                  continue;
+                }
+
+                Guest::create([
+                  'schedule_id' => $schedule->id,
+                  'user_id' => $user->id
+                ]);
+
+                broadcast(new Notifications($user, 'Você foi marcado em um compromisso.'))->toOthers();
+
+            }
+
+            if($request->has('send_notification_mail')) {
+                Notification::send($users, new ScheduleInvite($schedule));
+            }
+
+          } else {
+
+            foreach ($request->get('guests') as $key => $guest) {
+
+                $hasInvited = Guest::where('schedule_id', $schedule->id)->where('user_id', $guest)->get();
+
+                if($hasInvited->isNotEmpty()) {
+                  continue;
+                }
+
+                Guest::create([
+                  'schedule_id' => $schedule->id,
+                  'user_id' => $guest
+                ]);
+            }
+
+            $users = User::whereIn('id', $request->get('guests'))->get();
+
+            if($request->has('send_notification_mail')) {
+                Notification::send($users, new ScheduleInvite($schedule));
+            }
+
+            foreach ($users as $key => $user) {
+                broadcast(new Notifications($user, 'Você foi marcado em um compromisso.'))->toOthers();
+            }
+
+          }
+
+        }
+
         notify()->flash('Sucesso', 'success', [
           'text' => 'Compromissio atualizado com sucesso.'
         ]);

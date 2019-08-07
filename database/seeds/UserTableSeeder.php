@@ -255,7 +255,8 @@ class UserTableSeeder extends Seeder
               $user = User::create([
                 'nick'                           => $user['Email'],
                 'email'                          => $emailFormated,
-                'password'                       => Hash::make('Provider@123'),
+                //'password'                       => Hash::make('Provider@123'),
+                'password'                       => Hash::make(str_random(20)),
                 'avatar_type' => 'upload',
                 'avatar' => $avatar,
                 'person_id' => $person->id,
