@@ -31,7 +31,7 @@ class ScheduleReminder extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database'];
     }
 
     /**
