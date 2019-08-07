@@ -172,15 +172,6 @@ class MenuTableSeeder extends Seeder
           ],
 
           [
-            'title' => 'Mapeamentos',
-            'route' => 'mappings',
-            'permission' => 'view.mapeamentos',
-            'description' => 'Mapeamentos',
-            'parent' => 'Tarefas',
-            'icon' => 'far fa-clock',
-          ],
-
-          [
             'title' => 'Tarefas',
             'route' => 'tasks.index',
             'permission' => 'view.tarefas',

@@ -47,13 +47,6 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
-            'name' => 'Mapeamentos',
-            'slug' => str_slug('Mapeamentos'),
-            'description' => 'Mapeamentos',
-            'parent' => str_slug('Modulos'),
-          ],
-
-          [
             'name' => 'Agenda',
             'slug' => str_slug('Agenda'),
             'description' => 'Agenda',

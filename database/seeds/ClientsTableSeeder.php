@@ -6749,9 +6749,9 @@ class ClientsTableSeeder extends Seeder
 
         $data = [];
 
-        $occupation = Occupation::create([
+        /*$occupation = Occupation::create([
           'name' => 'ADM'
-        ]);
+        ]);*/
 
         foreach ($array as $key => $item) {
 
