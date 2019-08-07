@@ -540,7 +540,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label">Senha E-mail</label>
                                             <div class="input-group">
-                                              <input autocomplete="off" type="text" name="pass_email" value="{{$user->password_email??''}}" class="form-control">
+                                              <input autocomplete="off" type="password" name="pass_email" value="{{$user->password_email??''}}" class="form-control">
                                             </div>
                                         </div>
 
