@@ -182,7 +182,7 @@
 
                   @php
 
-                    $status = $ticket->logs->last()->status->id;
+                    $status = $ticket->status_id;
 
                     $bgColor = 'success';
 
@@ -206,7 +206,7 @@
                   <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Status</h4>
                     <p class="text-muted m-b-30">
-                      <label class="label label-lg label-{{ $bgColor }}">{{ $ticket->logs->last()->status->name }}</label>
+                      <label class="label label-lg label-{{ $bgColor }}">{{ $ticket->status->name }}</label>
                     </p>
                   </div>
 
