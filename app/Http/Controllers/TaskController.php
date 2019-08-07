@@ -40,7 +40,7 @@ class TaskController extends Controller
         $tasks = Task::where('id', '>', 0);
 
         if(!\Auth::user()->isAdmin()) {
-            $tasks->where('sponsor', \Auth::user()->id);
+            $tasks->where('sponsor_id', \Auth::user()->id)->orWhere('user_id', \Auth::user()->id);
         }
 
         if($request->filled('status')) {
