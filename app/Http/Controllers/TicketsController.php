@@ -12,6 +12,7 @@ use Storage;
 use File;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 use App\Events\Notifications;
+use App\Jobs\Ticket as TicketJob;
 
 class TicketsController extends Controller
 {
@@ -173,7 +174,9 @@ class TicketsController extends Controller
           }
         }
 
-        Notification::send($usersCollection, new NewTicket($ticket));
+        TicketJob::dispatch($ticket, $usersCollection)->delay(now()->addMinutes(2));;
+
+        //Notification::send($usersCollection, new NewTicket($ticket));
 
         foreach ($usersCollection as $key => $userA) {
             broadcast(new Notifications($userA, 'Novo Chamado aberto por ' . $user->person->name))->toOthers();
