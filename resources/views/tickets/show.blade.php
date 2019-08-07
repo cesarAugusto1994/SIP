@@ -95,7 +95,7 @@
                           <a class="dropdown-item waves-light waves-effect" onclick="startTicket()" href="#">Executar Chamado</a>
                         @elseif($ticket->status_id == 2)
                           <a class="dropdown-item waves-light waves-effect" onclick="concludeTicket()" href="#">Concluir Chamado</a>
-                        @elseif($ticket->status_>id == 3 && $ticket->user_id == auth()->user()->id)
+                        @elseif($ticket->status_id == 3 && $ticket->user_id == auth()->user()->id)
                           <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
                         @endif
                         @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
