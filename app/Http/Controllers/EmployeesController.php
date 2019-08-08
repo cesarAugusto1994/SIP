@@ -82,7 +82,7 @@ class EmployeesController extends Controller
             'phone' => 'string|max:20',
             'company_id' => 'required',
             'occupation_id' => 'required',
-            'cpf' => 'required|cpf|unique:employees',
+            //'cpf' => 'required|cpf|unique:employees',
         ]);
 
         if ($validator->fails()) {
@@ -154,7 +154,7 @@ class EmployeesController extends Controller
             'phone' => 'string|max:20',
             'company_id' => 'required',
             'occupation_id' => 'required',
-            'cpf' => 'required|cpf|unique:employees,cpf,'.$employee->id,
+            //'cpf' => 'required|cpf|unique:employees,cpf,'.$employee->id,
         ]);
 
         if ($validator->fails()) {

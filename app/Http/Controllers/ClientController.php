@@ -192,7 +192,7 @@ class ClientController extends Controller
       $validator = Validator::make($request->all(), [
           'name' => 'required|string|max:255',
           'contract_id' => 'required',
-          'document' => 'required|unique:clients|'.$documentType,
+          //'document' => 'required|unique:clients|'.$documentType,
       ]);
 
       if ($validator->fails()) {
@@ -376,7 +376,7 @@ class ClientController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'document' => 'required|unique:clients,document,'.$client->id.'|'.$documentType,
+            //'document' => 'required|unique:clients,document,'.$client->id.'|'.$documentType,
         ]);
 
         if ($validator->fails()) {

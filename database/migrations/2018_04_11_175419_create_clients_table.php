@@ -88,7 +88,7 @@ class CreateClientsTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('cpf');
+            $table->string('cpf')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('biometric')->nullable();

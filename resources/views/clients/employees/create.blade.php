@@ -89,7 +89,7 @@
                     <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="cpf">CPF</label>
                         <div class="input-group">
-                            <input type="text" required id="cpf" name="cpf" value="{{ old('cpf') }}" class="form-control inputDocument" placeholder="Informe o CPF">
+                            <input type="text" id="cpf" name="cpf" value="{{ old('cpf') }}" class="form-control inputDocument" placeholder="Informe o CPF">
 
                         </div>
                         {!! $errors->first('cpf', '<p class="help-block">:message</p>') !!}

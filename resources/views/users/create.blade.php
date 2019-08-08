@@ -53,7 +53,7 @@
                       <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}">
                           <label class="col-form-label">CPF</label>
                           <div class="input-group">
-                            <input type="text" required autocomplete="off" value="{{ old('cpf') }}" name="cpf" class="form-control inputCpf">
+                            <input type="text" autocomplete="off" value="{{ old('cpf') }}" name="cpf" class="form-control inputCpf">
                           </div>
                           {!! $errors->first('cpf', '<p class="help-block">:message</p>') !!}
                       </div>
@@ -72,7 +72,7 @@
                       <div class="form-group {!! $errors->has('birthday') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Nascimento</label>
                           <div class="input-group">
-                            <input type="text" required autocomplete="off" value="{{ old('birthday') }}" name="birthday" class="form-control inputDate" autocomplete="off" data-date-end-date="0d">
+                            <input type="text" value="{{ old('birthday') }}" name="birthday" class="form-control inputDate">
                           </div>
                           {!! $errors->first('birthday', '<p class="help-block">:message</p>') !!}
                       </div>

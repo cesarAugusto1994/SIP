@@ -504,10 +504,10 @@ class Helper
         $key = 'client-occupation';
 
         if(self::has($key)) {
-            return self::get($key);
+            //return self::get($key);
         }
 
-        $data = ClientOccupation::all();
+        return ClientOccupation::all();
 
         self::set($key, $data);
         return self::get($key);

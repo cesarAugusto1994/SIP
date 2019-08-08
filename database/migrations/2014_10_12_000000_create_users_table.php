@@ -54,7 +54,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('phone', 15)->nullable();
-            $table->string('cpf', 15);
+            $table->string('cpf', 15)->nullable();
             $table->date('birthday')->nullable();
             $table->string('branch', 8)->nullable();
             $table->string('phone_code')->nullable();
