@@ -276,6 +276,12 @@ Route::middleware('auth')->group(function () {
 
           Route::resource('purchasing', 'PurchasingController');
 
+          Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
+          Route::get('delivery-order/{id}/delivery-status', 'DeliveryOrderController@status')->name('delivery_status');
+          Route::post('delivery-order/{id}/receipt', 'DeliveryOrderController@receipt')->name('delivery_receipt');
+
+          Route::get('delivery-order/{id}/done', 'DeliveryOrderController@done')->name('delivery_done');
+
     });
 
   });
@@ -286,9 +292,3 @@ Route::middleware('auth')->group(function () {
 
 Route::get('user/{id}/online', 'UserOnlineController@online')->name('user_online');
 Route::get('user/{id}/offline', 'UserOfflineController@offline')->name('user_offline');
-
-Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
-Route::get('delivery-order/{id}/delivery-status', 'DeliveryOrderController@status')->name('delivery_status');
-Route::post('delivery-order/{id}/receipt', 'DeliveryOrderController@receipt')->name('delivery_receipt');
-
-Route::get('delivery-order/{id}/done', 'DeliveryOrderController@done')->name('delivery_done');

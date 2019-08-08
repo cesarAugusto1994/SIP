@@ -29,6 +29,11 @@ class DeliveryOrder extends Model
         return $this->hasMany('App\Models\DeliveryOrder\Documents');
     }
 
+    public function logs()
+    {
+        return $this->hasMany('App\Models\DeliveryOrder\Log');
+    }
+
     public function address()
     {
         return $this->belongsTo('App\Models\Client\Address');

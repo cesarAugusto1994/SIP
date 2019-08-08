@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
+use App\Models\DeliveryOrder\Log;
 use App\Models\{Client, People};
 use App\Models\Delivery\Document;
 use App\Models\Client\Address;
@@ -163,6 +164,8 @@ class DeliveryOrderController extends Controller
     {
         $delivery = DeliveryOrder::uuid($id);
 
+        $user = $request->user();
+
         if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
 
             $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
@@ -174,9 +177,14 @@ class DeliveryOrderController extends Controller
 
             $subject = 'Ordem de Entrega';
 
-            //dispatch(new DeliveryOrderJob($delivery, $subject, $message))->onQueue('emails');
-
             DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega', $message)->onQueue('emails');
+
+            Log::create([
+              'delivery_order_id' => $delivery->id,
+              'status_id' => Constants::STATUS_DELIVERY_EM_TRANSITO,
+              'user_id' => $user->id,
+              'message' => 'Ordem de Entrega alterada para Em Transio por ' . $user->person->name
+            ]);
 
             return view('delivery-order.scan-transit', compact('message'));
 
@@ -196,6 +204,8 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
+        $user = $request->user();
+
         $validator = Validator::make($request->all(), [
             'document' => 'required|image|mimes:jpeg,png,jpg|max:5024',
         ]);
@@ -212,6 +222,14 @@ class DeliveryOrderController extends Controller
             $delivery->status_id = Constants::STATUS_DELIVERY_ENTREGUE;
             $delivery->delivered_at = now();
             $delivery->save();
+
+            Log::create([
+              'delivery_order_id' => $delivery->id,
+              'status_id' => Constants::STATUS_DELIVERY_ENTREGUE,
+              'user_id' => $user->id,
+              'message' => 'Ordem de Entrega alterada para Entregue por ' . $user->person->name
+            ]);
+
         }
 
         return redirect()->route('delivery_done', $delivery->uuid);
@@ -247,6 +265,8 @@ class DeliveryOrderController extends Controller
 
           $delivery = DeliveryOrder::uuid($id);
 
+          $user = auth()->user();
+
           $delivery->documents->map(function($document) {
               $document->document->status_id = 1;
               $document->document->save();
@@ -255,6 +275,13 @@ class DeliveryOrderController extends Controller
 
           $delivery->status_id = 4;
           $delivery->save();
+
+          Log::create([
+            'delivery_order_id' => $delivery->id,
+            'status_id' => 4,
+            'user_id' => $user->id,
+            'message' => 'Ordem de Entrega Cancelada por ' . $user->person->name
+          ]);
 
           return response()->json([
             'success' => true,
@@ -278,15 +305,24 @@ class DeliveryOrderController extends Controller
 
           $delivery = DeliveryOrder::uuid($id);
 
+          $user = auth()->user();
+
           $delivery->documents->map(function($document) {
               $document->document->status_id = 5;
               $document->document->save();
           });
 
           $delivery->status_id = 5;
-          $delivery->finished_by = auth()->user()->id;
+          $delivery->finished_by = $user->id;
           $delivery->finished_at = now();
           $delivery->save();
+
+          Log::create([
+            'delivery_order_id' => $delivery->id,
+            'status_id' => 5,
+            'user_id' => $user->id,
+            'message' => 'Ordem de Entrega Confirmada por ' . $user->person->name
+          ]);
 
           return response()->json([
             'success' => true,
@@ -298,7 +334,7 @@ class DeliveryOrderController extends Controller
           return response()->json([
             'success' => false,
             'message' => 'Ocorreu um erro inesperado',
-            'route' => null
+            'route' => route('delivery-order.index')
           ]);
         }
 
@@ -428,6 +464,8 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
+        $user = $request->user();
+
         if(!$request->has('delivered_by')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum entregador foi informado.',
@@ -500,11 +538,18 @@ class DeliveryOrderController extends Controller
                   'delivery_order_id' => $deliveryOrder->id,
                   'delivery_date' => $deliveryDate,
                   'annotations' => $data['annotations'],
-                  'user_id' => $request->user()->id
+                  'user_id' => $user->id
                 ]);
                 $document->status_id = 2;
                 $document->save();
             }
+
+            Log::create([
+              'delivery_order_id' => $deliveryOrder->id,
+              'status_id' => 1,
+              'user_id' => $user->id,
+              'message' => 'Ordem de Entrega Criada por ' . $user->person->name
+            ]);
 
         }
 
@@ -582,6 +627,8 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
+        $user = $request->user();
+
         if(!$request->has('delivered_by')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum entregador foi informado.',
@@ -638,6 +685,13 @@ class DeliveryOrderController extends Controller
           'delivered_by' => $data['delivered_by'],
           'delivery_date' => $deliveryDate,
           'annotations' => $data['annotations']
+        ]);
+
+        Log::create([
+          'delivery_order_id' => $deliveryOrder->id,
+          'status_id' => $deliveryOrder->status_id,
+          'user_id' => $user->id,
+          'message' => 'Ordem de Entrega Atualizada por ' . $user->person->name
         ]);
 
         notify()->flash('Sucesso!', 'success', [

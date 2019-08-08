@@ -56,6 +56,19 @@ class CreateOrdemEntregasTable extends Migration
             $table->timestamps();
 
         });
+
+        Schema::create('delivery_order_logs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('delivery_order_id')->unsigned();
+            $table->foreign('delivery_order_id')->references('id')->on('delivery_order');
+            $table->integer('status_id')->unsigned();
+            $table->foreign('status_id')->references('id')->on('delivery_order_statuses');
+            $table->text('message');
+            $table->uuid('uuid')->unique();
+            $table->timestamps();
+        });
     }
 
     /**

@@ -307,6 +307,31 @@
 
   </div>
 
+  <div class="card">
+      <div class="card-header">
+          <h5 class="card-header-text"><i class="icofont icofont-certificate-alt-2 m-r-10"></i> Atividades</h5>
+      </div>
+      <div class="card-block revision-block">
+          <div class="form-group">
+              <div class="row">
+                  <ul class="media-list revision-blc">
+                    @foreach($order->logs->sortByDesc('id') as $log)
+                      <li class="media d-flex m-b-15">
+                          <div class="p-l-15 p-r-20 d-inline-block v-middle">
+                            <img width="40" class="img-radius" src="{{ route('image', ['user' => $log->user->uuid, 'link' => $log->user->avatar, 'avatar' => true])}}" alt="chat-user">
+                          </div>
+                          <div class="d-inline-block">
+                              {{ $log->message }}
+                              <div class="media-annotation">{{ \App\Helpers\TimesAgo::render($log->created_at) }}</div>
+                          </div>
+                      </li>
+                      @endforeach
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+
 </div>
 
 @endsection
