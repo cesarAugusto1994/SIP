@@ -343,7 +343,7 @@
 
   $(document).ready(function() {
 
-    var $formValid = $('.formValidation').parsley();
+      var $formValid = $('.formValidation').parsley();
 
       if($('.formValidation').length > 0) {
 

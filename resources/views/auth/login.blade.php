@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="md-float-material form-material" action="{{ route('login') }}" method="POST">
+<form class="md-float-material form-material formValidation" action="{{ route('login') }}" method="POST">
     @csrf
     <div class="text-center m-b-30">
         <img src="{{ asset('images\logo-provider.png') }}" style="width:30%" alt="SIP - Provider">
@@ -11,16 +11,14 @@
         <div class="card-block">
 
             @foreach ($errors->all() as $error)
-                <div class="alert alert-danger">{{ $error }}</div>
+                <div class="alert alert-danger background-danger text-center">{{ $error }}</div>
             @endforeach
 
             <div class="form-group form-primary">
                 <input type="text" name="email" class="form-control" required="" placeholder="E-mail">
-                <span class="form-bar"></span>
             </div>
             <div class="form-group form-primary">
                 <input type="password" name="password" class="form-control" required="" placeholder="Senha">
-                <span class="form-bar"></span>
             </div>
             <div class="row m-t-25 text-left">
                 <div class="col-12">
@@ -45,5 +43,35 @@
         </div>
     </div>
 </form>
+
+@stop
+
+@section('scripts')
+
+<script>
+
+  $(document).ready(function() {
+
+      var $formValid = $('.formValidation').parsley();
+
+      if($('.formValidation').length > 0) {
+
+        $formValid.on('form:submit', function(e) {
+          // This global callback will be called for any field that fails validation.
+          //e.preventDefault();
+          window.swal({
+            title: 'Autenticando...',
+            text: 'Aguarde enquanto as suas credenciais são verificadas.',
+            type: 'success',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+        });;
+
+      }
+
+  });
+
+</script>
 
 @stop

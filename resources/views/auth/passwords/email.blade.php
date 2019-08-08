@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="md-float-material form-material" action="{{ route('password.email') }}" method="POST">
+<form class="md-float-material form-material formValidation" action="{{ route('password.email') }}" method="POST">
 
     @csrf
 
@@ -40,5 +40,36 @@
         </div>
     </div>
 </form>
+
+@stop
+
+
+@section('scripts')
+
+<script>
+
+  $(document).ready(function() {
+
+      var $formValid = $('.formValidation').parsley();
+
+      if($('.formValidation').length > 0) {
+
+        $formValid.on('form:submit', function(e) {
+          // This global callback will be called for any field that fails validation.
+          //e.preventDefault();
+          window.swal({
+            title: 'Enviando...',
+            text: 'Aguarde enquanto enviamos a sua solicitação.',
+            type: 'success',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+        });;
+
+      }
+
+  });
+
+</script>
 
 @stop

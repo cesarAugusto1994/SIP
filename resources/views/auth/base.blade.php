@@ -32,6 +32,20 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 
+    <style>
+
+      .parsley-required {
+        list-style: none;
+        background-color: #fe5d70;
+        /* border: 2px solid #dc3545; */
+        color: white;
+        padding: 10px 10px 10px 15px;
+        border-radius: 10px;
+        border-left: 12px solid #dc3545;
+      }
+
+    </style>
+
 </head>
 
 <body class="fix-menu">
@@ -124,6 +138,8 @@
     <!-- modernizr js -->
     <script type="text/javascript" src="{{ asset('adminty\components\modernizr\js\modernizr.js') }}"></script>
     <script type="text/javascript" src="{{ asset('adminty\components\modernizr\js\css-scrollbars.js') }}"></script>
+
+    <script src="{{ asset('adminty\js\parsley.js') }}"></script>
     <!-- i18next.min.js -->
     <script type="text/javascript" src="{{ asset('adminty\components\i18next\js\i18next.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('adminty\components\i18next-xhr-backend\js\i18nextXHRBackend.min.js') }}"></script>
