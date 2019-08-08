@@ -65,7 +65,7 @@
                             $route = route('start_delivery', $delivery->uuid);
                         @endphp
 
-                          {!! QrCode::size(145)->generate($route); !!}
+                          {!! QrCode::size(120)->generate($route); !!}
 
                       </div>
 
@@ -74,20 +74,13 @@
                           <h3>{{ $delivery->client->name }}</h3>
 
                           <address>
-                              <b>Endereço:</b> {{ $delivery->address->street }}, {{ $delivery->address->number }},<br>
-                              <b>Bairro:</b> {{ $delivery->address->district }},<br>
-                              <b>Complemento:</b> {{ $delivery->address->complement }}<br>
-                              <b>Cidade:</b> {{ $delivery->address->city }}<br>
-                              <b>CEP:</b> {{ $delivery->address->zip }}<br>
-                              <b>Referencia:</b> {{ $delivery->address->reference }}<br>
-                              <br>
-                              <b>Email:</b> {{ $delivery->client->email }}<br>
-                              <b>Telefone:</b> {{ $delivery->client->phone }}
+                              <b>Endereço:</b> {{ $delivery->address->street }}, {{ $delivery->address->number }}, {{ $delivery->address->district }}<br>
+                              <b>Cidade:</b> {{ $delivery->address->city }}, {{ $delivery->address->zip }}<br>
                           </address>
 
                           <address>
                             <strong>Entregador</strong><br>
-                            <span id="entregador"><span class="text-navy">{{ $delivery->user->person->name }} - {{ $delivery->user->person->cpf }}</span></span>
+                            <span id="entregador"><span class="text-navy">{{ $delivery->user->person->name }}</span></span>
                           </address>
 
                       </div>
