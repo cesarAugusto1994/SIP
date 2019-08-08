@@ -78,8 +78,8 @@ class EmployeesController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:employees',
-            'phone' => 'string|max:20',
+            //'email' => 'required|string|email|max:255|unique:employees',
+            //'phone' => 'string|max:20',
             'company_id' => 'required',
             'occupation_id' => 'required',
             //'cpf' => 'required|cpf|unique:employees',
@@ -150,8 +150,8 @@ class EmployeesController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:employees,email,'.$employee->id,
-            'phone' => 'string|max:20',
+            //'email' => 'required|string|email|max:255|unique:employees,email,'.$employee->id,
+            //'phone' => 'string|max:20',
             'company_id' => 'required',
             'occupation_id' => 'required',
             //'cpf' => 'required|cpf|unique:employees,cpf,'.$employee->id,

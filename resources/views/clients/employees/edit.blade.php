@@ -60,7 +60,7 @@
                     <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="email">Email</label>
                         <div class="input-group">
-                            <input type="text" id="email" required name="email" value="{{ $employee->email }}" class="form-control" placeholder="Informe o email">
+                            <input type="text" id="email" name="email" value="{{ $employee->email }}" class="form-control" placeholder="Informe o email">
                         </div>
                         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -91,7 +91,7 @@
                     <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="phone">Telefone</label>
                         <div class="input-group">
-                            <input type="text" id="phone" required name="phone" value="{{ $employee->phone }}" class="form-control" placeholder="Informe o Telefone">
+                            <input type="text" id="phone" name="phone" value="{{ $employee->phone }}" class="form-control" placeholder="Informe o Telefone">
                         </div>
                         {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                     </div>

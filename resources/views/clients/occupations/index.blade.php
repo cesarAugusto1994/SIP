@@ -31,9 +31,7 @@
           <h5>Listagem de Cargos</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
-                  @permission('create.cargos')
-                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('client-occupations.create')}}">Novo Cargo</a></li>
-                  @endpermission
+                <li><a class="btn btn-sm btn-success btn-round" href="{{route('client-occupations.create')}}">Novo Cargo</a></li>
               </ul>
           </div>
       </div>
