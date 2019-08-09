@@ -99,7 +99,7 @@
                         <tr>
                             <td class="text-center">Empresa</td>
                             <td class="text-center" colspan="2"><b>{{ $delivery->client->name }}</b></td>
-                            <td><img style="float:right;padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+                            <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
                         </tr>
                         <tr>
                             <th>Tipo</th>
