@@ -382,8 +382,6 @@
             var marker, count;
             for (count = 0; count < locations.length; count++) {
 
-                console.log(locations[count]);
-
                 marker = new google.maps.Marker({
                   //position: center,
                   position: new google.maps.LatLng(locations[count][1], locations[count][2]),
