@@ -714,6 +714,26 @@ class UsersController extends Controller
 
     }
 
+    public function locales()
+    {
+        $users = User::whereHas('localizations')->get();
+
+        $results = [];
+
+        foreach ($users as $key => $user) {
+
+            $cord = $user->localizations->last();
+
+            $results[] = [
+              $user->person->name,
+              $cord->lat,
+              $cord->long
+            ];
+        }
+
+        return response()->json($results);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

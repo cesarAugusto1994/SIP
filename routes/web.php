@@ -146,6 +146,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('users', 'UsersController@index')->name('users');
           Route::post('user/localization', 'UsersController@localization')->name('user_localization');
+          Route::get('user/localizations', 'UsersController@locales')->name('users_locales');
+          Route::get('localizations', 'LocalizationsController@index')->name('localization');
 
           Route::get('profile', 'UsersController@show')->name('user');
 

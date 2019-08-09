@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Task\Log');
     }
 
+    public function localizations()
+    {
+        return $this->hasMany('App\Models\Localization');
+    }
+
     public function schedules()
     {
         return $this->hasMany('App\Models\Schedule');

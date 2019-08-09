@@ -124,6 +124,12 @@
         margin-right: 12px;
         z-index: 99999;
         }
+
+        #map {
+          height: 600px;
+          width: 100%;
+          background-color: grey;
+        }
     </style>
 
     <script>
@@ -276,6 +282,7 @@
 <script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\custom-picker.js') }}"></script>
 
 <input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
+<input type="hidden" value="{{ route('users_locales') }}" id="user-locales"/>
 
 <script>
   // This example requires the Places library. Include the libraries=places
@@ -345,6 +352,57 @@
         ].join(' ');
       }
     });
+
+    if(document.getElementById('map')) {
+      var center = {lat: -20.3101037 , lng: -40.320972999999995};
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: center
+      });
+      var marker = new google.maps.Marker({
+          position: center,
+          map: map
+      });
+
+      var url = $("#user-locales").val();
+
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "GET",
+          url: url,
+          dataType: 'json',
+          success: function(data) {
+
+            var locations = data;
+
+            var infowindow =  new google.maps.InfoWindow({});
+            var marker, count;
+            for (count = 0; count < locations.length; count++) {
+
+                console.log(locations[count]);
+
+                marker = new google.maps.Marker({
+                  //position: center,
+                  position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+                  map: map,
+                  title: locations[count][0]
+                });
+            google.maps.event.addListener(marker, 'click', (function (marker, count) {
+                  return function () {
+                    infowindow.setContent(locations[count][0]);
+                    infowindow.open(map, marker);
+                  }
+                })(marker, count));
+              }
+
+          }
+      });
+
+    }
+
   }
 </script>
 
