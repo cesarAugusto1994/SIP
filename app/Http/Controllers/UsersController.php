@@ -684,6 +684,23 @@ class UsersController extends Controller
 
         $user = $request->user();
 
+        $userlocalizations = Localization::where('user_id', $user->id)->get();
+
+        if($userlocalizations->isNotEmpty()) {
+
+            $lastlocalization = $userlocalizations->last();
+
+            if($lastlocalization->lat == $data['lat'] && $lastlocalization->long == $data['lng']) {
+
+              return response()->json([
+                'success' => true,
+                'message' => 'Localização salva com sucesso.'
+              ]);
+
+            }
+
+        }
+
         Localization::create([
           'lat' => $data['lat'],
           'long' => $data['lng'],
