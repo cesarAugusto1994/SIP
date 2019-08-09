@@ -275,12 +275,44 @@
 <script type="text/javascript" src="{{ asset('adminty\components\datedropper\js\datedropper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\custom-picker.js') }}"></script>
 
+<input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
+
 <script>
   // This example requires the Places library. Include the libraries=places
   // parameter when you first load the API. For example:
   // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
   function initMap() {
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        var url = $("#user-localization").val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: url,
+            data: pos,
+            dataType: 'json',
+        });
+
+        //console.log(pos);
+
+      }, function() {
+
+      });
+    } else {
+      // Browser doesn't support Geolocation
+
+    }
 
     var input = document.getElementById('pac-input');
 

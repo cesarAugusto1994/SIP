@@ -17,6 +17,7 @@ use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use App\Notifications\NewUser as NewUserNotification;
 use App\Helpers\Helper;
+use App\Models\Localization;
 use Storage;
 use Image;
 
@@ -487,7 +488,7 @@ class UsersController extends Controller
             if(Storage::exists($user->avatar) && $user->avatar != 'defaults/avatar.jpg') {
                 Storage::delete($user->avatar);
             }
-            
+
             $user->avatar = $path;
             $user->avatar_type = 'upload';
         }
@@ -675,6 +676,25 @@ class UsersController extends Controller
         $user->save();
 
         return redirect()->route('user', ['id' => $id]);
+    }
+
+    public function localization(Request $request)
+    {
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        Localization::create([
+          'lat' => $data['lat'],
+          'long' => $data['lng'],
+          'user_id' => $user->id,
+        ]);
+
+        return response()->json([
+          'success' => true,
+          'message' => 'Localização salva com sucesso.'
+        ]);
+
     }
 
     /**

@@ -145,6 +145,8 @@ Route::middleware('auth')->group(function () {
           Route::resource('users', 'UsersController');
 
           Route::get('users', 'UsersController@index')->name('users');
+          Route::post('user/localization', 'UsersController@localization')->name('user_localization');
+
           Route::get('profile', 'UsersController@show')->name('user');
 
           Route::resource('documents', 'DocumentsController');
