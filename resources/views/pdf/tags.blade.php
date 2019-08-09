@@ -99,7 +99,7 @@
                         <tr>
                             <td class="text-center">Empresa</td>
                             <td class="text-center" colspan="2"><b>{{ $delivery->client->name }}</b></td>
-                            <td></td>
+                            <td><img style="float:right;padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
                         </tr>
                         <tr>
                             <th>Tipo</th>
@@ -110,8 +110,6 @@
                       </thead>
 
                       <tbody>
-
-
 
                         @foreach($delivery->documents as $document)
                         @php
@@ -135,16 +133,18 @@
 
                         <tr>
                             <td>Data/Hora: __/__/____ __:__</td>
-                            <td colspan="3">Assinatura: ___________________________________________</td>
+                            <td colspan="3">Assinatura: _______________________________________________</td>
                         </tr>
 
                       </tbody>
                       <tfoot>
                         <tr>
-                            <td colspan="4">Ordem Entrega: #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</td>
+                            <td colspan="2"><small>Ordem Entrega: <b>#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</b></small></td>
+                            <td colspan="1"><small>Etiqueta gerada por: {{ substr(\Auth::user()->uuid, 0, 8) }} - {{ \Auth::user()->person->name }}</small></td>
+                            <td colspan="1"><small>Entregador: {{ $delivery->user->person->name }}</small></td>
                         </tr>
                         <tr>
-                            <td colspan="4"><small>Etiqueta gerada por: {{ \Auth::user()->id }} - {{ \Auth::user()->person->name }}</small></td>
+
                         </tr>
                       </tfoot>
 
