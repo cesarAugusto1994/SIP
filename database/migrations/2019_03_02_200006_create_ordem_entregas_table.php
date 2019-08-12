@@ -21,6 +21,7 @@ class CreateOrdemEntregasTable extends Migration
 
         Schema::create('delivery_order', function (Blueprint $table) {
             $table->increments('id');
+            $table->float('amount', 12,2)->nullable()->default(0.00);
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('delivery_order_statuses');
             $table->integer('client_id')->unsigned();

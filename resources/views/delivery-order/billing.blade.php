@@ -29,14 +29,168 @@
 </div>
 
 <div class="page-body">
-  <div class="card">
-      <div class="card-header">
-          <h5>Faturamento</h5>
+  <div class="row">
+      <div class="col-xl-6">
+          <!-- Sales and expense card start -->
+          <div class="card">
+              <div class="card-header">
+                  <h5>Entregas Mensais</h5>
+              </div>
+              <div class="card-block">
+              <canvas id="barChart" width="400" height="300"></canvas>
+              </div>
+          </div>
+          <!-- Sales and expense card end -->
       </div>
-      <div class="card-block">
+      <div class="col-xl-6">
+          <!-- Sales, Receipt and Dues card start -->
+          <div class="card">
+              <div class="card-header">
+                  <h5>Financeiro</h5>
 
+              </div>
+              <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                      <table class="table table-lg table-hover">
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Valor</th>
+                                  <th>Entregas</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($result as $item)
+                              <tr>
+                                  <th scope="row">{{ $item['title'] }}</th>
+                                  <td>{{ $item['amount'] }}</td>
+                                  <td>{{ $item['count'] }}</td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <!-- Sales, Receipt and Dues card end -->
+      </div>
+      <div class="col-lg-12">
+          <!-- Recent Orders card start -->
+          <div class="card">
+              <div class="card-header">
+                  <h5>Ordens de Entrega Recentes</h5>
+              </div>
+              <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                      <table class="table table-lg table-styling">
+                          <thead>
+                              <tr class="table-primary">
+                                  <th>Ordem No.</th>
+                                  <th>Cliente</th>
+                                  <th>Documentos</th>
+                                  <th>Valor</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($deliveries->sortByDesc('id') as $delivery)
+                              <tr>
+                                  <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                  <td>{{ $delivery->client->name }}</td>
+                                  <td>{{ $delivery->documents->count() }}</td>
+                                  <td>
+                                      <label class="label label-md label-success">{{ number_format($delivery->amount, 2 ,',','.') }}</label>
+                                  </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <!-- Recent Orders card end -->
       </div>
   </div>
 </div>
 
+<input type="hidden" id="billing-graph" value="{{ route('delivery_billing_graph') }}"/>
+
 @endsection
+
+@section('scripts')
+
+  <script>
+
+    if (document.getElementById("barChart")) {
+
+        var url = $("#billing-graph").val();
+
+        $.ajax({
+          type: 'GET',
+          url: url,
+          async: true,
+          cache: true,
+          success: function(retorno) {
+
+            var doughnutData = JSON.parse(retorno);
+
+            var doughnutOptions = {
+                segmentShowStroke: true,
+                segmentStrokeColor: "#fff",
+                segmentStrokeWidth: 2,
+                percentageInnerCutout: 45, // This is 0 for Pie charts
+                animationSteps: 100,
+                animationEasing: "easeOutBounce",
+                animateRotate: true,
+                animateScale: false,
+                legend: {
+                    display: false,
+                    position: 'right',
+                    labels: {}
+                }
+            };
+
+            var data = {
+
+                datasets: [{
+                    data: doughnutData.data,
+                    backgroundColor: doughnutData.backgroundColor
+                }],
+
+                labels: doughnutData.labels,
+                display: false,
+
+            };
+
+            var config = {
+                type: 'bar',
+                data: data,
+                //options: doughnutOptions,
+                options: {
+                    barValueSpacing: 20,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false,
+                        position: 'right',
+                        labels: {}
+                    },
+                    scales: {
+                      yAxes: [{
+                        ticks: {
+                          stepSize: 1
+                        }
+                      }]
+                    }
+                }
+            };
+
+            var ctx = document.getElementById("barChart").getContext("2d");
+            var DoughnutChart = new Chart(ctx, config);
+
+          }
+        })
+
+    }
+
+  </script>
+
+@stop

@@ -20,6 +20,9 @@ use Auth;
 use PDF;
 use Mail;
 use App\User;
+use DateTime;
+use DateInterval;
+use DatePeriod;
 
 class DeliveryOrderController extends Controller
 {
@@ -97,49 +100,130 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
-        exit('Em Desenvolvimento.');
+        //exit('Em Desenvolvimento.');
 
         $deliveries = DeliveryOrder::all();
 
-        $first = new \DateTime('first day of this month');
-        $last = new \DateTime('last day of this month');
+        $first = new DateTime('first day of this month');
+        $last = new DateTime('last day of this month');
 
         if($request->filled('start') && $request->filled('end')) {
-          $first = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
-          $last = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+          $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
+          $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
         }
 
-        $dias = $first->diff($last)->days;
+        //$interval = new DateInterval('P1D');
+
+        //$period = new DatePeriod($first, $interval, $last);
 
         $data = [];
 
+        $todayAmount = 0;
+        $weekAmount = 0;
+        $monthAmount = 0;
+        $totalAmount = 0;
+
+        $result = [];
+        $loopToday = 0;
+        $loopWeek = 0;
+        $loopMonth = 0;
+
         $date = $first;
 
-        foreach (range(0, $dias) as $key3 => $dia) {
+        $result['today'] = [
+          'title' => 'Hoje',
+          'amount' => 0.00,
+          'count' => 0
+        ];
 
-            $total = 0;
+        foreach ($deliveries as $key => $delivery) {
 
-            if($dia > 0) {
-                $date = (new \DateTime($date->format('Y-m-d')))->modify('+1 day');
+            if($delivery->created_at > now()->setTime(0,0,0) &&
+              $delivery->created_at < now()->setTime(23,59,59)) {
+
+                $todayAmount += $delivery->amount;
+                $loopToday++;
+
+                $result['today'] = [
+                  'title' => 'Hoje',
+                  'amount' => number_format($todayAmount, 2, ',', '.'),
+                  'count' => $loopToday
+                ];
+
             }
 
-            $dateA = $date->format('d/m/Y');
+            if($delivery->created_at > now()->modify('last monday')->setTime(0,0,0) &&
+              $delivery->created_at < now()->modify('this saturday')->setTime(23,59,59)) {
 
-            foreach ($deliveries as $key => $delivery) {
+                $weekAmount += $delivery->amount;
 
-                $client = $delivery->client;
-                $value = $delivery->documents->sum('document.type.price');
+                $loopWeek++;
 
-                print_r($value);
+                $result['week'] = [
+                  'title' => 'Nesta Semana',
+                  'amount' => number_format($weekAmount, 2, ',', '.'),
+                  'count' => $loopWeek
+                ];
 
-                $data[$client->name][$dateA] = $value;
             }
+
+            if($delivery->created_at > now()->modify('first day of this month')->setTime(0,0,0) &&
+              $delivery->created_at < now()->modify('last day of this month')->setTime(23,59,59)) {
+
+                $monthAmount += $delivery->amount;
+
+                $loopMonth++;
+
+                $result['month'] = [
+                  'title' => 'Neste Mês',
+                  'amount' => number_format($monthAmount, 2, ',', '.'),
+                  'count' => $loopMonth
+                ];
+
+            }
+
+            $totalAmount += $delivery->amount;
+
+            $result['total'] = [
+              'title' => 'Total',
+              'amount' => number_format($totalAmount, 2, ',', '.'),
+              'count' => $loopToday
+            ];
 
         }
 
-        dd($data);
+        return view('delivery-order.billing', compact('result', 'deliveries'));
+    }
 
-        return view('delivery-order.billing');
+    public function billingGraph()
+    {
+         $colors = ['#1ab394', '#23c6c8', '#1c84c6', '#5DADE2', '#DAF7A6', '#FFC300', '#DAF7A6', '#FFC300', '#FF5733', '#C70039', '#900C3F'];
+
+         $resultado = [];
+
+         $today = now()->addMonth(1);
+         $sixMonthsAgo = now()->subMonths(6);
+
+         $interval = new DateInterval('P1M');
+
+         $period = new DatePeriod($sixMonthsAgo, $interval, $today);
+
+         foreach ($period as $key => $current) {
+
+           $start = $current->format('Y-m-01') . ' 00:00:00';
+           $end = $current->format('Y-m-t') . ' 23:59:59';
+
+           $deliveries = DeliveryOrder::whereBetween('created_at', [$start, $end])->count();
+
+           $random = array_rand($colors);
+
+           $resultado['data'][] = $deliveries;
+           $resultado['labels'][] = $current->format('F');
+           $resultado['backgroundColor'][] = $colors[$random];
+
+         }
+
+         return json_encode($resultado);
     }
 
     public function printTags($id, Request $request)
@@ -520,6 +604,8 @@ class DeliveryOrderController extends Controller
             $documentsGroupedByClients[$document->client->id][] = $document;
         }
 
+        $amount = 0;
+
         foreach ($documentsGroupedByClients as $keyClient => $documentsGroupedByClient) {
 
             $deliveryOrder = DeliveryOrder::create([
@@ -533,16 +619,20 @@ class DeliveryOrderController extends Controller
 
             foreach ($documentsGroupedByClient as $key => $document) {
 
+                $amount += $document->amount;
+
                 DeliveryOrderDocuments::create([
                   'document_id' => $document->id,
                   'delivery_order_id' => $deliveryOrder->id,
                   'delivery_date' => $deliveryDate,
                   'annotations' => $data['annotations'],
-                  'user_id' => $user->id
+                  'user_id' => $user->id,
                 ]);
                 $document->status_id = 2;
                 $document->save();
             }
+
+            $deliveryOrder->update(['amount' => $amount]);
 
             Log::create([
               'delivery_order_id' => $deliveryOrder->id,

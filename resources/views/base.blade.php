@@ -277,6 +277,12 @@
 <!-- Date-range picker js -->
 <script type="text/javascript" src="{{ asset('adminty\components\bootstrap-daterangepicker\js\daterangepicker.js') }}"></script>
 
+<!-- Chart js -->
+<script type="text/javascript" src="{{ asset('adminty\components\chart.js\js\Chart.js') }}"></script>
+<!-- c3 chart js -->
+<script src="{{ asset('adminty\components\d3\js\d3.min.js') }}"></script>
+<script src="{{ asset('adminty\components\c3\js\c3.js') }}"></script>
+<!-- chart Custom js -->
 
 <script type="text/javascript" src="{{ asset('adminty\components\datedropper\js\datedropper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\custom-picker.js') }}"></script>

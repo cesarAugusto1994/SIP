@@ -64,7 +64,7 @@ class DocumentsController extends Controller
 
         $data['client_id'] = $client->id;
         $data['type_id'] = $type->id;
-        $data['price'] = $type->price;
+        $data['amount'] = $type->price;
         $data['employee_id'] = $emp->id ?? null;
 
         if($request->filled('employees')) {
@@ -113,7 +113,8 @@ class DocumentsController extends Controller
                     'employee_id' => $employee->id ?? null,
                     'reference' => $request->get($fieldReference),
                     'created_by' => $user->id,
-                    'status_id' => 1
+                    'status_id' => 1,
+                    'amount' => $type->price,
                   ]);
 
               }

@@ -164,6 +164,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('delivery-order/report/billing', 'DeliveryOrderController@billing')->name('delivery_billing');
 
+          Route::get('delivery-order/report/billing/graph', 'DeliveryOrderController@billingGraph')->name('delivery_billing_graph');
+
           Route::resource('message-board', 'MessageBoardController');
           Route::resource('message-types', 'MessageTypesController');
 

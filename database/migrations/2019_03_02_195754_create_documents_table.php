@@ -78,12 +78,11 @@ class CreateDocumentsTable extends Migration
             $table->foreign('status_id')->references('id')->on('delivery_document_statuses');
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('delivery_document_types');
-            $table->float('price', 12,2)->default(0.00);
-            $table->float('extra_value', 12,2)->default(0.00);
+            $table->float('amount', 12,2)->default(0.00);
+            $table->float('extra_amount', 12,2)->default(0.00);
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });
-
 
     }
 
@@ -94,7 +93,11 @@ class CreateDocumentsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('delivery_documents');
+        Schema::dropIfExists('delivery_document_type_log');
+        Schema::dropIfExists('delivery_document_types');
+        Schema::dropIfExists('delivery_document_statuses');
         Schema::dropIfExists('documents');
-        Schema::dropIfExists('documents_statuses');
+        Schema::dropIfExists('document_types');
     }
 }

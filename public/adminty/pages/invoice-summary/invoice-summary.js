@@ -18,7 +18,8 @@ $(document).ready(function() {
             ],
 
             data: [65, 59, 80, 81, 56, 55, 50, 20],
-        }, {
+        },
+        {
             label: "Expense",
             backgroundColor: [
                 '#01a9ac',
