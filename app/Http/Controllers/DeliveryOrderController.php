@@ -197,7 +197,7 @@ class DeliveryOrderController extends Controller
 
     public function billingGraph()
     {
-         $colors = ['#1ab394', '#23c6c8', '#1c84c6', '#5DADE2', '#DAF7A6', '#FFC300', '#DAF7A6', '#FFC300', '#FF5733', '#C70039', '#900C3F'];
+         $colors = ['#1ab394'];
 
          $resultado = [];
 
