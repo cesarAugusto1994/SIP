@@ -31,7 +31,7 @@ class CreateCoursesTable extends Migration
 
         Schema::create('employee_courses', function (Blueprint $table) {
             $table->integer('employee_id')->unsigned();
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('employee_id')->references('id')->on('client_employees');
             $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('courses');
             $table->boolean('required')->default(true);
@@ -50,6 +50,7 @@ class CreateCoursesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('employee_courses');
         Schema::dropIfExists('courses');
     }
 }

@@ -240,6 +240,16 @@ class MenuTableSeeder extends Seeder
               'parent' => 'Administrativo',
               'icon' => 'fas fa-user-friends',
             ],
+
+            [
+              'title' => 'Localização',
+              'route' => 'localization',
+              'permission' => 'view.localizacao',
+              'description' => 'Localização',
+              'parent' => 'Administrativo',
+              'icon' => 'fas fa-map-marked-alt',
+            ],
+
             [
               'title' => 'Configurações',
               'route' => 'configurations.index',

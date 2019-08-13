@@ -11,7 +11,7 @@ class Address extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $table = 'addresses';
+    protected $table = 'client_addresses';
 
     protected $fillable = ['description', 'complement', 'reference', 'zip', 'street', 'number', 'district', 'state', 'city', 'long', 'lat', 'user_id', 'client_id', 'is_default'];
 

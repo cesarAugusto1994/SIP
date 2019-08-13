@@ -67,7 +67,7 @@
                               <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Endereço</label>
                                   <div class="input-group">
-                                    <select class="form-control" id="select-address" name="address_id" required>
+                                    <select class="form-control" id="select-address" name="address_id">
                                         <option value="">Selecione um Endereço</option>
                                         @foreach($addresses as $address)
                                             <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}} - {{$address->street}}, {{$address->number}} - {{$address->district}}, {{$address->city}} - {{$address->zip}}</option>
@@ -78,6 +78,30 @@
                               </div>
 
                             </div>
+
+                            <div class="col-md-12">
+
+                                <div class="form-group {!! $errors->has('address') ? 'has-error' : '' !!}">
+                                  <label class="col-form-label text-primary">Novo Endereço</label>
+                                    <div class="input-group" id="pac-container">
+                                        <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+                                        <input class="form-control" name="address" id="pac-input" autocomplete="off"/>
+                                    </div>
+
+                                    <input type="hidden" name="street_number" id="street_number">
+                                    <input type="hidden" name="route" id="route">
+                                    <input type="hidden" name="sublocality_level_1" id="sublocality_level_1">
+                                    <input type="hidden" name="administrative_area_level_2" id="administrative_area_level_2">
+                                    <input type="hidden" name="administrative_area_level_1" id="administrative_area_level_1">
+                                    <input type="hidden" name="postal_code" id="postal_code">
+
+                                    <input type="hidden" name="lng" id="lng">
+                                    <input type="hidden" name="lat" id="lat">
+
+                                </div>
+
+                            </div>
+
 
                             <div class="col-md-12">
 

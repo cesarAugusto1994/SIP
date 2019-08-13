@@ -192,6 +192,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Localizacao',
+            'slug' => str_slug('Localizacao'),
+            'description' => 'Localização',
+            'parent' => str_slug('Administrativo'),
+          ],
+
+          [
             'name' => 'Tipos de Recados',
             'slug' => str_slug('Tipos de Recados'),
             'description' => 'Tipos de Recados',

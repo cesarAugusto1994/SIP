@@ -54,17 +54,17 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('client_addresses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');
-            $table->string('zip');
-            $table->string('street');
+            $table->string('zip')->nullable();
+            $table->string('street')->nullable();
             $table->string('number')->nullable();
             $table->string('district')->nullable();
             $table->string('complement')->nullable();
             $table->string('reference')->nullable();
-            $table->string('city');
-            $table->string('state');
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('building_type')->nullable();
             $table->string('long')->nullable();
             $table->string('lat')->nullable();
@@ -85,7 +85,7 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('client_employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('cpf')->nullable();
@@ -124,9 +124,9 @@ class CreateClientsTable extends Migration
     {
 
         Schema::dropIfExists('client_documents');
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('client_employees');
         Schema::dropIfExists('client_occupations');
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('client_addresses');
         Schema::dropIfExists('client_emails');
         Schema::dropIfExists('client_phones');
         Schema::dropIfExists('clients');

@@ -15,7 +15,7 @@ class Employee extends Model
 
     protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'biometric', 'occupation_id', 'company_id', 'created_by', 'active'];
 
-    protected $table = 'employees';
+    protected $table = 'client_employees';
 
     public function company()
     {

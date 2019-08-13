@@ -550,14 +550,14 @@ class DeliveryOrderController extends Controller
 
         $user = $request->user();
 
-        if(!$request->has('delivered_by')) {
+        if(!$request->filled('delivered_by')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum entregador foi informado.',
             ]);
             return back();
         }
 
-        if(!$request->has('address_id')) {
+        if(!$request->filled('address_id') && !$request->filled('postal_code')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum endereço foi informado.',
             ]);
@@ -573,10 +573,33 @@ class DeliveryOrderController extends Controller
 
         $deliverUuid = $data['delivered_by'];
 
+        $client = Client::uuid($data['client_id']);
+
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
-        $address = Address::uuid($data['address_id']);
+        if($request->filled('address')) {
+
+            $clientId = $request->get('client_id');
+            $postalCode = $request->get('postal_code');
+
+            $address = Address::create([
+              'description' => 'Unidade',
+              'zip' => $postalCode,
+              'street' => $request->get('route'),
+              'number' => $request->get('street_number'),
+              'district' => $request->get('sublocality_level_1'),
+              'city' => $request->get('administrative_area_level_2'),
+              'state' => $request->get('administrative_area_level_1'),
+              'long' => $request->get('lng'),
+              'lat' => $request->get('lat'),
+              'client_id' => $client->id,
+              'user_id' => $user->id
+            ]);
+        } else {
+            $address = Address::uuid($data['address_id']);
+        }
+
         $data['address_id'] = $address->id;
 
         $documents = Document::whereIn('uuid', $data['documents'])->get();

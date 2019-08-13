@@ -340,6 +340,17 @@
     autocomplete.setFields(
             ['address_components', 'geometry', 'icon', 'name']);
 
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      //country: 'long_name',
+      postal_code: 'short_name',
+      sublocality_level_1: 'long_name',
+      administrative_area_level_2: 'long_name'
+    };
+
     autocomplete.addListener('place_changed', function() {
       var place = autocomplete.getPlace();
       if (!place.geometry) {
@@ -351,6 +362,24 @@
 
       var address = '';
       if (place.address_components) {
+
+        //console.log(place.geometry.location.lat());
+        //console.log(place.geometry.location.lng());
+        //console.log(place.geometry.location);
+
+        $("#lat").val(place.geometry.location.lat());
+        $("#lng").val(place.geometry.location.lng());
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+
         address = [
           (place.address_components[0] && place.address_components[0].short_name || ''),
           (place.address_components[1] && place.address_components[1].short_name || ''),
@@ -1180,7 +1209,14 @@ $(document).ready(function() {
 
           $.each(response.data, function(idx, item) {
 
-              let address = item.description +', '+item.street+', '+item.number+' - '+item.district+', '+item.city+' - '+item.zip;
+              var description = item.description ? item.description : '';
+              var street = item.street ? item.street : '';
+              var number = item.number ? item.number : '';
+              var district = item.district ? item.district : '';
+              var city = item.city ? item.city : '';
+              var zip = item.zip ? item.zip : '';
+
+              let address = description +', '+street+', '+number+' - '+district+', '+city+' - '+zip;
 
               html += "<option value="+ item.uuid +">"+ address +"</option>";
 

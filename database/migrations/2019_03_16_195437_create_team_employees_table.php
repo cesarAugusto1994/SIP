@@ -18,7 +18,7 @@ class CreateTeamEmployeesTable extends Migration
             $table->integer('team_id')->unsigned();
             $table->foreign('team_id')->references('id')->on('teams');
             $table->integer('employee_id')->unsigned();
-            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('employee_id')->references('id')->on('client_employees');
             $table->enum('status', ['AGENDADO', 'PRESENTE', 'FALTA'])->default('AGENDADO');
             $table->integer('approved')->default(false);
             $table->uuid('uuid')->unique();

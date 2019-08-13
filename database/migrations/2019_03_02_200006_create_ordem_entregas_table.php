@@ -27,7 +27,7 @@ class CreateOrdemEntregasTable extends Migration
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('address_id')->unsigned();
-            $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('address_id')->references('id')->on('client_addresses');
             $table->integer('delivered_by')->unsigned();
             $table->foreign('delivered_by')->references('id')->on('users');
             $table->date('delivered_at')->nullable();

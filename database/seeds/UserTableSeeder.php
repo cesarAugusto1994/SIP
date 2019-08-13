@@ -177,8 +177,8 @@ class UserTableSeeder extends Seeder
           	90 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3579, 'Cargo' => 'Infraestrutura', 'Unidade' => 'Vitória', 'Setor' => 'Tecnologia da Informação', 'Nome' => 'Vinycius Alves', 'Email' => 'vinycius.alves'),
             93 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3557, 'Cargo' => 'Agendamento', 'Unidade' => 'Vitória', 'Setor' => 'Treinamentos', 'Nome' => 'Sabrina Oliveira', 'Email' => 'treinamentos'),
 
-            93 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => 3557, 'Cargo' => 'Entregador', 'Unidade' => 'Vitória', 'Setor' => 'Expedição', 'Nome' => 'Entregador 1', 'Email' => 'entregador'),
-            93 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Entregador', 'Unidade' => 'Vitória', 'Setor' => 'Expedição', 'Nome' => 'Entregador 2', 'Email' => 'entregador2'),
+            94 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Entregador', 'Unidade' => 'Vitória', 'Setor' => 'Expedição', 'Nome' => 'Entregador 1', 'Email' => 'entregador'),
+            95 => array('PHONE_CODE' => null, 'PHONE_PASS' => null, 'PHONE_CALL' => null,'Ramal' => null, 'Cargo' => 'Entregador', 'Unidade' => 'Vitória', 'Setor' => 'Expedição', 'Nome' => 'Entregador 2', 'Email' => 'entregador2'),
           );
 
         //$users = explode(',', $users);
