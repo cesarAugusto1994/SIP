@@ -557,7 +557,7 @@ class DeliveryOrderController extends Controller
             return back();
         }
 
-        if(!$request->filled('address_id') && !$request->filled('postal_code')) {
+        if(!$request->filled('address_id') && !$request->has('checkbox_address')) {
             notify()->flash('Erro de Envio', 'error', [
               'text' => 'Nenhum endereço foi informado.',
             ]);
@@ -578,7 +578,7 @@ class DeliveryOrderController extends Controller
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
-        if($request->filled('address')) {
+        if($request->has('checkbox_address')) {
 
             $clientId = $request->get('client_id');
             $postalCode = $request->get('postal_code');

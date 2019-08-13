@@ -447,7 +447,9 @@
                                       @endif
                                   </div>
 
-                                  <button type="submit" class="btn btn-success btn-sm btn-block">Salvar</button>
+                                  <br/>
+
+                                  <button type="submit" class="btn btn-success btn-sm">Salvar</button>
 
                               </form>
 
@@ -566,7 +568,7 @@
 
                                   </div>
 
-                                  <button type="submit" class="btn btn-success btn-block btn-sm">Salvar</button>
+                                  <button type="submit" class="btn btn-success btn-sm">Salvar</button>
                               </form>
 
                             </div>

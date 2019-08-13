@@ -19,7 +19,7 @@ class MenuTableSeeder extends Seeder
             'permission' => null,
             'description' => 'Painel Principal',
             'parent' => null,
-            'icon' => 'feather icon-home',
+            'icon' => 'fas fa-home',
           ],
 
           [

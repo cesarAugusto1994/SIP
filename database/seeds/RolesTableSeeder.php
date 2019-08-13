@@ -19,11 +19,11 @@ class RolesTableSeeder extends Seeder
          * Add Roles
          *
          */
-        if (Role::where('name', '=', 'Administrador')->first() === null) {
+        if (!Role::whereName('Administrador')->first()) {
             $adminRole = Role::create([
-                'name'        => 'Admin',
-                'slug'        => 'admin',
-                'description' => 'Admin',
+                'name'        => 'Administrador',
+                'slug'        => 'administrador',
+                'description' => 'Acesso de Administrador',
                 'level'       => 5,
             ]);
 
@@ -36,25 +36,49 @@ class RolesTableSeeder extends Seeder
 
         }
 
-        if (Role::where('name', '=', 'User')->first() === null) {
-            $userRole = Role::create([
-                'name'        => 'User',
-                'slug'        => 'User',
-                'description' => 'Acesso de User',
-                'level'       => 1,
-            ]);
+        $roles = ['Sistema',
+                  'Tecnologia da Informação',
+                  'Atendimento',
+                  'Técnico em Segurança do Trabalho',
+                  'Coleta',
+                  'Comercial',
+                  'Marketing',
+                  'Exames',
+                  'Diretoria',
+                  'Documentação',
+                  'Recursos Humanos',
+                  'Enfermagem',
+                  'Financeiro',
+                  'Fonoaudiologia',
+                  'Administrativo',
+                  'Treinamentos',
+                  'Juridico',
+                  'Laboratório',
+                  'Psicologia',
+                  'Expedição'];
 
-            $permissions = [5,9,10,11,12,13,14,16,42,43,44,98,99,103];
+        foreach ($roles as $key => $item) {
 
-            foreach ($permissions as $key => $item) {
-                RoleDefaultPermissions::create([
-                  'role_id' => $userRole->id,
-                  'permission_id' => $item
-                ]);
-            }
+          if (Role::where('name', '=', $item)->first() === null) {
+              $userRole = Role::create([
+                  'name'        => $item,
+                  'slug'        => str_slug($item, '.'),
+                  'description' => 'Acesso de '. $item,
+                  'level'       => 1,
+              ]);
+
+              $permissions = [5,9,10,11,12,13,14,16,42,43,44,98,99,103];
+
+              foreach ($permissions as $key => $item) {
+                  RoleDefaultPermissions::create([
+                    'role_id' => $userRole->id,
+                    'permission_id' => $item
+                  ]);
+              }
+
+          }
 
         }
-
 
     }
 }

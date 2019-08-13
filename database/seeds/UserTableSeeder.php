@@ -19,8 +19,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $adminRole = Role::whereName('Admin')->first();
-        $userRole = Role::whereName('User')->first();
+        $adminRole = Role::whereName('Administrador')->first();
         $permissions = Permission::pluck('id');
 
         $faker = Faker\Factory::create();
@@ -252,7 +251,7 @@ class UserTableSeeder extends Seeder
 
               $emailFormated = trim($user['Email']) . '@provider-es.com.br';
 
-              $user = User::create([
+              $newUser = User::create([
                 'nick'                           => $user['Email'],
                 'email'                          => $emailFormated,
                 //'password'                       => Hash::make('Provider@123'),
@@ -269,14 +268,16 @@ class UserTableSeeder extends Seeder
                 'change_password' => true
               ]);
 
-              $user->attachRole($userRole);
+              $userRole = Role::whereName($user['Setor'])->first();
+
+              $newUser->attachRole($userRole);
 
               $permissionForRole = RoleDefaultPermissions::where('role_id', $userRole->id)
               ->pluck('permission_id');
 
-              $user->syncPermissions($permissionForRole);
+              $newUser->syncPermissions($permissionForRole);
 
-              $user->save();
+              $newUser->save();
           }
 
         }

@@ -162,7 +162,7 @@ class User extends Authenticatable
     */
     public function isAdmin()
     {
-        return $this->hasRole('Admin');
+        return $this->hasRole('Administrador');
     }
 /*
     public function getDescriptionForEvent(string $eventName): string

@@ -115,12 +115,20 @@
                                                       </tr>
                                                       <tr>
                                                           <th scope="row">Telefone</th>
-                                                          <td>{{ $order->client->phone }}</td>
+                                                          <td>
+                                                            @foreach($order->client->phones as $phone)
+                                                                <p>{{ $phone->number }}</p>
+                                                            @endforeach
+                                                          </td>
                                                       </tr>
 
                                                       <tr>
                                                           <th scope="row">Email</th>
-                                                          <td>{{ $order->client->email }}</td>
+                                                          <td>
+                                                            @foreach($order->client->emails as $email)
+                                                                <p>{{ $email->email }}</p>
+                                                            @endforeach
+                                                          </td>
                                                       </tr>
 
                                                       @php
@@ -322,7 +330,7 @@
                           </div>
                           <div class="d-inline-block">
                               {{ $log->message }}
-                              <div class="media-annotation">{{ \App\Helpers\TimesAgo::render($log->created_at) }}</div>
+                              <div class="media-annotation">{{ $log->created_at->format('d/m/Y H:i:s') }} - {{ \App\Helpers\TimesAgo::render($log->created_at) }}</div>
                           </div>
                       </li>
                       @endforeach

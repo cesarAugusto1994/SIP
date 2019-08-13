@@ -63,7 +63,7 @@
 
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-12" id="select-address">
                               <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Endereço</label>
                                   <div class="input-group">
@@ -76,10 +76,23 @@
                                   </div>
                                   {!! $errors->first('address_id', '<p class="help-block">:message</p>') !!}
                               </div>
-
                             </div>
 
                             <div class="col-md-12">
+                              <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="checkbox-fade fade-in-primary d-">
+                                        <label>
+                                            <input type="checkbox" name="checkbox_address" value="1" id="checkbox-new-address">
+                                            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                            <span class="text-inverse">Adicionar Endereço</span>
+                                        </label>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12" id="input-new-address" style="display:none;">
 
                                 <div class="form-group {!! $errors->has('address') ? 'has-error' : '' !!}">
                                   <label class="col-form-label text-primary">Novo Endereço</label>
@@ -221,9 +234,25 @@
     var clientId = $("#client-id");
     var selectClient = $(".select-client-modal-address");
 
+    var checkboxNewAddress = $("#checkbox-new-address");
+    var inputNewAddress = $("#input-new-address");
+    var selectAddress = $("#select-address");
+
     selectClient.change(function() {
         clientId.val($(this).val());
     });
+
+    checkboxNewAddress.change(function() {
+
+      if(checkboxNewAddress.is(':checked')) {
+          inputNewAddress.show();
+          selectAddress.hide();
+      } else {
+          inputNewAddress.hide();
+          selectAddress.show();
+      }
+
+    })
 
 </script>
 

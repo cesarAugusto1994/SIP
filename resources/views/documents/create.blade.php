@@ -77,7 +77,7 @@
                   <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="form-control"
+                        <select class="form-control select2"
                           name="client_id" required>
                               <option value="">Selecione um Cliente</option>
                               @foreach($clients as $client)
@@ -93,7 +93,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
-                        <select class="form-control"
+                        <select class="form-control select2"
                           name="employee_id">
                               <option value="">Selecione um Funcionário</option>
                               @foreach(\App\Helpers\Helper::employees()->sortBy('name') as $emloyee)
@@ -134,13 +134,8 @@
 
       function renderCols(index) {
 
-        return '<div class="row" id="row-'+index+'">'
-            + '<div class="col-md-1">'
-              +   '<div class="form-group">'
-              + '<label class="col-form-label">Opç</label>'
-                    + '<button type="button" class="btn btn-danger btn-sm btn-block btnRmItem" data-item="'+index+'"><i class="fa fa-ban"></i></button>'
-                + '</div>'
-            + '</div>'
+        return '<div class="row m-b-30" id="row-'+index+'">'
+
              + '<div class="col-md-3">'
                  + '<div class="form-group">'
                      + '<label class="col-form-label">Tipo</label>'
@@ -189,6 +184,12 @@
                     + '</select>'
                   + '</div>'
               + '</div>'
+            + '</div>'
+            + '<div class="col-md-1">'
+              +   '<div class="form-group">'
+              + '<label class="col-form-label">Opç</label>'
+                    + '<button type="button" class="btn btn-danger btn-sm btn-block btnRmItem" data-item="'+index+'"><i class="fa fa-close"></i> Remover </button>'
+                + '</div>'
             + '</div>'
         + '</div>';
 
