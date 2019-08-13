@@ -819,7 +819,6 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\Ticket\\Type\\Department' => __DIR__ . '/../..' . '/app/Models/Ticket/Type/Department.php',
         'App\\Models\\Training\\Course' => __DIR__ . '/../..' . '/app/Models/Training/Course.php',
         'App\\Models\\Training\\Student' => __DIR__ . '/../..' . '/app/Models/Training/Student.php',
-        'App\\Models\\Training\\Teacher' => __DIR__ . '/../..' . '/app/Models/Training/Teacher.php',
         'App\\Models\\Training\\Team' => __DIR__ . '/../..' . '/app/Models/Training/Team.php',
         'App\\Models\\Training\\Team\\Employee' => __DIR__ . '/../..' . '/app/Models/Training/Team/Employee.php',
         'App\\Models\\Training\\Team\\Lessons' => __DIR__ . '/../..' . '/app/Models/Training/Team/Lessons.php',

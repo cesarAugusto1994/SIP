@@ -169,7 +169,6 @@ return array(
     'App\\Models\\Ticket\\Type\\Department' => $baseDir . '/app/Models/Ticket/Type/Department.php',
     'App\\Models\\Training\\Course' => $baseDir . '/app/Models/Training/Course.php',
     'App\\Models\\Training\\Student' => $baseDir . '/app/Models/Training/Student.php',
-    'App\\Models\\Training\\Teacher' => $baseDir . '/app/Models/Training/Teacher.php',
     'App\\Models\\Training\\Team' => $baseDir . '/app/Models/Training/Team.php',
     'App\\Models\\Training\\Team\\Employee' => $baseDir . '/app/Models/Training/Team/Employee.php',
     'App\\Models\\Training\\Team\\Lessons' => $baseDir . '/app/Models/Training/Team/Lessons.php',

@@ -90,13 +90,59 @@ class MenuTableSeeder extends Seeder
                 'parent' => 'Treinamentos',
                 'icon' => 'far fa-calendar-alt',
               ],
+
+          [
+            'title' => 'Estoque',
+            'route' => null,
+            'permission' => 'view.estoque',
+            'description' => 'Estoque',
+            'parent' => null,
+            'icon' => 'fas fa-boxes',
+          ],
+
+              [
+                'title' => 'Ativos',
+                'route' => 'products.index',
+                'permission' => 'view.ativos',
+                'description' => 'Ativos',
+                'parent' => 'Estoque',
+                'icon' => 'fas fa-box',
+              ],
+
+              [
+                'title' => 'Fornecedor',
+                'route' => 'vendors.index',
+                'permission' => 'view.fornecedores',
+                'description' => 'Fornecedor',
+                'parent' => 'Estoque',
+                'icon' => 'fas fa-box',
+              ],
+
+              [
+                'title' => 'Marcas',
+                'route' => 'brands.index',
+                'permission' => 'view.marcas',
+                'description' => 'Marcas',
+                'parent' => 'Estoque',
+                'icon' => 'fas fa-box',
+              ],
+
+              [
+                'title' => 'Modelos',
+                'route' => 'models.index',
+                'permission' => 'view.modelos',
+                'description' => 'Modelos',
+                'parent' => 'Estoque',
+                'icon' => 'fas fa-box',
+              ],
+
           [
             'title' => 'Gestão de Entregas',
             'route' => null,
             'permission' => 'view.gestao.de.entregas',
             'description' => 'Gestão de Entregas',
             'parent' => null,
-            'icon' => 'fas fa-truck',
+            'icon' => 'fas fa-motorcycle',
           ],
               [
                 'title' => 'Documentos',

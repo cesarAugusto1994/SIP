@@ -275,6 +275,42 @@ class ModulesTableSeeder extends Seeder
             'parent' => str_slug('Administrativo'),
           ],
 
+          [
+            'name' => 'Estoque',
+            'slug' => str_slug('Estoque'),
+            'description' => 'Estoque',
+            'parent' => str_slug('Administrativo'),
+          ],
+
+          [
+            'name' => 'Ativos',
+            'slug' => str_slug('Ativos'),
+            'description' => 'Ativos',
+            'parent' => str_slug('Estoque'),
+          ],
+
+          [
+            'name' => 'Fornecedores',
+            'slug' => str_slug('Fornecedores'),
+            'description' => 'Fornecedores',
+            'parent' => str_slug('Estoque'),
+          ],
+
+          [
+            'name' => 'Marcas',
+            'slug' => str_slug('Marcas'),
+            'description' => 'Marcas',
+            'parent' => str_slug('Estoque'),
+          ],
+
+          [
+            'name' => 'Modelos',
+            'slug' => str_slug('Modelos'),
+            'description' => 'Modelos',
+            'parent' => str_slug('Estoque'),
+          ],
+
+
         ];
 
         foreach ($itens as $key => $value) {
