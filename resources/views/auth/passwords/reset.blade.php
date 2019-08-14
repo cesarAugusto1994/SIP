@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="md-float-material form-material" action="{{ route('password.update') }}" method="POST">
+<form class="md-float-material form-material formValidation" action="{{ route('password.update') }}" method="POST">
 
     @csrf
 
@@ -28,6 +28,7 @@
                 <div class="alert alert-danger">{{ $error }}</div>
             @endforeach
 
+            @if (!request()->has('email'))
             <div class="form-group m-b-20">
                 <div class="col-xs-12">
                     <input autofocus value="{{ old('email') }}" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" id="email" required=""
@@ -39,10 +40,13 @@
                     @endif
                 </div>
             </div>
+            @else
+              <input style="display:none;" value="{{ request()->get('email') }}" name="email" type="email" id="email">
+            @endif
 
             <div class="form-group m-b-20">
                 <div class="col-xs-12">
-                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" type="password" id="password" required=""
+                    <input class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" type="password" id="password" required=""
                      placeholder="Informe uma Senha">
                     @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
@@ -54,9 +58,9 @@
 
             <div class="form-group m-b-20">
                 <div class="col-xs-12">
-                    <input class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" type="password" id="password_confirmation" required=""
+                    <input class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" type="password" id="password_confirmation" required=""
                      placeholder="Confirme a Senha">
-                    @if ($errors->has('password'))
+                    @if ($errors->has('password_confirmation'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('password_confirmation') }}</strong>
                         </span>
@@ -74,5 +78,35 @@
         </div>
     </div>
 </form>
+
+@stop
+
+@section('scripts')
+
+<script>
+
+  $(document).ready(function() {
+
+      var $formValid = $('.formValidation').parsley();
+
+      if($('.formValidation').length > 0) {
+
+        $formValid.on('form:submit', function(e) {
+          // This global callback will be called for any field that fails validation.
+          //e.preventDefault();
+          window.swal({
+            title: 'Autenticando...',
+            text: 'Aguarde enquanto as suas credenciais são verificadas.',
+            type: 'success',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+        });;
+
+      }
+
+  });
+
+</script>
 
 @stop
