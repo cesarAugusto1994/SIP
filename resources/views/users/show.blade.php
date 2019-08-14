@@ -62,7 +62,7 @@
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                         <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                                          <a href="{{ route('change_password') }}" class="dropdown-item">Alterar Senha</a>
+                                          <a href="{{ route('change_password', ['user' => $person->user->uuid]) }}" class="dropdown-item">Alterar Senha</a>
                                           @if(auth()->user()->id !== $person->user->id)
                                             <a class="dropdown-item" href="{{ route('impersonate', $person->user->id) }}">logar como</a>
                                           @endif

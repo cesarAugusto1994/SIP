@@ -11,7 +11,7 @@
 
   <div class="col-md-4">
 
-      <form data-parsley-validate class="md-float-material form-material" action="{{ route('update_password') }}" method="POST">
+      <form data-parsley-validate class="md-float-material form-material formValidation" action="{{ route('update_password') }}" method="POST">
 
           @csrf
 
@@ -21,7 +21,7 @@
           <div class="auth-box card">
               <div class="card-block">
 
-                  <h5 class="text-center"><i class="feather icon-lock text-primary f-60 p-t-15 p-b-20 d-block"></i>Atualizar Senha</h5>
+                  <h5 class="text-center"><i class="feather icon-lock text-primary f-60 p-t-15 p-b-20 d-block"></i>Atualizar Senha de {{ $user->person->name }}</h5>
 
                   <br/>
 
@@ -57,7 +57,7 @@
 
                   <div class="row">
                       <div class="col-md-12">
-                          <button type="submit" class="btn btn-success btn-md btn-block waves-effect text-center m-b-20"> Enviar </button>
+                          <button type="submit" class="btn btn-success btn-md btn-block waves-effect text-center m-b-20"> Trocar Senha </button>
                       </div>
                   </div>
 
@@ -72,4 +72,34 @@
   </div>
 
 </div>
+@stop
+
+@section('scripts')
+
+<script>
+
+  $(document).ready(function() {
+
+      var $formValid = $('.formValidation').parsley();
+
+      if($('.formValidation').length > 0) {
+
+        $formValid.on('form:submit', function(e) {
+          // This global callback will be called for any field that fails validation.
+          //e.preventDefault();
+          window.swal({
+            title: 'Alterando Senha',
+            text: 'Aguarde enquanto a senha é trocada.',
+            type: 'success',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+        });;
+
+      }
+
+  });
+
+</script>
+
 @stop

@@ -573,14 +573,22 @@ class UsersController extends Controller
         return redirect()->route('user', ['id' => $id]);
     }
 
-    public function password()
+    public function password(Request $request)
     {
-        return view('users.password');
+        $user = $request->user();
+
+        if($request->has('user')) {
+          $user = User::uuid($request->get('user'));
+        }
+
+        return view('users.password', compact('user'));
     }
 
     public function updatePassword(Request $request)
     {
         $data = $request->request->all();
+
+        $user = $request->get('user') ?? $request->user()->uuid;
 
         $validator = \Illuminate\Support\Facades\Validator::make($data, [
           'password' => ['required', 'string', 'min:6', 'dumbpwd', 'confirmed'],
@@ -596,7 +604,9 @@ class UsersController extends Controller
             'text' => 'A senha do usuário foi alterada com sucesso.'
           ]);
 
-          return back();
+          //return back();
+
+          return redirect()->route('user', $user);
 
         }
 
