@@ -53,30 +53,23 @@
                 @endif
 
               </div>
-
         </div>
-        <!-- List type card end -->
     </div>
     @elseif($ticket->status_id == 4)
       <div class="col-sm-12">
-          <!-- List type card start -->
           <div class="card bg-c-green update-card">
               <div class="card-header">
                   <h4>Chamado Finalizado!</h4>
               </div>
           </div>
-          <!-- List type card end -->
       </div>
     @elseif($ticket->status_id == 5)
       <div class="col-sm-12">
-          <!-- List type card start -->
           <div class="card bg-c-pink update-card">
               <div class="card-header">
                   <h4>Chamado Cancelado!</h4>
               </div>
-
           </div>
-          <!-- List type card end -->
       </div>
     @endif
 
@@ -88,7 +81,7 @@
               <div class="card-header-right">
                 @if($ticket->status_id != 4 && $ticket->status_id != 5)
                   <div class="dropdown-inverse dropdown open">
-                      <button class="btn btn-inverse btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
+                      <button class="btn btn-primary btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
 
                         @if($ticket->status_id == 1)
@@ -99,7 +92,7 @@
                           <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
                         @endif
                         @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
-                          <a class="dropdown-item waves-light waves-effect" onclick="cancelTicket()" href="#">Cancelar Chamado</a>
+                          <a class="dropdown-item waves-light waves-effect text-danger" onclick="cancelTicket()" href="#">Cancelar Chamado</a>
                         @endif
                       </div>
                   </div>
@@ -128,10 +121,17 @@
           <div class="card-block">
               <div class="row">
 
-                  <div class="col-sm-12 col-xl-12">
+                  <div class="col-sm-6 col-xl-8">
                     <h4 class="sub-title">Titulo</h4>
                     <p class="text-muted m-b-30">
                         <b>{{$ticket->type->category->name}}: </b>{{$ticket->type->name}}
+                    </p>
+                  </div>
+
+                  <div class="col-sm-6 col-xl-4">
+                    <h4 class="sub-title">Prioridade</h4>
+                    <p class="text-muted m-b-30">
+                        <label class="label label-{{ \App\Helpers\Helper::statusTaskPriorityCollor($ticket->priority) }}">{{ $ticket->priority }}</label>
                     </p>
                   </div>
 
@@ -226,6 +226,45 @@
               </div>
           </div>
 
+      </div>
+
+      <div class="card comment-block">
+          <div class="card-header">
+              <h5 class="card-header-text"><i class="icofont icofont-comment m-r-5"></i> Comentários</h5>
+          </div>
+          <div class="card-block">
+              <ul class="media-list">
+                @foreach($ticket->messages->sortByDesc('id') as $message)
+
+                  <li class="media">
+                      <div class="media-left">
+                          <a href="{{route('user', ['id' => $message->user->id])}}">
+                              <img class="media-object img-radius comment-img" src="{{ route('image', ['user' => $message->user->uuid, 'link' => $message->user->avatar, 'avatar' => true])}}" title="{{$message->user->name}}" alt="{{$message->user->name}}">
+                          </a>
+                      </div>
+                      <div class="media-body">
+                          <h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ $message->user->person->name }}, {{$message->created_at->format('d/m/Y H:i:s')}}</span></h6>
+                          {{$message->message}}
+                          <hr>
+                      </div>
+                  </li>
+
+                @endforeach
+
+              </ul>
+              <div class="md-float-material d-flex">
+                  <div class="col-md-12 btn-add-task">
+                    <form class="formValidation" data-parsley-validate method="post" action="{{route('ticket_message_store')}}">
+                      {{csrf_field()}}
+                      <input name="id" type="hidden" value="{{$ticket->uuid}}"/>
+                      <textarea rows="5" name="message" class="form-control" required placeholder="Insira um Comentário"></textarea>
+                      <br/>
+                      <button class="btn btn-success">Enviar</button>
+                    </form>
+
+                  </div>
+              </div>
+          </div>
       </div>
 
     </div>

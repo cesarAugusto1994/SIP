@@ -203,7 +203,7 @@ class TicketsController extends Controller
           'requester_id' => $ticket->user_id,
           'sponsor_id' => $user->id,
         ]);
-
+*/
         $alreadyExists = Log::where('ticket_id', $ticket->id)->where('status_id', 2)->get();
 
         if($alreadyExists->isNotEmpty()) {
@@ -215,7 +215,7 @@ class TicketsController extends Controller
           'ticket_id' => $ticket->id,
           'description' => 'Chamado atribuído à ' . $request->user()->person->name
         ]);
-*/
+
         $data['status_id'] = 2;
         $data['assigned_to'] = $user->id;
 
@@ -224,10 +224,6 @@ class TicketsController extends Controller
         notify()->flash('Sucesso!', 'success', [
           'text' => 'O chamado está em andamento.'
         ]);
-
-        //return redirect()->route('tasks.edit', $task->uuid)->with('ticket', $ticket->uuid);
-
-        //return view('tasks.edit', compact('task', 'ticket'));
 
         return redirect()->route('tickets.show', $ticket->uuid);
     }

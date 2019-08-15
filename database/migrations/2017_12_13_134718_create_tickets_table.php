@@ -50,7 +50,19 @@ class CreateTicketsTable extends Migration
             $table->enum('priority', ['Baixa', 'Normal', 'Alta', 'Altíssima'])->default('Normal');
             $table->integer('assigned_to')->nullable();
             $table->datetime('solved_at')->nullable();
+            $table->date('due')->nullable();
             $table->uuid('uuid');
+            $table->timestamps();
+        });
+
+        Schema::create('ticket_messages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('message');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('ticket_id')->unsigned();
+            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->uuid('uuid')->unique();
             $table->timestamps();
         });
 

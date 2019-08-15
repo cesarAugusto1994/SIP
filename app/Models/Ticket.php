@@ -42,6 +42,11 @@ class Ticket extends Model
         return $this->hasMany('App\Models\Ticket\Status\Log', 'ticket_id');
     }
 
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Ticket\Message');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {
