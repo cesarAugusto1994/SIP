@@ -195,6 +195,12 @@ class AddressesController extends Controller
               continue;
             }
 
+            $hasAddress = Address::where('street', $item['ENDERECO'])->where('number', $item['NUMEROENDERECO'])->where('zip', $item['CEP'])->first();
+
+            if($hasAddress) {
+                continue;
+            }
+
             $data['client_id'] = $client->id;
             $data['user_id'] = 1;
             $data['is_default'] = false;
