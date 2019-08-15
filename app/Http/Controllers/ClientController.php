@@ -66,7 +66,7 @@ class ClientController extends Controller
             });
         }
 
-        $clients->orderByDesc('name');
+        $clients->orderBy('name');
 
         $quantity = $clients->count();
 

@@ -78,7 +78,7 @@
                   </thead>
 
                   <tbody>
-                      @foreach($clients->sortByDesc('id') as $client)
+                      @foreach($clients as $client)
                           <tr>
 
                               <td>
