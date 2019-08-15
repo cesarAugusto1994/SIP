@@ -37,7 +37,7 @@
               <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Nova Ordem de Entrega</h5>
+                        <h5>Nova OE</h5>
                     </div>
                     <div class="card-block">
 
@@ -63,7 +63,7 @@
 
                             </div>
 
-                            <div class="col-md-12" id="select-address">
+                            <div class="col-md-12" id="div-select-address">
                               <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Endereço</label>
                                   <div class="input-group">
@@ -236,7 +236,7 @@
 
     var checkboxNewAddress = $("#checkbox-new-address");
     var inputNewAddress = $("#input-new-address");
-    var selectAddress = $("#select-address");
+    var selectAddress = $("#div-select-address");
 
     selectClient.change(function() {
         clientId.val($(this).val());
