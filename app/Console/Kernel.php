@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\ScheduleReminder',
+        Commands\AddressesImport::class
     ];
 
     /**
@@ -25,11 +25,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('schedule:reminder')->everyMinute();
+        $schedule->command('addresses:import')->everyMinute();
 
         //$schedule->call('SomeClass@method')->dailyAt('10:00');
 
-        $schedule->call('\App\Helpers\Helper@recurringTasks')->everyMinute();
 /*
         $schedule->call(function () {
 
