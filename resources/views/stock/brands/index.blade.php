@@ -35,7 +35,7 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  @permission('create.ativos')
+                  @permission('create.marcas')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('brands.create')}}">Nova Marca</a></li>
                   @endpermission
 
@@ -67,7 +67,7 @@
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                              @permission('edit.ativos')
+                              @permission('edit.marcas')
                                 <a href="{{route('brands.edit', ['id' => $brand->uuid])}}" class="dropdown-item">Editar </a>
                               @endpermission
 

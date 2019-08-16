@@ -35,7 +35,7 @@
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  @permission('create.ativos')
+                  @permission('create.fornecedores')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('vendors.create')}}">Novo Fornecedor</a></li>
                   @endpermission
 
@@ -72,7 +72,7 @@
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                              @permission('edit.ativos')
+                              @permission('edit.fornecedores')
                                 <a href="{{route('vendors.edit', ['id' => $vendor->uuid])}}" class="dropdown-item">Editar </a>
                               @endpermission
 
