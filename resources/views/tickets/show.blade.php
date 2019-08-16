@@ -236,16 +236,17 @@
               <ul class="media-list">
                 @foreach($ticket->messages->sortByDesc('id') as $message)
 
-                  <li class="media">
+                  <li class="media mediaFile">
                       <div class="media-left">
-                          <a href="{{route('user', ['id' => $message->user->id])}}">
-                              <img class="media-object img-radius comment-img" src="{{ route('image', ['user' => $message->user->uuid, 'link' => $message->user->avatar, 'avatar' => true])}}" title="{{$message->user->name}}" alt="{{$message->user->name}}">
-                          </a>
+                          <img class="media-object img-radius comment-img" src="{{ route('image', ['user' => $message->user->uuid, 'link' => $message->user->avatar, 'avatar' => true])}}" title="{{$message->user->name}}" alt="{{$message->user->name}}">
                       </div>
                       <div class="media-body">
-                          <h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ $message->user->person->name }}, {{$message->created_at->format('d/m/Y H:i:s')}}</span></h6>
-                          {{$message->message}}
-                          <hr>
+                          <h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ $message->user->person->name }}, {{$message->created_at->format('d/m/Y H:i:s')}}</span> </h6>
+                          <p>{{$message->message}}</p>
+                          @if(auth()->user()->isAdmin() || $message->user->id == auth()->user()->id)
+                              <a data-route="{{ route('ticket_message_destroy', $message->uuid) }}" class="text-danger btnRemoveItem" style="cursor:pointer"><i class="fa fa-trash"></i> Apagar</a>
+                          @endif
+                          <hr/>
                       </div>
                   </li>
 

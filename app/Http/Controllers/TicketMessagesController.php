@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\Notifications;
 use App\Models\Ticket\Message;
 use App\Models\Ticket;
 use Auth;
@@ -39,6 +40,8 @@ class TicketMessagesController extends Controller
     {
         $data = $request->request->all();
 
+        $user = $request->user();
+
         $ticket = Ticket::uuid($data['id']);
 
         $message = new Message();
@@ -47,6 +50,10 @@ class TicketMessagesController extends Controller
         $message->ticket_id = $ticket->id;
 
         $message->save();
+
+        $msg = $user->person->name . ' adicionou um novo comentário no chamado #'. str_pad($ticket->id, 6, "0", STR_PAD_LEFT);
+
+        broadcast(new Notifications(Auth::user(), $msg))->toOthers();
 
         return redirect()->route('tickets.show', $ticket->uuid);
     }
@@ -93,6 +100,23 @@ class TicketMessagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+            $message = Message::uuid($id);
+            $message->delete();
+
+            return response()->json([
+              'success' => true,
+              'message' => 'Mensagem apagada com sucesso.'
+            ]);
+
+        } catch(\Exception $e) {
+
+            return response()->json([
+              'success' => false,
+              'message' => 'Ocorreu um erro ao remover a mensagem'
+            ]);
+
+        }
     }
 }

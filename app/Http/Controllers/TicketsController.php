@@ -216,6 +216,12 @@ class TicketsController extends Controller
           'description' => 'Chamado atribuído à ' . $request->user()->person->name
         ]);
 
+        Log::create([
+          'status_id' => 2,
+          'ticket_id' => $ticket->id,
+          'description' => 'Chamado Em Andamento por: ' . $request->user()->person->name
+        ]);
+
         $data['status_id'] = 2;
         $data['assigned_to'] = $user->id;
 
