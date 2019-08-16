@@ -319,7 +319,7 @@ class TicketsController extends Controller
         Log::create([
           'status_id' => 5,
           'ticket_id' => $ticket->id,
-          'description' => 'Chamado cancelado por ' . $request->user()->person->name . ' motivo: ' . $message
+          'description' => 'Chamado cancelado por ' . $request->user()->person->name . ', motivo: ' . $message
         ]);
 
         $data['status_id'] = 5;

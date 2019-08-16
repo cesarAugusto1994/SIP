@@ -26,32 +26,66 @@
 </div>
 
 <div class="page-body">
+
   <div class="card">
       <div class="card-header">
           <h5>Listagem de Fornecedores</h5>
+          <span class="text-success">Fornecedores<span>
+
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
 
-                  @permission('create.fornecedores')
+                  @permission('create.ativos')
                     <li><a class="btn btn-sm btn-success btn-round" href="{{route('vendors.create')}}">Novo Fornecedor</a></li>
                   @endpermission
 
               </ul>
           </div>
-      </div>
-  </div>
 
-  <div class="row">
-    @foreach($vendors as $item)
-      <div class="col-md-12 col-lg-4">
-          <div class="card">
-              <div class="card-block text-center">
-                  <h4 class="m-t-20">{{ $item->name }}</h4>
-                  <a class="btn btn-primary btn-sm btn-round" href="{{ route('vendors.edit', $item->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
-              </div>
+      </div>
+      <div class="card-block">
+          <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Nome</th>
+                          <th>Telefone</th>
+                          <th>E-mail</th>
+                          <th>Ativo</th>
+                          <th>Opções</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+
+                    @foreach($vendors as $vendor)
+                      <tr>
+                          <th scope="row">{{ $vendor->id }}</th>
+                          <td>{{ $vendor->name }}</td>
+                          <td>{{ $vendor->phone }}</td>
+                          <td>{{ $vendor->email }}</td>
+
+                          <td>{{ $vendor->active ? 'Ativo' : 'Inativo' }}</td>
+
+                          <td class="dropdown">
+
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                              @permission('edit.ativos')
+                                <a href="{{route('vendors.edit', ['id' => $vendor->uuid])}}" class="dropdown-item">Editar </a>
+                              @endpermission
+
+                            </div>
+                          </td>
+
+                      </tr>
+                    @endforeach
+
+                  </tbody>
+              </table>
           </div>
       </div>
-    @endforeach
   </div>
 
 </div>

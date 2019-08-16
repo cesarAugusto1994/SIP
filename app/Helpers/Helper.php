@@ -23,6 +23,8 @@ use App\Models\MessageBoard\Type as MessageBoardType;
 use App\Models\DeliveryOrder\Status as DeliveryStatus;
 use App\Models\Fleet\Vehicle\Status as VehicleStatus;
 use App\Models\DeliveryOrder;
+use App\Models\Stock\{Stock,Brand,Product,Vendor};
+use App\Models\Stock\Brand\Models as BrandModels;
 
 /**
  *
@@ -323,6 +325,21 @@ class Helper
         return self::get($key);
     }
 
+    public static function vendors()
+    {
+        return Vendor::where('active', true)->get();
+    }
+
+    public static function brands()
+    {
+        return Brand::where('active', true)->get();
+    }
+
+    public static function models()
+    {
+        return BrandModels::where('active', true)->get();
+    }
+
     public static function taskStatus()
     {
         $key = 'task-status';
@@ -538,6 +555,34 @@ class Helper
         $types = Category::all();
 
         self::set($key, $types);
+        return self::get($key);
+    }
+
+    public static function stockStatus()
+    {
+        $key = 'stock-status';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ['Disponível', 'Em Uso', 'Em Manutenção', 'Troca', 'Danificado', 'Perdido', 'Descartado'];
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function stockLocalization()
+    {
+        $key = 'stock-localization';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ['Almoxarifado','Usuário', 'Departamento', 'Unidade', 'Fornecedor'];
+
+        self::set($key, $data);
         return self::get($key);
     }
 

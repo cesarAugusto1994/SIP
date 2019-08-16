@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stock\Product;
+use App\Models\Stock\Stock;
 
 class ProductsController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return view('stock.products.create');
     }
 
     /**
@@ -36,7 +37,28 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        $data['user_id'] = $user->id;
+
+        $product = Product::create($data);
+
+        foreach (range(1, $data['actual_stock']) as $key => $item) {
+            Stock::create([
+              'product_id' => $product->id,
+              'status' => 'Disponível',
+              'localization' => 'Almoxarifado'
+            ]);
+        }
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Novo Produto adicionado.'
+        ]);
+
+        return redirect()->route('products.index');
+
     }
 
     /**
@@ -47,7 +69,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::uuid($id);
+        return view('stock.products.show', compact('product'));
     }
 
     /**
@@ -58,7 +81,8 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::uuid($id);
+        return view('stock.products.edit', compact('product'));
     }
 
     /**
@@ -70,7 +94,18 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        $product = Product::uuid($id);
+        $product->update($data);
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Produto atualizado com sucesso.'
+        ]);
+
+        return redirect()->route('products.show', $product->uuid);
     }
 
     /**

@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Unidades</h4>
+                    <h4>Fornecedores</h4>
                 </div>
             </div>
         </div>
@@ -18,9 +18,9 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('units.index') }}"> Unidades </a>
+                        <a href="{{ route('vendors.index') }}"> Fornecedores </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Editar</a>
+                    <li class="breadcrumb-item"><a href="#!">Novo</a>
                     </li>
                 </ul>
             </div>
@@ -31,39 +31,47 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Editar Unidade</h5>
+          <h5>Novo Fornecedor</h5>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" data-parsley-validate method="post" action="{{route('units.update', $unit->uuid)}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('vendors.update', $vendor->uuid)}}">
             @csrf
             {{ method_field('PUT') }}
-
             <div class="row m-b-30">
 
-                <div class="col-md-12">
+                <div class="col-md-4">
                   <div class="form-group">
                       <label class="col-form-label">Nome</label>
                       <div class="input-group">
-                        <input type="text" required name="name" value="{{ $unit->name }}" class="form-control">
+                        <input type="text" required name="name" class="form-control" value="{{ $vendor->name }}">
                       </div>
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Endereço</label>
+                      <label class="col-form-label">Telefone</label>
                       <div class="input-group">
-                        <input type="text" name="address" value="{{ $unit->address }}" class="form-control">
+                        <input type="text" name="phone" class="form-control inputPhone" value="{{ $vendor->phone }}">
                       </div>
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Horário de Trabalho</label>
+                      <label class="col-form-label">E-mail</label>
                       <div class="input-group">
-                        <input type="text" name="workload" value="{{ $unit->workload }}" class="form-control">
+                        <input type="email" name="email" class="form-control" value="{{ $vendor->email }}">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <label class="col-form-label">Ativo</label>
+                      <div class="input-group">
+                        <input class="js-switch" type="checkbox" id="active" name="active" {{ $vendor->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
                       </div>
                   </div>
                 </div>
@@ -71,7 +79,7 @@
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('units.index') }}">Cancelar</a>
+            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('vendors.index') }}">Cancelar</a>
 
         </form>
 

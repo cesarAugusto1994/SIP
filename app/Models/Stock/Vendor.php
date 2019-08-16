@@ -11,6 +11,6 @@ class Vendor extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name'];
-    protected static $logAttributes = ['name'];
+    protected $fillable = ['name', 'phone', 'email', 'active'];
+    protected static $logAttributes = ['name', 'phone', 'email', 'active'];
 }

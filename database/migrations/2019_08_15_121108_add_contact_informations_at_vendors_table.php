@@ -15,7 +15,7 @@ class AddContactInformationsAtVendorsTable extends Migration
     {
         Schema::table('vendors', function (Blueprint $table) {
             $table->string('email')->nullable();
-            $table->string('telefone')->nullable();
+            $table->string('phone')->nullable();
         });
     }
 
@@ -28,7 +28,7 @@ class AddContactInformationsAtVendorsTable extends Migration
     {
         Schema::table('vendors', function (Blueprint $table) {
             $table->dropColumn('email');
-            $table->dropColumn('telefone');
+            $table->dropColumn('phone');
         });
     }
 }

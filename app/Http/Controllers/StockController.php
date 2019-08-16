@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Stock\Brand;
+use App\Models\Stock\Product;
+use App\Models\Stock\Stock;
+use DateTime;
 
-class BrandsController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,7 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
-        return view('stock.brands.index', compact('brands'));
+        //
     }
 
     /**
@@ -23,9 +24,19 @@ class BrandsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('stock.brands.create');
+        if(!$request->has('product_id')) {
+          notify()->flash('Erro', 'error', [
+            'text' => 'Produto não informado.'
+          ]);
+
+          return back();
+        }
+
+        $product = Product::uuid($request->get('product_id'));
+
+        return view('stock.stock.create', compact('product'));
     }
 
     /**
@@ -38,15 +49,29 @@ class BrandsController extends Controller
     {
         $data = $request->request->all();
 
-        $data['active'] = $request->has('active');
+        if(!$request->has('product_id')) {
+          notify()->flash('Erro', 'error', [
+            'text' => 'Produto não informado.'
+          ]);
 
-        Brand::create($data);
+          return back();
+        }
+
+        $product = Product::uuid($request->get('product_id'));
+
+        $data['product_id'] = $product->id;
+
+        if($request->filled('buyed_at')) {
+            $data['buyed_at'] = DateTime::createFromFormat('d/m/Y', $data['buyed_at']);
+        }
+
+        Stock::create($data);
 
         notify()->flash('Sucesso', 'success', [
-          'text' => 'Nova Marca adicionada.'
+          'text' => 'Novo Item adicionado ao Produto ' . $product->name
         ]);
 
-        return redirect()->route('brands.index');
+        return redirect()->route('products.show', $product->uuid);
     }
 
     /**
@@ -68,8 +93,8 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        $brand = Brand::uuid($id);
-        return view('stock.brands.edit', compact('brand'));
+        $stock = Stock::uuid($id);
+        return view('stock.stock.edit', compact('stock'));
     }
 
     /**
@@ -83,16 +108,19 @@ class BrandsController extends Controller
     {
         $data = $request->request->all();
 
-        $data['active'] = $request->has('active');
+        if($request->filled('buyed_at')) {
+            $data['buyed_at'] = DateTime::createFromFormat('d/m/Y', $data['buyed_at']);
+        }
 
-        $brand = Brand::uuid($id);
-        $brand->update($data);
+        $stock = Stock::uuid($id);
+
+        $stock->update($data);
 
         notify()->flash('Sucesso', 'success', [
-          'text' => 'Marca atualizada com sucesso.'
+          'text' => 'Item atualizado com sucesso'
         ]);
 
-        return redirect()->route('brands.index');
+        return redirect()->route('products.show', $stock->product->uuid);
     }
 
     /**

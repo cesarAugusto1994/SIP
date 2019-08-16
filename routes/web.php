@@ -285,6 +285,7 @@ Route::middleware('auth')->group(function () {
           Route::resource('purchasing', 'PurchasingController');
 
           Route::resource('products', 'ProductsController');
+          Route::resource('stock', 'StockController');
           Route::resource('brands', 'BrandsController');
           Route::resource('models', 'ModelsController');
           Route::resource('vendors', 'VendorsController');

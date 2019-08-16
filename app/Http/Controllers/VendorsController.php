@@ -36,7 +36,17 @@ class VendorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->request->all();
+
+        $data['active'] = $request->has('active');
+
+        Vendor::create($data);
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Novo Fornecedor adicionado.'
+        ]);
+
+        return redirect()->route('vendors.index');
     }
 
     /**
@@ -58,7 +68,8 @@ class VendorsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vendor = Vendor::uuid($id);
+        return view('stock.vendors.edit', compact('vendor'));
     }
 
     /**
@@ -70,7 +81,18 @@ class VendorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $data['active'] = $request->has('active');
+
+        $vendor = Vendor::uuid($id);
+        $vendor->update($data);
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Fornecedor atualizado com sucesso.'
+        ]);
+
+        return redirect()->route('vendors.index');
     }
 
     /**

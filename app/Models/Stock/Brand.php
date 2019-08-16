@@ -11,6 +11,6 @@ class Brand extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name'];
-    protected static $logAttributes = ['name'];
+    protected $fillable = ['name', 'active'];
+    protected static $logAttributes = ['name', 'active'];
 }

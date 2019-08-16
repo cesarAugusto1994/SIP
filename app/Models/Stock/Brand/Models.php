@@ -11,6 +11,11 @@ class Models extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name'];
-    protected static $logAttributes = ['name'];
+    protected $fillable = ['name', 'brand_id', 'active'];
+    protected static $logAttributes = ['name', 'brand_id', 'active'];
+
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\Stock\Brand');
+    }
 }
