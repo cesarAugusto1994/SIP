@@ -92,7 +92,7 @@
                           <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
                         @endif
                         @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
-                          <a class="dropdown-item waves-light waves-effect text-danger" onclick="cancelTicket()" href="#">Cancelar Chamado</a>
+                          <a class="dropdown-item waves-light waves-effect text-danger btnCancelTicket" data-route="{{ route('ticket_cancel', $ticket->uuid) }}" href="#">Cancelar Chamado</a>
                         @endif
                       </div>
                   </div>
@@ -443,35 +443,79 @@
 
     }
 
+    var cancelTicket = $(".btnCancelTicket");
 
-    function cancelTicket() {
+    cancelTicket.click(function() {
 
-        swal({
-          title: 'Cancelar Chamado?',
-          text: "Este chamado será cancelado!",
-          type: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#0ac282',
-          cancelButtonColor: '#D46A6A',
-          confirmButtonText: 'Sim',
-          cancelButtonText: 'Cancelar'
-          }).then((result) => {
-          if (result.value) {
+      var self = $(this);
+      var url = self.data('route');
 
-            swal({
-              title: 'Aguarde um instante.',
-              text: 'Carregando os dados...',
-              type: 'info',
-              showConfirmButton: false,
-              allowOutsideClick: false
-            });
+      swal({
+        title: 'Cancelar Chamado?',
+        text: "Então, informe o motivo do cancelamento.",
+        type: 'question',
+        customClass: 'bounceInLeft',
+        input: 'textarea',
+        confirmButtonText: 'Salvar',
+        showLoaderOnConfirm: true,
+        showCancelButton: true,
+        confirmButtonColor: '#0ac282',
+        cancelButtonColor: '#D46A6A',
+        cancelButtonText: 'Cancelar',
+        preConfirm: (text) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              if (text === '') {
+                swal.showValidationError(
+                  'Por Favor Informe o motivo do cancelamento.'
+                )
+              }
+              resolve()
+            }, 1000)
+          })
+        },
+        allowOutsideClick: () => false
+        }).then((result) => {
+        if (result.value) {
 
-            $("#ticket-cancel").submit();
+          swal({
+            title: 'Aguarde um instante.',
+            text: 'Carregando os dados...',
+            type: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
 
-          }
-        });
+          swal({
+            type: 'success',
+            title: 'O motivo de cancelamento foi enviado!',
+            html: 'Motivo: ' + result.value,
+            preConfirm: () => {
+               return $.ajax({
+                 headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                 url: url,
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {
+                   message : result.value,
+                 }
+               }).done(function(data) {
 
-    }
+                 window.location.reload();
+
+               });
+
+             }
+          })
+
+
+        }
+
+      });
+    });
+
 </script>
 
 @endsection

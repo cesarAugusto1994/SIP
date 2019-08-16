@@ -314,17 +314,20 @@ class TicketsController extends Controller
             return back();
         }
 
+        $message = $request->get('message');
+
         Log::create([
           'status_id' => 5,
           'ticket_id' => $ticket->id,
-          'description' => 'Chamado cancelado por ' . $request->user()->person->name
+          'description' => 'Chamado cancelado por ' . $request->user()->person->name . ' motivo: ' . $message
         ]);
 
         $data['status_id'] = 5;
         $ticket->update($data);
 
-        notify()->flash('Sucesso!', 'success', [
-          'text' => 'Chamado cancelado com sucesso.'
+        return response()->json([
+          'success' => true,
+          'message' => 'Chamado cancelado com sucesso.'
         ]);
 
         return redirect()->route('tickets.show', $ticket->uuid);
