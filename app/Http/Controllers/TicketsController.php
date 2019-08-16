@@ -223,7 +223,7 @@ class TicketsController extends Controller
         ]);
 
         $data['status_id'] = 2;
-        $data['assigned_to'] = $user->id;
+        $data['assigned_to'] = $request->user()->id;
 
         $ticket->update($data);
 

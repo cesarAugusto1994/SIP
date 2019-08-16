@@ -53,7 +53,13 @@ class TicketMessagesController extends Controller
 
         $msg = $user->person->name . ' adicionou um novo comentário no chamado #'. str_pad($ticket->id, 6, "0", STR_PAD_LEFT);
 
-        broadcast(new Notifications(Auth::user(), $msg))->toOthers();
+        if($ticket->user->id == $user->id) {
+          if($ticket->responsible) {
+            broadcast(new Notifications($ticket->responsible, $msg))->toOthers();
+          }
+        } else {
+            broadcast(new Notifications($ticket->user, $msg))->toOthers();
+        }
 
         return redirect()->route('tickets.show', $ticket->uuid);
     }
