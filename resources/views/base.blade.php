@@ -109,9 +109,10 @@
           opacity: 1;
         }
 
-        .parsley-required, .parsley-maxlength, .parsley-minlength, .help-block, .parsley-errors-list {
+        .help-block, .parsley-errors-list {
           list-style: none;
-          background-color: #fe5d70;
+          background-color: #009688;
+          /*background-color: #fe5d70;*/
           /* border: 2px solid #dc3545; */
           color: white;
           padding: 10px 10px 10px 15px;

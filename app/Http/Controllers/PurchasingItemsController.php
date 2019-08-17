@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Purchasing;
 use App\Models\Purchasing\Item;
 
-class PurchasingController extends Controller
+class PurchasingItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class PurchasingController extends Controller
      */
     public function index()
     {
-        $purchasings = Purchasing::orderBy('status')->get();
-        return view('purchasing.index', compact('purchasings'));
+        //
     }
 
     /**
@@ -24,9 +23,19 @@ class PurchasingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('purchasing.create');
+        if(!$request->has('purchasing_id')) {
+          notify()->flash('Erro', 'error', [
+            'text' => 'Pedido de Compra não informado.'
+          ]);
+
+          return back();
+        }
+
+        $purchasing = Purchasing::uuid($request->get('purchasing_id'));
+
+        return view('purchasing.items.create', compact('purchasing'));
     }
 
     /**
@@ -37,18 +46,34 @@ class PurchasingController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->has('purchasing_id')) {
+          notify()->flash('Erro', 'error', [
+            'text' => 'Pedido de Compra não informado.'
+          ]);
+
+          return back();
+        }
+
+        if(!$request->filled('indexes')) {
+
+          notify()->flash('Erro', 'error', [
+            'text' => 'Nenhum item informado.'
+          ]);
+
+          return back();
+
+        }
+
         $data = $request->request->all();
         $user = $request->user();
 
-        $data['user_id'] = $user->id;
+        $id = $request->get('purchasing_id');
 
-        $purchasing = Purchasing::create($data);
+        $purchasing = Purchasing::uuid($id);
 
-        if($request->has('indexes')) {
+        $indexes = $data['indexes'];
 
-            $indexes = $data['indexes'];
-
-            foreach (range(0, $indexes) as $key => $value) {
+        foreach (range(0, $indexes) as $key => $value) {
 
               $fieldUnit = 'unit-'.$value;
               $fieldDesc = 'description-'.$value;
@@ -68,10 +93,8 @@ class PurchasingController extends Controller
 
             }
 
-        }
-
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'Novo Pedido de Compra adicionado com sucesso.'
+          'text' => 'Novo Item adicionado ao Pedido de Compra com sucesso.'
         ]);
 
         return redirect()->route('purchasing.show', $purchasing->uuid);
@@ -85,8 +108,7 @@ class PurchasingController extends Controller
      */
     public function show($id)
     {
-        $purchasing = Purchasing::uuid($id);
-        return view('purchasing.show', compact('purchasing'));
+        //
     }
 
     /**
@@ -97,8 +119,8 @@ class PurchasingController extends Controller
      */
     public function edit($id)
     {
-        $purchasing = Purchasing::uuid($id);
-        return view('purchasing.edit', compact('purchasing'));
+        $purchasing = Item::uuid($id);
+        return view('purchasing.items.edit', compact('purchasing'));
     }
 
     /**
@@ -111,15 +133,14 @@ class PurchasingController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->request->all();
-
-        $purchasing = Purchasing::uuid($id);
+        $purchasing = Item::uuid($id);
         $purchasing->update($data);
 
         notify()->flash('Sucesso!', 'success', [
-          'text' => 'Pedido de Compra atualizado com sucesso.'
+          'text' => 'Item do Pedido de Compra aatualizado com sucesso.'
         ]);
 
-        return redirect()->route('purchasing.show', $purchasing->uuid);
+        return redirect()->route('purchasing.show', $purchasing->purchasing->uuid);
     }
 
     /**
@@ -132,15 +153,12 @@ class PurchasingController extends Controller
     {
         try {
 
-            $purchasing = Purchasing::uuid($id);
-
-            $purchasing->items()->delete();
-
-            $purchasing->delete();
+            $item = Item::uuid($id);
+            $item->delete();
 
             return response()->json([
               'success' => true,
-              'message' => 'Pedido de Compra removido com sucesso.'
+              'message' => 'Item removido do Pedido de Compra com sucesso.'
             ]);
 
         } catch(\Exception $e) {

@@ -328,7 +328,9 @@
     // Return the `$element` where errors will be appended
     // Could also be (and given directly from DOM) a valid selector like `'#div'`
     //errorsContainer: '.form-group',
-    errorsContainer: function errorsContainer(Field) {},
+    errorsContainer: function errorsContainer(Field) {
+      return Field.$element.parents('.form-group');
+    },
     // ul elem that would receive errors' list
     errorsWrapper: '<ul class="parsley-errors-list"></ul>',
     // li elem that would receive error message
@@ -1076,18 +1078,18 @@
 
       this._ui.$errorClassHandler.attr('aria-describedby', this._ui.errorsWrapperId);
 
-      this._ui.$errorsWrapper.parents('.form-group').addClass('filled').append($(this.options.errorTemplate).addClass('parsley-' + name).html(message || this._getErrorMessage(assert)));
+      this._ui.$errorsWrapper.addClass('filled').append($(this.options.errorTemplate).addClass('parsley-' + name).html(message || this._getErrorMessage(assert)));
     },
     _updateError: function _updateError(name, _ref5) {
       var message = _ref5.message,
           assert = _ref5.assert;
 
-      this._ui.$errorsWrapper.parents('.form-group').addClass('filled').find('.parsley-' + name).html(message || this._getErrorMessage(assert));
+      this._ui.$errorsWrapper.addClass('filled').find('.parsley-' + name).html(message || this._getErrorMessage(assert));
     },
     _removeError: function _removeError(name) {
       this._ui.$errorClassHandler.removeAttr('aria-describedby');
 
-      this._ui.$errorsWrapper.parents('.form-group').removeClass('filled').find('.parsley-' + name).remove();
+      this._ui.$errorsWrapper.removeClass('filled').find('.parsley-' + name).remove();
     },
     _getErrorMessage: function _getErrorMessage(constraint) {
       var customConstraintErrorMessage = constraint.name + 'Message';

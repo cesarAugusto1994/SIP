@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Ordens de Compra</h4>
+                    <h4>Pedidos de Compra</h4>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Ordens de Compra</a>
+                    <li class="breadcrumb-item"><a href="#!">Pedidos de Compra</a>
                     </li>
                 </ul>
             </div>
@@ -52,8 +52,8 @@
                   <div class="dropdown-menu" aria-labelledby="bystatus">
                       <a class="dropdown-item" href="?status=">Todos</a>
                       <div class="dropdown-divider"></div>
-                      @foreach(\App\Helpers\Helper::taskStatus() as $status)
-                          <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
+                      @foreach(\App\Helpers\Helper::purchasingStatus() as $item)
+                          <a class="dropdown-item" href="?status={{$item}}">{{$item}}</a>
                       @endforeach
                   </div>
               </li>
@@ -82,91 +82,87 @@
 
   </div>
 
-  <div class="row">
-    @forelse ($purchasings as $purchasing)
-
-    @php
-
-      $status = $purchasing->status_id;
-
-      $bgColor = 'success';
-
-      switch($status) {
-        case '2':
-          $bgColor = 'warning';
-          break;
-        case '3':
-          $bgColor = 'primary';
-          break;
-        case '4':
-          $bgColor = 'primary';
-          break;
-        case '5':
-          $bgColor = 'danger';
-          break;
-      }
-
-    @endphp
-
-    <div class="col-sm-4">
-        <div class="card card-border-{{ $bgColor }}">
-            <div class="card-header">
-                <a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">#{{$purchasing->id}} </a>
-                <a href="{{ route('tasks.show', $task->uuid) }}"><b>{{$task->name}}</b></a>
-                <a href="{{ route('tasks.show', $task->uuid) }}">
-                  <span class="label label-{{$bgColor}} f-right"> {{$task->status->name}} </span></a>
-            </div>
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-sm-12">
-                      <a href="{{ route('tasks.show', $task->uuid) }}">
-                        <p class="task-detail">{{substr($task->description,0,150)}}...</p>
-                        <hr/>
-
-                        <small>Tempo Previsto:  <b>
-                          {{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}
-                        </b></small>
-
-                        <p class="task-due"><strong> Aberto em : </strong>
-                        <label class="label label-inverse-success">{{ $task->created_at->format('d/m/Y H:i') }}</label></a>
-                        <label class="label label-inverse-primary">{{ $task->created_at->diffForHumans() }}</label></p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="task-list-table">
-
-                  <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""></a>
-
-                </div>
-                <div class="task-board">
-
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->severity); !!}">G {{$task->severity}}</span>
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->urgency); !!}">U {{$task->urgency}}</span>
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">T {{$task->trend}}</span>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @empty
-
-      <div class="col-md-12 col-lg-12">
-
-        <div class="widget white-bg no-padding">
-            <div class="p-m text-center">
-                <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
-                <br/>
-                <h6 class="font-bold no-margins">
-                    Nenhuma tarefa encontrada.
-                </h6>
-            </div>
-        </div>
-
+  <div class="card">
+      <div class="card-header">
+          <h5>Listagem de Pedidos De Compra</h5>
+          <span>Pedidos De Compra</span>
       </div>
+      <div class="card-block">
+          <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Solicitante</th>
+                          <th style="width: 35%;">Motivo</th>
+                          <th>Situação</th>
+                          <th>Cadastro</th>
+                          <th>Opções</th>
+                      </tr>
+                  </thead>
+                  <tbody>
 
-    @endforelse
+                  @forelse ($purchasings as $purchasing)
+
+                    @php
+
+                      $status = $purchasing->status;
+
+                      $bgColor = 'success';
+
+                      switch($status) {
+                        case '2':
+                          $bgColor = 'warning';
+                          break;
+                        case '3':
+                          $bgColor = 'primary';
+                          break;
+                        case '4':
+                          $bgColor = 'primary';
+                          break;
+                        case '5':
+                          $bgColor = 'danger';
+                          break;
+                      }
+
+                    @endphp
+
+                      <tr>
+                          <th scope="row">{{ $purchasing->id }}</th>
+                          <td>{{ $purchasing->user->person->name }}</td>
+                          <td style="white-space: normal;">{{ $purchasing->motive }}</th>
+                          <td><span class="label label-{{$bgColor}}"> {{$purchasing->status}} </span></td>
+                          <td>{{ $purchasing->created_at->format('d/m/Y H:i') }}
+                              <label class="label label-inverse-{{ $bgColor }}">{{ $purchasing->created_at->diffForHumans() }}</label>
+                          </td>
+
+                          <td class="dropdown">
+
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                              @permission('view.ativos')
+                                <a href="{{route('purchasing.show', ['id' => $purchasing->uuid])}}" class="dropdown-item">Visualizar </a>
+                              @endpermission
+
+                              @permission('edit.ativos')
+                                <a href="{{route('purchasing.edit', ['id' => $purchasing->uuid])}}" class="dropdown-item">Editar </a>
+                              @endpermission
+
+                              @permission('edit.ativos')
+                                <a data-route="{{ route('purchasing.destroy', ['id' => $purchasing->uuid]) }}" style="cursor:pointer" class="dropdown-item text-danger btnRemoveItem">Remover </a>
+                              @endpermission
+
+                            </div>
+                          </td>
+
+                      </tr>
+                    @endforeach
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
   </div>
 </div>
 

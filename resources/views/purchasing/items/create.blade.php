@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Pedidos de Compra</h4>
+                    <h4>Ativos</h4>
                 </div>
             </div>
         </div>
@@ -18,9 +18,12 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('purchasing.index') }}"> Pedidos de Compra </a>
+                        <a href="{{ route('products.index') }}"> Ativos </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Nova Solicitação</a>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('purchasing.show', $purchasing->uuid) }}"> Detalhes </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Novo Item</a>
                     </li>
                 </ul>
             </div>
@@ -31,48 +34,22 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Nova Solicitação</h5>
+          <h5>Novo Item </h5>
+          <span class="text-success">Pedido de Compra #{{ $purchasing->id }}<span>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" method="post" action="{{route('purchasing.store')}}" data-parsley-validate>
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('purchasing-item.store')}}">
             @csrf
+
+            <input type="hidden" name="purchasing_id" value="{{ request()->get('purchasing_id') }}">
 
             <input type="hidden" name="indexes" id="indexes" value=""/>
 
             <div id="rowForm"></div>
 
-            <div class="row m-b-30">
-
-              <div class="col-md-12">
-                <div class="form-group {!! $errors->has('motive') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Motivo</label>
-                    <div class="input-group">
-                      <textarea type="text" required name="motive" id="motive" rows="3"
-                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ old('description') }}</textarea>
-
-                    </div>
-                    {!! $errors->first('motive', '<p class="help-block">:message</p>') !!}
-                </div>
-              </div>
-
-
-              <div class="col-md-12">
-                <div class="form-group {!! $errors->has('observations') ? 'has-error' : '' !!}">
-                    <label class="col-form-label">Observações</label>
-                    <div class="input-group">
-                      <textarea type="text" required name="observations" id="observations" rows="3"
-                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ old('observations') }}</textarea>
-
-                    </div>
-                    {!! $errors->first('observations', '<p class="help-block">:message</p>') !!}
-                </div>
-              </div>
-
-            </div>
-
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a href="{{route('purchasing.index')}}" class="btn btn-danger btn-sm">Cancelar</a>
+            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('purchasing.show', $purchasing->uuid) }}">Cancelar</a>
 
             <button type="button" id="btnAddRows" class="btn btn-primary btn-sm f-right">Adicionar Mais Registro</button>
 
@@ -91,6 +68,8 @@
       var row = $("#rowForm");
       var btnAddRows = $("#btnAddRows");
       var indexes = $("#indexes");
+
+      btnAddRows.click();
 
       var index = 0;
 

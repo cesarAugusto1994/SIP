@@ -24,8 +24,7 @@ class CreatePurchasingsTable extends Migration
             $table->increments('id');
             $table->text('motive')->nullable();
             $table->text('observations')->nullable();
-            $table->integer('status_id')->unsigned()->index();
-            $table->foreign('status_id')->references('id')->on('purchasing_status');
+            $table->enum('status', ['Aberta', 'Em Andamento', 'Aprovada', 'Rejeitada'])->default('Aberta');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
             $table->date('delivery_forecast')->nullable();
@@ -38,6 +37,8 @@ class CreatePurchasingsTable extends Migration
 
         Schema::create('purchasing_items', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('purchasing_id')->unsigned()->index();
+            $table->foreign('purchasing_id')->references('id')->on('purchasings');
             $table->integer('quantity')->default(1);
             $table->enum('unit', ['Unidade', 'Serviço', 'Peça', 'Kilo', 'Litro', 'Metro', 'Caixa'])->default('Unidade');
             $table->string('description')->nullable();

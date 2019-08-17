@@ -43,7 +43,7 @@ class PermissionsTableSeeder extends Seeder
             'Agenda',
             'Entrega Faturamento',
             'Gestão de Frotas',
-            'Localizacao'
+            'Localizacao',
           ])) {
             continue;
           }

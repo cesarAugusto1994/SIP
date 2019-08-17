@@ -354,6 +354,34 @@ class Helper
         return self::get($key);
     }
 
+    public static function metricUnits()
+    {
+        $key = 'metric-units';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ['Unidade', 'Serviço', 'Peça', 'Kilo', 'Litro', 'Metro', 'Caixa'];
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function purchasingStatus()
+    {
+        $key = 'purchasing-status';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ['Aberta', 'Em Andamento', 'Aprovada', 'Rejeitada'];
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
     public static function folders()
     {
         $key = 'folders';
@@ -538,7 +566,7 @@ class Helper
             return self::get($key);
         }
 
-        $data = User::whereNotIn('id', [0])->get();
+        $data = User::where('active', true)->get();
 
         self::set($key, $data);
         return self::get($key);

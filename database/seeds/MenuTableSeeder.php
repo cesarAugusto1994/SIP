@@ -137,6 +137,15 @@ class MenuTableSeeder extends Seeder
               ],
 
           [
+            'title' => 'Pedidos de Compra',
+            'route' => 'purchasing.index',
+            'permission' => 'view.pedidos.de.compra',
+            'description' => 'Pedidos de Compra',
+            'parent' => null,
+            'icon' => 'fas fa-shopping-cart',
+          ],
+
+          [
             'title' => 'Gestão de Entregas',
             'route' => null,
             'permission' => 'view.gestao.de.entregas',

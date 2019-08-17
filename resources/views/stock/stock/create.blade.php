@@ -123,8 +123,8 @@
                       <label class="col-form-label">Unidade:</label>
                       <div class="input-group">
                         <select class="form-control" data-style="btn-white" name="unity_id" required>
-                            @foreach(\App\Helpers\Helper::users() as $user)
-                                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                            @foreach(\App\Helpers\Helper::units() as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
                       </div>
@@ -135,9 +135,9 @@
                   <div class="form-group">
                       <label class="col-form-label">Fornecedor:</label>
                       <div class="input-group">
-                        <select class="form-control" data-style="btn-white" name="vendor_id" required>
-                            @foreach(\App\Helpers\Helper::users() as $user)
-                                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                        <select class="form-control" data-style="btn-white" name="vendor_id">
+                            @foreach(\App\Helpers\Helper::vendors() as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
                       </div>

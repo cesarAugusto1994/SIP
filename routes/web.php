@@ -283,6 +283,7 @@ Route::middleware('auth')->group(function () {
           Route::get('schedule/list', 'ScheduleController@schedule')->name('schedule_list');
 
           Route::resource('purchasing', 'PurchasingController');
+          Route::resource('purchasing-item', 'PurchasingItemsController');
 
           Route::resource('products', 'ProductsController');
           Route::resource('stock', 'StockController');

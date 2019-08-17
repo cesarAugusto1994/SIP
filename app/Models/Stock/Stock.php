@@ -38,7 +38,7 @@ class Stock extends Model
 
     public function unit()
     {
-        return $this->belongsTo('App\Models\Unit');
+        return $this->belongsTo('App\Models\Unit', 'unity_id');
     }
 
     public function vendor()

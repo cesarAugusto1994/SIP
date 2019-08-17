@@ -276,6 +276,13 @@ class ModulesTableSeeder extends Seeder
           ],
 
           [
+            'name' => 'Pedidos de Compra',
+            'slug' => str_slug('Pedidos de Compra'),
+            'description' => 'Pedidos de Compra',
+            'parent' => str_slug('Administrativo'),
+          ],
+
+          [
             'name' => 'Estoque',
             'slug' => str_slug('Estoque'),
             'description' => 'Estoque',

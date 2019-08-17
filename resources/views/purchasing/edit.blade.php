@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Tarefas</h4>
+                    <h4>Pedidos de Compra</h4>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('tasks.index') }}"> Tarefas </a>
+                        <a href="{{ route('purchasing.index') }}"> Pedidos de Compra </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Editar</a>
                     </li>
@@ -31,149 +31,45 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Editar Tarefa</h5>
+          <h5>Editar Ordem de Compra</h5>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" method="post" action="{{route('tasks.update', $task->uuid)}}" data-parsley-validate>
+        <form class="formValidation" method="post" action="{{route('purchasing.update', $purchasing->uuid)}}" data-parsley-validate>
             @csrf
             {{ method_field('PUT') }}
             <div class="row m-b-30">
 
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Nome</label>
+              <div class="col-md-12">
+                <div class="form-group {!! $errors->has('motive') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Motivo</label>
                     <div class="input-group">
-                      <input type="text" required name="name" value="{{$task->name}}" class="form-control">
+                      <textarea type="text" required name="motive" id="motive" rows="3"
+                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ $purchasing->motive }}</textarea>
+
                     </div>
-                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                    {!! $errors->first('motive', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Descrição</label>
+
+              <div class="col-md-12">
+                <div class="form-group {!! $errors->has('observations') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Observações</label>
                     <div class="input-group">
-                      <textarea type="text" required name="description" id="description" rows="3"
-                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{$task->description}}</textarea>
+                      <textarea type="text" required name="observations" id="observations" rows="3"
+                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ $purchasing->observations }}</textarea>
 
                     </div>
-                    {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Responsável</label>
-                    <div class="input-group">
-                      <select class="form-control" name="sponsor_id" required>
-                          @foreach(\App\Helpers\Helper::users() as $user)
-                              <option value="{{$user->id}}" {{ $user->id == $task->sponsor_id ? 'selected' : '' }}>{{$user->person->name}}</option>
-                          @endforeach
-                      </select>
-                    </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-
-                <div class="row">
-                  <div class="col-md-4">
-
-                    <div class="form-group {!! $errors->has('time_type') ? 'has-error' : '' !!}">
-                        <label class="col-form-label">Tipo de Tempo</label>
-                        <div class="input-group">
-                          <select class="form-control" name="time_type" required>
-                              <option value="">Selecione um item</option>
-                              <option value="day" {{ $task->time_type == 'day' ? 'selected' : '' }}>Dia(s)</option>
-                              <option value="hour" {{ $task->time_type == 'hour' ? 'selected' : '' }}>Hora(s)</option>
-                              <option value="minute" {{ $task->time_type == 'minute' ? 'selected' : '' }}>Minuto(s)</option>
-                          </select>
-                        </div>
-                        {!! $errors->first('time_type', '<p class="help-block">:message</p>') !!}
-                    </div>
-
-                  </div>
-                  <div class="col-md-8">
-
-                    <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
-                        <label class="col-form-label">Tempo</label>
-                        <div class="input-group">
-                          <input type="number" min="1" max="100" required value="{{ $task->time }}" name="time" id="time" class="form-control" value="1">
-                        </div>
-                        {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Solicitante</label>
-                    <div class="input-group">
-                      <select class="form-control" name="requester_id">
-                            @foreach(\App\Helpers\Helper::users() as $user)
-                                <option value="{{$user->id}}" {{ $user->id == $task->requester_id ? 'selected' : '' }}>{{$user->person->name}}</option>
-                            @endforeach
-                        </select>
-                      {!! $errors->first('requester_id', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    </div>
-                </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Gravidade</label>
-                    <div class="input-group">
-
-                      <select class="form-control" data-live-search="true" data-style="btn-white" show-tick show-menu-arrow data-width="100%"  name="severity">
-                        <option value="1" {{ 1 == $task->severity ? 'selected' : '' }}>1 (baixissima)</option>
-                        <option value="2" {{ 2 == $task->severity ? 'selected' : '' }}>2 (baixa)</option>
-                        <option value="3" {{ 3 == $task->severity ? 'selected' : '' }}>3 (moderada)</option>
-                        <option value="4" {{ 4 == $task->severity ? 'selected' : '' }}>4 (alta)</option>
-                        <option value="5" {{ 5 == $task->severity ? 'selected' : '' }}>5 (altissima)</option>
-                      </select>
-
-                    </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Urgencia</label>
-                    <div class="input-group">
-                      <select class="form-control" data-live-search="true" data-style="btn-white" show-tick show-menu-arrow data-width="100%"  name="urgency">
-                        <option value="1" {{ 1 == $task->urgency ? 'selected' : '' }}>1 (baixissima)</option>
-                        <option value="2" {{ 2 == $task->urgency ? 'selected' : '' }}>2 (baixa)</option>
-                        <option value="3" {{ 3 == $task->urgency ? 'selected' : '' }}>3 (moderada)</option>
-                        <option value="4" {{ 4 == $task->urgency ? 'selected' : '' }}>4 (alta)</option>
-                        <option value="5" {{ 5 == $task->urgency ? 'selected' : '' }}>5 (altissima)</option>
-                      </select>
-                    </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-form-label">Tendencia</label>
-                    <div class="input-group">
-                      <select class="form-control" data-live-search="true" data-style="btn-white" show-tick show-menu-arrow data-width="100%"  name="trend">
-                        <option value="1" {{ 1 == $task->trend ? 'selected' : '' }}>1 (baixissima)</option>
-                        <option value="2" {{ 2 == $task->trend ? 'selected' : '' }}>2 (baixa)</option>
-                        <option value="3" {{ 3 == $task->trend ? 'selected' : '' }}>3 (moderada)</option>
-                        <option value="4" {{ 4 == $task->trend ? 'selected' : '' }}>4 (alta)</option>
-                        <option value="5" {{ 5 == $task->trend ? 'selected' : '' }}>5 (altissima)</option>
-                      </select>
-                    </div>
+                    {!! $errors->first('observations', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a href="{{route('tasks.show', ['id' => $task->uuid])}}" class="btn btn-danger btn-sm">Cancelar</a>
+            <a href="{{route('purchasing.index')}}" class="btn btn-danger btn-sm">Cancelar</a>
+
         </form>
 
       </div>
@@ -182,18 +78,10 @@
 
 @endsection
 
-@push('scripts')
+@section('scripts')
 
   <script>
 
-      $('.clockpicker').clockpicker();
-
-      $(document).ready(function() {
-        $('#select-processes').change(function() {
-            //$('#description').val($('#select-processes option:selected').text());
-        });
-        //$('#description').val($('#select-processes option:selected').text());
-      });
   </script>
 
-@endpush
+@endsection
