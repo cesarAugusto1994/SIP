@@ -45,4 +45,15 @@ class Stock extends Model
     {
         return $this->belongsTo('App\Models\Stock\Vendor');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Estoque do Ativo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Estoque do Ativo Removido";
+        }
+
+        return "Estoque adicionado ao Ativo";
+    }
 }

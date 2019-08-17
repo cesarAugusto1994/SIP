@@ -26,4 +26,15 @@ class Purchasing extends Model
     {
         return $this->hasMany('App\Models\Purchasing\Item', 'purchasing_id');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Pedido de Compra atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Pedido de Compra Removido";
+        }
+
+        return "Pedido de Compra Adicionado";
+    }
 }

@@ -38,4 +38,15 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Stock\Vendor');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Ativo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Ativo Removido";
+        }
+
+        return "Ativo Adicionado";
+    }
 }

@@ -781,6 +781,51 @@ class Helper
 
         }
 
+        if($model == 'App\Models\Stock\Product') {
+
+          if($item) {
+            $route = route('products.index', $item->uuid);
+            $html = "<a target='_blank' href=".$route."> " . $item->name."</a>";
+          }
+
+        }
+
+        if($model == 'App\Models\Stock\Stock') {
+
+          if($item) {
+            $route = route('products.show', $item->product->uuid);
+            $html = "<a target='_blank' href=".$route."> " . $item->id."</a>";
+          }
+
+        }
+
+        if($model == 'App\Models\Stock\Vendor') {
+
+          if($item) {
+            $route = route('vendors.index');
+            $html = "<a target='_blank' href=".$route."> " . $item->name."</a>";
+          }
+
+        }
+
+        if($model == 'App\Models\Stock\Brand') {
+
+          if($item) {
+            $route = route('brands.index');
+            $html = "<a target='_blank' href=".$route."> " . $item->name."</a>";
+          }
+
+        }
+
+        if($model == 'App\Models\Stock\Brand\Models') {
+
+          if($item) {
+            $route = route('models.index');
+            $html = "<a target='_blank' href=".$route."> " . $item->name."</a>";
+          }
+
+        }
+
         if($model == 'App\Models\Training\Course') {
 
           if($item) {

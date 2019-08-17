@@ -13,4 +13,15 @@ class Vendor extends Model
 
     protected $fillable = ['name', 'phone', 'email', 'active'];
     protected static $logAttributes = ['name', 'phone', 'email', 'active'];
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Fornecedor atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Fornecedor Removido";
+        }
+
+        return "Fornecedor adicionado";
+    }
 }

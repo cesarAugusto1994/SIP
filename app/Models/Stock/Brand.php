@@ -13,4 +13,15 @@ class Brand extends Model
 
     protected $fillable = ['name', 'active'];
     protected static $logAttributes = ['name', 'active'];
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Marca atualizada";
+        } elseif ($eventName == 'deleted') {
+            return "Marca Removida";
+        }
+
+        return "Marca adicionada";
+    }
 }

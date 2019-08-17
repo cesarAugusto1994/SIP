@@ -18,4 +18,15 @@ class Models extends Model
     {
         return $this->belongsTo('App\Models\Stock\Brand');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Modelo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Modelo Removido";
+        }
+
+        return "Modelo adicionado";
+    }
 }

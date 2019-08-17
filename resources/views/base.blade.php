@@ -192,6 +192,10 @@
                             <div class="page-wrapper">
                                 @yield('content')
                             </div>
+
+                            <div id="styleSelector">
+
+                            </div>
                         </div>
                     </div>
                 </div>

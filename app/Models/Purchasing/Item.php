@@ -21,4 +21,15 @@ class Item extends Model
     {
         return $this->belongsTo('App\Models\Purchasing', 'purchasing_id');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Item do Pedido de Compra atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Item do Pedido de Compra Removido";
+        }
+
+        return "Item do Pedido de Compra Adicionado";
+    }
 }
