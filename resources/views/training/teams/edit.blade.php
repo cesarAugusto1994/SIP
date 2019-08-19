@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('teams.index') }}"> Turmas</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Nova</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a></li>
                 </ul>
             </div>
         </div>
@@ -31,13 +31,14 @@
 
 <div class="card">
     <div class="card-header">
-        <h5>Nova Turma</h5>
+        <h5>Editar Turma</h5>
     </div>
     <div class="card-block">
 
-      <form class="formValidation" data-parsley-validate method="post" action="{{route('teams.store')}}">
+      <form class="formValidation" data-parsley-validate method="post" action="{{route('teams.update', $team->uuid)}}">
 
           {{csrf_field()}}
+          {{ method_field('PUT') }}
 
           <div class="row m-b-30">
               <div class="col-md-12">
@@ -51,7 +52,7 @@
                           <div class="input-group">
                             <select class="form-control" name="course_id" required>
                                 @foreach($courses->sortBy('name') as $course)
-                                      <option value="{{$course->uuid}}">{{$course->title}}</option>
+                                      <option value="{{$course->uuid}}" {{ $team->course_id == $course->id ? 'selected' : '' }}>{{$course->title}}</option>
                                 @endforeach
                             </select>
                           </div>
@@ -67,7 +68,7 @@
                           <div class="input-group">
                             <select class="form-control" name="teacher_id" required>
                                 @foreach($teachers->sortBy('name') as $teacher)
-                                      <option value="{{$teacher->user->uuid}}">{{$teacher->name}}</option>
+                                      <option value="{{$teacher->user->uuid}}" {{ $team->teacher_id == $teacher->id ? 'selected' : '' }}>{{$teacher->name}}</option>
                                 @endforeach
                             </select>
                           </div>
@@ -80,7 +81,7 @@
                       <div class="form-group">
                           <label class="col-form-label" for="teacher_id">Data Inicio</label>
                           <div class="input-group">
-                              <input type="text" class="input-md form-control inputDateTime" value="{{ now()->format('d/m/Y H:i') }}" name="start"/>
+                              <input type="text" class="input-md form-control inputDateTime" value="{{ $team->start ?  $team->start->format('d/m/Y H:i') : '' }}" name="start"/>
                           </div>
                       </div>
                     </div>
@@ -89,7 +90,7 @@
                       <div class="form-group">
                           <label class="col-form-label" for="teacher_id">Data Fim</label>
                           <div class="input-group">
-                              <input type="text" class="input-md form-control inputDateTime" value="{{ now()->addHours(2)->format('d/m/Y H:i') }}" name="end"/>
+                              <input type="text" class="input-md form-control inputDateTime" value="{{ $team->end ?  $team->end->format('d/m/Y H:i') : '' }}" name="end"/>
                           </div>
                       </div>
                     </div>
@@ -99,45 +100,11 @@
                       <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="vacancies">Vagas</label>
                           <div class="input-group">
-                              <input type="number" id="vacancies" name="vacancies" class="form-control" value="20" required>
+                              <input type="number" id="vacancies" name="vacancies" class="form-control" value="{{ $team->vacancies }}" required>
                           </div>
                           {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
                       </div>
 
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Adicionar Funcionários</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                                <select class="form-control select2" multiple name="employees[]" id="employees">
-                                  @foreach(App\Helpers\Helper::employees() as $employee)
-                                      <option value="{{$employee->id}}">{{$employee->name}}</option>
-                                  @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group" id="pac-card">
-                            <label>Localização</label>
-                            <div class="input-group" id="pac-container">
-                                <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
-                                <input class="form-control" name="localization" id="pac-input">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Adicionar uma descrição</label>
-                            <div class="input-group">
-                              <span class="input-group-addon"><i class="fa fa-edit"></i></span>
-                              <textarea class="form-control" rows="6" id="description" name="description"></textarea>
-                            </div>
-                        </div>
                     </div>
 
                 </div>

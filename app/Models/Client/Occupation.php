@@ -16,4 +16,15 @@ class Occupation extends Model
     protected $fillable = ['name', 'active'];
 
     protected static $logAttributes = ['name', 'active'];
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Cargo atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Cargo Removido";
+        }
+
+        return "Cargo Adicionado";
+    }
 }

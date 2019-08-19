@@ -22,6 +22,11 @@ class Employee extends Model
         return $this->belongsTo('App\Models\Client\Employee');
     }
 
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Training\Team');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {

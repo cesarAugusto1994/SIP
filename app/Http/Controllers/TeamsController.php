@@ -28,8 +28,8 @@ class TeamsController extends Controller
 
     public function schedule()
     {
-        $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 28)->get();
+        $courses = Helper::courses();
+        $teachers = Helper::usersByOccupation(28);
         return view('training.teams.schedule', compact('courses', 'teachers'));
     }
 
@@ -40,9 +40,10 @@ class TeamsController extends Controller
      */
     public function create()
     {
-        $companies = Company::whereHas('employees')->get();
-        $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 28)->where('active', true)->get();
+        $companies = Helper::companiesWhereHasEmployees();
+        $courses = Helper::courses();
+        $teachers = Helper::usersByOccupation(28);
+
         return view('training.teams.create', compact('companies', 'courses', 'teachers'));
     }
 
@@ -57,19 +58,9 @@ class TeamsController extends Controller
     {
         $team = Team::uuid($id);
 
-        /*if($team->start > now()) {
-
-          notify()->flash('Aula não iniciada!', 'warning', [
-            'text' => 'A data de início deve ser igual a data agendada.'
-          ]);
-
-          return back();
-
-        }*/
-
         $preReservados = $team->whereHas('employees', function($query) {
             $query->where('status', 'AGENDADO');
-        })->get();
+        })->first();
 
         if($preReservados) {
 
@@ -81,20 +72,49 @@ class TeamsController extends Controller
 
         }
 
-        dd($preReservados);
-
-        //ENUM('RESERVADO', 'EM ANDAMENTO', 'FINALIZADA', 'CANCELADA')
-
         $team->Status = 'EM ANDAMENTO';
         $team->save();
 
-        notify()->flash('Aula em Andamento!', 'success', [
-          'text' => 'A Aula foi iniciada com sucesso'
+        notify()->flash('Curso em Andamento!', 'success', [
+          'text' => 'O Curso foi iniciado com sucesso'
         ]);
 
         return redirect()->route('teams.show', $team->uuid);
 
-        //dd($teams);
+    }
+
+    public function finish($id, Request $request)
+    {
+        try {
+
+          $team = Team::uuid($id);
+
+          $preReservados = $team->whereHas('employees', function($query) {
+              $query->where('status', 'PRESENTE');
+          })->first();
+
+          if(!$preReservados) {
+
+            return response()->json([
+              'success' => false,
+              'message' => 'Informe a presença dos participantes.'
+            ]);
+
+          }
+
+          $team->Status = 'FINALIZADA';
+          $team->save();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'O Curso foi Finalizado com sucesso, os certificados podem ser gerados.'
+          ]);
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado, o suporte já foi informado sobre o ocorrido'
+          ]);
+        }
     }
 
     public function employeePresence($id, Request $request)
@@ -124,6 +144,29 @@ class TeamsController extends Controller
 
         return back();
     }
+
+    public function employeeStatus($id)
+    {
+        $employee = TeamEmployees::uuid($id);
+        return view('training.teams.employee.status', compact('employee'));
+    }
+
+    public function employeeStatusUpdate($id, Request $request)
+    {
+        $data = $request->request->all();
+
+        $teamEmployee = TeamEmployees::uuid($id);
+        $teamEmployee->status = $data['status'];
+        $teamEmployee->save();
+
+        notify()->flash('Preseça Confirmada', 'success', [
+          'text' => 'O status foi atualizado com sucesso.'
+        ]);
+
+        return redirect()->route('teams.show', $teamEmployee->team->uuid);
+    }
+
+
 
     public function employeeChangeStatus($id, Request $request)
     {
@@ -170,9 +213,6 @@ class TeamsController extends Controller
 
         $data['start'] = $start;
         $data['end'] = $end;
-
-        //$data['start'] = \DateTime::createFromFormat('d/m/Y', $data['start']);
-        //$data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
 
         $team = Team::create($data);
 
@@ -256,14 +296,23 @@ class TeamsController extends Controller
         }
 
         foreach ($data['employees'] as $key => $employeeID) {
+
+          $employee = Employee::uuid($employeeID);
+
+          $hasEmployee = TeamEmployees::where('team_id', $team->id)->where('employee_id', $employee->id)->first();
+
+          if($hasEmployee) {
+              continue;
+          }
+
           TeamEmployees::create([
             'team_id' => $team->id,
-            'employee_id' => Employee::uuid($employeeID)->id,
+            'employee_id' => $employee->id,
           ]);
         }
 
         notify()->flash('Feito', 'success', [
-          'text' => 'Funcionários adicionados com sucesso.'
+          'text' => 'Participantes adicionados com sucesso.'
         ]);
 
         return redirect()->route('teams.show', $team->uuid);
@@ -280,15 +329,14 @@ class TeamsController extends Controller
         $team = Team::uuid($id);
 
         $teamCode = Helper::Initials($team->course->title) . $team->id . '-'.$team->start->format('d-m-y');
-
-        $companies = Company::whereHas('employees')->get();
+        $companies = Helper::companiesWhereHasEmployees();
         $employeesSelected = $team->employees->pluck('employee.id')->toArray();
+        $courses = Helper::courses();
+        $teachers = Helper::usersByOccupation(28);
 
-        $courses = Course::where('active', true)->get();
-        //$teachers = People::where('occupation_id', 9)->get();
-        $teachers = People::where('occupation_id', 28)->where('active', true)->get();
+        $hasAgendado = $team->employees->where('status', 'AGENDADO')->first();
 
-        return view('training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected'));
+        return view('training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected', 'hasAgendado'));
     }
 
     /**
@@ -299,7 +347,13 @@ class TeamsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $team = Team::uuid($id);
+
+        $companies = Helper::companiesWhereHasEmployees();
+        $courses = Helper::courses();
+        $teachers = Helper::usersByOccupation(28);
+
+        return view('training.teams.edit', compact('team', 'companies', 'courses', 'teachers'));
     }
 
     /**
@@ -327,10 +381,11 @@ class TeamsController extends Controller
         $data['start'] = $start;
         $data['end'] = $end;
 
-        //$data['start'] = \DateTime::createFromFormat('d/m/Y', $data['start']);
-        //$data['end'] = \DateTime::createFromFormat('d/m/Y', $data['end']);
-
         $team->update($data);
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Turma atualizada com sucesso.'
+        ]);
 
         return redirect()->route('teams.show', $team->uuid);
     }
@@ -349,6 +404,15 @@ class TeamsController extends Controller
     public function destroyEmployes($id, $employee, Request $request)
     {
         try {
+
+          $team = Team::uuid($id);
+
+          if($team->employees->count() == 1) {
+            return response()->json([
+              'success' => false,
+              'message' => 'Não é possivel remover o único aluno da turma, favor finalizar a aula.'
+            ]);
+          }
 
           $employee = TeamEmployees::uuid($employee);
           $employee->delete();

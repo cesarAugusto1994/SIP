@@ -29,137 +29,161 @@
 
 <div class="page-body">
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Menu de opções </h5>
+    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
+        <div class="card">
+            <div class="card-header">
+                <h5>Menu de opções </h5>
 
-        </div>
-        <div class="card-block">
+            </div>
+            <div class="card-block">
 
-          @if($team->status == 'RESERVADO')
+              @if($team->status == 'RESERVADO')
 
-              <form action="{{ route('team_start', $team->uuid) }}" method="POST" style="display: inline;">{{ csrf_field() }}
-                <button class="btn btn-success btn-sm"><i class="ti-control-play"></i> <span>Iniciar Curso</span></button>
-              </form>
+                  <form action="{{ route('team_start', $team->uuid) }}" method="POST" style="display: inline;">{{ csrf_field() }}
+                    <button class="btn btn-success btn-sm"><i class="ti-control-play"></i> <span>Iniciar Curso</span></button>
+                  </form>
 
-          @endif
+              @endif
 
-          <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" data-toggle="modal" data-target=".editTeam"><i class="far fa-edit"></i> Editar Informações</button>
+              @if($team->status == 'EM ANDAMENTO')
 
-          <div class="modal fade editTeam" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="mySmallModalLabel">Editar Informações</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <a href="#!" data-route="{{ route('team_finish', $team->uuid) }}" class="btn btn-danger btn-sm btnFinishTeam"><i class="ti-control-pause"></i> <span>Finalizar Curso</span></a>
+
+              @endif
+
+              <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
+
+              <div class="modal fade editTeam" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="mySmallModalLabel">Editar Informações</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          </div>
+
+                          <form class="formValidation" data-parsley-validate method="post" action="{{route('teams.update', ['id' => $team->uuid])}}">
+
+                          <div class="modal-body">
+
+                                {{csrf_field()}}
+                                {{method_field('PUT')}}
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                      <div class="form-group {!! $errors->has('course_id') ? 'has-error' : '' !!}">
+                                          <label class="col-form-label" for="course_id">Curso</label>
+                                          <div class="input-group">
+                                            <select class="form-control" name="course_id" required>
+                                                @foreach($courses->sortBy('name') as $course)
+                                                      <option value="{{$course->uuid}}" {{ $team->course_id == $course->id ? 'selected' : '' }}>{{$course->title}}</option>
+                                                @endforeach
+                                            </select>
+                                          </div>
+                                          {!! $errors->first('course_id', '<p class="help-block">:message</p>') !!}
+                                      </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                      <div class="form-group {!! $errors->has('teacher_id') ? 'has-error' : '' !!}">
+                                          <label class="col-form-label" for="teacher_id">Instrutor</label>
+                                          <div class="input-group">
+                                            <select class="form-control" name="teacher_id" required>
+                                                @foreach($teachers->sortBy('name') as $teacher)
+                                                      <option value="{{$teacher->user->uuid}}" {{ $team->teacher_id == $teacher->id ? 'selected' : '' }}>{{$teacher->name}}</option>
+                                                @endforeach
+                                            </select>
+                                          </div>
+                                          {!! $errors->first('teacher_id', '<p class="help-block">:message</p>') !!}
+                                      </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label class="col-form-label" for="teacher_id">Data</label>
+                                          <div class="input-group">
+                                              <input type="text" class="input-md form-control inputDateTime" name="start" value="{{ $team->start->format('d/m/Y H:i') }}"/>
+                                          </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label class="col-form-label" for="teacher_id">Data</label>
+                                          <div class="input-group">
+                                              <input type="text" class="input-md form-control inputDateTime" name="end" value="{{ $team->end->format('d/m/Y H:i') }}"/>
+                                          </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                      <div class="form-group {!! $errors->has('status') ? 'has-error' : '' !!}">
+                                          <label class="col-form-label" for="status">Status</label>
+                                          <div class="input-group">
+                                            <select class="form-control" name="status" required>
+                                                <option value="RESERVADO" {{ $team->status == 'RESERVADO' ? 'selected' : '' }}>RESERVADO</option>
+                                                <option value="EM ANDAMENTO" {{ $team->status == 'EM ANDAMENTO' ? 'selected' : '' }}>EM ANDAMENTO</option>
+                                                <option value="FINALIZADA" {{ $team->status == 'FINALIZADA' ? 'selected' : '' }}>FINALIZADA</option>
+                                                <option value="CANCELADA" {{ $team->status == 'CANCELADA' ? 'selected' : '' }}>CANCELADA</option>
+                                            </select>
+                                          </div>
+                                          {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+                                      </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                      <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
+                                          <label class="col-form-label" for="vacancies">Vagas</label>
+                                          <div class="input-group">
+                                              <input type="number" id="vacancies" name="vacancies" class="form-control" value="{{ $team->vacancies }}" required>
+
+                                          </div>
+                                          {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
+                                      </div>
+
+                                    </div>
+
+                                </div>
+
+                          </div>
+
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
+                              <button type="submit" class="btn btn-primary btnChangeStatus waves-effect waves-light">Salvar</button>
+                          </div>
+
+                          </form>
+
                       </div>
-
-                      <form class="formValidation" data-parsley-validate method="post" action="{{route('teams.update', ['id' => $team->uuid])}}">
-
-                      <div class="modal-body">
-
-                            {{csrf_field()}}
-                            {{method_field('PUT')}}
-
-                            <div class="row">
-
-                                <div class="col-md-6">
-
-                                  <div class="form-group {!! $errors->has('course_id') ? 'has-error' : '' !!}">
-                                      <label class="col-form-label" for="course_id">Curso</label>
-                                      <div class="input-group">
-                                        <select class="form-control" name="course_id" required>
-                                            @foreach($courses->sortBy('name') as $course)
-                                                  <option value="{{$course->uuid}}" {{ $team->course_id == $course->id ? 'selected' : '' }}>{{$course->title}}</option>
-                                            @endforeach
-                                        </select>
-                                      </div>
-                                      {!! $errors->first('course_id', '<p class="help-block">:message</p>') !!}
-                                  </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                  <div class="form-group {!! $errors->has('teacher_id') ? 'has-error' : '' !!}">
-                                      <label class="col-form-label" for="teacher_id">Instrutor</label>
-                                      <div class="input-group">
-                                        <select class="form-control" name="teacher_id" required>
-                                            @foreach($teachers->sortBy('name') as $teacher)
-                                                  <option value="{{$teacher->user->uuid}}" {{ $team->teacher_id == $teacher->id ? 'selected' : '' }}>{{$teacher->name}}</option>
-                                            @endforeach
-                                        </select>
-                                      </div>
-                                      {!! $errors->first('teacher_id', '<p class="help-block">:message</p>') !!}
-                                  </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label class="col-form-label" for="teacher_id">Data</label>
-                                      <div class="input-group">
-                                          <input type="text" class="input-md form-control inputDateTime" name="start" value="{{ $team->start->format('d/m/Y H:i') }}"/>
-                                      </div>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label class="col-form-label" for="teacher_id">Data</label>
-                                      <div class="input-group">
-                                          <input type="text" class="input-md form-control inputDateTime" name="end" value="{{ $team->end->format('d/m/Y H:i') }}"/>
-                                      </div>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-6">
-
-                                  <div class="form-group {!! $errors->has('status') ? 'has-error' : '' !!}">
-                                      <label class="col-form-label" for="status">Status</label>
-                                      <div class="input-group">
-                                        <select class="form-control" name="status" required>
-                                            <option value="RESERVADO" {{ $team->status == 'RESERVADO' ? 'selected' : '' }}>RESERVADO</option>
-                                            <option value="EM ANDAMENTO" {{ $team->status == 'EM ANDAMENTO' ? 'selected' : '' }}>EM ANDAMENTO</option>
-                                            <option value="FINALIZADA" {{ $team->status == 'FINALIZADA' ? 'selected' : '' }}>FINALIZADA</option>
-                                            <option value="CANCELADA" {{ $team->status == 'CANCELADA' ? 'selected' : '' }}>CANCELADA</option>
-                                        </select>
-                                      </div>
-                                      {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-                                  </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                  <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
-                                      <label class="col-form-label" for="vacancies">Vagas</label>
-                                      <div class="input-group">
-                                          <input type="number" id="vacancies" name="vacancies" class="form-control" value="{{ $team->vacancies }}" required>
-
-                                      </div>
-                                      {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
-                                  </div>
-
-                                </div>
-
-                            </div>
-
-                      </div>
-
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                          <button type="submit" class="btn btn-primary btnChangeStatus waves-effect waves-light">Salvar</button>
-                      </div>
-
-                      </form>
-
                   </div>
               </div>
-          </div>
 
+            </div>
         </div>
-    </div>
+    @endif
+
+    @if($team->status == 'FINALIZADA')
+      <div class="card bg-c-green update-card">
+          <div class="card-header">
+              <h4>Curso Finalizado</h4>
+          </div>
+      </div>
+    @elseif($team->status == 'CANCELADA')
+      <div class="col-sm-12">
+          <div class="card bg-c-pink update-card">
+              <div class="card-header">
+                  <h4>Curso Cancelado</h4>
+              </div>
+          </div>
+      </div>
+    @endif
 
     <div class="card">
         <div class="card-header">
@@ -191,7 +215,12 @@
                                               </tr>
                                               <tr>
                                                   <th scope="row">Data</th>
-                                                  <td>{{ $team->start->format('d/m') }} à {{ $team->end->format('d/m') }}</td>
+                                                  <td>{{ $team->start->format('d/m H:i') }} à {{ $team->end->format('d/m H:i') }}</td>
+                                              </tr>
+
+                                              <tr>
+                                                  <th scope="row">Local</th>
+                                                  <td>{{ $team->localization }}</td>
                                               </tr>
 
                                           </tbody>
@@ -221,6 +250,11 @@
                                                   <td>{{ round(($team->employees->count() / intval($team->vacancies)) * 100, 2) }}%</td>
                                               </tr>
 
+                                              <tr>
+                                                  <th scope="row">Observações</th>
+                                                  <td>{{ $team->description }}</td>
+                                              </tr>
+
                                           </tbody>
                                       </table>
                                   </div>
@@ -240,6 +274,8 @@
     </div>
 
     @permission('create.clientes')
+
+    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
 
     <div class="card">
         <div class="card-header">
@@ -280,15 +316,17 @@
         </div>
     </div>
 
+    @endif
+
     @endpermission
 
     <div class="card">
         <div class="card-header">
-            <h5>Lista Funcionários para a Turma </h5>
+            <h5>Lista Funcionários para o Curso </h5>
             <span>({{ $team->employees->count() }}) registros encontrados.</span>
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">
-                  @if($team->employees->where('status', 'AGENDADO')->first())
+                  @if($hasAgendado)
                     <li><button type="button" class="btn btn-success btn-sm waves-effect waves-light" data-toggle="modal" data-target=".statusTeam">Presença</button></li>
                   @endif
                 </ul>
@@ -381,9 +419,7 @@
                               <td>
                                   <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                   <br/>
-
                                   <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
-
                               </td>
 
                               <td>
@@ -391,7 +427,7 @@
                                   <span class="badge badge-primary">{{ $employeeItem->status }}</span>
                                 @elseif($employeeItem->status == 'AGENDADO')
                                   <span class="badge badge-success">{{ $employeeItem->status }}</span>
-                                @elseif($employeeItem->status == 'CONFIRMADO')
+                                @elseif($employeeItem->status == 'PRESENTE')
                                   <span class="badge badge-success">{{ $employeeItem->status }}</span>
                                 @elseif($employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA')
                                   <span class="badge badge-danger">{{ $employeeItem->status }}</span>
@@ -403,73 +439,26 @@
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                                     <a data-toggle="modal" data-target="#editStatus-{{ $loop->index }}"
+                                    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
+                                     <a href="{{ route('teams_employee_status', $employeeItem->uuid) }}"
                                      class="dropdown-item" style="cursor:pointer">Editar Situação</a>
+                                    @endif
 
-                                    @permission('delete.clientes')
+                                    @if($team->status == 'FINALIZADA')
                                       <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
                                         class="dropdown-item text-success">Gerar Certificado</a>
-                                    @endpermission
+                                    @endif
 
-                                   @permission('delete.clientes')
+                                   @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
                                      <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
                                        class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
-                                   @endpermission
+                                   @endif
 
                                 </div>
 
                               </td>
 
                           </tr>
-
-                          <div class="modal fade" id="editStatus-{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="editStatus" style="display: none;" aria-hidden="true">
-                              <div class="modal-dialog">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title" id="mySmallModalLabel">{{$employee->name}}</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                      </div>
-
-                                      <form method="post" action="{{route('team_employee_change_status', [$employeeItem->uuid])}}">
-
-                                        <div class="modal-body">
-
-                                              {{csrf_field()}}
-
-                                              <div class="row m-b-30">
-                                                  <div class="col-md-12">
-                                                      <div class="form-group">
-                                                          <label class="col-form-label" for="status">Situação</label>
-                                                          <div class="input-group">
-                                                            <select class="form-control" name="status" id="status-employee-{{$loop->index}}" required>
-                                                                  <option value="PRE-AGENDADO">PRE-AGENDADO</option>
-                                                                  <option value="AGENDADO">AGENDADO</option>
-                                                                  <option value="CONFIRMADO">CONFIRMADO</option>
-                                                                  <option value="CANCELADO">CANCELADO</option>
-                                                                  <option value="FALTA">FALTA</option>
-                                                            </select>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                                            @php
-                                                $url = route('team_employee_change_status', [$employeeItem->uuid]);
-                                                $target = '#status-employee-' . $loop->index;
-                                            @endphp
-                                            <button type="submit" onclick="return sendForm('{{ $employeeItem->uuid }}', '{{ $url }}', '{{$target}}')" data-item="{{ $employeeItem->uuid }}" class="btn btn-primary waves-effect waves-light">Salvar</button>
-                                        </div>
-
-                                      </form>
-
-                                  </div>
-                              </div>
-                          </div>
-
                       @endforeach
                   </tbody>
               </table>
@@ -496,43 +485,58 @@
 
 <script>
 
-    var form = $("form");
-    var btnChangeStatud = $(".btnChangeStatus");
+    $(".btnFinishTeam").click(function(e) {
+        var self = $(this);
 
-    function sendForm($teamEmployeeID, $url, $target) {
+        swal({
+          title: 'Finalizar o Curso?',
+          text: "Tenha certeza que quer finalizar o curso!",
+          showCancelButton: true,
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
+          confirmButtonText: 'Sim, Finalizar',
+          cancelButtonText: 'Não'
+          }).then((result) => {
+          if (result.value) {
 
-        var elementTarget = $($target);
-        var elementTargetValue = elementTarget.val();
+            e.preventDefault();
 
-        $.ajax({
-          type:'POST',
-          headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-          cache: false,
-          url: $url,
-          data: {
-            status: elementTargetValue
-          },
-          success: function (response) {
-              console.log(response);
+            window.swal({
+              title: 'Em progresso...',
+              text: 'Aguarde enquanto a requisição é processada.',
+              type: 'success',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+
+            $.ajax({
+              headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+              url: self.data('route'),
+              type: 'POST',
+              dataType: 'json',
+              data: {}
+            }).done(function(data) {
+
+              swal.close();
+
+              if(data.success) {
+
+                window.location.reload();
+
+                notify(data.message, 'inverse');
+
+              } else {
+
+                notify(data.message, 'danger');
+
+              }
+
+            });
           }
-        })
-
-        alert(elementTargetValue);
-    }
-
-    var selectEmployees = $(".selectEmployee");
-    var route = selectEmployees.data('route');
-    var param = selectEmployees.val();
-
-    function getEmplyees() {
-
-      console.log(route, param);
-
-    }
-
-    selectEmployees.change(getEmplyees);
+        });
+    });
 
 </script>
 

@@ -183,6 +183,9 @@ Route::middleware('auth')->group(function () {
 
           Route::post('teams/{id}/employee/presence', 'TeamsController@employeePresence')->name('team_employee_presence');
 
+          Route::get('teams/employee/{id}/status-change', 'TeamsController@employeeStatus')->name('teams_employee_status');
+          Route::put('teams/employee/{id}/status/update', 'TeamsController@employeeStatusUpdate')->name('teams_employee_status_update');
+
           Route::resource('vehicles', 'VahiclesController');
           Route::resource('vehicle-schedule', 'VahicleScheduleController');
 
@@ -252,6 +255,7 @@ Route::middleware('auth')->group(function () {
           Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');
 
           Route::post('team/{id}/start', 'TeamsController@start')->name('team_start');
+          Route::post('team/{id}/finish', 'TeamsController@finish')->name('team_finish');
           Route::post('team/{id}/employee/change-status', 'TeamsController@employeeChangeStatus')->name('team_employee_change_status');
 
           Route::post('clients/{id}/documents/upload', 'ClientController@uploadDocuments')->name('client_documents_upload');

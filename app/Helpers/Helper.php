@@ -396,6 +396,20 @@ class Helper
         return self::get($key);
     }
 
+    public static function usersByOccupation($code)
+    {
+        $key = 'user-by-occupation-' . $code;
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = People::where('occupation_id', $code)->where('active', true)->get();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
     public static function courses()
     {
         $key = 'courses';
@@ -404,9 +418,23 @@ class Helper
             return self::get($key);
         }
 
-        $courses = Course::all();
+        $courses = Course::where('active', true)->get();
 
         self::set($key, $courses);
+        return self::get($key);
+    }
+
+    public static function companiesWhereHasEmployees()
+    {
+        $key = 'companies-has-employees';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Client::whereHas('employees')->get();
+
+        self::set($key, $data);
         return self::get($key);
     }
 
@@ -929,6 +957,13 @@ class Helper
           }
         }
 
+        if($model == 'App\Models\Client\Occupation') {
+          if($item) {
+            $route = route('client-occupations.index');
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
+        }
+
         if($model == 'App\Models\Fleet\Schedule') {
 
           if($item) {
@@ -1063,6 +1098,22 @@ class Helper
             case 4:
                 return 'primary';
             case 5:
+                return 'danger';
+            default:
+                return 'info';
+          }
+    }
+
+    public static function statusTeams($value)
+    {
+          switch ($value) {
+            case 'RESERVADO':
+                return 'warning';
+            case 'EM ANDAMENTO':
+                return 'primary';
+            case 'FINALIZADA':
+                return 'success';
+            case 'CANCELADA':
                 return 'danger';
             default:
                 return 'info';

@@ -44,6 +44,7 @@
                   <thead>
                     <tr>
                       <th>Curso</th>
+                      <th>Situação</th>
                       <th>Instrutor</th>
                       <th>Vagas</th>
                       <th>Data</th>
@@ -59,16 +60,20 @@
                               </td>
 
                               <td>
+                                  <label class="label label-{{ \App\Helpers\Helper::statusTeams($team->status) }} label-lg">{{$team->status}}</label>
+                              </td>
+
+                              <td>
                                   <a>{{$team->teacher->person->name ?? '-'}}</a>
                               </td>
 
                               <td>
                                   <a>{{$team->employees->count()}} de {{$team->vacancies}}</a>
-                                  <p class="lead text-danger">{{ round(($team->employees->count() / intval($team->vacancies)) * 100, 2) }}%</p>
+                                  <label class="label label-danger label-lg">{{ round(($team->employees->count() / intval($team->vacancies)) * 100, 2) }}%</label>
                               </td>
 
                               <td>
-                                  <a>{{ $team->start->format('d/m') }} à {{ $team->end->format('d/m') }}</a>
+                                  <a>{{ $team->start->format('d/m H:i') }} à {{ $team->end->format('d/m H:i') }}</a>
                               </td>
 
                               <td class="dropdown">
