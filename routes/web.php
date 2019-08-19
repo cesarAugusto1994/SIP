@@ -19,6 +19,8 @@ if (\App::environment('production')) {
 
 Auth::routes();
 
+Auth::routes(['verify' => true]);
+
 Route::get('test', function () {
     $user = \App\User::find(1);
     //event(new \App\Events\NewUser($user));

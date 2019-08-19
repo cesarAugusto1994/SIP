@@ -83,6 +83,8 @@ class UsersController extends Controller
 
         }
 
+        $people->orderBy('name');
+
         $people = $people->paginate();
 
         $roles = Helper::roles();

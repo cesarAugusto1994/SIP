@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('addresses:import')->everyMinute();
+        $schedule->command('backup:clean')->daily()->at('01:00');
+        $schedule->command('backup:run')->daily()->at('02:00');
 
         //$schedule->call('SomeClass@method')->dailyAt('10:00');
 

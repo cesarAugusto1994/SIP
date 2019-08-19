@@ -41,4 +41,5 @@ return array(
     'd92e6dafb93e67e5b59c39d9b9d00659' => $vendorDir . '/codecourse/notify/src/Codecourse/Notify/functions.php',
     'd9fc00ffac3dc4b7868e8efb0efdc85c' => $vendorDir . '/kris/laravel-form-builder/src/helpers.php',
     '72b1e3f4a2af9b30b3f137b3ec2057fc' => $vendorDir . '/spatie/laravel-activitylog/src/helpers.php',
+    '0c3c22e27afa83be19b4c938f4c6e9ea' => $vendorDir . '/spatie/laravel-backup/src/Helpers/functions.php',
 );

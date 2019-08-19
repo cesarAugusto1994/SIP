@@ -16,13 +16,13 @@ use App\Models\{Department, Task, MessageBoard};
 
 use Lab404\Impersonate\Models\Impersonate;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, AuthenticationLogable, Impersonate;
     use HasRoleAndPermission;
 
     use Uuids;
-    //use LogsActivity;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -164,7 +164,7 @@ class User extends Authenticatable
     {
         return $this->hasRole('Administrador');
     }
-/*
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {
@@ -175,7 +175,7 @@ class User extends Authenticatable
 
         return "Usuário Adicionado";
     }
-*/
+
     /**
      * @return bool
      */

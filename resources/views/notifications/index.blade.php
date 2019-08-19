@@ -64,3 +64,13 @@
 </div>
 
 @endsection
+
+@section('scripts')
+
+  <script>
+
+      $('.notif-count').text(0);
+
+  </script>
+
+@stop

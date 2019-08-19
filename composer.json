@@ -30,6 +30,7 @@
         "shalvah/monolog-pusher": "^1.2",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-activitylog": "^3.5",
+        "spatie/laravel-backup": "^6.3",
         "themsaid/laravel-mail-preview": "^2.0",
         "tylercd100/lern": "^4.5",
         "unicodeveloper/laravel-password": "^1.0",
