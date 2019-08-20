@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Ticket, Task};
+use App\Models\{Ticket, Task, Client as Company};
+use Webklex\IMAP\Client;
 use App\Models\Ticket\Status\Log;
 use Auth;
 use App\User;
@@ -388,5 +389,76 @@ class TicketsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function autoSearchTicketsByEmail()
+    {
+        $oClient = new Client([
+            'host'          => 'imap.umbler.com',
+            'port'          => 143,
+            'encryption'    => 'tls',
+            'validate_cert' => false,
+            'username'      => 'suporteti@provider-es.com.br',
+            'password'      => 'Provider@123',
+            'protocol'      => 'imap'
+        ]);
+
+        $connected = $oClient->connect();
+
+        $reflectionClass = new \ReflectionClass(get_class($connected));
+        $cennection = array();
+        foreach ($reflectionClass->getProperties() as $property) {
+            $property->setAccessible(true);
+            $cennection[$property->getName()] = $property->getValue($connected);
+            $property->setAccessible(false);
+        }
+
+        if($connected->isConnected()) {
+
+          $data = [];
+
+          $folder = $connected->getFolder('INBOX');
+
+          //$messages = $folder->query()->from('cesar.sousa@provider-es.com.br')->since('18.08.2019')->get();
+          //$messages = $folder->query()->whereText('SOC')->get();
+          $messages = $folder->query()->whereText(' SOC ')->since('18.08.2019')->get();
+          //$messages = $folder->query()->unseen()->since('18.08.2019')->get();
+
+          dd($messages);
+
+          foreach ($messages as $key => $message) {
+
+            $reflectionClass = new \ReflectionClass(get_class($message));
+            $msg = array();
+            foreach ($reflectionClass->getProperties() as $property) {
+                $property->setAccessible(true);
+                $msg[$property->getName()] = $property->getValue($message);
+                $property->setAccessible(false);
+            }
+
+            $hasTicket = Ticket::where('email_id', $msg['attributes']['message_id'])->first();
+
+            if($hasTicket) {
+              continue;
+            }
+
+            $sender = '';
+
+            foreach ($msg['attributes']['from'] as $key => $from) {
+              $sender = $from->full ?? $from->personal;
+            }
+
+            $text = $msg['bodies']['text']->content ?? '';
+
+            $data['user_id'] = 1;
+            $data['status_id'] = 1;
+            $data['type_id'] = 4;
+            $data['description'] = 'Solicitante: ' . $sender . PHP_EOL . $text;
+
+            Ticket::create($data);
+
+          }
+
+        }
     }
 }

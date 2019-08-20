@@ -315,3 +315,5 @@ Route::get('user/{id}/online', 'UserOnlineController@online')->name('user_online
 Route::get('user/{id}/offline', 'UserOfflineController@offline')->name('user_offline');
 
 Route::get('addresses/import-json', 'AddressesController@importJson')->name('adresses_import_json');
+
+Route::get('tickets/auto-search/by/email', 'TicketsController@autoSearchTicketsByEmail')->name('auto_search_tickets_by_email');

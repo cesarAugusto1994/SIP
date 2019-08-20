@@ -56,6 +56,15 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
+                      <label class="col-form-label">Número de Série</label>
+                      <div class="input-group">
+                        <input type="number" name="serial" class="form-control" value="{{ $stock->serial }}">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
                       <label class="col-form-label">Comprado Em</label>
                       <div class="input-group">
                         <input type="text" name="buyed_at" class="form-control inputDate" value="{{ $stock->buyed_at ? $stock->buyed_at->format('d/m/Y') : '' }}">
@@ -97,7 +106,7 @@
                       <div class="input-group">
                         <select class="form-control" data-style="btn-white" name="user_id" required>
                             @foreach(\App\Helpers\Helper::users() as $user)
-                                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                                <option value="{{$user->id}}" {{ $stock->user_id == $user->id ? 'selected' : '' }}>{{$user->person->name}}</option>
                             @endforeach
                         </select>
                       </div>
@@ -110,7 +119,7 @@
                       <div class="input-group">
                         <select class="form-control" data-style="btn-white" name="department_id" required>
                             @foreach(\App\Helpers\Helper::departments() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}" {{ $stock->department_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
                             @endforeach
                         </select>
                       </div>
@@ -123,7 +132,7 @@
                       <div class="input-group">
                         <select class="form-control" data-style="btn-white" name="unity_id" required>
                             @foreach(\App\Helpers\Helper::units() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}" {{ $stock->unity_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
                             @endforeach
                         </select>
                       </div>
@@ -136,7 +145,7 @@
                       <div class="input-group">
                         <select class="form-control" data-style="btn-white" name="vendor_id">
                             @foreach(\App\Helpers\Helper::vendors() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}" {{ $stock->vendor_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
                             @endforeach
                         </select>
                       </div>

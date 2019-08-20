@@ -62,7 +62,7 @@
                     @foreach($products as $product)
                       <tr>
                           <th scope="row">{{ $product->id }}</th>
-                          <td>{{ $product->name }}</td>
+                          <td>  <a href="{{route('products.show', ['id' => $product->uuid])}}">{{ $product->name }}</a></td>
                           <td>{{ $product->stocks ? $product->stocks->count() : 0 }}</td>
                           <td>{{ $product->stocks ? $product->stocks->filter(function($stock, $index) { return $stock->status == 'Disponível'; })->count() : 0 }}</td>
                           <td>{{ $product->vendor ? $product->vendor->name : '' }}</td>

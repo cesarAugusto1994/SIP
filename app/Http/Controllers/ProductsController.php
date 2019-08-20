@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock\Product;
 use App\Models\Stock\Stock;
+use App\Models\Stock\Stock\Log;
 
 class ProductsController extends Controller
 {
@@ -46,11 +47,19 @@ class ProductsController extends Controller
         $product = Product::create($data);
 
         foreach (range(1, $data['actual_stock']) as $key => $item) {
-            Stock::create([
+            $stock = Stock::create([
               'product_id' => $product->id,
               'status' => 'Disponível',
               'localization' => 'Almoxarifado'
             ]);
+
+            Log::create(
+              [
+                'stock_id' => $stock->id,
+                'user_id' => $user->id,
+                'message' => 'Item adicionado.'
+              ]
+            );
         }
 
         notify()->flash('Sucesso', 'success', [

@@ -32,7 +32,7 @@
 
   <div class="row">
 
-    @if($ticket->logs->last()->status->id == 3)
+    @if($ticket->status_id == 3)
     <div class="col-sm-12">
         <!-- List type card start -->
         <div class="card bg-c-green update-card">

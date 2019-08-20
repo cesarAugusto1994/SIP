@@ -260,16 +260,8 @@
 
 <script src="{{ asset('adminty\js\parsley.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.1/dist/i18n/pt-br.js"></script>
-
-<script src="{{ asset('adminty\components\bootstrap-multiselect\js\bootstrap-multiselect.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('adminty\pages\accordion\accordion.js') }}"></script>
-
-<script type="text/javascript" src="{{ asset('adminty\components\jquery-bar-rating\js\jquery.barrating.js') }}"></script>
-
 <script src="{{ asset('adminty\components\countdown\js\jquery.countdown.js') }}"></script>
-<script src="{{ asset('adminty\pages\counter\task-detail.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('adminty\components\moment\js\moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\fullcalendar\js\fullcalendar.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.0/locale/pt-br.js"></script>

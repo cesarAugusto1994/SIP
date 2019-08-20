@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock\Product;
 use App\Models\Stock\Stock;
+use App\Models\Stock\Stock\Log;
 use DateTime;
 
 class StockController extends Controller
@@ -48,6 +49,7 @@ class StockController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
+        $user = $request->user();
 
         if(!$request->has('product_id')) {
           notify()->flash('Erro', 'error', [
@@ -65,7 +67,15 @@ class StockController extends Controller
             $data['buyed_at'] = DateTime::createFromFormat('d/m/Y', $data['buyed_at']);
         }
 
-        Stock::create($data);
+        $stock = Stock::create($data);
+
+        Log::create(
+          [
+            'stock_id' => $stock->id,
+            'user_id' => $user->id,
+            'message' => 'Item adicionado.'
+          ]
+        );
 
         notify()->flash('Sucesso', 'success', [
           'text' => 'Novo Item adicionado ao Produto ' . $product->name
@@ -107,6 +117,7 @@ class StockController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->request->all();
+        $user = $request->user();
 
         if($request->filled('buyed_at')) {
             $data['buyed_at'] = DateTime::createFromFormat('d/m/Y', $data['buyed_at']);
@@ -115,6 +126,29 @@ class StockController extends Controller
         $stock = Stock::uuid($id);
 
         $stock->update($data);
+
+        $target = null;
+
+        if($stock->localization == 'Usuário') {
+            $target = $stock->user_id;
+        } elseif($stock->localization == 'Departamento') {
+            $target = $stock->department_id;
+        } elseif($stock->localization == 'Unidade') {
+            $target = $stock->unity_id;
+        } elseif($stock->localization == 'Fornecedor') {
+            $target = $stock->vendor_id;
+        }
+
+        Log::create(
+          [
+            'stock_id' => $stock->id,
+            'user_id' => $user->id,
+            'message' => 'Item atualizado.',
+            'status' => $stock->status,
+            'localization' => $stock->localization,
+            'target_id' => $target,
+          ]
+        );
 
         notify()->flash('Sucesso', 'success', [
           'text' => 'Item atualizado com sucesso'

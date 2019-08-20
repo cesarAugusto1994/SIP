@@ -57,6 +57,15 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
+                      <label class="col-form-label">Número de Série</label>
+                      <div class="input-group">
+                        <input type="number" name="serial" class="form-control">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
                       <label class="col-form-label">Comprado Em</label>
                       <div class="input-group">
                         <input type="text" name="buyed_at" class="form-control inputDate">

@@ -13,10 +13,10 @@ class Stock extends Model
 
     protected $table = 'stock';
 
-    protected $fillable = ['product_id', 'registration_code', 'equity_registration_code', 'buyed_at',
+    protected $fillable = ['product_id', 'registration_code', 'equity_registration_code', 'buyed_at', 'serial',
                             'status', 'localization', 'user_id', 'department_id', 'unity_id', 'vendor_id'];
 
-    protected static $logAttributes = ['product_id', 'registration_code', 'equity_registration_code', 'buyed_at',
+    protected static $logAttributes = ['product_id', 'registration_code', 'equity_registration_code', 'serial', 'buyed_at',
                             'status', 'localization', 'user_id', 'department_id', 'unity_id', 'vendor_id'];
 
     protected $dates = ['buyed_at'];
