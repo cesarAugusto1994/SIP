@@ -154,8 +154,10 @@ class MessageBoardController extends Controller
         $messageUser = MessageBoardUser::where('board_id', $messageBoard->id)->where('user_id', $user->id)->first();
 
         if($messageUser) {
-            $messageUser->status = 'VISUALIZADO';
-            $messageUser->save();
+            if($messageUser->status != 'VISUALIZADO') {
+              $messageUser->status = 'VISUALIZADO';
+              $messageUser->save();
+            }
         }
 
         $categories = Helper::messageBoardCategories();
