@@ -170,6 +170,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
+            'Inspector\\Laravel\\' => 18,
+            'Inspector\\' => 10,
             'Illuminate\\' => 11,
         ),
         'H' => 
@@ -513,6 +515,14 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
         ),
+        'Inspector\\Laravel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src',
+        ),
+        'Inspector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/inspector-apm/inspector-php/src',
+        ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
@@ -830,6 +840,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\Stock\\Brand\\Models' => __DIR__ . '/../..' . '/app/Models/Stock/Brand/Models.php',
         'App\\Models\\Stock\\Product' => __DIR__ . '/../..' . '/app/Models/Stock/Product.php',
         'App\\Models\\Stock\\Stock' => __DIR__ . '/../..' . '/app/Models/Stock/Stock.php',
+        'App\\Models\\Stock\\Stock\\Log' => __DIR__ . '/../..' . '/app/Models/Stock/Stock/Log.php',
         'App\\Models\\Stock\\Vendor' => __DIR__ . '/../..' . '/app/Models/Stock/Vendor.php',
         'App\\Models\\Task' => __DIR__ . '/../..' . '/app/Models/Task.php',
         'App\\Models\\Task\\Archive' => __DIR__ . '/../..' . '/app/Models/Task/Archive.php',
@@ -2548,6 +2559,37 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Inspector\\Configuration' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Configuration.php',
+        'Inspector\\Contracts\\TransportInterface' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Contracts/TransportInterface.php',
+        'Inspector\\Exceptions\\InspectorException' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Exceptions/InspectorException.php',
+        'Inspector\\Inspector' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Inspector.php',
+        'Inspector\\Laravel\\Facades\\Inspector' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Facades/Inspector.php',
+        'Inspector\\Laravel\\Filters' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Filters.php',
+        'Inspector\\Laravel\\InspectorServiceProvider' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/InspectorServiceProvider.php',
+        'Inspector\\Laravel\\Middleware\\WebRequestMonitoring' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Middleware/WebRequestMonitoring.php',
+        'Inspector\\Laravel\\Providers\\DatabaseQueryServiceProvider' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Providers/DatabaseQueryServiceProvider.php',
+        'Inspector\\Laravel\\Providers\\EmailServiceProvider' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Providers/EmailServiceProvider.php',
+        'Inspector\\Laravel\\Providers\\HttpResponseCollectorProvider' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Providers/HttpResponseCollectorProvider.php',
+        'Inspector\\Laravel\\Providers\\JobServiceProvider' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Providers/JobServiceProvider.php',
+        'Inspector\\Laravel\\Providers\\UnhandledExceptionServiceProvider' => __DIR__ . '/..' . '/inspector-apm/inspector-laravel/src/Providers/UnhandledExceptionServiceProvider.php',
+        'Inspector\\Models\\AbstractModel' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/AbstractModel.php',
+        'Inspector\\Models\\Context\\AbstractContext' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/AbstractContext.php',
+        'Inspector\\Models\\Context\\Db' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/Db.php',
+        'Inspector\\Models\\Context\\ErrorContext' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/ErrorContext.php',
+        'Inspector\\Models\\Context\\Http' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/Http.php',
+        'Inspector\\Models\\Context\\Request' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/Request.php',
+        'Inspector\\Models\\Context\\Response' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/Response.php',
+        'Inspector\\Models\\Context\\SegmentContext' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/SegmentContext.php',
+        'Inspector\\Models\\Context\\Socket' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/Socket.php',
+        'Inspector\\Models\\Context\\TransactionContext' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/TransactionContext.php',
+        'Inspector\\Models\\Context\\Url' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/Url.php',
+        'Inspector\\Models\\Context\\User' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Context/User.php',
+        'Inspector\\Models\\Error' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Error.php',
+        'Inspector\\Models\\Segment' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Segment.php',
+        'Inspector\\Models\\Transaction' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Models/Transaction.php',
+        'Inspector\\Transport\\AbstractApiTransport' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Transport/AbstractApiTransport.php',
+        'Inspector\\Transport\\AsyncTransport' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Transport/AsyncTransport.php',
+        'Inspector\\Transport\\CurlTransport' => __DIR__ . '/..' . '/inspector-apm/inspector-php/src/Transport/CurlTransport.php',
         'Intervention\\Image\\AbstractColor' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/AbstractColor.php',
         'Intervention\\Image\\AbstractDecoder' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/AbstractDecoder.php',
         'Intervention\\Image\\AbstractDriver' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/AbstractDriver.php',
