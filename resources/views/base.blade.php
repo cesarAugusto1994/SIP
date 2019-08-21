@@ -56,8 +56,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
-    <link rel="stylesheet" href="{{ asset('adminty\components\bootstrap-multiselect\css\bootstrap-multiselect.css') }}"/>
-
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.print.css') }}" media='print'>
 
@@ -437,10 +435,6 @@
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-CeVILuddTrCi4EcPcpXAMN6rj_5Je3k&libraries=places&callback=initMap" async defer></script>
-
-<script type="text/javascript">
-    $('#example-multiple-selected').multiselect();
-</script>
 
 <script>
   new FroalaEditor('.editor', {})
