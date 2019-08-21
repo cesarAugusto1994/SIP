@@ -101,7 +101,7 @@
   </div>
 
 </div>
-@if(!auth()->user()->isAdmin())
+@if(auth()->user()->isAdmin())
 <div class="card">
     <div class="card-header">
         <h5 class="card-header-text"><i class="icofont icofont-certificate-alt-2 m-r-10"></i> Atividades</h5>
