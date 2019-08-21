@@ -13,4 +13,9 @@ class User extends Model
 
     protected $fillable = ['user_id', 'board_id', 'status'];
     protected static $logAttributes = ['user_id', 'board_id', 'status'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

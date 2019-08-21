@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MessageBoard;
+use App\Models\MessageBoard\User as MessageBoardUser;
 use App\Models\{Department,People};
 use App\Models\MessageBoard\{Category,Type, User, Attachment};
 use App\Models\Category as MessageBoardCategory;
@@ -148,10 +149,13 @@ class MessageBoardController extends Controller
     public function show($id)
     {
         $messageBoard = MessageBoard::uuid($id);
+        $user = auth()->user();
 
-        if($messageBoard->status == 'PENDENTE' || $messageBoard->status == 'ENVIADO') {
-            $messageBoard->status = 'VISUALIZADO';
-            $messageBoard->save();
+        $messageUser = MessageBoardUser::where('board_id', $messageBoard->id)->where('user_id', $user->id)->first();
+
+        if($messageUser) {
+            $messageUser->status = 'VISUALIZADO';
+            $messageUser->save();
         }
 
         $categories = Helper::messageBoardCategories();

@@ -101,7 +101,56 @@
   </div>
 
 </div>
+@if(!auth()->user()->isAdmin())
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-header-text"><i class="icofont icofont-certificate-alt-2 m-r-10"></i> Atividades</h5>
+    </div>
+    <div class="card-block revision-block">
+        <div class="form-group">
+            <div class="row">
+                <ul class="media-list revision-blc">
+                  @foreach($messageBoard->messages->sortByDesc('id') as $log)
+                    <li class="media d-flex m-b-15">
+                        <div class="p-l-15 p-r-20 d-inline-block v-middle">
+                          <img width="40" class="img-radius" src="{{ route('image', ['user' => $log->user->uuid, 'link' => $log->user->avatar, 'avatar' => true])}}" alt="chat-user">
+                        </div>
 
+                        @php
+
+                          $status = $log->status;
+
+                          $bgColor = 'success';
+
+                          switch($status) {
+                            case 'PENDENTE':
+                              $bgColor = 'warning';
+                              break;
+                            case 'ENVIADO':
+                              $bgColor = 'primary';
+                              break;
+                            case 'VISUALIZADO':
+                              $bgColor = 'success';
+                              break;
+                            case 'REMOVIDO':
+                              $bgColor = 'danger';
+                              break;
+                          }
+
+                        @endphp
+
+                        <div class="d-inline-block">
+                            {{ $log->user->person->name }}
+                            <div class="media-annotation"><span class="label label-{{$bgColor}}">{{ $log->status }}</span></div>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
+</div>
+@endif
 @endsection
