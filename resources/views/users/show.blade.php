@@ -257,7 +257,7 @@
 
                                     <div class="row m-b-25">
                                         <div class="col">
-                                            <h6 class="m-b-5">{{ \App\Helpers\TimesAgo::render($login->login_at) ?? '' }} </h6>
+                                            <h6 class="m-b-5">{{ $login->login_at ? $login->login_at->diffForHumans() : '' }} </h6>
                                             <p class="text-muted m-b-0">Logou em: {{ $login->login_at ? $login->login_at->format('d/m/Y H:i:s') : '' }}</p>
                                             <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>Tempo de sessão: {{ \App\Helpers\TimesAgo::diffBetween($login->login_at, $login->logout_at) }}</p>
                                         </div>
@@ -531,7 +531,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label">ID Callcenter</label>
                                             <div class="input-group">
-                                              <input type="text" name="phone_callcenter_code" value="{{$user->person->phone_callcenter_code??''}}" class="form-control">
+                                              <input autocomplete="off" type="text" name="phone_callcenter_code" value="{{$user->person->phone_callcenter_code??''}}" class="form-control">
                                             </div>
                                         </div>
 

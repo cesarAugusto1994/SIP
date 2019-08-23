@@ -42,7 +42,7 @@
                       <div class="card">
                           <div class="card-header">
                               <h5>{{ $messageBoard->subject }}</h5>
-                              <h6 class="f-right">{{ \App\Helpers\TimesAgo::render($messageBoard->created_at) }}</h6>
+                              <h6 class="f-right">{{ $messageBoard->created_at->diffForHumans() }}</h6>
                           </div>
                           <div class="card-block">
                               <div class="">

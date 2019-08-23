@@ -49,7 +49,7 @@
               @foreach($messages as $message)
                   <div class="row p-t-20 p-b-30">
                       <div class="col-auto text-right update-meta">
-                          <p class="text-muted m-b-0 d-inline">{{ \App\Helpers\TimesAgo::render($message->created_at) }}</p>
+                          <p class="text-muted m-b-0 d-inline">{{ $message->created_at->diffForHumans() }}</p>
 
                           <i class="feather icon-briefcase bg-info update-icon"></i>
                       </div>
