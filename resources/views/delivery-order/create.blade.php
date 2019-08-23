@@ -29,7 +29,7 @@
 
 <div class="page-body">
 
-    <form class="formValidation" data-parsley-validate method="post" action="{{route('delivery-order.store')}}">
+    <form class="formValidation" data-parsley-validate method="post" autocomplete="off" action="{{route('delivery-order.store')}}">
         {{csrf_field()}}
 
         <div class="row">
@@ -78,7 +78,7 @@
                               </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="display:none">
                               <div class="form-group">
                                   <div class="input-group">
                                     <div class="checkbox-fade fade-in-primary d-">
@@ -159,7 +159,7 @@
 
                         </div>
 
-                        <button class="btn btn-success btn-sm btn-block">Salvar</button>
+                        <button class="btn btn-success btn-sm btn-block btnSubmitForm">Salvar</button>
 
                       </div>
                   </div>
@@ -237,6 +237,7 @@
     var checkboxNewAddress = $("#checkbox-new-address");
     var inputNewAddress = $("#input-new-address");
     var selectAddress = $("#div-select-address");
+    var btnSubmitForm = $(".btnSubmitForm");
 
     selectClient.change(function() {
         clientId.val($(this).val());

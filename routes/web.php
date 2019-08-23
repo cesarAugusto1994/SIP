@@ -178,7 +178,6 @@ Route::middleware('auth')->group(function () {
           Route::resource('types', 'DocumentTypesController');
 
           Route::resource('courses', 'CoursesController');
-          Route::resource('students', 'StudentsController');
           Route::resource('teams', 'TeamsController');
 
           Route::post('teams/{id}/employee/presence', 'TeamsController@employeePresence')->name('team_employee_presence');

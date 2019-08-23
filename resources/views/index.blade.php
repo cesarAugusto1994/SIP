@@ -165,6 +165,8 @@
                                   @if($message->important)
                                       <span class="label label-danger }}">Importante</span>
                                   @endif
+
+                                  <span class="badge badge-inverse-success">Visualizado por: {{ $message->messages->where('status', 'VISUALIZADO')->count() }}</span>
                               </div>
                           </div>
 

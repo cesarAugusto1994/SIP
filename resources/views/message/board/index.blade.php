@@ -56,6 +56,7 @@
                       <div class="col">
                         <a href="{{ route('message-board.show', $message->uuid) }}">
                           <h6>{{ $message->subject }}</h6>
+
                           <p class="text-muted m-b-0 d-inline">{{ $message->created_at->format('d/m/Y H:i') }}</p>
                           <p class="text-muted m-b-0">
                               {{ html_entity_decode(strip_tags(substr($message->content, 0, 800))) }}...
@@ -64,8 +65,11 @@
                         <br/>
                         <span class="label label-{{ array_random(['info', 'success', 'primary', 'warning']) }}">{{ $message->type->name }}</span>
                         @if($message->important)
-                            <span class="label label-danger }}">Importante</span>
+                            <span class="label label-danger">Importante</span>
                         @endif
+
+                        <span class="badge badge-inverse-success">Visualizado por: {{ $message->messages->where('status', 'VISUALIZADO')->count() }}</span>
+
                       </div>
                   </div>
 

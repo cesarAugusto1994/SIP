@@ -19,3 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->put('user/{user}/online', 'UserOnlineController');
 Route::middleware('auth:api')->put('user/{user}/offline', 'UserOfflineController');
+
+Route::prefix('v1')->group(function() {
+
+  Route::get("/delivery-order/{id}", 'DeliveryOrderController@delivery');
+
+});

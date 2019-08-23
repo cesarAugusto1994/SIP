@@ -820,8 +820,71 @@ class DeliveryOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delivery($id, Request $request)
     {
-        //
+        $delivery = DeliveryOrder::uuid($id);
+
+        $result = [];
+
+        if(!$delivery) {
+            return response()->json('OE nao encontrada.');
+        }
+
+        $user = $request->user();
+
+        if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
+
+            $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
+            //$delivery->save();
+
+            $message = 'Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' está em Transito.';
+
+            $users = User::where('id', 2)->get();
+
+            $subject = 'Ordem de Entrega';
+
+            //DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega', $message)->onQueue('emails');
+
+            /*Log::create([
+              'delivery_order_id' => $delivery->id,
+              'status_id' => Constants::STATUS_DELIVERY_EM_TRANSITO,
+              'user_id' => $user->id,
+              'message' => 'Ordem de Entrega alterada para Em Transio por ' . $user->person->name
+            ]);*/
+
+            /*$result = [
+              'id' => $delivery->id,
+              'client_id' => $delivery->client_id,
+              'client_name' => $delivery->client->name,
+              'address_id' => $delivery->address_id,
+              'address' => $delivery->address->description,
+              'itens' => $delivery->documents->map(function($document) {
+                return $document->document;
+              })->toArray(),
+              'response' => $message
+            ];*/
+
+            $result = [
+              'id' => $delivery->id,
+              //'clientId' => $delivery->client_id,
+              'client' => $delivery->client->name,
+              //'response' => $message
+            ];
+
+            return json_encode($result);
+
+            dd($result);
+
+            return view('delivery-order.scan-transit', compact('message'));
+
+        } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO) {
+
+            $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
+
+            return view('delivery-order.scan-delivered', compact('message', 'delivery'));
+
+        } else {
+            return abort(404);
+        }
     }
 }
