@@ -11,11 +11,17 @@ class Employee extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name', 'email', 'phone', 'cpf', 'biometric', 'occupation_id','company_id', 'created_by', 'active'];
+    protected $fillable = ['name', 'email', 'phone', 'cpf', 'code',
+    'biometric', 'occupation_id','company_id', 'created_by', 'active',
+    'birth','hired_at','fired_at'];
 
-    protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'biometric', 'occupation_id', 'company_id', 'created_by', 'active'];
+    protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'code',
+    'biometric', 'occupation_id', 'company_id', 'created_by', 'active',
+    'birth','hired_at','fired_at'];
 
     protected $table = 'client_employees';
+
+    protected $dates = ['birth','hired_at','fired_at'];
 
     public function company()
     {

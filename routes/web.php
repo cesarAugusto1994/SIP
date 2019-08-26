@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 if (\App::environment('production')) {
-    \URL::forceScheme('https');
+    //\URL::forceScheme('https');
 }
 
 Auth::routes();
@@ -314,5 +314,6 @@ Route::get('user/{id}/online', 'UserOnlineController@online')->name('user_online
 Route::get('user/{id}/offline', 'UserOfflineController@offline')->name('user_offline');
 
 Route::get('addresses/import-json', 'AddressesController@importJson')->name('adresses_import_json');
+Route::get('employees/import-json', 'EmployeesController@importJson')->name('employees_import_json');
 
 Route::get('tickets/auto-search/by/email', 'TicketsController@autoSearchTicketsByEmail')->name('auto_search_tickets_by_email');

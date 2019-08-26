@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Client\{Employee, Occupation};
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client as GuzzleClient;
 
 class EmployeesController extends Controller
 {
@@ -202,6 +203,95 @@ class EmployeesController extends Controller
             'success' => true,
             'message' => 'Funcionário removido com sucesso.'
           ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+          ]);
+        }
+    }
+
+    public function importJson()
+    {
+        try {
+
+          ini_set('max_execution_time', 3000);
+
+          $client = new GuzzleClient([
+            'handler' => new \GuzzleHttp\Handler\CurlHandler(),
+          ]);
+          $response = $client->get('https://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
+
+          $contents = $response->getBody()->getContents();
+
+          dd($contents);
+
+          $response = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
+
+          if(!$response) {
+              return response()->json('Ocorreu um erro.');
+          }
+
+          $data = [];
+
+          foreach ($response as $key => $item) {
+
+              if($item['SITUACAO'] == 'Inativo') {
+                continue;
+              }
+
+              $company = Client::where('code', $item['CODIGOEMPRESA'])->first();
+
+              if($company) {
+
+                $hasEmployee = Employee::where('name', $item['NOME'])
+                                ->orWhere('cpf', $item['CPFFUNCIONARIO'])
+                                ->orWhere('code', $item['CODIGO'])
+                                ->where('company_id', $company->id)
+                                ->first();
+
+                if($hasEmployee) {
+                    continue;
+                }
+
+                $data['company_id'] = $company->id;
+                $data['name'] = $item['NOME'];
+                $data['cpf'] = $item['CPFFUNCIONARIO'];
+                $data['code'] = $item['CODIGO'];
+
+                $occupation = Occupation::firstOrCreate([
+                  'name' => $item['NOMECARGO'],
+                  'client_id' => $company->id
+                ]);
+
+                $data['occupation_id'] = $occupation->id;
+
+                $birth = $hiredAt = $firedAt = null;
+
+                if(!empty($item['DATA_NASCIMENTO'])) {
+                    $birthday = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
+                }
+
+                if(!empty($item['DATA_ADMISSAO'])) {
+                    $hiredAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_ADMISSAO']);
+                }
+
+                if(!empty($item['DATA_DEMISSAO'])) {
+                    $firedAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_DEMISSAO']);
+                }
+
+                $data['birth'] = $birthday;
+                $data['hired_at'] = $hiredAt;
+                $data['fired_at'] = $firedAt;
+                $data['created_by'] = 1;
+
+                Employee::updateOrCreate($data);
+
+                dd($data);
+              }
+
+          }
 
         } catch(\Exception $e) {
           return response()->json([

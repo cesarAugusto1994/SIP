@@ -13,9 +13,9 @@ class Occupation extends Model
 
     protected $table = 'client_occupations';
 
-    protected $fillable = ['name', 'active'];
+    protected $fillable = ['name', 'active', 'client_id'];
 
-    protected static $logAttributes = ['name', 'active'];
+    protected static $logAttributes = ['name', 'active', 'client_id'];
 
     public function getDescriptionForEvent(string $eventName): string
     {
