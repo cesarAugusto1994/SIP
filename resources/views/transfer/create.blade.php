@@ -18,7 +18,7 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('units.index') }}"> Transferencia de Ativos </a>
+                        <a href="{{ route('transfer.index') }}"> Transferencia de Ativos </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Nova</a>
                     </li>
