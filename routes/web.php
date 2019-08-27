@@ -296,6 +296,11 @@ Route::middleware('auth')->group(function () {
           Route::resource('models', 'ModelsController');
           Route::resource('vendors', 'VendorsController');
 
+          Route::resource('transfer', 'TransferController');
+          Route::get('transfer/{id}/term/signature', 'TransferController@signature')->name('transfer_term_signature');
+
+          Route::post('transfer/{id}/oprions', 'TransferController@transfer')->name('transfer_itens_options');
+
           Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
           Route::get('delivery-order/{id}/delivery-status', 'DeliveryOrderController@status')->name('delivery_status');
           Route::post('delivery-order/{id}/receipt', 'DeliveryOrderController@receipt')->name('delivery_receipt');

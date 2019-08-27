@@ -105,8 +105,14 @@
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                               @permission('edit.ativos')
+                                <a href="{{route('transfer.create', ['stock' => $stock->uuid])}}" class="dropdown-item">Transferir </a>
+                              @endpermission
+                              
+                              @permission('edit.ativos')
                                 <a href="{{route('stock.edit', ['id' => $stock->uuid])}}" class="dropdown-item">Editar </a>
                               @endpermission
+
+
 
                             </div>
                           </td>

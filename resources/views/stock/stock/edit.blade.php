@@ -58,7 +58,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Número de Série</label>
                       <div class="input-group">
-                        <input type="number" name="serial" class="form-control" value="{{ $stock->serial }}">
+                        <input type="text" name="serial" class="form-control" value="{{ $stock->serial }}" maxlength="32">
                       </div>
                   </div>
                 </div>

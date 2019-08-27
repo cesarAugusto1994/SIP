@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Ativos</h4>
+                    <h4>Transferencia de Ativos</h4>
                 </div>
             </div>
         </div>
@@ -18,12 +18,9 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('products.index') }}"> Ativos </a>
+                        <a href="{{ route('units.index') }}"> Transferencia de Ativos </a>
                     </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('products.show', $product->uuid) }}"> Detalhes </a>
-                    </li>
-                    <li class="breadcrumb-item"><a href="#!">Novo Item</a>
+                    <li class="breadcrumb-item"><a href="#!">Nova</a>
                     </li>
                 </ul>
             </div>
@@ -34,62 +31,73 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Novo Item </h5>
-          <span class="text-success">#{{ $product->id }} - {{ $product->name }}<span>
+          <h5>Nova Transferencia</h5>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" data-parsley-validate method="post" action="{{route('stock.store')}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('transfer.store')}}">
             @csrf
-
-            <input type="hidden" name="product_id" value="{{ request()->get('product_id') }}">
 
             <div class="row m-b-30">
 
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Maticula de Patrimônio</label>
+                      <label class="col-form-label">Ativo</label>
                       <div class="input-group">
-                        <input type="number" name="equity_registration_code" class="form-control">
+                        <p>{{ $stock->product->name }}</p>
+                        <input type="hidden" name="stock_id" value="{{ $stock->uuid }}">
                       </div>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Número de Série</label>
+                      <label class="col-form-label">Assunto/Motivo</label>
                       <div class="input-group">
-                        <input type="text" name="serial" class="form-control" maxlength="32">
+                        <input type="text" required name="subject" placeholder="Ex: Treinamento Externo" class="form-control">
                       </div>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Comprado Em</label>
+                      <label class="col-form-label">Descrição</label>
                       <div class="input-group">
-                        <input type="text" name="buyed_at" class="form-control inputDate">
+                        <input type="text" name="description" class="form-control">
                       </div>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Situação</label>
+                      <label class="col-form-label">Data Agendamento</label>
                       <div class="input-group">
-                        <select class="form-control" required name="status">
-                            <option value="">Selecione a situação</option>
-                            @foreach(\App\Helpers\Helper::stockStatus() as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" name="scheduled_to" class="form-control inputDate" autocomplete="off">
                       </div>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                      <label class="col-form-label">Em posse de:</label>
+                      <label class="col-form-label">Data retirada</label>
+                      <div class="input-group">
+                        <input type="text" name="withdrawn_at" class="form-control inputDate" autocomplete="off">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <label class="col-form-label">Data Devolução</label>
+                      <div class="input-group">
+                        <input type="text" name="returned_at" class="form-control inputDate" autocomplete="off">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <label class="col-form-label">Empréstimo para:</label>
                       <div class="input-group">
                         <select class="form-control" id="select-owner" name="localization" required>
                             <option value="">Selecione</option>
@@ -156,7 +164,7 @@
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('products.show', $product->uuid) }}">Cancelar</a>
+            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('units.index') }}">Cancelar</a>
 
         </form>
 
