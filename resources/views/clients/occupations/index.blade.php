@@ -43,6 +43,7 @@
         <div class="card">
             <div class="card-block text-center">
                 <h4 class="m-t-20">{{$occupation->name}}</h4>
+                <p>{{$occupation->company->name}}</p>
                 <hr/>
                 <a class="btn btn-primary btn-sm btn-round" href="{{ route('client-occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
             </div>

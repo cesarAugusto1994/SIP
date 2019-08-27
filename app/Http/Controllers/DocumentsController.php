@@ -58,18 +58,13 @@ class DocumentsController extends Controller
 
         $emp = null;
 
-        if($request->filled('employee_id')) {
-          $emp = Employee::uuid($data['employee_id']);
-        }
-
         $data['client_id'] = $client->id;
         $data['type_id'] = $type->id;
         $data['amount'] = $type->price;
-        $data['employee_id'] = $emp->id ?? null;
 
-        if($request->filled('employees')) {
+        if($request->filled('employee_id')) {
 
-          $employees = Employee::whereIn('uuid', $data['employees'])->get();
+          $employees = Employee::whereIn('uuid', $data['employee_id'])->get();
 
           foreach ($employees as $key => $employee) {
 
@@ -100,22 +95,38 @@ class DocumentsController extends Controller
                   $client = Client::uuid($request->get($fieldClient));
 
                   $employee = null;
+                  $type = Type::uuid($request->get($fieldType));
+                  $reference = $request->get($fieldReference);
 
                   if($request->filled($fieldEmployee)) {
-                      $employee = Employee::uuid($request->get($fieldEmployee));
+                      $employees = Employee::whereIn('uuid', $request->get($fieldEmployee))->get();
+
+                      foreach ($employees as $key => $employee) {
+
+                        Document::create([
+                          'type_id' => $type->id,
+                          'client_id' => $client->id,
+                          'employee_id' => $employee->id,
+                          'reference' => $reference,
+                          'created_by' => $user->id,
+                          'status_id' => 1,
+                          'amount' => $type->price,
+                        ]);
+                      }
+
+                  } else {
+
+                    Document::create([
+                      'type_id' => $type->id,
+                      'client_id' => $client->id,
+                      'employee_id' => null,
+                      'reference' => $reference,
+                      'created_by' => $user->id,
+                      'status_id' => 1,
+                      'amount' => $type->price,
+                    ]);
+
                   }
-
-                  $type = Type::uuid($request->get($fieldType));
-
-                  Document::create([
-                    'type_id' => $type->id,
-                    'client_id' => $client->id,
-                    'employee_id' => $employee->id ?? null,
-                    'reference' => $request->get($fieldReference),
-                    'created_by' => $user->id,
-                    'status_id' => 1,
-                    'amount' => $type->price,
-                  ]);
 
               }
 
@@ -202,6 +213,14 @@ class DocumentsController extends Controller
         try {
 
           $document = Document::uuid($id);
+
+          if($document->status_id != 1) {
+            return response()->json([
+              'success' => false,
+              'message' => 'Não é possivel remover este documento, pois pertence a uma Ordem de Entrega.'
+            ]);
+          }
+
           $document->delete();
 
           return response()->json([

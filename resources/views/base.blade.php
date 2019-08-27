@@ -1224,10 +1224,16 @@ $(document).ready(function() {
     let selectClientEmployees = $(".select-client-employees");
     let selectEmployee = $("#select-employee");
 
-    selectClientEmployees.change(function() {
+    $(document).on('change','.select-client-employees',function(){
+
+    //selectClientEmployees.change(function() {
 
       let self = $(this);
       let route = self.data('search-employees');
+      let selectEmployee = $(self.data('target'));
+
+      //console.log(selectEmployee);
+
       let value = self.val();
 
       $.ajax({
@@ -1236,17 +1242,30 @@ $(document).ready(function() {
         async: true,
         success: function(response) {
 
-          let html = "";
+          data = response.data;
+
+          data = $.map(data, function(item) {
+            if(item) {
+              return { id: item.uuid, text: item.name };
+            }
+
+          });
+
+          selectEmployee.select2({
+                data: data,
+          });
+
+          /*let html = "";
           selectEmployee.html("<option value=''>Informe um funcionário</option>");
-          //selectEmployee.trigger('change');
+          selectEmployee.trigger('change');
 
           $.each(response.data, function(idx, item) {
-              let employee = item.name +' - '+item.email;
+              let employee = item.name;
               html += "<option value="+ item.uuid +">"+ employee +"</option>";
           });
 
           selectEmployee.append(html);
-          //selectEmployee.trigger('change');
+          selectEmployee.trigger('change');*/
 
         }
       })

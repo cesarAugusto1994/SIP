@@ -77,8 +77,9 @@
                   <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="form-control select2"
-                          name="client_id" required>
+                        <select class="form-control select2 select-client-employees"
+                          data-search-employees="{{ route('client_employees_search') }}"
+                          name="client_id" data-target="#select-employee" required>
                               <option value="">Selecione um Cliente</option>
                               @foreach($clients as $client)
                                   <option value="{{$client->uuid}}">{{$client->name}}</option>
@@ -93,12 +94,8 @@
                   <div class="form-group">
                       <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
-                        <select class="form-control select2"
-                          name="employee_id">
-                              <option value="">Selecione um Funcionário</option>
-                              @foreach(\App\Helpers\Helper::employees()->sortBy('name') as $emloyee)
-                                  <option value="{{$emloyee->uuid}}">{{$emloyee->name}}</option>
-                              @endforeach
+                        <select class="form-control select2" id="select-employee" multiple
+                          name="employee_id[]">
                         </select>
                       </div>
                   </div>
@@ -161,8 +158,9 @@
               + '<div class="form-group">'
                   + '<label class="col-form-label">Cliente</label>'
                   + '<div class="input-group">'
-                    + '<select class="form-control"'
-                      + 'name="client_id-'+index+'" required>'
+                    + '<select class="form-control select-client-employees select2"'
+                      + 'data-search-employees="{{ route("client_employees_search") }}"'
+                      + 'name="client_id-'+index+'" data-target="#select-employee-'+index+'" required>'
                           + '<option value="">Selecione um Cliente</option>'
                           @foreach($clients as $client)
                               + '<option value="{{$client->uuid}}">{{$client->name}}</option>'
@@ -175,12 +173,8 @@
               + '<div class="form-group">'
                   + '<label class="col-form-label">Funcionário</label>'
                   + '<div class="input-group">'
-                    + '<select class="form-control"'
-                      + 'name="employee_id-'+index+'">'
-                          + '<option value="">Selecione um Funcionário</option>'
-                          @foreach(\App\Helpers\Helper::employees()->sortBy('name') as $emloyee)
-                              + '<option value="{{$emloyee->uuid}}">{{$emloyee->name}}</option>'
-                          @endforeach
+                    + '<select class="form-control" multiple '
+                      + 'name="employee_id-'+index+'[]" id="select-employee-'+index+'">'
                     + '</select>'
                   + '</div>'
               + '</div>'
@@ -188,7 +182,7 @@
             + '<div class="col-md-1">'
               +   '<div class="form-group">'
               + '<label class="col-form-label">Opç</label>'
-                    + '<button type="button" class="btn btn-danger btn-sm btn-block btnRmItem" data-item="'+index+'"><i class="fa fa-close"></i> Remover </button>'
+                    + '<button type="button" class="btn btn-outline-danger btn-sm btn-icon btnRmItem" data-item="'+index+'"><i class="fa fa-close"></i></button>'
                 + '</div>'
             + '</div>'
         + '</div>';
@@ -198,13 +192,13 @@
       btnAddRows.click(function() {
         index++;
         row.append(renderCols(index));
+        $("#select-employee-" + index).select2();
         indexes.val(index);
       });
 
       var btnRmItem = $(".btnRmItem");
 
       $(document).on('click','.btnRmItem',function(){
-        console.log('item');
         var self = $(this);
         $("#row-" + self.data('item')).remove();
       });

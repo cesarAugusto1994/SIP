@@ -17,6 +17,11 @@ class Occupation extends Model
 
     protected static $logAttributes = ['name', 'active', 'client_id'];
 
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Client', 'client_id');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {

@@ -107,9 +107,6 @@
 
                         @if($document->status_id == 1 || $document->status_id == 2)
 
-                                @permission('edit.documentos')
-                                  <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-edit"></i> Editar</a>
-                                @endpermission
                                 @permission('delete.documentos')
                                   <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
                                 @endpermission
