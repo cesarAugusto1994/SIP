@@ -67,7 +67,7 @@
                                     <br>
                                     @if($due > 0)
                                         <p>O empréstimo é realizado pelo prazo de {{ $due }} dia(s), quando os equipamentos devem ser restituídos à Provider Saúde e Segurança do Trabalho, embora esta possa solicitá-los antecipadamente a seu critério.</p>
-                                    @else
+                                    @endif
                                     <p>Vitória - ES, {{ now()->format('d/m/Y') }}.</p>
                                     <p class="text-center">_______________________________________</p>
                                     <p class="text-center">Assinatura do Responsável</p>
