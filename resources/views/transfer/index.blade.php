@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Ativos</h4>
+                    <h4>Transferencia de Ativos</h4>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Ativos</a>
+                    <li class="breadcrumb-item"><a href="#!">Transferencia de Ativos</a>
                     </li>
                 </ul>
             </div>
@@ -29,20 +29,7 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Listagem de Ativos</h5>
-          <span>Ativos</span>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-
-                  <li><a class="btn btn-sm btn-primary" href="{{route('transfer.index')}}">Trasferências</a></li>
-
-                  @permission('create.ativos')
-                    <li><a class="btn btn-sm btn-success" href="{{route('products.create')}}">Novo Ativo</a></li>
-                  @endpermission
-
-              </ul>
-          </div>
-
+          <h5>Listagem de Transferencias</h5>
       </div>
       <div class="card-block">
           <div class="table-responsive">
@@ -50,26 +37,38 @@
                   <thead>
                       <tr>
                           <th>#</th>
-                          <th>Nome</th>
-                          <th>Inventário</th>
-                          <th>Disponíveis</th>
-                          <th>Fornecedor</th>
-                          <th>Marca</th>
-                          <th>Modelo</th>
+                          <th>Assunto / Motivo</th>
+                          <th>Destino</th>
+                          <th>Situação</th>
+                          <th>Agendamento</th>
+                          <th>Retirada</th>
+                          <th>Devolução</th>
                           <th>Opções</th>
                       </tr>
                   </thead>
                   <tbody>
 
-                    @foreach($products as $product)
+                    @foreach($transfers as $transfer)
                       <tr>
-                          <th scope="row">{{ $product->id }}</th>
-                          <td>  <a href="{{route('products.show', ['id' => $product->uuid])}}">{{ $product->name }}</a></td>
-                          <td>{{ $product->stocks ? $product->stocks->count() : 0 }}</td>
-                          <td>{{ $product->stocks ? $product->stocks->filter(function($stock, $index) { return $stock->status == 'Disponível'; })->count() : 0 }}</td>
-                          <td>{{ $product->vendor ? $product->vendor->name : '' }}</td>
-                          <td>{{ $product->brand ? $product->brand->name : '' }}</td>
-                          <td>{{ $product->model ? $product->model->name : '' }}</td>
+                          <th scope="row">{{ $transfer->id }}</th>
+                          <td>  <a href="{{route('products.show', ['id' => $transfer->uuid])}}">{{ $transfer->subject }}</a></td>
+                          <td>
+                            @if($transfer->localization == 'Usuário')
+                              {{ $transfer->user->person->name }} - {{ $transfer->user->person->department->name }}
+                            @elseif($transfer->localization == 'Departamento')
+                              {{ $transfer->department->name }}
+                            @elseif($transfer->localization == 'Unidade')
+                              {{ $transfer->unit->name }}
+                            @elseif($transfer->localization == 'Fornecedor')
+                              {{ $transfer->vendor->name }}
+                            @else
+                              -
+                            @endif
+                          </td>
+                          <td><span class="label label-inverse-success">{{ $transfer->status }}</span></td>
+                          <td>{{ $transfer->scheduled_to ? $transfer->scheduled_to->format('d/m/Y') : '-' }}</td>
+                          <td>{{ $transfer->withdrawn_at ? $transfer->withdrawn_at->format('d/m/Y') : '-' }}</td>
+                          <td>{{ $transfer->returned_at ? $transfer->returned_at->format('d/m/Y') : '-' }}</td>
 
                           <td class="dropdown">
 
@@ -77,11 +76,7 @@
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                               @permission('view.ativos')
-                                <a href="{{route('products.show', ['id' => $product->uuid])}}" class="dropdown-item">Visualizar </a>
-                              @endpermission
-
-                              @permission('edit.ativos')
-                                <a href="{{route('products.edit', ['id' => $product->uuid])}}" class="dropdown-item">Editar </a>
+                                <a href="{{route('transfer.show', ['id' => $transfer->uuid])}}" class="dropdown-item">Visualizar </a>
                               @endpermission
 
                             </div>
@@ -92,6 +87,8 @@
 
                   </tbody>
               </table>
+
+            {{ $transfers->links() }}
           </div>
       </div>
   </div>

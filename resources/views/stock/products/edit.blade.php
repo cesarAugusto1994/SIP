@@ -112,9 +112,9 @@
                           <div class="input-group">
                             <select class="form-control" name="lifetime_type">
                                 <option value="">Selecione</option>
-                                <option value="years" {{ $product->name == 'years' ? 'selected' : '' }}>Anos(s)</option>
-                                <option value="months" {{ $product->name == 'months' ? 'selected' : '' }}>Mes(es)</option>
-                                <option value="days" {{ $product->name == 'days' ? 'selected' : '' }}>Dia(s)</option>
+                                <option value="years" {{ $product->lifetime_type == 'years' ? 'selected' : '' }}>Anos(s)</option>
+                                <option value="months" {{ $product->lifetime_type == 'months' ? 'selected' : '' }}>Mes(es)</option>
+                                <option value="days" {{ $product->lifetime_type == 'days' ? 'selected' : '' }}>Dia(s)</option>
                             </select>
                           </div>
                       </div>

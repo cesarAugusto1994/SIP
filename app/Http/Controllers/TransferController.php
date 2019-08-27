@@ -18,7 +18,8 @@ class TransferController extends Controller
      */
     public function index()
     {
-        //
+        $transfers = Transfer::orderByDesc('id')->paginate();
+        return view('transfer.index', compact('transfers'));
     }
 
     public function signature($id)
