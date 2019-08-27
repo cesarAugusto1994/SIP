@@ -33,6 +33,17 @@
   <div class="card">
       <div class="card-header">
           <h5>Informações do Ativo</h5>
+
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+
+                  @permission('edit.ativos')
+                    <li><a class="btn btn-sm btn-primary" href="{{route('products.edit', $product->uuid)}}">Editar</a></li>
+                  @endpermission
+
+              </ul>
+          </div>
+
       </div>
       <div class="card-block">
 
@@ -55,7 +66,7 @@
               <ul class="list-unstyled card-option">
 
                   @permission('create.ativos')
-                    <li><a class="btn btn-sm btn-success btn-round" href="{{route('stock.create', ['product_id' => $product->uuid])}}">Novo Item</a></li>
+                    <li><a class="btn btn-sm btn-success" href="{{route('stock.create', ['product_id' => $product->uuid])}}">Novo Item</a></li>
                   @endpermission
 
               </ul>
@@ -107,7 +118,7 @@
                               @permission('edit.ativos')
                                 <a href="{{route('transfer.create', ['stock' => $stock->uuid])}}" class="dropdown-item">Transferir </a>
                               @endpermission
-                              
+
                               @permission('edit.ativos')
                                 <a href="{{route('stock.edit', ['id' => $stock->uuid])}}" class="dropdown-item">Editar </a>
                               @endpermission
