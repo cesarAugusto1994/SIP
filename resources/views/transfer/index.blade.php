@@ -51,7 +51,7 @@
                     @foreach($transfers as $transfer)
                       <tr>
                           <th scope="row">{{ $transfer->id }}</th>
-                          <td>  <a href="{{route('products.show', ['id' => $transfer->uuid])}}">{{ $transfer->subject }}</a></td>
+                          <td>  <a href="{{route('transfer.show', ['id' => $transfer->uuid])}}">{{ $transfer->subject }}</a></td>
                           <td>
                             @if($transfer->localization == 'Usuário')
                               {{ $transfer->user->person->name }} - {{ $transfer->user->person->department->name }}

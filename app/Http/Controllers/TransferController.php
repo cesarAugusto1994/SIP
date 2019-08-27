@@ -86,6 +86,7 @@ class TransferController extends Controller
                 $item->stock->save();
 
                 $transfer->status = 'Em Uso';
+                $transfer->withdrawn_at = now();
                 $transfer->save();
 
                 Log::create(
@@ -182,6 +183,34 @@ class TransferController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
+
+        if(!$request->filled('subject')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'O assunto/motivo deve ser informado.'
+          ]);
+          return back();
+        }
+
+        if(!$request->filled('description')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'A descrição deve ser informada.'
+          ]);
+          return back();
+        }
+
+        if(!$request->filled('scheduled_to')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'A Data de Agendamento deve ser informada.'
+          ]);
+          return back();
+        }
+
+        if(!$request->filled('withdrawn_at')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'A Data de Retirada deve ser informada.'
+          ]);
+          return back();
+        }
 
         $user = $request->user();
 

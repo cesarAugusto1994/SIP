@@ -63,7 +63,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Descrição</label>
                       <div class="input-group">
-                        <input type="text" name="description" class="form-control">
+                        <input type="text"  name="description" class="form-control">
                       </div>
                   </div>
                 </div>
