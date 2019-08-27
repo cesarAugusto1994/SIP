@@ -225,8 +225,6 @@ class EmployeesController extends Controller
 
           $contents = $response->getBody()->getContents();
 
-          dd($contents);
-
           $response = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
 
           if(!$response) {
@@ -288,7 +286,6 @@ class EmployeesController extends Controller
 
                 Employee::updateOrCreate($data);
 
-                dd($data);
               }
 
           }
