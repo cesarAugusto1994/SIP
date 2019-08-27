@@ -181,8 +181,8 @@
             + '</div>'
             + '<div class="col-md-1">'
               +   '<div class="form-group">'
-              + '<label class="col-form-label">Opç</label>'
-                    + '<button type="button" class="btn btn-outline-danger btn-sm btn-icon btnRmItem" data-item="'+index+'"><i class="fa fa-close"></i></button>'
+              + '<label class="col-form-label">Opção</label>'
+                    + '<button type="button" class="btn btn-outline-danger btn-sm btnRmItem" data-item="'+index+'"><i class="fa fa-close"></i></button>'
                 + '</div>'
             + '</div>'
         + '</div>';
