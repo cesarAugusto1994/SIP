@@ -37,9 +37,9 @@
 
             <div class="row m-b-25">
                 <div class="col">
-                    <h6 class="m-b-5">{{ $notification->created_at->format('H:i') }}</h6>
+                    <h6 class="m-b-5">{{ $notification->created_at->format('d/m/Y H:i') }}</h6>
                     <p class="text-muted m-b-0">{{ $notification->data['message'] ?? '' }}</p>
-                    <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</p>
+                    <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ $notification->created_at->diffForHumans() }}</p>
                 </div>
             </div>
 
