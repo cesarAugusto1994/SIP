@@ -164,7 +164,6 @@
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-outline btn-sm" href="{{ route('units.index') }}">Cancelar</a>
 
         </form>
 
