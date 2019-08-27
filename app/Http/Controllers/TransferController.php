@@ -25,7 +25,7 @@ class TransferController extends Controller
     {
         $transfer = Transfer::uuid($id);
 
-        $due = 1;
+        $due = 0;
 
         if($transfer->returned_at) {
             $diff = $transfer->returned_at->diff($transfer->scheduled_to);
