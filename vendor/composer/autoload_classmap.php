@@ -4446,6 +4446,7 @@ return array(
     'Themsaid\\MailPreview\\MailProvider' => $vendorDir . '/themsaid/laravel-mail-preview/src/MailProvider.php',
     'Themsaid\\MailPreview\\PreviewTransport' => $vendorDir . '/themsaid/laravel-mail-preview/src/PreviewTransport.php',
     'TicketStatusesTableSeeder' => $baseDir . '/database/seeds/TicketStatusesTableSeeder.php',
+    'TicketTypeCategoriesTableSeeder' => $baseDir . '/database/seeds/TicketTypeCategoriesTableSeeder.php',
     'TicketTypesTableSeeder' => $baseDir . '/database/seeds/TicketTypesTableSeeder.php',
     'TicketsTableSeeder' => $baseDir . '/database/seeds/TicketsTableSeeder.php',
     'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',

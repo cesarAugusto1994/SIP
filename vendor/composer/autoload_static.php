@@ -5122,6 +5122,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Themsaid\\MailPreview\\MailProvider' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/MailProvider.php',
         'Themsaid\\MailPreview\\PreviewTransport' => __DIR__ . '/..' . '/themsaid/laravel-mail-preview/src/PreviewTransport.php',
         'TicketStatusesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketStatusesTableSeeder.php',
+        'TicketTypeCategoriesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketTypeCategoriesTableSeeder.php',
         'TicketTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketTypesTableSeeder.php',
         'TicketsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/TicketsTableSeeder.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
