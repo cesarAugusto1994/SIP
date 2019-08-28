@@ -233,62 +233,75 @@ class EmployeesController extends Controller
 
           $data = [];
 
-          foreach ($response as $key => $item) {
+          $companies = Client::where('active', true)->get();
 
-              if($item['SITUACAO'] == 'Inativo') {
-                continue;
-              }
+          foreach ($companies as $key => $company) {
 
-              $company = Client::where('code', $item['CODIGOEMPRESA'])->first();
+            $result = array_filter($response, function($item) use ($company) {
+                return $item['CODIGOEMPRESA'] == $company->code;
+            });
 
-              if($company) {
+            foreach ($result as $key => $item) {
 
-                $hasEmployee = Employee::where('name', $item['NOME'])
-                                ->orWhere('cpf', $item['CPFFUNCIONARIO'])
-                                ->orWhere('code', $item['CODIGO'])
-                                ->where('company_id', $company->id)
-                                ->first();
-
-                if($hasEmployee) {
-                    continue;
+                if($item['SITUACAO'] == 'Inativo') {
+                  continue;
                 }
 
-                $data['company_id'] = $company->id;
-                $data['name'] = $item['NOME'];
-                $data['cpf'] = $item['CPFFUNCIONARIO'];
-                $data['code'] = $item['CODIGO'];
+                if($company) {
 
-                $occupation = Occupation::firstOrCreate([
-                  'name' => $item['NOMECARGO'],
-                  'client_id' => $company->id
-                ]);
+                  $hasEmployee = Employee::where('name', $item['NOME'])
+                                  ->orWhere('cpf', $item['CPFFUNCIONARIO'])
+                                  ->orWhere('code', $item['CODIGO'])
+                                  ->where('company_id', $company->id)
+                                  ->first();
 
-                $data['occupation_id'] = $occupation->id;
+                  if($hasEmployee) {
+                      continue;
+                  }
 
-                $birth = $hiredAt = $firedAt = null;
+                  $data['company_id'] = $company->id;
+                  $data['name'] = $item['NOME'];
+                  $data['cpf'] = $item['CPFFUNCIONARIO'];
+                  $data['code'] = $item['CODIGO'];
 
-                if(!empty($item['DATA_NASCIMENTO'])) {
-                    $birthday = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
+                  $occupation = Occupation::firstOrCreate([
+                    'name' => $item['NOMECARGO'],
+                    'client_id' => $company->id
+                  ]);
+
+                  $data['occupation_id'] = $occupation->id;
+
+                  $birth = $hiredAt = $firedAt = null;
+
+                  if(!empty($item['DATA_NASCIMENTO'])) {
+                      $birthday = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
+                  }
+
+                  if(!empty($item['DATA_ADMISSAO'])) {
+                      $hiredAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_ADMISSAO']);
+                  }
+
+                  if(!empty($item['DATA_DEMISSAO'])) {
+                      $firedAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_DEMISSAO']);
+                  }
+
+                  $data['birth'] = $birthday;
+                  $data['hired_at'] = $hiredAt;
+                  $data['fired_at'] = $firedAt;
+                  $data['created_by'] = 1;
+
+                  Employee::updateOrCreate($data);
+
                 }
 
-                if(!empty($item['DATA_ADMISSAO'])) {
-                    $hiredAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_ADMISSAO']);
-                }
-
-                if(!empty($item['DATA_DEMISSAO'])) {
-                    $firedAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_DEMISSAO']);
-                }
-
-                $data['birth'] = $birthday;
-                $data['hired_at'] = $hiredAt;
-                $data['fired_at'] = $firedAt;
-                $data['created_by'] = 1;
-
-                Employee::updateOrCreate($data);
-
-              }
+            }
 
           }
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Funcionários importados com sucesso!'
+          ]);
 
         } catch(\Exception $e) {
           return response()->json([
