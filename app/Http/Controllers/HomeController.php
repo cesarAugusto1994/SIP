@@ -50,9 +50,7 @@ class HomeController extends Controller
           $query->where('user_id', $request->user()->id);
         })->orderByDesc('id')->get();
 
-        $activities = Auth::user()->activities->sortByDesc('id')->take(4);
-
-        return view('index', compact('activities', 'messages'));
+        return view('index', compact('messages'));
     }
 
     public function createTasksFromProcesses()

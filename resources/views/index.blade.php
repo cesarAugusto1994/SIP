@@ -225,52 +225,6 @@
                 </div>
             </div>
 
-            <div class="col-md-12 col-sm-12">
-
-              <div class="card user-activity-card">
-                  <div class="card-header">
-                    <h5>Atividades</h5>
-                    <span>Fluxo de atividades do usuário</span>
-
-                  </div>
-                  <div class="card-block">
-
-                    @if($activities->isNotEmpty())
-
-                      @foreach($activities->take(4) as $activity)
-
-                        <div class="row m-b-25">
-                            <div class="col">
-                                <h6 class="m-b-5">{{ $activity->created_at->format('d/m/Y H:i') }}</h6>
-                                <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
-                                <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ $activity->created_at->diffForHumans() }}</p>
-                            </div>
-                        </div>
-
-                      @endforeach
-
-                      <div class="text-center">
-                          <a href="{{ route('activities.index') }}" class="b-b-primary text-primary">Visualizar todas atividades</a>
-                      </div>
-
-                    @else
-
-                      <div class="widget white-bg no-padding">
-                          <div class="p-m text-center">
-                              <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
-                              <br/>
-                              <h6 class="font-bold no-margins">
-                                  Nenhum log registrado até o momento.
-                              </h6>
-                          </div>
-                      </div>
-                    @endif
-
-                  </div>
-              </div>
-
-            </div>
-
           </div>
 
         </div>
