@@ -150,8 +150,6 @@
     </div>
 </nav>
 
-
-
 <!-- Sidebar chat start -->
 <div id="sidebar" class="users p-chat-user showChat">
     <div class="had-container">
