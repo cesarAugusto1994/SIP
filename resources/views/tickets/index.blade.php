@@ -227,7 +227,7 @@
 
             @forelse($tickets->sortByDesc('id') as $ticket)
 
-                <div class="col-sm-6">
+                <div class="col-sm-6 col-md-4 col-xl-4">
                     <div class="card card-border-{{ \App\Helpers\Helper::statusTaskCollor($ticket->status->id) }}">
                         <div class="card-header">
                             <a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ $ticket->id }} </a>

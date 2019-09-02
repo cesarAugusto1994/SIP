@@ -40,25 +40,8 @@ class TicketsController extends Controller
             }
 
         } else {
-            $tickets = Ticket::where('id', '>', 0);
+            $tickets = Ticket::orderBy('status_id');
         }
-
-        $opened = $tickets->whereIn('status_id', [1,2,3])->count();
-        $finished = $tickets->whereIn('status_id', [4])->count();
-        $canceled = $tickets->whereIn('status_id', [5])->count();
-
-        $total = $tickets->count();
-        $low =  $tickets->where('priority', 'Baixa')->count();
-        $normal =  $tickets->where('priority', 'Normal')->count();
-        $high =  $tickets->where('priority', 'Alta')->count();
-        $highest =  $tickets->where('priority', 'Altíssima')->count();
-
-        $totalTickets = $total > 0 ? $total : 1;
-
-        $low = number_format(($low/$totalTickets) * 100, 2);
-        $normal = number_format(($normal/$totalTickets) * 100, 2);
-        $high = number_format(($high/$totalTickets) * 100, 2);
-        $highest = number_format(($highest/$totalTickets) * 100, 2);
 
         if($request->filled('status')) {
             $status = $request->get('status');
@@ -116,6 +99,23 @@ class TicketsController extends Controller
         }
 
         $tickets = $tickets->paginate();
+
+        $opened = $tickets->whereIn('status_id', [1,2,3])->count();
+        $finished = $tickets->whereIn('status_id', [4])->count();
+        $canceled = $tickets->whereIn('status_id', [5])->count();
+
+        $total = $tickets->count();
+        $low =  $tickets->where('priority', 'Baixa')->count();
+        $normal =  $tickets->where('priority', 'Normal')->count();
+        $high =  $tickets->where('priority', 'Alta')->count();
+        $highest =  $tickets->where('priority', 'Altíssima')->count();
+
+        $totalTickets = $total > 0 ? $total : 1;
+
+        $low = number_format(($low/$totalTickets) * 100, 2);
+        $normal = number_format(($normal/$totalTickets) * 100, 2);
+        $high = number_format(($high/$totalTickets) * 100, 2);
+        $highest = number_format(($highest/$totalTickets) * 100, 2);
 
         return view('tickets.index', compact('tickets', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest'));
     }
