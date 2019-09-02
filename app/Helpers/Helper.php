@@ -1108,7 +1108,7 @@ class Helper
             case 3:
                 return 'primary';
             case 4:
-                return 'primary';
+                return 'success';
             case 5:
                 return 'danger';
             default:

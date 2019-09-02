@@ -28,7 +28,7 @@ class TicketsController extends Controller
 
         if(!$user->isAdmin()) {
 
-            $tickets = $user->tickets()->get();
+            $tickets = $user->tickets();
             $ticketTypeDepts = $user->person->department->ticketTypesDepartments;
 
             foreach ($ticketTypeDepts as $key => $ticketTypeDept) {
@@ -40,7 +40,7 @@ class TicketsController extends Controller
             }
 
         } else {
-            $tickets = Ticket::all();
+            $tickets = Ticket::where('id', '>', 0);
         }
 
         $opened = $tickets->whereIn('status_id', [1,2,3])->count();
@@ -114,6 +114,8 @@ class TicketsController extends Controller
             $type = $request->get('type');
             $tickets = $tickets->where('type.id', $type);
         }
+
+        $tickets = $tickets->paginate();
 
         return view('tickets.index', compact('tickets', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest'));
     }

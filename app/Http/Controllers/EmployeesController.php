@@ -221,7 +221,7 @@ class EmployeesController extends Controller
           $client = new GuzzleClient([
             'handler' => new \GuzzleHttp\Handler\CurlHandler(),
           ]);
-          $response = $client->get('https://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
+          $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
 
           $contents = $response->getBody()->getContents();
 

@@ -285,6 +285,8 @@
 
             @endforelse
 
+            {{ $tickets->links() }}
+
           </div>
           <!-- Task board design block end -->
       </div>
