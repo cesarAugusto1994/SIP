@@ -238,8 +238,12 @@ class EmployeesController extends Controller
           foreach ($companies as $key => $company) {
 
             $result = array_filter($response, function($item) use ($company) {
-                return $item['CODIGOEMPRESA'] == $company->code;
+                return $item['CODIGOEMPRESA'] == $company->code && $item['SITUACAO'] == 'Ativo';
             });
+
+            if(count($result) == $company->employees->count()) {
+                continue;
+            }
 
             foreach ($result as $key => $item) {
 

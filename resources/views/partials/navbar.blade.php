@@ -60,7 +60,7 @@
                                       <a href="{{ $notification['data']['url'] ?? route('notifications.index') }}">
                                         <div class="media-body">
                                             <p class="notification-msg">{{ $notification['data']['message'] ?? '' }}</p>
-                                            <span class="notification-time">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</span>
+                                            <span class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
                                         </div>
                                       </a>
                                   </div>
@@ -171,27 +171,21 @@
 
                   @php
 
-                      $users = \App\Helpers\Helper::users();
+                      $users = \App\Helpers\Helper::usersBySentMessages();
 
                   @endphp
 
 
-                  @foreach($users->sortBy('person.name') as $user)
+                  @forelse($users->sortBy('person.name') as $user)
 
                     @if(Auth::user()->id == $user->id)
                         @continue;
                     @endif
 
-                    @php
-
-                      $countMessages = $user->messages()->where('receiver_id', auth()->user()->id)->where('read_at', null)->count();
-
-                    @endphp
-
                     <div class="media userlist-box" data-id="{{ $user->id }}" data-status="online" data-username="{{ $user->person->name }}" data-toggle="tooltip" data-placement="left" title="" data-original-title="{{ $user->person->name }}">
-                        <!--<a class="media-left" href="{{ route('chat_user', $user->uuid) }}">
+                        <a class="media-left" href="{{ route('chat_user', $user->uuid) }}">
                             <img class="media-object img-radius img-radius" src="{{ route('image', ['user' => $user->person->user->uuid, 'link' => $user->person->user->avatar, 'avatar' => true])}}" alt="">
-                        </a>-->
+                        </a>
                         <div class="media-body">
                           <a href="{{ route('chat_user', $user->uuid) }}">
                             <div class="f-13 chat-header">{{ $user->person->name }}</div>
@@ -200,19 +194,33 @@
                               <br/>
                               <span>Ramal: {{ $user->person->branch }}</span>
                             @endif
-                            @if($countMessages)
-                              <span class="badge bg-c-green">{{ $countMessages }}</span>
-                            @endif
+                            <span class="badge bg-c-green">Nova Mensagem</span>
                           </a>
                           @if(config('app.env') == 'local')
                           <span class="float-right">
-                            
+
                           <span>
                           @endif
                         </div>
                     </div>
 
-                  @endforeach
+                  @empty
+
+                    <div class="media userlist-box">
+
+                      <div class="widget white-bg no-padding">
+                          <div class="p-m text-center">
+                              <h1 class="m-md"><i class="far fa-comment-dots fa-2x"></i></h1>
+                              <br/>
+                              <h6 class="font-bold no-margins">
+                                  Nenhuma mensagem até o momento.
+                              </h6>
+                          </div>
+                      </div>
+
+                    </div>
+
+                  @endforelse
 
                 </div>
             </div>

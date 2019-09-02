@@ -52,6 +52,8 @@ class HomeController extends Controller
 
         $activities = Auth::user()->activities->sortByDesc('id')->take(4);
 
+        $users = \App\Helpers\Helper::usersBySentMessages();
+
         return view('index', compact('activities', 'messages'));
     }
 

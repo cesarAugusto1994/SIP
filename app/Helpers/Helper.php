@@ -600,6 +600,18 @@ class Helper
         return self::get($key);
     }
 
+    public static function usersBySentMessages()
+    {
+        $user = auth()->user();
+
+        $data = User::whereHas('messages', function($query) use($user) {
+            $query->where('receiver_id', $user->id);
+            $query->where('read_at', null);
+        })->get();
+
+        return $data;
+    }
+
     public static function ticketCategories()
     {
         $key = 'ticket_type_categories';
