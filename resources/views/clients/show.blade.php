@@ -36,7 +36,7 @@
       <div class="card-block">
 
         @permission('create.clientes')
-            <a href="{{route('client_employee_create', $client->uuid)}}" class="btn btn-success btn-sm"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
+            <a href="{{route('employees.create', ['client' => $client->uuid])}}" class="btn btn-success btn-sm"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
         @endpermission
 
         @permission('create.clientes')
@@ -70,7 +70,7 @@
               <p>CPF/CNPJ: {{ $client->document }}</p>
               <p>Contrato: {{ $client->contract->name }}</p>
               <p>Cobrar Entrega?: {{ $client->charge_delivery ? 'Sim' : 'Não' }}</p>
-              
+
             </div>
         </div>
 

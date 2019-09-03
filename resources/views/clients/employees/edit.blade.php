@@ -32,11 +32,6 @@
   <div class="card">
       <div class="card-header">
           <h5>Editar Funcionário</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-                  <li><i class="feather icon-maximize full-card"></i></li>
-              </ul>
-          </div>
       </div>
       <div class="card-block">
 
@@ -68,8 +63,8 @@
                     <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Função</label>
                         <div class="input-group">
-                            <select class="form-control" name="occupation_id" required>
-                                  @foreach(\App\Helpers\Helper::clientOccupation() as $occupation)
+                            <select class="form-control select2" name="occupation_id" required>
+                                  @foreach(\App\Helpers\Helper::clientOccupation()->sortBy('name') as $occupation)
                                       <option value="{{$occupation->uuid}}" {{ $employee->occupation_id == $occupation->uuid ? 'selected' : '' }}>{{$occupation->name}}</option>
                                   @endforeach
                             </select>
@@ -103,7 +98,7 @@
                     <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
-                            <select class="form-control" name="company_id" required>
+                            <select class="form-control select2" name="company_id" required>
                                   @foreach($companies as $companyItem)
                                       <option value="{{$companyItem->uuid}}" {{ $employee->company_id == $companyItem->id ? 'selected' : '' }}>{{$companyItem->name}}</option>
                                   @endforeach

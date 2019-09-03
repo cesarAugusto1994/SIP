@@ -51,7 +51,7 @@
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo</label>
                         <div class="input-group">
-                          <select class="form-control" title="Selecione" name="type_id" required>
+                          <select class="form-control select2" title="Selecione" name="type_id" required>
                               <option value="">Selecione...</option>
                               @foreach($types as $type)
                                   <option value="{{$type->uuid}}">{{$type->name}}</option>
@@ -63,7 +63,7 @@
 
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Referencia</label>
                         <div class="input-group">
@@ -90,7 +90,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <div class="form-group">
                       <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
@@ -182,7 +182,7 @@
             + '<div class="col-md-1">'
               +   '<div class="form-group">'
               + '<label class="col-form-label">Opção</label>'
-                    + '<button type="button" class="btn btn-outline-danger btn-sm btnRmItem" data-item="'+index+'"><i class="fa fa-close"></i></button>'
+                    + '<button type="button" class="btn btn-outline-danger btn-sm btnRmItem btn-block" data-item="'+index+'"><i class="fa fa-close"></i></button>'
                 + '</div>'
             + '</div>'
         + '</div>';
@@ -194,6 +194,8 @@
         row.append(renderCols(index));
         $("#select-employee-" + index).select2();
         indexes.val(index);
+
+        $('.select-client-employees').select2();
       });
 
       var btnRmItem = $(".btnRmItem");

@@ -235,7 +235,7 @@
 <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 
 <script src="{{ asset('adminty\components\bootstrap-tagsinput\js\bootstrap-tagsinput.js') }}"></script>
-<script src="{{ asset('adminty\components\select2\js\select2.min.js') }}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.full.min.js" integrity="sha256-vdvhzhuTbMnLjFRpvffXpAW9APHVEMhWbpeQ7qRrhoE=" crossorigin="anonymous"></script>
 
 <script src="{{ asset('adminty\components\switchery\js\switchery.min.js') }}"></script>
 

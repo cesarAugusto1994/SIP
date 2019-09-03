@@ -216,28 +216,49 @@ class EmployeesController extends Controller
     {
         try {
 
-          ini_set('max_execution_time', 3000);
+          $employeesData = [];
 
-          $client = new GuzzleClient([
-            'handler' => new \GuzzleHttp\Handler\CurlHandler(),
-          ]);
-          $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
+          if(session()->has('employees')) {
 
-          $contents = $response->getBody()->getContents();
+              $employeesData = session()->get('employees');
 
-          $response = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
+          } else {
 
-          if(!$response) {
-              return response()->json('Ocorreu um erro.');
+            $client = new GuzzleClient([
+              'handler' => new \GuzzleHttp\Handler\CurlHandler(),
+            ]);
+            $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
+
+            $contents = $response->getBody()->getContents();
+
+            $employeesData = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
+
+            if(!$employeesData) {
+                return response()->json('Ocorreu um erro.');
+            }
+
+            session()->put('employees', $employeesData);
+
           }
 
           $data = [];
 
-          $companies = Client::where('active', true)->get();
+          $companiesAlreadyLoaded = $companiesHasLoaded = [];
+
+          if(session()->has('companies')) {
+            $companiesHasLoaded = session()->get('companies');
+          }
+
+          $companies = Client::whereNotIn('id', $companiesHasLoaded)->where('active', true)->get();
 
           foreach ($companies as $key => $company) {
 
-            $result = array_filter($response, function($item) use ($company) {
+            echo '> Empresa: ' . $company->name . '<br/>';
+
+            $companiesAlreadyLoaded[] = $company->id;
+            $companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
+
+            $result = array_filter($employeesData, function($item) use ($company) {
                 return $item['CODIGOEMPRESA'] == $company->code && $item['SITUACAO'] == 'Ativo';
             });
 
@@ -254,14 +275,17 @@ class EmployeesController extends Controller
                 if($company) {
 
                   $hasEmployee = Employee::where('name', $item['NOME'])
-                                  ->orWhere('cpf', $item['CPFFUNCIONARIO'])
-                                  ->orWhere('code', $item['CODIGO'])
+                                  //->orWhere('cpf', $item['CPFFUNCIONARIO'])
+                                  //->orWhere('code', $item['CODIGO'])
                                   ->where('company_id', $company->id)
                                   ->first();
 
                   if($hasEmployee) {
+                      echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
                       continue;
                   }
+
+                  echo '>> Importando Funcionario: ' . $item['NOME'] . '<br/>';
 
                   $data['company_id'] = $company->id;
                   $data['name'] = $item['NOME'];
