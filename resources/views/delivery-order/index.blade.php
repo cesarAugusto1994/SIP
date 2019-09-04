@@ -225,7 +225,7 @@
 
                                   <label class="label label-inverse-primary">{{ $delivery->delivery_date->diffForHumans() }}</label>
 
-                                  @else
+                                  @elseif($delivery->delivered_at)
 
                                   {{ $delivery->delivered_at->format('d/m/Y') }}
 
