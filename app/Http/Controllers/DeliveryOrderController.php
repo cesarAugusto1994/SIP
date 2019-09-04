@@ -100,9 +100,7 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
-        //exit('Em Desenvolvimento.');
-
-        $deliveries = DeliveryOrder::all();
+        $deliveries = DeliveryOrder::where('status_id', 5)->get();
 
         $first = new DateTime('first day of this month');
         $last = new DateTime('last day of this month');
@@ -111,10 +109,6 @@ class DeliveryOrderController extends Controller
           $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
           $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
         }
-
-        //$interval = new DateInterval('P1D');
-
-        //$period = new DatePeriod($first, $interval, $last);
 
         $data = [];
 
@@ -138,10 +132,16 @@ class DeliveryOrderController extends Controller
 
         foreach ($deliveries as $key => $delivery) {
 
+            $amount = 0.00;
+
+            if($delivery->client->charge_delivery) {
+                $amount = 5.00;
+            }
+
             if($delivery->created_at > now()->setTime(0,0,0) &&
               $delivery->created_at < now()->setTime(23,59,59)) {
 
-                $todayAmount += $delivery->amount;
+                $todayAmount += $amount;
                 $loopToday++;
 
                 $result['today'] = [
@@ -155,7 +155,7 @@ class DeliveryOrderController extends Controller
             if($delivery->created_at > now()->modify('last monday')->setTime(0,0,0) &&
               $delivery->created_at < now()->modify('this saturday')->setTime(23,59,59)) {
 
-                $weekAmount += $delivery->amount;
+                $weekAmount += $amount;
 
                 $loopWeek++;
 
@@ -170,7 +170,7 @@ class DeliveryOrderController extends Controller
             if($delivery->created_at > now()->modify('first day of this month')->setTime(0,0,0) &&
               $delivery->created_at < now()->modify('last day of this month')->setTime(23,59,59)) {
 
-                $monthAmount += $delivery->amount;
+                $monthAmount += $amount;
 
                 $loopMonth++;
 
@@ -182,7 +182,7 @@ class DeliveryOrderController extends Controller
 
             }
 
-            $totalAmount += $delivery->amount;
+            $totalAmount += $amount;
 
             $result['total'] = [
               'title' => 'Total',
@@ -213,7 +213,7 @@ class DeliveryOrderController extends Controller
            $start = $current->format('Y-m-01') . ' 00:00:00';
            $end = $current->format('Y-m-t') . ' 23:59:59';
 
-           $deliveries = DeliveryOrder::whereBetween('created_at', [$start, $end])->count();
+           $deliveries = DeliveryOrder::where('status_id', 5)->whereBetween('created_at', [$start, $end])->count();
 
            $random = array_rand($colors);
 

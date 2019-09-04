@@ -87,6 +87,7 @@
                               <tr class="table-primary">
                                   <th>Ordem No.</th>
                                   <th>Cliente</th>
+                                  <th>Data</th>
                                   <th>Documentos</th>
                                   <th>Valor</th>
                               </tr>
@@ -96,9 +97,14 @@
                               <tr>
                                   <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
                                   <td>{{ $delivery->client->name }}</td>
+                                  <td>{{ $delivery->created_at->format('d/m/Y') }}</td>
                                   <td>{{ $delivery->documents->count() }}</td>
                                   <td>
-                                      <label class="label label-md label-success">{{ number_format($delivery->amount, 2 ,',','.') }}</label>
+                                    @if($delivery->client->charge_delivery)
+                                      <label class="label label-md label-success">5,00</label>
+                                    @else
+                                      <label class="label label-md label-primary">Valor não cobrado</label>
+                                    @endif
                                   </td>
                               </tr>
                             @endforeach
