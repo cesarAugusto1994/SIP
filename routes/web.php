@@ -297,8 +297,13 @@ Route::middleware('auth')->group(function () {
           Route::resource('vendors', 'VendorsController');
 
           Route::resource('transfer', 'TransferController');
-          Route::get('transfer/{id}/term/signature', 'TransferController@signature')->name('transfer_term_signature');
 
+          Route::get('transfer/{id}/add/items', 'TransferController@items')->name('transfer_items');
+          Route::post('transfer/{id}/add/items/store', 'TransferController@itemsStore')->name('transfer_items_store');
+
+          Route::delete('transfer/{id}/items/{item}/destroy', 'TransferController@itemsDestroy')->name('transfer_item_destroy');
+
+          Route::get('transfer/{id}/term/signature', 'TransferController@signature')->name('transfer_term_signature');
           Route::post('transfer/{id}/oprions', 'TransferController@transfer')->name('transfer_itens_options');
 
           Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');

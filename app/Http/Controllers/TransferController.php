@@ -22,6 +22,76 @@ class TransferController extends Controller
         return view('transfer.index', compact('transfers'));
     }
 
+    public function items($id, Request $request)
+    {
+        $transfer = Transfer::uuid($id);
+        $stocks = Stock::where('status', 'Disponivel')->get();
+        return view('transfer.items', compact('transfer', 'stocks'));
+    }
+
+    public function itemsStore($id, Request $request)
+    {
+        if(!$request->has('items')) {
+
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Nenhum ativo informado para adicionar à transferência.'
+          ]);
+
+          return back();
+
+        }
+
+        $transfer = Transfer::uuid($id);
+
+        $items = $request->get('items');
+
+        $stocks = Stock::whereIn('id', $items)->get();
+
+        foreach ($stocks as $key => $stock) {
+
+            $hasTransfer = Transfer::whereIn('status', ['Pendente', 'Autorizado', 'Em Uso'])
+            ->whereHas('items', function($query) use($stock) {
+                $query->where('stock_id', $stock->id);
+            })->get();
+
+            if($hasTransfer->isNotEmpty()) {
+              continue;
+            }
+
+            Item::updateOrcreate([
+              'stock_id' => $stock->id,
+              'transfer_id' => $transfer->id,
+            ]);
+        }
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Itens adicionados à transferência #' . $transfer->id . ' com sucesso.'
+        ]);
+
+        return redirect()->route('transfer.show', $transfer->uuid);
+    }
+
+    public function itemsDestroy($id, $item)
+    {
+        try {
+
+          $item = Item::uuid($item);
+
+          $item->delete();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Item removido com sucesso.'
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+          ]);
+        }
+    }
+
     public function signature($id)
     {
         $transfer = Transfer::uuid($id);
@@ -165,6 +235,16 @@ class TransferController extends Controller
 
           notify()->flash('Erro!', 'error', [
             'text' => 'Este ativo já esta vinculado a uma transferência.'
+          ]);
+
+          return back();
+
+        }
+
+        if($stock->status != 'Disponível') {
+
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Este ativo deve estar disponivel para uma transferência.'
           ]);
 
           return back();

@@ -130,7 +130,13 @@
       <div class="card-header">
           <h5>Listagem de Itens do Ativo </h5>
           <span class="text-success">Itens de Ativo<span>
-
+          <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+                @if($transfer->status == 'Pendente')
+                  <li><a class="btn btn-sm btn-success" href="{{route('transfer_items', $transfer->uuid)}}">Adiconar Itens</a></li>
+                @endif
+              </ul>
+          </div>
       </div>
       <div class="card-block">
           <div class="table-responsive">
@@ -142,13 +148,14 @@
                           <th>Matricula</th>
                           <th>Situação Atual</th>
                           <th>Localização Atual</th>
+                          <th>#</th>
                       </tr>
                   </thead>
                   <tbody>
 
-                    @foreach($transfer->items as $stock)
+                    @foreach($transfer->items as $item)
                       @php
-                          $stock = $stock->stock;
+                          $stock = $item->stock;
                       @endphp
                       <tr>
                           <th scope="row">#{{ $stock->id }}</th>
@@ -166,6 +173,15 @@
                               {{ $stock->vendor->name }}
                             @else
 
+                            @endif
+                          </td>
+
+                          <td class="dropdown">
+                            @if($transfer->status == 'Pendente')
+                            <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+                                <a href="#!" data-route="{{route('transfer_item_destroy', ['id' => $transfer->uuid, 'item' => $item->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
+                            </div>
                             @endif
                           </td>
 

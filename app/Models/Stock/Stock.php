@@ -26,6 +26,11 @@ class Stock extends Model
         return $this->belongsTo('App\Models\Stock\Product');
     }
 
+    public function items()
+    {
+        return $this->hasMany('App\Models\Stock\Stock\Transfer\Item', 'stock_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');
