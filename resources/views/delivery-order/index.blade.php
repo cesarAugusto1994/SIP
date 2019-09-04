@@ -165,93 +165,88 @@
   </div>
 
   <div class="row">
-    @forelse ($orders->sortBy('status_id') as $order)
 
-    @php
-
-      $status = $order->status->id;
-
-      $bgColor = 'success';
-
-      switch($status) {
-        case '1':
-          $bgColor = 'primary';
-          break;
-        case '2':
-          $bgColor = 'warning';
-          break;
-        case '3':
-          $bgColor = 'success';
-          break;
-        case '4':
-          $bgColor = 'danger';
-          break;
-      }
-
-    @endphp
-
-    <div class="col-sm-4">
-        <div class="card card-border-{{ $bgColor }}">
+    <div class="col-lg-12">
+        <!-- Recent Orders card start -->
+        <div class="card">
             <div class="card-header">
-                <a href="{{ route('delivery-order.show', $order->uuid) }}" class="card-title">#{{ str_pad($order->id, 6, "0", STR_PAD_LEFT) }}</a>
-                <a href="{{ route('delivery-order.show', $order->uuid) }}"><b>{{$order->name}}</b></a>
-                <a href="{{ route('delivery-order.show', $order->uuid) }}">
-                  <span class="label label-{{$bgColor}} f-right"> {{$order->status->name}} </span></a>
+                <h5>Ordens de Entrega Recentes</h5>
             </div>
-            <div class="card-block">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p class="task-detail">Cliente: <b>{{ $order->client->name }}</b>
-                          <br/>
-                          <label class="label label-inverse-primary">{{$order->address->street}}, {{$order->address->number}} - {{$order->address->district}}, {{$order->address->city}}</label>
-                        </p>
-                        <p class="task-detail">Entregador: {{ $order->user ? $order->user->person->name : '-' }}</p>
-                        <hr/>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Ordem No.</th>
+                                <th>Cliente</th>
+                                <th>Data</th>
+                                <th>Previsão / Entrega</th>
+                                <th>Documentos</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($orders->sortByDesc('id') as $delivery)
 
-                        <p class="task-due">Adicionado:
-                        <label class="label label-inverse-success pull-right">{{ $order->created_at->format('d/m/Y H:i') }} {{ $order->created_at->diffForHumans() }}</label></p>
-                        <hr/>
-                        @if( $order->delivered_at)
-                        <p class="task-due">Entregue:
-                        <label class="label label-inverse-primary pull-right">{{ $order->delivered_at->format('d/m/Y H:i') }} {{ $order->delivered_at->diffForHumans() }}</label></p>
-                        @endif
-                    </div>
+                          @php
+
+                            $status = $delivery->status->id;
+
+                            $bgColor = 'success';
+
+                            switch($status) {
+                              case '1':
+                                $bgColor = 'primary';
+                                break;
+                              case '2':
+                                $bgColor = 'warning';
+                                break;
+                              case '3':
+                                $bgColor = 'success';
+                                break;
+                              case '4':
+                                $bgColor = 'danger';
+                                break;
+                            }
+
+                            @endphp
+
+                            <tr>
+                                <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                <td>{{ $delivery->client->name }}<br/>
+                                  <label class="label label-inverse-primary">{{$delivery->address->street}}, {{$delivery->address->number}} - {{$delivery->address->district}}, {{$delivery->address->city}}</label>
+                                </td>
+                                <td>{{ $delivery->created_at->format('d/m/Y H:i') }} <label class="label label-inverse-success">{{ $delivery->created_at->diffForHumans() }}</label></td>
+                                <td>
+
+                                  @if(in_array($delivery->status_id, [1,2,3]))
+
+                                  {{ $delivery->delivery_date->format('d/m/Y') }}
+
+                                  <label class="label label-inverse-primary">{{ $delivery->delivery_date->diffForHumans() }}</label>
+
+                                  @else
+
+                                  {{ $delivery->delivered_at->format('d/m/Y') }}
+
+                                  <label class="label label-inverse-success">{{ $delivery->delivered_at->diffForHumans() }}</label>
+
+                                  @endif
+
+                                </td>
+                                <td>{{ $delivery->documents->count() }}</td>
+                                <td>
+                                  <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
+                                </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            @if(in_array($order->status_id, [1,2,3]))
-                <div class="card-footer bg-c-blue">
-                    <div class="row align-items-center">
-                        <div class="col-9">
-                            <p class="text-white m-b-0">Previsão Entrega: {{ $order->delivery_date->format('d/m/Y') }}</p>
-                        </div>
-                        <div class="col-3 text-right">
-
-                        </div>
-                    </div>
-                </div>
-            @endif
-
         </div>
+
     </div>
-
-    @empty
-
-      <div class="col-md-12 col-lg-12">
-
-        <div class="widget white-bg no-padding">
-            <div class="p-m text-center">
-                <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
-                <br/>
-                <h6 class="font-bold no-margins">
-                    Nenhuma ordem de entrega foi registrada até o momento.
-                </h6>
-            </div>
-        </div>
-
-      </div>
-
-    @endforelse
 
     {{ $orders->links() }}
 
