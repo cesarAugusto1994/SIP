@@ -47,7 +47,7 @@ class NewTicket extends Notification
                     ->greeting('Novo Chamado Aberto')
                     ->subject($this->ticket->type->category->name . ': ' . $this->ticket->type->name)
                     ->line('Assunto: ' . $this->ticket->type->category->name . ' - ' . $this->ticket->type->name)
-                    ->line('Descrição: ' . $this->ticket->description)
+                    ->line('Descrição: ' . html_entity_decode(strip_tags(substr($this->ticket->description, 0, 800))))
                     ->line('Solicitante: ' . $this->ticket->user->person->name)
                     ->line('Data: ' . $this->ticket->created_at->format('d/m/Y H:i'))
                     ->action('Acessar Chamado', route('tickets.show', $this->ticket->uuid))
