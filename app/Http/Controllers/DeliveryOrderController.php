@@ -92,7 +92,7 @@ class DeliveryOrderController extends Controller
             $orders = $orders->where('client_id', $client);
         }
 
-        $orders = $orders->paginate(10);
+        $orders = $orders->paginate(20);
 
         //$orders = DeliveryOrder::all();
         return view('delivery-order.index', compact('orders'));

@@ -178,11 +178,10 @@
                         <thead>
                             <tr class="table-primary">
                                 <th>Ordem No.</th>
-                                <th>Cliente</th>
-                                <th>Data</th>
-                                <th>Previsão / Entrega</th>
-                                <th>Documentos</th>
                                 <th>Situação</th>
+                                <th>Cliente</th>
+                                <th>Previsão / Entrega</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -213,31 +212,30 @@
 
                             <tr>
                                 <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                <td>
+                                  <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
+                                </td>
                                 <td>{{ $delivery->client->name }}<br/>
                                   <label class="label label-inverse-primary">{{$delivery->address->street}}, {{$delivery->address->number}} - {{$delivery->address->district}}, {{$delivery->address->city}}</label>
                                 </td>
-                                <td>{{ $delivery->created_at->format('d/m/Y H:i') }} <label class="label label-inverse-success">{{ $delivery->created_at->diffForHumans() }}</label></td>
                                 <td>
 
                                   @if(in_array($delivery->status_id, [1,2,3]))
 
-                                  {{ $delivery->delivery_date->format('d/m/Y') }}
-
-                                  <label class="label label-inverse-primary">{{ $delivery->delivery_date->diffForHumans() }}</label>
+                                    {{ $delivery->delivery_date->format('d/m/Y') }}
+                                    <br/>
+                                    <label class="label label-inverse-primary">{{ $delivery->delivery_date->diffForHumans() }}</label>
 
                                   @elseif($delivery->delivered_at)
 
-                                  {{ $delivery->delivered_at->format('d/m/Y') }}
-
-                                  <label class="label label-inverse-success">{{ $delivery->delivered_at->diffForHumans() }}</label>
+                                    {{ $delivery->delivered_at->format('d/m/Y') }}
+                                    <br/>
+                                    <label class="label label-inverse-success">{{ $delivery->delivered_at->diffForHumans() }}</label>
 
                                   @endif
 
                                 </td>
-                                <td>{{ $delivery->documents->count() }}</td>
-                                <td>
-                                  <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
-                                </td>
+
                             </tr>
                           @endforeach
                         </tbody>
