@@ -269,9 +269,9 @@
                       <div class="media-body">
                           <h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ $message->user->person->name }}, {{$message->created_at->format('d/m/Y H:i:s')}}</span> </h6>
                           <p>{{$message->message}}</p>
-                          @if(auth()->user()->isAdmin() || $message->user->id == auth()->user()->id)
-                              <a data-route="{{ route('ticket_message_destroy', $message->uuid) }}" class="text-danger btnRemoveItem" style="cursor:pointer"><i class="fa fa-trash"></i> Apagar</a>
-                          @endif
+                            @if(auth()->user()->isAdmin() || $message->user->id == auth()->user()->id)
+                                <a href="#" data-route="{{ route('ticket_message_destroy', $message->uuid) }}" class="btn btn-danger btn-sm btnRemoveItem" style="cursor:pointer"><i class="fa fa-trash"></i> Apagar</a>
+                            @endif
                           <hr/>
                       </div>
                   </li>

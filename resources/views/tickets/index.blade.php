@@ -298,6 +298,7 @@
                                 <td>
 
                                   {{$ticket->created_at->format('d/m/Y H:i')}}
+                                  <br/>
                                   <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label>
 
                                 </td>

@@ -40,7 +40,7 @@ class TicketsController extends Controller
             }
 
         } else {
-            $tickets = Ticket::orderBy('status_id');
+            $tickets = Ticket::orderByDesc('id');
         }
 
         if($request->filled('code')) {
