@@ -100,198 +100,233 @@
   </div>
 
   <div class="row">
-      <div class="col-xl-3 col-lg-12 push-xl-9">
-          <div class="card">
-              <div class="card-block p-t-10">
-                  <div class="task-right">
-                      <div class="task-right-header-status">
-                          <span data-toggle="collapse">Prioridades</span>
-                          <i class="icofont icofont-rounded-down f-right"></i>
-                      </div>
 
-                      <div class="taskboard-right-progress">
-                          <h6>Altissima</h6>
-                          <div class="progress progress-striped progress-mini">
-                            <div style="width:{{ $highest }}%;background-color: #fe5d70;"
-                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('highest') }}">
-                              {{ $highest }}</div>
-                          </div>
+    <div class="col-xl-12 col-lg-12 filter-bar">
 
-                          <hr/>
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-                          <h6>Alta</h6>
-                          <div class="progress progress-striped progress-mini">
-                            <div style="width:{{ $high }}%;background-color: #fe9365;"
-                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('high') }}">
-                              {{ $high }}</div>
-                          </div>
+                  @permission('create.chamados')
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('tickets.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Chamado</a>
+                  @endpermission
 
-                          <hr/>
-
-                          <h6>Normal</h6>
-                          <div class="progress progress-striped progress-mini">
-                            <div style="width:{{ $normal }}%;background-color: #0ac282;"
-                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('normal') }}">
-                              {{ $normal }}</div>
-                          </div>
-
-                          <hr/>
-
-                          <h6>Baixa</h6>
-                          <div class="progress progress-striped progress-mini">
-                            <div style="width:{{ $low }}%;background-color: #01a9ac;"
-                              class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('low') }}">
-                              {{ $low }}</div>
-                          </div>
-                      </div>
-                  </div>
               </div>
           </div>
       </div>
-      <div class="col-xl-9 col-lg-12 pull-xl-3 filter-bar">
-          <nav class="navbar navbar-light bg-faded m-b-30 p-10">
-              <ul class="nav navbar-nav">
-                  <li class="nav-item active">
-                      <a class="nav-link" href="#!">Filtros: <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-clock-time"></i> Data</a>
-                      <div class="dropdown-menu" aria-labelledby="bydate">
-                          <a class="dropdown-item" href="?date=recente">Recente</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="?date=hoje">Hoje</a>
-                          <a class="dropdown-item" href="?date=ontem">Ontem</a>
-                          <a class="dropdown-item" href="?date=semana">Nesta Semana</a>
-                          <a class="dropdown-item" href="?date=mes">Neste Mês</a>
-                          <a class="dropdown-item" href="?date=ano">Neste Ano</a>
-                      </div>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-chart-histogram-alt"></i>Situação</a>
-                      <div class="dropdown-menu" aria-labelledby="bystatus">
-                          <a class="dropdown-item" href="?status=">Todos</a>
-                          <div class="dropdown-divider"></div>
-                          @foreach(\App\Helpers\Helper::ticketStatus() as $status)
-                              <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
-                          @endforeach
-                      </div>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Prioridade</a>
-                      <div class="dropdown-menu" aria-labelledby="bypriority">
-                          <a class="dropdown-item" href="?priority=">Todas</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="?priority=Altissima">Altissima</a>
-                          <a class="dropdown-item" href="?priority=Alta">Alta</a>
-                          <a class="dropdown-item" href="?priority=Normal">Normal</a>
-                          <a class="dropdown-item" href="?priority=Baixa">Baixa</a>
-                      </div>
-                  </li>
-                  @if(auth()->user()->isAdmin())
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Usuário</a>
-                          <div class="dropdown-menu" aria-labelledby="bystatus">
-                              <a class="dropdown-item" href="?user=">Todos</a>
-                              <div class="dropdown-divider"></div>
-                              @foreach(\App\Helpers\Helper::users() as $user)
-                                  <a class="dropdown-item" href="?user={{$user->id}}">{{$user->person->name}}</a>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+            </div>
+            <div class="card-block">
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="code" placeholder="Código do chamado">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" id="daterange" class="form-control" placeholder="Periodo">
+
+                            <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                            <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="status">
+                              <option value="">Situação</option>
+                              @foreach(\App\Helpers\Helper::ticketStatus() as $status)
+                                <option value="{{ $status->id }}">{{$status->name}}</option>
                               @endforeach
-                          </div>
-                      </li>
-                  @endif
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-automation"></i>Tipo</a>
-                      <div class="dropdown-menu" aria-labelledby="bystatus">
-                          <a class="dropdown-item" href="?type=">Todos</a>
-                          <div class="dropdown-divider"></div>
-                          @foreach(\App\Helpers\Helper::ticketCategories() as $category)
-                            @foreach($category->types as $type)
-                              @if(!$type->active) @continue; @endif
-                              <a class="dropdown-item" href="?type={{$type->id}}">{{$type->name}}</a>
-                            @endforeach
-                            <div class="dropdown-divider"></div>
-                          @endforeach
-                      </div>
-                  </li>
-              </ul>
-              <div class="nav-item nav-grid">
-                  @permission('create.chamados')
-                    <a class="btn btn-sm btn-success btn-round" href="{{route('tickets.create')}}">Novo Chamado</a>
-                  @endpermission
-              </div>
-
-          </nav>
-          <!-- Nav Filter tab end -->
-          <!-- Task board design block start-->
-          <div class="row">
-
-            @forelse($tickets->sortByDesc('id') as $ticket)
-
-                <div class="col-sm-6 col-md-4 col-xl-4">
-                    <div class="card card-border-{{ \App\Helpers\Helper::statusTaskCollor($ticket->status->id) }}">
-                        <div class="card-header">
-                            <a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ $ticket->id }} </a>
-                            <a href="{{ route('tickets.show', $ticket->uuid) }}"><b>{{$ticket->type->category->name}}</b></a>
-                            <a href="{{ route('tickets.show', $ticket->uuid) }}">
-                              <span class="label label-{{ \App\Helpers\Helper::statusTaskCollor($ticket->status->id) }} f-right"> {{ $ticket->status->name }} </span></a>
+                            </select>
                         </div>
-                        <div class="card-block">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                  <a href="{{ route('tickets.show', $ticket->uuid) }}">
-                                    <p class="task-detail"><b>{{$ticket->type->name}}</b>: {{substr($ticket->description,0,150)}}...</p>
-                                    <br/>
-                                    <p class="task-due"><strong> Aberto em : </strong>
-                                    <label class="label label-inverse-success">{{$ticket->created_at->format('d/m/Y H:i')}}</label></a>
-                                    <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label></p>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="user">
+                              <option value="">Usuários</option>
+                              @foreach(\App\Helpers\Helper::users()->sortBy('person.name') as $user)
+                                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                              @endforeach
+                            </select>
                         </div>
-                        <div class="card-footer">
-                            <div class="task-list-table">
-                                <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $ticket->user->uuid, 'link' => $ticket->user->avatar, 'avatar' => true])}}" title="{{ $ticket->user->person->name }}" alt="{{ $ticket->user->person->name }}"></a>
-                            </div>
-                            <div class="task-board">
-                                <label class="label label-{{ \App\Helpers\Helper::statusTaskPriorityCollor($ticket->priority) }}">{{ $ticket->priority }}</label>
-                                @if($ticket->status_id != 4)
-                                    <div class="dropdown-secondary dropdown">
-                                        <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                            <a class="dropdown-item waves-light waves-effect" href="{{route('tickets.edit', $ticket->uuid)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
-                                            <div class="dropdown-divider"></div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="type">
+                              <option value="">Tipo</option>
+                              @foreach(\App\Helpers\Helper::ticketCategories() as $category)
+                                <optgroup label="{{ $category->name }}">
+                                @foreach($category->types as $type)
+                                  @if(!$type->active) @continue; @endif
+                                  <option value="{{$type->id}}">{{$type->name}}</option>
+                                @endforeach
+                                </optgroup>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block p-t-10">
+                <div class="task-right">
+                    <div class="task-right-header-status">
+                        <span data-toggle="collapse">Prioridades</span>
+                        <i class="icofont icofont-rounded-down f-right"></i>
+                    </div>
+
+                    <div class="taskboard-right-progress">
+                        <h6>Altissima</h6>
+                        <div class="progress progress-striped progress-mini">
+                          <div style="width:{{ $highest }}%;background-color: #fe5d70;"
+                            class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('highest') }}">
+                            {{ $highest }}</div>
+                        </div>
+
+                        <hr/>
+
+                        <h6>Alta</h6>
+                        <div class="progress progress-striped progress-mini">
+                          <div style="width:{{ $high }}%;background-color: #fe9365;"
+                            class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('high') }}">
+                            {{ $high }}</div>
+                        </div>
+
+                        <hr/>
+
+                        <h6>Normal</h6>
+                        <div class="progress progress-striped progress-mini">
+                          <div style="width:{{ $normal }}%;background-color: #0ac282;"
+                            class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('normal') }}">
+                            {{ $normal }}</div>
+                        </div>
+
+                        <hr/>
+
+                        <h6>Baixa</h6>
+                        <div class="progress progress-striped progress-mini">
+                          <div style="width:{{ $low }}%;background-color: #01a9ac;"
+                            class="progress-bar {{ \App\Helpers\Helper::statusTaskPriorityCollor('low') }}">
+                            {{ $low }}</div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-            @empty
+    <div class="col-lg-9">
+        <!-- Recent Orders card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Ordens de Entrega Recentes</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>No.</th>
+                                <th>Situação</th>
+                                <th>Descrição</th>
+                                <th>Solicitante</th>
+                                <th>Abertura/Finalização</th>
+                                <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($tickets as $ticket)
 
-                <div class="col-md-12 col-lg-12">
+                          @php
 
-                  <div class="widget white-bg no-padding">
-                      <div class="p-m text-center">
-                          <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
-                          <br/>
-                          <h6 class="font-bold no-margins">
-                              Nenhum chamado encontrado.
-                          </h6>
-                      </div>
-                  </div>
+                            $status = $ticket->status->id;
 
+                            $bgColor = 'success';
+
+                            switch($status) {
+                              case '1':
+                                $bgColor = 'primary';
+                                break;
+                              case '2':
+                                $bgColor = 'warning';
+                                break;
+                              case '3':
+                                $bgColor = 'success';
+                                break;
+                              case '4':
+                                $bgColor = 'danger';
+                                break;
+                            }
+
+                            @endphp
+
+                            <tr>
+                                <td><a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ str_pad($ticket->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+
+                                <td>
+                                  <span class="label label-{{$bgColor}} f-right"> {{$ticket->status->name}} </span>
+                                </td>
+
+                                <td>
+                                  {{$ticket->type->category->name}} - {{$ticket->type->name}}
+                                  <br/>
+                                  <small>{{ html_entity_decode(strip_tags(substr($ticket->content, 0, 800))) }}</small>
+                                </td>
+                                <td>
+                                  <img width="32" class="img-fluid img-radius" src="{{ route('image', ['user' => $ticket->user->uuid, 'link' => $ticket->user->avatar, 'avatar' => true])}}" title="{{ $ticket->user->person->name }}" alt="{{ $ticket->user->person->name }}">
+                                  &nbsp;&nbsp;{{ $ticket->user->person->name }}
+                                </td>
+                                <td>
+
+                                  {{$ticket->created_at->format('d/m/Y H:i')}}
+                                  <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label>
+
+                                </td>
+                                <td>
+                                  @if($ticket->status_id != 4)
+                                      <div class="dropdown-secondary dropdown">
+                                          <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
+                                          <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                              <a class="dropdown-item waves-light waves-effect" href="{{route('tickets.edit', $ticket->uuid)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
+                                              <div class="dropdown-divider"></div>
+                                          </div>
+                                      </div>
+                                  @endif
+                                </td>
+
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
 
-            @endforelse
+    </div>
 
-            {{ $tickets->links() }}
+    {{ $tickets->links() }}
 
-          </div>
-          <!-- Task board design block end -->
-      </div>
-      <!-- Left column end -->
   </div>
+
 </div>
 </div>
 

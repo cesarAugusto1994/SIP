@@ -18,7 +18,7 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('departments.index') }}"> Chamados </a>
+                        <a href="{{ route('tickets.index') }}"> Chamados </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Novo</a>
                     </li>
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
-                      <textarea rows="5" required name="description" class="form-control ckeditor1"></textarea>
+                      <textarea rows="5" required name="description" class="form-control ckeditor"></textarea>
                     </div>
                 </div>
 

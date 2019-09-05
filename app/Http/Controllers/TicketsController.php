@@ -43,60 +43,44 @@ class TicketsController extends Controller
             $tickets = Ticket::orderBy('status_id');
         }
 
-        if($request->filled('status')) {
-            $status = $request->get('status');
-            $tickets = $tickets->where('status_id', $status);
+        if($request->filled('code')) {
+            $tickets->where('id', $request->get('code'));
+        } else {
+
+          if($request->filled('status')) {
+              $tickets->where('status_id', $request->get('status'));
+          }
+
+          if(!$request->has('find')) {
+              $tickets->whereIn('status_id', [1,2]);
+          }
+
+          if($request->filled('priority')) {
+              $tickets->where('priority', $request->get('priority'));
+          }
+
+          if($request->filled('user')) {
+              $tickets->where('user_id', $request->get('user'));
+          }
+
+          if($request->filled('type')) {
+              $tickets->where('type_id', $request->get('type'));
+          }
+
+          if($request->filled('start')) {
+              $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+              $tickets->where('created_at', '>=', $start->format('Y-m-d'))
+              ->orWhere('solved_at', $start->format('Y-m-d'));
+          }
+
+          if($request->filled('end')) {
+              $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+              $tickets->where('created_at', '<=', $end->format('Y-m-d'))
+              ->orWhere('solved_at', $end->format('Y-m-d'));
+          }
         }
 
-        if(!$request->has('status')) {
-            //$tickets = $tickets->whereIn('status_id', [1,2]);
-        }
-
-        if($request->filled('priority')) {
-            $priority = $request->get('priority');
-            $tickets = $tickets->where('priority', $priority);
-        }
-
-        if($request->filled('date')) {
-            $date = $request->get('date');
-            $tickets = $tickets->filter(function($ticket, $key) use ($date) {
-
-              $datePeriod = now()->subDays(0);
-
-              if($date == 'hoje') {
-                  return $ticket->created_at > now()->setTime(0,0,0) &&
-                  $ticket->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'ontem') {
-                  return $ticket->created_at > now()->subDays(1)->setTime(0,0,0) &&
-                  $ticket->created_at < now()->subDays(1)->setTime(23,59,59);
-              } elseif($date == 'semana') {
-                  return $ticket->created_at > now()->subDays(7)->setTime(0,0,0) &&
-                  $ticket->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'mes') {
-                  return $ticket->created_at > now()->subDays(30)->setTime(0,0,0) &&
-                  $ticket->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'ano') {
-                  return $ticket->created_at > now()->subDays(365)->setTime(0,0,0) &&
-                  $ticket->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'recente') {
-                  return $ticket->created_at > now()->subHours(2)->setTime(0,0,0) &&
-                  $ticket->created_at < now()->setTime(23,59,59);
-              }
-
-              return $ticket->created_at == $datePeriod;
-
-            });
-        }
-
-        if($request->filled('user')) {
-            $user = $request->get('user');
-            $tickets = $tickets->where('user.id', $user);
-        }
-
-        if($request->filled('type')) {
-            $type = $request->get('type');
-            $tickets = $tickets->where('type.id', $type);
-        }
+        $quantity = $tickets->count();
 
         $tickets = $tickets->paginate();
 
@@ -117,7 +101,7 @@ class TicketsController extends Controller
         $high = number_format(($high/$totalTickets) * 100, 2);
         $highest = number_format(($highest/$totalTickets) * 100, 2);
 
-        return view('tickets.index', compact('tickets', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest'));
+        return view('tickets.index', compact('tickets', 'quantity', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest'));
     }
 
     /**

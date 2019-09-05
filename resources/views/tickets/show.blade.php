@@ -32,6 +32,49 @@
 
   <div class="row">
 
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.chamados')
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('tickets.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Chamado</a>
+                  @endpermission
+
+                  @if($ticket->status_id != 4 && $ticket->status_id != 5)
+
+                  <div class="btn-group m-b-5 m-t-5">
+
+                      @if($ticket->status_id == 1)
+                        <a href="#" onclick="startTicket()" class="btn btn-primary btn-sm waves-effect waves-light"><i class="icofont icofont-play"></i> Iniciar</a>
+                      @elseif($ticket->status_id == 2)
+                        <a href="#" onclick="concludeTicket()" class="btn btn-primary btn-sm waves-effect waves-light"><i class="icofont icofont-play"></i> Concluir</a>
+                      @elseif($ticket->status_id == 3 && $ticket->user_id == auth()->user()->id)
+                        <a href="#" onclick="finishTicket()" class="btn btn-primary btn-sm waves-effect waves-light"><i class="icofont icofont-play"></i> Finalizar</a>
+                      @endif
+
+                      @if($ticket->status_id != 4)
+                        <a href="{{ route('tickets.edit', $ticket->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="icofont icofont-edit-alt"></i></a>
+                      @endif
+
+                      @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
+                        <a class="btn btn-danger btn-sm waves-effect waves-light btnCancelTicket" data-route="{{ route('ticket_cancel', $ticket->uuid) }}" href="#"><i class="icofont icofont-ban"></i> Cancelar</a>
+                      @endif
+
+                 </div>
+
+                 @endif
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
     @if($ticket->status_id == 3)
     <div class="col-sm-12">
         <!-- List type card start -->
@@ -78,26 +121,6 @@
       <div class="card">
           <div class="card-header">
               <h5>Solicitação</h5>
-              <div class="card-header-right">
-                @if($ticket->status_id != 4 && $ticket->status_id != 5)
-                  <div class="dropdown-inverse dropdown open">
-                      <button class="btn btn-primary btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
-                      <div class="dropdown-menu" aria-labelledby="dropdown-3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-
-                        @if($ticket->status_id == 1)
-                          <a class="dropdown-item waves-light waves-effect" onclick="startTicket()" href="#">Executar Chamado</a>
-                        @elseif($ticket->status_id == 2)
-                          <a class="dropdown-item waves-light waves-effect" onclick="concludeTicket()" href="#">Concluir Chamado</a>
-                        @elseif($ticket->status_id == 3 && $ticket->user_id == auth()->user()->id)
-                          <a class="dropdown-item waves-light waves-effect" onclick="finishTicket()" href="#">Finalizar Chamado</a>
-                        @endif
-                        @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
-                          <a class="dropdown-item waves-light waves-effect text-danger btnCancelTicket" data-route="{{ route('ticket_cancel', $ticket->uuid) }}" href="#">Cancelar Chamado</a>
-                        @endif
-                      </div>
-                  </div>
-                @endif
-              </div>
           </div>
 
           <form style="display:none" id="ticket-start" class="dropdown-item waves-light waves-effect" action="{{ route('ticket_start', $ticket->uuid) }}" method="POST">
@@ -128,10 +151,10 @@
                     </p>
                   </div>
 
-                  <div class="col-sm-6 col-xl-4">
-                    <h4 class="sub-title">Prioridade</h4>
-                    <p class="text-muted m-b-30">
-                        <label class="label label-{{ \App\Helpers\Helper::statusTaskPriorityCollor($ticket->priority) }}">{{ $ticket->priority }}</label>
+                  <div class="col-sm-12 col-xl-4">
+                    <h4 class="sub-title">Solicitante</h4>
+                    <p class="lead m-b-30">
+                        {{ $ticket->user->person->name }}
                     </p>
                   </div>
 
@@ -147,12 +170,15 @@
                         {{ $ticket->created_at->format('d/m/Y H:i:s') }}
                     </p>
                   </div>
-                  <div class="col-sm-12 col-xl-4">
-                    <h4 class="sub-title">Solicitante</h4>
+
+
+                  <div class="col-sm-6 col-xl-4">
+                    <h4 class="sub-title">Prioridade</h4>
                     <p class="text-muted m-b-30">
-                        {{ $ticket->user->person->name }}
+                        <label class="label label-{{ \App\Helpers\Helper::statusTaskPriorityCollor($ticket->priority) }}">{{ $ticket->priority }}</label>
                     </p>
                   </div>
+
                   <div class="col-sm-12 col-xl-4">
                     <h4 class="sub-title">Setor</h4>
                     <p class="text-muted m-b-30">
@@ -219,8 +245,8 @@
 
                   <div class="col-sm-12 col-xl-12">
                       <h4 class="sub-title">Descrição</h4>
-                      <p class="text-muted m-b-30">
-                          {{ $ticket->description  }}
+                      <p class="m-b-30">
+                          {!! $ticket->description !!}
                       </p>
                   </div>
               </div>

@@ -66,9 +66,6 @@ class DeliveryOrderController extends Controller
               $orders->where('delivery_date', '<=', $end->format('Y-m-d'))
               ->orWhere('delivered_at', $end->format('Y-m-d'));
           }
-
-
-
         }
 
         $quantity = $orders->count();
