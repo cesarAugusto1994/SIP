@@ -37,65 +37,45 @@ class DeliveryOrderController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        $orders = DeliveryOrder::where('id', '>', 0);
+        $orders = DeliveryOrder::orderByDesc('id');
 
-        if($request->filled('status')) {
-            $status = $request->get('status');
-            $orders = $orders->where('status_id', $status);
+        if(!$request->has('find')) {
+            $orders->whereIn('status_id', [1,2]);
         }
 
-        if(!$request->has('status')) {
-            //$orders = $orders->whereIn('status_id', [1,2]);
+        if($request->filled('code')) {
+            $orders->where('id', $request->get('code'));
+        } else {
+
+          if($request->filled('client')) {
+              $orders->where('client_id', $request->get('client'));
+          }
+
+          if($request->filled('status')) {
+              $orders->where('status_id', $request->get('status'));
+          }
+
+          if($request->filled('start')) {
+              $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+              $orders->where('delivery_date', '>=', $start->format('Y-m-d'))
+              ->orWhere('delivered_at', $start->format('Y-m-d'));
+          }
+
+          if($request->filled('end')) {
+              $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+              $orders->where('delivery_date', '<=', $end->format('Y-m-d'))
+              ->orWhere('delivered_at', $end->format('Y-m-d'));
+          }
+
+
+
         }
 
-        if($request->filled('q') && !$request->has('status')) {
-            $search = $request->get('q');
-            $orders = $orders->where('id', $search);
-        }
-
-        if($request->filled('date')) {
-            $date = $request->get('date');
-            $orders = $orders->filter(function($order, $key) use ($date) {
-
-              $datePeriod = now()->subDays(0);
-
-              if($date == 'hoje') {
-                  return $order->created_at > now()->setTime(0,0,0) &&
-                  $order->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'ontem') {
-                  return $order->created_at > now()->subDays(1)->setTime(0,0,0) &&
-                  $order->created_at < now()->subDays(1)->setTime(23,59,59);
-              } elseif($date == 'semana') {
-                  return $order->created_at > now()->subDays(7)->setTime(0,0,0) &&
-                  $order->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'mes') {
-                  return $order->created_at > now()->subDays(30)->setTime(0,0,0) &&
-                  $order->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'ano') {
-                  return $order->created_at > now()->subDays(365)->setTime(0,0,0) &&
-                  $order->created_at < now()->setTime(23,59,59);
-              } elseif($date == 'recente') {
-                  return $order->created_at > now()->subHours(2)->setTime(0,0,0) &&
-                  $order->created_at < now()->setTime(23,59,59);
-              }
-
-            });
-        }
-
-        if($request->filled('user')) {
-            $user = $request->get('user');
-            $orders = $orders->where('user_id', $user);
-        }
-
-        if($request->filled('client')) {
-            $client = $request->get('client');
-            $orders = $orders->where('client_id', $client);
-        }
+        $quantity = $orders->count();
 
         $orders = $orders->paginate(20);
 
-        //$orders = DeliveryOrder::all();
-        return view('delivery-order.index', compact('orders'));
+        return view('delivery-order.index', compact('orders', 'quantity'));
     }
 
     public function billing(Request $request)

@@ -102,75 +102,83 @@
   <div class="row">
 
     <div class="col-xl-12 col-lg-12 filter-bar">
-      <nav class="navbar navbar-light bg-faded m-b-30 p-10">
-          <ul class="nav navbar-nav">
-              <li class="nav-item active">
-                  <a class="nav-link" href="#!">Filtros: <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-clock-time"></i> Data</a>
-                  <div class="dropdown-menu" aria-labelledby="bydate">
-                      <a class="dropdown-item" href="?date=recente">Recente</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?date=hoje">Hoje</a>
-                      <a class="dropdown-item" href="?date=ontem">Ontem</a>
-                      <a class="dropdown-item" href="?date=semana">Nesta Semana</a>
-                      <a class="dropdown-item" href="?date=mes">Neste Mês</a>
-                      <a class="dropdown-item" href="?date=ano">Neste Ano</a>
-                  </div>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-chart-histogram-alt"></i>Situação</a>
-                  <div class="dropdown-menu" aria-labelledby="bystatus">
-                      <a class="dropdown-item" href="?status=">Todos</a>
-                      <div class="dropdown-divider"></div>
-                      @foreach(\App\Helpers\Helper::deliveryStatus() as $status)
-                          <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
-                      @endforeach
-                  </div>
-              </li>
 
-              @if(auth()->user()->isAdmin())
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Cliente</a>
-                      <div class="dropdown-menu" aria-labelledby="bystatus">
-                          <a class="dropdown-item" href="?client=">Todos</a>
-                          <div class="dropdown-divider"></div>
-                          @foreach(\App\Helpers\Helper::clients() as $client)
-                              <a class="dropdown-item" href="?client={{$client->id}}">{{$client->name}}</a>
-                          @endforeach
-                      </div>
-                  </li>
-              @endif
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-              <li class="nav-item">
-                <form action="?">
-                <div class="input-group" style="margin-top: 5px;margin-bottom: 5px;">
-                  <input type="text" name="q" class="form-control" style="width: 200px;" placeholder="Pesquisar"/>
-                  <span class="input-group-addon"><i class="feather icon-search"></i>
-                  </span>
-                </div>
-              </li>
+                  @permission('create.ordem.entrega')
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('delivery-order.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Entrega</a>
+                  @endpermission
 
-          </ul>
-          <div class="nav-item nav-grid">
-              @permission('create.ordem.entrega')
-                <a class="btn bottom-right btn-primary btn-sm" href="{{route('delivery-order.create')}}">Nova OE</a>
-              @endpermission
+              </div>
           </div>
-
-      </nav>
+      </div>
     </div>
 
   </div>
 
   <div class="row">
 
-    <div class="col-lg-12">
+    <div class="col-lg-3">
+
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+            </div>
+            <div class="card-block">
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="code" placeholder="Código da OE">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" id="daterange" class="form-control" placeholder="Periodo">
+
+                            <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                            <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="status">
+                              <option value="">Situação</option>
+                              @foreach(\App\Helpers\Helper::deliveryStatus() as $status)
+                                <option value="{{ $status->id }}">{{$status->name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="client">
+                              <option value="">Cliente</option>
+                              @foreach(\App\Helpers\Helper::clients()->sortBy('name') as $client)
+                                <option value="{{$client->id}}">{{$client->name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
         <!-- Recent Orders card start -->
         <div class="card">
             <div class="card-header">
                 <h5>Ordens de Entrega Recentes</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
             </div>
             <div class="card-block table-border-style">
                 <div class="table-responsive">

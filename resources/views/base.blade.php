@@ -457,6 +457,59 @@
 
   $(document).ready(function() {
 
+    $('#daterange').daterangepicker({
+        "showDropdowns": true,
+        "autoApply": true,
+        ranges: {
+            'Hoje': [moment(), moment()],
+            'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
+            'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
+            'Este Mês': [moment().startOf('month'), moment().endOf('month')],
+            'Mês Anterior': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        "locale": {
+            "format": "DD/MM/YYYY",
+            "separator": " - ",
+            "applyLabel": "Applicar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "De",
+            "toLabel": "Até",
+            "customRangeLabel": "Editar",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "Dom",
+                "Seg",
+                "Ter",
+                "Qua",
+                "Qui",
+                "Sex",
+                "Sab"
+            ],
+            "monthNames": [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ],
+            "firstDay": 1
+        },
+        //"startDate": "08/29/2019",
+        //"endDate": "09/04/2019"
+      }, function(start, end, label) {
+        $("#start").val(start.format('DD/MM/YYYY'));
+        $("#end").val(end.format('DD/MM/YYYY'));
+        //console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+      });
+
       var $formValid = $('.formValidation').parsley();
 
       if($('.formValidation').length > 0) {
