@@ -14,6 +14,7 @@ use File;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 use App\Events\Notifications;
 use App\Jobs\Ticket as TicketJob;
+use Khill\Lavacharts\Lavacharts;
 
 class TicketsController extends Controller
 {
@@ -25,6 +26,13 @@ class TicketsController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+
+        $lava = new Lavacharts;
+
+        $reasons = $lava->DataTable();
+        $reasons2 = $lava->DataTable();
+        $reasons3 = $lava->DataTable();
+        $reasons4 = $lava->DataTable();
 
         if(!$user->isAdmin()) {
 
@@ -82,6 +90,66 @@ class TicketsController extends Controller
 
         $quantity = $tickets->count();
 
+        $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $tickets->get();
+
+        $groupedByType = $groupedByType->groupBy('type_id');
+
+        $reasons->addStringColumn('Tipos')
+                ->addNumberColumn('Percent');
+
+        foreach ($groupedByType as $key => $grouped) {
+          $reasons->addRow([$grouped->first()->type->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Tipo', $reasons, [
+            'title' => 'Chamados Por Tipo'
+        ]);
+
+        // Usuário
+
+        $reasons2->addStringColumn('Usuários')
+                ->addNumberColumn('Percent');
+
+        $groupedByUser = $groupedByUser->groupBy('user_id');
+
+        foreach ($groupedByUser as $key => $grouped) {
+          $reasons2->addRow([$grouped->first()->user->person->name, $grouped->count()]);
+        }
+
+        $lava->ColumnChart('Usuario', $reasons2, [
+            'title' => 'Chamados Por Usuário'
+        ]);
+
+        // Status
+
+        $reasons3->addStringColumn('Situação')
+                ->addNumberColumn('Percent');
+
+        $groupedByStatus = $groupedByStatus->groupBy('status_id');
+
+        foreach ($groupedByStatus as $key => $grouped) {
+          $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Status', $reasons3, [
+            'title' => 'Chamados Por Situação'
+        ]);
+
+        // Prioridade
+
+        $reasons4->addStringColumn('Prioridades')
+                ->addNumberColumn('Quantidade');
+
+        $groupedByPriority = $groupedByPriority->groupBy('priority');
+
+        foreach ($groupedByPriority as $key => $grouped) {
+          $reasons4->addRow([$grouped->first()->priority, $grouped->count()]);
+        }
+
+        $lava->BarChart('Prioridade', $reasons4, [
+            'title' => 'Chamados Por Prioridade'
+        ]);
+
         $tickets = $tickets->paginate();
 
         $opened = $tickets->whereIn('status_id', [1,2,3])->count();
@@ -101,7 +169,9 @@ class TicketsController extends Controller
         $high = number_format(($high/$totalTickets) * 100, 2);
         $highest = number_format(($highest/$totalTickets) * 100, 2);
 
-        return view('tickets.index', compact('tickets', 'quantity', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest'));
+
+
+        return view('tickets.index', compact('tickets', 'quantity', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest', 'lava'));
     }
 
     /**
@@ -125,6 +195,14 @@ class TicketsController extends Controller
         $data = $request->request->all();
 
         $user = $request->user();
+
+        if(!$request->filled('description')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Pro favor informe a descrição do chamado.'
+          ]);
+
+          return back();
+        }
 
         $data['user_id'] = $user->id;
         $data['status_id'] = 1;

@@ -76,6 +76,7 @@ return array(
     'Laravolt\\Avatar\\' => array($vendorDir . '/laravolt/avatar/src'),
     'Laravel\\Tinker\\' => array($vendorDir . '/laravel/tinker/src'),
     'Lab404\\Impersonate\\' => array($vendorDir . '/lab404/laravel-impersonate/src'),
+    'Khill\\Lavacharts\\' => array($vendorDir . '/khill/lavacharts/src'),
     'JakubOnderka\\PhpConsoleHighlighter\\' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),

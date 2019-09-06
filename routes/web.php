@@ -174,6 +174,9 @@ Route::middleware('auth')->group(function () {
           Route::resource('roles', 'RolesController');
           Route::resource('permissions', 'PermissionsController');
 
+          Route::resource('modules', 'ModulesController');
+          Route::resource('menus', 'MenusController');
+
           Route::resource('occupations', 'OccupationController');
           Route::resource('types', 'DocumentTypesController');
 
