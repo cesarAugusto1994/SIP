@@ -98,7 +98,7 @@ class TicketsController extends Controller
                 ->addNumberColumn('Percent');
 
         foreach ($groupedByType as $key => $grouped) {
-          $reasons->addRow([$grouped->first()->type->name, $grouped->count()]);
+          $reasons->addRow([$grouped->first()->type->name. ' - '.$grouped->first()->type->category->name, $grouped->count()]);
         }
 
         $lava->DonutChart('Tipo', $reasons, [
@@ -108,7 +108,7 @@ class TicketsController extends Controller
         // Usuário
 
         $reasons2->addStringColumn('Usuários')
-                ->addNumberColumn('Percent');
+                ->addNumberColumn('Quantidade');
 
         $groupedByUser = $groupedByUser->groupBy('user_id');
 
