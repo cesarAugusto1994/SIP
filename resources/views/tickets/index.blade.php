@@ -287,18 +287,9 @@
                                 </td>
 
                                 <td>
-
-                                  <a class="mytooltip tooltip-effect-1">{{$ticket->type->category->name}} - {{$ticket->type->name}}
-                                    <span class="tooltip-content4" style="top: 10px;">
-                                      <span class="tooltip-text3">
-                                        <span class="tooltip-inner2">Descrição:
-                                          <br>
-                                          {{ html_entity_decode(strip_tags(substr($ticket->description, 0, 800))) }}
-                                        </span>
-                                      </span>
-                                    </span>
-                                  </a>
-
+                                  <p data-toggle="tooltip" data-original-title="{{ html_entity_decode(strip_tags(substr($ticket->description, 0, 800))) }}">
+                                      {{$ticket->type->category->name}} - {{$ticket->type->name}}
+                                  </p>
                                 </td>
                                 <td>
                                   <img width="32" class="img-fluid img-radius" src="{{ route('image', ['user' => $ticket->user->uuid, 'link' => $ticket->user->avatar, 'avatar' => true])}}" title="{{ $ticket->user->person->name }}" alt="{{ $ticket->user->person->name }}">
