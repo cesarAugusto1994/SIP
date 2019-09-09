@@ -69,11 +69,7 @@
                     <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Função</label>
                         <div class="input-group">
-                            <select class="form-control select2" name="occupation_id" required>
-                                  @foreach(\App\Helpers\Helper::clientOccupation()->sortBy('name') as $occupation)
-                                      <option value="{{$occupation->uuid}}" {{ old('occupation_id') == $occupation->uuid ? 'selected' : '' }}>{{$occupation->name}}</option>
-                                  @endforeach
-                            </select>
+                            <select class="form-control select-client-occuparions" name="occupation_id" required data-url="{{ route('client_occupations_search') }}"></select>
                         </div>
                         {!! $errors->first('occupation_id', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -105,11 +101,7 @@
                     <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
-                            <select class="form-control select2" name="company_id" required>
-                                  @foreach(\App\Helpers\Helper::clients() as $companyItem)
-                                      <option value="{{$companyItem->uuid ?? ''}}" {{ !empty($company) && $company->uuid == $companyItem->uuid || request()->get('company_id') == $companyItem->uuid ? 'selected' : '' }}>{{$companyItem->name}}</option>
-                                  @endforeach
-                            </select>
+                            <select class="form-control select-client" name="company_id" data-url="{{ route('client_search') }}" required></select>
                         </div>
                         {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -138,3 +130,7 @@
 </div>
 
 @endsection
+
+@section('scripts')
+
+@stop

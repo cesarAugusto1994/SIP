@@ -45,8 +45,6 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 
-    <link href="{{ asset('adminty\components\bootstrap-tagsinput\css\bootstrap-tagsinput.css') }}" rel="stylesheet" />
-    <link href="{{ asset('adminty\components\select2\css\select2-b.min.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('adminty\components\switchery\css\switchery.min.css') }}" rel="stylesheet" type="text/css" />
 
@@ -69,6 +67,11 @@
     <!-- Date-Dropper css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\datedropper\css\datedropper.min.css') }}">
 
+    <link href="{{ asset('adminty\components\bootstrap-tagsinput\css\bootstrap-tagsinput.css') }}" rel="stylesheet" />
+
+    <link href="{{ asset('adminty\components\select2\css\select2-b.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">-->
     @yield('css')
 
     <style>
@@ -235,11 +238,13 @@
 <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 
 <script src="{{ asset('adminty\components\bootstrap-tagsinput\js\bootstrap-tagsinput.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.full.min.js" integrity="sha256-vdvhzhuTbMnLjFRpvffXpAW9APHVEMhWbpeQ7qRrhoE=" crossorigin="anonymous"></script>
+
+<!-- Select2
+    <script src="{{ asset('adminty\components\select2\js\select2.full.min.js') }}"></script>
+-->
+
 
 <script src="{{ asset('adminty\components\switchery\js\switchery.min.js') }}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/i18n/pt-BR.js"></script>
 
 <script src="{{ asset('adminty\components/bootstrap-filestyle/js/bootstrap-filestyle.min.js') }}" type="text/javascript"></script>
 
@@ -281,6 +286,8 @@
 
 <script type="text/javascript" src="{{ asset('adminty\components\datedropper\js\datedropper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\advance-elements\custom-picker.js') }}"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
 <input type="hidden" value="{{ route('users_locales') }}" id="user-locales"/>
@@ -835,6 +842,68 @@ $(document).ready(function() {
 			width: '100%',
       placeholder: "Selecione"
 		});
+
+    $('.select-client').select2({
+      ajax: {
+        type: "GET",
+        dataType: 'json',
+        delay: 250,
+        url: $('.select-client').data('url'),
+        data: function (params) {
+          var query = {
+            search: params.term,
+            type: 'public'
+          }
+
+          return query;
+        },
+        processResults: function (data) {
+            return {
+                results: $.map(data, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.id
+                    }
+                })
+            };
+        }
+      },
+      cache: true,
+      placeholder: 'Procurar um cliente',
+      minimumInputLength: 1,
+
+    });
+
+    $('.select-client-occuparions').select2({
+      ajax: {
+        type: "GET",
+        dataType: 'json',
+        delay: 250,
+        url: $('.select-client-occuparions').data('url'),
+        data: function (params) {
+          var query = {
+            search: params.term,
+            type: 'public'
+          }
+
+          return query;
+        },
+        processResults: function (data) {
+            return {
+                results: $.map(data, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.id
+                    }
+                })
+            };
+        }
+      },
+      cache: true,
+      placeholder: 'Procurar um cliente',
+      minimumInputLength: 1,
+
+    });
 
     var elem = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 

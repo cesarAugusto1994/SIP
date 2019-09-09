@@ -19,6 +19,28 @@ class ClientOccupationsController extends Controller
         return view('clients.occupations.index', compact('occupations'));
     }
 
+    public function search(Request $request)
+    {
+        if(!$request->filled('search')) {}
+
+        $search = $request->get('search');
+
+        $occupations = Occupation::where('id', $search)
+        ->orWhere('name', 'like', "%$search%")
+        ->get();
+
+        $result = [];
+
+        $result = $occupations->map(function($occupation) {
+            return [
+              'id' => $occupation->uuid,
+              'name' => $occupation->name
+            ];
+        });
+
+        return json_encode($result);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

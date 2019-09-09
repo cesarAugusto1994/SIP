@@ -79,6 +79,29 @@ class ClientController extends Controller
         return view('clients.index', compact('clients', 'quantity'));
     }
 
+    public function search(Request $request)
+    {
+        if(!$request->filled('search')) {}
+
+        $search = $request->get('search');
+
+        $clients = Client::where('id', $search)
+        ->orWhere('name', 'like', "%$search%")
+        ->orWhere('document', 'like', "%$search%")
+        ->get();
+
+        $result = [];
+
+        $result = $clients->map(function($client) {
+            return [
+              'id' => $client->uuid,
+              'name' => $client->name
+            ];
+        });
+
+        return json_encode($result);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

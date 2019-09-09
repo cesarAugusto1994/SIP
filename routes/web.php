@@ -205,6 +205,9 @@ Route::middleware('auth')->group(function () {
           Route::post('tickets/message/store', 'TicketMessagesController@store')->name('ticket_message_store');
           Route::delete('task/message/{id}/destroy', 'TicketMessagesController@destroy')->name('ticket_message_destroy');
 
+          Route::get('clients/search/json', 'ClientController@search')->name('client_search');
+          Route::get('clients/occupations/search/json', 'ClientOccupationsController@search')->name('client_occupations_search');
+
           Route::get('clients/addresses/search', 'ClientController@addresses')->name('client_addresses_search');
           Route::get('clients/{id}/addresses', 'AddressesController@show')->name('client_addresses');
           Route::get('clients/{id}/addresses/create', 'AddressesController@create')->name('client_addresses_create');
