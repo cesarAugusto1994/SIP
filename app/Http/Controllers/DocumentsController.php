@@ -72,7 +72,7 @@ class DocumentsController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('documents.create',compact('clients', 'types'));
+        return view('documents.create',compact('types'));
     }
 
     /**
