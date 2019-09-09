@@ -291,6 +291,8 @@
 
 <input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
 <input type="hidden" value="{{ route('users_locales') }}" id="user-locales"/>
+<input type="hidden" value="{{ route('client_search') }}" id="input-search-clientes"/>
+
 
 <script>
   // This example requires the Places library. Include the libraries=places
@@ -848,7 +850,7 @@ $(document).ready(function() {
         type: "GET",
         dataType: 'json',
         delay: 250,
-        url: $('.select-client').data('url'),
+        url: $('#input-search-clientes').val(),
         data: function (params) {
           var query = {
             search: params.term,

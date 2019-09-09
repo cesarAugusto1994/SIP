@@ -77,13 +77,10 @@
                   <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="form-control select2 select-client-employees"
+                        <select class="form-control select-client-employees select-client"
                           data-search-employees="{{ route('client_employees_search') }}"
                           name="client_id" data-target="#select-employee" required>
-                              <option value="">Selecione um Cliente</option>
-                              @foreach($clients as $client)
-                                  <option value="{{$client->uuid}}">{{$client->name}}</option>
-                              @endforeach
+
                         </select>
                       </div>
                       {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
@@ -158,13 +155,10 @@
               + '<div class="form-group">'
                   + '<label class="col-form-label">Cliente</label>'
                   + '<div class="input-group">'
-                    + '<select class="form-control select-client-employees select2"'
+                    + '<select class="form-control select-client-employees"'
                       + 'data-search-employees="{{ route("client_employees_search") }}"'
                       + 'name="client_id-'+index+'" data-target="#select-employee-'+index+'" required>'
-                          + '<option value="">Selecione um Cliente</option>'
-                          @foreach($clients as $client)
-                              + '<option value="{{$client->uuid}}">{{$client->name}}</option>'
-                          @endforeach
+
                     + '</select>'
                   + '</div>'
               + '</div>'
@@ -195,7 +189,36 @@
         $("#select-employee-" + index).select2();
         indexes.val(index);
 
-        $('.select-client-employees').select2();
+        $('.select-client-employees').select2({
+          ajax: {
+            type: "GET",
+            dataType: 'json',
+            delay: 250,
+            url: $('#input-search-clientes').val(),
+            data: function (params) {
+              var query = {
+                search: params.term,
+                type: 'public'
+              }
+
+              return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+          },
+          cache: true,
+          placeholder: 'Procurar um cliente',
+          minimumInputLength: 1,
+
+        });
       });
 
       var btnRmItem = $(".btnRmItem");
