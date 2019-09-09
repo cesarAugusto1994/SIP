@@ -99,7 +99,7 @@
                         <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
                             <select class="form-control select2" name="company_id" required>
-                                  @foreach($companies as $companyItem)
+                                  @foreach(\App\Helpers\Helper::clients() as $companyItem)
                                       <option value="{{$companyItem->uuid}}" {{ $employee->company_id == $companyItem->id ? 'selected' : '' }}>{{$companyItem->name}}</option>
                                   @endforeach
                             </select>

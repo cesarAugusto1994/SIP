@@ -106,7 +106,7 @@
                         <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
                             <select class="form-control select2" name="company_id" required>
-                                  @foreach($companies as $companyItem)
+                                  @foreach(\App\Helpers\Helper::clients() as $companyItem)
                                       <option value="{{$companyItem->uuid ?? ''}}" {{ !empty($company) && $company->uuid == $companyItem->uuid || request()->get('company_id') == $companyItem->uuid ? 'selected' : '' }}>{{$companyItem->name}}</option>
                                   @endforeach
                             </select>
