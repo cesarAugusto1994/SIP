@@ -110,7 +110,7 @@
         <div class="card">
             <div class="card-block">
                 <div id="chart-div-user"></div>
-                {!! $lava->render('ColumnChart', 'Usuario', 'chart-div-user') !!}
+                {!! $lava->render('DonutChart', 'Usuario', 'chart-div-user') !!}
             </div>
         </div>
     </div>

@@ -116,7 +116,7 @@ class TicketsController extends Controller
           $reasons2->addRow([$grouped->first()->user->person->name, $grouped->count()]);
         }
 
-        $lava->ColumnChart('Usuario', $reasons2, [
+        $lava->DonutChart('Usuario', $reasons2, [
             'title' => 'Chamados Por Usuário'
         ]);
 
@@ -150,17 +150,18 @@ class TicketsController extends Controller
             'title' => 'Chamados Por Prioridade'
         ]);
 
-        $tickets = $tickets->paginate();
-
-        $opened = $tickets->whereIn('status_id', [1,2,3])->count();
-        $finished = $tickets->whereIn('status_id', [4])->count();
-        $canceled = $tickets->whereIn('status_id', [5])->count();
-
         $total = $tickets->count();
-        $low =  $tickets->where('priority', 'Baixa')->count();
-        $normal =  $tickets->where('priority', 'Normal')->count();
-        $high =  $tickets->where('priority', 'Alta')->count();
-        $highest =  $tickets->where('priority', 'Altíssima')->count();
+
+        $ticketsReport = $tickets = $tickets->paginate();
+
+        $opened = $ticketsReport->whereIn('status_id', [1,2,3])->count();
+        $finished = $ticketsReport->whereIn('status_id', [4])->count();
+        $canceled = $ticketsReport->whereIn('status_id', [5])->count();
+
+        $low =  $ticketsReport->where('priority', 'Baixa')->count();
+        $normal =  $ticketsReport->where('priority', 'Normal')->count();
+        $high =  $ticketsReport->where('priority', 'Alta')->count();
+        $highest =  $ticketsReport->where('priority', 'Altíssima')->count();
 
         $totalTickets = $total > 0 ? $total : 1;
 
@@ -168,8 +169,6 @@ class TicketsController extends Controller
         $normal = number_format(($normal/$totalTickets) * 100, 2);
         $high = number_format(($high/$totalTickets) * 100, 2);
         $highest = number_format(($highest/$totalTickets) * 100, 2);
-
-
 
         return view('tickets.index', compact('tickets', 'quantity', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest', 'lava'));
     }
