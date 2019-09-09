@@ -48,12 +48,11 @@
                                 <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                                     <label class="col-form-label">Cliente</label>
                                     <div class="input-group">
-                                      <select class="select2 select-client-modal-address select-client-addresses select-client-documents"
+                                      <select class="select-client select-client-modal-address select-client-addresses select-client-documents"
                                         data-search-addresses="{{ route('client_addresses_search') }}"
                                         data-search-documents="{{ route('client_documents_search') }}"
                                         name="client_id" required>
-                                            <option value="">Selecione um Cliente</option>
-                                            @foreach($clients as $client)
+                                            @foreach(\App\Helpers\Helper::clients() as $client)
                                                 <option value="{{$client->uuid}}" {{ request()->get('client') == $client->uuid ? 'selected' : '' }}>{{$client->name}}</option>
                                             @endforeach
                                       </select>
@@ -61,6 +60,20 @@
                                     {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
                                 </div>
 
+                            </div>
+
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="checkbox-fade fade-in-primary d-">
+                                        <label>
+                                            <input type="checkbox" name="checkbox_address" value="1" id="checkbox-new-address">
+                                            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                            <span class="text-inverse">Adicionar Endereço</span>
+                                        </label>
+                                    </div>
+                                  </div>
+                              </div>
                             </div>
 
                             <div class="col-md-12" id="div-select-address">

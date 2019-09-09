@@ -374,6 +374,8 @@
         $("#lat").val(place.geometry.location.lat());
         $("#lng").val(place.geometry.location.lng());
 
+        $("#pac-container").parent().append("<p class='text-success'>O Endereço está correto!</p>");
+
         // Get each component of the address from the place details,
         // and then fill-in the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {

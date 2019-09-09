@@ -185,8 +185,8 @@
 
                                       @if($document->status_id == 1)
 
-                                          @permission('edit.documentos')
-                                            <a href="{{route('documents.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
+                                          @permission('create.ordem.entrega')
+                                            <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
                                           @endpermission
 
                                       @endif

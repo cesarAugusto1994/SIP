@@ -216,8 +216,8 @@
                                                     <td>{{ $order->address->district }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">Cidade</th>
-                                                    <td>{{ $order->address->city }}</td>
+                                                    <th scope="row">Cidade / Estado</th>
+                                                    <td>{{ $order->address->city }} / {{ $order->address->state }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">CEP</th>
