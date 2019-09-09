@@ -7,6 +7,7 @@ use App\Models\Delivery\Document;
 use App\Models\Client;
 use App\Models\Client\{Address, Employee};
 use App\Models\Delivery\Document\Type;
+use App\Models\Delivery\Document\Status;
 use Auth;
 
 class DocumentsController extends Controller
@@ -16,14 +17,51 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if(!Auth::user()->hasPermission('view.documentos')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        $documents = Document::orderByDesc('id')->paginate(10);
-        return view('documents.index', compact('documents'));
+        $documents = Document::orderByDesc('id');
+
+        if(!$request->has('find')) {
+            $documents->whereIn('status_id', [1,2]);
+        }
+
+        if($request->filled('code')) {
+            $documents->where('id', $request->get('code'));
+        } else {
+
+          if($request->filled('client')) {
+              $client = Client::uuid($request->get('client'));
+              $documents->where('client_id', $client->id);
+          }
+
+          if($request->filled('status')) {
+              $documents->where('status_id', $request->get('status'));
+          }
+
+          if($request->filled('type')) {
+              $documents->where('type_id', $request->get('type'));
+          }
+
+          if($request->filled('start')) {
+              $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+              $documents->where('created_at', '>=', $start->format('Y-m-d'));
+          }
+
+          if($request->filled('end')) {
+              $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+              $documents->where('created_at', '<=', $end->format('Y-m-d'));
+          }
+        }
+
+        $quantity = $documents->count();
+
+        $documents = $documents->paginate();
+
+        return view('documents.index', compact('documents', 'quantity'));
     }
 
     /**
@@ -33,7 +71,6 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        $clients = Client::all();
         $types = Type::all();
         return view('documents.create',compact('clients', 'types'));
     }

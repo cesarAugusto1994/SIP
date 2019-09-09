@@ -25,6 +25,8 @@ use App\Models\Fleet\Vehicle\Status as VehicleStatus;
 use App\Models\DeliveryOrder;
 use App\Models\Stock\{Stock,Brand,Product,Vendor};
 use App\Models\Stock\Brand\Models as BrandModels;
+use App\Models\Delivery\Document\Type as DocumentType;
+use App\Models\Delivery\Document\Status as DocumentStatus;
 
 /**
  *
@@ -623,6 +625,34 @@ class Helper
         $types = Category::all();
 
         self::set($key, $types);
+        return self::get($key);
+    }
+
+    public static function documentTypes()
+    {
+        $key = 'document-types';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = DocumentType::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function documentStatuses()
+    {
+        $key = 'document-statuses';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = DocumentStatus::all();
+
+        self::set($key, $data);
         return self::get($key);
     }
 
