@@ -14,28 +14,35 @@ class EmployeesController extends Controller
 {
     public function index(Request $request)
     {
-        $employees = Employee::where('id', '>', 0);
+        $quantity = 0;
+        $employees = [];
 
-        if($request->filled('search')) {
+        if($request->get('find')) {
 
-          $search = $request->get('search');
+          $employees = Employee::orderBy('name');
 
-          $employees->where('id', $search)
-          ->orWhere('name', 'like', "%$search%")
-          ->orWhere('cpf', 'like', "%$search%");
+          if($request->filled('search')) {
 
-        }
+            $search = $request->get('search');
 
-        if($request->filled('status')) {
-          $employees->where('active', $request->get('status'));
-        }
+            $employees->where('id', $search)
+            ->orWhere('name', 'like', "%$search%")
+            ->orWhere('cpf', 'like', "%$search%");
 
-        $quantity = $employees->count();
+          }
 
-        $employees = $employees->paginate(15);
+          if($request->filled('status')) {
+            $employees->where('active', $request->get('status'));
+          }
 
-        foreach ($request->all() as $key => $value) {
-            $employees->appends($key, $value);
+          $quantity = $employees->count();
+
+          $employees = $employees->paginate(15);
+
+          foreach ($request->all() as $key => $value) {
+              $employees->appends($key, $value);
+          }
+
         }
 
         return view('clients.employees.index', compact('employees', 'quantity'));
