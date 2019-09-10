@@ -99,15 +99,50 @@
                     <table class="table table-lg table-styling">
                         <thead>
                             <tr class="table-primary">
+                                <th>Opções</th>
+                                <th>No.</th>
                                 <th>Nome</th>
                                 <th>Documento</th>
                                 <th>Status</th>
-                                <th>Opções</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($clients as $client)
                                 <tr>
+
+                                    <td class="dropdown">
+
+                                      <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                      <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                        @permission('view.clientes')
+                                          <a href="{{route('clients.show', ['id' => $client->uuid])}}" class="dropdown-item">Visualizar </a>
+                                        @endpermission
+
+                                        @permission('create.cliente.funcionarios')
+                                            <a href="{{route('employees.create', ['client' => $client->uuid])}}" class="dropdown-item"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
+                                        @endpermission
+
+                                        @permission('create.cliente.funcionarios')
+                                            <a href="{{route('client_employees_create', $client->uuid)}}" class="dropdown-item"><i class="fas fa-user-plus"></i> Adicionar Funcionários em Massa</a>
+                                        @endpermission
+
+                                        @permission('create.cliente.enderecos')
+                                            <a href="{{route('client_addresses_create', $client->uuid)}}" class="dropdown-item"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
+                                        @endpermission
+
+                                        @permission('edit.clientes')
+                                          <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="dropdown-item">Editar </a>
+                                        @endpermission
+
+                                        @permission('delete.clientes')
+                                          <a href="#!" data-route="{{route('clients.destroy', ['id' => $client->uuid])}}" class="dropdown-item btnRemoveItem">Remover </a>
+                                        @endpermission
+
+                                      </div>
+                                    </td>
+
+                                    <td><a href="{{ route('clients.show', $client->uuid) }}" class="card-title">#{{ str_pad($client->id, 6, "0", STR_PAD_LEFT) }}</a></td>
 
                                     <td>
                                         <a href="{{route('clients.show', ['id' => $client->uuid])}}">{{$client->name}}</a>
@@ -125,32 +160,11 @@
                                       @endif
                                     </td>
 
-                                    <td class="dropdown">
-
-                                      <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                      <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                        @permission('view.clientes')
-                                          <a href="{{route('clients.show', ['id' => $client->uuid])}}" class="dropdown-item">Visualizar </a>
-                                        @endpermission
-
-                                        @permission('edit.clientes')
-                                          <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="dropdown-item">Editar </a>
-                                        @endpermission
-
-                                        @permission('delete.clientes')
-                                          <a href="#!" data-route="{{route('clients.destroy', ['id' => $client->uuid])}}" class="dropdown-item btnRemoveItem">Remover </a>
-                                        @endpermission
-
-                                      </div>
-                                    </td>
-
-
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
             </div>
         </div>
