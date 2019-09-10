@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Module;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use App\Helpers\Helper;
+use Auth;
 
 class ModulesController extends Controller
 {
@@ -15,6 +17,10 @@ class ModulesController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->hasPermission('view.modulos')) {
+            return abort(403, 'Acesso negado.');
+        }
+
         $modules = Module::where('parent', 1)->get();
         return view('modules.index', compact('modules'));
     }
@@ -26,6 +32,10 @@ class ModulesController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->hasPermission('create.modulos')) {
+            return abort(403, 'Acesso negado.');
+        }
+
         $modules = Module::where('parent', 1)->get();
         return view('modules.create', compact('modules'));
     }
@@ -89,6 +99,19 @@ class ModulesController extends Controller
             ]);
         }
 
+        $permissions = Permission::pluck('id');
+
+        foreach (Helper::users() as $key => $user) {
+
+            if(!$user->isAdmin()) {
+                continue;
+            }
+
+            $user->syncPermissions($permissions);
+        }
+
+        Helper::drop('modules');
+
         return redirect()->route('modules.index');
     }
 
@@ -100,6 +123,10 @@ class ModulesController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::user()->hasPermission('view.modulos')) {
+            return abort(403, 'Acesso negado.');
+        }
+
         $module = Module::find($id);
         return view('modules.permissions', compact('module'));
     }
@@ -112,7 +139,13 @@ class ModulesController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(!Auth::user()->hasPermission('edit.modulos')) {
+            return abort(403, 'Acesso negado.');
+        }
+
+        $modules = Module::where('parent', 1)->get();
+        $module = Module::find($id);
+        return view('modules.edit', compact('module', 'modules'));
     }
 
     /**
@@ -124,7 +157,14 @@ class ModulesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $module = Module::find($id);
+        $module->update($data);
+
+        Helper::drop('modules');
+
+        return redirect()->route('modules.show', $module->id);
     }
 
     /**
@@ -135,6 +175,8 @@ class ModulesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!Auth::user()->hasPermission('delete.modulos')) {
+            return abort(403, 'Acesso negado.');
+        }
     }
 }

@@ -51,12 +51,23 @@
 
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-4">
 
                   <div class="form-group">
                       <label class="col-form-label">Descrição</label>
                       <div class="input-group">
                         <input type="text" required name="description" class="form-control">
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <div class="form-group">
+                      <label class="col-form-label">Rota</label>
+                      <div class="input-group">
+                        <input type="text" required name="route" class="form-control">
                       </div>
                   </div>
 
@@ -102,9 +113,7 @@
                   </div>
 
                 </div>
-
-
-
+                
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
