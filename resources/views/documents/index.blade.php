@@ -120,12 +120,12 @@
                       <table class="table table-lg table-styling">
                           <thead>
                               <tr class="table-primary">
+                                  <th>Opções</th>
                                   <th>No.</th>
                                   <th>Tipo</th>
                                   <th>Situação</th>
                                   <th>Cliente</th>
                                   <th>Adicionado Em</th>
-                                  <th>Opções</th>
                               </tr>
                           </thead>
                           <tbody>
