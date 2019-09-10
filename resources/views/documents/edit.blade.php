@@ -46,7 +46,7 @@
                         <label class="col-form-label">Tipo</label>
                         <div class="input-group">
                           <select class="select2" name="type_id" required>
-                                @foreach($types as $type)
+                                @foreach(\App\Helpers\Helper::documentTypes()->sortBy('name') as $type)
                                     <option value="{{$type->uuid}}" {{ $document->type_id == $type->id ? 'selected' : '' }}>{{$type->name}}</option>
                                 @endforeach
                             </select>

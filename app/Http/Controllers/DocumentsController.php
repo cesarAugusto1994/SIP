@@ -71,8 +71,7 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        $types = Type::all();
-        return view('documents.create',compact('types'));
+        return view('documents.create');
     }
 
     /**
@@ -199,10 +198,7 @@ class DocumentsController extends Controller
     public function edit($id)
     {
         $document = Document::uuid($id);
-        $clients = Client::all();
-        $types = Type::all();
-        $employees = Employee::all();
-        return view('documents.edit',compact('clients', 'document', 'types', 'employees'));
+        return view('documents.edit',compact('document'));
     }
 
     /**

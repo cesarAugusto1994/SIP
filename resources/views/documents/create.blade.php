@@ -53,7 +53,7 @@
                         <div class="input-group">
                           <select class="form-control select2" title="Selecione" name="type_id" required>
                               <option value="">Selecione...</option>
-                              @foreach($types as $type)
+                              @foreach(\App\Helpers\Helper::documentTypes()->sortBy('name') as $type)
                                   <option value="{{$type->uuid}}">{{$type->name}}</option>
                               @endforeach
                           </select>
@@ -136,7 +136,7 @@
                      + '<div class="input-group">'
                        + '<select class="form-control" title="Selecione" name="type_id-'+index+'" required>'
                           + '<option value="">Selecione...</option>'
-                           @foreach($types as $type)
+                           @foreach(\App\Helpers\Helper::documentTypes()->sortBy('name') as $type)
                                + '<option value="{{$type->uuid}}">{{$type->name}}</option>'
                            @endforeach
                       + '</select>'
