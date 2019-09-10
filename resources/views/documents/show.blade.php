@@ -38,7 +38,16 @@
                 <h5>Informações do Documento</h5>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
-                        <li><a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="btn btn-primary text-white btn-sm">Editar</a></li>
+
+                      @if($document->status_id == 1)
+
+                          @permission('edit.documentos')
+
+                            <li><a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="btn btn-primary text-white btn-sm">Editar</a></li>
+
+                          @endpermission
+
+                      @endif
                     </ul>
                 </div>
             </div>
