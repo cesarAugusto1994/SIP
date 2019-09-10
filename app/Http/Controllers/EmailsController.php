@@ -97,9 +97,15 @@ class EmailsController extends Controller
 
                 if(config('app.env') == 'production') {
                   //$messages = $folder->messages()->all()->get();
-                  $messages = $folder->getUnseenMessages();
+
+                  if(Email::where('user_id', auth()->user()->id)->count() == 0) {
+                    $messages = $folder->messages()->all()->get();
+                  } else {
+                    $messages = $folder->getUnseenMessages();
+                  }
+
                 } else {
-                  $messages = $folder->query()->since(now()->subDays(1))->get();
+                  $messages = $folder->query()->since(now()->subHours(6))->get();
                   //$messages = $folder->getUnseenMessages();
                 }
 
@@ -161,18 +167,14 @@ class EmailsController extends Controller
 
                         foreach ($msg['attributes']['from'] as $key => $from) {
 
-                          $contact = Contact::where('mail', $from->mail)->first();
-
-                          if(!$contact) {
-                              $contact = Contact::create([
-                                  'user_id' => $user->id,
-                                  'mail' => $from->mail,
-                                  'personal' => $from->personal,
-                                  'mailbox' => $from->mailbox,
-                                  'host' => $from->host,
-                                  'full' => $from->full,
-                              ]);
-                          }
+                          $contact = Contact::updateOrCreate([
+                              'user_id' => $user->id,
+                              'mail' => $from->mail,
+                              'personal' => $from->personal,
+                              'mailbox' => $from->mailbox,
+                              'host' => $from->host,
+                              'full' => $from->full,
+                          ]);
 
                           From::create([
                             'email_id' => $email->id,
@@ -183,18 +185,14 @@ class EmailsController extends Controller
 
                         foreach ($msg['attributes']['to'] as $key => $to) {
 
-                          $contact = Contact::where('mail', $to->mail)->first();
-
-                          if(!$contact) {
-                              $contact = Contact::create([
-                                  'user_id' => $user->id,
-                                  'mail' => $to->mail,
-                                  'personal' => $to->personal,
-                                  'mailbox' => $to->mailbox,
-                                  'host' => $to->host,
-                                  'full' => $to->full,
-                              ]);
-                          }
+                          $contact = Contact::updateOrCreate([
+                              'user_id' => $user->id,
+                              'mail' => $to->mail,
+                              'personal' => $to->personal,
+                              'mailbox' => $to->mailbox,
+                              'host' => $to->host,
+                              'full' => $to->full,
+                          ]);
 
                           To::create([
                             'email_id' => $email->id,
@@ -205,18 +203,14 @@ class EmailsController extends Controller
 
                         foreach ($msg['attributes']['cc'] as $key => $cc) {
 
-                          $contact = Contact::where('mail', $cc->mail)->first();
-
-                          if(!$contact) {
-                              $contact = Contact::create([
-                                  'user_id' => $user->id,
-                                  'mail' => $cc->mail,
-                                  'personal' => $cc->personal,
-                                  'mailbox' => $cc->mailbox,
-                                  'host' => $cc->host,
-                                  'full' => $cc->full,
-                              ]);
-                          }
+                          $contact = Contact::updateOrCreate([
+                              'user_id' => $user->id,
+                              'mail' => $cc->mail,
+                              'personal' => $cc->personal,
+                              'mailbox' => $cc->mailbox,
+                              'host' => $cc->host,
+                              'full' => $cc->full,
+                          ]);
 
                           Cc::create([
                             'email_id' => $email->id,
@@ -227,18 +221,14 @@ class EmailsController extends Controller
 
                         foreach ($msg['attributes']['bcc'] as $key => $bcc) {
 
-                          $contact = Contact::where('mail', $bcc->mail)->first();
-
-                          if(!$contact) {
-                              $contact = Contact::create([
-                                  'user_id' => $user->id,
-                                  'mail' => $bcc->mail,
-                                  'personal' => $bcc->personal,
-                                  'mailbox' => $bcc->mailbox,
-                                  'host' => $bcc->host,
-                                  'full' => $bcc->full,
-                              ]);
-                          }
+                          $contact = Contact::updateOrCreate([
+                              'user_id' => $user->id,
+                              'mail' => $bcc->mail,
+                              'personal' => $bcc->personal,
+                              'mailbox' => $bcc->mailbox,
+                              'host' => $bcc->host,
+                              'full' => $bcc->full,
+                          ]);
 
                           Bcc::create([
                             'email_id' => $email->id,
@@ -249,18 +239,14 @@ class EmailsController extends Controller
 
                         foreach ($msg['attributes']['reply_to'] as $key => $replayTo) {
 
-                          $contact = Contact::where('mail', $replayTo->mail)->first();
-
-                          if(!$contact) {
-                              $contact = Contact::create([
-                                  'user_id' => $user->id,
-                                  'mail' => $replayTo->mail,
-                                  'personal' => $replayTo->personal,
-                                  'mailbox' => $replayTo->mailbox,
-                                  'host' => $replayTo->host,
-                                  'full' => $replayTo->full,
-                              ]);
-                          }
+                          $contact = Contact::updateOrCreate([
+                              'user_id' => $user->id,
+                              'mail' => $replayTo->mail,
+                              'personal' => $replayTo->personal,
+                              'mailbox' => $replayTo->mailbox,
+                              'host' => $replayTo->host,
+                              'full' => $replayTo->full,
+                          ]);
 
                           ReplayTo::create([
                             'email_id' => $email->id,
@@ -271,18 +257,14 @@ class EmailsController extends Controller
 
                         foreach ($msg['attributes']['sender'] as $key => $sender) {
 
-                          $contact = Contact::where('mail', $sender->mail)->first();
-
-                          if(!$contact) {
-                              $contact = Contact::create([
-                                  'user_id' => $user->id,
-                                  'mail' => $sender->mail,
-                                  'personal' => $sender->personal,
-                                  'mailbox' => $sender->mailbox,
-                                  'host' => $sender->host,
-                                  'full' => $sender->full,
-                              ]);
-                          }
+                          $contact = Contact::updateOrCreate([
+                              'user_id' => $user->id,
+                              'mail' => $sender->mail,
+                              'personal' => $sender->personal,
+                              'mailbox' => $sender->mailbox,
+                              'host' => $sender->host,
+                              'full' => $sender->full,
+                          ]);
 
                           Sender::create([
                             'email_id' => $email->id,
