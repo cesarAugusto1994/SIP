@@ -1353,13 +1353,9 @@ $(document).ready(function() {
 
     $(document).on('change','.select-client-employees',function(){
 
-    //selectClientEmployees.change(function() {
-
       let self = $(this);
       let route = self.data('search-employees');
       let selectEmployee = $(self.data('target'));
-
-      //console.log(selectEmployee);
 
       let value = self.val();
 
@@ -1378,21 +1374,12 @@ $(document).ready(function() {
 
           });
 
-          selectEmployee.select2({
-                data: data,
-          });
-
-          /*let html = "";
-          selectEmployee.html("<option value=''>Informe um funcionário</option>");
+          selectEmployee.html("");
           selectEmployee.trigger('change');
 
-          $.each(response.data, function(idx, item) {
-              let employee = item.name;
-              html += "<option value="+ item.uuid +">"+ employee +"</option>";
+          selectEmployee.select2({
+              data: data,
           });
-
-          selectEmployee.append(html);
-          selectEmployee.trigger('change');*/
 
         }
       })

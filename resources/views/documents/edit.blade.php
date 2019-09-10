@@ -71,13 +71,12 @@
                     <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Cliente</label>
                         <div class="input-group">
-                          <select class="select2 select-client-employees"
+                          <select class="form-control select-client-employees select-client"
                             data-search-employees="{{ route('client_employees_search') }}"
-                            name="client_id" required>
-                                @foreach($clients as $client)
-                                    <option value="{{$client->uuid}}" {{ $document->client_id == $client->id ? 'selected' : '' }}>{{$client->name}}</option>
-                                @endforeach
-                            </select>
+                            name="client_id" data-target="#select-employee" required>
+                            <option value="{{$document->client->uuid}}">{{$document->client->name}}</option>
+                          </select>
+
                         </div>
                         {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -89,12 +88,14 @@
                   <div class="form-group {!! $errors->has('employee_id') ? 'has-error' : '' !!}">
                       <label class="col-form-label">Funcionário</label>
                       <div class="input-group">
-                        <select class="select2" id="select-employee" name="employee_id">
-                              <option value="">Selecione um Funcionário</option>
-                              @foreach($employees as $employee)
-                                  <option value="{{$employee->uuid}}" {{ $document->employee_id == $employee->id ? 'selected' : '' }}>{{$employee->name}}</option>
-                              @endforeach
+
+                        <select class="form-control select2" id="select-employee"
+                          name="employee_id">
+
+                          <option value="{{$document->employee->uuid}}">{{$document->employee->name}}</option>
+
                         </select>
+
                       </div>
                       {!! $errors->first('employee_id', '<p class="help-block">:message</p>') !!}
                   </div>
