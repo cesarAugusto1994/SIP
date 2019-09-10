@@ -57,14 +57,12 @@ class DeliveryOrderController extends Controller
 
           if($request->filled('start')) {
               $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
-              $orders->where('delivery_date', '>=', $start->format('Y-m-d'))
-              ->orWhere('delivered_at', $start->format('Y-m-d'));
+              $orders->where('created_at', '>=', $start->format('Y-m-d') . ' 00:00:00');
           }
 
           if($request->filled('end')) {
               $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
-              $orders->where('delivery_date', '<=', $end->format('Y-m-d'))
-              ->orWhere('delivered_at', $end->format('Y-m-d'));
+              $orders->where('created_at', '<=', $end->format('Y-m-d') . ' 23:59:59');
           }
         }
 
