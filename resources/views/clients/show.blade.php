@@ -134,6 +134,7 @@
       <div class="card">
           <div class="card-header">
               <h5>Funcionários</h5>
+              <span>Registros retornados: {{ $client->employees->count() }}</span>
           </div>
           <div class="card-block">
 
@@ -153,7 +154,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($client->employees as $employee)
+                        @foreach($client->employees->sortBy('name') as $employee)
                             <tr>
 
                                 <td>
@@ -221,6 +222,7 @@
       <div class="card">
           <div class="card-header">
               <h5>Endereços</h5>
+              <span>Registros retornados: {{ $client->addresses->count() }}</span>
           </div>
           <div class="card-block">
 
@@ -238,7 +240,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($client->addresses as $address)
+                        @foreach($client->addresses->sortBy('description') as $address)
                             <tr>
 
                                 <td>
