@@ -13,11 +13,11 @@ class Employee extends Model
 
     protected $fillable = ['name', 'email', 'phone', 'cpf', 'code',
     'biometric', 'occupation_id','company_id', 'created_by', 'active',
-    'birth','hired_at','fired_at'];
+    'birth','hired_at','fired_at', 'rg'];
 
     protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'code',
     'biometric', 'occupation_id', 'company_id', 'created_by', 'active',
-    'birth','hired_at','fired_at'];
+    'birth','hired_at','fired_at', 'rg'];
 
     protected $table = 'client_employees';
 

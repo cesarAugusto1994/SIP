@@ -197,6 +197,10 @@ Route::middleware('auth')->group(function () {
           Route::resource('ticket-types', 'TicketTypesController');
           Route::resource('ticket-type-departments', 'TicketTypeDepartmentsController');
 
+          Route::get('client/{id}/employees/create/many', 'EmployeesController@createMany')->name('client_employees_create');
+          Route::post('client/{id}/employees/store/many', 'EmployeesController@storeMany')->name('client_employees_store');
+
+
           Route::post('tickets/{id}/start', 'TicketsController@startTicket')->name('ticket_start');
           Route::post('tickets/{id}/conclude', 'TicketsController@concludeTicket')->name('ticket_conclude');
           Route::post('tickets/{id}/finish', 'TicketsController@finishTicket')->name('ticket_finish');

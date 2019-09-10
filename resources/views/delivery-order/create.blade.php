@@ -179,57 +179,51 @@
               </div>
 
               <div class="col-lg-8">
+
                   <div class="card">
                       <div class="card-header">
-                          <h5>Documentos</h5>
+                          <h5>Documentos Pendentes</h5>
                       </div>
-                      <div class="card-block">
+                      <div class="card-block table-border-style">
+                          <div class="table-responsive">
+                              <table class="table table-lg table-styling">
+                                  <thead>
+                                      <tr class="table-primary">
+                                        <th>#</th>
+                                        <th>Tipo</th>
+                                        <th>Funcionário</th>
+                                        <th>Referencia</th>
+                                        <th>Status</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="table-documents">
 
-                        <div class="table-responsive">
+                                      @foreach($documents as $document)
+                                      <tr>
+                                          @php
+                                              $docs = request()->get('document');
 
-                        <table class="table table-hover">
+                                              $checked = '';
 
-                            <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Tipo</th>
-                                  <th>Cliente</th>
-                                  <th>Funcionário</th>
-                                  <th>Referencia</th>
-                                  <th>Status</th>
-                                </tr>
-                            </thead>
+                                              if(in_array($document->uuid, $docs)) {
+                                                $checked = 'checked';
+                                              }
+                                          @endphp
 
-                            <tbody id="table-documents">
+                                          <td><input class="js-switch" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
+                                          <td>{{ $document->type->name }}</td>
+                                          <td>{{ $document->employee->name ?? '-' }}</td>
+                                          <td>{{ $document->reference ?? '' }}</td>
+                                          <td><label class="label label-inverse-primary">{{ $document->status->name }}</label></td>
+                                      </tr>
+                                      @endforeach
 
-                                @foreach($documents as $document)
-                                <tr>
-                                    @php
-                                        $docs = request()->get('document');
-
-                                        $checked = '';
-
-                                        if(in_array($document->uuid, $docs)) {
-                                          $checked = 'checked';
-                                        }
-                                    @endphp
-
-                                    <td><input class="js-switch" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
-                                    <td>{{ $document->type->name }}</td>
-                                    <td>{{ $document->client->name ?? '' }}</td>
-                                    <td>{{ $document->employee->name ?? '-' }}</td>
-                                    <td>{{ $document->reference ?? '' }}</td>
-                                    <td>{{ $document->status->name }}</td>
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-
-                        </div>
-
+                                  </tbody>
+                              </table>
+                          </div>
                       </div>
                   </div>
+
               </div>
 
           </div>

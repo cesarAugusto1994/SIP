@@ -63,6 +63,78 @@ class EmployeesController extends Controller
         return view('clients.employees.create', compact('company', 'companies'));
     }
 
+    public function createMany($id, Request $request)
+    {
+        if(!Auth::user()->hasPermission('create.cliente.funcionarios')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
+        $company = Client::uuid($id);
+
+        return view('clients.employees.create-many', compact('company'));
+    }
+
+    public function storeMany($id, Request $request)
+    {
+        if(!Auth::user()->hasPermission('create.cliente.funcionarios')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
+        if(!$request->has('indexes')) {
+
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Nenhum dado foi informado, favor clicar em *Adicionar mais registros*.'
+          ]);
+
+          return back();
+
+        }
+
+        $data = $request->request->all();
+
+        $company = Client::uuid($id);
+
+        if($request->has('indexes')) {
+
+            $indexes = $data['indexes'];
+
+            foreach (range(0, $indexes) as $key => $value) {
+
+              $fieldName = 'name-'.$value;
+              $fieldCpf = 'cpf-'.$value;
+              $fieldRg = 'rg-'.$value;
+              $fieldOccupation = 'occupation-'.$value;
+              $fieldActive = 'active-'.$value;
+
+              if($request->has($fieldName)) {
+
+                  $data['company_id'] = $company->id;
+
+                  $data['name'] = $request->get($fieldName);
+                  $data['cpf'] = $request->get($fieldCpf);
+                  $data['rg'] = $request->get($fieldRg);
+
+                  $occupation = Occupation::uuid($request->get($fieldOccupation));
+                  $data['occupation_id'] = $occupation->id;
+
+                  $data['created_by'] = $request->user()->id;
+                  $data['active'] = $request->has($fieldActive);
+
+                  Employee::create($data);
+
+              }
+
+            }
+
+        }
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Novo Funcionário adicionado ao Cliente com sucesso.'
+        ]);
+
+        return redirect()->route('clients.show', $company->uuid);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -40,6 +40,10 @@
         @endpermission
 
         @permission('create.clientes')
+            <a href="{{route('client_employees_create', $client->uuid)}}" class="btn btn-warning btn-sm"><i class="fas fa-user-plus"></i> Adicionar Funcionários em Massa</a>
+        @endpermission
+
+        @permission('create.clientes')
             <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-primary btn-sm"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
         @endpermission
 
@@ -137,12 +141,13 @@
 
             <div class="table-responsive">
 
-                <table class="table table-hover">
+                <table class="table table-lg table-styling">
                     <thead>
-                        <tr>
+                        <tr class="table-primary">
                           <th>Nome</th>
                           <th>Função</th>
                           <th>CPF</th>
+                          <th>RG</th>
                           <th>Ativo</th>
                           <th>Opções</th>
                         </tr>
@@ -161,6 +166,10 @@
 
                                 <td>
                                     <a>{{$employee->cpf}}</a>
+                                </td>
+
+                                <td>
+                                    <a>{{$employee->rg}}</a>
                                 </td>
 
                                 <td>
@@ -219,9 +228,9 @@
 
             <div class="table-responsive">
 
-                <table class="table table-hover">
+                <table class="table table-lg table-styling">
                     <thead>
-                        <tr>
+                        <tr class="table-inverse">
                           <th>Descrição</th>
                           <th>Endereço</th>
                           <th>Principal</th>

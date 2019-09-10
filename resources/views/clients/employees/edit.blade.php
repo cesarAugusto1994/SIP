@@ -51,15 +51,16 @@
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                     </div>
 
-
-                    <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="email">Email</label>
+                    <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
-                            <input type="text" id="email" name="email" value="{{ $employee->email }}" class="form-control" placeholder="Informe o email">
+                            <select class="form-control select-client" name="company_id" required data-url="{{ route('client_search') }}">
+                                <option value="{{$employee->company->uuid}}" >{{$employee->company->name}}</option>
+                            </select>
                         </div>
-                        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
                     </div>
-
+                    
                     <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Função</label>
                         <div class="input-group">
@@ -81,26 +82,12 @@
                         {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
                     </div>
 
-                    <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="phone">Telefone</label>
+                    <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="email">Email</label>
                         <div class="input-group">
-                            <input type="text" id="phone" name="phone" value="{{ $employee->phone }}" class="form-control" placeholder="Informe o Telefone">
+                            <input type="text" id="email" name="email" value="{{ $employee->email }}" class="form-control" placeholder="Informe o email">
                         </div>
-                        {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="company_id">Empresa</label>
-                        <div class="input-group">
-                            <select class="form-control select-client" name="company_id" required data-url="{{ route('client_search') }}">
-                                <option value="{{$employee->company->uuid}}" >{{$employee->company->name}}</option>
-                            </select>
-                        </div>
-                        {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
 
                     <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
@@ -111,6 +98,25 @@
                         {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                     </div>
 
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="form-group {!! $errors->has('rg') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="rg">RG</label>
+                        <div class="input-group">
+                            <input type="text" id="cpf" name="rg" value="{{ $employee->rg }}" class="form-control" placeholder="Informe o RG">
+                        </div>
+                        {!! $errors->first('rg', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                    <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="phone">Telefone</label>
+                        <div class="input-group">
+                            <input type="text" id="phone" name="phone" value="{{ $employee->phone }}" class="form-control" placeholder="Informe o Telefone">
+                        </div>
+                        {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
+                    </div>
 
                 </div>
 

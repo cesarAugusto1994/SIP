@@ -292,6 +292,7 @@
 <input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
 <input type="hidden" value="{{ route('users_locales') }}" id="user-locales"/>
 <input type="hidden" value="{{ route('client_search') }}" id="input-search-clientes"/>
+<input type="hidden" value="{{ route('client_occupations_search') }}" id="input-search-client-occupations"/>
 
 
 <script>
@@ -1475,7 +1476,6 @@ $(document).ready(function() {
               html += "<tr>";
               html += "<td><input class='js-switch' type='checkbox' name='documents[]' value='"+ item.id +"'/></td>";
               html += "<td>"+ item.type +"</td>";
-              html += "<td>"+ item.client +"</td>";
               html += "<td>"+ item.employee +"</td>";
               html += "<td>"+ item.reference +"</td>";
               html += "<td>"+ item.status +"</td>";
