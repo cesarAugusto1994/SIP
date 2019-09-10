@@ -186,7 +186,8 @@ class DocumentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $document = Document::uuid($id);
+        return view('documents.show', compact('document'));
     }
 
     /**

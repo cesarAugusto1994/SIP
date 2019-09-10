@@ -120,7 +120,7 @@
                       <table class="table table-lg table-styling">
                           <thead>
                               <tr class="table-primary">
-                                  <th>Ordem No.</th>
+                                  <th>No.</th>
                                   <th>Tipo</th>
                                   <th>Situação</th>
                                   <th>Cliente</th>
@@ -180,7 +180,7 @@
 
                                   <td class="dropdown">
 
-                                    <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                     <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                                       @if($document->status_id == 1)
