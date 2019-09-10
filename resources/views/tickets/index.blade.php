@@ -275,7 +275,7 @@
         <!-- Recent Orders card start -->
         <div class="card">
             <div class="card-header">
-                <h5>Ordens de Entrega Recentes</h5>
+                <h5>Chamados Recentes</h5>
                 <span>Registros retornados: {{ $quantity }}</span>
             </div>
             <div class="card-block table-border-style">
@@ -283,12 +283,12 @@
                     <table class="table table-lg table-styling">
                         <thead>
                             <tr class="table-primary">
+                                <th>Opções</th>
                                 <th>No.</th>
                                 <th>Situação</th>
                                 <th>Descrição</th>
                                 <th>Solicitante</th>
                                 <th>Abertura/Finalização</th>
-                                <th>Opções</th>
                             </tr>
                         </thead>
                         <tbody>

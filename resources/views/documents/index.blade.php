@@ -155,6 +155,31 @@
                               @endphp
 
                               <tr>
+
+                                <td class="dropdown">
+
+                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                  <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                    @if($document->status_id == 1)
+
+                                        @permission('create.ordem.entrega')
+                                          <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
+                                        @endpermission
+
+                                    @endif
+
+                                    @if($document->status_id == 1 || $document->status_id == 2)
+
+                                            @permission('delete.documentos')
+                                              <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
+                                            @endpermission
+
+                                    @endif
+
+
+                                  </div>
+
                                   <td><a href="{{ route('documents.show', $document->uuid) }}" class="card-title">#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</a></td>
                                   <td>
                                     <p><a href="{{route('clients.show', ['id' => $document->client->uuid])}}">{{ $document->type->name }}</a></p>
@@ -178,29 +203,7 @@
 
                                   </td>
 
-                                  <td class="dropdown">
 
-                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                      @if($document->status_id == 1)
-
-                                          @permission('create.ordem.entrega')
-                                            <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
-                                          @endpermission
-
-                                      @endif
-
-                                      @if($document->status_id == 1 || $document->status_id == 2)
-
-                                              @permission('delete.documentos')
-                                                <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                                              @endpermission
-
-                                      @endif
-
-
-                                    </div>
 
                                   </td>
 
