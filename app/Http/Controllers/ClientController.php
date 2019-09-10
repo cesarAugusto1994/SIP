@@ -28,52 +28,58 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         if(!Auth::user()->hasPermission('view.clientes')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado.');
         }
 
-        $clients = Client::where('id', '>', 0);
+        $quantity = 0;
+        $clients = [];
 
-        if($request->filled('search')) {
+        if($request->get('find')) {
 
-          $search = $request->get('search');
+          $clients = Client::orderBy('name');
 
-          $clients->where('id', $search)
-          ->orWhere('name', 'like', "%$search%")
-          ->orWhere('document', 'like', "%$search%");
+          if($request->filled('search')) {
 
-        }
+            $search = $request->get('search');
 
-        if($request->filled('status')) {
-          $clients->where('active', $request->get('status'));
-        }
+            $clients->where('id', $search)
+            ->orWhere('name', 'like', "%$search%")
+            ->orWhere('document', 'like', "%$search%");
 
-        if($request->filled('address')) {
+          }
 
-            $address = $request->get('address');
+          if($request->filled('status')) {
+            $clients->where('active', $request->get('status'));
+          }
 
-            $clients->whereHas('addresses', function($query) use($address) {
-                $query->where('zip', 'like', "%$address%")
-                ->orWhere('description', 'like', "%$address%")
-                ->orWhere('street', 'like', "%$address%")
-                ->orWhere('number', 'like', "%$address%")
-                ->orWhere('district', 'like', "%$address%")
-                ->orWhere('city', 'like', "%$address%")
-                ->orWhere('state', 'like', "%$address%")
-                ->orWhere('complement', 'like', "%$address%")
-                ->orWhere('reference', 'like', "%$address%")
-                ->orWhere('long', 'like', "%$address%")
-                ->orWhere('lat', 'like', "%$address%");
-            });
-        }
+          if($request->filled('address')) {
 
-        $clients->orderBy('name');
+              $address = $request->get('address');
 
-        $quantity = $clients->count();
+              $clients->whereHas('addresses', function($query) use($address) {
+                  $query->where('zip', 'like', "%$address%")
+                  ->orWhere('description', 'like', "%$address%")
+                  ->orWhere('street', 'like', "%$address%")
+                  ->orWhere('number', 'like', "%$address%")
+                  ->orWhere('district', 'like', "%$address%")
+                  ->orWhere('city', 'like', "%$address%")
+                  ->orWhere('state', 'like', "%$address%")
+                  ->orWhere('complement', 'like', "%$address%")
+                  ->orWhere('reference', 'like', "%$address%")
+                  ->orWhere('long', 'like', "%$address%")
+                  ->orWhere('lat', 'like', "%$address%");
+              });
+          }
 
-        $clients = $clients->paginate(15);
+          $clients->orderBy('name');
 
-        foreach ($request->all() as $key => $value) {
-            $clients->appends($key, $value);
+          $quantity = $clients->count();
+          $clients = $clients->paginate();
+
+          foreach ($request->all() as $key => $value) {
+              $clients->appends($key, $value);
+          }
+
         }
 
         return view('clients.index', compact('clients', 'quantity'));

@@ -26,121 +26,139 @@
 
 <div class="page-body">
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Pesquisa</h5>
-      </div>
-      <div class="card-block">
+  <div class="row">
 
-        <form method="get" action="?">
-          <div class="row">
-              <div class="col-md-5"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
-              <div class="col-md-2">
-                <select class="form-control" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="status">
-                    <option value="">Situação</option>
-                    <option value="1">Ativo</option>
-                    <option value="0">Inativo</option>
-                </select>
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.clientes')
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('clients.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Cliente</a>
+                  @endpermission
+
               </div>
-              <div class="col-md-3"><input name="address" type="text" placeholder="CEP, Endereço" class="form-control"></div>
-              <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-search"></i>  Buscar</button></div>
-
           </div>
-        </form>
-
       </div>
+    </div>
+
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Lista de Clientes</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-                  <li><a class="btn btn-sm btn-success btn-round" href="{{route('clients.create')}}">Novo Cliente</a></li>
-              </ul>
-          </div>
-      </div>
-      <div class="card-block">
+  <div class="row">
 
-          @if($clients->isNotEmpty())
-            <div class="table-responsive">
+    <div class="col-lg-3">
 
-              <table class="table table-hover">
-                  <thead>
-
-                    <tr>
-                      <th>Nome</th>
-                      <th>Documento</th>
-                      <th>Status</th>
-                      <th>Opções</th>
-                    </tr>
-
-                  </thead>
-
-                  <tbody>
-                      @foreach($clients as $client)
-                          <tr>
-
-                              <td>
-                                  <a href="{{route('clients.show', ['id' => $client->uuid])}}">{{$client->name}}</a>
-                              </td>
-
-                              <td>
-                                  <p>{{$client->document}}</p>
-                              </td>
-
-                              <td>
-                                @if($client->active)
-                                  <span class="badge badge-success">Ativo</span>
-                                @else
-                                  <span class="badge badge-danger">Inativo</span>
-                                @endif
-                              </td>
-
-                              <td class="dropdown">
-
-                                <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                  @permission('view.clientes')
-                                    <a href="{{route('clients.show', ['id' => $client->uuid])}}" class="dropdown-item">Visualizar </a>
-                                  @endpermission
-
-                                  @permission('edit.clientes')
-                                    <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="dropdown-item">Editar </a>
-                                  @endpermission
-
-                                  @permission('delete.clientes')
-                                    <a href="#!" data-route="{{route('clients.destroy', ['id' => $client->uuid])}}" class="dropdown-item btnRemoveItem">Remover </a>
-                                  @endpermission
-
-                                </div>
-                              </td>
-
-
-                          </tr>
-                      @endforeach
-                  </tbody>
-              </table>
-
-              <div class="text-center">
-              {{ $clients->links() }}
-              </div>
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
             </div>
-          @else
+            <div class="card-block">
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="search" placeholder="Código do Cliente, Nome, Documento, Email, ou Telefone">
+                        </div>
+                    </div>
 
-              <div class="widget white-bg no-padding text-center">
-                  <div class="p-m text-center">
-                      <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
-                      <h6 class="font-bold no-margins">
-                          Nenhum registro encontrado para o parametros informados.
-                      </h6>
-                  </div>
-              </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="status">
+                              <option value="">Situação</option>
+                              <option value="1">Ativo</option>
+                              <option value="0">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
 
-          @endif
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input name="address" type="text" placeholder="CEP, Endereço" class="form-control">
+                        </div>
+                    </div>
 
-      </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <h5>Empresas Cadastradas</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Nome</th>
+                                <th>Documento</th>
+                                <th>Status</th>
+                                <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($clients as $client)
+                                <tr>
+
+                                    <td>
+                                        <a href="{{route('clients.show', ['id' => $client->uuid])}}">{{$client->name}}</a>
+                                    </td>
+
+                                    <td>
+                                        <p>{{$client->document}}</p>
+                                    </td>
+
+                                    <td>
+                                      @if($client->active)
+                                        <span class="badge badge-success">Ativo</span>
+                                      @else
+                                        <span class="badge badge-danger">Inativo</span>
+                                      @endif
+                                    </td>
+
+                                    <td class="dropdown">
+
+                                      <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                      <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                        @permission('view.clientes')
+                                          <a href="{{route('clients.show', ['id' => $client->uuid])}}" class="dropdown-item">Visualizar </a>
+                                        @endpermission
+
+                                        @permission('edit.clientes')
+                                          <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="dropdown-item">Editar </a>
+                                        @endpermission
+
+                                        @permission('delete.clientes')
+                                          <a href="#!" data-route="{{route('clients.destroy', ['id' => $client->uuid])}}" class="dropdown-item btnRemoveItem">Remover </a>
+                                        @endpermission
+
+                                      </div>
+                                    </td>
+
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @if(!empty($clients))
+    {{ $clients->links() }}
+    @endif
   </div>
 
 </div>
