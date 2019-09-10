@@ -61,6 +61,10 @@ class DocumentsController extends Controller
 
         $documents = $documents->paginate();
 
+        foreach ($request->all() as $key => $value) {
+            $documents->appends($key, $value);
+        }
+
         return view('documents.index', compact('documents', 'quantity'));
     }
 

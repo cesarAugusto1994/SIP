@@ -68,7 +68,11 @@ class DeliveryOrderController extends Controller
 
         $quantity = $orders->count();
 
-        $orders = $orders->paginate(20);
+        $orders = $orders->paginate();
+
+        foreach ($request->all() as $key => $value) {
+            $orders->appends($key, $value);
+        }
 
         return view('delivery-order.index', compact('orders', 'quantity'));
     }
