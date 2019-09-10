@@ -48,12 +48,12 @@ class DocumentsController extends Controller
 
           if($request->filled('start')) {
               $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
-              $documents->where('created_at', '>=', $start->format('Y-m-d'));
+              $documents->where('created_at', '>=', $start->format('Y-m-d') . ' 00:00:00');
           }
 
           if($request->filled('end')) {
               $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
-              $documents->where('created_at', '<=', $end->format('Y-m-d'));
+              $documents->where('created_at', '<=', $end->format('Y-m-d') . ' 23:59:59');
           }
         }
 
