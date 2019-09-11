@@ -126,7 +126,7 @@
                                   </td>
                                   <td>{{$person->department->name}} / {{$person->occupation->name}}</td>
                                   <td>
-                                    @if($person->active)
+                                    @if($person->user->active)
                                         <label class="label label-inverse-success">Ativo</label>
                                     @else
                                         <label class="label label-inverse-success">Inativo</label>
