@@ -52,6 +52,10 @@
               <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                   <h4>Ordem de Entrega: #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</h4>
                   <label class="label label-primary">{{ $delivery->status->name }}</label>
+                  @if($delivery->delivery_date)
+                    <br/><br/>
+                    <span>Entregue Em: <b>{{ $delivery->delivery_date->format('d/m/Y') }}</b><span>
+                  @endif
               </div>
 
               <div class="col-lg-12 col-md-12 col-sm-12">
