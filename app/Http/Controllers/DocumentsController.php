@@ -156,6 +156,8 @@ class DocumentsController extends Controller
     {
         $data = $request->request->all();
 
+        //dd($data);
+
         $user = $request->user();
 
         $data['created_by'] = $user->id;
@@ -164,29 +166,38 @@ class DocumentsController extends Controller
         $documentsList = [];
 
         $client = Client::uuid($data['client_id']);
-        $type = Type::uuid($data['type_id']);
+        $types = $request->get('type_id');
 
-        $emp = null;
+        $employeesList = $data['employee_id'] ?? [];
 
-        $data['client_id'] = $client->id;
-        $data['type_id'] = $type->id;
-        $data['amount'] = $type->price;
+        foreach ($types as $key => $typeI) {
 
-        if($request->filled('employee_id')) {
+          $type = Type::uuid($typeI);
 
-          $employees = Employee::whereIn('uuid', $data['employee_id'])->get();
+          $emp = null;
 
-          foreach ($employees as $key => $employee) {
+          $data['client_id'] = $client->id;
+          $data['type_id'] = $type->id;
+          $data['amount'] = $type->price;
 
-            $data['employee_id'] = $employee->id;
+          if($request->filled('employee_id')) {
+
+            $employees = Employee::whereIn('uuid', $employeesList)->get();
+
+            foreach ($employees as $key => $employee) {
+
+              $data['employee_id'] = $employee->id;
+              $document = Document::create($data);
+              $documentsList[$client->id] = $document->uuid;
+            }
+
+
+          } else {
+
             $document = Document::create($data);
             $documentsList[$client->id] = $document->uuid;
+
           }
-
-        } else {
-
-          $document = Document::create($data);
-          $documentsList[$client->id] = $document->uuid;
 
         }
 
@@ -203,46 +214,52 @@ class DocumentsController extends Controller
 
               if($request->has($fieldType)) {
 
-                  $client = Client::uuid($request->get($fieldClient));
+                  foreach ($request->get($fieldType) as $key => $typeItem) {
 
-                  $employee = null;
-                  $type = Type::uuid($request->get($fieldType));
-                  $reference = $request->get($fieldReference);
+                    $client = Client::uuid($request->get($fieldClient));
 
-                  if($request->filled($fieldEmployee)) {
-                      $employees = Employee::whereIn('uuid', $request->get($fieldEmployee))->get();
+                    $employee = null;
+                    $type = Type::uuid($typeItem);
+                    $reference = $request->get($fieldReference);
 
-                      foreach ($employees as $key => $employee) {
+                    if($request->filled($fieldEmployee)) {
+                        $employees = Employee::whereIn('uuid', $request->get($fieldEmployee))->get();
 
-                        $document = Document::create([
-                          'type_id' => $type->id,
-                          'client_id' => $client->id,
-                          'employee_id' => $employee->id,
-                          'reference' => $reference,
-                          'created_by' => $user->id,
-                          'status_id' => 1,
-                          'amount' => $type->price,
-                        ]);
+                        foreach ($employees as $key => $employee) {
 
-                        $documentsList[$client->id] = $document->uuid;
+                          $document = Document::create([
+                            'type_id' => $type->id,
+                            'client_id' => $client->id,
+                            'employee_id' => $employee->id,
+                            'reference' => $reference,
+                            'created_by' => $user->id,
+                            'status_id' => 1,
+                            'amount' => $type->price,
+                          ]);
 
-                      }
+                          $documentsList[$client->id] = $document->uuid;
 
-                  } else {
+                        }
 
-                    $document = Document::create([
-                      'type_id' => $type->id,
-                      'client_id' => $client->id,
-                      'employee_id' => null,
-                      'reference' => $reference,
-                      'created_by' => $user->id,
-                      'status_id' => 1,
-                      'amount' => $type->price,
-                    ]);
+                    } else {
 
-                    $documentsList[$client->id] = $document->uuid;
+                      $document = Document::create([
+                        'type_id' => $type->id,
+                        'client_id' => $client->id,
+                        'employee_id' => null,
+                        'reference' => $reference,
+                        'created_by' => $user->id,
+                        'status_id' => 1,
+                        'amount' => $type->price,
+                      ]);
+
+                      $documentsList[$client->id] = $document->uuid;
+
+                    }
 
                   }
+
+
 
               }
 

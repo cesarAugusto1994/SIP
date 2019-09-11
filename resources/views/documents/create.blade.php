@@ -51,7 +51,7 @@
                     <div class="form-group {!! $errors->has('type_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo</label>
                         <div class="input-group">
-                          <select class="form-control select2" title="Selecione" name="type_id" required>
+                          <select class="form-control select2" title="Selecione" name="type_id[]" required multiple>
                               <option value="">Selecione...</option>
                               @foreach(\App\Helpers\Helper::documentTypes()->sortBy('name') as $type)
                                   <option value="{{$type->uuid}}">{{$type->name}}</option>
@@ -134,7 +134,7 @@
                  + '<div class="form-group">'
                      + '<label class="col-form-label">Tipo</label>'
                      + '<div class="input-group">'
-                       + '<select class="form-control" title="Selecione" name="type_id-'+index+'" required>'
+                       + '<select class="form-control" id="type-document-'+index+'" title="Selecione" name="type_id-'+index+'[]" required multiple>'
                           + '<option value="">Selecione...</option>'
                            @foreach(\App\Helpers\Helper::documentTypes()->sortBy('name') as $type)
                                + '<option value="{{$type->uuid}}">{{$type->name}}</option>'
@@ -187,6 +187,9 @@
         index++;
         row.append(renderCols(index));
         $("#select-employee-" + index).select2();
+
+        $("#type-document-" + index).select2();
+
         indexes.val(index);
 
         $('.select-client-employees').select2({
