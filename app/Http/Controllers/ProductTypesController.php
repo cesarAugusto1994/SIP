@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stock\Product\Type;
+use App\Helpers\Helper;
 
 class ProductTypesController extends Controller
 {
@@ -41,6 +42,8 @@ class ProductTypesController extends Controller
         $data['active'] = $request->has('active');
 
         Type::create($data);
+
+        Helper::drop('product-types');
 
         notify()->flash('Sucesso', 'success', [
           'text' => 'Novo Tipo de Produto adicionado com sucesso'
@@ -87,6 +90,8 @@ class ProductTypesController extends Controller
 
         $type = Type::uuid($id);
         $type->update($data);
+
+        Helper::drop('product-types');
 
         notify()->flash('Sucesso', 'success', [
           'text' => 'Tipo de Produto atualizado com sucesso'
