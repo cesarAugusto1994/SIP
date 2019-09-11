@@ -283,7 +283,6 @@
                     <table class="table table-lg table-styling">
                         <thead>
                             <tr class="table-primary">
-                                <th>Opções</th>
                                 <th>No.</th>
                                 <th>Situação</th>
                                 <th>Descrição</th>
@@ -318,18 +317,6 @@
                             @endphp
 
                             <tr>
-
-                                <td>
-                                  @if($ticket->status_id != 4)
-                                      <div class="dropdown-secondary dropdown">
-                                          <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
-                                          <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                              <a class="dropdown-item waves-light waves-effect" href="{{route('tickets.edit', $ticket->uuid)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
-                                              <div class="dropdown-divider"></div>
-                                          </div>
-                                      </div>
-                                  @endif
-                                </td>
 
                                 <td><a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ str_pad($ticket->id, 6, "0", STR_PAD_LEFT) }}</a></td>
 
