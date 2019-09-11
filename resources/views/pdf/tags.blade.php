@@ -45,7 +45,7 @@
   <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
 <img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
 </div>
-  <div class="wrapper wrapper-content">
+  <div style="padding:0px 10px 0px 10px">
       <div class="ibox-content">
           <div class="row">
 
@@ -78,22 +78,78 @@
                               <b>Cidade:</b> {{ $delivery->address->city }}, {{ $delivery->address->zip }}<br>
                           </address>
 
-                          <address>
-                            <strong>Entregador</strong><br>
-                            <span id="entregador"><span class="text-navy">{{ $delivery->user->person->name }}</span></span>
-                          </address>
-
                       </div>
 
                     </div>
-
-                    <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:5em"></div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                         <h4>Comprovante de Entrega de Documentos</h4>
                     </div>
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="font-size:11px">
+
+                      <thead>
+                        <tr>
+                            <td class="text-center">Empresa</td>
+                            <td class="text-center" colspan="2"><b>{{ $delivery->client->name }}</b></td>
+                            <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Funcionário</th>
+                            <th>Referência</th>
+                            <th>Entregue?</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+
+                        @foreach($delivery->documents as $document)
+                        @php
+                            $document = $document->document;
+                        @endphp
+                          <tr>
+                              <td>{{ $document->type->name }}</td>
+                              <td>{{ $document->employee->name ?? '' }}</td>
+                              <td>{{ $document->reference ?? '' }}</td>
+                              <td>
+                                  Sim <input type="checkbox"/>
+                                  Não <input type="checkbox"/>
+                              </td>
+                          </tr>
+                        @endforeach
+
+                        <tr>
+                            <td colspan="4" class="text-center font-10"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
+                            DATADOS E CARIMBADOS.</b></td>
+                        </tr>
+
+                        <tr>
+                            <td>Data/Hora: __/__/____ __:__</td>
+                            <td colspan="3">Assinatura: _______________________________________________</td>
+                        </tr>
+
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                            <td colspan="2"><small>Ordem Entrega: <b>#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</b></small></td>
+                            <td colspan="1"><small>Etiqueta gerada por: {{ substr(\Auth::user()->uuid, 0, 8) }} - {{ \Auth::user()->person->name }}</small></td>
+                            <td colspan="1"><small>Entregador: {{ $delivery->user->person->name }}</small></td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                      </tfoot>
+
+                    </table>
+
+                    <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:5em"></div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <h4>Comprovante de Entrega de Documentos: Via do Cliente</h4>
+                    </div>
+
+                    <table class="table table-bordered" style="font-size:11px">
 
                       <thead>
                         <tr>
