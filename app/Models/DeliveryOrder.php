@@ -13,11 +13,11 @@ class DeliveryOrder extends Model
 
     protected $table = 'delivery_order';
 
-    protected $fillable = ['status_id', 'client_id', 'amount', 'delivered_by', 'finished_at', 'finished_by', 'address_id', 'delivered_at', 'delivery_date', 'receipt', 'annotations', 'delivery_date'];
+    protected $fillable = ['status_id', 'client_id', 'amount', 'delivered_by', 'finished_at', 'finished_by', 'address_id', 'delivered_at', 'delivery_date', 'receipt', 'annotations', 'delivery_date', 'created_at'];
 
     protected static $logAttributes = ['status_id', 'client_id', 'amount', 'address_id', 'delivered_by', 'finished_at', 'finished_by', 'delivered_at', 'delivery_date', 'receipt', 'annotations', 'delivery_date'];
 
-    protected $dates = ['delivery_date', 'delivery_at', 'delivered_at'];
+    protected $dates = ['delivery_date', 'delivery_at', 'delivered_at', 'created_at'];
 
     public function client()
     {

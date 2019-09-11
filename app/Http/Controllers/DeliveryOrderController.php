@@ -15,6 +15,7 @@ use App\Notifications\DeliveryOrder as DeliveryOrderNotification;
 use App\Mail\DeliveryOrder as DeliveryOrderMail;
 use App\Jobs\DeliveryOrder as DeliveryOrderJob;
 use Illuminate\Support\Facades\Validator;
+use Khill\Lavacharts\Lavacharts;
 use Notification;
 use Auth;
 use PDF;
@@ -66,6 +67,76 @@ class DeliveryOrderController extends Controller
           }
         }
 
+        $lava = new Lavacharts;
+
+        $reasons = $lava->DataTable();
+        $reasons2 = $lava->DataTable();
+        $reasons3 = $lava->DataTable();
+        $reasons4 = $lava->DataTable();
+
+        $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $orders->get();
+
+        $groupedByType = $groupedByType->groupBy('delivered_by');
+
+        $reasons->addStringColumn('Entregue Por')
+                ->addNumberColumn('Percent');
+
+        foreach ($groupedByType as $key => $grouped) {
+          $reasons->addRow([$grouped->first()->user->person->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Entregador', $reasons, [
+            'title' => 'Entregas'
+        ]);
+
+        // Usuário
+
+        $reasons2->addStringColumn('Entregas por dia')
+                ->addNumberColumn('Quantidade');
+
+        $groupedByUser = $groupedByUser->groupBy('delivered_at');
+
+        foreach ($groupedByUser as $key => $grouped) {
+
+          $fisrt = $grouped->first();
+
+          $reasons2->addRow([$fisrt->delivered_at ? $fisrt->delivered_at->format('d/m/Y') : '', $grouped->count()]);
+        }
+
+        $lava->DonutChart('EntregasPorDia', $reasons2, [
+            'title' => 'Entregas por dia'
+        ]);
+
+        // Status
+
+        $reasons3->addStringColumn('Situação')
+                ->addNumberColumn('Porcentagem');
+
+        $groupedByStatus = $groupedByStatus->groupBy('status_id');
+
+        foreach ($groupedByStatus as $key => $grouped) {
+          $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Status', $reasons3, [
+            'title' => 'Entregas Por Situação'
+        ]);
+
+        // Prioridade
+
+        $reasons4->addStringColumn('Cliente')
+                ->addNumberColumn('Quantidade');
+
+        $groupedByPriority = $groupedByPriority->groupBy('client_id');
+
+        foreach ($groupedByPriority as $key => $grouped) {
+          $reasons4->addRow([$grouped->first()->client->name, $grouped->count()]);
+        }
+
+        $lava->BarChart('Empresa', $reasons4, [
+            'title' => 'Documentos Por Empresa'
+        ]);
+
         $quantity = $orders->count();
 
         $orders = $orders->paginate();
@@ -74,7 +145,7 @@ class DeliveryOrderController extends Controller
             $orders->appends($key, $value);
         }
 
-        return view('delivery-order.index', compact('orders', 'quantity'));
+        return view('delivery-order.index', compact('orders', 'quantity', 'lava'));
     }
 
     public function billing(Request $request)
