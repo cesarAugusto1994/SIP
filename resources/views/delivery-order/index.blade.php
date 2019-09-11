@@ -101,7 +101,7 @@
 
   <div class="row">
 
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-4 col-md-6">
         <div class="card">
             <div class="card-block">
                 <div id="chart-div"></div>
@@ -110,16 +110,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6">
-        <div class="card">
-            <div class="card-block">
-                <div id="chart-div-user"></div>
-                {!! $lava->render('DonutChart', 'EntregasPorDia', 'chart-div-user') !!}
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-4 col-md-6">
         <div class="card">
             <div class="card-block">
                 <div id="chart-div-status"></div>
@@ -128,7 +119,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-4 col-md-6">
         <div class="card">
             <div class="card-block">
                 <div id="chart-div-priority"></div>

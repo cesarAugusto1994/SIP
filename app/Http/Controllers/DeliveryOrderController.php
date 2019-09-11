@@ -90,7 +90,7 @@ class DeliveryOrderController extends Controller
         ]);
 
         // Usuário
-
+/*
         $reasons2->addStringColumn('Entregas por dia')
                 ->addNumberColumn('Quantidade');
 
@@ -106,7 +106,7 @@ class DeliveryOrderController extends Controller
         $lava->DonutChart('EntregasPorDia', $reasons2, [
             'title' => 'Entregas por dia'
         ]);
-
+*/
         // Status
 
         $reasons3->addStringColumn('Situação')
