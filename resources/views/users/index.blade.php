@@ -129,7 +129,7 @@
                                     @if($person->user->active)
                                         <label class="label label-inverse-success">Ativo</label>
                                     @else
-                                        <label class="label label-inverse-success">Inativo</label>
+                                        <label class="label label-inverse-danger">Inativo</label>
                                     @endif
                                   </td>
 
