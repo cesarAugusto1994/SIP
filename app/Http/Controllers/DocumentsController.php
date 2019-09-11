@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Client\{Address, Employee};
 use App\Models\Delivery\Document\Type;
 use App\Models\Delivery\Document\Status;
+use Khill\Lavacharts\Lavacharts;
 use Auth;
 
 class DocumentsController extends Controller
@@ -57,6 +58,73 @@ class DocumentsController extends Controller
           }
         }
 
+        $lava = new Lavacharts;
+
+        $reasons = $lava->DataTable();
+        $reasons2 = $lava->DataTable();
+        $reasons3 = $lava->DataTable();
+        $reasons4 = $lava->DataTable();
+
+        $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $documents->get();
+
+        $groupedByType = $groupedByType->groupBy('type_id');
+
+        $reasons->addStringColumn('Tipos')
+                ->addNumberColumn('Percent');
+
+        foreach ($groupedByType as $key => $grouped) {
+          $reasons->addRow([$grouped->first()->type->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Tipo', $reasons, [
+            'title' => 'Documentos Por Tipo'
+        ]);
+
+        // Usuário
+
+        $reasons2->addStringColumn('Usuários')
+                ->addNumberColumn('Quantidade');
+
+        $groupedByUser = $groupedByUser->groupBy('user_id');
+
+        foreach ($groupedByUser as $key => $grouped) {
+          $reasons2->addRow([$grouped->first()->creator->person->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Usuario', $reasons2, [
+            'title' => 'Documentos Por Usuário'
+        ]);
+
+        // Status
+
+        $reasons3->addStringColumn('Situação')
+                ->addNumberColumn('Percent');
+
+        $groupedByStatus = $groupedByStatus->groupBy('status_id');
+
+        foreach ($groupedByStatus as $key => $grouped) {
+          $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Status', $reasons3, [
+            'title' => 'Documentos Por Situação'
+        ]);
+
+        // Prioridade
+
+        $reasons4->addStringColumn('Cliente')
+                ->addNumberColumn('Quantidade');
+
+        $groupedByPriority = $groupedByPriority->groupBy('client_id');
+
+        foreach ($groupedByPriority as $key => $grouped) {
+          $reasons4->addRow([$grouped->first()->client->name, $grouped->count()]);
+        }
+
+        $lava->BarChart('Empresa', $reasons4, [
+            'title' => 'Documentos Por Empresa'
+        ]);
+
         $quantity = $documents->count();
 
         $documents = $documents->paginate();
@@ -65,7 +133,7 @@ class DocumentsController extends Controller
             $documents->appends($key, $value);
         }
 
-        return view('documents.index', compact('documents', 'quantity'));
+        return view('documents.index', compact('documents', 'quantity', 'lava'));
     }
 
     /**

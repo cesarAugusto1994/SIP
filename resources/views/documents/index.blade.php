@@ -48,6 +48,46 @@
 
     <div class="row">
 
+      <div class="col-xl-3 col-md-6">
+          <div class="card">
+              <div class="card-block">
+                  <div id="chart-div"></div>
+                  {!! $lava->render('DonutChart', 'Tipo', 'chart-div') !!}
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+          <div class="card">
+              <div class="card-block">
+                  <div id="chart-div-user"></div>
+                  {!! $lava->render('DonutChart', 'Usuario', 'chart-div-user') !!}
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+          <div class="card">
+              <div class="card-block">
+                  <div id="chart-div-status"></div>
+                  {!! $lava->render('DonutChart', 'Status', 'chart-div-status') !!}
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+          <div class="card">
+              <div class="card-block">
+                  <div id="chart-div-priority"></div>
+                  {!! $lava->render('BarChart', 'Empresa', 'chart-div-priority') !!}
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
       <div class="col-lg-3">
 
           <div class="card">
