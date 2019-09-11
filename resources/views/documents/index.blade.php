@@ -159,12 +159,12 @@
                       <table class="table table-lg table-styling">
                           <thead>
                               <tr class="table-primary">
-                                  <th>Opções</th>
                                   <th>No.</th>
                                   <th>Tipo</th>
                                   <th>Situação</th>
                                   <th>Cliente</th>
                                   <th>Adicionado Em</th>
+                                  <th>Opções</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -194,28 +194,6 @@
                               @endphp
 
                               <tr>
-
-                                  <td class="dropdown">
-
-                                    @if($document->status_id == 1)
-
-                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                        @permission('create.ordem.entrega')
-                                          <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
-                                        @endpermission
-
-                                        @permission('delete.documentos')
-                                          <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                                        @endpermission
-
-                                    </div>
-
-                                    @endif
-
-                                  </td>
-
                                   <td><a href="{{ route('documents.show', $document->uuid) }}" class="card-title">#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</a></td>
                                   <td>
                                     <p><a href="{{route('documents.show', ['id' => $document->uuid])}}">{{ $document->type->name }}</a></p>
@@ -239,7 +217,24 @@
 
                                   </td>
 
+                                  <td class="dropdown">
 
+                                    @if($document->status_id == 1)
+
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                        @permission('create.ordem.entrega')
+                                          <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
+                                        @endpermission
+
+                                        @permission('delete.documentos')
+                                          <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
+                                        @endpermission
+
+                                    </div>
+
+                                    @endif
 
                                   </td>
 

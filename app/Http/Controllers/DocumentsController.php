@@ -161,6 +161,8 @@ class DocumentsController extends Controller
         $data['created_by'] = $user->id;
         $data['status_id'] = 1;
 
+        $documentsList = [];
+
         $client = Client::uuid($data['client_id']);
         $type = Type::uuid($data['type_id']);
 
@@ -178,12 +180,13 @@ class DocumentsController extends Controller
 
             $data['employee_id'] = $employee->id;
             $document = Document::create($data);
-
+            $documentsList[$client->id] = $document->uuid;
           }
 
         } else {
 
           $document = Document::create($data);
+          $documentsList[$client->id] = $document->uuid;
 
         }
 
@@ -211,7 +214,7 @@ class DocumentsController extends Controller
 
                       foreach ($employees as $key => $employee) {
 
-                        Document::create([
+                        $document = Document::create([
                           'type_id' => $type->id,
                           'client_id' => $client->id,
                           'employee_id' => $employee->id,
@@ -220,11 +223,14 @@ class DocumentsController extends Controller
                           'status_id' => 1,
                           'amount' => $type->price,
                         ]);
+
+                        $documentsList[$client->id] = $document->uuid;
+
                       }
 
                   } else {
 
-                    Document::create([
+                    $document = Document::create([
                       'type_id' => $type->id,
                       'client_id' => $client->id,
                       'employee_id' => null,
@@ -233,6 +239,8 @@ class DocumentsController extends Controller
                       'status_id' => 1,
                       'amount' => $type->price,
                     ]);
+
+                    $documentsList[$client->id] = $document->uuid;
 
                   }
 
@@ -246,7 +254,7 @@ class DocumentsController extends Controller
           'text' => 'Novo Documento adicionado com sucesso.'
         ]);
 
-        return redirect()->route('documents.index');
+        return redirect()->route('delivery-order.create', ['client' => $client->uuid, 'document[]' => $documentsList[$client->id]]);
     }
 
     /**
