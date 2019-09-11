@@ -301,6 +301,7 @@ Route::middleware('auth')->group(function () {
           Route::resource('purchasing-item', 'PurchasingItemsController');
 
           Route::resource('products', 'ProductsController');
+          Route::resource('product-types', 'ProductTypesController');
           Route::resource('stock', 'StockController');
           Route::resource('brands', 'BrandsController');
           Route::resource('models', 'ModelsController');
