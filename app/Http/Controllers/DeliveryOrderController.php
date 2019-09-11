@@ -89,26 +89,6 @@ class DeliveryOrderController extends Controller
             'title' => 'Entregas'
         ]);
 
-        // Usuário
-/*
-        $reasons2->addStringColumn('Entregas por dia')
-                ->addNumberColumn('Quantidade');
-
-        $groupedByUser = $groupedByUser->groupBy('delivered_at');
-
-        foreach ($groupedByUser as $key => $grouped) {
-
-          $fisrt = $grouped->first();
-
-          $reasons2->addRow([$fisrt->delivered_at ? $fisrt->delivered_at->format('d/m/Y') : '', $grouped->count()]);
-        }
-
-        $lava->DonutChart('EntregasPorDia', $reasons2, [
-            'title' => 'Entregas por dia'
-        ]);
-*/
-        // Status
-
         $reasons3->addStringColumn('Situação')
                 ->addNumberColumn('Porcentagem');
 
@@ -298,9 +278,13 @@ class DeliveryOrderController extends Controller
     {
         $delivery = DeliveryOrder::uuid($id);
 
-        $user = $request->user();
-
         if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
+
+            if(!Auth::check()) {
+                abort(403, 'Ordem de Entrega Pendente');
+            }
+
+            $user = $request->user();
 
             $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
             $delivery->save();
@@ -324,14 +308,46 @@ class DeliveryOrderController extends Controller
 
         } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO) {
 
+            if(!Auth::check()) {
+                abort(403, 'Ordem de Entrega Em Transito');
+            }
+
+            $user = $request->user();
+
             $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
 
             return view('delivery-order.scan-delivered', compact('message', 'delivery'));
 
         } else {
-            return abort(404);
+
+            return redirect()->route('delivery_receipt_view', $delivery->uuid);
+
         }
 
+    }
+
+    public function deliveryReceipt($id)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+
+        return view('delivery-order.delivery', compact('delivery'));
+    }
+
+    public function deliveryReceiptImage($id)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+
+        $link = $delivery->receipt;
+
+        $file = \Storage::exists($link) ? \Storage::get($link) : false;
+
+        if(!$file) {
+          abort(404, 'Comprovante não encontrado.');
+        }
+
+        $mimetype = \Storage::disk('local')->mimeType($link);
+
+        return response($file, 200)->header('Content-Type', $mimetype);
     }
 
     public function receipt($id, Request $request)
@@ -574,17 +590,6 @@ class DeliveryOrderController extends Controller
         }
 
         $documents = Document::whereIn('uuid', $data['document'])->get();
-/*
-        foreach ($documents as $key => $document) {
-            if(!$document->address) {
-              notify()->flash('Endereço não informado!', 'error', [
-                'text' => 'O documento ' . $document->description . ' não possui endereço de entrega, e é obrigatória essa informação.'
-              ]);
-
-              return back();
-            }
-        }
-*/
         return view('delivery-order.conference', compact('documents', 'delivers'));
     }
 
@@ -893,14 +898,14 @@ class DeliveryOrderController extends Controller
 
             $subject = 'Ordem de Entrega';
 
-            //DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega', $message)->onQueue('emails');
+            DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega', $message)->onQueue('emails');
 
-            /*Log::create([
+            Log::create([
               'delivery_order_id' => $delivery->id,
               'status_id' => Constants::STATUS_DELIVERY_EM_TRANSITO,
               'user_id' => $user->id,
               'message' => 'Ordem de Entrega alterada para Em Transio por ' . $user->person->name
-            ]);*/
+            ]);
 
             /*$result = [
               'id' => $delivery->id,

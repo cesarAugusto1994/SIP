@@ -145,15 +145,36 @@
 
                     <div class="bg-white" style="border-bottom:2px dashed green;padding:0.3em 0.2em;margin-bottom:2em"></div>
 
-                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                        <h4>Comprovante de Entrega de Documentos: Via do Cliente</h4>
+                    <div class="row">
+                    <div class="col-md-12 pull-right">
+
+                      @php
+                          $route = route('start_delivery', $delivery->uuid);
+                      @endphp
+
+                        {!! QrCode::size(100)->generate($route); !!}
+
                     </div>
+
+                    <div class="col-md-12">
+
+                      <h3>{{ $delivery->client->name }}</h3>
+
+                      <address>
+                          <b>Endereço:</b> {{ $delivery->address->street }}, {{ $delivery->address->number }}, {{ $delivery->address->district }}<br>
+                          <b>Cidade:</b> {{ $delivery->address->city }}, {{ $delivery->address->zip }}<br>
+                      </address>
+
+                    </div>
+                    </div>
+
+                    <h4 class="">Comprovante de Entrega de Documentos: <i>Via do Cliente</i></h4>
 
                     <table class="table table-bordered" style="font-size:11px">
 
                       <thead>
                         <tr>
-                            <td class="text-center">Empresa</td>
+                            <td class="text-center"><small>Ordem Entrega: <b>#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</b></small></td>
                             <td class="text-center" colspan="2"><b>{{ $delivery->client->name }}</b></td>
                             <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
                         </tr>
@@ -193,18 +214,11 @@
                         </tr>
 
                       </tbody>
-                      <tfoot>
-                        <tr>
-                            <td colspan="2"><small>Ordem Entrega: <b>#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</b></small></td>
-                            <td colspan="1"><small>Etiqueta gerada por: {{ substr(\Auth::user()->uuid, 0, 8) }} - {{ \Auth::user()->person->name }}</small></td>
-                            <td colspan="1"><small>Entregador: {{ $delivery->user->person->name }}</small></td>
-                        </tr>
-                        <tr>
 
-                        </tr>
-                      </tfoot>
 
                     </table>
+
+
 
                   </div>
                 </div>

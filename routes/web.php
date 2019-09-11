@@ -317,7 +317,6 @@ Route::middleware('auth')->group(function () {
           Route::get('transfer/{id}/term/signature', 'TransferController@signature')->name('transfer_term_signature');
           Route::post('transfer/{id}/oprions', 'TransferController@transfer')->name('transfer_itens_options');
 
-          Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
           Route::get('delivery-order/{id}/delivery-status', 'DeliveryOrderController@status')->name('delivery_status');
           Route::post('delivery-order/{id}/receipt', 'DeliveryOrderController@receipt')->name('delivery_receipt');
 
@@ -337,5 +336,9 @@ Route::get('user/{id}/offline', 'UserOfflineController@offline')->name('user_off
 Route::get('clients/import-json', 'ClientsController@importJson')->name('clients_import_json');
 Route::get('addresses/import-json', 'AddressesController@importJson')->name('adresses_import_json');
 Route::get('employees/import-json', 'EmployeesController@importJson')->name('employees_import_json');
+
+Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
+Route::get('delivery-order/{id}/delivery', 'DeliveryOrderController@deliveryReceipt')->name('delivery_receipt_view');
+Route::get('delivery-order/{id}/delivery/receipt/print', 'DeliveryOrderController@deliveryReceiptImage')->name('delivery_receipt_image');
 
 Route::get('tickets/auto-search/by/email', 'TicketsController@autoSearchTicketsByEmail')->name('auto_search_tickets_by_email');
