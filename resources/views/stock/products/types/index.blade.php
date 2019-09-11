@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Tipos de Produtos</h4>
+                    <h4>Tipos de Ativo</h4>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Tipos de Produtos</a>
+                    <li class="breadcrumb-item"><a href="#!">Tipos de Ativo</a>
                     </li>
                 </ul>
             </div>

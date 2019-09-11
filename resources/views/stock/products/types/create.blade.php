@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Tipos de Produtos</h4>
+                    <h4>Tipos de Ativo</h4>
                 </div>
             </div>
         </div>
@@ -18,9 +18,9 @@
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('product-types.index') }}"> Tipos de Produtos </a>
+                        <a href="{{ route('product-types.index') }}"> Tipos de Ativo </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Nova</a>
+                    <li class="breadcrumb-item"><a href="#!">Novo</a>
                     </li>
                 </ul>
             </div>
@@ -31,7 +31,7 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Tipos de Produtos</h5>
+          <h5>Novo Tipo de Ativo</h5>
       </div>
       <div class="card-block">
 
