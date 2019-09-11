@@ -120,8 +120,8 @@
                         @endforeach
 
                         <tr>
-                            <td colspan="4" class="text-center font-10"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
-                            DATADOS E CARIMBADOS.</b></td>
+                            <td colspan="4" class="text-center font-9"><p style="font-size:9px"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
+                            DATADOS E CARIMBADOS.</b></p></td>
                         </tr>
 
                         <tr>
@@ -143,7 +143,7 @@
 
                     </table>
 
-                    <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:2em"></div>
+                    <div class="bg-white" style="border-bottom:2px dashed green;padding:0.3em 0.2em;margin-bottom:2em"></div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                         <h4>Comprovante de Entrega de Documentos: Via do Cliente</h4>
@@ -183,8 +183,8 @@
                         @endforeach
 
                         <tr>
-                            <td colspan="4" class="text-center font-10"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
-                            DATADOS E CARIMBADOS.</b></td>
+                            <td colspan="4" class="text-center font-9"><p style="font-size:9px"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
+                            DATADOS E CARIMBADOS.</b></p></td>
                         </tr>
 
                         <tr>
