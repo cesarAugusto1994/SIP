@@ -85,7 +85,7 @@ class DocumentsController extends Controller
         $reasons2->addStringColumn('Usuários')
                 ->addNumberColumn('Quantidade');
 
-        $groupedByUser = $groupedByUser->groupBy('user_id');
+        $groupedByUser = $groupedByUser->groupBy('created_by');
 
         foreach ($groupedByUser as $key => $grouped) {
           $reasons2->addRow([$grouped->first()->creator->person->name, $grouped->count()]);
