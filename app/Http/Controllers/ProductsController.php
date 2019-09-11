@@ -14,10 +14,57 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('stock.products.index', compact('products'));
+        $quantity = 0;
+        $products = [];
+
+        if($request->get('find')) {
+
+          $products = Product::orderBy('name');
+
+          if($request->filled('search')) {
+
+            $search = $request->get('search');
+
+            $products->where('id', $search)
+            ->orWhere('name', 'like', "%$search%")
+            ->orWhere('description', 'like', "%$search%")
+            ->orWhereHas('stocks', function($query) use($search) {
+                $query->where('equity_registration_code', $search);
+                $query->orWhere('serial', $search);
+            });
+
+          }
+
+          if($request->filled('type')) {
+            $products->where('type_id', $request->get('type'));
+          }
+
+          if($request->filled('status')) {
+            $status = $request->get('status');
+            $products->whereHas('stocks', function($query) use($status) {
+                $query->where('status', $status);
+            });
+          }
+
+          if($request->filled('localization')) {
+            $localization = $request->get('localization');
+            $products->whereHas('stocks', function($query) use($localization) {
+                $query->where('localization', $localization);
+            });
+          }
+
+          $quantity = $products->count();
+          $products = $products->paginate();
+
+          foreach ($request->all() as $key => $value) {
+              $products->appends($key, $value);
+          }
+
+        }
+
+        return view('stock.products.index', compact('products', 'quantity'));
     }
 
     /**

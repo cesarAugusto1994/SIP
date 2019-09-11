@@ -27,6 +27,7 @@ use App\Models\Stock\{Stock,Brand,Product,Vendor};
 use App\Models\Stock\Brand\Models as BrandModels;
 use App\Models\Delivery\Document\Type as DocumentType;
 use App\Models\Delivery\Document\Status as DocumentStatus;
+use App\Models\Stock\Product\Type as ProductType;
 
 /**
  *
@@ -322,6 +323,20 @@ class Helper
         }
 
         $data = ScheduleType::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function productTypes()
+    {
+        $key = 'product-types';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ProductType::all();
 
         self::set($key, $data);
         return self::get($key);

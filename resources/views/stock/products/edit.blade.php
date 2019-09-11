@@ -41,7 +41,7 @@
 
             <div class="row m-b-30">
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                       <label class="col-form-label">Nome</label>
                       <div class="input-group">
@@ -50,11 +50,25 @@
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                       <label class="col-form-label">Descrição</label>
                       <div class="input-group">
                         <input type="text" name="description" class="form-control" value="{{ $product->description }}">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <label class="col-form-label">Tipo</label>
+                      <div class="input-group">
+                        <select class="form-control select2" name="type_id">
+                            <option value="">Selecione</option>
+                            @foreach(\App\Helpers\Helper::productTypes() as $item)
+                                <option value="{{$item->id}}" {{ $product->type_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
                       </div>
                   </div>
                 </div>

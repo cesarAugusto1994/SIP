@@ -27,98 +27,149 @@
 
 <div class="page-body">
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Listagem de Ativos</h5>
-          <span>Ativos</span>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
+  <div class="row">
 
-                  <li><a class="btn btn-sm btn-primary" href="{{route('transfer.index')}}">Trasferências</a></li>
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
                   @permission('create.ativos')
-                    <li><a class="btn btn-sm btn-success" href="{{route('products.create')}}">Novo Ativo</a></li>
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('products.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Ativo</a>
                   @endpermission
 
-              </ul>
-          </div>
+                  @permission('view.transferencias')
+                    <a class="btn btn-sm btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('transfer.index')}}"><i class="icofont icofont-paper-plane"></i> Trasferências</a>
+                  @endpermission
 
-      </div>
-      <div class="card-block">
-          <div class="table-responsive">
-              <table class="table table-striped table-bordered">
-                  <thead>
-                      <tr>
-                          <th>#</th>
-                          <th>Nome</th>
-                          <th>Inventário</th>
-                          <th>Disponíveis</th>
-                          <th>Fornecedor</th>
-                          <th>Marca</th>
-                          <th>Modelo</th>
-                          <th>Opções</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-
-                    @foreach($products as $product)
-                      <tr>
-                          <th scope="row">{{ $product->id }}</th>
-                          <td>  <a href="{{route('products.show', ['id' => $product->uuid])}}">{{ $product->name }}</a></td>
-                          <td>{{ $product->stocks ? $product->stocks->count() : 0 }}</td>
-                          <td>{{ $product->stocks ? $product->stocks->filter(function($stock, $index) { return $stock->status == 'Disponível'; })->count() : 0 }}</td>
-                          <td>{{ $product->vendor ? $product->vendor->name : '' }}</td>
-                          <td>{{ $product->brand ? $product->brand->name : '' }}</td>
-                          <td>{{ $product->model ? $product->model->name : '' }}</td>
-
-                          <td class="dropdown">
-
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                              @permission('view.ativos')
-                                <a href="{{route('products.show', ['id' => $product->uuid])}}" class="dropdown-item">Visualizar </a>
-                              @endpermission
-
-                              @permission('edit.ativos')
-                                <a href="{{route('products.edit', ['id' => $product->uuid])}}" class="dropdown-item">Editar </a>
-                              @endpermission
-
-                            </div>
-                          </td>
-
-                      </tr>
-                    @endforeach
-
-                  </tbody>
-              </table>
+              </div>
           </div>
       </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-3">
+
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+            </div>
+            <div class="card-block">
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="search" placeholder="Código do Ativo, Matricula">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="type">
+                              <option value="">Selecione</option>
+                              @foreach(\App\Helpers\Helper::productTypes() as $item)
+                                  <option value="{{$item->id}}">{{$item->name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="status">
+                              <option value="">Selecione a situação</option>
+                              @foreach(\App\Helpers\Helper::stockStatus() as $item)
+                                  <option value="{{ $item }}">{{ $item }}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" id="select-owner" name="localization">
+                              <option value="">Selecione a localizaçaõ</option>
+                              @foreach(\App\Helpers\Helper::stockLocalization() as $item)
+                                  <option value="{{ $item }}">{{ $item }}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <h5>Ativos Cadastrados</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                              <th>#</th>
+                              <th>Nome</th>
+                              <th>Inventário</th>
+                              <th>Disponíveis</th>
+                              <th>Tipo</th>
+                              <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($products as $product)
+                            <tr>
+                                <th scope="row">{{ $product->id }}</th>
+                                <td>  <a href="{{route('products.show', ['id' => $product->uuid])}}">{{ $product->name }}</a></td>
+                                <td>{{ $product->stocks ? $product->stocks->count() : 0 }}</td>
+                                <td>{{ $product->stocks ? $product->stocks->filter(function($stock, $index) { return $stock->status == 'Disponível'; })->count() : 0 }}</td>
+                                <td>{{ $product->type ? $product->type->name : '' }}</td>
+
+                                <td class="dropdown">
+
+                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                  <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                    @permission('view.ativos')
+                                      <a href="{{route('products.show', ['id' => $product->uuid])}}" class="dropdown-item">Visualizar </a>
+                                    @endpermission
+
+                                    @permission('edit.ativos')
+                                      <a href="{{route('products.edit', ['id' => $product->uuid])}}" class="dropdown-item">Editar </a>
+                                    @endpermission
+
+                                  </div>
+                                </td>
+
+                            </tr>
+                          @endforeach
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @if(!empty($products))
+    {{ $products->links() }}
+    @endif
   </div>
 
 </div>
-
-@endsection
-
-@section('scripts')
-
-<script type="text/javascript" src="{{ asset('adminty\pages\edit-table\jquery.tabledit.js') }}"></script>
-
-<script>
-
-	$(document).ready(function() {
-
-      $('#products-table').Tabledit({
-          deleteButton: false,
-          saveButton: false,
-          columns: {
-            identifier: [0, 'id'],
-            editable: [[1, 'name'], [2, 'description']]
-        }
-
-      });
-  });
-
-</script>
 
 @endsection

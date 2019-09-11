@@ -12,16 +12,21 @@ class Product extends Model
     use LogsActivity;
 
     protected $fillable = ['name', 'description', 'brand_id', 'model_id',
-                            'vendor_id', 'lifetime', 'lifetime_type',
+                            'vendor_id', 'lifetime', 'lifetime_type', 'type_id',
                             'min_stock', 'max_stock', 'actual_stock', 'user_id'];
 
     protected static $logAttributes = ['name', 'description', 'brand_id', 'model_id',
-                            'vendor_id', 'lifetime', 'lifetime_type',
+                            'vendor_id', 'lifetime', 'lifetime_type', 'type_id',
                             'min_stock', 'max_stock', 'actual_stock', 'user_id'];
 
     public function stocks()
     {
         return $this->hasMany('App\Models\Stock\Stock');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Stock\Product\Type');
     }
 
     public function model()

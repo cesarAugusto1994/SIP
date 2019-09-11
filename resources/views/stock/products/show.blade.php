@@ -49,6 +49,7 @@
 
         <p class="lead text-success">#{{ $product->id }} - {{ $product->name }}<p>
 
+        <p class="">Tipo: {{ $product->type->name }}<p>
         <p class="text-muted">Descrição: {{ $product->description }}<p>
         <p class="text-muted">Fornecedor: {{ $product->vendor ? $product->vendor->name : '-' }}<p>
         <p class="text-muted">Marca: {{ $product->brand ? $product->brand->name : '-' }}<p>
@@ -115,7 +116,7 @@
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                              @permission('edit.ativos')
+                              @permission('create.transferencias')
                                 <a href="{{route('transfer.create', ['stock' => $stock->uuid])}}" class="dropdown-item">Transferir </a>
                               @endpermission
 
