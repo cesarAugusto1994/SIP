@@ -203,22 +203,9 @@
                           </tr>
                         @endforeach
 
-                        <tr>
-                            <td colspan="4" class="text-center font-9"><p style="font-size:9px"><b>DECLARO PARA DEVIDOS FINS QUE RECEBI OS ASO`S E/OU DOCUMENTOS DESCRITOS ACIMA, DEVIDAMENTE ASSINADOS,
-                            DATADOS E CARIMBADOS.</b></p></td>
-                        </tr>
-
-                        <tr>
-                            <td>Data/Hora: __/__/____ __:__</td>
-                            <td colspan="3">Assinatura: _______________________________________________</td>
-                        </tr>
-
                       </tbody>
 
-
                     </table>
-
-
 
                   </div>
                 </div>

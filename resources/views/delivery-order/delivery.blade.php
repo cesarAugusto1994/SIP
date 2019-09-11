@@ -127,8 +127,6 @@
 
                     </div>
 
-
-
                     <a class="btn btn-primary btn-block" href="{{ route('delivery_receipt_image', $delivery->uuid) }}"> Comprovante </a>
 
                   </div>
