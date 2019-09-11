@@ -143,7 +143,7 @@
 
                     </table>
 
-                    <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:5em"></div>
+                    <div class="bg-white" style="border-bottom:2px dashed grey;padding:2em 2em;margin-bottom:2em"></div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                         <h4>Comprovante de Entrega de Documentos: Via do Cliente</h4>
