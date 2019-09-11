@@ -76,23 +76,29 @@ class UsersController extends Controller
           ->orWhere('phone', 'like', "%$search%")
           ->orWhere('cpf', 'like', "%$search%");
 
-          $people->whereHas('user', function($query) use ($search) {
+          $people->orWhereHas('user', function($query) use ($search) {
             $query->where('email', 'like', "%$search%")
-            ->where('nick', 'like', "%$search%");
+            ->orWhere('nick', 'like', "%$search%");
           });
 
         }
 
         $people->orderBy('name');
 
+        $quantity = $people->count();
+
         $people = $people->paginate();
+
+        foreach ($request->all() as $key => $value) {
+            $people->appends($key, $value);
+        }
 
         $roles = Helper::roles();
 
         $departments = Helper::departments();
         $occupations = Helper::occupation($departments->first()->id);
 
-        return view('users.index', compact('roles', 'people', 'departments', 'occupations'));
+        return view('users.index', compact('roles', 'people', 'departments', 'occupations', 'quantity'));
     }
 
     public function contacts()

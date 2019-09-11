@@ -26,121 +26,140 @@
 
 <div class="page-body">
 
-  <div class="row">
 
-  <div class="col-lg-12 col-xl-3">
+    <div class="row">
 
-      <div class="card">
-          <div class="card-header">
-              <h5><i class="icofont icofont-filter m-r-5"></i>Pesquisa</h5>
-              <div class="card-header-right">
-                  <ul class="list-unstyled card-option">
+      <div class="col-xl-12 col-lg-12 filter-bar">
 
-                      @permission('create.usuarios')
-                        <li><a class="btn btn-sm btn-success" href="{{route('users.create')}}">Novo Usuário</a></li>
-                      @endpermission
+        <div class="card">
+            <div class="card-block">
+                <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-                  </ul>
-              </div>
-          </div>
-          <div class="card-block">
-              <form action="?">
-                  <div class="form-group row">
-                      <div class="col-sm-12">
-                          <input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control">
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                      <div class="col-sm-12">
-                        <select class="form-control select-occupations" data-search-occupations="{{ route('occupation_search') }}" data-live-search="true" title="Departamento" data-style="btn-white" data-width="100%" placeholder="Departamento" name="department">
-                          <option value="">Selecionar Departamento</option>
-                          @foreach($departments as $department)
-                              <option value="{{$department->uuid}}">{{$department->name}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                      <div class="col-sm-12">
-                        <select class="form-control" id="occupation" data-live-search="true" title="Cargo" data-style="btn-white" data-width="100%" placeholder="Cargo" name="occupation">
-                            <option value="">Selecionar Departamento</option>
-                        </select>
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                      <div class="col-sm-12">
-                        <select class="form-control" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="active">
-                            <option value="">Situação</option>
-                            <option value="0">Inativo</option>
-                            <option value="1">Ativo</option>
-                        </select>
-                      </div>
-                  </div>
-                  <div class="text-right">
-                      <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Buscar</button>
-                  </div>
-              </form>
-          </div>
-      </div>
+                    @permission('create.usuarios')
+                      <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('users.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Usuário</a>
+                    @endpermission
 
-  </div>
-
-  <div class="col-xl-9">
-
-    <div class="row simple-cards users-card">
-
-    @forelse($people as $person)
-
-      <div class="col-md-12 col-xl-4">
-          <div class="card user-card">
-              <div class="card-header-img">
-                @if(config('app.env') == 'production')
-                  <img class="img-fluid img-radius" style="width:100px;height:100%" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="">
-                @endif
-                  <h4>{{ $person->name }}</h4>
-                  <h5><a href="" class="__cf_email__" >{{$person->user->email}}</a></h5>
-                  <p>{{$person->department->name}} / {{$person->occupation->name}}</p>
-              </div>
-
-              @if($person->active)
-                  Ativo<i class="fa fa-circle text-success" title="Ativo"></i>
-              @else
-                  Inativo<i class="fa fa-circle text-danger" title="Inativo"></i>
-              @endif
-              <br/>
-              <small>Último Login: {{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</small>
-              <br/>
-              <a href="{{route('user', ['id' => $person->user->uuid])}}" class="btn btn-success btn-sm btn-round"><i class="icofont icofont-user m-r-5"></i>Perfil</a>
-
-          </div>
-      </div>
-
-    @empty
-
-      <div class="col-md-12 m-b-sm">
-        <div class="widget white-bg no-padding">
-            <div class="p-m text-center">
-                <h1 class="m-xs"><i class="fas fa-users fa-2x"></i></h1>
-                <h6 class="font-bold no-margins">
-                    Nenhum usuário encontrado.
-                </h6>
+                </div>
             </div>
         </div>
       </div>
 
-    @endforelse
-
     </div>
 
-  </div>
+    <div class="row">
 
-  </div>
+      <div class="col-lg-3">
 
-  <br/><br/>
+          <div class="card">
+              <div class="card-header">
+                  <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+              </div>
+              <div class="card-block">
+                  <form method="get" action="?">
+                      <input type="hidden" name="find" value="1"/>
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control">
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                            <select class="form-control select-occupations" data-search-occupations="{{ route('occupation_search') }}" data-live-search="true" title="Departamento" data-style="btn-white" data-width="100%" placeholder="Departamento" name="department">
+                              <option value="">Selecionar Departamento</option>
+                              @foreach($departments as $department)
+                                  <option value="{{$department->uuid}}">{{$department->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                            <select class="form-control" id="occupation" data-live-search="true" title="Cargo" data-style="btn-white" data-width="100%" placeholder="Cargo" name="occupation">
+                                <option value="">Selecionar Departamento</option>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                            <select class="form-control" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="active">
+                                <option value="">Situação</option>
+                                <option value="0">Inativo</option>
+                                <option value="1">Ativo</option>
+                            </select>
+                          </div>
+                      </div>
 
-  <div class="text-center">
+                      <div class="">
+                          <button type="submit" class="btn btn-success btn-sm btn-block">
+                              <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-9">
+          <div class="card">
+              <div class="card-header">
+                  <h5>Usuários Cadastrados</h5>
+                  <span>Registros retornados: {{ $quantity }}</span>
+              </div>
+              <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                      <table class="table table-lg table-styling">
+                          <thead>
+                              <tr class="table-primary">
+                                <th>Nome</th>
+                                <th>Depto/Cargo</th>
+                                <th>Situação</th>
+                                <th>Opções</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+
+                            @foreach($people as $person)
+                              <tr>
+                                  <td>  <a href="{{route('user', ['id' => $person->user->uuid])}}">{{ $person->name }}</a>
+                                    <br/>
+                                    <small>{{$person->user->email}}</small>
+                                  </td>
+                                  <td>{{$person->department->name}} / {{$person->occupation->name}}</td>
+                                  <td>
+                                    @if($person->active)
+                                        <label class="label label-inverse-success">Ativo</label>
+                                    @else
+                                        <label class="label label-inverse-success">Inativo</label>
+                                    @endif
+                                  </td>
+
+                                  <td class="dropdown">
+
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                      @permission('view.usuarios')
+                                        <a href="{{route('user', ['id' => $person->user->uuid])}}" class="dropdown-item">Visualizar </a>
+                                      @endpermission
+
+                                    </div>
+                                  </td>
+
+                              </tr>
+                            @endforeach
+
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+          </div>
+
+      </div>
+      @if(!empty($people))
       {{ $people->links() }}
-  </div>
+      @endif
+    </div>
 
 </div>
 
