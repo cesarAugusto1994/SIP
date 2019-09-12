@@ -289,13 +289,10 @@ class DeliveryOrderController extends Controller
             $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
             $delivery->save();
 
-            $message = 'Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' está em Transito.';
-
-            $users = User::where('id', 2)->get();
-
-            $subject = 'Ordem de Entrega';
-
-            DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega', $message)->onQueue('emails');
+            $orderCode = str_pad($delivery->id, 6, "0", STR_PAD_LEFT);
+            $message = 'Ordem de Entrega nº: '. $orderCode .' está em Transito.';
+            $subject = 'Ordem de Entrega no. ' . $orderCode . ' em Transito';
+            DeliveryOrderJob::dispatchNow($delivery, $subject , $message);
 
             Log::create([
               'delivery_order_id' => $delivery->id,
@@ -313,9 +310,7 @@ class DeliveryOrderController extends Controller
             }
 
             $user = $request->user();
-
             $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
-
             return view('delivery-order.scan-delivered', compact('message', 'delivery'));
 
         } else {
@@ -381,6 +376,11 @@ class DeliveryOrderController extends Controller
             ]);
 
         }
+        
+        $orderCode = str_pad($delivery->id, 6, "0", STR_PAD_LEFT);
+        $message = 'Ordem de Entrega nº: '. $orderCode .' foi entregue.';
+        $subject = 'Ordem de Entrega nº. ' . $orderCode . ' Entregue';
+        DeliveryOrderJob::dispatchNow($delivery, $subject , $message);
 
         return redirect()->route('delivery_done', $delivery->uuid);
     }

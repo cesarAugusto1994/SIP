@@ -36,7 +36,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -47,12 +47,30 @@ class DeliveryOrder extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->greeting('Olá!')
+        $orderCode = str_pad($this->deliverOrder->id, 6, "0", STR_PAD_LEFT);
+        $address = $this->deliverOrder->address;
+
+        $mailMessage = new MailMessage();
+
+        $mailMessage->greeting('Entrega de Documentos')
                     ->subject($this->subject)
-                    ->line('O seu documento esta prestes a ser entregue.')
-                    ->action('Acompanhar Entrega', route('delivery_status', $this->deliverOrder->uuid))
+                    ->line('Empresa: ' . $this->deliverOrder->client->name)
+                    ->line('Ordem de Entrega No.: ' . $orderCode)
+                    ->line('Situação: ' . $this->deliverOrder->status->name)
+                    ->line('Endereço: ' . $address->street . ', ' . $address->number . ' - ' . $address->district  . ' - ' .  $address->city . ' / ' . $address->zip)
+                    ->line(' > Documentos < ');
+
+        foreach ($this->deliverOrder->documents as $key => $item) {
+            $document = $item->document;
+            $documentCode = str_pad($document->id, 6, "0", STR_PAD_LEFT);
+            $employeeName = $document->employee->name ?? '';
+            $mailMessage->line($documentCode . ' - ' . $document->type->name . ' - ' . $employeeName);
+        }
+
+        $mailMessage->action('Acompanhar Entrega', route('start_delivery', $this->deliverOrder->uuid))
                     ->salutation('Esta é uma mensagem automática, favor não responder.');
+
+        return $mailMessage;
     }
 
     public function toSlack($notifiable)
@@ -69,10 +87,12 @@ class DeliveryOrder extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
+        $orderCode = str_pad($this->deliverOrder->id, 6, "0", STR_PAD_LEFT);
+
         return [
-          'message' => 'Documento esta a caminho do destino.',
+          'message' => 'A entrega de no. ' . $orderCode . ' está a caminho do destino.',
           'date' => $this->deliverOrder->created_at,
-          'url' => route('notifications.index')
+          'url' => route('delivery_status', $this->deliverOrder->uuid)
         ];
     }
 }

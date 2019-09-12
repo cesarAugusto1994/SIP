@@ -14,6 +14,7 @@ use App\Models\DeliveryOrder as DeliveryOrderModel;
 
 use Notification, Mail;
 use App\User;
+use Auth;
 
 class DeliveryOrder implements ShouldQueue
 {
@@ -44,7 +45,9 @@ class DeliveryOrder implements ShouldQueue
     {
         $client = $this->delivery->client;
 
-        $users = User::where('id', 1)->get();
+        $usersList = collect();
+
+        $users = $usersList->push(Auth::user());
 
         try {
 

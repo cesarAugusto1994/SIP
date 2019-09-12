@@ -17,24 +17,17 @@ if (\App::environment('production')) {
     //\URL::forceScheme('https');
 }
 
-Auth::routes();
+//Auth::routes();
 
 Auth::routes(['verify' => true]);
-
+/*
 Route::get('test', function () {
     $user = \App\User::find(1);
     //event(new \App\Events\NewUser($user));
     \Notification::send(\App\User::where('id', 2)->get(), new \App\Notifications\NewUser($user));
     return "Event has been sent!";
 });
-
-Route::get('/home', function() {
-  return redirect()->route('home');
-})->middleware('lock');
-
-Route::get('/admin', function() {
-  return redirect()->route('home');
-})->middleware('lock');
+*/
 
 Route::middleware('auth')->group(function () {
 
@@ -47,15 +40,16 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('lock')->group(function () {
 
+        Route::get('/home', 'HomeController@index');
+        Route::get('/admin', 'HomeController@index');
+
         Route::get('/', 'HomeController@index')->name('home');
 
         Route::get('messages', 'ChatsController@fetchMessages')->name('chat_user_messages');
 
         Route::prefix('admin')->group(function () {
 
-          Route::get('/logs', function() {
-            return view('logs');
-          })->middleware('lock');
+          Route::get('/logs', 'LogsController@index');
 
           Route::impersonate();
 
