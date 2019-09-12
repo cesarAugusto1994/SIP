@@ -101,7 +101,7 @@
       <div class="col-xl-12">
         <div class="alert alert-danger background-danger">
             <strong>Atenção!</strong> {{ $delay }} Entrega(s) em Atraso.
-            <a href="?delay=1" class="btn btn-inverse btn-sm">Ver Entregas Atrasadas</a>
+            <a href="?delay=1&find=1" class="btn btn-inverse btn-sm">Ver Entregas Atrasadas</a>
         </div>
       </div>
     @endif
