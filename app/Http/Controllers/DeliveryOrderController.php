@@ -50,7 +50,7 @@ class DeliveryOrderController extends Controller
         if($request->has('delay')) {
             $orders->whereIn('status_id',
                         [Constants::STATUS_DELIVERY_PENDENTE, Constants::STATUS_DELIVERY_EM_TRANSITO])
-                        ->where('delivery_date', '<', now());
+                        ->where('delivery_date', '<', now()->setTime(00,00,00));
         }
 
         if($request->filled('code')) {
