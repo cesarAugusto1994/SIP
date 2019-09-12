@@ -41,7 +41,7 @@ class DeliveryOrderController extends Controller
         $orders = DeliveryOrder::orderByDesc('id');
 
         $delay = DeliveryOrder::whereIn('status_id', [Constants::STATUS_DELIVERY_PENDENTE, Constants::STATUS_DELIVERY_EM_TRANSITO])
-                    ->where('delivery_date', '<', now())->count();
+                    ->where('delivery_date', '<', now()->setTime(00,00,00))->count();
 
         if(!$request->has('find')) {
             $orders->whereIn('status_id', [1,2]);
