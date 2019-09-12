@@ -357,7 +357,7 @@ class EmployeesController extends Controller
 
                   if($hasEmployee) {
                       echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
-                      //continue;
+                      continue;
                       $data['id'] = $hasEmployee->id;
                   }
 
