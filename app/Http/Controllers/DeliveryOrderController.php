@@ -40,8 +40,17 @@ class DeliveryOrderController extends Controller
 
         $orders = DeliveryOrder::orderByDesc('id');
 
+        $delay = DeliveryOrder::whereIn('status_id', [Constants::STATUS_DELIVERY_PENDENTE, Constants::STATUS_DELIVERY_EM_TRANSITO])
+                    ->where('delivery_date', '<', now())->count();
+
         if(!$request->has('find')) {
             $orders->whereIn('status_id', [1,2]);
+        }
+
+        if($request->has('delay')) {
+            $orders->whereIn('status_id',
+                        [Constants::STATUS_DELIVERY_PENDENTE, Constants::STATUS_DELIVERY_EM_TRANSITO])
+                        ->where('delivery_date', '<', now());
         }
 
         if($request->filled('code')) {
@@ -125,7 +134,7 @@ class DeliveryOrderController extends Controller
             $orders->appends($key, $value);
         }
 
-        return view('delivery-order.index', compact('orders', 'quantity', 'lava'));
+        return view('delivery-order.index', compact('orders', 'quantity', 'lava', 'delay'));
     }
 
     public function billing(Request $request)
