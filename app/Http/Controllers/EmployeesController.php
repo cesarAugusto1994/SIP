@@ -338,7 +338,7 @@ class EmployeesController extends Controller
             $companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
 
             $result = array_filter($employeesData, function($item) use ($company) {
-                return $item['CODIGOEMPRESA'] == $company->code && $item['SITUACAO'] == 'Ativo';
+                return $item['CODIGOEMPRESA'] == $company->code;
             });
 
             if(count($result) == $company->employees->count()) {
@@ -346,10 +346,6 @@ class EmployeesController extends Controller
             }
 
             foreach ($result as $key => $item) {
-
-                if($item['SITUACAO'] == 'Inativo') {
-                  continue;
-                }
 
                 if($company) {
 
