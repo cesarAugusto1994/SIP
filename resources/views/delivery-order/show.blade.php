@@ -52,6 +52,24 @@
 
               @endif
 
+              @if($order->status_id == 1)
+                @permission('view.ordem.entrega')
+                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-success btn-sm"> Iniciar Entrega </a>
+                @endpermission
+              @endif
+
+              @if($order->status_id == 2)
+                @permission('view.ordem.entrega')
+                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-primary btn-sm"> Realizar Entrega </a>
+                @endpermission
+              @endif
+
+              @if($order->status_id == 3 || $order->status_id == 5)
+                @permission('view.ordem.entrega')
+                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-info btn-sm"> Ver Comprovante </a>
+                @endpermission
+              @endif
+
               @if($order->status_id == 3)
 
                   @permission('edit.ordem.entrega')
@@ -284,8 +302,31 @@
                                 {{ $document->reference }}
                             </td>
 
+                            @php
+
+                              $status = $document->status->id;
+
+                              $bgColor = 'success';
+
+                              switch($status) {
+                                case '1':
+                                  $bgColor = 'primary';
+                                  break;
+                                case '2':
+                                  $bgColor = 'warning';
+                                  break;
+                                case '3':
+                                  $bgColor = 'success';
+                                  break;
+                                case '4':
+                                  $bgColor = 'danger';
+                                  break;
+                              }
+
+                              @endphp
+
                             <td>
-                                <a>{{ $document->status->name }}</a>
+                                <label class="label label-{{$bgColor}}">{{ $document->status->name }}</label>
                             </td>
 
                         </tr>
