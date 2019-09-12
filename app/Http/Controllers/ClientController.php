@@ -280,6 +280,32 @@ class ClientController extends Controller
 
     }
 
+    public function emails(Request $request)
+    {
+        $id = $request->get('param');
+
+        try {
+
+          $client = Client::uuid($id);
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Registros retornados',
+            'data' => $client->emails
+          ]);
+
+        } catch(\Exception $e) {
+
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado',
+            'data' => []
+          ]);
+
+        }
+
+    }
+
     public function employees(Request $request)
     {
         $id = $request->get('param');

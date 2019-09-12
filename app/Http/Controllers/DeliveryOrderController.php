@@ -376,7 +376,7 @@ class DeliveryOrderController extends Controller
             ]);
 
         }
-        
+
         $orderCode = str_pad($delivery->id, 6, "0", STR_PAD_LEFT);
         $message = 'Ordem de Entrega nº: '. $orderCode .' foi entregue.';
         $subject = 'Ordem de Entrega nº. ' . $orderCode . ' Entregue';
@@ -521,18 +521,19 @@ class DeliveryOrderController extends Controller
           return back();
         }
 
-        $clients = Client::all();
-        $addresses = $documents = [];
+        $client = null;
+        $emails = $addresses = $documents = [];
 
         if($request->has('client')) {
             $client = Client::uuid($request->get('client'));
             $documents = $client->documents->where('status_id', 1);
             $addresses = $client->addresses;
+            $emails = $client->emails;
         } elseif($request->has('document')) {
             $documents = Document::whereIn('uuid', $data['document'])->get();
         }
 
-        return view('delivery-order.create', compact('documents', 'delivers', 'clients', 'addresses'));
+        return view('delivery-order.create', compact('client', 'documents', 'delivers', 'addresses', 'emails'));
     }
 
     public function conference(Request $request)
@@ -630,6 +631,12 @@ class DeliveryOrderController extends Controller
 
         $client = Client::uuid($data['client_id']);
 
+        $data['email_notification'] = null;
+
+        if($request->filled('emails')) {
+            $data['email_notification'] = implode(', ', $request->get('emails'));
+        }
+
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
@@ -693,6 +700,7 @@ class DeliveryOrderController extends Controller
               'address_id' => $data['address_id'],
               'annotations' => $data['annotations'],
               'delivery_date' => $deliveryDate,
+              'email_notification' => $data['email_notification']
             ]);
 
             foreach ($documentsGroupedByClient as $key => $document) {
@@ -710,7 +718,9 @@ class DeliveryOrderController extends Controller
                 $document->save();
             }
 
-            $deliveryOrder->update(['amount' => $amount]);
+            if($client->charge_delivery) {
+                $deliveryOrder->update(['amount' => 5.00]);
+            }
 
             Log::create([
               'delivery_order_id' => $deliveryOrder->id,

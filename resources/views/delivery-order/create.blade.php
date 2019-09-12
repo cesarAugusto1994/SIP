@@ -48,13 +48,14 @@
                                 <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                                     <label class="col-form-label">Cliente</label>
                                     <div class="input-group">
-                                      <select class="select-client select-client-modal-address select-client-addresses select-client-documents"
+                                      <select class="select-client select-client-modal-address select-client-addresses select-client-emails select-client-documents"
                                         data-search-addresses="{{ route('client_addresses_search') }}"
+                                        data-search-emails="{{ route('client_emails_search') }}"
                                         data-search-documents="{{ route('client_documents_search') }}"
                                         name="client_id" required>
-                                            @foreach(\App\Helpers\Helper::clients() as $client)
-                                                <option value="{{$client->uuid}}" {{ request()->get('client') == $client->uuid ? 'selected' : '' }}>{{$client->name}}</option>
-                                            @endforeach
+                                            @if($client)
+                                              <option value="{{$client->uuid}}">{{$client->name}}</option>
+                                            @endif
                                       </select>
                                     </div>
                                     {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}
@@ -80,7 +81,7 @@
                               <div class="form-group {!! $errors->has('address_id') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Endereço</label>
                                   <div class="input-group">
-                                    <select class="form-control" id="select-address" name="address_id">
+                                    <select class="form-control select2" id="select-address" name="address_id">
                                         <option value="">Selecione um Endereço</option>
                                         @foreach($addresses as $address)
                                             <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}} - {{$address->street}}, {{$address->number}} - {{$address->district}}, {{$address->city}} - {{$address->zip}}</option>
@@ -128,13 +129,29 @@
 
                             </div>
 
+                            <div class="col-md-12">
+
+                                <div class="form-group {!! $errors->has('emails') ? 'has-error' : '' !!}">
+                                  <label class="col-form-label">E-mail de Notificação</label>
+                                    <div class="input-group">
+                                      <select class="form-control select2" id="select-email" name="emails[]" multiple>
+                                          <option value="">Selecione um e-mail</option>
+                                          @foreach($emails as $email)
+                                              <option value="{{$email->email}}">{{$email->email}}</option>
+                                          @endforeach
+                                      </select>
+                                      {!! $errors->first('emails', '<p class="help-block">:message</p>') !!}
+                                    </div>
+                                </div>
+
+                            </div>
 
                             <div class="col-md-12">
 
                                 <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entregador</label>
                                     <div class="input-group">
-                                      <select class="form-control select-entregador" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
+                                      <select class="form-control select-entregador select2" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
                                           <option value="">Selecione um entregador</option>
                                           @foreach($delivers as $deliver)
                                               <option value="{{$deliver->uuid}}">{{$deliver->name}}</option>

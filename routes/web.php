@@ -207,6 +207,7 @@ Route::middleware('auth')->group(function () {
           Route::get('clients/occupations/search/json', 'ClientOccupationsController@search')->name('client_occupations_search');
 
           Route::get('clients/addresses/search', 'ClientController@addresses')->name('client_addresses_search');
+          Route::get('clients/emails/search', 'ClientController@emails')->name('client_emails_search');
           Route::get('clients/{id}/addresses', 'AddressesController@show')->name('client_addresses');
           Route::get('clients/{id}/addresses/create', 'AddressesController@create')->name('client_addresses_create');
           Route::post('clients/{id}/addresses', 'AddressesController@store')->name('client_addresses_store');

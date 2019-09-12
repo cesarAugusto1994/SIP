@@ -1386,6 +1386,43 @@ $(document).ready(function() {
 
     });
 
+    let selectClientEmails = $(".select-client-emails");
+    let selectEmail = $("#select-email");
+
+    $(document).on('change','.select-client-emails',function(){
+
+      let self = $(this);
+      let route = self.data('search-emails');
+      //let selectEmail = $(self.data('target'));
+
+      let value = self.val();
+
+      $.ajax({
+        type: 'GET',
+        url: route + '?param=' + value,
+        async: true,
+        success: function(response) {
+
+          data = response.data;
+
+          data = $.map(data, function(item) {
+            if(item) {
+              return { id: item.email, text: item.email };
+            }
+
+          });
+
+          selectEmail.html("");
+          selectEmail.trigger('change');
+          selectEmail.select2({
+              data: data,
+          });
+
+        }
+      })
+
+    });
+
     let selectOccupations = $(".select-occupations");
     let occupation = $("#occupation");
 

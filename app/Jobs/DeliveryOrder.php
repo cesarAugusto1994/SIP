@@ -53,6 +53,20 @@ class DeliveryOrder implements ShouldQueue
 
           Notification::send($users, new DeliveryOrderNotification($this->delivery, $this->subject, $this->message));
 
+          $emails = [];
+
+          if($this->delivery->email_notification) {
+              $emails = explode(', ', $this->delivery->email_notification);
+          }
+
+          foreach ($client->emails as $key => $email) {
+
+              if(in_array($email->email, $emails)) {
+                  $email->notify(new DeliveryOrderNotification($this->delivery, $this->subject, $this->message));
+              }
+
+          }
+
         } catch(\Exception $exception) {
             throw $exception;
         }
