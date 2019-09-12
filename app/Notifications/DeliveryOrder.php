@@ -92,7 +92,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
         return [
           'message' => 'A entrega de no. ' . $orderCode . ' está a caminho do destino.',
           'date' => $this->deliverOrder->created_at,
-          'url' => route('delivery_status', $this->deliverOrder->uuid)
+          'url' => route('delivery-orders.show', $this->deliverOrder->uuid)
         ];
     }
 }
