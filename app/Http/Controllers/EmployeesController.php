@@ -338,7 +338,7 @@ class EmployeesController extends Controller
             $companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
 
             $result = array_filter($employeesData, function($item) use ($company) {
-                return $item['CODIGOEMPRESA'] == $company->code;
+                return $item['CODIGOEMPRESA'] == $company->code && $item['SITUACAO'] == 'Ativo';
             });
 
             if(count($result) == $company->employees->count()) {
@@ -350,14 +350,14 @@ class EmployeesController extends Controller
                 if($company) {
 
                   $hasEmployee = Employee::where('name', $item['NOME'])
-                                  //->orWhere('cpf', $item['CPFFUNCIONARIO'])
-                                  //->orWhere('code', $item['CODIGO'])
+                                  ->orWhere('cpf', $item['CPFFUNCIONARIO'])
+                                  ->orWhere('code', $item['CODIGO'])
                                   ->where('company_id', $company->id)
                                   ->first();
 
                   if($hasEmployee) {
                       echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
-                      continue;
+                      //continue;
                   }
 
                   echo '>> Importando Funcionario: ' . $item['NOME'] . '<br/>';
@@ -366,6 +366,8 @@ class EmployeesController extends Controller
                   $data['name'] = $item['NOME'];
                   $data['cpf'] = $item['CPFFUNCIONARIO'];
                   $data['code'] = $item['CODIGO'];
+
+                  $data['active'] = $item['SITUACAO'] == 'Ativo' ? true : false;
 
                   $occupation = Occupation::firstOrCreate([
                     'name' => $item['NOMECARGO'],
