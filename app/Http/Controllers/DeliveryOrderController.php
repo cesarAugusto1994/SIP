@@ -55,6 +55,12 @@ class DeliveryOrderController extends Controller
 
         if($request->filled('code')) {
             $orders->where('id', $request->get('code'));
+
+            if($orders->count() == 1) {
+                $delivery = $orders->first();
+                return redirect()->route('delivery-order.show', $delivery->uuid);
+            }
+
         } else {
 
           if($request->filled('client')) {
@@ -271,16 +277,11 @@ class DeliveryOrderController extends Controller
 
         $user = $request->user();
 
-        //echo route('start_delivery', $delivery->uuid);
-
         $titulo = "etiquetas-".str_random();
 
         $file = \Storage::disk('local')->path($user->avatar);
 
         return view('pdf.tags', compact('delivery', 'file'));
-
-        //$pdf = PDF::loadView('pdf.tags', compact('delivery', 'file'));
-        //return $pdf->stream($titulo. ".pdf");
     }
 
     public function start($id, Request $request)
@@ -397,8 +398,9 @@ class DeliveryOrderController extends Controller
     public function done($id, Request $request)
     {
         $delivery = DeliveryOrder::uuid($id);
-        $message = 'A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.';
-        return view('delivery-order.scan-done', compact('message', 'delivery'));
+        //$message = 'A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.';
+        //return view('delivery-order.scan-done', compact('message', 'delivery'));
+        return redirect()->route('delivery_receipt_view', $delivery->uuid);
     }
 
     public function getReceipt($id)

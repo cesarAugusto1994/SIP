@@ -54,19 +54,19 @@
 
               @if($order->status_id == 1)
                 @permission('view.ordem.entrega')
-                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-success btn-sm"> Iniciar Entrega </a>
+                  <a href="{{route('start_delivery', $order->uuid)}}" class="btn btn-success btn-sm"> Iniciar Entrega </a>
                 @endpermission
               @endif
 
               @if($order->status_id == 2)
                 @permission('view.ordem.entrega')
-                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-primary btn-sm"> Realizar Entrega </a>
+                  <a href="{{route('start_delivery', $order->uuid)}}" class="btn btn-primary btn-sm"> Realizar Entrega </a>
                 @endpermission
               @endif
 
               @if($order->status_id == 3 || $order->status_id == 5)
                 @permission('view.ordem.entrega')
-                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-info btn-sm"> Ver Comprovante </a>
+                  <a href="{{route('start_delivery', $order->uuid)}}" class="btn btn-info btn-sm"> Ver Comprovante </a>
                 @endpermission
               @endif
 
