@@ -132,7 +132,8 @@
                       </tbody>
                       <tfoot>
                         <tr>
-                            <td colspan="2"><small>Ordem Entrega: <b>#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</b></small></td>
+                            <td colspan="1"><small>Ordem Entrega: <b>#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</b></small></td>
+                            <td colspan="1"><small>Adicionado em: <b>{{ $delivery->created_at ? $delivery->created_at->format('d/m/Y H:i') : '' }}</b></small></td>
                             <td colspan="1"><small>Etiqueta gerada por: {{ substr(\Auth::user()->uuid, 0, 8) }} - {{ \Auth::user()->person->name }}</small></td>
                             <td colspan="1"><small>Entregador: {{ $delivery->user->person->name }}</small></td>
                         </tr>
