@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\{Client, Documents};
 use Storage;
 use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client as GuzzleClient;
 use Auth;
 
 class ClientController extends Controller
@@ -491,5 +492,61 @@ class ClientController extends Controller
             'message' => $e->getMessage()
           ]);
         }
+    }
+
+    public function importJson()
+    {
+        try {
+
+            $clientData = [];
+
+            $client = new GuzzleClient([
+              'handler' => new \GuzzleHttp\Handler\CurlHandler(),
+            ]);
+            $response = $client->get("http://soc.com.br/WebSoc/exportadados?parametro={'empresa':'235164','codigo':'23703','chave':'d32494177fab74b4df10','tipoSaida':'json','empresafiltro':'','subgrupo':'','socnet':'','mostrarinativas':''}");
+
+            $contents = $response->getBody()->getContents();
+
+            $clientData = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
+
+            if(!$clientData) {
+                return response()->json('Ocorreu um erro.');
+            }
+
+            foreach ($clientData as $key => $item) {
+
+                if($key > 10 && config('app.env') == 'local') {
+                  //break;
+                }
+
+                $data['contract_id'] = 1;
+
+                $hasClient = Client::where('document', $item['cnpj'])
+                ->orWhere('name', trim($item['razaoSocial']))
+                ->first();
+
+                if($hasClient) {
+                    $data['contract_id'] = $hasClient->contract_id;
+                }
+
+                $data = [
+                    'code' => ($item['codigo']),
+                    'name' => trim($item['razaoSocial']),
+                    'document' => trim($item['cnpj']),
+                    'active' => $item['status'] ? true : false,
+                    'contract_id' => $data['contract_id']
+                ];
+
+                $client = Client::updateOrCreate($data);
+
+                return response()->json([
+                  'success' => true,
+                  'message' => 'Clientes importados com sucesso!'
+                ]);
+
+            }
+          } catch(\Exception $e) {
+              throw $e;
+          }
     }
 }
