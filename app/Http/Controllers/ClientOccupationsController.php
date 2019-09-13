@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client\Occupation;
+use App\Models\Client;
+use Auth;
 
 class ClientOccupationsController extends Controller
 {
@@ -12,11 +14,45 @@ class ClientOccupationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $occupations = Occupation::all();
 
-        return view('clients.occupations.index', compact('occupations'));
+        if(!Auth::user()->hasPermission('view.funcoes')) {
+            return abort(403, 'Acesso negado.');
+        }
+
+        $quantity = 0;
+        $occupations = [];
+
+        if($request->get('find')) {
+
+          $occupations = Occupation::orderBy('name');
+
+          if($request->filled('search')) {
+
+            $search = $request->get('search');
+
+            $occupations->where('id', $search)
+            ->orWhere('name', 'like', "%$search%");
+
+          }
+
+          if($request->filled('client')) {
+            $client = Client::uuid($request->get('client'));
+            $occupations->where('client_id', $client->id);
+          }
+
+          $quantity = $occupations->count();
+          $occupations = $occupations->paginate();
+
+          foreach ($request->all() as $key => $value) {
+              $occupations->appends($key, $value);
+          }
+
+        }
+
+        return view('clients.occupations.index', compact('occupations', 'quantity'));
     }
 
     public function search(Request $request)
@@ -61,8 +97,11 @@ class ClientOccupationsController extends Controller
     {
         $data = $request->request->all();
 
+        $client = Client::uuid($request->get('company_id'));
+
         Occupation::updateOrCreate([
-          'name' => $data['name']
+          'name' => $data['name'],
+          'client_id' => $client->id
         ]);
 
         notify()->flash('Sucesso!', 'success', [
@@ -105,6 +144,10 @@ class ClientOccupationsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->request->all();
+
+        $client = Client::uuid($request->get('company_id'));
+
+        $data['client_id'] = $client->id;
 
         $occupation = Occupation::uuid($id);
         $occupation->update($data);

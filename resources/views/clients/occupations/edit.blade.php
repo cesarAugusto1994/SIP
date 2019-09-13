@@ -49,23 +49,25 @@
 
                 </div>
 
-            </div>
+                <div class="col-md-4">
 
-            <div class="col-md-4">
+                    <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="company_id">Empresa</label>
+                        <div class="input-group">
 
-                <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
-                    <label class="col-form-label" for="company_id">Empresa</label>
-                    <div class="input-group">
-                        <select class="form-control" name="company_id" required>
-                              @foreach(\App\Helpers\Helper::clients() as $company)
-                                  <option value="{{$company->uuid}}" {{ $employee->company_id == $company->id ? 'selected' : '' }}>{{$company->name}}</option>
-                              @endforeach
-                        </select>
+                            <select class="form-control select-client" name="company_id" required>
+                                <option value="{{$occupation->company->uuid}}">{{$occupation->company->name}}</option>
+                            </select>
+
+                        </div>
+                        {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
                     </div>
-                    {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
+
                 </div>
 
             </div>
+
+
 
             <button class="btn btn-success btn-sm">Salvar</button>
             <a class="btn btn-danger btn-outline btn-sm" href="{{ route('client-occupations.index') }}">Cancelar</a>

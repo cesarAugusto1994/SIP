@@ -26,31 +26,116 @@
 </div>
 
 <div class="page-body">
-  <div class="card">
-      <div class="card-header">
-          <h5>Listagem de Cargos</h5>
-          <div class="card-header-right">
-              <ul class="list-unstyled card-option">
-                <li><a class="btn btn-sm btn-success btn-round" href="{{route('client-occupations.create')}}">Novo Cargo</a></li>
-              </ul>
-          </div>
-      </div>
-  </div>
 
-  <div class="row">
-    @foreach($occupations as $occupation)
-    <div class="col-md-12 col-lg-4">
+
+    <div class="row">
+
+      <div class="col-xl-12 col-lg-12 filter-bar">
+
         <div class="card">
-            <div class="card-block text-center">
-                <h4 class="m-t-20">{{$occupation->name}}</h4>
-                <p>{{$occupation->company->name}}</p>
-                <hr/>
-                <a class="btn btn-primary btn-sm btn-round" href="{{ route('client-occupations.edit', $occupation->uuid) }}"><i class="fa fa-edit"></i> Editar</a>
+            <div class="card-block">
+                <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                    @permission('create.funcoes')
+                      <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('client-occupations.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Cargo</a>
+                    @endpermission
+
+                </div>
             </div>
         </div>
+      </div>
+
     </div>
-    @endforeach
-  </div>
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+          <div class="card">
+              <div class="card-header">
+                  <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+              </div>
+              <div class="card-block">
+                  <form method="get" action="?">
+                      <input type="hidden" name="find" value="1"/>
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <input type="text" class="form-control" name="search" placeholder="Código do Cargo, Nome">
+                          </div>
+                      </div>
+
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <select class="form-control select-client" name="client">
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="">
+                          <button type="submit" class="btn btn-success btn-sm btn-block">
+                              <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-9">
+          <div class="card">
+              <div class="card-header">
+                  <h5>Cargos Cadastradas</h5>
+                  <span>Registros retornados: {{ $quantity }}</span>
+              </div>
+              <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                      <table class="table table-lg table-styling">
+                          <thead>
+                              <tr class="table-primary">
+                                  <th>Opções</th>
+                                  <th>No.</th>
+                                  <th>Nome</th>
+                                  <th>Empresa</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @foreach($occupations as $occupation)
+                                  <tr>
+
+                                      <td class="dropdown">
+
+                                        <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                        <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+
+                                          @permission('edit.funcoes')
+                                            <a href="{{route('client-occupations.edit', ['id' => $occupation->uuid])}}" class="dropdown-item">Editar </a>
+                                          @endpermission
+
+                                        </div>
+                                      </td>
+
+                                      <td>#{{ str_pad($occupation->id, 6, "0", STR_PAD_LEFT) }}</td>
+
+                                      <td>{{ $occupation->name }}</td>
+
+                                      <td>
+                                          <a href="{{route('clients.show', ['id' => $occupation->company->uuid])}}">{{$occupation->company->name}}</a>
+                                      </td>
+
+                                  </tr>
+                              @endforeach
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+          </div>
+
+      </div>
+      @if(!empty($occupations))
+      {{ $occupations->links() }}
+      @endif
+    </div>
 
 </div>
 

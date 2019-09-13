@@ -52,11 +52,7 @@
                     <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
-                            <select class="form-control" name="client_id" required>
-                                  @foreach(\App\Helpers\Helper::clients() as $company)
-                                      <option value="{{$company->uuid ?? ''}}">{{$company->name}}</option>
-                                  @endforeach
-                            </select>
+                          <select class="form-control select-client" name="company_id" required></select>
                         </div>
                         {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
                     </div>
