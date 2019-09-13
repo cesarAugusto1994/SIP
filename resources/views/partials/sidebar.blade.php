@@ -42,7 +42,7 @@
                             @permission($child->permission)
 
                             <li class="">
-                                <a href="{{ route($child->route) }}">
+                                <a href="@if($child->route) {{ route($child->route) }} @else '#' @endif">
                                     <span class="pcoded-mtext">{{ $child->title }}</span>
                                 </a>
                             </li>

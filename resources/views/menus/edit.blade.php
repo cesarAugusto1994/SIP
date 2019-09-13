@@ -52,12 +52,23 @@
 
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-4">
 
                   <div class="form-group">
                       <label class="col-form-label">Descrição</label>
                       <div class="input-group">
                         <input type="text" required name="description" value="{{ $menu->description }}" class="form-control">
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <div class="form-group">
+                      <label class="col-form-label">Rota</label>
+                      <div class="input-group">
+                        <input type="text" name="route" class="form-control" value="{{ $menu->route }}">
                       </div>
                   </div>
 
