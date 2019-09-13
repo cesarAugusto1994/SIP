@@ -317,6 +317,7 @@ Route::middleware('auth')->group(function () {
 
           Route::get('delivery-order/{id}/done', 'DeliveryOrderController@done')->name('delivery_done');
 
+          Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
     });
 
   });
@@ -332,7 +333,7 @@ Route::get('clients/import-json', 'ClientController@importJson')->name('clients_
 Route::get('addresses/import-json', 'AddressesController@importJson')->name('adresses_import_json');
 Route::get('employees/import-json', 'EmployeesController@importJson')->name('employees_import_json');
 
-Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
+
 Route::get('delivery-order/{id}/delivery', 'DeliveryOrderController@deliveryReceipt')->name('delivery_receipt_view');
 Route::get('delivery-order/{id}/delivery/receipt/print', 'DeliveryOrderController@deliveryReceiptImage')->name('delivery_receipt_image');
 

@@ -39,15 +39,15 @@
 
                             @foreach($menu->childs as $child)
 
-                            @permission($child->permission)
+                              @permission($child->permission)
 
-                            <li class="">
-                                <a href="@if($child->route) {{ route($child->route) }} @else '#' @endif">
-                                    <span class="pcoded-mtext">{{ $child->title }}</span>
-                                </a>
-                            </li>
+                                <li class="">
+                                    <a href="@if($child->route) {{ route($child->route) }} @else '#' @endif">
+                                        <span class="pcoded-mtext">{{ $child->title }}</span>
+                                    </a>
+                                </li>
 
-                            @endpermission
+                              @endpermission
 
                             @endforeach
 
