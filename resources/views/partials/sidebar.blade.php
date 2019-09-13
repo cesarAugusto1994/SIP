@@ -28,7 +28,7 @@
                 @if($user->hasPermission($menu->permission))
 
                   <li class="@if($menu->childs->isNotEmpty()) pcoded-hasmenu @endif">
-                      <a href="@if($menu->childs->isNotEmpty()) javascript:void(0) @else {{ route($menu->route) }} @endif">
+                      <a href="@if($menu->childs->isNotEmpty()) javascript:void(0) @elseif($menu->route) {{ route($menu->route) }} @endif">
                           <span class="pcoded-micon"><i class="{{ $menu->icon }}"></i></span>
                           <span class="pcoded-mtext">{{ $menu->title }}</span>
                       </a>
