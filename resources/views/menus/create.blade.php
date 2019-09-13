@@ -67,7 +67,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Rota</label>
                       <div class="input-group">
-                        <input type="text" required name="route" class="form-control">
+                        <input type="text" name="route" class="form-control">
                       </div>
                   </div>
 
@@ -93,7 +93,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Pai</label>
                       <div class="input-group">
-                        <select class="form-control select2" name="parent" required>
+                        <select class="form-control select2" name="parent">
                             <option value="">Sem Ancoragem</option>
                             @foreach($menus as $item)
                                 <option value="{{$item->id}}">{{$item->title}}</option>
