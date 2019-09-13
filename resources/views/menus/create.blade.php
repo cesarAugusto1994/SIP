@@ -94,6 +94,7 @@
                       <label class="col-form-label">Pai</label>
                       <div class="input-group">
                         <select class="form-control select2" name="parent" required>
+                            <option value="">Sem Ancoragem</option>
                             @foreach($menus as $item)
                                 <option value="{{$item->id}}">{{$item->title}}</option>
                             @endforeach
@@ -113,7 +114,7 @@
                   </div>
 
                 </div>
-                
+
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>

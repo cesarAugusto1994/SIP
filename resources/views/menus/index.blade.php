@@ -44,7 +44,7 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Módulos</h5>
+          <h5>Menus</h5>
           <span>Registros retornados: </span>
       </div>
       <div class="card-block table-border-style">

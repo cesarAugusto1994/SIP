@@ -68,7 +68,7 @@
                   <div class="form-group">
                       <label class="col-form-label">Permissão</label>
                       <div class="input-group">
-                        <select class="form-control" name="permission" required>
+                        <select class="form-control select2" name="permission" required>
                             @foreach($permissions as $permission)
                                 <option value="{{$permission->slug}}" {{ $permission->slug == $menu->permission ? 'selected' : '' }}>{{$permission->name}}</option>
                             @endforeach
@@ -83,7 +83,8 @@
                   <div class="form-group">
                       <label class="col-form-label">Pai</label>
                       <div class="input-group">
-                        <select class="form-control" name="parent" required>
+                        <select class="form-control select2" name="parent">
+                            <option value="">Sem Ancoragem</option>
                             @foreach($menus as $item)
                                 <option value="{{$item->id}}" {{ $menu->parent == $item->id ? 'selected' : '' }}>{{$item->title}}</option>
                             @endforeach
