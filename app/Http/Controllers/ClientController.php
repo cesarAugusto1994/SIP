@@ -346,7 +346,8 @@ class ClientController extends Controller
 
           foreach ($documents as $key => $document) {
               $response[] = [
-                'id' => $document->uuid,
+                'id' => str_pad($document->id, 6, "0", STR_PAD_LEFT),
+                'uuid' => $document->uuid,
                 'type' => $document->type->name,
                 'client' => $document->client->name,
                 'employee' => $document->employee->name ?? '',

@@ -1498,7 +1498,8 @@ $(document).ready(function() {
           $.each(response.data, function(idx, item) {
 
               html += "<tr>";
-              html += "<td><input class='js-switch' type='checkbox' name='documents[]' value='"+ item.id +"'/></td>";
+              html += "<td><input class='js-switch2 select-item' type='checkbox' name='documents[]' value='"+ item.uuid +"'/></td>";
+              html += "<td>"+ item.id +"</td>";
               html += "<td>"+ item.type +"</td>";
               html += "<td>"+ item.employee +"</td>";
               html += "<td>"+ item.reference +"</td>";
@@ -1508,6 +1509,15 @@ $(document).ready(function() {
           });
 
           tableDocuments.append(html);
+
+          var elem = Array.prototype.slice.call(document.querySelectorAll('.js-switch2'));
+
+          elem.forEach(function(html) {
+            var switchery = new Switchery(html, { color: '#93BE52', jackColor: '#fff' });
+          });
+          if($("#select-all").is(':checked')) {
+            $("#select-all").trigger('click');
+          }
         }
       })
 

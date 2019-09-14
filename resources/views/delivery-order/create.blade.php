@@ -36,8 +36,8 @@
 
               <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Nova OE</h5>
+                    <div class="card-header bg-c-green update-card">
+                        <h5 class="text-white">Nova Ordem de Entrega</h5>
                     </div>
                     <div class="card-block">
 
@@ -206,7 +206,10 @@
                               <table class="table table-lg table-styling">
                                   <thead>
                                       <tr class="table-primary">
-                                        <th>#</th>
+                                        <th>
+                                            <input class="js-switch" type="checkbox" id="select-all" name="select_all" value="1"/>
+                                        </th>
+                                        <th>ID</th>
                                         <th>Tipo</th>
                                         <th>Funcionário</th>
                                         <th>Referencia</th>
@@ -227,7 +230,8 @@
                                               }
                                           @endphp
 
-                                          <td><input class="js-switch" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
+                                          <td><input class="js-switch select-item" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
+                                          <td>{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</td>
                                           <td>{{ $document->type->name }}</td>
                                           <td>{{ $document->employee->name ?? '-' }}</td>
                                           <td>{{ $document->reference ?? '' }}</td>
@@ -277,7 +281,40 @@
           selectAddress.show();
       }
 
-    })
+    });
+
+    var clickCheckbox = document.querySelector('#select-all');
+
+    $(document).on('change','#select-all',function(){
+
+      var itemsCheckbox = $('.select-item');
+
+      if (clickCheckbox.checked) {
+
+          $.each(itemsCheckbox, function(idx, elem) {
+
+              if(!$(elem).is(':checked')) {
+                  $(elem).trigger('click');
+              }
+
+          });
+
+      } else {
+
+          $.each(itemsCheckbox, function(idx, elem) {
+            if($(elem).is(':checked')) {
+                $(elem).trigger('click');
+            }
+          });
+
+      }
+    });
+
+    clickCheckbox.onchange = function() {
+
+
+
+    };
 
 </script>
 

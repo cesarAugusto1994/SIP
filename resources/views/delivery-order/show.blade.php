@@ -277,6 +277,7 @@
 
                         <thead>
                             <tr>
+                              <th>ID</th>
                               <th>Tipo</th>
                               <th>Funcionário</th>
                               <th>Referência</th>
@@ -290,6 +291,8 @@
                           $document = $document->document;
                         @endphp
                         <tr>
+                            <td><a href="{{route('documents.show', ['id' => $document->uuid])}}">#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+
                             <td>
                                 <a>{{ $document->type->name ?? '-' }}</a>
                             </td>
