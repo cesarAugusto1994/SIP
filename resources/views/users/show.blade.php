@@ -222,9 +222,9 @@
 
                                     <div class="row m-b-25">
                                         <div class="col">
-                                            <h6 class="m-b-5">{{ \App\Helpers\TimesAgo::render($activity->created_at) ?? '' }}</h6>
+                                            <h6 class="m-b-5">{{ $activity->created_at->format('d/m/Y H:i:s') }}</h6>
                                             <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
-                                            <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
+                                            <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ $activity->created_at->diffForHumans() }}</p>
                                         </div>
                                     </div>
 
