@@ -176,6 +176,10 @@
                                                                     <td>{{$person->occupation->name}}</td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th scope="row">Adicionado em</th>
+                                                                    <td>{{ $person->user->created_at ? $person->user->created_at->format('d/m/Y H:i') : '-' }}</td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th scope="row">Último Login</th>
                                                                     <td>{{ $person->user->lastLoginAt() ? $person->user->lastLoginAt()->format('d/m/Y H:i') : '-' }}</td>
                                                                 </tr>
