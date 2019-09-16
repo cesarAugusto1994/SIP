@@ -20,6 +20,11 @@ class Documents extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function deliveryDocument()
+    {
+        return $this->belongsTo('App\Models\Delivery\Document');
+    }
+
     public function creator()
     {
         return $this->belongsTo('App\User', 'created_by');

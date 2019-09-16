@@ -797,12 +797,15 @@ class DeliveryOrderController extends Controller
 
         $client = $delivery->client;
 
+        $newDocuments = $client->documents->whereIn('status_id', [1]);
+
         $documents = $delivery->documents->map(function($document) {
           return $document->document;
         });
+
         $addresses = $client->addresses;
 
-        return view('delivery-order.edit', compact('documents', 'delivers', 'delivery', 'addresses'));
+        return view('delivery-order.edit', compact('documents', 'newDocuments', 'delivers', 'delivery', 'addresses'));
     }
 
     /**
@@ -844,19 +847,40 @@ class DeliveryOrderController extends Controller
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
+        //dd($data['documents']);
+
         $documents = Document::whereIn('uuid', $data['documents'])->get();
 
         $deliveryOrder = DeliveryOrder::uuid($id);
 
         $deliveryDate = $data['delivery_date'] ? \DateTime::createFromFormat('d/m/Y', $data['delivery_date']) : null;
 
-        $deliveryOrder->documents->map(function($document) {
-            $document->document->status_id = 1;
-            $document->document->save();
-            $document->delete();
-        });
+        $documentsAlreadyInOrder = $deliveryOrder->documents->pluck('document.uuid');
+
+        $deliveryOrder->documents->whereNotIn('document.uuid', $data['documents'])
+          ->map(function($document) use($deliveryOrder, $user) {
+              $document->document->status_id = 1;
+              $document->document->save();
+
+              $documentCode = str_pad($document->document->id, 6, "0", STR_PAD_LEFT);
+
+              Log::create([
+                'delivery_order_id' => $deliveryOrder->id,
+                'status_id' => $deliveryOrder->status_id,
+                'user_id' => $user->id,
+                'message' => 'Documento no. #' . $documentCode . ' removido da Ordem de Entrega por '. $user->person->name
+              ]);
+
+              $document->delete();
+          });
 
         foreach ($documents as $key => $document) {
+
+            #dd($document, $documentsAlreadyInOrder);
+
+            if(in_array($document->uuid, $documentsAlreadyInOrder->toArray())) {
+                continue;
+            }
 
             DeliveryOrderDocuments::create([
               'document_id' => $document->id,
@@ -868,6 +892,16 @@ class DeliveryOrderController extends Controller
 
             $document->status_id = 2;
             $document->save();
+
+            $documentCode = str_pad($document->id, 6, "0", STR_PAD_LEFT);
+
+            Log::create([
+              'delivery_order_id' => $deliveryOrder->id,
+              'status_id' => $deliveryOrder->status_id,
+              'user_id' => $user->id,
+              'message' => 'Documento no. #' . $documentCode . ' Adicionado à Ordem de Entrega por '. $user->person->name
+            ]);
+
         }
 
         $deliveryOrder->update([

@@ -34,21 +34,16 @@
         {{method_field('PUT')}}
         <div class="row">
 
-              <div class="col-lg-7">
+              <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Nova Ordem de Entrega</h5>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="feather icon-maximize full-card"></i></li>
-                            </ul>
-                        </div>
+                    <div class="card-header bg-c-green update-card">
+                        <h5 class="text-white">Nova Ordem de Entrega</h5>
                     </div>
                     <div class="card-block">
 
                         <div class="row m-b-30">
 
-                            <div class="col-md-12">
+                            <div class="col-md-12 m-t-30">
 
                             <h4>{{ $delivery->client->name }}</h4>
 
@@ -119,53 +114,67 @@
                   </div>
               </div>
 
-              <div class="col-lg-5">
+              <div class="col-lg-8">
                   <div class="card">
                       <div class="card-header">
                           <h5>Documentos</h5>
-                          <div class="card-header-right">
-                              <ul class="list-unstyled card-option">
-                                  <li><i class="feather icon-maximize full-card"></i></li>
-                              </ul>
-                          </div>
                       </div>
-                      <div class="card-block">
+                      <div class="card-block table-border-style">
 
                         <div class="table-responsive">
 
-                        <table class="table table-hover">
+                        <table class="table table-lg table-styling">
 
                             <thead>
-                                <tr>
-                                  <th>#</th>
+                                <tr class="table-primary">
+                                  <th>
+                                      <input class="js-switch" type="checkbox" id="select-all" name="select_all" value="1"/>
+                                  </th>
+                                  <th>ID</th>
                                   <th>Tipo</th>
-                                  <th>Cliente</th>
                                   <th>Funcionário</th>
                                   <th>Referencia</th>
+                                  <th>Status</th>
                                 </tr>
                             </thead>
 
                             <tbody id="table-documents">
 
                                 @foreach($documents as $document)
-                                <tr>
-                                    @php
-                                        $docs = $delivery->documents->pluck('document.uuid');
+                                  <tr>
+                                      @php
+                                          $docs = $delivery->documents->pluck('document.uuid');
 
-                                        $checked = '';
+                                          $checked = '';
 
-                                        if(in_array($document->uuid, $docs->toArray())) {
-                                          $checked = 'checked';
-                                        }
+                                          if(in_array($document->uuid, $docs->toArray())) {
+                                            $checked = 'checked';
+                                          }
 
-                                    @endphp
+                                      @endphp
 
-                                    <td><input type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
-                                    <td>{{ $document->type->name }}</td>
-                                    <td>{{ $document->client->name }}</td>
-                                    <td>{{ $document->employee->name ?? '-' }}</td>
-                                    <td>{{ $document->reference }}</td>
+                                      <td><input class="js-switch select-item" type="checkbox" {{ $checked }} name="documents[]" value="{{ $document->uuid }}"/></td>
+                                      <td>#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</td>
+                                      <td>{{ $document->type->name }}</td>
+                                      <td>{{ $document->employee->name ?? '-' }}</td>
+                                      <td>{{ $document->reference }}</td>
+                                      <td><label class="label label-inverse-primary">{{ $document->status->name }}</label></td>
+                                  </tr>
+                                @endforeach
+
+                                <tr class="table-primary">
+                                  <th colspan="6">Adicionar novos documentos</th>
                                 </tr>
+
+                                @foreach($newDocuments as $document)
+                                  <tr>
+                                      <td><input class="js-switch select-item" type="checkbox" name="documents[]" value="{{ $document->uuid }}"/></td>
+                                      <td>#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</td>
+                                      <td>{{ $document->type->name }}</td>
+                                      <td>{{ $document->employee->name ?? '-' }}</td>
+                                      <td>{{ $document->reference }}</td>
+                                      <td><label class="label label-inverse-primary">{{ $document->status->name }}</label></td>
+                                  </tr>
                                 @endforeach
 
                             </tbody>
@@ -184,42 +193,60 @@
 @endsection
 
 @section('scripts')
-    <script>
 
-      $(document).ready(function() {
+<script>
 
-        let selectEntregador = $(".select-entregador");
-        let entregador = $("#entregador");
+    var clientId = $("#client-id");
+    var selectClient = $(".select-client-modal-address");
 
-        selectEntregador.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+    var checkboxNewAddress = $("#checkbox-new-address");
+    var inputNewAddress = $("#input-new-address");
+    var selectAddress = $("#div-select-address");
+    var btnSubmitForm = $(".btnSubmitForm");
 
-          let self = $(this);
-          let route = self.data('search-user');
-          let value = self.val();
+    selectClient.change(function() {
+        clientId.val($(this).val());
+    });
 
-          $.ajax({
-            type: 'GET',
-            url: route + '?param=' + value,
-            async: true,
-            success: function(response) {
+    checkboxNewAddress.change(function() {
 
-              if(response.success) {
+      if(checkboxNewAddress.is(':checked')) {
+          inputNewAddress.show();
+          selectAddress.hide();
+      } else {
+          inputNewAddress.hide();
+          selectAddress.show();
+      }
 
-                let result = response.data;
+    });
 
-                entregador.html("");
-                let html = result.name + " - " + result.cpf;
-                entregador.append(html);
+    var clickCheckbox = document.querySelector('#select-all');
+
+    $(document).on('change','#select-all',function(){
+
+      var itemsCheckbox = $('.select-item');
+
+      if (clickCheckbox.checked) {
+
+          $.each(itemsCheckbox, function(idx, elem) {
+
+              if(!$(elem).is(':checked')) {
+                  $(elem).trigger('click');
               }
 
+          });
 
+      } else {
+
+          $.each(itemsCheckbox, function(idx, elem) {
+            if($(elem).is(':checked')) {
+                $(elem).trigger('click');
             }
-          })
+          });
 
+      }
+    });
 
-        });
+</script>
 
-      });
-
-    </script>
-@stop
+@endsection

@@ -253,8 +253,6 @@
 
 @endsection
 
-
-
 @section('scripts')
 
 <script>
@@ -309,12 +307,6 @@
 
       }
     });
-
-    clickCheckbox.onchange = function() {
-
-
-
-    };
 
 </script>
 
