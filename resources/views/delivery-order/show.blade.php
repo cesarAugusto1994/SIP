@@ -374,7 +374,7 @@
                           </div>
                           <div class="d-inline-block">
                               {{ $log->message }}
-                              <div class="media-annotation">{{ $log->created_at->format('d/m/Y H:i:s') }} - {{ \App\Helpers\TimesAgo::render($log->created_at) }}</div>
+                              <div class="media-annotation">{{ $log->created_at->format('d/m/Y H:i:s') }} - {{ $log->created_at->diffForHumans() }}</div>
                           </div>
                       </li>
                       @endforeach
