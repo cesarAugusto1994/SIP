@@ -880,8 +880,6 @@ class DeliveryOrderController extends Controller
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
-        //dd($data['documents']);
-
         $documents = Document::whereIn('uuid', $data['documents'])->get();
 
         $deliveryOrder = DeliveryOrder::uuid($id);
@@ -909,8 +907,6 @@ class DeliveryOrderController extends Controller
 
         foreach ($documents as $key => $document) {
 
-            #dd($document, $documentsAlreadyInOrder);
-
             if(in_array($document->uuid, $documentsAlreadyInOrder->toArray())) {
                 continue;
             }
@@ -937,8 +933,11 @@ class DeliveryOrderController extends Controller
 
         }
 
+        $address = Address::uuid($data['address_id']);
+
         $deliveryOrder->update([
           'delivered_by' => $data['delivered_by'],
+          'address_id' => $address->id,
           'delivery_date' => $deliveryDate,
           'annotations' => $data['annotations']
         ]);

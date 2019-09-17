@@ -37,17 +37,17 @@
             <div class="card-block">
 
               @permission('view.ordem.entrega')
-                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-success btn-sm"> Imprimir Etiqueta </a>
+                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-info btn-sm"> Imprimir Etiqueta </a>
               @endpermission
 
               @if($order->status_id == 1 || $order->status_id == 2)
 
-                  @permission('edit.ordem.entrega')
-                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm pull-right"> Editar </a>
-                  @endpermission
-
                   @permission('delete.ordem.entrega')
                     <a data-route="{{route('delivery_cancel', $order->uuid)}}" class="btn btn-danger text-white btn-sm pull-right btnCancel"> Cancelar </a>
+                  @endpermission
+
+                  @permission('edit.ordem.entrega')
+                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm pull-right"> Editar </a>
                   @endpermission
 
               @endif
@@ -60,7 +60,7 @@
 
               @if($order->status_id == 1)
                 @permission('view.ordem.entrega')
-                  <a href="{{route('start_delivery', $order->uuid)}}" class="btn btn-success btn-sm"> Iniciar Entrega </a>
+                  <a href="{{route('start_delivery', $order->uuid)}}" class="btn btn-primary btn-sm"> Iniciar Entrega </a>
                 @endpermission
               @endif
 
