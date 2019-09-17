@@ -106,7 +106,7 @@
             <button class="btn btn-success btn-sm">Salvar</button>
             <a class="btn btn-danger btn-sm" href="{{ route('documents.index') }}">Cancelar</a>
 
-            <button type="button" id="btnAddRows" class="btn btn-primary btn-sm f-right">Adicionar Mais Registro</button>
+            <button type="button" id="btnAddRows" class="btn btn-primary btn-sm f-right">Adicionar Mais Registros</button>
 
         </form>
 

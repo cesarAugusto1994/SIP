@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Permissões do Modulos</h4>
+                    <h4>Permissões do Modulo</h4>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('modules.index') }}"> Módulos </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Permissões</a>
+                    <li class="breadcrumb-item"><a href="#!">Permissõe</a>
                     </li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                     <a class="dropdown-item waves-light waves-effect" href="{{route('modules.edit', $child->id)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item waves-light waves-effect" href="{{route('modules.show', $child->id)}}"><i class="icofont icofont-ui-edit"></i> Permissões</a>
+                                    <a class="dropdown-item waves-light waves-effect" href="{{route('modules.show', $child->id)}}"><i class="icofont icofont-key"></i> Permissões</a>
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@
           <div class="table-responsive">
               <table class="table table-lg table-styling">
                   <thead>
-                      <tr class="table-primary">
+                      <tr class="table-inverse">
                           <th>Nome</th>
                           <th>Slug</th>
                           <th>Descrição</th>
@@ -94,20 +94,21 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach($module->permissions as $module)
+                    @foreach($module->permissions as $permission)
 
                       <tr>
 
-                          <td>{{$module->name}}</td>
-                          <td>{{$module->slug}}</td>
-                          <td>{{$module->description}}</td>
+                          <td>{{$permission->name}}</td>
+                          <td>{{$permission->slug}}</td>
+                          <td>{{$permission->description}}</td>
                           <td>
 
                             <div class="dropdown-secondary dropdown">
                                 <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                 <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                    <a class="dropdown-item waves-light waves-effect" href="{{route('modules.edit', $module->id)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
+                                    <a class="dropdown-item waves-light waves-effect" href="{{route('permissions.edit', $permission->id)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item waves-light waves-effect" href="{{route('module_permissions_users', ['id' => $module->id, 'permission' => $permission->id])}}"><i class="icofont icofont-users"></i> Usuários</a>
                                 </div>
                             </div>
 

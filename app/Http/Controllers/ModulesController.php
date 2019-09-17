@@ -25,6 +25,14 @@ class ModulesController extends Controller
         return view('modules.index', compact('modules'));
     }
 
+    public function permissionUsers($id, $permission)
+    {
+        $permission = Permission::find($permission);
+        $module = Module::find($id);
+
+        return view('modules.users', compact('module', 'permission'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
