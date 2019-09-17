@@ -43,13 +43,19 @@
               @if($order->status_id == 1 || $order->status_id == 2)
 
                   @permission('edit.ordem.entrega')
-                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm"> Editar </a>
+                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm pull-right"> Editar </a>
                   @endpermission
 
                   @permission('delete.ordem.entrega')
                     <a data-route="{{route('delivery_cancel', $order->uuid)}}" class="btn btn-danger text-white btn-sm pull-right btnCancel"> Cancelar </a>
                   @endpermission
 
+              @endif
+
+              @if($order->status_id == 1 || $order->status_id == 2)
+                @permission('view.ordem.entrega')
+                  <a href="{{ route('start_delivery_client', $order->uuid) }}" class="btn btn-warning btn-sm"> Retirada Pelo Cliente </a>
+                @endpermission
               @endif
 
               @if($order->status_id == 1)
@@ -66,16 +72,14 @@
 
               @if($order->status_id == 3 || $order->status_id == 5)
                 @permission('view.ordem.entrega')
-                  <a href="{{route('start_delivery', $order->uuid)}}" class="btn btn-info btn-sm"> Ver Comprovante </a>
+                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-info btn-sm"> Ver Comprovante </a>
                 @endpermission
               @endif
 
               @if($order->status_id == 3)
-
                   @permission('edit.ordem.entrega')
                     <a data-route="{{route('delivery_confirm', $order->uuid)}}" class="btn btn-primary text-white btn-sm pull-right btnConfirm"> Finalizar </a>
                   @endpermission
-
               @endif
 
             </div>
@@ -129,7 +133,7 @@
                                                       </tr>
                                                       <tr>
                                                           <th scope="row">Cliente</th>
-                                                          <td>{{ $order->client->name }}</td>
+                                                          <td><a href="{{route('clients.show', ['id' => $order->client->uuid])}}" target="_blank">{{ $order->client->name }}</a></td>
                                                       </tr>
                                                       <tr>
                                                           <th scope="row">Telefone</th>

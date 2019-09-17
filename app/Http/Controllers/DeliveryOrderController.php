@@ -288,6 +288,10 @@ class DeliveryOrderController extends Controller
     {
         $delivery = DeliveryOrder::uuid($id);
 
+        if(!$delivery->client->deliver_documents && Auth::check()) {
+            return redirect()->route('start_delivery_client', $delivery->uuid);
+        }
+
         if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
 
             if(!Auth::check()) {
@@ -327,6 +331,35 @@ class DeliveryOrderController extends Controller
 
             return redirect()->route('delivery_receipt_view', $delivery->uuid);
 
+        }
+
+    }
+
+    public function startWithdrawal($id, Request $request)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+        $user = $request->user();
+
+        switch ($delivery->status_id) {
+          case Constants::STATUS_DELIVERY_PENDENTE:
+
+            $delivery->status_id = Constants::STATUS_DELIVERY_RETIRADA_PELO_CLIENTE;
+            $delivery->save();
+
+            Log::create([
+              'delivery_order_id' => $delivery->id,
+              'status_id' => Constants::STATUS_DELIVERY_RETIRADA_PELO_CLIENTE,
+              'user_id' => $user->id,
+              'message' => 'Ordem de Entrega retirada pelo cliente'
+            ]);
+
+          case Constants::STATUS_DELIVERY_PENDENTE:
+
+            $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
+            return view('delivery-order.scan-delivered', compact('message', 'delivery'));
+
+          default:
+            return redirect()->route('delivery_receipt_view', $delivery->uuid);
         }
 
     }

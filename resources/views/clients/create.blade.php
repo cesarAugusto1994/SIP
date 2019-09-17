@@ -95,6 +95,16 @@
                   </div>
                 </div>
 
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('deliver_documents') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="deliver_documents">Entregar Documentos</label>
+                      <div class="input-group">
+                          <input class="js-switch" type="checkbox" id="deliver_documents" name="deliver_documents" data-plugin="switchery" checked value="{{ 1 }}">
+                      </div>
+                      {!! $errors->first('deliver_documents', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>

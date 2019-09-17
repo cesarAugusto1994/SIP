@@ -263,7 +263,7 @@
                                 <td>
                                   <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
                                 </td>
-                                <td>{{ $delivery->client->name }}<br/>
+                                <td><a href="{{route('clients.show', ['id' => $delivery->client->uuid])}}">{{ $delivery->client->name }}</a><br/>
                                   <label class="label label-inverse-primary">{{$delivery->address->street}}, {{$delivery->address->number}} - {{$delivery->address->district}}, {{$delivery->address->city}}</label>
                                 </td>
                                 <td>

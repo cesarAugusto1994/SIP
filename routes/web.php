@@ -318,6 +318,7 @@ Route::middleware('auth')->group(function () {
           Route::get('delivery-order/{id}/done', 'DeliveryOrderController@done')->name('delivery_done');
 
           Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
+          Route::get('delivery-order/{id}/start-delivery-client', 'DeliveryOrderController@startWithdrawal')->name('start_delivery_client');
     });
 
   });

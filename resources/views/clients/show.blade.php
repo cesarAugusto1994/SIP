@@ -100,6 +100,7 @@
                                   <p>CPF/CNPJ: {{ $client->document }}</p>
                                   <p>Contrato: {{ $client->contract->name }}</p>
                                   <p>Cobrar Entrega?: {{ $client->charge_delivery ? 'Sim' : 'Não' }}</p>
+                                  <p>Entrega de Documentos?: {{ $client->deliver_documents ? 'Sim' : 'Não' }}</p>
                                 </div>
 
                                 <div class="col-md-3">
