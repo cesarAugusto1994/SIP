@@ -344,6 +344,7 @@ class DeliveryOrderController extends Controller
           case Constants::STATUS_DELIVERY_PENDENTE:
 
             $delivery->status_id = Constants::STATUS_DELIVERY_RETIRADA_PELO_CLIENTE;
+            $delivery->delivered_by = $user->id;
             $delivery->save();
 
             Log::create([
@@ -555,7 +556,15 @@ class DeliveryOrderController extends Controller
 
         $occupation = $occupation->first();
 
-        $delivers = People::where('occupation_id', $occupation->id)->get();
+        $people = People::where('active', true)->orderBy('name')->get();
+
+        $delivers = $people->filter(function ($person, $key) use ($occupation) {
+            return $person->occupation_id == $occupation->id;
+        });
+
+        $anotherPeople = $people->filter(function ($person, $key) use ($occupation) {
+            return $person->occupation_id != $occupation->id;
+        });
 
         if($delivers->isEmpty()) {
           notify()->flash('Nenhum usuário com o cargo de Entregador.', 'warning', [
@@ -577,7 +586,7 @@ class DeliveryOrderController extends Controller
             $documents = Document::whereIn('uuid', $data['document'])->get();
         }
 
-        return view('delivery-order.create', compact('client', 'documents', 'delivers', 'addresses', 'emails'));
+        return view('delivery-order.create', compact('client', 'documents', 'delivers', 'anotherPeople', 'addresses', 'emails'));
     }
 
     public function conference(Request $request)
@@ -816,7 +825,15 @@ class DeliveryOrderController extends Controller
 
         $occupation = $occupation->first();
 
-        $delivers = People::where('occupation_id', $occupation->id)->get();
+        $people = People::where('active', true)->orderBy('name')->get();
+
+        $delivers = $people->filter(function ($person, $key) use ($occupation) {
+            return $person->occupation_id == $occupation->id;
+        });
+
+        $anotherPeople = $people->filter(function ($person, $key) use ($occupation) {
+            return $person->occupation_id != $occupation->id;
+        });
 
         if($delivers->isEmpty()) {
           notify()->flash('Nenhum usuário com o cargo de Entregador.', 'warning', [
@@ -838,7 +855,7 @@ class DeliveryOrderController extends Controller
 
         $addresses = $client->addresses;
 
-        return view('delivery-order.edit', compact('documents', 'newDocuments', 'delivers', 'delivery', 'addresses'));
+        return view('delivery-order.edit', compact('documents', 'newDocuments', 'delivers', 'anotherPeople', 'delivery', 'addresses'));
     }
 
     /**

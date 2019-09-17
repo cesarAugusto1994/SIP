@@ -37,7 +37,7 @@
               <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header bg-c-green update-card">
-                        <h5 class="text-white">Nova Ordem de Entrega</h5>
+                        <h5 class="text-white">Editar Ordem de Entrega</h5>
                     </div>
                     <div class="card-block">
 
@@ -65,16 +65,25 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                                 <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entregador</label>
                                     <div class="input-group">
                                       <select class="select2 select-entregador" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
-                                          <option value="">Selecione um entregador</option>
-                                          @foreach($delivers as $deliver)
-                                              <option value="{{$deliver->uuid}}" {{ $deliver->id == $delivery->delivered_by ? 'selected' : '' }}>{{$deliver->name}}</option>
-                                          @endforeach
+
+                                          <optgroup label="Entregadores">
+                                            <option value="">Selecione um entregador</option>
+                                            @foreach($delivers as $deliver)
+                                                <option value="{{$deliver->uuid}}" {{ $deliver->id == $delivery->delivered_by ? 'selected' : '' }}>{{$deliver->name}}</option>
+                                            @endforeach
+                                          </optgroup>
+                                          <optgroup label="Outros Usuários">
+                                            @foreach($anotherPeople as $person)
+                                                <option value="{{$person->uuid}}" {{ $person->user->id == $delivery->delivered_by ? 'selected' : '' }}>{{$person->name}}</option>
+                                            @endforeach
+                                          </optgroup>
+
                                       </select>
                                       {!! $errors->first('delivered_by', '<p class="help-block">:message</p>') !!}
                                     </div>
@@ -82,7 +91,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                                 <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
                                   <label class="col-form-label">Entrega</label>

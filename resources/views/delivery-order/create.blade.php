@@ -43,7 +43,7 @@
 
                         <div class="row m-b-30">
 
-                            <div class="col-md-12">
+                            <div class="col-md-12 m-t-30">
 
                                 <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                                     <label class="col-form-label">Cliente</label>
@@ -70,7 +70,7 @@
                                         <label>
                                             <input type="checkbox" name="checkbox_address" value="1" id="checkbox-new-address">
                                             <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                            <span class="text-inverse">Adicionar Endereço</span>
+                                            <span class="text-inverse">Adicionar NOVO Endereço</span>
                                         </label>
                                     </div>
                                   </div>
@@ -99,7 +99,7 @@
                                         <label>
                                             <input type="checkbox" name="checkbox_address" value="1" id="checkbox-new-address">
                                             <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                            <span class="text-inverse">Adicionar Endereço</span>
+                                            <span class="text-inverse">Adicionar NOVO Endereço</span>
                                         </label>
                                     </div>
                                   </div>
@@ -152,10 +152,17 @@
                                   <label class="col-form-label">Entregador</label>
                                     <div class="input-group">
                                       <select class="form-control select-entregador select2" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
+                                        <optgroup label="Entregadores">
                                           <option value="">Selecione um entregador</option>
                                           @foreach($delivers as $deliver)
                                               <option value="{{$deliver->uuid}}">{{$deliver->name}}</option>
                                           @endforeach
+                                        </optgroup>
+                                        <optgroup label="Outros Usuários">
+                                          @foreach($anotherPeople as $person)
+                                              <option value="{{$person->uuid}}">{{$person->name}}</option>
+                                          @endforeach
+                                        </optgroup>
                                       </select>
                                       {!! $errors->first('delivered_by', '<p class="help-block">:message</p>') !!}
                                     </div>
