@@ -54,7 +54,7 @@
                     <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="document">CPF/CNPJ</label>
                         <div class="input-group">
-                            <input type="text" id="document" name="document" value="{{ old('document') }}" class="form-control" placeholder="Informe o CPF ou CNPJ">
+                            <input type="text" id="document" required name="document" value="{{ old('document') }}" class="form-control" placeholder="Informe o CPF ou CNPJ">
                         </div>
                         {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -64,7 +64,8 @@
                     <div class="form-group {!! $errors->has('contract_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="document">Contrato</label>
                         <div class="input-group">
-                          <select class="form-control" name="contract_id">
+                          <select class="form-control select2" name="contract_id" required>
+                              <option value="">Selecione o tipo de Contrato</option>
                               @foreach(\App\Helpers\Helper::contracts() as $contract)
                                   <option value="{{$contract->id}}">{{$contract->name}}</option>
                               @endforeach
