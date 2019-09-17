@@ -40,7 +40,7 @@
               <table class="table table-lg table-styling">
                   <thead>
                       <tr class="table-primary">
-                          <th>Conceder?</th>
+                          <th><input class="js-switch" type="checkbox" id="select-all" name="select_all" value="1"/></th>
                           <th>Nome</th>
                           <th>E-mail</th>
                       </tr>
@@ -48,22 +48,24 @@
                   <tbody>
                     @foreach(\App\Helpers\Helper::users() as $user)
 
+                      @if(auth()->user()->id != $user->id)
+
                       @php
                           $hasPermission = $user->hasPermission($permission->slug);
                       @endphp
 
                       <tr>
-
-                          <td class="project-actions">
-                              <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="js-switch checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                          <td>
+                              <input type="checkbox" class="js-switch checkboxPermissions select-item" {{ $hasPermission ? 'checked' : '' }}
                                 data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
                                 data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}" value="1"/>
                           </td>
-
                           <td>{{ $user->person->name }}</td>
                           <td>{{ $user->email }}</td>
-
                       </tr>
+
+                      @endif
+
                     @endforeach
                   </tbody>
               </table>
@@ -72,5 +74,40 @@
   </div>
 
 </div>
+
+@endsection
+
+@section('scripts')
+
+<script>
+
+    var clickCheckbox = document.querySelector('#select-all');
+
+    $(document).on('change','#select-all',function(){
+
+      var itemsCheckbox = $('.select-item');
+
+      if (clickCheckbox.checked) {
+
+          $.each(itemsCheckbox, function(idx, elem) {
+
+              if(!$(elem).is(':checked')) {
+                  $(elem).trigger('click');
+              }
+
+          });
+
+      } else {
+
+          $.each(itemsCheckbox, function(idx, elem) {
+            if($(elem).is(':checked')) {
+                $(elem).trigger('click');
+            }
+          });
+
+      }
+    });
+
+</script>
 
 @endsection
