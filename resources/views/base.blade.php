@@ -913,7 +913,7 @@ $(document).ready(function() {
     var elem = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
     elem.forEach(function(html) {
-      var switchery = new Switchery(html, { color: '#93BE52', jackColor: '#fff' });
+      var switchery = new Switchery(html, { color: '#93BE52', jackColor: '#fff', size: 'small' });
     });
 
     $('.inputDate').mask('00/00/0000');
