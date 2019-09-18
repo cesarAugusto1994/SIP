@@ -779,7 +779,7 @@ class EmployeesController extends Controller
 
           foreach ($companies as $key => $company) {
 
-            echo '> Empresa: ' . $company->name . '<br/>';
+            echo '> Empresa: ' . $company->name . PHP_EOL;
 
             //$companiesAlreadyLoaded[] = $company->id;
             //$companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
