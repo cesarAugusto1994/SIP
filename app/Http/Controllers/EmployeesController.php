@@ -781,16 +781,16 @@ class EmployeesController extends Controller
 
             echo '> Empresa: ' . $company->name . '<br/>';
 
-            $companiesAlreadyLoaded[] = $company->id;
-            $companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
+            //$companiesAlreadyLoaded[] = $company->id;
+            //$companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
 
             $result = array_filter($employeesData, function($item) use ($company) {
                 return $item['CODIGOEMPRESA'] == $company->code;
             });
 
-            if(count($result) == $company->employees->count()) {
+            /*if(count($result) == $company->employees->count()) {
                 //continue;
-            }
+            }*/
 
             foreach ($result as $key => $item) {
 
