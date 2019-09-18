@@ -339,7 +339,7 @@ class EmployeesController extends Controller
             $employeesData = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
 
             if(!$employeesData) {
-                return response()->json('Ocorreu um erro.');
+                return response()->json('Dados não informados.');
             }
 
             //$employeesData = [];
