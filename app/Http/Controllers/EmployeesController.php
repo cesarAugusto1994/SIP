@@ -843,10 +843,10 @@ class EmployeesController extends Controller
                   $data['created_by'] = 1;
 
                   if($hasEmployee) {
-                      echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
+                      //echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
                       $hasEmployee->update($data);
                   } else {
-                      echo '>> Funcionario adicionado : ' . $item['NOME'] . '<br/>';
+                      //echo '>> Funcionario adicionado : ' . $item['NOME'] . '<br/>';
                       Employee::create($data);
                   }
                 }
