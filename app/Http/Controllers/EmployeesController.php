@@ -329,7 +329,7 @@ class EmployeesController extends Controller
 
           //} else {
 
-            /*$client = new GuzzleClient([
+            $client = new GuzzleClient([
               'handler' => new \GuzzleHttp\Handler\CurlHandler(),
             ]);
             $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
@@ -341,10 +341,10 @@ class EmployeesController extends Controller
             if(!$employeesData) {
                 return response()->json('Ocorreu um erro.');
             }
-*/
-            $employeesData = [];
 
-            $employeesData = array (
+            //$employeesData = [];
+
+            /*$employeesData = array (
                 0 =>
                 array (
                   'CODIGOEMPRESA' => '244534',
@@ -761,7 +761,7 @@ class EmployeesController extends Controller
                   'CEP' => '',
                   'CODIGO_MUNICIPIO' => '0',
                 ),
-              );
+              );*/
 
             //session()->put('employees', $employeesData);
 
