@@ -512,42 +512,48 @@ class ClientController extends Controller
 
             $clientData = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
 
+            $data = [];
+
             if(!$clientData) {
                 return response()->json('Ocorreu um erro.');
             }
 
             foreach ($clientData as $key => $item) {
 
-                if($key > 10 && config('app.env') == 'local') {
-                  //break;
-                }
+                $contractId = 1;
 
-                $data['contract_id'] = 1;
-
-                $hasClient = Client::where('document', $item['cnpj'])
-                ->orWhere('name', trim($item['razaoSocial']))
+                $company = Client::where('document', $item['cnpj'])
+                ->where('name', trim($item['razaoSocial']))
+                ->where('code', trim($item['codigo']))
                 ->first();
 
-                if($hasClient) {
-                    $data['contract_id'] = $hasClient->contract_id;
+                if($company) {
+                    $contractId = $company->contract_id;
                 }
 
                 $data = [
                     'code' => ($item['codigo']),
                     'name' => trim($item['razaoSocial']),
                     'document' => trim($item['cnpj']),
-                    'active' => $item['status'] ? true : false,
-                    'contract_id' => $data['contract_id']
+                    'active' => (boolean)$item['status'],
+                    'contract_id' => $contractId
                 ];
 
-                $client = Client::updateOrCreate($data);
-
-                return response()->json([
-                  'success' => true,
-                  'message' => 'Clientes importados com sucesso!'
-                ]);
+                if($company) {
+                    $company->update($data);
+                    echo '> Empresa Atualizada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . '<br/>';
+                } else {
+                    $company = Client::create($data);
+                    echo '> Empresa Adicionada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . '<br/>';
+                }
 
             }
+
+            return response()->json([
+              'success' => true,
+              'message' => 'Clientes importados com sucesso!'
+            ]);
+
           } catch(\Exception $e) {
               throw $e;
           }

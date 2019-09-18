@@ -323,13 +323,13 @@ class EmployeesController extends Controller
 
           $employeesData = [];
 
-          if(session()->has('employees')) {
+          //if(session()->has('employees')) {
 
-              $employeesData = session()->get('employees');
+              //$employeesData = session()->get('employees');
 
-          } else {
+          //} else {
 
-            $client = new GuzzleClient([
+            /*$client = new GuzzleClient([
               'handler' => new \GuzzleHttp\Handler\CurlHandler(),
             ]);
             $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
@@ -341,20 +341,441 @@ class EmployeesController extends Controller
             if(!$employeesData) {
                 return response()->json('Ocorreu um erro.');
             }
+*/
+            $employeesData = [];
 
-            session()->put('employees', $employeesData);
+            $employeesData = array (
+                0 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '1',
+                  'NOME' => 'TIAGO ALVARENGA DE TASSI',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '001',
+                  'NOMECARGO' => 'CAIXA ATENDENTE',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '11018',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Ativo',
+                  'DATA_NASCIMENTO' => '24/05/1981',
+                  'DATA_ADMISSAO' => '01/07/2009',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                1 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '2',
+                  'NOME' => 'FABIO MIRANDA DA SILVA',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '21651',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '05/05/1978',
+                  'DATA_ADMISSAO' => '13/01/2010',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                2 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '3',
+                  'NOME' => 'ANTONIO MACIEL',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '21822',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '28/09/1977',
+                  'DATA_ADMISSAO' => '15/01/2010',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                3 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '4',
+                  'NOME' => 'EMANUELY BICALHO DE MATTOS',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '001',
+                  'NOMECARGO' => 'CAIXA ATENDENTE',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '15267',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '20/02/1980',
+                  'DATA_ADMISSAO' => '12/08/2011',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                4 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '5',
+                  'NOME' => 'SANTILHA REIS',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '001',
+                  'NOMECARGO' => 'CAIXA ATENDENTE',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8841',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '22/08/1980',
+                  'DATA_ADMISSAO' => '02/06/2009',
+                  'DATA_DEMISSAO' => '02/06/2009',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                5 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '6',
+                  'NOME' => 'GEILSON PEREIRA MAIA',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '002',
+                  'NOMECARGO' => 'CARGO INDEFINIDO',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8917',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '06/12/1973',
+                  'DATA_ADMISSAO' => '02/06/2009',
+                  'DATA_DEMISSAO' => '18/01/2010',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                6 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '7',
+                  'NOME' => 'PAULO AFONSO',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8918',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '11/03/1973',
+                  'DATA_ADMISSAO' => '03/06/2009',
+                  'DATA_DEMISSAO' => '13/01/2010',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                7 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '8',
+                  'NOME' => 'RONNE VENTURA DE SOUZA',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8919',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '08/04/1974',
+                  'DATA_ADMISSAO' => '03/06/2009',
+                  'DATA_DEMISSAO' => '24/03/2010',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                8 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '9',
+                  'NOME' => 'ALMIR CHAVES DE BRITO',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8921',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '19/11/1973',
+                  'DATA_ADMISSAO' => '16/10/2008',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                9 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '10',
+                  'NOME' => 'PATRICIA MENDES LEITE',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '001',
+                  'NOMECARGO' => 'CAIXA ATENDENTE',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8922',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '29/01/1984',
+                  'DATA_ADMISSAO' => '03/06/2009',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                10 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '11',
+                  'NOME' => 'ALEXANDRE FERNANDES DE SA',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8923',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '01/01/1970',
+                  'DATA_ADMISSAO' => '01/01/2013',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                11 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '12',
+                  'NOME' => 'HEDILAINE DO CARMO UCCELI',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '006',
+                  'NOMECARGO' => 'SECRETARIA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '8948',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '23/06/1976',
+                  'DATA_ADMISSAO' => '31/05/2004',
+                  'DATA_DEMISSAO' => '04/01/2011',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                12 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '13',
+                  'NOME' => 'SANDRA NERI DE OLIVEIRA',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '001',
+                  'NOMECARGO' => 'CAIXA ATENDENTE',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '11732',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '05/06/1977',
+                  'DATA_ADMISSAO' => '14/06/2007',
+                  'DATA_DEMISSAO' => '30/07/2010',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                13 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '14',
+                  'NOME' => 'DANIEL DA MOTA EDUARDO',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '1402',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '22/02/1986',
+                  'DATA_ADMISSAO' => '25/04/2012',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                14 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '15',
+                  'NOME' => 'MAGNO GOMES MACIEL',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '002',
+                  'NOMESETOR' => 'OPERACIONAL',
+                  'CODIGOCARGO' => '004',
+                  'NOMECARGO' => 'FRENTISTA',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '6183',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '16/04/1985',
+                  'DATA_ADMISSAO' => '01/01/2000',
+                  'DATA_DEMISSAO' => '06/05/2011',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+                15 =>
+                array (
+                  'CODIGOEMPRESA' => '244534',
+                  'NOMEEMPRESA' => 'AUTO POSTO SAO PEDRO LTDA ',
+                  'CODIGO' => '16',
+                  'NOME' => 'KARLA CAROLINA CAETANO DOS SANTOS COUTINHO',
+                  'CODIGOUNIDADE' => '0000001',
+                  'NOMEUNIDADE' => 'AUTO POSTO SAO PEDRO LTDA',
+                  'CODIGOSETOR' => '001',
+                  'NOMESETOR' => 'ADMINISTRATIVA',
+                  'CODIGOCARGO' => '001',
+                  'NOMECARGO' => 'CAIXA ATENDENTE',
+                  'CBOCARGO' => '',
+                  'MATRICULAFUNCIONARIO' => '3496',
+                  'CPFFUNCIONARIO' => '',
+                  'SITUACAO' => 'Inativo',
+                  'DATA_NASCIMENTO' => '30/10/1988',
+                  'DATA_ADMISSAO' => '17/10/2007',
+                  'DATA_DEMISSAO' => '',
+                  'ENDERECO' => ',',
+                  'NUMERO_ENDERECO' => '0',
+                  'BAIRRO' => '',
+                  'UF' => '',
+                  'CEP' => '',
+                  'CODIGO_MUNICIPIO' => '0',
+                ),
+              );
 
-          }
+            //session()->put('employees', $employeesData);
+
+          //}
 
           $data = [];
 
           $companiesAlreadyLoaded = $companiesHasLoaded = [];
 
-          if(session()->has('companies')) {
-            $companiesHasLoaded = session()->get('companies');
-          }
+          //if(session()->has('companies')) {
+            //$companiesHasLoaded = session()->get('companies');
+          //}
 
-          $companies = Client::whereNotIn('id', $companiesHasLoaded)->where('active', true)->get();
+          $companies = Client::where('active', true)->get();
 
           foreach ($companies as $key => $company) {
 
@@ -364,36 +785,35 @@ class EmployeesController extends Controller
             $companiesHasLoaded = session('companies', $companiesAlreadyLoaded);
 
             $result = array_filter($employeesData, function($item) use ($company) {
-                return $item['CODIGOEMPRESA'] == $company->code && $item['SITUACAO'] == 'Ativo';
+                return $item['CODIGOEMPRESA'] == $company->code;
             });
 
             if(count($result) == $company->employees->count()) {
-                continue;
+                //continue;
             }
 
             foreach ($result as $key => $item) {
 
                 if($company) {
 
-                  $hasEmployee = Employee::where('name', $item['NOME'])
-                                  ->orWhere('cpf', $item['CPFFUNCIONARIO'])
-                                  ->orWhere('code', $item['CODIGO'])
-                                  ->where('company_id', $company->id)
-                                  ->first();
+                  $birthDay = null;
 
-                  if($hasEmployee) {
-                      echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
-                      continue;
-                      $data['id'] = $hasEmployee->id;
+                  if($item['DATA_NASCIMENTO']) {
+                      $birthDay = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
+                      $birthDay = $birthDay->format('Y-m-d');
                   }
 
-                  echo '>> Importando Funcionario: ' . $item['NOME'] . '<br/>';
+                  $hasEmployee = Employee::where('name', $item['NOME'])
+                                  //->orWhere('cpf', $item['CPFFUNCIONARIO'])
+                                  ->orWhere('code', $item['CODIGO'])
+                                  ->orWhere('birth', $birthDay)
+                                  ->where('company_id', $company->id)
+                                  ->first();
 
                   $data['company_id'] = $company->id;
                   $data['name'] = $item['NOME'];
                   $data['cpf'] = $item['CPFFUNCIONARIO'];
                   $data['code'] = $item['CODIGO'];
-
                   $data['active'] = $item['SITUACAO'] == 'Ativo' ? true : false;
 
                   $occupation = Occupation::firstOrCreate([
@@ -422,8 +842,13 @@ class EmployeesController extends Controller
                   $data['fired_at'] = $firedAt;
                   $data['created_by'] = 1;
 
-                  Employee::updateOrCreate($data);
-
+                  if($hasEmployee) {
+                      echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
+                      $hasEmployee->update($data);
+                  } else {
+                      echo '>> Funcionario adicionado : ' . $item['NOME'] . '<br/>';
+                      Employee::create($data);
+                  }
                 }
 
             }
