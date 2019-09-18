@@ -443,7 +443,7 @@
                                           <div class="form-group {!! $errors->has('do_task') ? 'has-error' : '' !!}">
                                               <label class="col-form-label" for="active">Realiza Tarefas</label>
                                               <div class="input-group">
-                                                  <input class="js-switch" type="checkbox" id="active" name="do_task" {{ $user->do_task ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
+                                                  <input class="js-switch" type="checkbox" id="do_task" name="do_task" {{ $user->do_task ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
                                               </div>
                                               {!! $errors->first('do_task', '<p class="help-block">:message</p>') !!}
                                           </div>
@@ -719,7 +719,6 @@
 
                 </div>
             </div>
-            <!-- tab content end -->
         </div>
     </div>
 </div>

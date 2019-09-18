@@ -268,16 +268,39 @@
 <input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
 <input type="hidden" value="{{ route('users_locales') }}" id="user-locales"/>
 <input type="hidden" value="{{ route('client_search') }}" id="input-search-clientes"/>
+<input type="hidden" value="{{ route('employee_search') }}" id="input-search-employees"/>
 <input type="hidden" value="{{ route('client_occupations_search') }}" id="input-search-client-occupations"/>
 
 <script src="{{ asset('js/sip.js') }}"></script>
 
 <script>
 
+function notify(message, type){
+    $.growl({
+        message: message
+    },{
+        type: type,
+        allow_dismiss: false,
+        label: 'Cancel',
+        className: 'btn-xs btn-inverse',
+        placement: {
+            from: 'bottom',
+            align: 'center'
+        },
+        delay: 5000,
+        animate: {
+                enter: 'animated fadeInRight',
+                exit: 'animated fadeOutRight'
+        },
+        offset: {
+            x: 30,
+            y: 30
+        }
+    });
+};
 
 function initMap() {
 
-  // Try HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {

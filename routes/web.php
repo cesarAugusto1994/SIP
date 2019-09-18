@@ -208,6 +208,8 @@ Route::middleware('auth')->group(function () {
           Route::get('clients/search/json', 'ClientController@search')->name('client_search');
           Route::get('clients/occupations/search/json', 'ClientOccupationsController@search')->name('client_occupations_search');
 
+          Route::get('employees/search/json', 'EmployeesController@search')->name('employee_search');
+
           Route::get('clients/addresses/search', 'ClientController@addresses')->name('client_addresses_search');
           Route::get('clients/emails/search', 'ClientController@emails')->name('client_emails_search');
           Route::get('clients/{id}/addresses', 'AddressesController@show')->name('client_addresses');

@@ -111,11 +111,9 @@
                             <label>Adicionar Funcionários</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                                <select class="form-control select2" multiple name="employees[]" id="employees">
-                                  @foreach(App\Helpers\Helper::employees() as $employee)
-                                      <option value="{{$employee->id}}">{{$employee->name}}</option>
-                                  @endforeach
-                                </select>
+
+                                <select multiple class="form-control select-employees" name="employees[]" id="employees" required></select>
+
                             </div>
                         </div>
                     </div>

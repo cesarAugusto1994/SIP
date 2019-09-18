@@ -159,14 +159,12 @@ class TeamsController extends Controller
         $teamEmployee->status = $data['status'];
         $teamEmployee->save();
 
-        notify()->flash('Preseça Confirmada', 'success', [
+         notify()->flash('Presença Confirmada', 'success', [
           'text' => 'O status foi atualizado com sucesso.'
         ]);
 
         return redirect()->route('teams.show', $teamEmployee->team->uuid);
     }
-
-
 
     public function employeeChangeStatus($id, Request $request)
     {
@@ -218,10 +216,12 @@ class TeamsController extends Controller
 
         if($request->has('employees')) {
 
-          foreach ($data['employees'] as $key => $employeeID) {
+          $employees = Employee::whereIn('uuid', $data['employees'])->get();
+
+          foreach ($employees as $key => $employee) {
             TeamEmployees::create([
               'team_id' => $team->id,
-              'employee_id' => $employeeID,
+              'employee_id' => $employee->id,
             ]);
           }
 

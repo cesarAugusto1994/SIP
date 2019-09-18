@@ -370,7 +370,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        //Notification::send(User::whereNot('id', $user->id)->get(), new NewUserNotification($user));
+        Notification::send(User::where('id', [1,2])->get(), new NewUserNotification($user));
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo usuário adicionado com sucesso.'

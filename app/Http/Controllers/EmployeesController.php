@@ -48,6 +48,32 @@ class EmployeesController extends Controller
         return view('clients.employees.index', compact('employees', 'quantity'));
     }
 
+    public function search(Request $request)
+    {
+        if(!$request->has('search')) {
+          return response()->json('Nenhum paramentro de busca foi informado.');
+        }
+
+        $search = $request->get('search');
+
+        $employees = Employee::where('id', $search)
+        ->orWhere('name', 'like', "%$search%")
+        ->get();
+
+        $result = [];
+
+        $result = $employees->map(function($employee) {
+            return [
+              'id' => $employee->uuid,
+              'name' => $employee->name,
+              'document' => $employee->cpf,
+              'company' => $employee->company->name
+            ];
+        });
+
+        return json_encode($result);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

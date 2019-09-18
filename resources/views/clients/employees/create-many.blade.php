@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Funcionários</h4>
+                    <h4>Clientes</h4>
                 </div>
             </div>
         </div>
@@ -19,14 +19,14 @@
                     </li>
                     @if($company)
                       <li class="breadcrumb-item">
-                          <a href="{{ route('clients.show', $company->uuid) }}"> Cliente </a>
+                          <a href="{{ route('clients.show', $company->uuid) }}"> Clientes </a>
                       </li>
                     @else
                       <li class="breadcrumb-item">
                           <a href="{{ route('employees.index') }}"> Funcionários </a>
                       </li>
                     @endif
-                    <li class="breadcrumb-item"><a href="#!">Funcionários</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Adicionar</a></li>
                 </ul>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
   <div class="card">
       <div class="card-header">
-          <h5>Novo Funcionário</h5>
+          <h5>Adicionar Novos Funcionários em {{ $company->name }}</h5>
       </div>
       <div class="card-block">
 
@@ -91,7 +91,7 @@
                 + '</div>'
             + '</div>'
 
-            + '<div class="col-md-3">'
+            + '<div class="col-md-2">'
               +   '<div class="form-group">'
                     + '<label class="col-form-label">CPF</label>'
                     + '<div class="input-group">'
@@ -109,7 +109,7 @@
                 + '</div>'
             + '</div>'
 
-            + '<div class="col-md-2">'
+            + '<div class="col-md-3">'
               + '<div class="form-group">'
                   + '<label class="col-form-label">Função</label>'
                   + '<div class="input-group">'
@@ -124,7 +124,7 @@
               +   '<div class="form-group">'
                     + '<label class="col-form-label">Ativo</label>'
                     + '<div class="input-group">'
-                      + '<input type="checkbox" value="1" name="active-'+index+'"/>'
+                      + '<input id="js-switch-'+index+'" type="checkbox" value="1" name="active-'+index+'"/>'
                     + '</div>'
                 + '</div>'
             + '</div>'
@@ -145,6 +145,12 @@
         $("#select-employee-" + index).select2();
         $('.inputCpf').mask('000.000.000-00', {reverse: true});
         indexes.val(index);
+
+        var elem = Array.prototype.slice.call(document.querySelectorAll('#js-switch-'+index));
+
+        elem.forEach(function(html) {
+          var switchery = new Switchery(html, { color: '#93BE52', jackColor: '#fff' });
+        });
 
         $('.select-client-occuparions').select2({
           ajax: {
