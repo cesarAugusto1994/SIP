@@ -78,7 +78,7 @@
 
                       <div class="col-md-12">
 
-                          <h4>{{ $delivery->client->name }}</h4>
+                          <h3>{{ $delivery->client->name }}</h3>
 
                           <address>
                               <b>Endereço:</b> {{ $delivery->address->street }}, {{ $delivery->address->number }}, {{ $delivery->address->district }}<br>
