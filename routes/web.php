@@ -150,6 +150,9 @@ Route::middleware('auth')->group(function () {
           Route::resource('documents', 'DocumentsController');
           Route::resource('delivery-order', 'DeliveryOrderController');
 
+          Route::get('documents/create/for-client', 'DocumentsController@createManyForOneClient')->name('documents_create_for_client');
+          Route::post('documents/create/for-client/store', 'DocumentsController@createManyForOneClientStore')->name('documents_create_for_client_store');
+
           Route::get('delivery-order/{id}/print/tags', 'DeliveryOrderController@printTags')->name('print_tags');
           Route::get('delivery-order/document/{id}/status', 'DeliveryOrderController@statsByDocument')->name('delivery_status_by_document');
 

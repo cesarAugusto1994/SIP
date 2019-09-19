@@ -146,6 +146,11 @@ class DocumentsController extends Controller
         return view('documents.create');
     }
 
+    public function createManyForOneClient()
+    {
+        return view('documents.create-many');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -263,6 +268,88 @@ class DocumentsController extends Controller
 
             }
 
+        }
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Novo Documento adicionado com sucesso.'
+        ]);
+
+        return redirect()->route('delivery-order.create', ['client' => $client->uuid, 'document[]' => $documentsList[$client->id]]);
+    }
+
+    public function createManyForOneClientStore(Request $request)
+    {
+        if(!$request->has('indexes')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Nenhum documento foi informado.'
+          ]);
+          return back();
+        }
+
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        $data['created_by'] = $user->id;
+        $data['status_id'] = 1;
+
+        $documentsList = [];
+
+        $client = Client::uuid($data['client_id']);
+
+        $indexes = $data['indexes'];
+
+        foreach (range(0, $indexes) as $key => $value) {
+
+            $fieldType = 'type_id-'.$value;
+            $fieldEmployee = 'employee_id-'.$value;
+            $fieldReference = 'reference-'.$value;
+
+            if($request->has($fieldType)) {
+
+                foreach ($request->get($fieldType) as $key => $typeItem) {
+
+                  $employee = null;
+                  $type = Type::uuid($typeItem);
+                  $reference = $request->get($fieldReference);
+
+                  if($request->filled($fieldEmployee)) {
+                      $employees = Employee::whereIn('uuid', $request->get($fieldEmployee))->get();
+
+                      foreach ($employees as $key => $employee) {
+
+                        $document = Document::create([
+                          'type_id' => $type->id,
+                          'client_id' => $client->id,
+                          'employee_id' => $employee->id,
+                          'reference' => $reference,
+                          'created_by' => $user->id,
+                          'status_id' => 1,
+                          'amount' => $type->price,
+                        ]);
+
+                        $documentsList[$client->id] = $document->uuid;
+
+                      }
+
+                  } else {
+
+                    $document = Document::create([
+                      'type_id' => $type->id,
+                      'client_id' => $client->id,
+                      'employee_id' => null,
+                      'reference' => $reference,
+                      'created_by' => $user->id,
+                      'status_id' => 1,
+                      'amount' => $type->price,
+                    ]);
+
+                    $documentsList[$client->id] = $document->uuid;
+
+                  }
+
+                }
+            }
         }
 
         notify()->flash('Sucesso!', 'success', [

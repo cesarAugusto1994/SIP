@@ -54,11 +54,19 @@ class EmployeesController extends Controller
           return response()->json('Nenhum paramentro de busca foi informado.');
         }
 
+        $client = null;
+
         $search = $request->get('search');
 
         $employees = Employee::where('id', $search)
-        ->orWhere('name', 'like', "%$search%")
-        ->get();
+        ->orWhere('name', 'like', "%$search%");
+
+        if($request->filled('client')) {
+            $client = Client::uuid($request->get('client'));
+            $employees->where('company_id', $client->id);
+        }
+
+        $employees = $employees->get();
 
         $result = [];
 
@@ -66,7 +74,7 @@ class EmployeesController extends Controller
             return [
               'id' => $employee->uuid,
               'name' => $employee->name,
-              'document' => $employee->cpf,
+              'document' => $employee->cpf ?? '',
               'company' => $employee->company->name
             ];
         });

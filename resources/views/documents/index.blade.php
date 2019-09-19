@@ -36,7 +36,11 @@
                 <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
                     @permission('create.documentos')
-                      <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('documents.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Documento</a>
+                      <a class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('documents.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Documento</a>
+                    @endpermission
+
+                    @permission('create.documentos')
+                      <a class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('documents_create_for_client')}}"><i class="icofont icofont-paper-plane"></i> Novos Documentos Por Cliente</a>
                     @endpermission
 
                 </div>
