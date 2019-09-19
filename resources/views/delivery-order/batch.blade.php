@@ -52,7 +52,7 @@
     <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
     <img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
   </div>
-  <div style="padding:0px 10px 0px 10px; min-height:900px!important ">
+  <div style="padding:0px 10px 0px 10px; {{ $delivery->documents->count() < 4 ? 'min-height:900px!important' : 'min-height:900px!important' }}">
       <div class="ibox-content">
           <div class="row">
 
@@ -146,7 +146,7 @@
 
                     </table>
 
-                    @if($delivery->documents->count() < 6)
+                    @if($delivery->documents->count() < 4)
 
                     <div class="bg-white" style="border-bottom:2px dashed black;padding:0.3em 0.2em;margin-bottom:2em"></div>
 
