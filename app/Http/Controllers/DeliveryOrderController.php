@@ -293,6 +293,14 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
+        if(!$request->has('deliveries')) {
+          notify()->flash('Erro!', 'error', [
+            'text' => 'Informe ao menos um documento para a impressão.'
+          ]);
+
+          return back();
+        }
+
         $deliveries = DeliveryOrder::whereIn('uuid', $data['deliveries'])->orderByDesc('id')->get();
 
         $user = $request->user();

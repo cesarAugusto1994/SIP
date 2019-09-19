@@ -48,11 +48,11 @@
 </head>
 
 <body class="pace-done">
-<div style="width:100%;max-height:100px;min-height:100px;padding:0.6em 0.6em;top:0;margin-top:0">
-  <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
-<img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
-</div>
-  <div style="padding:0px 10px 0px 10px">
+  <div style="width:100%;max-height:100px;min-height:100px;padding:0.6em 0.6em;top:0;margin-top:0">
+    <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
+    <img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
+  </div>
+  <div style="padding:0px 10px 0px 10px; min-height:900px!important ">
       <div class="ibox-content">
           <div class="row">
 
@@ -78,7 +78,7 @@
 
                       <div class="col-md-12">
 
-                          <h3>{{ $delivery->client->name }}</h3>
+                          <h4>{{ $delivery->client->name }}</h4>
 
                           <address>
                               <b>Endereço:</b> {{ $delivery->address->street }}, {{ $delivery->address->number }}, {{ $delivery->address->district }}<br>
