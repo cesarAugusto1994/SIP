@@ -76,7 +76,7 @@
                           @foreach($orders->sortByDesc('id') as $delivery)
 
                             @if($delivery->documents->count() > 5)
-                                continue;
+                                @continue;
                             @endif
 
                             @php
