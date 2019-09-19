@@ -285,6 +285,7 @@ class DeliveryOrderController extends Controller
     public function printBatchList(Request $request)
     {
         $orders = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)->get();
+
         return view('delivery-order.list', compact('orders'));
     }
 
@@ -292,7 +293,7 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
-        $deliveries = DeliveryOrder::whereIn('uuid', $data['deliveries'])->get();
+        $deliveries = DeliveryOrder::whereIn('uuid', $data['deliveries'])->orderByDesc('id')->get();
 
         $user = $request->user();
 

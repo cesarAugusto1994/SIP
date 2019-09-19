@@ -27,7 +27,7 @@
 
 <div class="page-body">
 
-  <form target="_blank" action="{{ route('print_batch') }}" method="post">
+  <form action="{{ route('print_batch') }}" method="post">
     @csrf
 
   <div class="row">
@@ -56,7 +56,7 @@
         <div class="card">
             <div class="card-header">
                 <h5>Ordens de Entrega Pendentes</h5>
-                <span>Listagem para impressão</span>
+                <span>Listagem para impressão, {{ $orders->count() }} registros retornados.</span>
             </div>
             <div class="card-block table-border-style">
                 <div class="table-responsive">
@@ -99,7 +99,7 @@
                             @endphp
 
                             <tr>
-                                <td><input class="js-switch select-item" type="checkbox" checked name="deliveries[]" value="{{ $delivery->uuid }}"/></td>
+                                <td><input class="js-switch select-item" type="checkbox" name="deliveries[]" value="{{ $delivery->uuid }}"/></td>
                                 <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
                                 <td>
                                   <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
