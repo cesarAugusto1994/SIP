@@ -279,7 +279,7 @@ class DocumentsController extends Controller
 
     public function createManyForOneClientStore(Request $request)
     {
-        if(!$request->has('indexes')) {
+        if(!$request->filled('indexes')) {
           notify()->flash('Erro!', 'error', [
             'text' => 'Nenhum documento foi informado.'
           ]);
@@ -287,7 +287,7 @@ class DocumentsController extends Controller
         }
 
         $data = $request->request->all();
-
+        
         $user = $request->user();
 
         $data['created_by'] = $user->id;
