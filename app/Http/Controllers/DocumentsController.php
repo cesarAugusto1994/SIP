@@ -156,8 +156,6 @@ class DocumentsController extends Controller
     {
         $data = $request->request->all();
 
-        //dd($data);
-
         $user = $request->user();
 
         $data['created_by'] = $user->id;
@@ -283,7 +281,12 @@ class DocumentsController extends Controller
     public function show($id)
     {
         $document = Document::uuid($id);
-        return view('documents.show', compact('document'));
+
+        $deliveryOrder = $document->deliveryDocument ?
+                         $document->deliveryDocument->deliveryOrder :
+                         null;
+
+        return view('documents.show', compact('document', 'deliveryOrder'));
     }
 
     /**

@@ -46,6 +46,11 @@ class Document extends Model
         return $this->belongsTo('App\Models\DeliveryOrder');
     }
 
+    public function deliveryDocument()
+    {
+        return $this->hasOne('App\Models\DeliveryOrder\Documents');
+    }
+
     public function status()
     {
         return $this->belongsTo('App\Models\Delivery\Document\Status', 'status_id');

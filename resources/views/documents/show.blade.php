@@ -34,8 +34,8 @@
     <div class="col-md-12">
 
         <div class="card">
-            <div class="card-header">
-                <h5>Informações do Documento</h5>
+            <div class="card-header bg-c-green update-card">
+                <h5 class="text-white">Informações do Documento</h5>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
 
@@ -52,15 +52,14 @@
                 </div>
             </div>
             <div class="card-block">
-              <p class="lead text-success">Código: #{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</p>
+              <p class="m-t-30">Código: <b>#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</b></p>
               <p>Tipo: {{ $document->type->name }}</p>
               <p>Empresa: <a href="{{route('clients.show', $document->client->uuid)}}"><b>{{ $document->client->name }}</b></a></p>
               <p>Funcionário: {{ $document->employee->name ?? '' }}</p>
               <p>Referencia: {{ $document->reference ?? '' }}</p>
 
-              <p>Adicionado Em: {{ $document->created_at->format('d/m/Y') }}
-                <label class="label label-inverse-primary">{{ $document->created_at->diffForHumans() }}</label>
-              </p>
+
+              <p>Adicionado por: {{ $document->creator->person->name ?? '' }} em {{ $document->created_at->format('d/m/Y H:i:s') }} <label class="label label-inverse-primary">{{ $document->created_at->diffForHumans() }}</label></p>
 
               @php
 
@@ -89,6 +88,12 @@
 
             </div>
         </div>
+
+        @if($deliveryOrder)
+          <div class="alert alert-primary background-primary">
+              <p class="text-white">Este documento está vinculado à Ordem de Entrega: <a class="btn btn-success btn-sm" href="{{ route('delivery-order.show', $deliveryOrder->uuid) }}">#{{ str_pad($deliveryOrder->id, 6, "0", STR_PAD_LEFT) }}</a></p>
+          </div>
+        @endif
 
     </div>
 
