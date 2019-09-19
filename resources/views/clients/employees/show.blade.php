@@ -39,6 +39,9 @@
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
                         <li><a href="{{route('employees.edit', ['id' => $employee->uuid])}}" class="btn btn-primary text-white btn-sm">Editar</a></li>
+
+                        <!--<li><a href="{{route('employee_grant_access', ['id' => $employee->uuid])}}" class="btn btn-success text-white btn-sm">Conceder Acesso ao SIP</a></li>
+                        -->
                     </ul>
                 </div>
             </div>
@@ -52,6 +55,7 @@
                 @endif
 
               </p>
+              <p>E-mail: {{ $employee->email }}</p>
               <p>CPF: {{ $employee->cpf }}</p>
               <p>RG: {{ $employee->rg }}</p>
               <p>Empresa: <a href="{{route('clients.show', $employee->company->uuid)}}"><b>{{ $employee->company->name }}</b></a></p>

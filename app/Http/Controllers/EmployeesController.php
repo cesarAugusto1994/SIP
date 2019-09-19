@@ -854,7 +854,7 @@ class EmployeesController extends Controller
                       //echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
                       $hasEmployee->update($data);
                   } else {
-                      //echo '>> Funcionario adicionado : ' . $item['NOME'] . '<br/>';
+                      echo '>> Funcionario adicionado : ' . $item['NOME'] . PHP_EOL;
                       Employee::create($data);
                   }
                 }
@@ -874,5 +874,12 @@ class EmployeesController extends Controller
             'message' => $e->getMessage()
           ]);
         }
+    }
+
+    public function grantAccess($id)
+    {
+        $employee = Employee::uuid($id);
+
+        return view('clients.employees.access', compact('employee'));
     }
 }

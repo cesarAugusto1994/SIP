@@ -114,6 +114,8 @@ Route::middleware('auth')->group(function () {
 
           Route::resource('employees', 'EmployeesController');
 
+          Route::get('employees/{id}/grant/access', 'EmployeesController@grantAccess')->name('employee_grant_access');
+
           Route::get('user/{id}/avatar', 'UsersController@editAvatar')->name('user_avatar');
           Route::get('users/create/form', 'UsersController@create')->name('user_create');
           Route::get('user/{id}/avatar/{avatar}/upload', 'UsersController@uploadAvatar')->name('user_upload_avatar');
