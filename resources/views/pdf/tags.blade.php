@@ -86,7 +86,7 @@
                         <h4>Comprovante de Entrega de Documentos</h4>
                     </div>
 
-                    <table class="table table-bordered" style="font-size:11px">
+                    <table class="table table-bordered table-sm" style="font-size:11px">
 
                       <thead>
                         <tr>
@@ -104,7 +104,7 @@
 
                       <tbody>
 
-                        @foreach($delivery->documents as $document)
+                        @foreach($delivery->documents->sortBy('document.employee.name') as $document)
                         @php
                             $document = $document->document;
                         @endphp

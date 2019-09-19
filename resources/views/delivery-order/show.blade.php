@@ -290,7 +290,7 @@
                         </thead>
 
                         <tbody>
-                        @foreach($order->documents as $document)
+                        @foreach($order->documents->sortBy('document.employee.name') as $document)
                         @php
                           $document = $document->document;
                         @endphp

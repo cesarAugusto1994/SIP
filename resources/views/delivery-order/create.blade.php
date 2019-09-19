@@ -225,7 +225,7 @@
                                   </thead>
                                   <tbody id="table-documents">
 
-                                      @foreach($documents as $document)
+                                      @foreach($documents->sortBy('employee.name') as $document)
                                       <tr>
                                           @php
                                               $docs = request()->get('document');
