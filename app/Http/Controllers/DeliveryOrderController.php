@@ -277,11 +277,28 @@ class DeliveryOrderController extends Controller
 
         $user = $request->user();
 
-        $titulo = "etiquetas-".str_random();
-
         $file = \Storage::disk('local')->path($user->avatar);
 
         return view('pdf.tags', compact('delivery', 'file'));
+    }
+
+    public function printBatchList(Request $request)
+    {
+        $orders = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)->get();
+        return view('delivery-order.list', compact('orders'));
+    }
+
+    public function printBatch(Request $request)
+    {
+        $data = $request->request->all();
+
+        $deliveries = DeliveryOrder::whereIn('uuid', $data['deliveries'])->get();
+
+        $user = $request->user();
+
+        $file = \Storage::disk('local')->path($user->avatar);
+
+        return view('delivery-order.batch', compact('deliveries', 'file'));
     }
 
     public function start($id, Request $request)
