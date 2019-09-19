@@ -541,10 +541,10 @@ class ClientController extends Controller
 
                 if($company) {
                     $company->update($data);
-                    echo '* Empresa Atualizada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . '<br/>';
+                    echo '* Empresa Atualizada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . PHP_EOL;
                 } else {
                     $company = Client::create($data);
-                    echo '* Empresa Adicionada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . '<br/>';
+                    echo '* Empresa Adicionada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . PHP_EOL;
                 }
 
             }
