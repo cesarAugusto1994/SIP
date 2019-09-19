@@ -47,6 +47,8 @@
 
                             <h4>{{ $delivery->client->name }}</h4>
 
+                            <p>ORDEM DE ENTREGA: #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</p>
+
                             </div>
 
                             <div class="col-md-12">
@@ -98,6 +100,28 @@
                                     <div class="input-group">
                                         <input type="text" required class="form-control inputDate" name="delivery_date" value="{{ $delivery->delivery_date ? $delivery->delivery_date->format('d/m/Y') : '' }}"/>
                                         {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                  <label class="col-form-label">Cobrar Entrega</label>
+                                    <div class="input-group">
+                                        <input type="checkbox" class="js-switch" name="charge_delivery" {{ $delivery->charge_delivery ? 'checked' : '' }}/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                  <label class="col-form-label">Retirado pelo Cliente</label>
+                                    <div class="input-group">
+                                        <input type="checkbox" class="js-switch" name="withdrawal_by_client" {{ $delivery->withdrawal_by_client ? 'checked' : '' }}/>
                                     </div>
                                 </div>
 

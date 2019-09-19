@@ -71,6 +71,7 @@ return array(
     'App\\Http\\Controllers\\TaskMessagesController' => $baseDir . '/app/Http/Controllers/TaskMessagesController.php',
     'App\\Http\\Controllers\\TeamsController' => $baseDir . '/app/Http/Controllers/TeamsController.php',
     'App\\Http\\Controllers\\TicketMessagesController' => $baseDir . '/app/Http/Controllers/TicketMessagesController.php',
+    'App\\Http\\Controllers\\TicketTypeCategoryController' => $baseDir . '/app/Http/Controllers/TicketTypeCategoryController.php',
     'App\\Http\\Controllers\\TicketTypeDepartmentsController' => $baseDir . '/app/Http/Controllers/TicketTypeDepartmentsController.php',
     'App\\Http\\Controllers\\TicketTypesController' => $baseDir . '/app/Http/Controllers/TicketTypesController.php',
     'App\\Http\\Controllers\\TicketsController' => $baseDir . '/app/Http/Controllers/TicketsController.php',

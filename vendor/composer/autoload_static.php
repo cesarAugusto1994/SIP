@@ -750,6 +750,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Controllers\\TaskMessagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TaskMessagesController.php',
         'App\\Http\\Controllers\\TeamsController' => __DIR__ . '/../..' . '/app/Http/Controllers/TeamsController.php',
         'App\\Http\\Controllers\\TicketMessagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketMessagesController.php',
+        'App\\Http\\Controllers\\TicketTypeCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketTypeCategoryController.php',
         'App\\Http\\Controllers\\TicketTypeDepartmentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketTypeDepartmentsController.php',
         'App\\Http\\Controllers\\TicketTypesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketTypesController.php',
         'App\\Http\\Controllers\\TicketsController' => __DIR__ . '/../..' . '/app/Http/Controllers/TicketsController.php',

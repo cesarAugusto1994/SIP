@@ -52,7 +52,7 @@
 
               @endif
 
-              @if($order->status_id == 1 || $order->status_id == 2)
+              @if($order->status_id == 1 || $order->status_id == 2 || $order->status_id == 10)
                 @permission('view.ordem.entrega')
                   <a href="{{ route('start_delivery_client', $order->uuid) }}" class="btn btn-warning btn-sm"> Retirada Pelo Cliente </a>
                 @endpermission
@@ -197,6 +197,39 @@
                                                           <th scope="row">Anotações</th>
                                                           <td>{{ $order->annotations ?? '-' }}</td>
                                                       </tr>
+
+                                                      @if(auth()->user()->isAdmin())
+
+                                                        <tr>
+                                                            <th scope="row">Cobrar Entrega</th>
+                                                            <td>
+                                                              @if($order->charge_delivery)
+                                                                  <label class="label label-success">Sim</label>
+                                                              @else
+                                                                  <label class="label label-danger">Não</label>
+                                                              @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">Reirada pelo Cliente</th>
+                                                            <td>
+                                                              @if($order->withdrawal_by_client)
+                                                                  <label class="label label-success">Sim</label>
+                                                              @else
+                                                                  <label class="label label-danger">Não</label>
+                                                              @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row">R$ Valor</th>
+                                                            <td>
+                                                              <label class="label label-primary">{{ $order->amount ? number_format($order->amount, 2) : 'Valor não cobrado' }}</label>
+                                                            </td>
+                                                        </tr>
+
+                                                      @endif
 
                                                   </tbody>
                                               </table>

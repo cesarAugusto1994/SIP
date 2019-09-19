@@ -104,7 +104,7 @@
 
                       <tbody>
 
-                        @foreach($delivery->documents as $document)
+                        @foreach($delivery->documents->sortBy('document.employee.name') as $document)
                         @php
                             $document = $document->document;
                         @endphp
@@ -188,7 +188,7 @@
 
                       <tbody>
 
-                        @foreach($delivery->documents as $document)
+                        @foreach($delivery->documents->sortBy('document.employee.name') as $document)
                         @php
                             $document = $document->document;
                         @endphp

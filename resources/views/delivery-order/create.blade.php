@@ -182,6 +182,28 @@
 
                             </div>
 
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                  <label class="col-form-label">Cobrar Entrega</label>
+                                    <div class="input-group">
+                                        <input type="checkbox" class="js-switch" name="charge_delivery" checked/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                  <label class="col-form-label">Retirado pelo Cliente</label>
+                                    <div class="input-group">
+                                        <input type="checkbox" class="js-switch" name="withdrawal_by_client"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <div class="col-md-12">
 
                                 <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">

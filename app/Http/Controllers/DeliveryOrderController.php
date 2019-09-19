@@ -145,7 +145,7 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
-        $deliveries = DeliveryOrder::where('status_id', 5)->get();
+        $deliveries = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_FINALIZADA)->get();
 
         $first = new DateTime('first day of this month');
         $last = new DateTime('last day of this month');
@@ -179,7 +179,7 @@ class DeliveryOrderController extends Controller
 
             $amount = 0.00;
 
-            if($delivery->client->charge_delivery) {
+            if($delivery->client->charge_delivery && $delivery->amount) {
                 $amount = 5.00;
             }
 
@@ -301,6 +301,7 @@ class DeliveryOrderController extends Controller
             $user = $request->user();
 
             $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
+            $delivery->withdrawal_by_client = false;
             $delivery->save();
 
             $orderCode = str_pad($delivery->id, 6, "0", STR_PAD_LEFT);
@@ -345,6 +346,7 @@ class DeliveryOrderController extends Controller
 
             $delivery->status_id = Constants::STATUS_DELIVERY_RETIRADA_PELO_CLIENTE;
             $delivery->delivered_by = $user->id;
+            $delivery->withdrawal_by_client = true;
             $delivery->save();
 
             Log::create([
@@ -680,6 +682,9 @@ class DeliveryOrderController extends Controller
             return back();
         }
 
+        $chargeDelivery = $request->has('charge_delivery');
+        $withdrawal = $request->has('withdrawal_by_client');
+
         $deliverUuid = $data['delivered_by'];
 
         $client = Client::uuid($data['client_id']);
@@ -753,7 +758,9 @@ class DeliveryOrderController extends Controller
               'address_id' => $data['address_id'],
               'annotations' => $data['annotations'],
               'delivery_date' => $deliveryDate,
-              'email_notification' => $data['email_notification']
+              'email_notification' => $data['email_notification'],
+              'withdrawal_by_client' => $withdrawal,
+              'charge_delivery' => $chargeDelivery
             ]);
 
             foreach ($documentsGroupedByClient as $key => $document) {
@@ -771,8 +778,10 @@ class DeliveryOrderController extends Controller
                 $document->save();
             }
 
-            if($client->charge_delivery) {
-                $deliveryOrder->update(['amount' => 5.00]);
+            if($chargeDelivery) {
+              if($client->charge_delivery) {
+                  $deliveryOrder->update(['amount' => 5.00]);
+              }
             }
 
             Log::create([
@@ -894,6 +903,9 @@ class DeliveryOrderController extends Controller
 
         $deliverUuid = $data['delivered_by'];
 
+        $chargeDelivery = $request->has('charge_delivery');
+        $withdrawal = $request->has('withdrawal_by_client');
+
         $deliver = People::uuid($deliverUuid);
         $data['delivered_by'] = $deliver->id;
 
@@ -956,7 +968,9 @@ class DeliveryOrderController extends Controller
           'delivered_by' => $data['delivered_by'],
           'address_id' => $address->id,
           'delivery_date' => $deliveryDate,
-          'annotations' => $data['annotations']
+          'annotations' => $data['annotations'],
+          'withdrawal_by_client' => $withdrawal,
+          'charge_delivery' => $chargeDelivery
         ]);
 
         Log::create([

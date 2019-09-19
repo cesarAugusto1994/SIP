@@ -100,7 +100,7 @@
                                   <td>{{ $delivery->created_at->format('d/m/Y') }}</td>
                                   <td>{{ $delivery->documents->count() }}</td>
                                   <td>
-                                    @if($delivery->client->charge_delivery)
+                                    @if($delivery->client->charge_delivery && $delivery->amount)
                                       <label class="label label-md label-success">5,00</label>
                                     @else
                                       <label class="label label-md label-primary">Valor não cobrado</label>
