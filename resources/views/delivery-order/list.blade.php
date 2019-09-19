@@ -75,28 +75,32 @@
                         <tbody>
                           @foreach($orders->sortByDesc('id') as $delivery)
 
-                          @php
+                            @if($delivery->documents->count() > 5)
+                                continue;
+                            @endif
 
-                            $status = $delivery->status->id;
+                            @php
 
-                            $bgColor = 'success';
+                              $status = $delivery->status->id;
 
-                            switch($status) {
-                              case '1':
-                                $bgColor = 'primary';
-                                break;
-                              case '2':
-                                $bgColor = 'warning';
-                                break;
-                              case '3':
-                                $bgColor = 'success';
-                                break;
-                              case '4':
-                                $bgColor = 'danger';
-                                break;
-                            }
+                              $bgColor = 'success';
 
-                            @endphp
+                              switch($status) {
+                                case '1':
+                                  $bgColor = 'primary';
+                                  break;
+                                case '2':
+                                  $bgColor = 'warning';
+                                  break;
+                                case '3':
+                                  $bgColor = 'success';
+                                  break;
+                                case '4':
+                                  $bgColor = 'danger';
+                                  break;
+                              }
+
+                              @endphp
 
                             <tr>
                                 <td><input class="js-switch select-item" type="checkbox" name="deliveries[]" value="{{ $delivery->uuid }}"/></td>
