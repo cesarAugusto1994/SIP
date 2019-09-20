@@ -43,6 +43,10 @@
                       <a class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('documents_create_for_client')}}"><i class="icofont icofont-paper-plane"></i> Novos Documentos Por Cliente</a>
                     @endpermission
 
+                    @permission('create.documentos')
+                      <a class="btn btn-sm btn-warning waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('delivery_order_create_many')}}"><i class="icofont icofont-paper-plane"></i> Gerar Remessas de Entrega</a>
+                    @endpermission
+
                 </div>
             </div>
         </div>

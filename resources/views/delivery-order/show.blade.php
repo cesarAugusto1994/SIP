@@ -108,6 +108,14 @@
 
       </div>
 
+      @if($order->shipment)
+        <div class="col-lg-12">
+          <div class="alert alert-primary background-primary">
+              <strong>Atenção!</strong> Esta é uma Remessa de Entrega.
+          </div>
+        </div>
+      @endif
+
       <div class="col-lg-6">
           <div class="card">
               <div class="card-header">
@@ -317,7 +325,11 @@
                             <tr>
                               <th>ID</th>
                               <th>Tipo</th>
-                              <th>Funcionário</th>
+                              @if($order->shipment)
+                                <th>Empresa</th>
+                              @else
+                                <th>Funcionário</th>
+                              @endif
                               <th>Referência</th>
                               <th>Status</th>
                             </tr>
@@ -335,9 +347,26 @@
                                 <a>{{ $document->type->name ?? '-' }}</a>
                             </td>
 
-                            <td>
-                                {{ $document->employee->name ?? '' }}
-                            </td>
+                            @if($order->shipment)
+                              <td>
+                                  {{ $document->client->name ?? '' }}
+
+                                  @if($document->deliveryDocument)
+                                    <br/><br/>
+                                    <a href="{{ route('delivery-order.show', $document->deliveryDocument->deliveryOrder->uuid) }}" class="label label-inverse-success">Ordem de Entrega #{{ str_pad($document->deliveryDocument->deliveryOrder->id, 6, "0", STR_PAD_LEFT) }}</a>
+                                  @endif
+
+                                  @if($document->employee)
+                                    <br/>
+                                    <small>Funcionário: {{ $document->employee->name ?? '' }}</small>
+                                  @endif
+
+                              </td>
+                            @else
+                              <td>
+                                  {{ $document->employee->name ?? '' }}
+                              </td>
+                            @endif
 
                             <td>
                                 {{ $document->reference }}

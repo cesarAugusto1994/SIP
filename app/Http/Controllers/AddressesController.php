@@ -20,6 +20,43 @@ class AddressesController extends Controller
         //
     }
 
+    public function search(Request $request)
+    {
+        if(!$request->has('search')) {
+          return response()->json('Nenhum paramentro de busca foi informado.');
+        }
+
+        $client = null;
+
+        $search = $request->get('search');
+
+        $addresses = Address::where('id', $search)
+        ->orWhere('description', 'like', "%$search%")
+        ->orWhere('zip', 'like', "%$search%")
+        ->orWhere('street', 'like', "%$search%");
+
+        if($request->filled('client')) {
+            $client = Client::uuid($request->get('client'));
+            $addresses->where('client_id', $client->id);
+        }
+
+        $addresses = $addresses->get();
+
+        $result = [];
+
+        $result = $addresses->map(function($address) {
+
+            $formated = $address->description . ' - ' . $address->street . ', ' . $address->number . ', ' . $address->district . ' - ' . $address->city . ' / ' . $address->state . ' - ' . $address->zip;
+
+            return [
+              'id' => $address->uuid,
+              'address' => $formated,
+            ];
+        });
+
+        return json_encode($result);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

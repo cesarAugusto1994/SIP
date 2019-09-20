@@ -160,6 +160,9 @@ Route::middleware('auth')->group(function () {
           Route::get('delivery-order/print/batch/list', 'DeliveryOrderController@printBatchList')->name('print_batch_list');
           Route::post('delivery-order/print/batch', 'DeliveryOrderController@printBatch')->name('print_batch');
 
+          Route::get('delivery-order/create/batch', 'DeliveryOrderController@createMany')->name('delivery_order_create_many');
+          Route::post('delivery-order/store/batch', 'DeliveryOrderController@storeMany')->name('delivery_order_store_many');
+
           Route::get('delivery-order/document/{id}/status', 'DeliveryOrderController@statsByDocument')->name('delivery_status_by_document');
 
           Route::get('delivery-order/{id}/get-receipt', 'DeliveryOrderController@getReceipt')->name('delivery_get_receipt');
@@ -218,6 +221,7 @@ Route::middleware('auth')->group(function () {
           Route::get('clients/occupations/search/json', 'ClientOccupationsController@search')->name('client_occupations_search');
 
           Route::get('employees/search/json', 'EmployeesController@search')->name('employee_search');
+          Route::get('addresses/search/json', 'AddressesController@search')->name('addresses_search');
 
           Route::get('clients/addresses/search', 'ClientController@addresses')->name('client_addresses_search');
           Route::get('clients/emails/search', 'ClientController@emails')->name('client_emails_search');

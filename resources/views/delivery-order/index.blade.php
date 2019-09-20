@@ -193,7 +193,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <select class="form-control" name="status">
+                            <select class="form-control select2" name="status">
                               <option value="">Situação</option>
                               @foreach(\App\Helpers\Helper::deliveryStatus() as $status)
                                 <option value="{{ $status->id }}">{{$status->name}}</option>
@@ -267,7 +267,12 @@
                             @endphp
 
                             <tr>
-                                <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a>
+                                  @if($delivery->shipment)
+                                    <br/>
+                                    <span class="label label-inverse-success"> Remessa </span>
+                                  @endif
+                                </td>
                                 <td>
                                   <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
                                 </td>

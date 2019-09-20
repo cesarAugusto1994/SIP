@@ -544,10 +544,12 @@ class DeliveryOrderController extends Controller
 
           $user = auth()->user();
 
-          $delivery->documents->map(function($document) {
-              $document->document->status_id = 5;
-              $document->document->save();
-          });
+          if(!$delivery->shipment) {
+            $delivery->documents->map(function($document) {
+                $document->document->status_id = 5;
+                $document->document->save();
+            });
+          }
 
           $delivery->status_id = 5;
           $delivery->finished_by = $user->id;
@@ -631,6 +633,48 @@ class DeliveryOrderController extends Controller
         return view('delivery-order.create', compact('client', 'documents', 'delivers', 'anotherPeople', 'addresses', 'emails'));
     }
 
+    public function createMany(Request $request)
+    {
+        $data = $request->request->all();
+
+        $occupation = Occupation::where('name', 'Entregador')->get();
+
+        if($occupation->isEmpty()) {
+          notify()->flash('Cargo de Entregador não existe.', 'warning', [
+            'text' => 'Para que a entrega possa ser realizada é necessário criar o cargo Entregador.'
+          ]);
+
+          return back();
+        }
+
+        $occupation = $occupation->first();
+
+        $people = People::where('active', true)->orderBy('name')->get();
+
+        $delivers = $people->filter(function ($person, $key) use ($occupation) {
+            return $person->occupation_id == $occupation->id;
+        });
+
+        $anotherPeople = $people->filter(function ($person, $key) use ($occupation) {
+            return $person->occupation_id != $occupation->id;
+        });
+
+        if($delivers->isEmpty()) {
+          notify()->flash('Nenhum usuário com o cargo de Entregador.', 'warning', [
+            'text' => 'Para que a entrega possa ser realizada é necessário ao menos um usuário com o cargo de Entregador.'
+          ]);
+
+          return back();
+        }
+
+        $client = Client::find(10459);
+        $addresses = $client->addresses;
+
+        $documents = Document::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)->get();
+
+        return view('delivery-order.create-many', compact('client', 'delivers', 'anotherPeople', 'addresses', 'documents'));
+    }
+
     public function conference(Request $request)
     {
         if(!$request->has('document')) {
@@ -698,8 +742,6 @@ class DeliveryOrderController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
-
-        #dd($data);
 
         $user = $request->user();
 
@@ -841,6 +883,172 @@ class DeliveryOrderController extends Controller
         ]);
 
         return redirect()->route('delivery-order.show', $deliveryOrder->uuid);
+    }
+
+    public function storeMany(Request $request)
+    {
+        $data = $request->request->all();
+
+        $user = $request->user();
+
+        if(!$request->filled('delivered_by')) {
+            notify()->flash('Erro de Envio', 'error', [
+              'text' => 'Nenhum entregador foi informado.',
+            ]);
+            return back();
+        }
+
+        if(!$request->filled('address_id') && !$request->has('checkbox_address')) {
+            notify()->flash('Erro de Envio', 'error', [
+              'text' => 'Nenhum endereço foi informado.',
+            ]);
+            return back();
+        }
+
+        if(!$request->has('documents')) {
+            notify()->flash('Erro de Envio', 'error', [
+              'text' => 'Nenhum documento foi informado.',
+            ]);
+            return back();
+        }
+
+        $chargeDelivery = $request->has('charge_delivery');
+        $withdrawal = $request->has('withdrawal_by_client');
+
+        $deliverUuid = $data['delivered_by'];
+
+        $company = Client::uuid($data['client_id']);
+
+        $deliver = People::uuid($deliverUuid);
+        $data['delivered_by'] = $deliver->id;
+
+        $address = Address::uuid($data['address_id']);
+        $data['address_id'] = $address->id;
+
+        $documents = Document::whereIn('uuid', $data['documents'])->get();
+
+        $documentsGroupedByClients = [];
+
+        $deliveryDate = $data['delivery_date'] ? \DateTime::createFromFormat('d/m/Y', $data['delivery_date']) : null;
+
+        foreach ($documents as $key => $document) {
+
+            $deliveryOrder = $document->deliveryDocument ?
+                             $document->deliveryDocument->deliveryOrder :
+                             null;
+
+            if($deliveryOrder && !$deliveryOrder->shipment) {
+
+              $string = 'O documento ' . $document->description . ' já está vinculado à Ordem de Entrega n. '. $hasDocument->first()->id ?? '';
+
+              notify()->flash('Falha ao adicionar documento!', 'error', [
+                'text' => $string,
+              ]);
+
+              return back();
+
+            }
+
+            $documentsGroupedByClients[$document->client->uuid][] = $document;
+        }
+
+        foreach ($documentsGroupedByClients as $keyClient => $documentsGroupedByClient) {
+            $client = Client::uuid($keyClient);
+            $currentDocument = current($documentsGroupedByClient);
+            $codeAddress = $data['address_id-'.$currentDocument->id];
+            if(!$codeAddress) {
+                notify()->flash('Erro de Envio', 'error', [
+                  'text' => 'Nenhum endereço foi informado para o cliente ' . $client->name,
+                ]);
+                return back();
+            }
+        }
+
+        foreach ($documentsGroupedByClients as $keyClient => $documentsGroupedByClient) {
+            $client = Client::uuid($keyClient);
+            $currentDocument = current($documentsGroupedByClient);
+            $codeAddress = $data['address_id-'.$currentDocument->id];
+
+            $address = Address::uuid($codeAddress);
+
+            $withdrawal = $request->has('withdrawal_by_client-'.$currentDocument->id);
+            $chargeDelivery = $request->has('charge_delivery-'.$currentDocument->id);
+
+            $deliveryOrder = DeliveryOrder::create([
+              'client_id' => $client->id,
+              'status_id' => 1,
+              'delivered_by' => $data['delivered_by'],
+              'address_id' => $address->id,
+              'delivery_date' => $deliveryDate,
+              'withdrawal_by_client' => $withdrawal,
+              'charge_delivery' => $chargeDelivery,
+              'user_id' => $user->id
+            ]);
+
+            foreach ($documentsGroupedByClient as $key => $document) {
+
+                DeliveryOrderDocuments::create([
+                  'document_id' => $document->id,
+                  'delivery_order_id' => $deliveryOrder->id,
+                  'delivery_date' => $deliveryDate,
+                  'annotations' => $data['annotations'],
+                  'user_id' => $user->id,
+                ]);
+
+                $document->status_id = 2;
+                $document->save();
+
+            }
+
+            if($chargeDelivery) {
+              if($client->charge_delivery) {
+                  $deliveryOrder->update(['amount' => 5.00]);
+              }
+            }
+
+            Log::create([
+              'delivery_order_id' => $deliveryOrder->id,
+              'status_id' => 1,
+              'user_id' => $user->id,
+              'message' => 'Ordem de Entrega Criada por ' . $user->person->name
+            ]);
+
+        }
+
+        $deliveryOrderShipment = DeliveryOrder::create([
+          'client_id' => $company->id,
+          'status_id' => 1,
+          'delivered_by' => $data['delivered_by'],
+          'address_id' => $data['address_id'],
+          'delivery_date' => $deliveryDate,
+          'charge_delivery' => false,
+          'user_id' => $user->id,
+          'shipment' => true
+        ]);
+
+        Log::create([
+          'delivery_order_id' => $deliveryOrderShipment->id,
+          'status_id' => 1,
+          'user_id' => $user->id,
+          'message' => 'Remessa de Entrega Criada por ' . $user->person->name
+        ]);
+
+        foreach ($documentsGroupedByClients as $keyClient => $documentsGroupedByClient) {
+            foreach ($documentsGroupedByClient as $key => $document) {
+                DeliveryOrderDocuments::create([
+                  'document_id' => $document->id,
+                  'delivery_order_id' => $deliveryOrderShipment->id,
+                  'delivery_date' => $deliveryDate,
+                  'user_id' => $user->id,
+                ]);
+            }
+        }
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Nova Remessa de Entrega Gerada com sucesso.'
+        ]);
+
+        return redirect()->route('delivery-order.show', $deliveryOrderShipment->uuid);
     }
 
     /**
