@@ -152,7 +152,7 @@
                                   </thead>
                                   <tbody id="table-documents">
 
-                                      @foreach($documents as $document)
+                                      @foreach($documents->sortByDesc('id') as $document)
                                         <tr>
                                             <td><input class="js-switch select-item" type="checkbox" name="documents[]" value="{{ $document->uuid }}"/></td>
                                             <td>{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</td>
