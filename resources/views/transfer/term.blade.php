@@ -123,7 +123,7 @@
   </div>
 
   <script>
-    //window.print();
+    window.print();
   </script>
 
 </body>
