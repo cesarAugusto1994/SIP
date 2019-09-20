@@ -66,7 +66,7 @@
                                   <div class="input-group">
                                     <select class="form-control select2" id="select-address" name="address_id">
                                         <option value="">Selecione um Endereço</option>
-                                        @foreach($addresses as $address)
+                                        @foreach($client->addresses as $address)
                                             <option value="{{$address->uuid}}" {{ $loop->first ? 'selected' : '' }}>{{$address->description}} - {{$address->street}}, {{$address->number}} - {{$address->district}}, {{$address->city}} - {{$address->zip}}</option>
                                         @endforeach
                                     </select>

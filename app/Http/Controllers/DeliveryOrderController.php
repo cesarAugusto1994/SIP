@@ -667,12 +667,16 @@ class DeliveryOrderController extends Controller
           return back();
         }
 
-        $client = Client::find(10459);
-        $addresses = $client->addresses;
+        $codeCompany = 533;
 
+        if(config('app.env') == 'local') {
+            $codeCompany = 1;
+        }
+
+        $client = Client::find($codeCompany);
         $documents = Document::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)->get();
 
-        return view('delivery-order.create-many', compact('client', 'delivers', 'anotherPeople', 'addresses', 'documents'));
+        return view('delivery-order.create-many', compact('client', 'delivers', 'anotherPeople', 'documents'));
     }
 
     public function conference(Request $request)
