@@ -287,8 +287,13 @@ class DeliveryOrderController extends Controller
     public function printBatchList(Request $request)
     {
         $orders = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)
-        ->where('printed', false)
-        ->get();
+        ->where('printed', false);
+
+        if($request->has('only_user')) {
+            $orders->where('user_id', $request->user()->id);
+        }
+
+        $orders = $orders->get();
 
         return view('delivery-order.list', compact('orders'));
     }
@@ -694,6 +699,8 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
+        #dd($data);
+
         $user = $request->user();
 
         if(!$request->filled('delivered_by')) {
@@ -795,7 +802,8 @@ class DeliveryOrderController extends Controller
               'delivery_date' => $deliveryDate,
               'email_notification' => $data['email_notification'],
               'withdrawal_by_client' => $withdrawal,
-              'charge_delivery' => $chargeDelivery
+              'charge_delivery' => $chargeDelivery,
+              'user_id' => $user->id
             ]);
 
             foreach ($documentsGroupedByClient as $key => $document) {

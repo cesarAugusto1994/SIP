@@ -155,6 +155,10 @@
                     <a class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('print_batch_list')}}"><i class="icofont icofont-print"></i> Imprimir em Massa</a>
                   @endpermission
 
+                  @permission('create.ordem.entrega')
+                    <a class="btn btn-sm btn-warning waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('print_batch_list', ['only_user' => true])}}"><i class="icofont icofont-print"></i> Imprimir Ordens Geradas por mim</a>
+                  @endpermission
+
               </div>
           </div>
       </div>

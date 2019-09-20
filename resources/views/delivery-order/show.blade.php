@@ -40,18 +40,6 @@
                 <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-info btn-sm"> Imprimir Etiqueta </a>
               @endpermission
 
-              @if($order->status_id == 1 || $order->status_id == 2)
-
-                  @permission('delete.ordem.entrega')
-                    <a data-route="{{route('delivery_cancel', $order->uuid)}}" class="btn btn-danger text-white btn-sm pull-right btnCancel"> Cancelar </a>
-                  @endpermission
-
-                  @permission('edit.ordem.entrega')
-                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-primary btn-sm pull-right"> Editar </a>
-                  @endpermission
-
-              @endif
-
               @if($order->status_id == 1 || $order->status_id == 2 || $order->status_id == 10)
                 @permission('view.ordem.entrega')
                   <a href="{{ route('start_delivery_client', $order->uuid) }}" class="btn btn-warning btn-sm"> Retirada Pelo Cliente </a>
@@ -78,8 +66,21 @@
 
               @if($order->status_id == 3)
                   @permission('edit.ordem.entrega')
-                    <a data-route="{{route('delivery_confirm', $order->uuid)}}" class="btn btn-primary text-white btn-sm pull-right btnConfirm"> Finalizar </a>
+                    <a data-route="{{route('delivery_confirm', $order->uuid)}}" class="btn btn-primary text-white btn-sm btnConfirm"> Finalizar </a>
                   @endpermission
+              @endif
+
+
+              @if($order->status_id == 1 || $order->status_id == 2)
+
+                  @permission('edit.ordem.entrega')
+                    <a href="{{route('delivery-order.edit', ['id' => $order->uuid])}}" class="btn btn-info btn-sm"> Editar </a>
+                  @endpermission
+
+                  @permission('delete.ordem.entrega')
+                    <a data-route="{{route('delivery_cancel', $order->uuid)}}" class="btn btn-danger text-white btn-sm btnCancel"> Cancelar </a>
+                  @endpermission
+
               @endif
 
             </div>
