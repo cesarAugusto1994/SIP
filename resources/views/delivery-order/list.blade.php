@@ -27,7 +27,7 @@
 
 <div class="page-body">
 
-  <form action="{{ route('print_batch') }}" method="post">
+  <form class="formValidation" data-parsley-validate action="{{ route('print_batch') }}" method="post">
     @csrf
 
   <div class="row">
@@ -38,9 +38,7 @@
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-                  @permission('create.ordem.entrega')
-                    <button type="submit" class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5" target="_blank"><i class="icofont icofont-print"></i> Gerar</button>
-                  @endpermission
+                  <button type="submit" class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5" target="_blank"><i class="icofont icofont-print"></i> Gerar</button>
 
               </div>
           </div>

@@ -44,7 +44,7 @@ class DeliveryOrderController extends Controller
                     ->where('delivery_date', '<', now()->setTime(00,00,00))->count();
 
         if(!$request->has('find')) {
-            $orders->whereIn('status_id', [1,2]);
+            $orders->whereIn('status_id', [1]);
         }
 
         if($request->has('delay')) {
@@ -274,6 +274,8 @@ class DeliveryOrderController extends Controller
     public function printTags($id, Request $request)
     {
         $delivery = DeliveryOrder::uuid($id);
+        $delivery->printed = true;
+        $delivery->save();
 
         $user = $request->user();
 
@@ -284,7 +286,9 @@ class DeliveryOrderController extends Controller
 
     public function printBatchList(Request $request)
     {
-        $orders = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)->get();
+        $orders = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_PENDENTE)
+        ->where('printed', false)
+        ->get();
 
         return view('delivery-order.list', compact('orders'));
     }
@@ -302,6 +306,11 @@ class DeliveryOrderController extends Controller
         }
 
         $deliveries = DeliveryOrder::whereIn('uuid', $data['deliveries'])->orderByDesc('id')->get();
+
+        $deliveries->map(function($delivery) {
+            $delivery->printed = true;
+            $delivery->save();
+        });
 
         $user = $request->user();
 
