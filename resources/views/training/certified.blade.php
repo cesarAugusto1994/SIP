@@ -895,6 +895,23 @@
             left: 579.889989px;
         }
 
+        .item-left {
+            text-align:center;
+            margin:0;
+            padding-left:180px;
+            float:left;
+            text-transform: uppercase;
+            font-size:12px;
+        }
+        .item-right {
+            text-align:center;
+            margin:0;
+            padding-right:50px!important;
+            float:right;
+            text-transform: uppercase;
+            font-size:12px;
+        }
+
         @media print {
             .v0 {
                 vertical-align: 0.000000pt;
@@ -1232,6 +1249,22 @@
             .x4 {
                 left: 773.186652pt;
             }
+            .item-left {
+                text-align:center;
+                margin:0;
+                padding-left:320px;
+                float:left;
+                text-transform: uppercase;
+                font-size:18px;
+            }
+            .item-right {
+                text-align:center;
+                margin:0;
+                padding-right:120px;
+                float:right;
+                text-transform: uppercase;
+                font-size:18px;
+            }
         }
 
     </style>
@@ -1252,11 +1285,11 @@
                     <div class="list" style="font-size:12px;font-family: sans-serif;margin-top:100px;padding-left:130px; width:550px">
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                          Certificamos em conformidade com a NR 18 – SEGURANÇA CONSTRUÇÃO CIVIL
+                          Certificamos em conformidade com a {{ $team->course->title }}
                       </p>
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                           Portaria 3214 de 1978 que,
+                           Portaria {{ $team->course->ordinance }} de {{ $team->course->ordinance_year }} que,
                       </p style="text-align:center;">
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
@@ -1288,7 +1321,6 @@
                       </p>
 
                       <br>
-                      <br>
 
                       <h4 style="text-align:center;padding-left:0"><i>Vitória, {{ now()->format('d/m/Y') }}</i></h4>
 
@@ -1298,7 +1330,7 @@
 
                     <div>
 
-                      <p style="text-align:center;margin:0;padding-left:320px;float:left;text-transform: uppercase;">
+                      <p class="item-left">
                           <b>{{ $team->teacher->person->name }}</b><br/>
                           {{ $team->teacher->person->occupation->name }}<br/>
                           {{ $team->teacher->person->department->name }}<br/>
@@ -1308,7 +1340,7 @@
                     </div>
                     <div>
 
-                      <p style="text-align:center;margin:0;padding-right:120px;float:right;text-transform: uppercase;">
+                      <p class="item-right">
                            <b>{{ $employee->name }}</b><br/>
                            {{ $employee->cpf }}<br/>
                            Participante

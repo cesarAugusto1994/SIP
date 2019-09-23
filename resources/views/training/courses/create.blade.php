@@ -80,6 +80,30 @@
 
                         </div>
 
+                        <div class="col-md-6">
+
+                          <div class="form-group {!! $errors->has('ordinance') ? 'has-error' : '' !!}">
+                              <label class="col-form-label" for="ordinance">Portaria</label>
+                              <div class="input-group">
+                                  <input type="text" id="ordinance" name="ordinance" class="form-control">
+                              </div>
+                              {!! $errors->first('ordinance', '<p class="help-block">:message</p>') !!}
+                          </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                          <div class="form-group {!! $errors->has('ordinance_year') ? 'has-error' : '' !!}">
+                              <label class="col-form-label" for="ordinance_year">Portaria Ano</label>
+                              <div class="input-group">
+                                  <input type="number" id="ordinance_year" name="ordinance_year" class="form-control">
+                              </div>
+                              {!! $errors->first('ordinance_year', '<p class="help-block">:message</p>') !!}
+                          </div>
+
+                        </div>
+
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -101,6 +125,7 @@
                         {!! $errors->first('grade', '<p class="help-block">:message</p>') !!}
                     </div>
                   </div>
+
               </div>
 
               <button class="btn btn-success btn-sm">Salvar</button>

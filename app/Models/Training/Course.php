@@ -13,9 +13,9 @@ class Course extends Model
 
     protected $table = 'courses';
 
-    protected $fillable = ['title', 'description', 'workload', 'created_by', 'grade', 'active'];
+    protected $fillable = ['title', 'description', 'workload', 'ordinance', 'ordinance_year', 'created_by', 'grade', 'active'];
 
-    protected static $logAttributes = ['title', 'description', 'workload', 'created_by', 'grade', 'active'];
+    protected static $logAttributes = ['title', 'description', 'workload', 'ordinance', 'ordinance_year', 'created_by', 'grade', 'active'];
 
     public function teams()
     {
