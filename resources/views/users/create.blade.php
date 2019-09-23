@@ -215,6 +215,16 @@
                     </div>
 
                     <div class="col-md-4">
+                      <div class="form-group {!! $errors->has('registry') ? 'has-error' : '' !!}">
+                          <label class="col-form-label">Registro do Conselho Profissional</label>
+                          <div class="input-group">
+                            <input placeholder="Campo Opcional" type="text" autocomplete="off" value="{{ old('registry') }}" name="registry" class="form-control">
+                          </div>
+                          {!! $errors->first('registry', '<p class="help-block">:message</p>') !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
 
                       <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                           <label class="col-form-label">Ativo</label>

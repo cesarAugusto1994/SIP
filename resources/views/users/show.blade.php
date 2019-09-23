@@ -416,6 +416,17 @@
 
                                       </div>
 
+                                      <div class="col-md-6">
+
+                                          <div class="form-group">
+                                              <label class="col-form-label">Registro do Conselho Profissional</label>
+                                              <div class="input-group">
+                                                <input type="text" name="registry" value="{{$user->person->registry}}" class="form-control">
+                                              </div>
+                                          </div>
+
+                                      </div>
+
                                       <div class="col-md-12">
 
                                         <div class="form-group">

@@ -457,6 +457,10 @@ class UsersController extends Controller
           $person->department_id = $department->id;
         }
 
+        if($request->has('registry')) {
+          $person->registry = $data['registry'];
+        }
+
         if($request->has('occupation_id')) {
           $occupation = Occupation::uuid($data['occupation_id']);
           $person->occupation_id = $occupation->id;

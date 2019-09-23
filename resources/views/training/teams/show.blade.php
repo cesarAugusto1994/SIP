@@ -269,14 +269,13 @@
             </div>
 
         </div>
-        <div class="card-block">
+        <div class="card-block table-border-style">
 
           @if($team->employees->isNotEmpty())
             <div class="table-responsive">
-              <table class="table table-hover">
+              <table class="table table-lg table-styling">
                   <thead>
-                      <tr>
-
+                      <tr class="table-primary">
                         <th>Nome</th>
                         <th>Situação</th>
                         <th>Opções</th>
@@ -323,6 +322,9 @@
                                       <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
                                         class="dropdown-item text-success">Gerar Certificado</a>
                                     @endif
+
+                                    <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
+                                      class="dropdown-item text-success">Gerar Certificado</a>
 
                                    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
                                      <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"

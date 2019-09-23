@@ -49,7 +49,8 @@
                       <div class="form-group {!! $errors->has('course_id') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="course_id">Curso</label>
                           <div class="input-group">
-                            <select class="form-control" name="course_id" required>
+                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                            <select class="form-control select2" name="course_id" required>
                                 @foreach($courses->sortBy('name') as $course)
                                       <option value="{{$course->uuid}}">{{$course->title}}</option>
                                 @endforeach
@@ -65,7 +66,8 @@
                       <div class="form-group {!! $errors->has('teacher_id') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="teacher_id">Instrutor</label>
                           <div class="input-group">
-                            <select class="form-control" name="teacher_id" required>
+                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                            <select class="form-control select2" name="teacher_id" required>
                                 @foreach($teachers->sortBy('name') as $teacher)
                                       <option value="{{$teacher->user->uuid}}">{{$teacher->name}}</option>
                                 @endforeach
@@ -80,6 +82,7 @@
                       <div class="form-group">
                           <label class="col-form-label" for="teacher_id">Data Inicio</label>
                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                               <input type="text" class="input-md form-control inputDateTime" value="{{ now()->format('d/m/Y H:i') }}" name="start"/>
                           </div>
                       </div>
@@ -89,6 +92,7 @@
                       <div class="form-group">
                           <label class="col-form-label" for="teacher_id">Data Fim</label>
                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                               <input type="text" class="input-md form-control inputDateTime" value="{{ now()->addHours(2)->format('d/m/Y H:i') }}" name="end"/>
                           </div>
                       </div>
@@ -99,6 +103,7 @@
                       <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="vacancies">Vagas</label>
                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-users"></i></span>
                               <input type="number" id="vacancies" name="vacancies" class="form-control" value="20" required>
                           </div>
                           {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
@@ -111,9 +116,7 @@
                             <label>Adicionar Funcionários</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
-
-                                <select multiple class="form-control select-employees" name="employees[]" id="employees" required></select>
-
+                                <select multiple class="form-control select-employees" name="employees[]" id="employees"></select>
                             </div>
                         </div>
                     </div>

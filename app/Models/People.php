@@ -11,9 +11,9 @@ class People extends Model
     use Uuids;
     use LogsActivity;
 
-    protected $fillable = ['name', 'department_id', 'occupation_id', 'cpf', 'birthday', 'unit_id', 'branch', 'phone', 'phone_code', 'phone_password', 'phone_callcenter_code'];
+    protected $fillable = ['name', 'department_id', 'occupation_id', 'registry', 'cpf', 'birthday', 'unit_id', 'branch', 'phone', 'phone_code', 'phone_password', 'phone_callcenter_code'];
 
-    protected static $logAttributes = ['name', 'department_id', 'occupation_id', 'cpf', 'birthday', 'unit_id', 'branch', 'phone', 'phone_code', 'phone_password', 'phone_callcenter_code'];
+    protected static $logAttributes = ['name', 'department_id', 'occupation_id', 'registry', 'cpf', 'birthday', 'unit_id', 'branch', 'phone', 'phone_code', 'phone_password', 'phone_callcenter_code'];
 
     protected $dates = ['birthday'];
 
