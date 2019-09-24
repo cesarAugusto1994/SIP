@@ -26,101 +26,144 @@
 
 <div class="page-body">
 
-<div class="card">
-    <div class="card-header">
-        <h5>Listagem de Turmas</h5>
-        <div class="card-header-right">
-            <ul class="list-unstyled card-option">
-                <li><a class="btn btn-sm btn-success btn-round" href="{{route('teams.create')}}">Novo</a></li>
-            </ul>
+  <div class="row">
+
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.turmas')
+                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('teams.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Turma</a>
+                  @endpermission
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-3">
+
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+            </div>
+            <div class="card-block">
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="code" placeholder="Código da Turma">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" id="daterange" class="form-control" placeholder="Periodo">
+
+                            <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                            <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-controls select2" name="status">
+                              <option value="">Situação</option>
+                              <option value="RESERVADO">RESERVADO</option>
+                              <option value="EM ANDAMENTO">EM ANDAMENTO</option>
+                              <option value="FINALIZADA">FINALIZADA</option>
+                              <option value="CANCELADA">CANCELADA</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                          <select class="form-control select2" name="teacher_id">
+                              <option value="">Instrutor</option>
+                              @foreach($teachers->sortBy('name') as $teacher)
+                                  <option value="{{$teacher->user->id}}">{{$teacher->name}}</option>
+                              @endforeach
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="card-block">
 
-      <div class="table-responsive">
-          @if($teams->isNotEmpty())
-
-              <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Curso</th>
-                      <th>Situação</th>
-                      <th>Instrutor</th>
-                      <th>Vagas</th>
-                      <th>Data</th>
-                      <th>Opções</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      @foreach($teams as $team)
-                          <tr>
-
-                              <td>
-                                  <a href="{{route('teams.show', ['id' => $team->uuid])}}">#{{ str_pad($team->id, 6, "0", STR_PAD_LEFT) }}</a>
-                              </td>
-
-                              <td>
-                                  <a href="{{route('teams.show', ['id' => $team->uuid])}}">{{substr($team->course->title,0,45)}}</a>
-                              </td>
-
-                              <td>
-                                  <label class="label label-{{ \App\Helpers\Helper::statusTeams($team->status) }} label-lg">{{$team->status}}</label>
-                              </td>
-
-                              <td>
-                                  <a>{{$team->teacher->person->name ?? '-'}}</a>
-                              </td>
-
-                              <td>
-                                  <a>{{$team->employees->count()}} de {{$team->vacancies}}</a>
-                                  <label class="label label-danger label-lg">{{ round(($team->employees->count() / intval($team->vacancies)) * 100, 2) }}%</label>
-                              </td>
-
-                              <td>
-                                  <a>{{ $team->start->format('d/m H:i') }} à {{ $team->end->format('d/m H:i') }}</a>
-                              </td>
-
-                              <td class="dropdown">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-                                  @permission('edit.turmas')
-                                    <a href="{{route('teams.show', ['id' => $team->uuid])}}" class="dropdown-item"><i class="fa fa-list"></i> Cronograma</a>
-                                  @endpermission
-                                </div>
-                              </td>
-
-                          </tr>
-                      @endforeach
-                  </tbody>
-              </table>
-
-          @else
-            <div class="col-sm-12">
-
-              <div class="widget white-bg no-padding m-t-30">
-                  <div class="p-m text-center">
-                      <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
-                      <h6 class="font-bold no-margins">
-                          Nenhum registro encontrado.
-                      </h6>
-                  </div>
-              </div>
-
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <h5>Documentos Recentes</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
             </div>
-          @endif
-      </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>No.</th>
+                                <th>Nome</th>
+                                <th>Curso</th>
+                                <th>Situação</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($teams as $team)
+
+                            @php
+
+                              $teamCode = \App\Helpers\Helper::Initials($team->course->title) . $team->id . '-'.$team->start->format('d-m-y');
+
+                            @endphp
+
+                            <tr>
+                                <td><a href="{{ route('teams.show', $team->uuid) }}" class="card-title">#{{ str_pad($team->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                <td>
+                                  <p><a href="{{route('teams.show', ['id' => $team->uuid])}}">{{ $teamCode }}</a></p>
+                                </td>
+                                <td>{{ $team->course->title }}<br/>
+                                  <small>Instrutor: {{ $team->teacher->person->name }}</small>
+                                </td>
+                                <td>
+                                  <span class="label label-{{ \App\Helpers\Helper::statusTeams($team->status) }}"> {{$team->status}} </span>
+                                </td>
+
+                                <td>
+                                  {{ $team->start->format('d/m/Y') }}
+                                  <br/>
+                                  <label class="label label-inverse-primary">{{ $team->start->diffForHumans() }}</label>
+
+                                </td>
+
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     </div>
-</div>
+
+    {{ $teams->links() }}
+
+  </div>
+
 
 </div>
-
 
 @endsection
-
-@push('scripts')
-
-
-
-@endpush

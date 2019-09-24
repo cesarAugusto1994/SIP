@@ -20,10 +20,48 @@ class TeamsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $teams = Team::all();
-        return view('training.teams.index', compact('teams'));
+        $teams = Team::orderByDesc('start');
+
+        if(!$request->has('find')) {
+            $teams->whereIn('status', ['RESERVADO', 'EM ANDAMENTO']);
+        }
+
+        if($request->filled('code')) {
+            $teams->where('id', $request->get('code'));
+        } else {
+
+          if($request->filled('status')) {
+              $teams->where('status', $request->get('status'));
+          }
+
+          if($request->filled('teacher_id')) {
+              $teams->where('teacher_id', $request->get('teacher_id'));
+          }
+
+          if($request->filled('start')) {
+              $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+              $teams->where('start', '>=', $start->format('Y-m-d') . ' 00:00:00');
+          }
+
+          if($request->filled('end')) {
+              $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+              $teams->where('start', '<=', $end->format('Y-m-d') . ' 23:59:59');
+          }
+        }
+
+        $quantity = $teams->count();
+
+        $teams = $teams->paginate();
+
+        foreach ($request->all() as $key => $value) {
+            $teams->appends($key, $value);
+        }
+
+        $teachers = Helper::usersByOccupation(28);
+
+        return view('training.teams.index', compact('teams', 'quantity', 'teachers'));
     }
 
     public function schedule()
