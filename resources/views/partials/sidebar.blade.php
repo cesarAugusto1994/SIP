@@ -71,19 +71,22 @@
 
             @endpermission
 
-            <li>
+            <li class="">
+                <a href="#!" class="btnRedirectSoc">
+                    <span class="pcoded-micon"><i class="fa fa-key"></i></span>
+                    <span class="pcoded-mtext">Soc</span>
+                </a>
 
-              <a href="#!" style="cursor:pointer" class="btnRedirectSoc"><i class="fa fa-key"></i> <span class="nav-label">SOC</span></a>
-
-              <form method="post" action="https://www.soc.com.br/WebSoc/LoginAction.do" id="formularioLoginSoc" target="_blank" class="hidden" style="display:none">
-                <input required="" name="usu" id="usu" value="{{ \Auth::user()->login_soc }}" type="text" class="FormatForm hidden" placeholder="Usuário">
-                <input required="" name="senha" id="senha" value="{{ \Auth::user()->password_soc }}" type="password" class="FormatForm hidden" placeholder="Senha">
-                <div class="row">
-                  <div class="column column-8">
-                    <input required="" name="empsoc" id="empsoc" value="{{ \Auth::user()->id_soc }}" type="text" class="FormatForm hidden" placeholder="ID">
+                <form method="post" action="https://www.soc.com.br/WebSoc/LoginAction.do" id="formularioLoginSoc" target="_blank" class="hidden" style="display:none">
+                  <input required="" name="usu" id="usu" value="{{ \Auth::user()->login_soc }}" type="text" class="FormatForm hidden" placeholder="Usuário">
+                  <input required="" name="senha" id="senha" value="{{ \Auth::user()->password_soc }}" type="password" class="FormatForm hidden" placeholder="Senha">
+                  <div class="row">
+                    <div class="column column-8">
+                      <input required="" name="empsoc" id="empsoc" value="{{ \Auth::user()->id_soc }}" type="text" class="FormatForm hidden" placeholder="ID">
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+
             </li>
 
         </ul>
