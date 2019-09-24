@@ -95,7 +95,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
 
                       <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="vacancies">Vagas</label>
@@ -105,6 +105,21 @@
                           {!! $errors->first('vacancies', '<p class="help-block">:message</p>') !!}
                       </div>
 
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group {!! $errors->has('status') ? 'has-error' : '' !!}">
+                          <label class="col-form-label" for="status">Situação</label>
+                          <div class="input-group">
+                            <select class="form-control" name="status" required>
+                                <option value="RESERVADO" {{ 'RESERVADO' == $team->status ? 'selected' : '' }}>RESERVADO</option>
+                                <option value="EM ANDAMENTO" {{ 'EM ANDAMENTO' == $team->status ? 'selected' : '' }}>EM ANDAMENTO</option>
+                                <option value="FINALIZADA" {{ 'FINALIZADA' == $team->status ? 'selected' : '' }}>FINALIZADA</option>
+                                <option value="CANCELADA" {{ 'CANCELADA' == $team->status ? 'selected' : '' }}>CANCELADA</option>
+                            </select>
+                          </div>
+                          {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+                      </div>
                     </div>
 
                     <div class="col-md-12">

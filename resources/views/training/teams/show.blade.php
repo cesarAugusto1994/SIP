@@ -60,15 +60,13 @@
     @if($team->status == 'FINALIZADA')
       <div class="card bg-c-green update-card">
           <div class="card-header">
-              <h4>Curso Finalizado</h4>
+              <h4>Treinamento Finalizado</h4>
           </div>
       </div>
     @elseif($team->status == 'CANCELADA')
-      <div class="col-sm-12">
-          <div class="card bg-c-pink update-card">
-              <div class="card-header">
-                  <h4>Curso Cancelado</h4>
-              </div>
+      <div class="card bg-c-pink update-card">
+          <div class="card-header">
+              <h4>Treinamento Cancelado</h4>
           </div>
       </div>
     @endif
