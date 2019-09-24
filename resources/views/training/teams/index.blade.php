@@ -106,7 +106,7 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-header">
-                <h5>Documentos Recentes</h5>
+                <h5>Turmas Recentes</h5>
                 <span>Registros retornados: {{ $quantity }}</span>
             </div>
             <div class="card-block table-border-style">
