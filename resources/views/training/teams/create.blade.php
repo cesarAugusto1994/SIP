@@ -51,7 +51,7 @@
                           <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users"></i></span>
                             <select class="form-control select2" name="course_id" required>
-                                @foreach($courses->sortBy('name') as $course)
+                                @foreach($courses->sortBy('title') as $course)
                                       <option value="{{$course->uuid}}">{{$course->title}}</option>
                                 @endforeach
                             </select>

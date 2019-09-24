@@ -56,7 +56,12 @@
                       <tr>
 
                           <td>
-                              <a>{{substr(($course->title), 0, 50)}}</a>
+                              <a>{{substr(($course->title), 0, 50)}}<br>
+                                @if($course->ordinance)
+                                  <small>Portaria de {{ $course->ordinance }} - {{ $course->ordinance }}</small>
+                                @elseif($course->nbr)
+                                  <small>NBR {{ $course->nbr }} e NT {{ $course->nt }}</small>
+                                @endif</a>
                           </td>
 
                           <td>
@@ -73,9 +78,6 @@
                             <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
                               @permission('edit.cursos')
                                 <a class="dropdown-item" href="{{route('courses.edit', ['id' => $course->uuid])}}"><i class="icofont icofont-edit"></i>Editar</a>
-                              @endpermission
-                              @permission('delete.cursos')
-                                <a class="dropdown-item btnRemoveItem" style="cursor:pointer" data-route="{{route('courses.destroy', ['id' => $course->uuid])}}"><i class="icofont icofont-ui-delete"></i>Remover</a>
                               @endpermission
                             </div>
 

@@ -1285,12 +1285,14 @@
                     <div class="list" style="font-size:12px;font-family: sans-serif;margin-top:100px;padding-left:130px; width:550px">
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                          Certificamos em conformidade com a {{ $team->course->title }}
+                          Certificamos em conformidade com a @if($team->course->nbr) NBR {{ $team->course->nbr }} e NT {{ $team->course->nt }} - @endif {{ $team->course->title }}  @if($team->course->nbr) que, @endif
                       </p>
 
-                      <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                           Portaria {{ $team->course->ordinance }} de {{ $team->course->ordinance_year }} que,
-                      </p style="text-align:center;">
+                      @if($team->course->ordinance)
+                        <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
+                             Portaria {{ $team->course->ordinance }} de {{ $team->course->ordinance_year }} que,
+                        </p style="text-align:center;">
+                      @endif
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
                            <b>{{ $employee->name }}</b>, portador da CPF: {{ $employee->cpf }},
@@ -1316,8 +1318,8 @@
 
                       <h4 style="text-align:center;"><i>Conteúdo Programático:</i></h4>
 
-                      <p style="text-align:center;margin:0;padding:0">
-                           {!! $team->course->grade !!}
+                      <p style="text-align:center;margin:0;padding:0;text-align:justify">
+                           <i>{{ html_entity_decode(strip_tags(substr($team->course->grade, 0, 800))) }}</i>
                       </p>
 
                       <br>

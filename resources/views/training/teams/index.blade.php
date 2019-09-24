@@ -43,6 +43,7 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th>Curso</th>
                       <th>Situação</th>
                       <th>Instrutor</th>
@@ -54,6 +55,10 @@
                   <tbody>
                       @foreach($teams as $team)
                           <tr>
+
+                              <td>
+                                  <a href="{{route('teams.show', ['id' => $team->uuid])}}">#{{ str_pad($team->id, 6, "0", STR_PAD_LEFT) }}</a>
+                              </td>
 
                               <td>
                                   <a href="{{route('teams.show', ['id' => $team->uuid])}}">{{substr($team->course->title,0,45)}}</a>
@@ -79,11 +84,8 @@
                               <td class="dropdown">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-                                  @permission('edit.cursos')
+                                  @permission('edit.turmas')
                                     <a href="{{route('teams.show', ['id' => $team->uuid])}}" class="dropdown-item"><i class="fa fa-list"></i> Cronograma</a>
-                                  @endpermission
-                                  @permission('delete.cursos')
-                                    <a style="cursor:pointer" data-route="{{route('courses.destroy', ['id' => $team->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-close"></i> Remover</a>
                                   @endpermission
                                 </div>
                               </td>

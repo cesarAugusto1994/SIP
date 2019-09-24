@@ -79,7 +79,7 @@
 
                           </div>
 
-                          <div class="col-md-6">
+                          <div class="col-md-3">
 
                             <div class="form-group {!! $errors->has('ordinance') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="ordinance">Portaria</label>
@@ -91,7 +91,7 @@
 
                           </div>
 
-                          <div class="col-md-6">
+                          <div class="col-md-3">
 
                             <div class="form-group {!! $errors->has('ordinance_year') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="ordinance_year">Portaria Ano</label>
@@ -99,6 +99,30 @@
                                     <input type="number" id="ordinance_year" name="ordinance_year" value="{{ $course->ordinance_year }}" class="form-control">
                                 </div>
                                 {!! $errors->first('ordinance_year', '<p class="help-block">:message</p>') !!}
+                            </div>
+
+                          </div>
+
+                          <div class="col-md-3">
+
+                            <div class="form-group {!! $errors->has('nbr') ? 'has-error' : '' !!}">
+                                <label class="col-form-label" for="nbr">NBR</label>
+                                <div class="input-group">
+                                    <input type="text" id="nbr" name="nbr" value="{{ $course->nbr }}" class="form-control">
+                                </div>
+                                {!! $errors->first('nbr', '<p class="help-block">:message</p>') !!}
+                            </div>
+
+                          </div>
+
+                          <div class="col-md-3">
+
+                            <div class="form-group {!! $errors->has('nt') ? 'has-error' : '' !!}">
+                                <label class="col-form-label" for="nt">NT</label>
+                                <div class="input-group">
+                                    <input type="number" id="nt" name="nt" value="{{ $course->nt }}" class="form-control">
+                                </div>
+                                {!! $errors->first('nt', '<p class="help-block">:message</p>') !!}
                             </div>
 
                           </div>

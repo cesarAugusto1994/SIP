@@ -102,7 +102,14 @@ class TeamsController extends Controller
 
           }
 
-          $team->Status = 'FINALIZADA';
+          $team->employees->map(function($employee) {
+              if($employee->status == 'PRESENTE') {
+                  $employee->approved = true;
+                  $employee->save();
+              }
+          });
+
+          $team->status = 'FINALIZADA';
           $team->save();
 
           return response()->json([

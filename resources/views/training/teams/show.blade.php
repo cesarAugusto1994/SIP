@@ -229,17 +229,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($team->employees as $employeeItem)
+                                        @foreach($team->employees->sortBy('employee.name') as $employeeItem)
 
                                             @php
                                                 $employee = $employeeItem->employee;
+
+                                                $checked = null;
+
+                                                if($employeeItem->status == 'PRESENTE') {
+                                                    $checked = 'checked';
+                                                }
                                             @endphp
 
                                             <input name="employees[]" value="{{ $employeeItem->uuid }}" type="hidden"/>
 
                                             <tr>
 
-                                                <td><input class="js-switch" type="checkbox" name="employee-{{ $employeeItem->uuid }}" value="1"/></td>
+                                                <td><input class="js-switch" type="checkbox" {{ $checked }} name="employee-{{ $employeeItem->uuid }}" value="1"/></td>
                                                 <td>
                                                     <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                                     <br/>
@@ -280,7 +286,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                      @foreach($team->employees as $employeeItem)
+                      @foreach($team->employees->sortBy('employee.name') as $employeeItem)
 
                           @php
                               $employee = $employeeItem->employee;
@@ -295,10 +301,8 @@
                               </td>
 
                               <td>
-                                @if($employeeItem->status == 'PRE-AGENDADO')
+                                @if($employeeItem->status == 'AGENDADO')
                                   <span class="badge badge-primary">{{ $employeeItem->status }}</span>
-                                @elseif($employeeItem->status == 'AGENDADO')
-                                  <span class="badge badge-success">{{ $employeeItem->status }}</span>
                                 @elseif($employeeItem->status == 'PRESENTE')
                                   <span class="badge badge-success">{{ $employeeItem->status }}</span>
                                 @elseif($employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA')
@@ -316,7 +320,7 @@
                                      class="dropdown-item" style="cursor:pointer">Editar Situação</a>
                                     @endif
 
-                                    @if($team->status == 'FINALIZADA')
+                                    @if($employeeItem->approved)
                                       <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
                                         class="dropdown-item text-success">Gerar Certificado</a>
                                     @endif
@@ -355,7 +359,7 @@
         </div>
         <div class="card-block">
 
-          <form class="formValidation m-t-30" data-parsley-validate method="post" enctype="multipart/form-data" action="{{route('teams_upload_presence_list', ['id' => $team->uuid])}}">
+          <form class="m-t-30" data-parsley-validate method="post" enctype="multipart/form-data" action="{{route('teams_upload_presence_list', ['id' => $team->uuid])}}">
 
             {{csrf_field()}}
 
@@ -375,6 +379,7 @@
         </div>
     </div>
 
+    @if($team->presence_list)
     <div class="card">
         <div class="card-header bg-c-green update-card">
             <h5 class="text-white">Lista de Presença </h5>
@@ -396,6 +401,7 @@
 
         </div>
     </div>
+    @endif
 
 </div>
 
