@@ -107,6 +107,26 @@
 
                     </div>
 
+                    <div class="col-md-12">
+                        <div class="form-group" id="pac-card">
+                            <label>Localização</label>
+                            <div class="input-group" id="pac-container">
+                                <span class="input-group-addon"><i class="fas fa-map-marked-alt"></i></span>
+                                <input class="form-control" name="localization" value="{{ $team->localization }}" id="pac-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Adicionar uma descrição</label>
+                            <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-edit"></i></span>
+                              <textarea class="form-control" rows="6" id="description" name="description">{{ $team->description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
               </div>
           </div>

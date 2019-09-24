@@ -29,33 +29,33 @@
 
 <div class="page-body">
 
-    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
-        <div class="card">
-            <div class="card-header">
-                <h5>Menu de opções </h5>
+    <div class="card">
+        <div class="card-header">
+            <h5>Menu de opções </h5>
 
-            </div>
-            <div class="card-block">
-
-              @if($team->status == 'RESERVADO')
-
-                  <form action="{{ route('team_start', $team->uuid) }}" method="POST" style="display: inline;">{{ csrf_field() }}
-                    <button class="btn btn-success btn-sm"><i class="ti-control-play"></i> <span>Iniciar Curso</span></button>
-                  </form>
-
-              @endif
-
-              @if($team->status == 'EM ANDAMENTO')
-
-                  <a href="#!" data-route="{{ route('team_finish', $team->uuid) }}" class="btn btn-danger btn-sm btnFinishTeam"><i class="ti-control-pause"></i> <span>Finalizar Curso</span></a>
-
-              @endif
-
-              <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
-
-            </div>
         </div>
-    @endif
+        <div class="card-block">
+
+          @if($team->status == 'RESERVADO')
+
+              <form action="{{ route('team_start', $team->uuid) }}" method="POST" style="display: inline;">{{ csrf_field() }}
+                <button class="btn btn-success btn-sm"><i class="ti-control-play"></i> <span>Iniciar Curso</span></button>
+              </form>
+
+          @endif
+
+          @if($team->status == 'EM ANDAMENTO')
+
+              <a href="#!" data-route="{{ route('team_finish', $team->uuid) }}" class="btn btn-danger btn-sm btnFinishTeam"><i class="ti-control-pause"></i> <span>Finalizar Curso</span></a>
+
+          @endif
+
+          <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="btn btn-warning btn-sm"><i class="ti-list"></i> <span>Lista de Presença</span></a>
+
+          <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
+
+        </div>
+    </div>
 
     @if($team->status == 'FINALIZADA')
       <div class="card bg-c-green update-card">
@@ -161,37 +161,37 @@
         </div>
     </div>
 
-    @permission('create.clientes')
+    @permission('create.turmas')
 
-    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
+      @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Adicionar Funcionários </h5>
-        </div>
-        <div class="card-block">
+        <div class="card">
+            <div class="card-header">
+                <h5>Adicionar Funcionários </h5>
+            </div>
+            <div class="card-block">
 
-          <form class="formValidation" data-parsley-validate method="post" action="{{route('teams_add_employees', ['id' => $team->uuid])}}">
+              <form class="formValidation" data-parsley-validate method="post" action="{{route('teams_add_employees', ['id' => $team->uuid])}}">
 
-            {{csrf_field()}}
-            {{method_field('PUT')}}
+                {{csrf_field()}}
+                {{method_field('PUT')}}
 
-            <div class="form-group {!! $errors->has('employees') ? 'has-error' : '' !!}">
-                  <label class="col-form-label" for="employees">Funcionários</label>
-                  <div class="input-group">
-                      <select multiple class="form-control select-employees" name="employees[]" id="employees" required></select>
+                <div class="form-group {!! $errors->has('employees') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="employees">Funcionários</label>
+                      <div class="input-group">
+                          <select multiple class="form-control select-employees" name="employees[]" id="employees" required></select>
+                      </div>
+                      {!! $errors->first('employees', '<p class="help-block">:message</p>') !!}
                   </div>
-                  {!! $errors->first('employees', '<p class="help-block">:message</p>') !!}
-              </div>
 
-            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 
-          </form>
+              </form>
 
+            </div>
         </div>
-    </div>
 
-    @endif
+      @endif
 
     @endpermission
 
@@ -275,7 +275,7 @@
             <div class="table-responsive">
               <table class="table table-lg table-styling">
                   <thead>
-                      <tr class="table-primary">
+                      <tr class="table-inverse">
                         <th>Nome</th>
                         <th>Situação</th>
                         <th>Opções</th>
@@ -323,13 +323,10 @@
                                         class="dropdown-item text-success">Gerar Certificado</a>
                                     @endif
 
-                                    <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
-                                      class="dropdown-item text-success">Gerar Certificado</a>
-
-                                   @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
-                                     <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
+                                    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
+                                      <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
                                        class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
-                                   @endif
+                                    @endif
 
                                 </div>
 
@@ -350,6 +347,54 @@
                 </div>
             </div>
           @endif
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-c-green update-card">
+            <h5 class="text-white">Adicionar Lista de Presença </h5>
+        </div>
+        <div class="card-block">
+
+          <form class="formValidation m-t-30" data-parsley-validate method="post" enctype="multipart/form-data" action="{{route('teams_upload_presence_list', ['id' => $team->uuid])}}">
+
+            {{csrf_field()}}
+
+            <div class="form-group {!! $errors->has('presence_list') ? 'has-error' : '' !!}">
+                  <label class="col-form-label" for="presence_list">Upload da Lista</label>
+                  <div class="input-group">
+                      <input required name="presence_list" data-buttonText="Selecionar Documento" data-dragdrop="true" data-badge="false" type="file" data-input="true"
+                      accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" class="filestyle" multiple/>
+                  </div>
+                  {!! $errors->first('presence_list', '<p class="help-block">:message</p>') !!}
+              </div>
+
+            <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+
+          </form>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-c-green update-card">
+            <h5 class="text-white">Lista de Presença </h5>
+        </div>
+        <div class="card-block">
+
+          <ul class="media-list m-t-30">
+
+            <li class="media d-flex m-b-10 mediaFile">
+                <div class="m-r-20 v-middle">
+                    <i class="icofont icofont-file-pdf f-28 text-muted"></i>
+                </div>
+                <div class="media-body">
+                    <a target="_blank" href="{{ route('teams_preview_presence_list', $team->uuid) }}" class="m-b-5 d-block">Visualizar Lista</a>
+                </div>
+            </li>
+
+          </ul>
 
         </div>
     </div>

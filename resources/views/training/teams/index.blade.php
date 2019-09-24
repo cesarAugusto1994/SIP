@@ -56,7 +56,7 @@
                           <tr>
 
                               <td>
-                                  <a>{{substr($team->course->title,0,45)}}</a>
+                                  <a href="{{route('teams.show', ['id' => $team->uuid])}}">{{substr($team->course->title,0,45)}}</a>
                               </td>
 
                               <td>

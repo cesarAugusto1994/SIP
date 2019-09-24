@@ -117,6 +117,51 @@ class TeamsController extends Controller
         }
     }
 
+    public function presenceList($id)
+    {
+        $team = Team::uuid($id);
+        return view('training.teams.presence', compact('team'));
+    }
+
+    public function uploadPresenceList($id, Request $request)
+    {
+        $team = Team::uuid($id);
+
+        if ($request->hasFile('presence_list')) {
+
+          $path = $request->presence_list->store('teams');
+          $data['presence_list'] = $path;
+
+          $team->update($data);
+        }
+
+        notify()->flash('Lista de Preseça Enviada', 'success', [
+          'text' => 'A Lista de Preseça Enviada e Salva com sucesso.'
+        ]);
+
+        return back();
+    }
+
+    public function previewPresenceList($id)
+    {
+        $team = Team::uuid($id);
+
+        $link = $team->presence_list;
+
+        $file = \Storage::exists($link) ? \Storage::get($link) : false;
+
+        if(!$file) {
+          notify()->flash('Lista de Preseça Não Encontrada', 'error', [
+            'text' => 'A Lista de Preseça errornão foi Encontrada.'
+          ]);
+          return back();
+        }
+
+        $mimetype = \Storage::disk('local')->mimeType($link);
+
+        return response($file, 200)->header('Content-Type', $mimetype);
+    }
+
     public function employeePresence($id, Request $request)
     {
         $data = $request->request->all();
