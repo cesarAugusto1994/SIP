@@ -468,6 +468,25 @@ class DeliveryOrderController extends Controller
         $subject = 'Ordem de Entrega nº. ' . $orderCode . ' Entregue';
         DeliveryOrderJob::dispatchNow($delivery, $subject , $message);
 
+        if(!$delivery->shipment) {
+          $delivery->documents->map(function($document) {
+              $document->document->status_id = 5;
+              $document->document->save();
+          });
+        }
+
+        $delivery->status_id = 5;
+        $delivery->finished_by = $user->id;
+        $delivery->finished_at = now();
+        $delivery->save();
+
+        Log::create([
+          'delivery_order_id' => $delivery->id,
+          'status_id' => 5,
+          'user_id' => $user->id,
+          'message' => 'Ordem de Entrega Confirmada por ' . $user->person->name
+        ]);
+
         return redirect()->route('delivery_done', $delivery->uuid);
     }
 
