@@ -502,7 +502,7 @@
                                         <div class="form-group">
                                             <label class="col-form-label">Senha SOC</label>
                                             <div class="input-group">
-                                              <input type="text" name="password_soc" value="{{$user->password_soc ?? ''}}" class="form-control" autocomplete="off">
+                                              <input type="password" name="password_soc" value="{{$user->password_soc ?? ''}}" class="form-control" autocomplete="off">
                                             </div>
                                         </div>
 

@@ -525,25 +525,20 @@ class UsersController extends Controller
     {
         $data = $request->request->all();
 
-        $validator = \Illuminate\Support\Facades\Validator::make($data, [
-          'roles' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
         $user = User::uuid($id);
 
+        if($user->id != auth()->user()->id) {
 
-          /*
-        $user->start_day = $data['begin'];
-        $user->lunch = $data['lunch'];
-        $user->lunch_return = $data['lunch_return'];
-        $user->end_day = $data['end'];
+          $validator = \Illuminate\Support\Facades\Validator::make($data, [
+            'roles' => 'required',
+          ]);
 
-        $user->weekly_workload = $data['weekly_workload'];
-          */
+          if ($validator->fails()) {
+              return back()->withErrors($validator)->withInput();
+          }
+
+        }
+        
         $user->login_soc = $data['login_soc'];
         $user->password_soc = $data['password_soc'];
         $user->id_soc = $data['id_soc'];

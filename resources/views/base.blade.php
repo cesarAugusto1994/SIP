@@ -276,6 +276,21 @@
 
 <script>
 
+  $(".btnRedirectSoc").click(function() {
+  		var loginSoc = $("#usu").val();
+  		var passwordSoc = $("#senha").val();
+  		var idSoc = $("#empsoc").val();
+  		if(usu && loginSoc && loginSoc) {
+  				$("#formularioLoginSoc").submit();
+  		} else {
+  			Swal.fire({
+  				type: 'error',
+  				title: 'Falha ao logar no SOC',
+  				text: 'Informe as suas credenciais SOC no seu perfil',
+  			})
+  		}
+  });
+
 function notify(message, type){
     $.growl({
         message: message
