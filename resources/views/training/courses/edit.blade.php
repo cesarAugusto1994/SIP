@@ -120,7 +120,7 @@
                             <div class="form-group {!! $errors->has('nt') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="nt">NT</label>
                                 <div class="input-group">
-                                    <input type="number" id="nt" name="nt" value="{{ $course->nt }}" class="form-control">
+                                    <input type="text" id="nt" name="nt" value="{{ $course->nt }}" class="form-control">
                                 </div>
                                 {!! $errors->first('nt', '<p class="help-block">:message</p>') !!}
                             </div>

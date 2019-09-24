@@ -18,25 +18,10 @@ class CoursesController extends Controller
     public function index(Request $request)
     {
         if(!Auth::user()->hasPermission('view.cursos')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado.');
         }
 
-        $courses = Course::paginate();
-
-        $table = (new \Okipa\LaravelTable\Table)->model(Course::class)
-        ->request($request)
-        ->routes([
-            'index'      => ['name' => 'courses.index'],
-            'create'     => ['name' => 'courses.create'],
-            'edit'       => ['name' => 'courses.edit'],
-            'destroy'    => ['name' => 'courses.destroy'],
-            'show'    => ['name' => 'courses.show'],
-        ])
-        ->rowsNumber(50) // or set `false` to get all the items contained in database
-        ->rowsNumberSelectionActivation(false);
-        $table->column('title')->title('Titulo')->sortable()->searchable();
-        $table->column('description')->title('Descrição')->searchable();
-        $table->column('workload')->title('Carga Horária')->sortable()->searchable();
+        $courses = Course::orderBy('title')->paginate();
 
         return view('training.courses.index', compact('courses'));
     }
