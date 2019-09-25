@@ -111,8 +111,8 @@ class EmailsController extends Controller
                   if(Email::where('user_id', auth()->user()->id)->count() == 0) {
                     $messages = $folder->messages()->all()->get();
                   } else {
-                    //$messages = $folder->getUnseenMessages();
-                    $messages = $folder->messages()->all()->get();
+                    $messages = $folder->getUnseenMessages();
+                    //$messages = $folder->messages()->all()->get();
                   }
 
                 } else {
