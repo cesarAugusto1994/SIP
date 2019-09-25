@@ -30,6 +30,25 @@
 
 <div class="page-body">
 
+  <div class="row">
+
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.clientes')
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('permissions.create', ['module' => $module->id])}}"><i class="icofont icofont-paper-plane"></i> Nova Permissão</a>
+                  @endpermission
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
   @if($module->children->isNotEmpty())
   <div class="card">
       <div class="card-header">
