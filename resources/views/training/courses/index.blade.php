@@ -86,6 +86,7 @@
                               <tr class="table-primary">
                                   <th>No.</th>
                                   <th>Título</th>
+                                  <th>Tipo</th>
                                   <th>Carga Horária</th>
                                   <th>Opções</th>
                               </tr>
@@ -103,6 +104,8 @@
                                             <small>NBR {{ $course->nbr }} e NT {{ $course->nt }}</small>
                                           @endif</a>
                                     </td>
+
+                                    <td>{{$course->type}}</td>
 
                                     <td>
                                         <a>{{$course->workload}} horas</a>

@@ -54,7 +54,7 @@
 
                       <div class="row">
 
-                        <div class="col-md-6">
+                          <div class="col-md-6">
 
                             <div class="form-group {!! $errors->has('title') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="title">Titulo</label>
@@ -66,13 +66,25 @@
 
                           </div>
 
-                          <div class="col-md-6">
+                          <div class="col-md-3">
+                            <div class="form-group {!! $errors->has('type') ? 'has-error' : '' !!}">
+                                <label class="col-form-label" for="type">Tipo</label>
+                                <div class="input-group">
+                                  <select class="form-control select2" name="type" required>
+                                      <option value="Treinamento" {{ 'Treinamento' == $course->type ? 'selected' : '' }}>Treinamento</option>
+                                      <option value="Palestra" {{ 'Palestra' == $course->type ? 'selected' : '' }}>Palestra</option>
+                                  </select>
+                                </div>
+                                {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+                            </div>
+                          </div>
+
+                          <div class="col-md-3">
 
                             <div class="form-group {!! $errors->has('workload') ? 'has-error' : '' !!}">
                                 <label class="col-form-label" for="workload">Carga Horária</label>
                                 <div class="input-group">
                                     <input type="number" id="workload" required name="workload" value="{{ $course->workload }}" class="form-control" value="10">
-
                                 </div>
                                 {!! $errors->first('workload', '<p class="help-block">:message</p>') !!}
                             </div>

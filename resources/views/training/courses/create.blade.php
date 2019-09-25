@@ -67,7 +67,20 @@
 
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                          <div class="form-group {!! $errors->has('type') ? 'has-error' : '' !!}">
+                              <label class="col-form-label" for="type">Tipo</label>
+                              <div class="input-group">
+                                <select class="form-control" name="type" required>
+                                    <option value="Treinamento">Treinamento</option>
+                                    <option value="Palestra">Palestra</option>
+                                </select>
+                              </div>
+                              {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
 
                           <div class="form-group {!! $errors->has('workload') ? 'has-error' : '' !!}">
                               <label class="col-form-label"  for="workload">Carga Horária</label>
