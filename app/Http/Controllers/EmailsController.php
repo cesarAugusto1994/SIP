@@ -32,7 +32,7 @@ class EmailsController extends Controller
         if(config('app.env') == 'production') {
             $this->search();
         }
-        
+
         return view('email.index', compact('folder', 'emails', 'emailsInboxUnSeen'));
     }
 
@@ -111,7 +111,8 @@ class EmailsController extends Controller
                   if(Email::where('user_id', auth()->user()->id)->count() == 0) {
                     $messages = $folder->messages()->all()->get();
                   } else {
-                    $messages = $folder->getUnseenMessages();
+                    //$messages = $folder->getUnseenMessages();
+                    $messages = $folder->messages()->all()->get();
                   }
 
                 } else {
