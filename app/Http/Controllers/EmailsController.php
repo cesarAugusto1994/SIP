@@ -15,15 +15,25 @@ class EmailsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $emailsInbox = Email::where('folder_id', 2)->orderByDesc('id')->paginate();
-        $emailsSent = Email::where('folder_id', 4)->get();
-        $emailsDraft = Email::where('folder_id', 5)->get();
-        $emailsTrash = Email::where('folder_id', 3)->get();
-        $emailsInboxUnSeen = Email::where('flag_seen', false)->count();
+        if($request->has('folder')) {
 
-        return view('email.index', compact('emailsInbox', 'emailsSent', 'emailsDraft', 'emailsTrash', 'emailsInboxUnSeen'));
+            $emails = Email::where('folder_id', $request->get('folder'))->orderByDesc('id')->paginate();
+            $folder = Folder::find($request->get('folder'));
+
+        } else {
+            $folder = Folder::find(2);
+            $emails = Email::where('folder_id', $folder->id)->orderByDesc('id')->paginate();
+        }
+
+        $emailsInboxUnSeen = $emails->where('flag_seen', false)->count();
+
+        if(config('app.env') == 'production') {
+            $this->search();
+        }
+        
+        return view('email.index', compact('folder', 'emails', 'emailsInboxUnSeen'));
     }
 
     public function html($id)
@@ -105,7 +115,7 @@ class EmailsController extends Controller
                   }
 
                 } else {
-                  $messages = $folder->query()->since(now()->subHours(6))->get();
+                  $messages = $folder->query()->since(now()->subHours(3))->get();
                   //$messages = $folder->getUnseenMessages();
                 }
 

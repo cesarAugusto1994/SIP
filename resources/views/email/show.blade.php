@@ -59,12 +59,14 @@
                                         </div>
                                         <div class="media-body photo-contant">
 
+                                          @if($from)
                                             <a href="#">
-                                                <h6 class="user-name txt-primary">{{ $from->contact->personal ?? $from->contact->mailbox }}</h6>
+                                                <h6 class="user-name txt-primary">{{ $from->contact ? $from->contact->personal : '' }}</h6>
                                             </a>
                                             <a class="user-mail txt-muted" href="#">
-                                                <h6>De: {{ $from->contact->mail }}</h6>
+                                                <h6>De: {{ $from->contact ? $from->contact->mail : '' }}</h6>
                                             </a>
+                                          @endif
 
                                             <div style="" id="semail-template"></div>
 

@@ -27,13 +27,12 @@
 
 <div class="page-body">
     <div class="card">
-        <!-- Email-card start -->
         <div class="card-block email-card">
             <div class="row">
                 <div class="col-lg-12 col-xl-3">
                     <div class="user-head row">
                         <div class="user-face">
-
+                            <h3>Pasta: {{ $folder->name }}</h3>
                         </div>
                     </div>
                 </div>
@@ -60,29 +59,31 @@
                             <a href="{{route('emails.create')}}" class="btn btn-success btn-round btn-block">Novo</a>
                         </div>
                         <ul class="page-list nav nav-tabs flex-column" id="pills-tab" role="tablist">
+
                             <li class="nav-item mail-section">
-                                <a class="nav-link active" data-toggle="pill" href="#e-inbox" role="tab">
+                                <a class="nav-link {{ request()->get('folder') == 2 ? 'active' : '' }}" href="?folder=2" role="tab">
                                     <i class="icofont icofont-inbox"></i> Caixa de Entrada
                                     <span class="label label-primary f-right">{{$emailsInboxUnSeen}}</span>
                                 </a>
                             </li>
+
                             <li class="nav-item mail-section">
-                                <a class="nav-link" data-toggle="pill" href="#e-starred" role="tab">
-                                    <i class="icofont icofont-star"></i> Marcados
+                                <a class="nav-link {{ request()->get('folder') == 7 ? 'active' : '' }}" href="?folder=7" role="tab">
+                                    <i class="icofont icofont-star"></i> Arquivados
                                 </a>
                             </li>
                             <li class="nav-item mail-section">
-                                <a class="nav-link" data-toggle="pill" href="#e-drafts" role="tab">
+                                <a class="nav-link {{ request()->get('folder') == 5 ? 'active' : '' }}" href="?folder=5" role="tab">
                                     <i class="icofont icofont-file-text"></i> Rascunho
                                 </a>
                             </li>
                             <li class="nav-item mail-section">
-                                <a class="nav-link" data-toggle="pill" href="#e-sent" role="tab">
+                                <a class="nav-link {{ request()->get('folder') == 4 ? 'active' : '' }}" href="?folder=4" role="tab">
                                     <i class="icofont icofont-paper-plane"></i> Enviados
                                 </a>
                             </li>
                             <li class="nav-item mail-section">
-                                <a class="nav-link" data-toggle="pill" href="#e-trash" role="tab">
+                                <a class="nav-link {{ request()->get('folder') == 1 ? 'active' : '' }}" href="?folder=1" role="tab">
                                     <i class="icofont icofont-ui-delete"></i> Lixeira
                                 </a>
                             </li>
@@ -100,10 +101,10 @@
                                       <div class="table-responsive">
                                           <table class="table">
 
-                                            @foreach($emailsInbox->sortByDesc('id') as $email)
+                                            @foreach($emails->sortByDesc('id') as $email)
                                               <tr class="{{ $email->flag_seen ? 'read' : 'unread' }}">
-                                                  <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ substr($email->subject, 0, 30) }}</a></td>
-                                                  <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ substr($email->text, 0, 30) }}...</a></td>
+                                                  <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name"><b>{{ substr($email->subject, 0, 30) }}</b><br/><small>{{ substr($email->text, 0, 150) }}...</small></a></td>
+                                                  <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name"></a></td>
                                                   <td class="email-attch">@if($email->attachments->isNotEmpty())<a href="#"><i class="icofont icofont-clip"></i></a>@endif</td>
                                                   <td class="email-time"><label class="label label-inverse-primary">{{ $email->date->format('d/m/Y H:i') }}</label></td>
                                               </tr>
@@ -114,83 +115,10 @@
                                     </div>
                                     <div class="col-md-12 text-center">
 
-                                        {{ $emailsInbox->links() }}
+                                        {{ $emails->links() }}
 
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="e-starred" role="tabpanel">
-                            <div class="mail-body">
-                                <div class="mail-body-content">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                          @foreach($emailsSent->sortByDesc('id') as $email)
-                                            <tr class="{{ $email->flag_seen ? 'read' : 'unread' }}">
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ $email->subject }}</a></td>
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ substr($email->text, 0, 40) }}...</a></td>
-                                                <td class="email-attch">@if($email->attachments->isNotEmpty())<a href="#"><i class="icofont icofont-clip"></i></a>@endif</td>
-                                                <td class="email-time">{{ $email->date->format('d/m/Y H:i') }}</td>
-                                            </tr>
-                                          @endforeach
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="e-drafts" role="tabpanel">
-                            <div class="mail-body">
-                                <div class="mail-body-content">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                          @foreach($emailsDraft->sortByDesc('id') as $email)
-                                            <tr class="{{ $email->flag_seen ? 'read' : 'unread' }}">
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ $email->subject }}</a></td>
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ substr($email->text, 0, 40) }}...</a></td>
-                                                <td class="email-attch">@if($email->attachments->isNotEmpty())<a href="#"><i class="icofont icofont-clip"></i></a>@endif</td>
-                                                <td class="email-time">{{ $email->date->format('d/m/Y H:i') }}</td>
-                                            </tr>
-                                          @endforeach
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="e-sent" role="tabpanel">
-                            <div class="mail-body">
-                                <div class="mail-body-content">
-                                    <div class="table-responsive">
-                                        <table class="table">
-
-                                          @foreach($emailsSent->sortByDesc('id') as $email)
-                                            <tr class="{{ $email->flag_seen ? 'read' : 'unread' }}">
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ $email->subject }}</a></td>
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ substr($email->text, 0, 40) }}...</a></td>
-                                                <td class="email-attch">@if($email->attachments->isNotEmpty())<a href="#"><i class="icofont icofont-clip"></i></a>@endif</td>
-                                                <td class="email-time">{{ $email->date->format('d/m/Y H:i') }}</td>
-                                            </tr>
-                                          @endforeach
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="e-trash" role="tabpanel">
-                            <div class="mail-body">
-                                <div class="mail-body-content">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                          @foreach($emailsTrash->sortByDesc('id') as $email)
-                                            <tr class="{{ $email->flag_seen ? 'read' : 'unread' }}">
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ $email->subject }}</a></td>
-                                                <td><a href="{{ route('emails.show', $email->uuid) }}" class="email-name">{{ substr($email->text, 0, 40) }}...</a></td>
-                                                <td class="email-attch">@if($email->attachments->isNotEmpty())<a href="#"><i class="icofont icofont-clip"></i></a>@endif</td>
-                                                <td class="email-time">{{ $email->date->format('d/m/Y H:i') }}</td>
-                                            </tr>
-                                          @endforeach
-                                        </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,14 +141,14 @@
 
       $(document).ready(function() {
 
-        swal({
+        /*swal({
           title: 'Em progresso...',
           text: 'Aguarde enquanto os e-mails são carregados.',
           type: 'success',
           showConfirmButton: false,
           allowOutsideClick: false
-        });
-
+        });*/
+/*
         var emails = $('#load-emails').val();
 
         $.ajax({
@@ -230,13 +158,11 @@
 
             swal.close();
 
-            //window.location.reload();
-
             console.log(data);
 
           }
         });
-
+*/
       });
 
   </script>
