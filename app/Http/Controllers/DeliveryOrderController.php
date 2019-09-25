@@ -64,7 +64,8 @@ class DeliveryOrderController extends Controller
         } else {
 
           if($request->filled('client')) {
-              $orders->where('client_id', $request->get('client'));
+              $client = Client::uuid($request->get('client'));
+              $orders->where('client_id', $client->id);
           }
 
           if($request->filled('status')) {
