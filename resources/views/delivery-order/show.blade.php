@@ -362,7 +362,7 @@
                                   @endif
 
                               </td>
-                            @else
+                            @elseif($document->employee)
                               <td>
                                   <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a>
                               </td>

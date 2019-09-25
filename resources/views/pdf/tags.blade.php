@@ -47,7 +47,7 @@
 </head>
 
 <body class="pace-done">
-<div style="width:100%;max-height:80px;min-height:100px;padding:0.6em 0.6em;top:0;margin-top:0">
+<div style="width:100%;max-height:60px;min-height:60px;padding:0.6em 0.6em;top:0;margin-top:0">
   <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
 <img class="img" style="max-height:80px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
 </div>
@@ -56,7 +56,7 @@
           <div class="row">
 
               <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                  <h4>ORDEM DE ENTREGA: #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</h4>
+                  <h4><b>ORDEM DE ENTREGA</b> #{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT)  }}</h4>
               </div>
 
               <div class="col-lg-12 col-md-12 col-sm-12">
@@ -71,7 +71,7 @@
                             $route = route('start_delivery', $delivery->uuid);
                         @endphp
 
-                          {!! QrCode::size(120)->generate($route); !!}
+                          {!! QrCode::size(100)->generate($route); !!}
 
                       </div>
 
@@ -111,7 +111,7 @@
                           <tr>
                               <td>{{ $document->type->name }}</td>
                               @if($document->employee)
-                              <td>{{ $document->employee->name ?? '' }} <small>{{ $document->employee->cpf ?? '' }}</small></td>
+                              <td>{{ $document->employee->name ?? '' }} <br/><small>{{ $document->employee->cpf ?? '' }}</small></td>
                               @else
                               <td>{{ $document->reference ?? '' }}</td>
                               @endif
@@ -145,7 +145,7 @@
 
                     </table>
 
-                    @if($delivery->documents->count() < 6)
+                    @if($delivery->documents->count() < 3)
 
                     <div class="bg-white" style="border-bottom:2px dashed black;padding:0.3em 0.2em;margin-bottom:2em"></div>
 
@@ -195,7 +195,7 @@
                           <tr>
                               <td>{{ $document->type->name }}</td>
                               @if($document->employee)
-                              <td>{{ $document->employee->name ?? '' }} <small>{{ $document->employee->cpf ?? '' }}</td>
+                              <td>{{ $document->employee->name ?? '' }} <br/><small>{{ $document->employee->cpf ?? '' }}</td>
                               @else
                               <td>{{ $document->reference ?? '' }}</td>
                               @endif

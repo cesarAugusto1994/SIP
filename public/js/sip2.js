@@ -37,7 +37,7 @@ $('.select-client').select2({
 function formatRepo(emp) {
 
     if(!emp.name) return '<span>Pesquisando...</span>';
-    
+
     var markup = "<div class='select2-result-repository clearfix'>" +
         "<div class='select2-result-repository__avatar'></div>" +
         "<div class='select2-result-repository__meta'>" +

@@ -48,7 +48,7 @@
                                 <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
                                     <label class="col-form-label">Cliente</label>
                                     <div class="input-group">
-                                      <select class="select-client select-client-modal-address select-client-addresses select-client-emails select-client-documents"
+                                      <select class="select-client select-client-addresses select-client-emails select-client-documents"
                                         data-search-addresses="{{ route('client_addresses_search') }}"
                                         data-search-emails="{{ route('client_emails_search') }}"
                                         data-search-documents="{{ route('client_documents_search') }}"
@@ -291,21 +291,21 @@
 
     var checkboxNewAddress = $("#checkbox-new-address");
     var inputNewAddress = $("#input-new-address");
-    var selectAddress = $("#div-select-address");
+    var divSelectAddress = $("#div-select-address");
     var btnSubmitForm = $(".btnSubmitForm");
 
     selectClient.change(function() {
-        clientId.val($(this).val());
+        //clientId.val($(this).val());
     });
 
     checkboxNewAddress.change(function() {
 
       if(checkboxNewAddress.is(':checked')) {
           inputNewAddress.show();
-          selectAddress.hide();
+          divSelectAddress.hide();
       } else {
           inputNewAddress.hide();
-          selectAddress.show();
+          divSelectAddress.show();
       }
 
     });
