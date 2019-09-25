@@ -332,28 +332,31 @@ class TeamsController extends Controller
         $data = [];
 
         foreach ($teams as $key => $team) {
-          switch($team->course_id) {
-            case 1:
+          switch($team->course->type) {
+            case 'Treinamento':
               $cardCollor = "#23c6c8";
               $editable = true;
             break;
-            case 2:
+            case 'Palestra':
               $cardCollor = "#f8ac59";
               $editable = true;
-            break;
-            case 3:
-              $cardCollor = "#0ac282";
             break;
             default:
               $cardCollor = "#0ac282";
             break;
           }
 
+          if($team->status != 'RESERVADO') {
+            $editable = false;
+          }
+
+          $title = $team->course->type . ' - ' . $team->course->title;
+
           $data[] = [
               'id' => $team->id,
               'uuid' => $team->uuid,
               'course_id' => $team->course_id,
-              'title' => $team->course->title,
+              'title' => $title,
               'description' => $team->course->description,
               'start' => $team->start ? $team->start->format('Y-m-d H:i') : null,
               'end' => $team->end ? $team->end->format('Y-m-d H:i') : null,

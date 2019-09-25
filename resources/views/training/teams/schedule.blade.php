@@ -239,7 +239,6 @@ $calendar.fullCalendar({
         $("#end").val(end.format('DD/MM/YYYY HH:mm'));
     },
     eventClick: function(event, element, view) {
-        //popularModalAndShow(event);
 
         window.swal({
           title: 'Em progresso...',
@@ -269,12 +268,12 @@ $calendar.fullCalendar({
     //When u drop an event in the calendar do the following:
     eventDrop: function(event, delta, revertFunc) {
         //console.log(event);
-        popularModal(event);
+        //popularModal(event);
     },
     //When u resize an event in the calendar do the following:
     eventResize: function(event, delta, revertFunc) {
         //console.log(event);
-        popularModal(event);
+        //popularModal(event);
     },
     eventRender: function(event, element) {
         $(element).tooltip({
