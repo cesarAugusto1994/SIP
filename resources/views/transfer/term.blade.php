@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="pace-done">
+<body class="pace-done" style="background-color:white;">
 
   <div class="page-body">
 
@@ -48,7 +48,7 @@
 
             <div style="">
               <img class="img" style="max-height:80px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
-              <h4 class="text-center">OERDEM DE TRANSFERÊNCIA</h4>
+              <h4 class="text-center">ORDEM DE TRANSFERÊNCIA</h4>
             </div>
             <div class="p-20">
               <p><b>Código: #{{ str_pad($transfer->id, 6, "0", STR_PAD_LEFT) }}</b></p>
