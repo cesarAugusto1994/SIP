@@ -98,7 +98,7 @@
                   <i class="feather icon-file-text st-icon bg-c-blue"></i>
                   <div class="text-left">
                       <h3 class="d-inline-block">{{ $client->deliveries->count() }}</h3>
-                      <span class="f-right bg-c-blue"><a class="text-white" href="{{ route('delivery-order.index', ['client' => $client->uuid]) }}">Acessar</a></span>
+                      <span class="f-right bg-c-blue"><a class="text-white" href="{{ route('delivery-order.index', ['find' => 1, 'client' => $client->uuid]) }}">Acessar</a></span>
                   </div>
               </div>
           </div>
