@@ -47,9 +47,9 @@
 </head>
 
 <body class="pace-done">
-<div style="width:100%;max-height:100px;min-height:100px;padding:0.6em 0.6em;top:0;margin-top:0">
+<div style="width:100%;max-height:80px;min-height:100px;padding:0.6em 0.6em;top:0;margin-top:0">
   <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
-<img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
+<img class="img" style="max-height:80px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
 </div>
   <div style="padding:0px 10px 0px 10px">
       <div class="ibox-content">
@@ -111,7 +111,7 @@
                           <tr>
                               <td>{{ $document->type->name }}</td>
                               @if($document->employee)
-                              <td>{{ $document->employee->name ?? '' }}</td>
+                              <td>{{ $document->employee->name ?? '' }} <small>{{ $document->employee->cpf ?? '' }}</small></td>
                               @else
                               <td>{{ $document->reference ?? '' }}</td>
                               @endif
@@ -195,7 +195,7 @@
                           <tr>
                               <td>{{ $document->type->name }}</td>
                               @if($document->employee)
-                              <td>{{ $document->employee->name ?? '' }}</td>
+                              <td>{{ $document->employee->name ?? '' }} <small>{{ $document->employee->cpf ?? '' }}</td>
                               @else
                               <td>{{ $document->reference ?? '' }}</td>
                               @endif
@@ -236,7 +236,8 @@
   </div>
 
   <script>
-    window.print();
+      window.print();
+      window.onfocus=function(){ window.close();}
   </script>
 
 </body>

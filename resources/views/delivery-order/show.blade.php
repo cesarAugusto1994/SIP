@@ -358,13 +358,13 @@
 
                                   @if($document->employee)
                                     <br/>
-                                    <small>Funcionário: {{ $document->employee->name ?? '' }}</small>
+                                    <small>Funcionário: <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a></small>
                                   @endif
 
                               </td>
                             @else
                               <td>
-                                  {{ $document->employee->name ?? '' }}
+                                  <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a>
                               </td>
                             @endif
 
