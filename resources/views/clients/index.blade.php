@@ -168,7 +168,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     @if(!empty($clients))
     {{ $clients->links() }}

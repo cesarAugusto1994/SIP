@@ -238,6 +238,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('clients/documents/search', 'ClientController@documents')->name('client_documents_search');
 
+          Route::resource('employees', 'EmployeesController');
+
           Route::get('clients/{id}/employees', 'EmployeesController@show')->name('client_employees');
           Route::get('clients/{id}/employees/create', 'EmployeesController@create')->name('client_employee_create');
           Route::post('clients/{id}/employees', 'EmployeesController@store')->name('client_employee_store');

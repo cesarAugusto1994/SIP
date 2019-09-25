@@ -140,7 +140,9 @@ class AddressesController extends Controller
         }
 
         $client = Client::uuid($id);
-        return view('clients.addresses.index', compact('client'));
+        $quantity = $client->addresses->count();
+
+        return view('clients.addresses.index', compact('client', 'quantity'));
     }
 
     /**

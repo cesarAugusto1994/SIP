@@ -203,12 +203,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <select class="form-control select2" name="client">
-                              <option value="">Cliente</option>
-                              @foreach(\App\Helpers\Helper::clients()->sortBy('name') as $client)
-                                <option value="{{$client->id}}">{{$client->name}}</option>
-                              @endforeach
-                            </select>
+                            <select class="form-control select-client" name="client"></select>
                         </div>
                     </div>
                     <div class="">

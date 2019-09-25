@@ -31,6 +31,15 @@ class EmployeesController extends Controller
 
           }
 
+          if($request->filled('client')) {
+
+            $client = $request->get('client');
+            $client = Client::uuid($client);
+
+            $employees->where('company_id', $client->id);
+
+          }
+
           if($request->filled('status')) {
             $employees->where('active', $request->get('status'));
           }

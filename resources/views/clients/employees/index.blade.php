@@ -64,6 +64,12 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
+                            <select class="form-control select-client" name="client"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
                             <select class="form-control select2" name="status">
                               <option value="">Situação</option>
                               <option value="1">Ativo</option>
