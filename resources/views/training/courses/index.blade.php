@@ -26,93 +26,111 @@
 
 <div class="page-body">
 
-<div class="card">
-    <div class="card-header">
-        <h5>Listagem de Cursos</h5>
-        <div class="card-header-right">
-            <ul class="list-unstyled card-option">
-                <li><a class="btn btn-sm btn-success btn-round" href="{{route('courses.create')}}">Novo</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="card-block">
 
-      @if($courses->isNotEmpty())
+    <div class="row">
 
-      <div class="table-responsive">
-          <table class="table table-hover">
+      <div class="col-xl-12 col-lg-12 filter-bar">
 
-              <thead>
-                <tr>
-                  <th>Titulo</th>
-                  <th>Carga Horária</th>
-                  <th>Adicionado em</th>
-                  <th>Opções</th>
-                </tr>
-              </thead>
+        <div class="card">
+            <div class="card-block">
+                <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-              <tbody>
-                  @foreach($courses as $course)
-                      <tr>
+                    @permission('create.cursos')
+                      <a class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('courses.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Curso</a>
+                    @endpermission
 
-                          <td>
-                              <a>{{substr(($course->title), 0, 50)}}<br>
-                                @if($course->ordinance)
-                                  <small>Portaria de {{ $course->ordinance }} - {{ $course->ordinance }}</small>
-                                @elseif($course->nbr)
-                                  <small>NBR {{ $course->nbr }} e NT {{ $course->nt }}</small>
-                                @endif</a>
-                          </td>
-
-                          <td>
-                              <a>{{$course->workload}} horas</a>
-                          </td>
-
-                          <td>
-                              <a>{{$course->created_at->format('d/m/Y H:i')}}</a>
-                          </td>
-
-                          <td class="dropdown">
-
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-                              @permission('edit.cursos')
-                                <a class="dropdown-item" href="{{route('courses.edit', ['id' => $course->uuid])}}"><i class="icofont icofont-edit"></i>Editar</a>
-                              @endpermission
-                            </div>
-
-                          </td>
-
-                      </tr>
-                  @endforeach
-              </tbody>
-          </table>
-
-          <div class="text-center">
-          {{ $courses->links() }}
-          </div>
-
-      </div>
-
-      @else
-
-          <div class="col-sm-12">
-
-            <div class="widget white-bg no-padding m-t-30">
-                <div class="p-m text-center">
-                    <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
-                    <h6 class="font-bold no-margins">
-                        Nenhum registro encontrado.
-                    </h6>
                 </div>
             </div>
-
-          </div>
-
-      @endif
+        </div>
+      </div>
 
     </div>
-</div>
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+          <div class="card">
+              <div class="card-header">
+                  <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+              </div>
+              <div class="card-block">
+                  <form method="get" action="?">
+                      <input type="hidden" name="find" value="1"/>
+                      <div class="form-group row">
+                          <div class="col-sm-12">
+                              <input type="text" class="form-control" name="search" placeholder="Código, Título, Descrição">
+                          </div>
+                      </div>
+
+                      <div class="">
+                          <button type="submit" class="btn btn-success btn-sm btn-block">
+                              <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-9">
+          <div class="card">
+              <div class="card-header">
+                  <h5>Cursos Cadastrados</h5>
+                  <span>Registros retornados: {{ $quantity }}</span>
+              </div>
+              <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                      <table class="table table-lg table-styling">
+                          <thead>
+                              <tr class="table-primary">
+                                  <th>No.</th>
+                                  <th>Título</th>
+                                  <th>Carga Horária</th>
+                                  <th>Opções</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($courses as $course)
+                                <tr>
+                                    <td><a href="{{ route('courses.edit', $course->uuid) }}" class="card-title">#{{ str_pad($course->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+
+                                    <td>
+                                        <a>{{substr(($course->title), 0, 50)}}<br>
+                                          @if($course->ordinance)
+                                            <small>Portaria de {{ $course->ordinance }} - {{ $course->ordinance }}</small>
+                                          @elseif($course->nbr)
+                                            <small>NBR {{ $course->nbr }} e NT {{ $course->nt }}</small>
+                                          @endif</a>
+                                    </td>
+
+                                    <td>
+                                        <a>{{$course->workload}} horas</a>
+                                    </td>
+
+                                    <td class="dropdown">
+
+                                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                      <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+                                        @permission('edit.cursos')
+                                          <a class="dropdown-item" href="{{route('courses.edit', ['id' => $course->uuid])}}"><i class="icofont icofont-edit"></i>Editar</a>
+                                        @endpermission
+                                      </div>
+
+                                    </td>
+
+                                </tr>
+                            @endforeach
+
+                            <tr><td colspan="4" class="text-center">{{ $courses->links() }}</td></tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
 
 </div>
 

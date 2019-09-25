@@ -21,9 +21,24 @@ class CoursesController extends Controller
             return abort(403, 'Acesso negado.');
         }
 
-        $courses = Course::orderBy('title')->paginate();
+        $courses = Course::orderBy('title');
 
-        return view('training.courses.index', compact('courses'));
+        if($request->filled('search')) {
+            $search = $request->get('search');
+            $courses->where('id', $search)
+            ->orWhere('title', 'LIKE', "%$search%")
+            ->orWhere('description', 'LIKE', "%$search%");
+        }
+
+        $quantity = $courses->count();
+
+        $courses = $courses->paginate();
+
+        foreach ($request->all() as $key => $value) {
+            $courses->appends($key, $value);
+        }
+
+        return view('training.courses.index', compact('courses', 'quantity'));
     }
 
     /**
