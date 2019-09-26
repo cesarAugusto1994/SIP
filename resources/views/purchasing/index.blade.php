@@ -30,140 +30,168 @@
   <div class="row">
 
     <div class="col-xl-12 col-lg-12 filter-bar">
-      <nav class="navbar navbar-light bg-faded m-b-30 p-10">
-          <ul class="nav navbar-nav">
-              <li class="nav-item active">
-                  <a class="nav-link" href="#!">Filtros: <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-clock-time"></i> Data</a>
-                  <div class="dropdown-menu" aria-labelledby="bydate">
-                      <a class="dropdown-item" href="?date=recente">Recente</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?date=hoje">Hoje</a>
-                      <a class="dropdown-item" href="?date=ontem">Ontem</a>
-                      <a class="dropdown-item" href="?date=semana">Nesta Semana</a>
-                      <a class="dropdown-item" href="?date=mes">Neste Mês</a>
-                      <a class="dropdown-item" href="?date=ano">Neste Ano</a>
-                  </div>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-chart-histogram-alt"></i>Situação</a>
-                  <div class="dropdown-menu" aria-labelledby="bystatus">
-                      <a class="dropdown-item" href="?status=">Todos</a>
-                      <div class="dropdown-divider"></div>
-                      @foreach(\App\Helpers\Helper::purchasingStatus() as $item)
-                          <a class="dropdown-item" href="?status={{$item}}">{{$item}}</a>
-                      @endforeach
-                  </div>
-              </li>
-              @if(auth()->user()->isAdmin())
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Usuário</a>
-                      <div class="dropdown-menu" aria-labelledby="bystatus">
-                          <a class="dropdown-item" href="?user=">Todos</a>
-                          <div class="dropdown-divider"></div>
-                          @foreach(\App\Helpers\Helper::users() as $user)
-                              <a class="dropdown-item" href="?user={{$user->id}}">{{$user->person->name}}</a>
-                          @endforeach
-                      </div>
-                  </li>
-              @endif
 
-          </ul>
-          <div class="nav-item nav-grid">
-              @permission('create.chamados')
-                <a href="{{route('purchasing.create')}}" class="btn bottom-right btn-primary btn-sm pull-right">Nova Solicitação</a>
-              @endpermission
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.pedidos.de.compra')
+                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('purchasing.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Solicitação</a>
+                  @endpermission
+
+              </div>
           </div>
-
-      </nav>
+      </div>
     </div>
 
   </div>
 
-  <div class="card">
-      <div class="card-header">
-          <h5>Listagem de Pedidos De Compra</h5>
-          <span>Pedidos De Compra</span>
-      </div>
-      <div class="card-block">
-          <div class="table-responsive">
-              <table class="table table-striped table-bordered">
-                  <thead>
-                      <tr>
-                          <th>#</th>
-                          <th>Solicitante</th>
-                          <th style="width: 35%;">Motivo</th>
-                          <th>Situação</th>
-                          <th>Cadastro</th>
-                          <th>Opções</th>
-                      </tr>
-                  </thead>
-                  <tbody>
+  <div class="row">
 
-                  @forelse ($purchasings as $purchasing)
+    <div class="col-lg-3">
 
-                    @php
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+            </div>
+            <div class="card-block">
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="code" placeholder="Código da Solicitação">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" id="daterange" class="form-control" placeholder="Periodo">
 
-                      $status = $purchasing->status;
+                            <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                            <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
 
-                      $bgColor = 'success';
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="status">
+                              <option value="">Situação</option>
+                              @foreach(\App\Helpers\Helper::purchasingStatus() as $item)
+                                <option value="{{$item}}">{{$item}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select2" name="status">
+                              <option value="">Situação</option>
+                              @foreach(\App\Helpers\Helper::users() as $user)
+                                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-                      switch($status) {
-                        case '2':
-                          $bgColor = 'warning';
-                          break;
-                        case '3':
-                          $bgColor = 'primary';
-                          break;
-                        case '4':
-                          $bgColor = 'primary';
-                          break;
-                        case '5':
-                          $bgColor = 'danger';
-                          break;
-                      }
+    <div class="col-lg-9">
+        <!-- Recent Orders card start -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Listagem de Pedidos De Compra</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                              <th>#</th>
+                              <th>Solicitante</th>
+                              <th style="width: 35%;">Motivo</th>
+                              <th>Situação</th>
+                              <th>Cadastro</th>
+                              <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @forelse ($purchasings as $purchasing)
 
-                    @endphp
+                            @php
 
-                      <tr>
-                          <th scope="row">{{ $purchasing->id }}</th>
-                          <td>{{ $purchasing->user->person->name }}</td>
-                          <td style="white-space: normal;">{{ $purchasing->motive }}</th>
-                          <td><span class="label label-{{$bgColor}}"> {{$purchasing->status}} </span></td>
-                          <td>{{ $purchasing->created_at->format('d/m/Y H:i') }}
-                              <label class="label label-inverse-{{ $bgColor }}">{{ $purchasing->created_at->diffForHumans() }}</label>
-                          </td>
+                              $status = $purchasing->status;
 
-                          <td class="dropdown">
+                              $bgColor = 'success';
 
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+                              switch($status) {
+                                case '2':
+                                  $bgColor = 'warning';
+                                  break;
+                                case '3':
+                                  $bgColor = 'primary';
+                                  break;
+                                case '4':
+                                  $bgColor = 'primary';
+                                  break;
+                                case '5':
+                                  $bgColor = 'danger';
+                                  break;
+                              }
 
-                              @permission('view.ativos')
-                                <a href="{{route('purchasing.show', ['id' => $purchasing->uuid])}}" class="dropdown-item">Visualizar </a>
-                              @endpermission
+                            @endphp
 
-                              @permission('edit.ativos')
-                                <a href="{{route('purchasing.edit', ['id' => $purchasing->uuid])}}" class="dropdown-item">Editar </a>
-                              @endpermission
+                              <tr>
+                                  <th scope="row"><a href="{{route('purchasing.show', ['id' => $purchasing->uuid])}}">#{{ str_pad($purchasing->id, 6, "0", STR_PAD_LEFT) }}</a></th>
+                                  <td>{{ $purchasing->user->person->name }}</td>
+                                  <td style="white-space: normal;">{{ $purchasing->motive }}</th>
+                                  <td><span class="label label-{{$bgColor}}"> {{$purchasing->status}} </span></td>
+                                  <td>{{ $purchasing->created_at->format('d/m/Y H:i') }}
+                                      <label class="label label-inverse-{{ $bgColor }}">{{ $purchasing->created_at->diffForHumans() }}</label>
+                                  </td>
 
-                              @permission('edit.ativos')
-                                <a data-route="{{ route('purchasing.destroy', ['id' => $purchasing->uuid]) }}" style="cursor:pointer" class="dropdown-item text-danger btnRemoveItem">Remover </a>
-                              @endpermission
+                                  <td class="dropdown">
 
-                            </div>
-                          </td>
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                      </tr>
-                    @endforeach
+                                      @permission('view.ativos')
+                                        <a href="{{route('purchasing.show', ['id' => $purchasing->uuid])}}" class="dropdown-item">Visualizar </a>
+                                      @endpermission
 
-                  </tbody>
-              </table>
-          </div>
-      </div>
+                                      @permission('edit.ativos')
+                                        <a href="{{route('purchasing.edit', ['id' => $purchasing->uuid])}}" class="dropdown-item">Editar </a>
+                                      @endpermission
+
+                                      @permission('edit.ativos')
+                                        <a data-route="{{ route('purchasing.destroy', ['id' => $purchasing->uuid]) }}" style="cursor:pointer" class="dropdown-item text-danger btnRemoveItem">Remover </a>
+                                      @endpermission
+
+                                    </div>
+                                  </td>
+
+                              </tr>
+                            @endforeach
+
+                          </tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{ $purchasings->links() }}
+
   </div>
+
 </div>
 
 @endsection

@@ -13,10 +13,36 @@ class PurchasingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $purchasings = Purchasing::orderBy('status')->get();
-        return view('purchasing.index', compact('purchasings'));
+        $purchasings = Purchasing::orderByDesc('id');
+
+        if($request->filled('status')) {
+            $purchasings->where('status', $request->get('status'));
+        }
+
+        if($request->filled('start')) {
+            $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+            $purchasings->where('created_at', '>=', $start->format('Y-m-d') . ' 00:00:00');
+        }
+
+        if($request->filled('end')) {
+            $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+            $purchasings->where('created_at', '<=', $end->format('Y-m-d') . ' 23:59:59');
+        }
+
+        if($request->filled('user')) {
+            $purchasings->where('user_id', $request->get('user'));
+        }
+
+        $quantity = $purchasings->count();
+
+        $purchasings = $purchasings->paginate();
+
+        foreach ($request->all() as $key => $value) {
+            $purchasings->appends($key, $value);
+        }
+        return view('purchasing.index', compact('purchasings', 'quantity'));
     }
 
     /**

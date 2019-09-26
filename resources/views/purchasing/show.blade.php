@@ -36,7 +36,7 @@
       </div>
       <div class="card-block">
 
-        <p class="lead text-primary">#{{ $purchasing->id }}<p>
+        <p class="lead text-primary">#{{ str_pad($purchasing->id, 6, "0", STR_PAD_LEFT) }}<p>
 
         <p class="text-muted">Solicitante: {{ $purchasing->user->person->name }}<p>
         <p class="text-muted">Setor / Unidade: {{ $purchasing->user->person->department->name }} - {{ $purchasing->user->person->unit->name }}<p>
