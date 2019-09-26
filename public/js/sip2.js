@@ -29,7 +29,7 @@ $('.select-client').select2({
     }
   },
   cache: true,
-  placeholder: 'Procurar um cliente',
+  placeholder: 'Procurar cliente',
   minimumInputLength: 1,
 
 });
@@ -60,6 +60,7 @@ function formatRepoSelection(repo) {
 }
 
 $('.select-employees').select2({
+  placeholder: 'Procurar Funcionario',
   ajax: {
     type: "GET",
     dataType: 'json',
@@ -75,25 +76,20 @@ $('.select-employees').select2({
     },
     processResults: function (data, params) {
 
-        params.page = params.page || 1;
-
         return {
-            results: data,
-            pagination: {
-                more: (params.page * 30) < data.total_count
-            }
+
+            results: $.map(data, function (item) {
+                return {
+                    text: item.name + ' - ' + item.company,
+                    id: item.id
+                }
+            })
         };
     }
   },
   cache: true,
-  placeholder: 'Procurar um Funcionário',
+  placeholder: 'Procurar Funcionario',
   minimumInputLength: 3,
-  escapeMarkup: function(markup) {
-      return markup;
-  }, // let our custom formatter work
-  templateResult: formatRepo, // omitted for brevity, see the source of this page
-  templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
-
 });
 
 $('.select-client-occuparions').select2({

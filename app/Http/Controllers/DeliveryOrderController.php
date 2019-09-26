@@ -7,7 +7,7 @@ use App\Models\DeliveryOrder;
 use App\Models\DeliveryOrder\Log;
 use App\Models\{Client, People};
 use App\Models\Delivery\Document;
-use App\Models\Client\Address;
+use App\Models\Client\{Address, Employee};
 use App\Models\Department\Occupation;
 use App\Models\DeliveryOrder\Documents as DeliveryOrderDocuments;
 use App\Helpers\Constants;
@@ -66,6 +66,18 @@ class DeliveryOrderController extends Controller
           if($request->filled('client')) {
               $client = Client::uuid($request->get('client'));
               $orders->where('client_id', $client->id);
+          }
+
+          if($request->filled('employee')) {
+            
+              $employee = Employee::uuid($request->get('employee'));
+
+              $orders->whereHas('documents', function($query) use ($employee) {
+                  $query->whereHas('document', function($query2) use ($employee) {
+                      $query2->where('employee_id', $employee->id);
+                  });
+              });
+
           }
 
           if($request->filled('status')) {

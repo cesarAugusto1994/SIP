@@ -39,6 +39,11 @@ class DocumentsController extends Controller
               $documents->where('client_id', $client->id);
           }
 
+          if($request->filled('employee')) {
+              $employee = Employee::uuid($request->get('employee'));
+              $documents->where('employee_id', $employee->id);
+          }
+
           if($request->filled('status')) {
               $documents->where('status_id', $request->get('status'));
           }
@@ -287,7 +292,7 @@ class DocumentsController extends Controller
         }
 
         $data = $request->request->all();
-        
+
         $user = $request->user();
 
         $data['created_by'] = $user->id;

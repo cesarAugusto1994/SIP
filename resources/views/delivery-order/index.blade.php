@@ -206,6 +206,15 @@
                             <select class="form-control select-client" name="client"></select>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select-employees" name="employee" id="employees">
+                                <option value="">Selecionar Funcionário<option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="">
                         <button type="submit" class="btn btn-success btn-sm btn-block">
                             <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
