@@ -388,7 +388,10 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $data = $request->request->all();
-        $data['database'] = 'provider';
+
+        $schema = env('DB_DATABASE', 'provider');
+        $data['database'] = $schema;
+
         Table::create($data);
         return redirect()->route('tables.index');
     }
