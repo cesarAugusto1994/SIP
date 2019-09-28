@@ -187,7 +187,8 @@ return [
         Webklex\IMAP\Providers\LaravelServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         Unicodeveloper\DumbPassword\DumbPasswordServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -248,7 +249,7 @@ return [
         'Client' => Webklex\IMAP\Facades\Client::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
         'Lava' => 'Khill\Lavacharts\Laravel\LavachartsFacade',
-
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

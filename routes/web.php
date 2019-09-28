@@ -344,6 +344,31 @@ Route::middleware('auth')->group(function () {
           Route::post('training/team/{id}/presence-list/upload', 'TeamsController@uploadPresenceList')->name('teams_upload_presence_list');
 
           Route::get('training/team/{id}/presence-list/preview', 'TeamsController@previewPresenceList')->name('teams_preview_presence_list');
+
+          Route::resource('reports', 'ReportController');
+          Route::resource('tables', 'TableController');
+          Route::resource('queries', 'QueryController');
+
+          Route::get('tables/{id}/columns/import', 'TableController@importColumns')->name('table_import_columns');
+
+          Route::post('tables/columns/{id}/status-view', 'ColumnController@status')->name('column_status');
+
+          Route::get('columns/formats', 'UtilController@formats')->name('column_formats');
+          Route::get('tables/search/list', 'UtilController@tables')->name('tables_list');
+
+          Route::post('columns/{id}/formats/set', 'ColumnController@setFormat')->name('column_set_format');
+          Route::post('columns/{id}/label/set', 'ColumnController@setLabel')->name('column_set_label');
+          Route::post('columns/{id}/label/add', 'ColumnController@addLabel')->name('column_add_label');
+
+          Route::get('tables/{id}/execute/query', 'QueryController@executeQuery')->name('table_execute');
+          Route::post('columns/{id}/table-reference/set', 'ColumnController@setTableReference')->name('column_set_table_reference');
+
+          Route::get('tables/{id}/create/query', 'TableController@createQuery')->name('table_create_query');
+          Route::post('tables/{id}/create/store', 'TableController@storeQuery')->name('table_store_query');
+
+          Route::get('queries/{id}/execute', 'QueryController@execute')->name('query_execute');
+
+
     });
 
   });

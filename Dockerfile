@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libc-client-dev \
-    libkrb5-dev
+    libkrb5-dev \
+    libmcrypt-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
 RUN apt-get -y install nodejs npm
@@ -41,6 +42,7 @@ RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && docker-php-
 #RUN docker-php-ext-install imap
 #RUN docker-php-ext-install curl
 RUN docker-php-ext-install exif
+RUN pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

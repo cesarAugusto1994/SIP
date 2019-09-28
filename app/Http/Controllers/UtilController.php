@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Report\{Format, Table};
 use App\Models\Department;
 use App\User;
 
@@ -162,5 +163,31 @@ class UtilController extends Controller
         $mimetype = \Storage::disk('local')->mimeType($link);
 
         return response($file, 200)->header('Content-Type', $mimetype);
+    }
+
+    public function formats()
+    {
+        $formats = Format::all();
+
+        $result = [];
+
+        foreach ($formats as $format) {
+            $result[$format->id] = $format->name;
+        }
+
+        return json_encode($result);
+    }
+
+    public function tables()
+    {
+        $tables = Table::all();
+
+        $result = [];
+
+        foreach ($tables as $table) {
+            $result[$table->uuid] = $table->label ?? $table->name;
+        }
+
+        return json_encode($result);
     }
 }
