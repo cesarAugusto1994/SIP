@@ -86,9 +86,9 @@ class ParametersHelper
                             return $coluna->isLabel() == true;
                         });*/
 
-                        if (!empty($colPrimary)) {
+                        if ($colPrimary->isNotEmpty()) {
                             $col = $colPrimary->first()->name;
-                        } elseif (!empty($colLabel)) {
+                        } elseif ($colLabel->isNotEmpty()) {
                             $col = $colLabel->first()->name;
                         }
                     }
