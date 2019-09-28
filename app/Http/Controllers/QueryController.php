@@ -679,7 +679,7 @@ class QueryController extends Controller
                                 //dd($strColumn);
                                 foreach ($strColumn as $keyT => $strColumnC) {
                                     //dd($strColumnC);
-                                    $retorno[$key]['label'] = $strColumnC->title ?? $strColumnC->label ?? $strColumnC->name ?? null;
+                                    $retorno[$key]['label'] = $strColumnC->label ?? $strColumnC->name ?? null;
                                 }
                             }
 
