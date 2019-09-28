@@ -61,11 +61,11 @@
       <div class="card">
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
-                  <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_import_columns', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Importar Colunas</a>
+                  <a class="btn btn-mini btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_import_columns', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Importar Colunas</a>
 
-                  <a class="btn btn-sm btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_execute', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Executar</a>
+                  <a class="btn btn-mini btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_execute', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Executar</a>
 
-                  <a class="btn btn-sm btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{ route('table_create_query', $table->uuid) }}"><i class="icofont icofont-paper-plane"></i> Criar Query</a>
+                  <a class="btn btn-mini btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{ route('table_create_query', $table->uuid) }}"><i class="icofont icofont-paper-plane"></i> Criar Query</a>
               </div>
 
           </div>
@@ -87,9 +87,9 @@
                         <tr>
                             <th><a href="{{ route('query_execute', $query->uuid) }}">{{ $query->name }}</a>
                                 <button data-route="{{ route('queries.destroy', $query->uuid) }}"
-                                        class="btn btn-danger pull-right btn-sm btnRemoveItem">Remover
+                                        class="btn btn-danger pull-right btn-mini btnRemoveItem">Remover
                                 </button>
-                                <a href="#!" class="btn pull-right btn-sm">Editar Query</a>
+                                <a href="#!" class="btn pull-right btn-mini">Editar Query</a>
                             </th>
                         </tr>
                     @endforeach
@@ -111,7 +111,6 @@
                       <tr class="table-primary">
                           <th>Nome</th>
                           <th>Nome Visível</th>
-                          <th>Tipo</th>
                           <th>Label</th>
                           <th>Tabela Vinculada</th>
                           <th>Formato</th>
@@ -128,27 +127,28 @@
                             @if($column->is_primary_key)
                                 <span class="label label-danger">PK</span>
                             @endif
+
+                            <br/>
+                            <small>Tipo: {{ $column->type }}</small>
+
                           </td>
                           <td class="buttonsi"><span id="label-{{ $column->uuid }}">{{ $column->label }}</span>
 
                             @if($column->label)
                                 <button data-coluna="{{ $column->uuid }}"
                                   data-url="{{ route('column_set_label', $column->uuid) }}"
-                                  class="btn
-                            btn-primary btn-sm btnAddIdentificado">
+                                  class="btn btn-primary btn-mini btnAddIdentificado">
                                     Editar
                                 </button>
                             @else
                                 <button data-coluna="{{ $column->uuid }}"
                                   data-url="{{ route('column_set_label', $column->uuid) }}"
-                                  class="btn
-                            btn-success btn-sm btnAddIdentificado">
+                                  class="btn btn-success btn-mini btnAddIdentificado">
                                     Adicionar
                                 </button>
                             @endif
 
                           </td>
-                          <td>{{ $column->type }}</td>
 
                           <td class="buttonsi">{{ $column->is_label ? 'Sim' : 'Não' }}
 
@@ -156,14 +156,14 @@
                                 <button
                                 data-url="{{ route('column_add_label', $column->uuid) }}"
                                 data-coluna="{{ $column->uuid }}" data-acao="Adicionar" class="btn
-                            btn-success btn-sm btnAddLabel">
+                            btn-success btn-mini btnAddLabel">
                                     Adicionar
                                 </button>
                             @else
                                 <button
                                 data-url="{{ route('column_add_label', $column->uuid) }}"
                                 data-coluna="{{ $column->uuid }}" data-acao="Remover" class="btn
-                            btn-danger btn-sm btnAddLabel">
+                            btn-danger btn-mini btnAddLabel">
                                     Remover
                                 </button>
                             @endif
@@ -178,12 +178,12 @@
                                         <button data-coluna="{{ $column->uuid }}"
                                           data-route="{{ route('column_set_table_reference', $column->uuid) }}"
                                           data-url="{{ route('tables_list') }}"
-                                          class="btn btn-primary btn-sm btnAddTabela">Tocar
+                                          class="btn btn-primary btn-mini btnAddTabela">Tocar
                                         </button>
                                         <button data-coluna="{{ $column->uuid }}"
                                           data-route="{{ route('column_set_table_reference', $column->uuid) }}"
                                           data-url="{{ route('tables_list') }}"
-                                          class="btn btn-danger btn-sm btnARmTabela">Remover
+                                          class="btn btn-danger btn-mini btnARmTabela">Remover
                                         </button>
                                     </div>
 
@@ -192,7 +192,7 @@
                                       data-route="{{ route('column_set_table_reference', $column->uuid) }}"
                                       data-coluna="{{ $column->uuid }}"
                                       data-url="{{ route('tables_list') }}"
-                                      class="btn btn-success btn-sm btnAddTabela">
+                                      class="btn btn-success btn-mini btnAddTabela">
                                         Adicionar
                                     </button>
                                 @endif
@@ -205,14 +205,14 @@
                                 <button data-route="{{ route('column_set_format', $column->uuid) }}"
                                   data-url="{{ route('column_formats', $column->uuid) }}"
                                   data-coluna="{{ $column->uuid }}" class="btn
-                                  btn-primary btn-sm btnAddFormato">
+                                  btn-primary btn-mini btnAddFormato">
                                     Editar
                                 </button>
                             @else
                                 <button data-route="{{ route('column_set_format', $column->uuid) }}"
                                   data-url="{{ route('column_formats', $column->uuid) }}"
                                   data-coluna="{{ $column->uuid }}" class="btn
-                                  btn-success btn-sm btnAddFormato">
+                                  btn-success btn-mini btnAddFormato">
                                     Adicionar
                                 </button>
                             @endif
