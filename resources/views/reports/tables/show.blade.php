@@ -31,7 +31,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Tabela: {{ $table->name }}</h4>
+                    <h4>Tabela: {{ $table->label ?? $table->name }}</h4>
                 </div>
             </div>
         </div>
