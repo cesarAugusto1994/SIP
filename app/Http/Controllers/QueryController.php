@@ -517,6 +517,7 @@ class QueryController extends Controller
             $columns = $table->columns;
 
             foreach ($columns as $key => $column) {
+                $arrayColumns[$column->name]['parentTable'] = $column->table->name;
                 $arrayColumns[$column->name]['id'] = $column->id;
                 $arrayColumns[$column->name]['visualizar'] = $column->show;
                 $arrayColumns[$column->name]['nome'] = $column->name;
@@ -597,6 +598,7 @@ class QueryController extends Controller
                             'valor' => !is_null($item) ? $item : null,
                             'coluna' => $key,
                             'tabela' => null,
+                            'parentTable' => $arrayColumns[$key]['parentTable'],
                             'label' => null,
                             'nome' => $arrayColumns[$key]['identificador'] ?: $arrayColumns[$key]['nome'],
                         ];
@@ -621,6 +623,7 @@ class QueryController extends Controller
                             'valor' => !is_null($item) ? $item : null,
                             'coluna' => $key,
                             'tabela' => $arrayColumns[$key]['tabelaNome'],
+                            'parentTable' => $arrayColumns[$key]['parentTable'],
                             'label' => $item,
                             'nome' => $arrayColumns[$key]['identificador'] ?: $arrayColumns[$key]['nome'],
                         ];

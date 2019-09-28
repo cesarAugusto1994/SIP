@@ -78,7 +78,7 @@
                                     @php
                                       //dd($item);
                                     @endphp
-                                    <td><a href="/execute/{{ $item['tabela'] }}/{{ $item['coluna'] }}/{{ $item['valor'] }}">
+                                    <td><a href="{{ route('table_query_search', ['id' => $item['parentTable'], 'column' => $item['coluna'], 'value' => $item['valor']]) }}">
                                           @if($item['label']){{ $item['label'] }}@else{{ $item['valor'] }}@endif</a></td>
 
                                   @else
