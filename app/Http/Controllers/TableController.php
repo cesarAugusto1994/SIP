@@ -26,7 +26,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        $schema = 'provider';
+        $schema = env('DB_DATABASE', 'provider');
 
         $tables = [];
 
@@ -414,7 +414,7 @@ class TableController extends Controller
 
         $columns = [];
 
-        $schema = 'provider';
+        $schema = env('DB_DATABASE', 'provider');
 
         $sql = "
           SELECT

@@ -42,7 +42,7 @@ class QueryController extends Controller
             ->select(DB::raw($selectColumns))
             ->paginate();
 
-            return view('reports.queries.execute', compact('result', 'columns', 'query', 'table'));
+            return view('reports.queries.execute', compact('result', 'columns', 'table'));
 
         } catch (\Exception $e) {
             throw $e;
