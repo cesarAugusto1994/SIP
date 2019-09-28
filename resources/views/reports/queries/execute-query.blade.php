@@ -20,9 +20,11 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('tables.index') }}"> Queries </a>
                     </li>
+                    @if($query)
                     <li class="breadcrumb-item">
                         <a href="{{ route('tables.show', $query->uuid) }}"> Informações </a>
                     </li>
+                    @endif
                     <li class="breadcrumb-item"><a href="#!">Resultado</a>
                     </li>
                 </ul>
@@ -35,6 +37,7 @@
 
   <div class="row">
 
+    @if($parametrosR)
     <div class="col-xl-12 col-lg-12 filter-bar">
 
       <div class="card">
@@ -42,11 +45,11 @@
 
             <form>
 
-                @if($parametrosR)
+
                     @foreach($parametrosR as $pr)
                         {!! $pr !!}
                     @endforeach
-                @endif
+
 
               <button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-flash"> </span>Executar</button>
 
@@ -55,12 +58,13 @@
           </div>
       </div>
     </div>
+    @endif
 
   </div>
 
   <div class="card">
       <div class="card-header">
-          <h5>Tabela: {{ $query->label ?? $query->name }}</h5>
+          <h5>Tabela: {{ $query->label ?? $query->name ?? null }}</h5>
           <span>Registros retornados: {{ count($result) }}</span>
       </div>
       <div class="card-block table-border-style">
@@ -88,7 +92,7 @@
                                     @php
                                       //dd($item);
                                     @endphp
-                                    <td><a href="/execute/{{ $item['tabela'] }}/{{ $item['coluna'] }}/{{ $item['valor'] }}">
+                                    <td><a href="{{ route('table_query_search', ['id' => $item['parentTable'], 'column' => $item['coluna'], 'value' => $item['valor']]) }}">
                                           @if($item['label']){{ $item['label'] }}@else{{ $item['valor'] }}@endif</a></td>
 
                                   @else

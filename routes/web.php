@@ -368,6 +368,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('queries/{id}/execute', 'QueryController@execute')->name('query_execute');
 
+          Route::get('tables/{id}/search/execute', 'QueryController@executeTableQuery')->name('table_query_search');
+
 
     });
 

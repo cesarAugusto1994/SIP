@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Tabelas</h4>
+                    <h4>Queries</h4>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                       <thead>
                       <tr class="table-primary">
                           @foreach($columns as $column)
-                              <th data-sortable="true">{{ $column->label ?? $column->name }}</th>
+                              <th data-sortable="true">{{ $column }}</th>
                           @endforeach
                       </tr>
                       </thead>
@@ -71,11 +71,27 @@
                     @foreach($result as $items)
                         <tr>
                             @foreach($items as $item)
+                              @if(is_array($item))
+
+                                  @if($item['tabela'])
+
+                                    @php
+                                      //dd($item);
+                                    @endphp
+                                    <td><a href="/execute/{{ $item['tabela'] }}/{{ $item['coluna'] }}/{{ $item['valor'] }}">
+                                          @if($item['label']){{ $item['label'] }}@else{{ $item['valor'] }}@endif</a></td>
+
+                                  @else
+                                    <td>{!! $item['valor'] !!}</td>
+                                  @endif
+
+                              @else
                                 <td>{{ $item }}</td>
+                              @endif
                             @endforeach
                         </tr>
                     @endforeach
-                    <tr><td colspan="{{ count($result) }}">{{ $result->links() }}</td></tr>
+                    <tr><td colspan="{{ $result->count() }}">{{ $result->links() }}</td></tr>
                   </tbody>
               </table>
           </div>
