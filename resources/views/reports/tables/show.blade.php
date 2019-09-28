@@ -61,11 +61,11 @@
       <div class="card">
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
-                  <a class="btn btn-mini btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_import_columns', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Importar Colunas</a>
+                  <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_import_columns', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Importar Colunas</a>
 
-                  <a class="btn btn-mini btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_execute', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Executar</a>
+                  <a class="btn btn-sm btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('table_execute', $table->uuid)}}"><i class="icofont icofont-paper-plane"></i> Executar</a>
 
-                  <a class="btn btn-mini btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{ route('table_create_query', $table->uuid) }}"><i class="icofont icofont-paper-plane"></i> Criar Query</a>
+                  <a class="btn btn-sm btn-primary btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{ route('table_create_query', $table->uuid) }}"><i class="icofont icofont-paper-plane"></i> Criar Query</a>
               </div>
 
           </div>
