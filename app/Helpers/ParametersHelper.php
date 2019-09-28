@@ -339,9 +339,9 @@ class ParametersHelper
                                       </div>';
                 break;
 
-            case 'CASA' :
-                $select = '<div class="form-group">
-                                        <label class="control-label col-sm-2" for="' . $parameter->name . '">' . $nome . ':</label>
+            case 'Select' :
+                $select = '<div class="form-group row">
+                                        <label class="col-form-label col-sm-2" for="' . $parameter->name . '">' . $nome . ':</label>
                                         <div class="col-sm-10">
                                         <select class="selectpicker" required title="Nada Selecionado" multiple data-actions-box="true"
                                         data-width="100%" id="' . $parameter->name . '" name=' . $parameter->name . '[]>';
@@ -392,8 +392,8 @@ class ParametersHelper
                 break;
             case Format::TYPE_DATE :
 
-                $todo = '<div class="form-group">
-                                        <label class="control-label col-sm-2" for="' . $parameter->name . '">' . $nome . ':</label>
+                $todo = '<div class="form-group row">
+                                        <label class="col-form-label col-sm-2" for="' . $parameter->name . '">' . $nome . ':</label>
                                         <div class="col-sm-10">
                                             <div class="input-daterange input-group" id="datepicker">
                                                 <input type="text" class="input-sm form-control" name="' . $parameter->name . '-inicio" />
@@ -403,19 +403,19 @@ class ParametersHelper
                                         </div>
                                       </div>';
 
-                $retorno = '<div class="form-group">
-                                        <label class="control-label col-sm-2" for="' . $parametro->getNome() . '">' . $nome . ':</label>
+                $retorno = '<div class="form-group row">
+                                        <label class="col-form-label col-sm-2" for="' . $parameter->name . '">' . $nome . ':</label>
                                         <div class="col-sm-10">
-                                            <input type="text" required class="form-control datepicker" name="' . $parametro->getNome() . '" value="' . $request . '"/>
+                                            <input type="text" required class="form-control datepicker inputDate" name="' . $parameter->name . '" value="' . $request . '"/>
                                         </div>
                                       </div>';
                 break;
             case Format::TYPE_DATE_TIME :
 
-                $retorno = '<div class="form-group">
-                                        <label class="control-label col-sm-2" for="' . $parametro->getNome() . '">' . $parametro->getColuna()->getNomeFormatado() . ':</label>
+                $retorno = '<div class="form-group row">
+                                        <label class="col-form-label col-sm-2" for="' . $parameter->name . '">' . $parameter->column->label ?? $parameter->column->name . ':</label>
                                         <div class="col-sm-10">
-                                            <input type="text" required class="form-control datepicker2" name="' . $parametro->getNome() . '" value="' . $request . '"/>
+                                            <input type="text" required class="form-control datepicker2" name="' . $parameter->name . '" value="' . $request . '"/>
                                         </div>
                                       </div>';
                 break;

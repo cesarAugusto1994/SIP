@@ -72,6 +72,7 @@
                       <label class="col-form-label">Colunas</label>
                       <div class="input-group">
                         <select required class="select2 colunas" id="columns" multiple name="select[]">
+                            <option value="all">Todas Colunas</option>
                             @foreach($table->columns as $column)
                                 <option value="{{ $column->uuid }}">{{ $column->label ?? $column->name }}</option>
                             @endforeach
@@ -96,6 +97,7 @@
                       <label class="col-form-label">Onde</label>
                       <div class="input-group">
                         <select class="select2" multiple name="where[]">
+                            <option value="all">Todas Colunas</option>
                             @foreach($table->columns as $column)
                                 <option value="{{ $column->uuid }}">{{ $column->label ?? $column->name }}</option>
                             @endforeach

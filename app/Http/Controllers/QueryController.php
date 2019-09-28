@@ -527,6 +527,7 @@ class QueryController extends Controller
             }
 
             $retorno = [];
+            $colunas = $arrayResult = [];
 
             foreach ($result as $itens) {
 

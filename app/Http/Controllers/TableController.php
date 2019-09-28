@@ -82,7 +82,11 @@ class TableController extends Controller
             $arrayColumns[$column->id] = $column->name;
         }
 
-        $columns = Column::whereIn('uuid', $select)->get();
+        if(in_array('all', $select)) {
+          $columns = $table->columns;
+        } else {
+          $columns = Column::whereIn('uuid', $select)->get();
+        }
 
         $alias = $table->name;
 

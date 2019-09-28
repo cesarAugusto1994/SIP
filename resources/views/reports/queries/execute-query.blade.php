@@ -41,6 +41,10 @@
     <div class="col-xl-12 col-lg-12 filter-bar">
 
       <div class="card">
+          <div class="card-header">
+              <h5>Query: {{ $query->label ?? $query->name ?? null }}</h5>
+              <span>Formulário de Pesquisa</span>
+          </div>
           <div class="card-block">
 
             <form>

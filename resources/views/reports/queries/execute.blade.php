@@ -33,21 +33,6 @@
 
 <div class="page-body">
 
-  <div class="row">
-
-    <div class="col-xl-12 col-lg-12 filter-bar">
-
-      <div class="card">
-          <div class="card-block">
-              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
-                  <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('tables.create')}}"><i class="icofont icofont-paper-plane"></i> Adicionar Tabela</a>
-              </div>
-          </div>
-      </div>
-    </div>
-
-  </div>
-
   <div class="card">
       <div class="card-header">
           <h5>Tabela: {{ $table->label ?? $table->name }}</h5>
