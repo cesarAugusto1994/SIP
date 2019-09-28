@@ -69,7 +69,7 @@ class DeliveryOrderController extends Controller
           }
 
           if($request->filled('employee')) {
-            
+
               $employee = Employee::uuid($request->get('employee'));
 
               $orders->whereHas('documents', function($query) use ($employee) {
@@ -294,7 +294,9 @@ class DeliveryOrderController extends Controller
 
         $file = \Storage::disk('local')->path($user->avatar);
 
-        return view('pdf.tags', compact('delivery', 'file'));
+        //return view('pdf.tags', compact('delivery', 'file'));
+
+        return view('delivery-order.protocol-simple', compact('delivery', 'file'));
     }
 
     public function printBatchList(Request $request)
