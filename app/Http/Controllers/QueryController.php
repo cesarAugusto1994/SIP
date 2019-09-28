@@ -275,7 +275,7 @@ class QueryController extends Controller
             }, $colunas);
 
         }
-*/
+          */
         if ($result) {
 
           $arrayColumns = [];
@@ -520,7 +520,7 @@ class QueryController extends Controller
                 $arrayColumns[$column->name]['parentTable'] = $column->table->name;
                 $arrayColumns[$column->name]['id'] = $column->id;
                 $arrayColumns[$column->name]['visualizar'] = $column->show;
-                $arrayColumns[$column->name]['nome'] = $column->name;
+                $arrayColumns[$column->name]['nome'] = $column->label ?? $column->name;
                 $arrayColumns[$column->name]['identificador'] = $column->label;
                 $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->id : null;
                 $arrayColumns[$column->name]['tabelaNome'] = $column->tableReference ? $column->tableReference->name : null;
@@ -678,10 +678,9 @@ class QueryController extends Controller
 
                                 //dd($strColumn);
                                 foreach ($strColumn as $keyT => $strColumnC) {
-                                    //echo ($strColumnC->name);
-                                    $retorno[$key]['label'] = $strColumnC->name ?? null;
+                                    //dd($strColumnC);
+                                    $retorno[$key]['label'] = $strColumnC->title ?? $strColumnC->label ?? $strColumnC->name ?? null;
                                 }
-
                             }
 
                             if ($cs->label && $cs->name == $arrayColumns[$key]['nome']) {
