@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Report\{Table, Column, Query, Format};
 use App\Helpers\ParametersHelper;
+use DateTime;
 use DB;
 
 class QueryController extends Controller
@@ -231,7 +232,7 @@ class QueryController extends Controller
                   $arrayColumns[$column->name]['visualizar'] = $column->show;
                   $arrayColumns[$column->name]['nome'] = $column->name;
                   $arrayColumns[$column->name]['identificador'] = $column->label;
-                  $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->name : null;
+                  $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->id : null;
                   $arrayColumns[$column->name]['tabelaNome'] = $column->tableReference ? $column->tableReference->name : null;
               }
 
@@ -263,7 +264,7 @@ class QueryController extends Controller
                                       break;
                                   }
 
-                                  $data = DateTime::createFromFormat('Ymd', $item);
+                                  $data = DateTime::createFromFormat('Y-m-d', $item);
 
                                   if (!$data instanceof DateTime) {
                                       break;
@@ -288,11 +289,11 @@ class QueryController extends Controller
                                   break;
 
                               case Format::TYPE_BOOLEAN_CONFIRMATION :
-                                  $item = $item ? 'Sim' : 'Nao';
+                                  $item = $item ? '<span class="label label-success">Sim</span>' : '<span class="label label-danger">Não</span>';
                                   break;
 
                               case Format::TYPE_BOOLEAN_SITUATION :
-                                  $item = $item ? 'Ativo' : 'Inativo';
+                                  $item = $item ? '<span class="label label-success">Ativo</span>' : '<span class="label label-danger">Inativo</span>';
                                   break;
 
                               case Format::TYPE_MONEY :

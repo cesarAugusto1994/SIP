@@ -133,7 +133,7 @@ class ParametersHelper
 
                             $pk =  $label = $valor = null;
 
-                            if($colunaChavePrimaria) {
+                            if($colunaChavePrimaria->isNotEmpty()) {
                                 $pk = $colunaChavePrimaria->first()->name;
                             }
 

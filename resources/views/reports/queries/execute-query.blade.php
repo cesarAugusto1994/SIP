@@ -92,7 +92,7 @@
                                           @if($item['label']){{ $item['label'] }}@else{{ $item['valor'] }}@endif</a></td>
 
                                   @else
-                                    <td>{{ $item['valor'] }}</td>
+                                    <td>{!! $item['valor'] !!}</td>
                                   @endif
 
                               @else
