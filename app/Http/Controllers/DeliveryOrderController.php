@@ -179,7 +179,7 @@ class DeliveryOrderController extends Controller
 
         $deliveriesPerMonth->addDateColumn('Mês')
                  ->addNumberColumn('Entregas')
-                 ->setDateTimeFormat('Y-m-d');
+                 ->setDateTimeFormat('Y-m');
 
         $quantityPerDay = [];
         $deliveriesPerPeriodo = [];
@@ -191,7 +191,7 @@ class DeliveryOrderController extends Controller
             }
 
             $date = $delivery->delivered_at->format('Y-m-d');
-            $dateA = $delivery->delivered_at->format('Y-m-d');
+            $dateA = $delivery->delivered_at->format('Y-m');
 
             if(!isset($quantityPerDay[$date])) {
                 $quantityPerDay[$date] = 0;
