@@ -248,6 +248,7 @@ class DeliveryOrderController extends Controller
         $loopToday = 0;
         $loopWeek = 0;
         $loopMonth = 0;
+        $loopTotal = 0;
 
         $date = $first;
 
@@ -260,6 +261,7 @@ class DeliveryOrderController extends Controller
         foreach ($deliveries as $key => $delivery) {
 
             $amount = 0.00;
+            $loopTotal++;
 
             if($delivery->client->charge_delivery && $delivery->amount) {
                 $amount = 5.00;
@@ -314,7 +316,7 @@ class DeliveryOrderController extends Controller
             $result['total'] = [
               'title' => 'Total',
               'amount' => number_format($totalAmount, 2, ',', '.'),
-              'count' => $loopToday
+              'count' => $loopTotal
             ];
 
         }
