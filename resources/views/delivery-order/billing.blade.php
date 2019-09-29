@@ -30,18 +30,16 @@
 
 <div class="page-body">
   <div class="row">
-      <div class="col-xl-6">
-          <!-- Sales and expense card start -->
+
+      <div class="col-xl-6 col-md-6">
           <div class="card">
-              <div class="card-header">
-                  <h5>Entregas Mensais</h5>
-              </div>
               <div class="card-block">
-              <canvas id="barChart" width="400" height="300"></canvas>
+                  <div id="deliv-div"></div>
+                  {!! $lava->render('ColumnChart', 'EntregasPorMes', 'deliv-div') !!}
               </div>
           </div>
-          <!-- Sales and expense card end -->
       </div>
+
       <div class="col-xl-6">
           <!-- Sales, Receipt and Dues card start -->
           <div class="card">
@@ -83,6 +81,8 @@
               </div>
           </div>
       </div>
+
+
 
       <div class="col-lg-12">
           <!-- Recent Orders card start -->
@@ -140,7 +140,7 @@
 
         var url = $("#billing-graph").val();
 
-        $.ajax({
+        /*$.ajax({
           type: 'GET',
           url: url,
           async: true,
@@ -204,7 +204,7 @@
 
           }
         })
-
+        */
     }
 
   </script>

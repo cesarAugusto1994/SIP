@@ -175,12 +175,19 @@ class DeliveryOrderController extends Controller
         $deliv->addDateColumn('Date')
               ->addNumberColumn('Entregas');
 
+        $deliveriesPerMonth = $lava->DataTable();
+
+        $deliveriesPerMonth->addDateColumn('Mês')
+                 ->addNumberColumn('Entregas')
+                 ->setDateTimeFormat('Y-m-d');
+
         $quantityPerDay = [];
         $deliveriesPerPeriodo = [];
 
         foreach ($deliveries as $key => $delivery) {
 
             $date = $delivery->created_at->format('Y-m-d');
+            $dateA = $delivery->created_at->format('Y-m-d');
 
             if(!isset($quantityPerDay[$date])) {
                 $quantityPerDay[$date] = 0;
@@ -189,6 +196,14 @@ class DeliveryOrderController extends Controller
             $q = $quantityPerDay[$date] += 1;
 
             $deliv->addRow([$delivery->created_at, $q]);
+
+            if(!isset($quantityPerDay[$dateA])) {
+                $quantityPerDay[$dateA] = 0;
+            }
+
+            $qA = $quantityPerDay[$dateA] += 1;
+
+            $deliveriesPerMonth->addRow([$dateA, $qA]);
 
         }
 
@@ -211,6 +226,14 @@ class DeliveryOrderController extends Controller
             'colorAxis' => [
                 'values' => [0, 100],
                 'colors' => ['black', 'green']
+            ]
+        ]);
+
+        $lava->ColumnChart('EntregasPorMes', $deliveriesPerMonth, [
+            'title' => 'Entregas Por Mês',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
             ]
         ]);
 
