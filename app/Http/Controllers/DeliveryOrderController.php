@@ -186,7 +186,7 @@ class DeliveryOrderController extends Controller
 
         foreach ($deliveries as $key => $delivery) {
 
-            if($delivery->delivered_at) {
+            if(!$delivery->delivered_at) {
                continue;
             }
 
