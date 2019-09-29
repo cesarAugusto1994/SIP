@@ -158,7 +158,7 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
-        $deliveries = DeliveryOrder::where('status_id', Constants::STATUS_DELIVERY_FINALIZADA)->get();
+        $deliveries = DeliveryOrder::whereIn('status_id', [1,2,3,Constants::STATUS_DELIVERY_FINALIZADA])->get();
 
         $first = new DateTime('first day of this month');
         $last = new DateTime('last day of this month');
@@ -167,6 +167,52 @@ class DeliveryOrderController extends Controller
           $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
           $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
         }
+
+        $lava = new Lavacharts;
+
+        $deliv = $lava->DataTable();
+
+        $deliv->addDateColumn('Date')
+              ->addNumberColumn('Entregas');
+
+        $quantityPerDay = [];
+        $deliveriesPerPeriodo = [];
+
+        foreach ($deliveries as $key => $delivery) {
+
+            $date = $delivery->created_at->format('Y-m-d');
+
+            if(!isset($quantityPerDay[$date])) {
+                $quantityPerDay[$date] = 0;
+            }
+
+            $q = $quantityPerDay[$date] += 1;
+
+            $deliv->addRow([$delivery->created_at, $q]);
+
+        }
+
+        $lava->CalendarChart('Entregas', $deliv, [
+            'title' => 'Entregas Por Dia',
+            'unusedMonthOutlineColor' => [
+                'stroke'        => '#ECECEC',
+                'strokeOpacity' => 0.75,
+                'strokeWidth'   => 1
+            ],
+            'dayOfWeekLabel' => [
+                'color'    => '#4f5b0d',
+                'fontSize' => 16,
+                'italic'   => true
+            ],
+            'noDataPattern' => [
+                'color' => '#DDD',
+                'backgroundColor' => '#11FFFF'
+            ],
+            'colorAxis' => [
+                'values' => [0, 100],
+                'colors' => ['black', 'green']
+            ]
+        ]);
 
         $data = [];
 
@@ -250,7 +296,7 @@ class DeliveryOrderController extends Controller
 
         }
 
-        return view('delivery-order.billing', compact('result', 'deliveries'));
+        return view('delivery-order.billing', compact('result', 'deliveries', 'lava'));
     }
 
     public function billingGraph()

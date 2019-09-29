@@ -74,6 +74,16 @@
           </div>
           <!-- Sales, Receipt and Dues card end -->
       </div>
+
+      <div class="col-xl-12 col-md-6">
+          <div class="card">
+              <div class="card-block">
+                  <div id="sales_div"></div>
+                  {!! $lava->render('CalendarChart', 'Entregas', 'sales_div') !!}
+              </div>
+          </div>
+      </div>
+
       <div class="col-lg-12">
           <!-- Recent Orders card start -->
           <div class="card">
