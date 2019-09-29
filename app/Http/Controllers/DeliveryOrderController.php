@@ -158,7 +158,7 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
-        $deliveries = DeliveryOrder::whereIn('status_id', [1,2,3,Constants::STATUS_DELIVERY_FINALIZADA])->get();
+        $deliveries = DeliveryOrder::whereIn('status_id', [Constants::STATUS_DELIVERY_FINALIZADA])->get();
 
         $first = new DateTime('first day of this month');
         $last = new DateTime('last day of this month');
@@ -186,8 +186,12 @@ class DeliveryOrderController extends Controller
 
         foreach ($deliveries as $key => $delivery) {
 
-            $date = $delivery->created_at->format('Y-m-d');
-            $dateA = $delivery->created_at->format('Y-m-d');
+            if($delivery->delivered_at) {
+               continue;
+            }
+
+            $date = $delivery->delivered_at->format('Y-m-d');
+            $dateA = $delivery->delivered_at->format('Y-m-d');
 
             if(!isset($quantityPerDay[$date])) {
                 $quantityPerDay[$date] = 0;
