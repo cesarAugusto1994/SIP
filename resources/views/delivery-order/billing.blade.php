@@ -181,7 +181,7 @@
                                   <td>{{ $deliveries->count() }}</td>
                                   <td>
                                     @if($deliveries->first()->client->charge_delivery && $deliveries->sum('amount'))
-                                      <label class="label label-md label-success">{{ number_format($deliveries->sum('amount'), 2, ',', '.') }}</label>
+                                      <label class="label label-md label-success">{{ number_format($deliveries->count()*5.00, 2, ',', '.') }}</label>
                                     @else
                                       <label class="label label-md label-primary">Valor não cobrado</label>
                                     @endif
