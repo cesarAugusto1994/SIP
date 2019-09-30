@@ -175,7 +175,7 @@ class DeliveryOrderController extends Controller
         }
 
         $deliveries = $deliveries->get();
-        $deliveriesGroupedByClient = $deliveries->groupBy('client_id');
+        $deliveriesGroupedByClient = $deliveries->sortBy('client.name')->groupBy('client_id');
 
         $lava = new Lavacharts;
 
