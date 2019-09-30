@@ -511,198 +511,195 @@ class QueryController extends Controller
 
             if ($result) {
 
-            $arrayColumns = [];
+              $arrayColumns = [];
 
-            //$table = $query->table;
-            $columns = $table->columns;
+              //$table = $query->table;
+              $columns = $table->columns;
 
-            foreach ($columns as $key => $column) {
-                $arrayColumns[$column->name]['parentTable'] = $column->table->name;
-                $arrayColumns[$column->name]['id'] = $column->id;
-                $arrayColumns[$column->name]['visualizar'] = $column->show;
-                $arrayColumns[$column->name]['nome'] = $column->label ?? $column->name;
-                $arrayColumns[$column->name]['identificador'] = $column->label;
-                $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->id : null;
-                $arrayColumns[$column->name]['tabelaNome'] = $column->tableReference ? $column->tableReference->name : null;
-            }
+              foreach ($columns as $key => $column) {
+                  $arrayColumns[$column->name]['parentTable'] = $column->table->name;
+                  $arrayColumns[$column->name]['id'] = $column->id;
+                  $arrayColumns[$column->name]['visualizar'] = (boolean)$column->show;
+                  $arrayColumns[$column->name]['nome'] = $column->name;
+                  $arrayColumns[$column->name]['label'] = $column->label;
+                  $arrayColumns[$column->name]['identificador'] = $column->label;
+                  $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->id : null;
+                  $arrayColumns[$column->name]['tabelaNome'] = $column->tableReference ? $column->tableReference->name : null;
+              }
 
-            $retorno = [];
-            $colunas = $arrayResult = [];
+              $retorno = [];
+              $colunas = $arrayResult = [];
 
-            foreach ($result as $itens) {
+              foreach ($result as $itens) {
 
-                foreach ($itens as $key => $item) {
+                  foreach ($itens as $key => $item) {
 
-                    if (empty($item)) {
-                        $item = null;
-                    }
+                      if (empty($item)) {
+                          $item = null;
+                      }
 
-                    if (isset($arrayColumns[$key]) && !$arrayColumns[$key]['visualizar']) {
-                        //unset($itens[$key]);
-                    }
+                      if (isset($arrayColumns[$key]) && !$arrayColumns[$key]['visualizar']) {
+                          //unset($itens[$key]);
+                      }
 
-                    if (!isset($arrayColumns[$key])) {
-                        continue;
-                    }
+                      if (!isset($arrayColumns[$key])) {
+                          continue;
+                      }
 
-                    if (!empty($arrayColumns[$key]['formato'])) {
+                      if (!empty($arrayColumns[$key]['formato'])) {
 
-                        switch ($arrayColumns[$key]['formato']) {
+                          switch ($arrayColumns[$key]['formato']) {
 
-                            case Format::TYPE_DATE :
+                              case Format::TYPE_DATE :
 
-                                if (empty($item)) {
-                                    break;
-                                }
+                                  if (empty($item)) {
+                                      break;
+                                  }
 
-                                $data = DateTime::createFromFormat('Y-m-d', $item);
+                                  $data = DateTime::createFromFormat('Y-m-d', $item);
 
-                                if (!$data instanceof DateTime) {
-                                    break;
-                                }
+                                  if (!$data instanceof DateTime) {
+                                      break;
+                                  }
 
-                                $item = $data->format('d/m/Y');
-                                break;
+                                  $item = $data->format('d/m/Y');
+                                  break;
 
-                            case Format::TYPE_DATE_TIME :
+                              case Format::TYPE_DATE_TIME :
 
-                                if (empty($item)) {
-                                    break;
-                                }
+                                  if (empty($item)) {
+                                      break;
+                                  }
 
-                                $data = DateTime::createFromFormat('Y-m-d H:i:s', $item);
+                                  $data = DateTime::createFromFormat('Y-m-d H:i:s', $item);
 
-                                if (!$data instanceof DateTime) {
-                                    break;
-                                }
+                                  if (!$data instanceof DateTime) {
+                                      break;
+                                  }
 
-                                $item = $data->format('d/m/Y H:i:s');
-                                break;
+                                  $item = $data->format('d/m/Y H:i:s');
+                                  break;
 
-                            case Format::TYPE_BOOLEAN_CONFIRMATION :
-                                $item = $item ? '<span class="label label-success">Sim</span>' : '<span class="label label-danger">Não</span>';
-                                break;
+                              case Format::TYPE_BOOLEAN_CONFIRMATION :
+                                  $item = $item ? '<span class="label label-success">Sim</span>' : '<span class="label label-danger">Não</span>';
+                                  break;
 
-                            case Format::TYPE_BOOLEAN_SITUATION :
-                                $item = $item ? '<span class="label label-success">Ativo</span>' : '<span class="label label-danger">Inativo</span>';
-                                break;
+                              case Format::TYPE_BOOLEAN_SITUATION :
+                                  $item = $item ? '<span class="label label-success">Ativo</span>' : '<span class="label label-danger">Inativo</span>';
+                                  break;
 
-                            case Format::TYPE_MONEY :
-                                $item = number_format($item, 2);
-                                break;
-                        }
+                              case Format::TYPE_MONEY :
+                                  $item = number_format($item, 2);
+                                  break;
+                          }
 
-                    }
+                      }
 
-                    if ($key == $arrayColumns[$key]['nome'] && !empty($arrayColumns[$key]['visualizar'])) {
-                        $retorno[$key] = [
-                            'valor' => !is_null($item) ? $item : null,
-                            'coluna' => $key,
-                            'tabela' => null,
-                            'parentTable' => $arrayColumns[$key]['parentTable'],
-                            'label' => null,
-                            'nome' => $arrayColumns[$key]['identificador'] ?: $arrayColumns[$key]['nome'],
-                        ];
-                    }
+                      //dd($arrayColumns[$key]['nome']);
 
-                    if ($key == $arrayColumns[$key]['nome'] && !empty($arrayColumns[$key]['tabelaNome'])) {
+                      if ($key == $arrayColumns[$key]['nome'] && !empty($arrayColumns[$key]['visualizar'])) {
+                          $retorno[$key] = [
+                              'valor' => !is_null($item) ? $item : null,
+                              'coluna' => $key,
+                              'tabela' => null,
+                              'parentTable' => $arrayColumns[$key]['parentTable'],
+                              'label' => null,
+                              'nome' => $arrayColumns[$key]['label'] ?? $arrayColumns[$key]['nome'],
+                          ];
+                      }
 
-                        if (!$arrayColumns[$key]['visualizar']) {
-                            continue;
-                        }
+                      if ($key == $arrayColumns[$key]['nome'] && !empty($arrayColumns[$key]['tabelaNome'])) {
 
-                        //dd($arrayColumns[$key]['tabelaNome']);
+                          if (!$arrayColumns[$key]['visualizar']) {
+                              continue;
+                          }
 
-                        $table = Table::where('name', $arrayColumns[$key]['tabelaNome'])->first();
+                          $table = Table::where('name', $arrayColumns[$key]['tabelaNome'])->first();
 
-                        //$table = $app['tables.repository']->findOneBy(['nome' => $arrayColumns[$key]['tabelaNome']]);
-                        //$columnsB = $app['columns.repository']->findBy(['tabela' => $table]);
+                          $columnsB = $table->columns;
 
-                        $columnsB = $table->columns;
+                          $retorno[$key] = [
+                              'valor' => !is_null($item) ? $item : null,
+                              'coluna' => $key,
+                              'tabela' => $arrayColumns[$key]['tabelaNome'],
+                              'parentTable' => $arrayColumns[$key]['parentTable'],
+                              'label' => $item,
+                              'nome' => $arrayColumns[$key]['identificador'] ?: $arrayColumns[$key]['nome'],
+                          ];
 
-                        $retorno[$key] = [
-                            'valor' => !is_null($item) ? $item : null,
-                            'coluna' => $key,
-                            'tabela' => $arrayColumns[$key]['tabelaNome'],
-                            'parentTable' => $arrayColumns[$key]['parentTable'],
-                            'label' => $item,
-                            'nome' => $arrayColumns[$key]['identificador'] ?: $arrayColumns[$key]['nome'],
-                        ];
+                          $nomesColunas = $columnsB->map(function($column) {
+                              return $column->name;
+                          });
 
-                        $nomesColunas = $columnsB->map(function($column) {
-                            return $column->name;
-                        });
+                          $chavePrimaria = $columnsB->filter(function($column, $k) {
+                              return $column->is_primary_key == true;
+                          })->first();
 
-                        $chavePrimaria = $columnsB->filter(function($column, $k) {
-                            return $column->is_primary_key == true;
-                        })->first();
+                          $pk = $chavePrimaria->name ?? 'id';
 
-                        //dd($chavePrimaria);
+                          foreach ($columnsB as $cs) {
 
-                        $pk = $chavePrimaria->name ?? 'id';
+                              /**
+                               * @var Colunas $cs
+                               */
+                              if ($cs->is_label) {
 
-                        foreach ($columnsB as $cs) {
+                                  if (!$item) {
+                                      continue;
+                                  }
 
-                            /**
-                             * @var Colunas $cs
-                             */
-                            if ($cs->is_label) {
+                                  $field = $key;
 
-                                if (!$item) {
-                                    continue;
-                                }
+                                  $hasKey = $nomesColunas->search($key);
 
-                                $field = $key;
+                                  if(!$hasKey) {
+                                      $field = $pk;
+                                  }
 
-                                $hasKey = $nomesColunas->search($key);
+                                  $table = Table::where('name', $arrayColumns[$key]['tabelaNome'])
+                                    ->first();
 
-                                if(!$hasKey) {
-                                    $field = $pk;
-                                }
+                                  //$table = $app['tables.repository']->findOneBy(['nome' => $arrayColumns[$key]['tabelaNome']]);
 
-                                $table = Table::where('name', $arrayColumns[$key]['tabelaNome'])
-                                  ->first();
+                                  $string = " SELECT {$cs->name} FROM {$table->database}.{$table->name} WHERE {$field} = {$item}";
 
-                                //$table = $app['tables.repository']->findOneBy(['nome' => $arrayColumns[$key]['tabelaNome']]);
+                                  //$strColumn = $app['db']->fetchColumn($string);
 
-                                $string = " SELECT {$cs->name} FROM {$table->database}.{$table->name} WHERE {$field} = {$item}";
+                                  $strColumn = DB::connection('mysql')
+                                  //->table($query->table->name)
+                                  ->select($string);
+                                  //->paginate();
 
-                                //$strColumn = $app['db']->fetchColumn($string);
+                                  //dd($retorno[$key]['label']);
 
-                                $strColumn = DB::connection('mysql')
-                                //->table($query->table->name)
-                                ->select($string);
-                                //->paginate();
+                                  //dd($strColumn);
+                                  foreach ($strColumn as $keyT => $strColumnC) {
+                                      $retorno[$key]['label'] = $strColumnC->label ?? $strColumnC->name ?? null;
+                                  }
+                              }
 
-                                //dd($retorno[$key]['label']);
+                              if ($cs->label && $cs->name == $arrayColumns[$key]['nome']) {
+                                  $retorno[$key]['nome'] = $arrayColumns[$key]['identificador'];
+                              }
 
-                                //dd($strColumn);
-                                foreach ($strColumn as $keyT => $strColumnC) {
-                                    //dd($strColumnC);
-                                    $retorno[$key]['label'] = $strColumnC->title ?? $strColumnC->label ?? $strColumnC->name ?? null;
-                                }
-                            }
+                          }
+                      }
+                  }
 
-                            if ($cs->label && $cs->name == $arrayColumns[$key]['nome']) {
-                                $retorno[$key]['nome'] = $arrayColumns[$key]['identificador'];
-                            }
+                  $arrayResult[] = $retorno;
 
-                        }
-                    }
-                }
-                $arrayResult[] = $retorno;
-            }
+              }
 
-            foreach ($arrayResult as $cols) {
-                foreach ($cols as $key => $col) {
-                    $colunas[] = isset($col['nome']) ? $col['nome'] : $key;
-                }
-                break;
-            }
+              foreach ($arrayResult as $cols) {
+                  foreach ($cols as $key => $col) {
+                      $colunas[] = isset($col['nome']) ? $col['nome'] : $key;
+                  }
+                  break;
+              }
 
-            $columns = array_map(function ($coluna) {
-                return ucwords(str_replace('_', ' ', $coluna));
-            }, $colunas);
+              $columns = array_map(function ($coluna) {
+                  return ucwords(str_replace('_', ' ', $coluna));
+              }, $colunas);
 
             }
 
@@ -715,8 +712,6 @@ class QueryController extends Controller
                 'path'  => $request->url(),
                 'query' => $request->query(),
             ]);
-
-            //$result = $arrayResult;
 
             return view('reports.queries.execute', compact('result', 'columns', 'table'));
 

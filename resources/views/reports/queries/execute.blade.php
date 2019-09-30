@@ -54,15 +54,17 @@
 
                   <tbody>
                     @foreach($result as $items)
+
                         <tr>
                             @foreach($items as $item)
+
+
+
                               @if(is_array($item))
 
                                   @if($item['tabela'])
 
-                                    @php
-                                      //dd($item);
-                                    @endphp
+
                                     <td><a href="{{ route('table_query_search', ['id' => $item['parentTable'], 'column' => $item['coluna'], 'value' => $item['valor']]) }}">
                                           @if($item['label']){{ $item['label'] }}@else{{ $item['valor'] }}@endif</a></td>
 
