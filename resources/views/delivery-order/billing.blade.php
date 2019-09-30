@@ -174,7 +174,7 @@
                               </tr>
                           </thead>
                           <tbody>
-                            @foreach($deliveriesGroupedByClient as $deliveries)
+                            @foreach($deliveriesGroupedByClient->sortBy('client.name') as $deliveries)
 
                               <tr>
                                   <td>{{ $deliveries->first()->client->name }}</td>
