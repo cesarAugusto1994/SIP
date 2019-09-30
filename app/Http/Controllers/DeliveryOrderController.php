@@ -329,8 +329,7 @@ class DeliveryOrderController extends Controller
                 $amount = 5.00;
             }
 
-            if($delivery->created_at > now()->setTime(0,0,0) &&
-              $delivery->created_at < now()->setTime(23,59,59)) {
+            if($delivery->delivered_at->format('Y-m-d') == now()->format('Y-m-d')) {
 
                 $todayAmount += $amount;
                 $loopToday++;
@@ -343,8 +342,8 @@ class DeliveryOrderController extends Controller
 
             }
 
-            if($delivery->created_at > now()->modify('last monday')->setTime(0,0,0) &&
-              $delivery->created_at < now()->modify('this saturday')->setTime(23,59,59)) {
+            if($delivery->delivered_at > now()->modify('last monday')->setTime(0,0,0) &&
+              $delivery->delivered_at < now()->modify('this saturday')->setTime(23,59,59)) {
 
                 $weekAmount += $amount;
 
@@ -358,8 +357,8 @@ class DeliveryOrderController extends Controller
 
             }
 
-            if($delivery->created_at > now()->modify('first day of this month')->setTime(0,0,0) &&
-              $delivery->created_at < now()->modify('last day of this month')->setTime(23,59,59)) {
+            if($delivery->delivered_at > now()->modify('first day of this month')->setTime(0,0,0) &&
+              $delivery->delivered_at < now()->modify('last day of this month')->setTime(23,59,59)) {
 
                 $monthAmount += $amount;
 
