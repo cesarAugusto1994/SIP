@@ -291,6 +291,10 @@
                                         Previsto para: {{ $delivery->delivery_date->format('d/m/Y') }}
                                       </small>
 
+                                      @if($delivery->delivery_date < now()->format('Y-m-d'))
+                                        <label class="label label-danger">Entrega em Atraso</label>
+                                      @endif
+
                                     @elseif($delivery->delivered_at)
 
                                       <small class="text-primary">
