@@ -29,6 +29,114 @@
 </div>
 
 <div class="page-body">
+
+  <div class="row">
+
+    <div class="col-md-12 col-xl-3">
+        <div class="card widget-statstic-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h5>Hoje</h5>
+                    <p class="p-t-10 m-b-0 text-c-yellow">Entregas realizadas hoje</p>
+                </div>
+            </div>
+            <div class="card-block">
+                <i class="feather icon-sliders st-icon bg-c-yellow"></i>
+                <div class="text-left">
+                    <h3 class="d-inline-block">{{ $result['today']['count'] }}</h3>
+                    <span class="f-right bg-c-yellow">{{ $result['today']['amount'] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card widget-statstic-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h5>Nesta Semana</h5>
+                    <p class="p-t-10 m-b-0 text-c-pink">Entregas realizadas nesta semana.</p>
+                </div>
+            </div>
+            <div class="card-block">
+                <i class="feather icon-users st-icon bg-c-pink text-c-pink"></i>
+                <div class="text-left">
+                    <h3 class="d-inline-block">{{ $result['week']['count'] }}</h3>
+                    <span class="f-right bg-c-pink">{{ $result['week']['amount'] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card widget-statstic-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h5>Neste Mês</h5>
+                    <p class="p-t-10 m-b-0 text-c-blue">Entregas realizadas neste mês.</p>
+                </div>
+            </div>
+            <div class="card-block">
+                <i class="feather icon-calendar st-icon bg-c-blue"></i>
+                <div class="text-left">
+                    <h3 class="d-inline-block">{{ $result['month']['count'] }}</h3>
+                    <span class="f-right bg-c-blue">{{ $result['month']['amount'] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card widget-statstic-card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h5>Total</h5>
+                    <p class="p-t-10 m-b-0 text-c-green">Total de Entregas realizadas.</p>
+                </div>
+            </div>
+            <div class="card-block">
+                <i class="feather icon-calendar st-icon bg-c-green"></i>
+                <div class="text-left">
+                    <h3 class="d-inline-block">{{ $result['total']['count'] }}</h3>
+                    <span class="f-right bg-c-green">{{ $result['total']['amount'] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-xl-4 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div id="chart-div"></div>
+                {!! $lava->render('DonutChart', 'Entregador', 'chart-div') !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div id="chart-div-status"></div>
+                {!! $lava->render('DonutChart', 'Status', 'chart-div-status') !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6">
+        <div class="card">
+            <div class="card-block">
+                <div id="chart-div-priority"></div>
+                {!! $lava->render('BarChart', 'Empresa', 'chart-div-priority') !!}
+            </div>
+        </div>
+    </div>
+
+  </div>
+
   <div class="row">
 
       <div class="col-xl-6 col-md-6">
@@ -40,40 +148,7 @@
           </div>
       </div>
 
-      <div class="col-xl-6">
-          <!-- Sales, Receipt and Dues card start -->
-          <div class="card">
-              <div class="card-header">
-                  <h5>Financeiro</h5>
-
-              </div>
-              <div class="card-block table-border-style">
-                  <div class="table-responsive">
-                      <table class="table table-lg table-hover">
-                          <thead>
-                              <tr>
-                                  <th>#</th>
-                                  <th>Valor</th>
-                                  <th>Entregas</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($result as $item)
-                              <tr>
-                                  <th scope="row">{{ $item['title'] }}</th>
-                                  <td>{{ $item['amount'] }}</td>
-                                  <td>{{ $item['count'] }}</td>
-                              </tr>
-                            @endforeach
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-          <!-- Sales, Receipt and Dues card end -->
-      </div>
-
-      <div class="col-xl-12 col-md-6">
+      <div class="col-xl-6 col-md-6">
           <div class="card">
               <div class="card-block">
                   <div id="sales_div"></div>
@@ -81,8 +156,6 @@
               </div>
           </div>
       </div>
-
-
 
       <div class="col-lg-12">
           <!-- Recent Orders card start -->
@@ -95,28 +168,26 @@
                       <table class="table table-lg table-styling">
                           <thead>
                               <tr class="table-primary">
-                                  <th>Ordem No.</th>
                                   <th>Cliente</th>
-                                  <th>Data</th>
-                                  <th>Documentos</th>
+                                  <th>Entregas</th>
                                   <th>Valor</th>
                               </tr>
                           </thead>
                           <tbody>
-                            @foreach($deliveries->sortByDesc('id') as $delivery)
+                            @foreach($deliveriesGroupedByClient as $deliveries)
+
                               <tr>
-                                  <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a></td>
-                                  <td>{{ $delivery->client->name }}</td>
-                                  <td>{{ $delivery->created_at->format('d/m/Y') }}</td>
-                                  <td>{{ $delivery->documents->count() }}</td>
+                                  <td>{{ $deliveries->first()->client->name }}</td>
+                                  <td>{{ $deliveries->count() }}</td>
                                   <td>
-                                    @if($delivery->client->charge_delivery && $delivery->amount)
-                                      <label class="label label-md label-success">5,00</label>
+                                    @if($deliveries->first()->client->charge_delivery && $deliveries->sum('amount'))
+                                      <label class="label label-md label-success">{{ number_format($deliveries->sum('amount'), 2, ',', '.') }}</label>
                                     @else
                                       <label class="label label-md label-primary">Valor não cobrado</label>
                                     @endif
                                   </td>
                               </tr>
+
                             @endforeach
                           </tbody>
                       </table>

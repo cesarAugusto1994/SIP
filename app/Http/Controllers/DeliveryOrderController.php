@@ -40,7 +40,8 @@ class DeliveryOrderController extends Controller
 
         $orders = DeliveryOrder::orderByDesc('id');
 
-        $delay = DeliveryOrder::whereIn('status_id', [Constants::STATUS_DELIVERY_PENDENTE, Constants::STATUS_DELIVERY_EM_TRANSITO])
+        $delay = DeliveryOrder::whereIn('status_id',
+                    [Constants::STATUS_DELIVERY_PENDENTE, Constants::STATUS_DELIVERY_EM_TRANSITO])
                     ->where('delivery_date', '<', now()->setTime(00,00,00))->count();
 
         if(!$request->has('find')) {
@@ -158,7 +159,8 @@ class DeliveryOrderController extends Controller
 
     public function billing(Request $request)
     {
-        $deliveries = DeliveryOrder::whereIn('status_id', [Constants::STATUS_DELIVERY_FINALIZADA])->get();
+        $deliveries = DeliveryOrder::whereIn('status_id',
+            [Constants::STATUS_DELIVERY_FINALIZADA]);
 
         $first = new DateTime('first day of this month');
         $last = new DateTime('last day of this month');
@@ -167,6 +169,13 @@ class DeliveryOrderController extends Controller
           $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
           $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
         }
+
+        if(!$request->has('find')) {
+            $deliveries->whereBetween('delivered_at', [$first, $last]);
+        }
+
+        $deliveries = $deliveries->get();
+        $deliveriesGroupedByClient = $deliveries->groupBy('client_id');
 
         $lava = new Lavacharts;
 
@@ -179,7 +188,7 @@ class DeliveryOrderController extends Controller
 
         $deliveriesPerMonth->addDateColumn('Mês')
                  ->addNumberColumn('Entregas')
-                 ->setDateTimeFormat('Y-m');
+                 ->setDateTimeFormat('Y-m-d');
 
         $quantityPerDay = [];
         $deliveriesPerPeriodo = [];
@@ -191,7 +200,7 @@ class DeliveryOrderController extends Controller
             }
 
             $date = $delivery->delivered_at->format('Y-m-d');
-            $dateA = $delivery->delivered_at->format('Y-m');
+            $dateA = $delivery->delivered_at->format('Y-m-d');
 
             if(!isset($quantityPerDay[$date])) {
                 $quantityPerDay[$date] = 0;
@@ -241,6 +250,54 @@ class DeliveryOrderController extends Controller
             ]
         ]);
 
+        $reasons = $lava->DataTable();
+        $reasons2 = $lava->DataTable();
+        $reasons3 = $lava->DataTable();
+        $reasons4 = $lava->DataTable();
+
+        $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $deliveries;
+
+        $groupedByType = $groupedByType->groupBy('delivered_by');
+
+        $reasons->addStringColumn('Entregue Por')
+                ->addNumberColumn('Percent');
+
+        foreach ($groupedByType as $key => $grouped) {
+          $reasons->addRow([$grouped->first()->user->person->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Entregador', $reasons, [
+            'title' => 'Entregas'
+        ]);
+
+        $reasons3->addStringColumn('Situação')
+                ->addNumberColumn('Porcentagem');
+
+        $groupedByStatus = $groupedByStatus->groupBy('status_id');
+
+        foreach ($groupedByStatus as $key => $grouped) {
+          $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
+        }
+
+        $lava->DonutChart('Status', $reasons3, [
+            'title' => 'Entregas Por Situação'
+        ]);
+
+        // Prioridade
+
+        $reasons4->addStringColumn('Cliente')
+                ->addNumberColumn('Quantidade');
+
+        $groupedByPriority = $groupedByPriority->groupBy('client_id');
+
+        foreach ($groupedByPriority as $key => $grouped) {
+          $reasons4->addRow([$grouped->first()->client->name, $grouped->count()]);
+        }
+
+        $lava->BarChart('Empresa', $reasons4, [
+            'title' => 'Documentos Por Empresa'
+        ]);
+
         $data = [];
 
         $todayAmount = 0;
@@ -253,12 +310,13 @@ class DeliveryOrderController extends Controller
         $loopWeek = 0;
         $loopMonth = 0;
         $loopTotal = 0;
+        $deliveriesByClient = [];
 
         $date = $first;
 
         $result['today'] = [
           'title' => 'Hoje',
-          'amount' => 0.00,
+          'amount' => '0,00',
           'count' => 0
         ];
 
@@ -325,7 +383,7 @@ class DeliveryOrderController extends Controller
 
         }
 
-        return view('delivery-order.billing', compact('result', 'deliveries', 'lava'));
+        return view('delivery-order.billing', compact('result', 'deliveries', 'deliveriesGroupedByClient', 'lava'));
     }
 
     public function billingGraph()
@@ -368,8 +426,6 @@ class DeliveryOrderController extends Controller
         $user = $request->user();
 
         $file = \Storage::disk('local')->path($user->avatar);
-
-        //return view('pdf.tags', compact('delivery', 'file'));
 
         return view('delivery-order.protocol-simple', compact('delivery', 'file'));
     }
