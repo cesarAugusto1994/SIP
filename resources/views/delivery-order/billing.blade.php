@@ -158,10 +158,10 @@
       </div>
 
       <div class="col-lg-12">
-          <!-- Recent Orders card start -->
           <div class="card">
               <div class="card-header">
                   <h5>Ordens de Entrega Recentes</h5>
+                  <a target="_blank" href="{{ route('delivery_billing_report') }}" class="btn btn-primary f-right">Imprimir</a>
               </div>
               <div class="card-block table-border-style">
                   <div class="table-responsive">

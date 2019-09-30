@@ -171,7 +171,7 @@ Route::middleware('auth')->group(function () {
           Route::post('delivery-order/{id}/confirm', 'DeliveryOrderController@confirm')->name('delivery_confirm');
 
           Route::get('delivery-order/report/billing', 'DeliveryOrderController@billing')->name('delivery_billing');
-
+          Route::get('delivery-order/report/billing/print', 'DeliveryOrderController@billingreport')->name('delivery_billing_report');
           Route::get('delivery-order/report/billing/graph', 'DeliveryOrderController@billingGraph')->name('delivery_billing_graph');
 
           Route::resource('message-board', 'MessageBoardController');

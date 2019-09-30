@@ -385,6 +385,29 @@ class DeliveryOrderController extends Controller
         return view('delivery-order.billing', compact('result', 'deliveriesGroupedByClient', 'lava'));
     }
 
+    public function billingreport(Request $request)
+    {
+        $deliveries = DeliveryOrder::whereIn('status_id',
+            [Constants::STATUS_DELIVERY_FINALIZADA]);
+
+        $first = new DateTime('first day of this month');
+        $last = new DateTime('last day of this month');
+
+        if($request->filled('start') && $request->filled('end')) {
+          $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
+          $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
+        }
+
+        if(!$request->has('find')) {
+            $deliveries->whereBetween('delivered_at', [$first, $last]);
+        }
+
+        $deliveries = $deliveries->get();
+        $deliveries = $deliveries->sortBy('client.name')->groupBy('client_id');
+
+        return view('delivery-order.billing-report', compact('deliveries'));
+    }
+
     public function billingGraph()
     {
          $colors = ['#1ab394'];
