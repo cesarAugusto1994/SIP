@@ -406,7 +406,7 @@ class ParametersHelper
                 $retorno = '<div class="form-group row">
                                         <label class="col-form-label col-sm-2" for="' . $parameter->name . '">' . $nome . ':</label>
                                         <div class="col-sm-10">
-                                            <input type="text" required class="form-control datepicker inputDate" name="' . $parameter->name . '" value="' . $request . '"/>
+                                            <input type="text" required class="form-control datepicker inputDate" name="' . $parameter->column->uuid . '" value="' . $request . '"/>
                                         </div>
                                       </div>';
                 break;

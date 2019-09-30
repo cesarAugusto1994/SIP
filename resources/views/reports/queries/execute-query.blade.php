@@ -48,15 +48,10 @@
           <div class="card-block">
 
             <form>
-
-
-                    @foreach($parametrosR as $pr)
-                        {!! $pr !!}
-                    @endforeach
-
-
+                @foreach($parametrosR as $pr)
+                    {!! $pr !!}
+                @endforeach
               <button class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-flash"> </span>Executar</button>
-
             </form>
 
           </div>

@@ -519,9 +519,8 @@ class QueryController extends Controller
               foreach ($columns as $key => $column) {
                   $arrayColumns[$column->name]['parentTable'] = $column->table->name;
                   $arrayColumns[$column->name]['id'] = $column->id;
-                  $arrayColumns[$column->name]['visualizar'] = (boolean)$column->show;
-                  $arrayColumns[$column->name]['nome'] = $column->name;
-                  $arrayColumns[$column->name]['label'] = $column->label;
+                  $arrayColumns[$column->name]['visualizar'] = (Boolean)$column->show;
+                  $arrayColumns[$column->name]['nome'] = $column->label ?? $column->name;
                   $arrayColumns[$column->name]['identificador'] = $column->label;
                   $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->id : null;
                   $arrayColumns[$column->name]['tabelaNome'] = $column->tableReference ? $column->tableReference->name : null;
@@ -604,7 +603,7 @@ class QueryController extends Controller
                               'tabela' => null,
                               'parentTable' => $arrayColumns[$key]['parentTable'],
                               'label' => null,
-                              'nome' => $arrayColumns[$key]['label'] ?? $arrayColumns[$key]['nome'],
+                              'nome' => $arrayColumns[$key]['identificador'] ?: $arrayColumns[$key]['nome'],
                           ];
                       }
 
@@ -686,9 +685,13 @@ class QueryController extends Controller
                       }
                   }
 
+                  //dd($retorno);
+
                   $arrayResult[] = $retorno;
 
               }
+
+              dd($arrayResult);
 
               foreach ($arrayResult as $cols) {
                   foreach ($cols as $key => $col) {
@@ -712,6 +715,8 @@ class QueryController extends Controller
                 'path'  => $request->url(),
                 'query' => $request->query(),
             ]);
+
+            //$result = $arrayResult;
 
             return view('reports.queries.execute', compact('result', 'columns', 'table'));
 
