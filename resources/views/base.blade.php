@@ -176,7 +176,7 @@
 </div>
 <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
-    <div class="pcoded-container navbar-wrapper" id="app" :user="{{ \Auth::user() }}">
+    <div class="pcoded-container navbar-wrapper" id="app" :user="{{ \Auth::user()->id }}">
 
         @include('partials.navbar')
 
