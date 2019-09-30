@@ -49,6 +49,11 @@ class DeliveryOrder extends Model
         return $this->belongsTo('App\User', 'delivered_by');
     }
 
+    public function creator()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {
