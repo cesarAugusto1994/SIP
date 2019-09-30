@@ -177,9 +177,9 @@
                             @foreach($deliveriesGroupedByClient as $deliveries)
 
                               <tr @if(!$deliveries->first()->client->charge_delivery || !$deliveries->sum('amount'))
-                                      class="bg-warning"
-                                    @endif>
-                                  <td><a href="{{route('clients.show', $deliveries->first()->client->uuid)}}">{{ $deliveries->first()->client->name }}</a></td>
+                                      class="table-inverse"
+                                  @endif>
+                                  <td>{{ $deliveries->first()->client->name }}  <a class="btn btn-mini btn-success" target="_blank" href="{{route('clients.show', $deliveries->first()->client->uuid)}}"> Acessar </a></td>
                                   <td>{{ $deliveries->count() }}</td>
                                   <td>
                                     @if($deliveries->first()->client->charge_delivery && $deliveries->sum('amount'))

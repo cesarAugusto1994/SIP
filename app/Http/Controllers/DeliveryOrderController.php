@@ -382,7 +382,7 @@ class DeliveryOrderController extends Controller
 
         }
 
-        return view('delivery-order.billing', compact('result', 'deliveries', 'deliveriesGroupedByClient', 'lava'));
+        return view('delivery-order.billing', compact('result', 'deliveriesGroupedByClient', 'lava'));
     }
 
     public function billingGraph()

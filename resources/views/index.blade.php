@@ -23,8 +23,6 @@
 <div class="page-body">
     <div class="row">
 
-
-
         <div class="col-xl-3 col-md-6">
             <div class="card">
                 <div class="card-block">
@@ -41,8 +39,6 @@
             </div>
         </div>
 
-
-
         <div class="col-xl-3 col-md-6">
             <div class="card">
                 <div class="card-block">
@@ -58,8 +54,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div class="col-xl-3 col-md-6">
             <div class="card">
@@ -135,7 +129,7 @@
         </div>
         @endif
 
-        <div class="col-md-8 col-sm-12">
+        <div class="col-xl-8 col-md-12 col-sm-12">
             <div class="card latest-update-card">
                 <div class="card-header">
                     <h5>Gestão à Vista</h5>

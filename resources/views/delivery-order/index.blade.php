@@ -240,8 +240,6 @@
                                 <th>Ordem No.</th>
                                 <th>Situação</th>
                                 <th>Cliente</th>
-                                <th>Previsão / Entrega</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -271,33 +269,35 @@
                             @endphp
 
                             <tr>
-                                <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a>
+                                <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title" data-toggle="tooltip" data-original-title="Adicionado Por {{$delivery->user->person->name}} em {{ $delivery->created_at->format('d/m/Y H:i:s') }}">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a>
                                   @if($delivery->shipment)
                                     <br/>
                                     <span class="label label-inverse-success"> Remessa </span>
                                   @endif
                                 </td>
                                 <td>
-                                  <span class="label label-{{$bgColor}} f-right"> {{$delivery->status->name}} </span>
+                                  <p data-toggle="tooltip" data-original-title="Adicionado Por {{$delivery->user->person->name}} em {{ $delivery->created_at->format('d/m/Y H:i:s') }}">
+                                      <span class="label label-{{$bgColor}}"> {{$delivery->status->name}} </span>
+                                  </p>
                                 </td>
                                 <td><a href="{{route('clients.show', ['id' => $delivery->client->uuid])}}">{{ $delivery->client->name }}</a><br/>
                                   <label class="label label-inverse-primary">{{$delivery->address->street}}, {{$delivery->address->number}} - {{$delivery->address->district}}, {{$delivery->address->city}}</label>
-                                </td>
-                                <td>
 
-                                  @if(in_array($delivery->status_id, [1,2,3]))
+                                  <br/>
 
-                                    {{ $delivery->delivery_date->format('d/m/Y') }}
-                                    <br/>
-                                    <label class="label label-inverse-primary">{{ $delivery->delivery_date->diffForHumans() }}</label>
+                                    @if(in_array($delivery->status_id, [1,2,3]))
 
-                                  @elseif($delivery->delivered_at)
+                                      <small class="text-success">
+                                        Previsto para: {{ $delivery->delivery_date->format('d/m/Y') }}
+                                      </small>
 
-                                    {{ $delivery->delivered_at->format('d/m/Y') }}
-                                    <br/>
-                                    <label class="label label-inverse-success">{{ $delivery->delivered_at->diffForHumans() }}</label>
+                                    @elseif($delivery->delivered_at)
 
-                                  @endif
+                                      <small class="text-primary">
+                                        Entregue em: {{ $delivery->delivered_at->format('d/m/Y') }}
+                                      </small>
+
+                                    @endif
 
                                 </td>
 
