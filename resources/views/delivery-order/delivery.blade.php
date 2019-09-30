@@ -131,7 +131,9 @@
 
                     </div>
 
-                    <a class="btn btn-primary btn-block" href="{{ route('delivery_receipt_image', $delivery->uuid) }}"> Comprovante </a>
+                    @if($delivery->status->id == 5)
+                        <a class="btn btn-primary btn-block" href="{{ route('delivery_receipt_image', $delivery->uuid) }}"> Comprovante </a>
+                    @endif
 
                   </div>
                 </div>

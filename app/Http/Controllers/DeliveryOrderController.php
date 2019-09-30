@@ -487,6 +487,7 @@ class DeliveryOrderController extends Controller
             ]);
 
           case Constants::STATUS_DELIVERY_PENDENTE:
+          case Constants::STATUS_DELIVERY_RETIRADA_PELO_CLIENTE:
 
             $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
             return view('delivery-order.scan-delivered', compact('message', 'delivery'));
@@ -500,6 +501,11 @@ class DeliveryOrderController extends Controller
     public function deliveryReceipt($id)
     {
         $delivery = DeliveryOrder::uuid($id);
+
+        if(!$delivery->receipt) {
+          $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
+          return view('delivery-order.scan-delivered', compact('message', 'delivery'));
+        }
 
         return view('delivery-order.delivery', compact('delivery'));
     }
@@ -524,6 +530,18 @@ class DeliveryOrderController extends Controller
     public function receipt($id, Request $request)
     {
         $data = $request->request->all();
+
+        if(!$request->hasFile('document') && !$delivery->receipt) {
+
+          $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
+          return view('delivery-order.scan-delivered', compact('message', 'delivery'));
+
+          notify()->flash('Erro!', 'error', [
+            'text' => 'A Imagem do protocolo não foi informada.'
+          ]);
+
+          return back();
+        }
 
         $user = $request->user();
 
