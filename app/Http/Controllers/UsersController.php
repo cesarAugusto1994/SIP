@@ -44,10 +44,6 @@ class UsersController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        if(!Auth::user()->isAdmin()) {
-            return redirect()->route('users.show', ['id' => $request->get('id')]);
-        }
-
         $people = People::where('id', '>', 0);
 
         if($request->filled('active')) {
@@ -538,7 +534,7 @@ class UsersController extends Controller
           }
 
         }
-        
+
         $user->login_soc = $data['login_soc'];
         $user->password_soc = $data['password_soc'];
         $user->id_soc = $data['id_soc'];
