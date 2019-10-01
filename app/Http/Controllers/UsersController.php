@@ -385,8 +385,12 @@ class UsersController extends Controller
     {
         $user = $request->user();
 
-        if($request->has('id') && $request->user()->isAdmin()) {
-          $user = User::uuid($request->get('id'));
+        if(!Auth::user()->hasPermission('edit.usuarios')) {
+            return abort(403, 'Acesso negado.');
+        }
+
+        if($request->has('id')) {
+            $user = User::uuid($request->get('id'));
         }
 
         $users = Helper::users();
