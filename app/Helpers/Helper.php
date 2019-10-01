@@ -28,6 +28,7 @@ use App\Models\Stock\Brand\Models as BrandModels;
 use App\Models\Delivery\Document\Type as DocumentType;
 use App\Models\Delivery\Document\Status as DocumentStatus;
 use App\Models\Stock\Product\Type as ProductType;
+use App\Models\ServiceOrder\Service\Type as ServiceType;
 
 /**
  *
@@ -337,6 +338,20 @@ class Helper
         }
 
         $data = ProductType::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function serviceTypes()
+    {
+        $key = 'service-types';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = ServiceType::all();
 
         self::set($key, $data);
         return self::get($key);
@@ -1368,6 +1383,20 @@ class Helper
         return self::delivery()->filter(function($delivery, $index) {
             return $delivery->status_id == 5;
         })->count();
+    }
+
+    public static function brl2decimal($brl, $casasDecimais = 2)
+    {
+        // Se já estiver no formato USD, retorna como float e formatado
+        if(preg_match('/^\d+\.{1}\d+$/', $brl))
+            return (float) number_format($brl, $casasDecimais, '.', '');
+        // Tira tudo que não for número, ponto ou vírgula
+        $brl = preg_replace('/[^\d\.\,]+/', '', $brl);
+        // Tira o ponto
+        $decimal = str_replace('.', '', $brl);
+        // Troca a vírgula por ponto
+        $decimal = str_replace(',', '.', $decimal);
+        return (float) number_format($decimal, $casasDecimais, '.', '');
     }
 
 }

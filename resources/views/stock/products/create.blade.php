@@ -31,7 +31,7 @@
 <div class="page-body">
   <div class="card">
       <div class="card-header">
-          <h5>Nova Ativo</h5>
+          <h5>Novo Ativo</h5>
       </div>
       <div class="card-block">
 

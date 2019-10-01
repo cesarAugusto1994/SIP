@@ -370,7 +370,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('tables/{id}/search/execute', 'QueryController@executeTableQuery')->name('table_query_search');
 
-
+          Route::resource('services', 'ServiceController');
+          Route::resource('service-order', 'ServiceOrderController');
     });
 
   });
