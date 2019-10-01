@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Ordem de Entrega</h4>
+                    <h4>Ordem de Entrega: Faturamento</h4>
                 </div>
             </div>
         </div>
@@ -29,6 +29,38 @@
 </div>
 
 <div class="page-body">
+
+  <div class="row">
+
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+                <form method="get" action="?">
+                  <div class="form-group row">
+                      <div class="col-sm-12">
+                          <input type="text" id="daterange" class="form-control" placeholder="Periodo">
+
+                          <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                          <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+
+                      </div>
+                  </div>
+
+                  <div class="">
+                      <button type="submit" class="btn btn-success btn-sm">
+                          <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                      </button>
+                  </div>
+                </form>
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
 
   <div class="row">
 

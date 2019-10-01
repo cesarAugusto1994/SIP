@@ -320,6 +320,24 @@ class DeliveryOrderController extends Controller
           'count' => 0
         ];
 
+        $result['week'] = [
+          'title' => 'Semana',
+          'amount' => '0,00',
+          'count' => 0
+        ];
+
+        $result['month'] = [
+          'title' => 'Mês',
+          'amount' => '0,00',
+          'count' => 0
+        ];
+
+        $result['total'] = [
+          'title' => 'Total',
+          'amount' => '0,00',
+          'count' => 0
+        ];
+
         foreach ($deliveries as $key => $delivery) {
 
             $amount = 0.00;
