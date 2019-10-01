@@ -35,7 +35,7 @@
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
                   @permission('create.ativos')
-                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('services.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Ativo</a>
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('services.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Serviço</a>
                   @endpermission
               </div>
           </div>

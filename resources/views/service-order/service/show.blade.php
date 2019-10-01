@@ -54,10 +54,6 @@
                 @endif
               </p>
 
-              @foreach($values as $value)
-                  <p>{{ $value->contract->name }}: {{ number_format($value->value, 2) }}</p>
-              @endforeach
-
             </div>
         </div>
 

@@ -66,10 +66,14 @@ class ServiceController extends Controller
             if($request->has($slug) && $request->has($slugCost)) {
 
                 $value = $request->get($slug);
-                $value = \App\Helpers\Helper::brl2decimal($value);
+                if($value) {
+                    $value = \App\Helpers\Helper::brl2decimal($value);
+                }
 
                 $cost = $request->get($slugCost);
-                $cost = \App\Helpers\Helper::brl2decimal($cost);
+                if($cost) {
+                  $cost = \App\Helpers\Helper::brl2decimal($cost);
+                }
 
                 ServiceValue::create([
                   'service_id' => $service->id,
