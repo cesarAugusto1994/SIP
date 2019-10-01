@@ -54,6 +54,8 @@
 
           <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
 
+          <a href="#!" data-route="{{ route('team_duplicate', $team->uuid) }}" class="btn btn-inverse btnDuplicate btn-sm waves-effect waves-light"><i class="far fa-copy"></i> Duplicar</a>
+
         </div>
     </div>
 
@@ -454,6 +456,59 @@
                 notify(data.message, 'inverse');
 
               } else {
+
+                notify(data.message, 'danger');
+
+              }
+
+            });
+          }
+        });
+    });
+
+    $(".btnDuplicate").click(function(e) {
+        var self = $(this);
+
+        swal({
+          title: 'Duplicar Turma?',
+          text: "Deseja duplicar esta Turma?",
+          showCancelButton: true,
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
+          confirmButtonText: 'Sim',
+          cancelButtonText: 'Não'
+          }).then((result) => {
+          if (result.value) {
+
+            e.preventDefault();
+
+            window.swal({
+              title: 'Em progresso...',
+              text: 'Aguarde enquanto a requisição é processada.',
+              type: 'success',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+
+            $.ajax({
+              headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+              url: self.data('route'),
+              type: 'POST',
+              dataType: 'json',
+              data: {}
+            }).done(function(data) {
+
+              if(data.success) {
+
+                notify(data.message, 'inverse');
+
+                window.location.href = data.route;
+
+              } else {
+
+                swal.close();
 
                 notify(data.message, 'danger');
 

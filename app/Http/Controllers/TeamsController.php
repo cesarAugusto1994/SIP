@@ -318,6 +318,43 @@ class TeamsController extends Controller
         return redirect()->route('teams.show', $team->uuid);
     }
 
+    public function duplicate($id, Request $request)
+    {
+        try {
+          $team = Team::uuid($id);
+
+          $startDate = $team->start;
+          $endDate = $team->end;
+
+          $newTeam = $team->replicate();
+          $teamEmployees = $team->employees;
+
+          $newTeam->start = $startDate->modify('+1 day');
+          $newTeam->end = $endDate->modify('+1 day');
+          $newTeam->save();
+
+          foreach ($teamEmployees as $key => $employee) {
+            TeamEmployees::create([
+              'team_id' => $newTeam->id,
+              'employee_id' => $employee->employee->id,
+            ]);
+          }
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Uma nova turma foi criada.',
+            'route' => route('teams.show', ['id' => $newTeam->uuid])
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'route' => null
+          ]);
+        }
+    }
+
     public function list()
     {
         $user = auth()->user();

@@ -281,6 +281,8 @@ Route::middleware('auth')->group(function () {
           Route::post('team/{id}/finish', 'TeamsController@finish')->name('team_finish');
           Route::post('team/{id}/employee/change-status', 'TeamsController@employeeChangeStatus')->name('team_employee_change_status');
 
+          Route::post('team/{id}/duplicate', 'TeamsController@duplicate')->name('team_duplicate');
+
           Route::post('clients/{id}/documents/upload', 'ClientController@uploadDocuments')->name('client_documents_upload');
 
           Route::get('client/documents/{id}/preview', 'ClientController@previewDocument')->name('document_preview');
