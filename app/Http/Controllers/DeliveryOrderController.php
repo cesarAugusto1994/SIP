@@ -544,7 +544,8 @@ class DeliveryOrderController extends Controller
 
             return view('delivery-order.scan-transit', compact('message'));
 
-        } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO) {
+        } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO ||
+          $delivery->status_id == Constants::STATUS_DELIVERY_ENTREGUE) {
 
             if(!Auth::check()) {
                 abort(403, 'Ordem de Entrega Em Transito');
@@ -598,7 +599,7 @@ class DeliveryOrderController extends Controller
     {
         $delivery = DeliveryOrder::uuid($id);
 
-        if(!$delivery->receipt) {
+        if(!$delivery->receipt && $delivery->status_id != Constants::STATUS_DELIVERY_FINALIZADA) {
           $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
           return view('delivery-order.scan-delivered', compact('message', 'delivery'));
         }
