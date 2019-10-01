@@ -53,7 +53,7 @@
           <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="">
-                  <div class="panel-body" style="font-size:12px">
+                  <div class="panel-body" style="font-size:11px">
 
                     <table class="table table-bordered table-framed">
 
@@ -66,12 +66,15 @@
                         <tr>
                             <td>
                               <b>Curso:</b> {{ $team->course->title }}<br/>
-                              <b>Carga horaria:</b>{{ $team->course->workload }} hora(s)<br>
-                              <b>Turma:</b> #{{ str_pad($team->id, 6, "0", STR_PAD_LEFT)  }}</td>
-                            <td colspan="2"><b>Instrutor:</b> {{ $team->teacher->person->name }} - {{ $team->teacher->person->cpf }}<br/>
-                              @if($team->teacher->person->registry)
-                                  REG/MTE: {{ $team->teacher->person->registry }}
-                              @endif
+
+                            <td colspan="2">
+                              <b>Turma:</b> #{{ str_pad($team->id, 6, "0", STR_PAD_LEFT) }},
+                              <b>Carga horaria: </b>{{ $team->course->workload }} hora(s)<br>
+                              <b>Instrutor:</b> {{ $team->teacher->person->name }} - {{ $team->teacher->person->cpf }}<br/>
+                                @if($team->teacher->person->registry)
+                                    REG/MTE: {{ $team->teacher->person->registry }}<br/>
+                                @endif
+
                             </td>
                             <td><b>Data:</b> {{ $team->start->format('d/m/Y') }}</td>
                             <td colspan="2"><b>Local:</b> {{ $team->localization }}</td>
@@ -93,11 +96,11 @@
                         @php
                             $employee = $employeeItem->employee;
                         @endphp
-                          <tr class="{{ $employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA' ? 'table-inverse' : '' }}">
+                          <tr class="{{ $employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA' ? 'table-danger' : '' }}">
                               <td style="text-transform:uppercase;">{{$employee->name}}</td>
                               <td>{{$employee->occupation->name}}</td>
                               <td>{{$employee->company->name}}</td>
-                              <td>{{$employee->company->document}}</td>
+                              <td style="font-size:10px">{{$employee->company->document}}</td>
                               <td style="width:150px">
 
                               </td>
@@ -108,11 +111,6 @@
                               </td>
                           </tr>
                         @endforeach
-
-                        <tr>
-                            <td colspan="6" class="text-center font-9"></td>
-                        </tr>
-
                         <tr>
                             <td colspan="3">
                               Observações: {{ $team->description }}

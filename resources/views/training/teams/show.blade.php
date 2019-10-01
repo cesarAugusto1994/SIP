@@ -89,7 +89,7 @@
                                           <tbody>
                                               <tr>
                                                   <th scope="row">Turma</th>
-                                                  <td>{{ $teamCode }}</td>
+                                                  <td>#{{ str_pad($team->id, 6, "0", STR_PAD_LEFT)  }}</td>
                                               </tr>
                                               <tr>
                                                   <th scope="row">Curso</th>

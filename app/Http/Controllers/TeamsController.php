@@ -96,11 +96,9 @@ class TeamsController extends Controller
     {
         $team = Team::uuid($id);
 
-        $preReservados = $team->whereHas('employees', function($query) {
-            $query->where('status', 'AGENDADO');
-        })->first();
+        $preReservados = $team->employees->where('status', 'AGENDADO');
 
-        if($preReservados) {
+        if($preReservados->isNotEmpty()) {
 
           notify()->flash('Aula não iniciada!', 'warning', [
             'text' => 'Informe a presença dos participantes.'
@@ -110,7 +108,7 @@ class TeamsController extends Controller
 
         }
 
-        $team->Status = 'EM ANDAMENTO';
+        $team->status = 'EM ANDAMENTO';
         $team->save();
 
         notify()->flash('Curso em Andamento!', 'success', [
