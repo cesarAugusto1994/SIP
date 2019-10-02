@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Serviços</h4>
+                    <h4>Ordem de Serviço</h4>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Serviços</a>
+                    <li class="breadcrumb-item"><a href="#!">Ordem de Serviço</a>
                     </li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
                   @permission('create.ativos')
-                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('services.create')}}"><i class="icofont icofont-paper-plane"></i> Novo Ativo</a>
+                    <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('service-order.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Ordem de Serviço</a>
                   @endpermission
               </div>
           </div>
@@ -57,27 +57,16 @@
                     <input type="hidden" name="find" value="1"/>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="search" placeholder="Código do Ativo, Matricula">
+                            <input type="text" class="form-control" name="search" placeholder="Código do Serviço, Nome">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <select class="form-control select2" name="type">
-                              <option value="">Selecione</option>
-                              @foreach(\App\Helpers\Helper::productTypes() as $item)
+                            <select class="form-control select2" name="service_type_id">
+                              <option value="">Tipo</option>
+                              @foreach(\App\Helpers\Helper::serviceTypes() as $item)
                                   <option value="{{$item->id}}">{{$item->name}}</option>
-                              @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <select class="form-control select2" name="status">
-                              <option value="">Selecione a situação</option>
-                              @foreach(\App\Helpers\Helper::stockStatus() as $item)
-                                  <option value="{{ $item }}">{{ $item }}</option>
                               @endforeach
                             </select>
                         </div>
@@ -96,7 +85,7 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-header">
-                <h5>Serviços Cadastrados</h5>
+                <h5>Ordens de Serviço Cadastradas</h5>
                 <span>Registros retornados: {{ $quantity }}</span>
             </div>
             <div class="card-block table-border-style">
@@ -105,9 +94,10 @@
                         <thead>
                             <tr class="table-primary">
                               <th>#</th>
-                              <th>Nome</th>
-                              <th>Descrição</th>
-                              <th>Ativo</th>
+                              <th>Contrato</th>
+                              <th>Cliente</th>
+                              <th>Status</th>
+                              <th>Data</th>
                               <th>Opções</th>
                             </tr>
                         </thead>
@@ -115,11 +105,10 @@
                           @foreach($services as $service)
                             <tr>
                                 <th scope="row">{{ $service->id }}</th>
-                                <td>  <a href="{{route('services.show', ['id' => $service->uuid])}}">{{ $service->name }}</a></td>
-                                <td>{{ $service->description }}</td>
-                                <td>{{ $service->active ? 'Sim' : 'Não' }}</td>
-
-
+                                <td>{{ $service->contract->name }}</td>
+                                <td>{{ $service->client->name }}</td>
+                                <td>{{ $service->status->name }}</td>
+                                <td>{{ $service->created_at->format('d/m/Y H:i') }}</td>
                                 <td class="dropdown">
 
                                   <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
@@ -127,6 +116,10 @@
 
                                     @permission('edit.ativos')
                                       <a href="{{route('services.edit', ['id' => $service->uuid])}}" class="dropdown-item">Editar </a>
+                                    @endpermission
+
+                                    @permission('edit.ativos')
+                                      <a href="{{route('service_order_contract', ['id' => $service->uuid])}}" class="dropdown-item">Contrato </a>
                                     @endpermission
 
                                   </div>

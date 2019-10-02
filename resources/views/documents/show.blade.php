@@ -58,7 +58,14 @@
               <p>Funcionário: {{ $document->employee->name ?? '' }}</p>
               <p>Referencia: {{ $document->reference ?? '' }}</p>
 
+              @if($document->address)
+                @php
+                    $formated = $document->address->description . ' - ' . $document->address->document . ' - ' . $document->address->street . ', ' . $document->address->number . ', ' . $document->address->district . ' - ' . $document->address->city . ' / ' . $document->address->state . ' - ' . $document->address->zip;
+                @endphp
 
+                <p>Endereço: {{ $formated }}</p>
+
+              @endif
               <p>Adicionado por: {{ $document->creator->person->name ?? '' }} em {{ $document->created_at->format('d/m/Y H:i:s') }} <label class="label label-inverse-primary">{{ $document->created_at->diffForHumans() }}</label></p>
 
               @php

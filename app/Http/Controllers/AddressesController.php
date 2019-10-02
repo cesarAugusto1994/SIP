@@ -30,10 +30,10 @@ class AddressesController extends Controller
 
         $search = $request->get('search');
 
-        $addresses = Address::where('id', $search)
-        ->orWhere('description', 'like', "%$search%")
-        ->orWhere('zip', 'like', "%$search%")
-        ->orWhere('street', 'like', "%$search%");
+        $addresses = Address::where('description', 'like', "%$search%");
+
+        $addresses->orWhere('zip', 'like', "%$search%")
+          ->orWhere('street', 'like', "%$search%");
 
         if($request->filled('client')) {
             $client = Client::uuid($request->get('client'));
@@ -234,17 +234,12 @@ class AddressesController extends Controller
               continue;
             }
 
-            $hasAddress = Address::where('street', $item['ENDERECO'])->where('number', $item['NUMEROENDERECO'])->where('zip', $item['CEP'])->first();
-
-            if($hasAddress) {
-                continue;
-            }
-
             $data['client_id'] = $client->id;
             $data['user_id'] = 1;
             $data['is_default'] = false;
 
             $data['description'] = $item['NOMEUNIDADE'];
+            $data['document'] = $item['CNPJUNIDADE'];
             $data['street'] = $item['ENDERECO'];
             $data['number'] = $item['NUMEROENDERECO'];
             $data['complement'] = $item['COMPLEMENTO'];
@@ -280,7 +275,16 @@ class AddressesController extends Controller
                 $data['long'] = $geometry->location->lng;
             }
 
+            $hasAddress = Address::where('street', $item['ENDERECO'])->where('number', $item['NUMEROENDERECO'])->where('zip', $item['CEP'])->first();
+
+            if($hasAddress) {
+                $hasAddress->update($data);
+                echo '>> Endereço atualizado : ' . $item['NOMEUNIDADE'] . PHP_EOL;
+                continue;
+            }
+
             Address::create($data);
+            echo '>> Endereço adicionado : ' . $item['NOMEUNIDADE'] . PHP_EOL;
 
           }
 

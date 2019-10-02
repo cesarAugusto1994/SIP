@@ -180,6 +180,8 @@ return array(
     'App\\Models\\Schedule\\Type' => $baseDir . '/app/Models/Schedule/Type.php',
     'App\\Models\\ServiceOrder\\Service' => $baseDir . '/app/Models/ServiceOrder/Service.php',
     'App\\Models\\ServiceOrder\\ServiceOrder' => $baseDir . '/app/Models/ServiceOrder/ServiceOrder.php',
+    'App\\Models\\ServiceOrder\\ServiceOrder\\Item' => $baseDir . '/app/Models/ServiceOrder/ServiceOrder/Item.php',
+    'App\\Models\\ServiceOrder\\ServiceOrder\\Status' => $baseDir . '/app/Models/ServiceOrder/ServiceOrder/Status.php',
     'App\\Models\\ServiceOrder\\Service\\Type' => $baseDir . '/app/Models/ServiceOrder/Service/Type.php',
     'App\\Models\\ServiceOrder\\Service\\Value' => $baseDir . '/app/Models/ServiceOrder/Service/Value.php',
     'App\\Models\\Stock\\Brand' => $baseDir . '/app/Models/Stock/Brand.php',

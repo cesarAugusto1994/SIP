@@ -328,9 +328,8 @@
                               @if($order->shipment)
                                 <th>Empresa</th>
                               @else
-                                <th>Funcionário</th>
+                                <th>Funcionário / Referência</th>
                               @endif
-                              <th>Referência</th>
                               <th>Status</th>
                             </tr>
                         </thead>
@@ -346,32 +345,32 @@
                             <td>
                                 <a>{{ $document->type->name ?? '-' }}</a>
                             </td>
-
-                            @if($order->shipment)
-                              <td>
-                                  {{ $document->client->name ?? '' }}
-
-                                  @if($document->deliveryDocument)
-                                    <br/><br/>
-                                    <a href="{{ route('delivery-order.show', $document->deliveryDocument->deliveryOrder->uuid) }}" class="label label-inverse-success">Ordem de Entrega #{{ str_pad($document->deliveryDocument->deliveryOrder->id, 6, "0", STR_PAD_LEFT) }}</a>
-                                  @endif
-
-                                  @if($document->employee)
-                                    <br/>
-                                    <small>Funcionário: <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a></small>
-                                  @endif
-
-                              </td>
-                            @elseif($document->employee)
-                              <td>
-                                  <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a>
-                              </td>
-                            @endif
-
                             <td>
-                                {{ $document->reference }}
-                            </td>
+                              @if($order->shipment)
 
+                                    {{ $document->client->name ?? '' }}
+
+                                    @if($document->deliveryDocument)
+                                      <br/><br/>
+                                      <a href="{{ route('delivery-order.show', $document->deliveryDocument->deliveryOrder->uuid) }}" class="label label-inverse-success">Ordem de Entrega #{{ str_pad($document->deliveryDocument->deliveryOrder->id, 6, "0", STR_PAD_LEFT) }}</a>
+                                    @endif
+
+                                    @if($document->employee)
+                                      <br/>
+                                      <small>Funcionário: <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a></small>
+                                    @endif
+
+                              @elseif($document->employee)
+                                  <a href="{{ route('employees.show', $document->employee->uuid) }}">{{ $document->employee->name ?? '' }}</a>
+                              @elseif($document->reference)
+                                  {{ $document->reference }}
+                              @endif
+
+                              @if($document->address)
+                                  <br/>
+                                  <small>Endereço: <a href="{{ route('client_addresses', $document->address->uuid) }}">{{ $document->address->description ?? '' }}</a></small>
+                              @endif
+                            </td>
                             @php
 
                               $status = $document->status->id;

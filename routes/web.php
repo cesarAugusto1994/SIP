@@ -374,6 +374,9 @@ Route::middleware('auth')->group(function () {
 
           Route::resource('services', 'ServiceController');
           Route::resource('service-order', 'ServiceOrderController');
+
+          Route::get('service-order/{id}/contract', 'ServiceOrderController@contract')->name('service_order_contract');
+
     });
 
   });

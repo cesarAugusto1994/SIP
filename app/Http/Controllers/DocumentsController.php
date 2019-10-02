@@ -202,6 +202,11 @@ class DocumentsController extends Controller
 
           } else {
 
+            if($request->has('address_id')) {
+                $addressDoc = Address::uuid($request->get('address_id'));
+                $data['address_id'] = $addressDoc->id;
+            }
+
             $document = Document::create($data);
             $documentsList[$client->id] = $document->uuid;
 
@@ -219,6 +224,7 @@ class DocumentsController extends Controller
               $fieldClient = 'client_id-'.$value;
               $fieldEmployee = 'employee_id-'.$value;
               $fieldReference = 'reference-'.$value;
+              $fieldAddress = 'address_id-'.$value;
 
               if($request->has($fieldType)) {
 
@@ -226,7 +232,7 @@ class DocumentsController extends Controller
 
                     $client = Client::uuid($request->get($fieldClient));
 
-                    $employee = null;
+                    $addressDoc = $employee = null;
                     $type = Type::uuid($typeItem);
                     $reference = $request->get($fieldReference);
 
@@ -251,6 +257,11 @@ class DocumentsController extends Controller
 
                     } else {
 
+                      if($request->filled($fieldAddress)) {
+                          $addressDoc = Address::uuid($request->get($fieldAddress));
+                          $addressDoc = $addressDoc->id;
+                      }
+
                       $document = Document::create([
                         'type_id' => $type->id,
                         'client_id' => $client->id,
@@ -259,6 +270,7 @@ class DocumentsController extends Controller
                         'created_by' => $user->id,
                         'status_id' => 1,
                         'amount' => $type->price,
+                        'address_id' => $addressDoc
                       ]);
 
                       $documentsList[$client->id] = $document->uuid;

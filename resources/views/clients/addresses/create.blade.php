@@ -46,8 +46,12 @@
 
             <input type="hidden" name="client_id" value="{{ $client->uuid }}"/>
 
-            <div class="form-group col-md-12"><label class="control-label">Descrição</label>
+            <div class="form-group col-md-6"><label class="control-label">Descrição</label>
                 <input type="text" name="description" required class="form-control" id="description" placeholder="Ex: Matriz">
+            </div>
+
+            <div class="form-group col-md-6"><label class="control-label">CNPJ</label>
+                <input type="text" id="document" name="document" class="form-control" id="document">
             </div>
 
             <div class="form-group col-md-3"><label class="control-label">CEP</label>

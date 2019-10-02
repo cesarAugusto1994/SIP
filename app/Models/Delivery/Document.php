@@ -15,14 +15,14 @@ class Document extends Model
     protected $fillable = [
       'annotations', 'client_id',
       'employee_id', 'created_by',
-      'status_id', 'type_id',
+      'status_id', 'type_id', 'address_id',
       'amount', 'extra_amount', 'reference'
     ];
 
     protected static $logAttributes = [
       'annotations', 'client_id',
       'employee_id', 'created_by',
-      'status_id', 'type_id',
+      'status_id', 'type_id', 'address_id',
       'amount', 'extra_amount', 'reference'
     ];
 
@@ -39,6 +39,11 @@ class Document extends Model
     public function employee()
     {
         return $this->belongsTo('App\Models\Client\Employee');
+    }
+
+    public function address()
+    {
+        return $this->belongsTo('App\Models\Client\Address');
     }
 
     public function delivery()

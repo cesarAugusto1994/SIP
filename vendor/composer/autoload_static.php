@@ -883,6 +883,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\Schedule\\Type' => __DIR__ . '/../..' . '/app/Models/Schedule/Type.php',
         'App\\Models\\ServiceOrder\\Service' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/Service.php',
         'App\\Models\\ServiceOrder\\ServiceOrder' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder.php',
+        'App\\Models\\ServiceOrder\\ServiceOrder\\Item' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder/Item.php',
+        'App\\Models\\ServiceOrder\\ServiceOrder\\Status' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder/Status.php',
         'App\\Models\\ServiceOrder\\Service\\Type' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/Service/Type.php',
         'App\\Models\\ServiceOrder\\Service\\Value' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/Service/Value.php',
         'App\\Models\\Stock\\Brand' => __DIR__ . '/../..' . '/app/Models/Stock/Brand.php',
