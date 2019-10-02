@@ -520,7 +520,7 @@ class QueryController extends Controller
                   $arrayColumns[$column->name]['parentTable'] = $column->table->name;
                   $arrayColumns[$column->name]['id'] = $column->id;
                   $arrayColumns[$column->name]['visualizar'] = (Boolean)$column->show;
-                  $arrayColumns[$column->name]['nome'] = $column->label ?? $column->name;
+                  $arrayColumns[$column->name]['nome'] = $column->name;
                   $arrayColumns[$column->name]['identificador'] = $column->label;
                   $arrayColumns[$column->name]['formato'] = $column->format ? $column->format->id : null;
                   $arrayColumns[$column->name]['tabelaNome'] = $column->tableReference ? $column->tableReference->name : null;
