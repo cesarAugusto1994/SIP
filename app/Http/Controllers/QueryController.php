@@ -685,13 +685,9 @@ class QueryController extends Controller
                       }
                   }
 
-                  //dd($retorno);
-
                   $arrayResult[] = $retorno;
 
               }
-
-              dd($arrayResult);
 
               foreach ($arrayResult as $cols) {
                   foreach ($cols as $key => $col) {
