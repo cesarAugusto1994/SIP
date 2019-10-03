@@ -736,7 +736,7 @@ class Helper
             return self::get($key);
         }
 
-        $menus = Menu::all();
+        $menus = Menu::where('active', true)->orderBy('order')->get();
 
         self::set($key, $menus);
         return self::get($key);

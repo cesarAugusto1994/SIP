@@ -51,6 +51,8 @@ class MenusController extends Controller
     {
         $data = $request->request->all();
 
+        $data['active'] = $request->has('active');
+
         $menu = Menu::create($data);
 
         Helper::drop('menus');
@@ -108,6 +110,7 @@ class MenusController extends Controller
         $data = $request->request->all();
 
         $menu = Menu::find($id);
+        $data['active'] = $request->has('active');
         $menu->update($data);
 
         Helper::drop('menus');

@@ -43,6 +43,7 @@
                           <th>Nome</th>
                           <th>Slug</th>
                           <th>Descrição</th>
+                          <th>Ativo</th>
                           <th>Opções</th>
                       </tr>
                   </thead>
@@ -54,6 +55,13 @@
                           <td>{{ $child->title }}</td>
                           <td>{{ $child->permission }}</td>
                           <td>{{ $child->description }}</td>
+                          <td>
+                            @if($child->active)
+                              <span class="badge badge-success">Ativo</span>
+                            @else
+                              <span class="badge badge-danger">Inativo</span>
+                            @endif
+                          </td>
                           <td>
 
                             <div class="dropdown-secondary dropdown">

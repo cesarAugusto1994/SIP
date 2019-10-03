@@ -55,25 +55,35 @@
                           <th>Nome</th>
                           <th>Slug Permissão</th>
                           <th>Descrição</th>
+                          <th>Ativo</th>
                           <th>Opções</th>
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach($menus as $module)
+                    @foreach($menus as $menu)
 
                       <tr>
 
-                          <td>{{$module->title}}</td>
-                          <td>{{$module->permission}}</td>
-                          <td>{{$module->description}}</td>
+                          <td><a href="{{route('menus.show', $menu->id)}}">{{$menu->title}}</a></td>
+                          <td>{{$menu->permission}}</td>
+                          <td>{{$menu->description}}</td>
+
+                          <td>
+                            @if($menu->active)
+                              <span class="badge badge-success">Ativo</span>
+                            @else
+                              <span class="badge badge-danger">Inativo</span>
+                            @endif
+                          </td>
+
                           <td>
 
                             <div class="dropdown-secondary dropdown">
                                 <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                 <div class="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                    <a class="dropdown-item waves-light waves-effect" href="{{route('menus.edit', $module->id)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
+                                    <a class="dropdown-item waves-light waves-effect" href="{{route('menus.edit', $menu->id)}}"><i class="icofont icofont-ui-edit"></i> Editar</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item waves-light waves-effect" href="{{route('menus.show', $module->id)}}"><i class="icofont icofont-ui-edit"></i> Menus e Permissões</a>
+                                    <a class="dropdown-item waves-light waves-effect" href="{{route('menus.show', $menu->id)}}"><i class="icofont icofont-ui-edit"></i> Menus e Permissões</a>
                                 </div>
                             </div>
 

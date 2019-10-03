@@ -3,17 +3,6 @@
         <div class="pcoded-navigatio-lavel">Navegação</div>
         <ul class="pcoded-item pcoded-left-item">
 
-            @permission('view.painel.principal')
-
-            <li class="">
-                <a href="{{ route('home') }}">
-                    <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                    <span class="pcoded-mtext">Painel Principal</span>
-                </a>
-            </li>
-
-            @endpermission
-
             @php
                 $menus = \App\Helpers\Helper::menus();
                 $user = auth()->user();
@@ -22,6 +11,10 @@
             @foreach($menus as $menu)
 
                 @if($menu->childs->isEmpty() && $menu->parent)
+                  @continue;
+                @endif
+
+                @if(!$menu->active)
                   @continue;
                 @endif
 
@@ -38,6 +31,10 @@
                         <ul class="pcoded-submenu">
 
                             @foreach($menu->childs as $child)
+
+                              @if(!$child->active)
+                                @continue;
+                              @endif
 
                               @permission($child->permission)
 

@@ -115,6 +115,27 @@
 
                 </div>
 
+                <div class="col-md-4">
+
+                  <div class="form-group">
+                      <label class="col-form-label">Ordem</label>
+                      <div class="input-group">
+                        <input type="number" min="1" autocomplete="off" max="1000" maxlength="4" required name="order" class="form-control">
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="active">Ativo</label>
+                      <div class="input-group">
+                          <input class="js-switch" type="checkbox" id="active" name="active" data-plugin="switchery" value="{{ 1 }}">
+                      </div>
+                      {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
