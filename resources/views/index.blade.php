@@ -127,6 +127,119 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-yellow update-card">
+                <div class="card-block">
+                    <div class="row align-items-end">
+                        <div class="col-12">
+                            <h4 class="text-white">{{ \App\Helpers\Helper::documentsTotal() }}</h4>
+                            <h6 class="text-white m-b-0">Documentos</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Atualizado: {{ now()->format('H:i') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-green update-card">
+                <div class="card-block">
+                    <div class="row align-items-end">
+                        <div class="col-12">
+                            <h4 class="text-white">{{ \App\Helpers\Helper::deliveriesTotal() }}</h4>
+                            <h6 class="text-white m-b-0">Ordens de Entrega</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Atualizado: {{ now()->format('H:i') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-pink update-card">
+                <div class="card-block">
+                    <div class="row align-items-end">
+                        <div class="col-12">
+                            <h4 class="text-white">{{ \App\Helpers\Helper::teamsTotal() }}</h4>
+                            <h6 class="text-white m-b-0">Treinamentos</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Atualizado: {{ now()->format('H:i') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-c-lite-green update-card">
+                <div class="card-block">
+                    <div class="row align-items-end">
+                        <div class="col-12">
+                            <h4 class="text-white">{{ \App\Helpers\Helper::teamEmloyeesTotal() }}</h4>
+                            <h6 class="text-white m-b-0">Alunos dos Treinamentos</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="text-white m-b-0"><i class="feather icon-clock text-white f-14 m-r-10"></i>Atualizado: {{ now()->format('H:i') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="card widget-statstic-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <h5>Clientes</h5>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <i class="feather icon-users st-icon bg-c-pink txt-lite-color"></i>
+                    <div class="text-left">
+                        <h3 class="d-inline-block">{{ \App\Helpers\Helper::clients()->count() }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-xl-4">
+            <div class="card widget-statstic-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <h5>Funcionários</h5>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <i class="feather icon-map-pin st-icon bg-c-yellow"></i>
+                    <div class="text-left">
+                        <h3 class="d-inline-block">{{ \App\Helpers\Helper::employees()->count() }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="card widget-statstic-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <h5>Endereços</h5>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <i class="feather icon-file-text st-icon bg-c-blue"></i>
+                    <div class="text-left">
+                        <h3 class="d-inline-block">{{ \App\Helpers\Helper::addresses()->count() }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @endif
 
         <div class="col-xl-8 col-md-12 col-sm-12">

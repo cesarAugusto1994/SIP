@@ -5,8 +5,10 @@ namespace App\Helpers;
 use Auth;
 use Session;
 use App\User;
-use App\Models\Training\Course;
+use App\Models\Training\{Course, Team};
+use App\Models\Training\Team\Employee as TeamEmployee;
 use App\Models\{People, Menu, Client, Contract};
+use App\Models\Client\Address;
 use App\Models\Client\{Employee, Occupation as ClientOccupation};
 use App\Models\Task\Status as TicketStatus;
 use App\Models\Ticket\{Type,Status};
@@ -23,6 +25,7 @@ use App\Models\MessageBoard\Type as MessageBoardType;
 use App\Models\DeliveryOrder\Status as DeliveryStatus;
 use App\Models\Fleet\Vehicle\Status as VehicleStatus;
 use App\Models\DeliveryOrder;
+use App\Models\Delivery\Document as DeliveryDocument;
 use App\Models\Stock\{Stock,Brand,Product,Vendor};
 use App\Models\Stock\Brand\Models as BrandModels;
 use App\Models\Delivery\Document\Type as DocumentType;
@@ -211,6 +214,70 @@ class Helper
         }
 
         return $hour . ':' . $minutes;
+    }
+
+    public static function documentsTotal()
+    {
+        $key = 'documents-total';
+
+        if(self::has($key)) {
+            //return self::get($key);
+        }
+
+        $data = DeliveryDocument::count();
+
+        return $data;
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function deliveriesTotal()
+    {
+        $key = 'deliveries-total';
+
+        if(self::has($key)) {
+            //return self::get($key);
+        }
+
+        $data = DeliveryOrder::count();
+
+        return $data;
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function teamsTotal()
+    {
+        $key = 'teams-total';
+
+        if(self::has($key)) {
+            //return self::get($key);
+        }
+
+        $data = Team::count();
+
+        return $data;
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function teamEmloyeesTotal()
+    {
+        $key = 'team-employees-total';
+
+        if(self::has($key)) {
+            //return self::get($key);
+        }
+
+        $data = TeamEmployee::count();
+
+        return $data;
+
+        self::set($key, $data);
+        return self::get($key);
     }
 
     public static function ticketsTotal()
@@ -751,6 +818,20 @@ class Helper
         }
 
         $data = Client::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function addresses()
+    {
+        $key = 'addresses';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = Address::all();
 
         self::set($key, $data);
         return self::get($key);
