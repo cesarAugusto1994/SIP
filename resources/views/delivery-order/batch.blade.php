@@ -26,29 +26,14 @@
         body: wrapper-content;
       }
 
-      .page-header {
-        margin-top: -80px !important;
-      }
-
-      p:last-child { page-break-after: auto; }
-      .wrapper-content { padding: 2em 2em;}
-
-      .font-10 {
-        font-size: 10px;
-      }
-
-      .table>tbody>tr>td {
-        padding: 6px;
-        padding-bottom: 3px;
-        font-size: 12px;
-      }
+      .divA {page-break-inside: avoid}
 
     </style>
 
 </head>
 
 <body class="pace-done">
-  <div style="padding:15px 20px 0 20px">
+  <div style="padding:20px 20px 0 20px;min-height: 600px;" class="divA">
       <div class="ibox-content">
           <div class="row">
 
