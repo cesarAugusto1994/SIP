@@ -103,7 +103,13 @@
                                               </tr>
                                               <tr>
                                                   <th scope="row">Data</th>
-                                                  <td>{{ $team->start->format('d/m H:i') }} à {{ $team->end->format('d/m H:i') }}</td>
+                                                  <td>
+                                                    @if($diffDays > 1)
+                                                        {{ $team->start->format('d/m/Y') }} à {{ $team->end->format('d/m/Y') }}
+                                                    @else
+                                                        {{ $team->start->format('d/m/Y') }} {{ $team->start->format('H:i') }}:{{ $team->end->format('H:i') }}
+                                                    @endif
+                                                    </td>
                                               </tr>
 
                                               <tr>

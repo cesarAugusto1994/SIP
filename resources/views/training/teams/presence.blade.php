@@ -76,7 +76,15 @@
                                 @endif
 
                             </td>
-                            <td><b>Data:</b> {{ $team->start->format('d/m/Y') }}</td>
+                            <td><b>Data:</b> <br/>
+
+                              @if($diffDays > 1)
+                                  {{ $team->start->format('d/m/Y') }} à {{ $team->end->format('d/m/Y') }}
+                              @else
+                                  {{ $team->start->format('d/m/Y') }} {{ $team->start->format('H:i') }}:{{ $team->end->format('H:i') }}
+                              @endif
+
+                            </td>
                             <td colspan="2"><b>Local:</b> {{ $team->localization }}</td>
                         </tr>
 

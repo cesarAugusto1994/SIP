@@ -1327,28 +1327,53 @@ class Helper
         $tasks = Task::whereNull('end')->get();
     }
 
+    public static function convertMonths($code)
+    {
+        switch($code) {
+          case 1:
+              return 'Janeiro';
+          case 2:
+              return 'Fevereiro';
+          case 3:
+              return 'Março';
+          case 4:
+              return 'Abril';
+          case 5:
+              return 'Maio';
+          case 6:
+              return 'Junho';
+          case 7:
+              return 'Julho';
+          case 8:
+              return 'Agosto';
+          case 9:
+              return 'Setembro';
+          case 10:
+              return 'Outobro';
+          case 11:
+              return 'Novembro';
+          case 12:
+              return 'Dezembro';
+          default:
+              throw new \Exception("O Mês informado não existe.", 1);
+        }
+    }
+
     public static function convertToEnglish($string)
     {
         switch($string) {
           case 'Segunda':
               return 'Monday';
-              break;
           case 'Terca':
               return 'Tuesday';
-              break;
           case 'Quarta':
               return 'Wednesday';
-              break;
           case 'Quinta':
               return 'Thursday';
-              break;
           case 'Sexta':
               return 'Friday';
-              break;
           case 'Sabado':
               return 'Saturday';
-              break;
-          break;
           default:
               return 'Sunday';
         }

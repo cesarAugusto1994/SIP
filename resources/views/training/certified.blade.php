@@ -1324,12 +1324,13 @@
 
                       <br>
 
-                      <h4 style="text-align:center;padding-left:0"><i>Vitória, {{ now()->format('d/m/Y') }}</i></h4>
+                      <h4 style="text-align:center;padding-left:0"><i>Vitória, {{ $textDate }}</i></h4>
 
                     </div>
 
                     <br>
 
+                    <div>
                     <div>
 
                       <p class="item-left">
@@ -1349,7 +1350,7 @@
                       </p>
 
                     </div>
-
+                    </div>
                 </div>
             </div>
             <div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div>

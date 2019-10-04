@@ -11,7 +11,7 @@ use App\Models\Client\Employee;
 use App\Models\Client as Company;
 use App\Models\People;
 use App\User;
-use DateTime;
+use DateTime, DatePeriod, DateInterval;
 
 class TeamsController extends Controller
 {
@@ -89,7 +89,29 @@ class TeamsController extends Controller
     {
         $employee = Employee::uuid($employee);
         $team = Team::uuid($id);
-        return view('training.certified', compact('team', 'employee'));
+
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($team->start, $interval, $team->end);
+
+        $arrayDate = [];
+
+        $yearString = $monthString = $textDate = "";
+
+        foreach ($period as $dt) {
+            //$textDate .= $dt->format('d') . ', ';
+            $monthString = Helper::convertMonths($dt->format('m'));
+            $yearString = $dt->format('Y');
+            $arrayDate[$monthString][] = $dt->format('d');
+        }
+
+        foreach ($arrayDate as $key => $item) {
+          $stringA = implode(', ', $item);
+          $textDate .= $stringA . ' de ' . $key . ' ';
+        }
+
+        $textDate .= 'de ' . $yearString;
+
+        return view('training.certified', compact('team', 'employee', 'textDate'));
     }
 
     public function start($id, Request $request)
@@ -163,7 +185,14 @@ class TeamsController extends Controller
     public function presenceList($id)
     {
         $team = Team::uuid($id);
-        return view('training.teams.presence', compact('team'));
+
+        $diffDays = 0;
+
+        if($team->start) {
+          $diffDays = $team->end->diff($team->start)->days;
+        }
+
+        return view('training.teams.presence', compact('team', 'diffDays'));
     }
 
     public function uploadPresenceList($id, Request $request)
@@ -457,14 +486,20 @@ class TeamsController extends Controller
         $team = Team::uuid($id);
 
         $teamCode = Helper::Initials($team->course->title) . $team->id . '-'.$team->start->format('d-m-y');
-        $companies = Helper::companiesWhereHasEmployees();
-        $employeesSelected = $team->employees->pluck('employee.id')->toArray();
+        //$companies = Helper::companiesWhereHasEmployees();
+        //$employeesSelected = $team->employees->pluck('employee.id')->toArray();
         $courses = Helper::courses();
         $teachers = Helper::usersByOccupation(28);
 
         $hasAgendado = $team->employees->where('status', 'AGENDADO')->first();
 
-        return view('training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected', 'hasAgendado'));
+        $diffDays = 0;
+
+        if($team->start) {
+          $diffDays = $team->end->diff($team->start)->days;
+        }
+
+        return view('training.teams.show', compact('team', 'diffDays', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected', 'hasAgendado'));
     }
 
     /**
