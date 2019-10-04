@@ -1305,7 +1305,7 @@
                       <br>
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0">
-                           Concluiu o {{ $team->course->title }},
+                           Concluiu o Treinamento de {{ $team->course->title }},
                       </p>
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0">

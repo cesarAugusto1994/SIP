@@ -192,7 +192,10 @@ class TeamsController extends Controller
           $diffDays = $team->end->diff($team->start)->days;
         }
 
-        return view('training.teams.presence', compact('team', 'diffDays'));
+        $interval = DateInterval::createFromDateString('1 day');
+        $periodDate = new DatePeriod($team->start, $interval, $team->end);
+
+        return view('training.teams.presence', compact('team', 'diffDays', 'periodDate'));
     }
 
     public function uploadPresenceList($id, Request $request)

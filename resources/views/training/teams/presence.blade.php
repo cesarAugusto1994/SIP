@@ -1,3 +1,4 @@
+@foreach($periodDate as $dt)
 <!DOCTYPE html>
 <html>
 
@@ -26,14 +27,7 @@
       }
 
       .page-header {
-        margin-top: -80px !important;
-      }
-
-      p:last-child { page-break-after: auto; }
-      .wrapper-content { padding: 2em 2em;}
-
-      .font-10 {
-        font-size: 10px;
+        margin-top: 0px !important;
       }
 
       @media print {
@@ -42,13 +36,14 @@
         }
       }
 
+      .divA {page-break-inside: avoid}
+
     </style>
 
 </head>
 
 <body class="pace-done">
-
-  <div style="padding:0px 10px 0px 10px">
+  <div style="padding:20px 20px 0 20px;min-height: 600px;" class="divA">
       <div class="ibox-content">
           <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12">
@@ -78,11 +73,7 @@
                             </td>
                             <td><b>Data:</b> <br/>
 
-                              @if($diffDays > 1)
-                                  {{ $team->start->format('d/m/Y') }} à {{ $team->end->format('d/m/Y') }}
-                              @else
-                                  {{ $team->start->format('d/m/Y') }} {{ $team->start->format('H:i') }}:{{ $team->end->format('H:i') }}
-                              @endif
+                              {{ $dt->format('d/m/Y') }}
 
                             </td>
                             <td colspan="2"><b>Local:</b> {{ $team->localization }}</td>
@@ -150,3 +141,4 @@
 </body>
 
 </html>
+@endforeach
