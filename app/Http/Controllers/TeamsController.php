@@ -486,8 +486,6 @@ class TeamsController extends Controller
         $team = Team::uuid($id);
 
         $teamCode = Helper::Initials($team->course->title) . $team->id . '-'.$team->start->format('d-m-y');
-        //$companies = Helper::companiesWhereHasEmployees();
-        //$employeesSelected = $team->employees->pluck('employee.id')->toArray();
         $courses = Helper::courses();
         $teachers = Helper::usersByOccupation(28);
 
@@ -499,7 +497,7 @@ class TeamsController extends Controller
           $diffDays = $team->end->diff($team->start)->days;
         }
 
-        return view('training.teams.show', compact('team', 'diffDays', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected', 'hasAgendado'));
+        return view('training.teams.show', compact('team', 'diffDays', 'teamCode', 'courses', 'teachers', 'hasAgendado'));
     }
 
     /**
