@@ -385,9 +385,9 @@ class UsersController extends Controller
     {
         $user = $request->user();
 
-        if(!Auth::user()->hasPermission('edit.usuarios')) {
-            return abort(403, 'Acesso negado.');
-        }
+        /*if(!Auth::user()->hasPermission('edit.usuarios')) {
+            //return abort(403, 'Acesso negado.');
+        }*/
 
         if($request->has('id')) {
             $user = User::uuid($request->get('id'));
