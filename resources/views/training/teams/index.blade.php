@@ -115,7 +115,6 @@
                         <thead>
                             <tr class="table-primary">
                                 <th>No.</th>
-                                <th>Nome</th>
                                 <th>Curso</th>
                                 <th>Situação</th>
                                 <th>Data</th>
@@ -124,19 +123,12 @@
                         <tbody>
                           @foreach($teams as $team)
 
-                            @php
-
-                              $teamCode = \App\Helpers\Helper::Initials($team->course->title) . $team->id . '-'.$team->start->format('d-m-y');
-
-                            @endphp
-
                             <tr>
                                 <td><a href="{{ route('teams.show', $team->uuid) }}" class="card-title">#{{ str_pad($team->id, 6, "0", STR_PAD_LEFT) }}</a></td>
-                                <td>
-                                  <p><a href="{{route('teams.show', ['id' => $team->uuid])}}">{{ $teamCode }}</a></p>
-                                </td>
                                 <td>{{ $team->course->title }}<br/>
                                   <small>Instrutor: {{ $team->teacher->person->name }}</small>
+                                  <br/>
+                                  <small>Vagas: {{ $team->employees->count() }} / {{ $team->vacancies }}</small>
                                 </td>
                                 <td>
                                   <span class="label label-{{ \App\Helpers\Helper::statusTeams($team->status) }}"> {{$team->status}} </span>

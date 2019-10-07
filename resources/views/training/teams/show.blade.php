@@ -306,6 +306,12 @@
                                   <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                   <br/>
                                   <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
+
+                                  <br/>
+                                  <small>Função: {{$employee->occupation->name}}</small>
+                                  <br/>
+                                  <small>CPF: {{$employee->cpf}}</small>
+
                               </td>
 
                               <td>
