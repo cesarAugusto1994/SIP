@@ -1430,7 +1430,7 @@ class Helper
           case 9:
               return 'Setembro';
           case 10:
-              return 'Outobro';
+              return 'Outubro';
           case 11:
               return 'Novembro';
           case 12:
