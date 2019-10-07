@@ -35,6 +35,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '298946589c8e980580c22399a4f81c53' => __DIR__ . '/..' . '/okipa/laravel-html-helper/app/Helpers/HtmlHelper.php',
+        'f0b9d51884e28b28685ab36b3a87f700' => __DIR__ . '/..' . '/pcrov/unicode/src/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'e91d0dc994644828154ae2387ede1ca8' => __DIR__ . '/..' . '/spatie/string/src/string_functions.php',
@@ -51,6 +52,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             'phpseclib\\' => 10,
             'phpDocumentor\\Reflection\\' => 25,
+            'pcrov\\JsonReader\\' => 17,
         ),
         'j' => 
         array (
@@ -242,6 +244,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'pcrov\\JsonReader\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pcrov/jsonreader/src',
         ),
         'jeremykenedy\\LaravelRoles\\' => 
         array (
@@ -5667,6 +5673,20 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'jeremykenedy\\LaravelRoles\\Traits\\PermissionHasRelations' => __DIR__ . '/..' . '/jeremykenedy/laravel-roles/src/Traits/PermissionHasRelations.php',
         'jeremykenedy\\LaravelRoles\\Traits\\RoleHasRelations' => __DIR__ . '/..' . '/jeremykenedy/laravel-roles/src/Traits/RoleHasRelations.php',
         'jeremykenedy\\LaravelRoles\\Traits\\Slugable' => __DIR__ . '/..' . '/jeremykenedy/laravel-roles/src/Traits/Slugable.php',
+        'pcrov\\JsonReader\\Exception' => __DIR__ . '/..' . '/pcrov/jsonreader/src/Exception.php',
+        'pcrov\\JsonReader\\InputStream\\IOException' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InputStream/IOException.php',
+        'pcrov\\JsonReader\\InputStream\\InputStream' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InputStream/InputStream.php',
+        'pcrov\\JsonReader\\InputStream\\Psr7Stream' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InputStream/Psr7Stream.php',
+        'pcrov\\JsonReader\\InputStream\\Stream' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InputStream/Stream.php',
+        'pcrov\\JsonReader\\InputStream\\StringInput' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InputStream/StringInput.php',
+        'pcrov\\JsonReader\\InputStream\\Uri' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InputStream/Uri.php',
+        'pcrov\\JsonReader\\InvalidArgumentException' => __DIR__ . '/..' . '/pcrov/jsonreader/src/InvalidArgumentException.php',
+        'pcrov\\JsonReader\\JsonReader' => __DIR__ . '/..' . '/pcrov/jsonreader/src/JsonReader.php',
+        'pcrov\\JsonReader\\Parser\\JsonParser' => __DIR__ . '/..' . '/pcrov/jsonreader/src/Parser/JsonParser.php',
+        'pcrov\\JsonReader\\Parser\\Lexer' => __DIR__ . '/..' . '/pcrov/jsonreader/src/Parser/Lexer.php',
+        'pcrov\\JsonReader\\Parser\\ParseException' => __DIR__ . '/..' . '/pcrov/jsonreader/src/Parser/ParseException.php',
+        'pcrov\\JsonReader\\Parser\\Parser' => __DIR__ . '/..' . '/pcrov/jsonreader/src/Parser/Parser.php',
+        'pcrov\\JsonReader\\Parser\\Tokenizer' => __DIR__ . '/..' . '/pcrov/jsonreader/src/Parser/Tokenizer.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

@@ -9,6 +9,7 @@ use App\Models\Client\{Employee, Occupation};
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client as GuzzleClient;
+use pcrov\JsonReader\JsonReader;
 
 class EmployeesController extends Controller
 {
@@ -340,7 +341,7 @@ class EmployeesController extends Controller
 
           $employeesData = [];
 
-          $client = new GuzzleClient([
+          /*$client = new GuzzleClient([
             'handler' => new \GuzzleHttp\Handler\CurlHandler(),
           ]);
           $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
@@ -353,7 +354,12 @@ class EmployeesController extends Controller
               return response()->json('Dados não informados.');
           }
 
-          $data = [];
+          $data = [];*/
+
+          $reader = new JsonReader();
+          $reader->open("http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}");
+
+          //dd($reader);
 
           //$companies = Client::where('active', true)->get();
 
@@ -365,81 +371,82 @@ class EmployeesController extends Controller
                 return $item['CODIGOEMPRESA'] == $company->code;
             });*/
 
-            foreach ($employeesData as $key => $item) {
+            while($reader->read()) {
 
-                //if($company) {
+                $employeesData = $reader->value();
 
-                  $birthDay = null;
+                foreach ($employeesData as $key => $item) {
 
-                  if($item['DATA_NASCIMENTO']) {
-                      $birthDay = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
-                      $birthDay = $birthDay->format('Y-m-d');
-                  }
+                      $birthDay = null;
 
-                  $company = Client::where('code', $item['CODIGOEMPRESA'])->first();
+                      if($item['DATA_NASCIMENTO']) {
+                          $birthDay = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
+                          $birthDay = $birthDay->format('Y-m-d');
+                      }
 
-                  if(!$company) {
-                      continue;
-                  }
+                      $company = Client::where('code', $item['CODIGOEMPRESA'])->first();
 
-                  $hasEmployee = Employee::where('name', $item['NOME'])
-                                  //->orWhere('cpf', $item['CPFFUNCIONARIO'])
-                                  ->orWhere('code', $item['CODIGO'])
-                                  ->orWhere('birth', $birthDay)
-                                  ->where('company_id', $company->id)
-                                  ->first();
+                      if(!$company) {
+                          continue;
+                      }
 
-                  $data['company_id'] = $company->id;
-                  $data['name'] = $item['NOME'];
-                  $data['cpf'] = $item['CPFFUNCIONARIO'];
-                  $data['code'] = $item['CODIGO'];
-                  $data['active'] = $item['SITUACAO'] == 'Ativo' ? true : false;
+                      $hasEmployee = Employee::where('name', $item['NOME'])
+                                      //->orWhere('cpf', $item['CPFFUNCIONARIO'])
+                                      ->orWhere('code', $item['CODIGO'])
+                                      ->orWhere('birth', $birthDay)
+                                      ->where('company_id', $company->id)
+                                      ->first();
 
-                  $occupation = Occupation::firstOrCreate([
-                    'name' => $item['NOMECARGO'],
-                    'client_id' => $company->id
-                  ]);
+                      $data['company_id'] = $company->id;
+                      $data['name'] = $item['NOME'];
+                      $data['cpf'] = $item['CPFFUNCIONARIO'];
+                      $data['code'] = $item['CODIGO'];
+                      $data['active'] = $item['SITUACAO'] == 'Ativo' ? true : false;
 
-                  $data['occupation_id'] = $occupation->id;
+                      $occupation = Occupation::firstOrCreate([
+                        'name' => $item['NOMECARGO'],
+                        'client_id' => $company->id
+                      ]);
 
-                  $birth = $hiredAt = $firedAt = null;
+                      $data['occupation_id'] = $occupation->id;
 
-                  if(!empty($item['DATA_NASCIMENTO'])) {
-                      $birthday = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
-                  }
+                      $birth = $hiredAt = $firedAt = null;
 
-                  if(!empty($item['DATA_ADMISSAO'])) {
-                      $hiredAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_ADMISSAO']);
-                  }
+                      if(!empty($item['DATA_NASCIMENTO'])) {
+                          $birthday = \DateTime::createFromFormat('d/m/Y', $item['DATA_NASCIMENTO']);
+                      }
 
-                  if(!empty($item['DATA_DEMISSAO'])) {
-                      $firedAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_DEMISSAO']);
-                  }
+                      if(!empty($item['DATA_ADMISSAO'])) {
+                          $hiredAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_ADMISSAO']);
+                      }
 
-                  $data['birth'] = $birthday;
-                  $data['hired_at'] = $hiredAt;
-                  $data['fired_at'] = $firedAt;
-                  $data['created_by'] = 1;
+                      if(!empty($item['DATA_DEMISSAO'])) {
+                          $firedAt = \DateTime::createFromFormat('d/m/Y', $item['DATA_DEMISSAO']);
+                      }
 
-                  if($hasEmployee) {
-                      //echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
-                      $hasEmployee->update($data);
-                  } else {
-                      echo '>> Funcionario adicionado : ' . $item['NOME'] . PHP_EOL;
-                      Employee::create($data);
-                  }
-                //}
+                      $data['birth'] = $birthday;
+                      $data['hired_at'] = $hiredAt;
+                      $data['fired_at'] = $firedAt;
+                      $data['created_by'] = 1;
 
-            //}
+                      if($hasEmployee) {
+                          //echo '>> Funcionario ja importado : ' . $item['NOME'] . '<br/>';
+                          $hasEmployee->update($data);
+                      } else {
+                          echo '>> Funcionario adicionado : ' . $item['NOME'] . PHP_EOL;
+                          Employee::create($data);
+                      }
 
-            //dd($item);
+                    }
 
-          }
+            }
 
-          return response()->json([
-            'success' => true,
-            'message' => 'Funcionários importados com sucesso!'
-          ]);
+            $reader->close();
+
+            return response()->json([
+              'success' => true,
+              'message' => 'Funcionários importados com sucesso!'
+            ]);
 
         } catch(\Exception $e) {
           return response()->json([

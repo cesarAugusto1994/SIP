@@ -250,6 +250,7 @@ return [
         'Zipper' => Chumper\Zipper\Zipper::class,
         'Lava' => 'Khill\Lavacharts\Laravel\LavachartsFacade',
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'JsonReader' => pcrov\JsonReader\JsonReader::class
     ],
 
 ];

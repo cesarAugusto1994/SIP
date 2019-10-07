@@ -5,8 +5,11 @@
             <a class="mobile-menu" id="mobile-collapse" href="#!">
                 <i class="feather icon-menu"></i>
             </a>
-            <a href="{{ route('home') }}">
-                <img class="img" src="{{ asset('images\logo-provider.png') }}" width="138px" alt="SIP - Provider">
+            <a href="{{ route('home') }}" class="text-center">
+                <!--<img class="img" src="{{ asset('images\logo-provider.png') }}" width="138px" alt="SIP - Provider">
+                -->
+
+                <h5><b>SIP - Provider</b></h5>
             </a>
             <a class="mobile-options">
                 <i class="feather icon-more-horizontal"></i>

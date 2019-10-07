@@ -7,6 +7,7 @@ use App\Models\{Client, Documents};
 use Storage;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client as GuzzleClient;
+use pcrov\JsonReader\JsonReader;
 use Auth;
 
 class ClientController extends Controller
@@ -502,7 +503,7 @@ class ClientController extends Controller
         try {
 
             $clientData = [];
-
+/*
             $client = new GuzzleClient([
               'handler' => new \GuzzleHttp\Handler\CurlHandler(),
             ]);
@@ -517,6 +518,52 @@ class ClientController extends Controller
             if(!$clientData) {
                 return response()->json('Ocorreu um erro.');
             }
+*/
+            $reader = new JsonReader();
+            $reader->open("http://soc.com.br/WebSoc/exportadados?parametro={'empresa':'235164','codigo':'23703','chave':'d32494177fab74b4df10','tipoSaida':'json','empresafiltro':'','subgrupo':'','socnet':'','mostrarinativas':''}");
+
+            while ($reader->read()) {
+                //dd($reader->value());
+                //print_r($reader->value()) . " \n ";
+
+                $clientData = $reader->value();
+
+                foreach ($clientData as $key => $item) {
+
+                    $contractId = 1;
+
+                    $company = Client::where('document', $item['cnpj'])
+                    ->where('name', trim($item['razaoSocial']))
+                    ->where('code', trim($item['codigo']))
+                    ->first();
+
+                    if($company) {
+                        $contractId = $company->contract_id;
+                    }
+
+                    $data = [
+                        'code' => ($item['codigo']),
+                        'name' => trim($item['razaoSocial']),
+                        'document' => trim($item['cnpj']),
+                        'active' => (boolean)$item['status'],
+                        'contract_id' => $contractId
+                    ];
+
+                    if($company) {
+                        $company->update($data);
+                        echo '* Empresa Atualizada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . PHP_EOL;
+                    } else {
+                        $company = Client::create($data);
+                        echo '* Empresa Adicionada: ' . $company->code . ' : ' . $company->name . ' - Status: ' . $item['status'] . PHP_EOL;
+                    }
+
+                }
+
+
+            }
+            $reader->close();
+
+            exit('FIM');
 
             foreach ($clientData as $key => $item) {
 
