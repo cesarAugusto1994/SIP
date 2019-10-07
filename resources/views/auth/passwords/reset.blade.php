@@ -9,7 +9,7 @@
     <input type="hidden" name="token" value="{{ $token }}">
 
     <div class="text-center m-b-30">
-        <img src="{{ asset('images\logo-provider.png') }}" alt="SIP - Provider">
+        <img src="{{ asset('images\logo-provider.png') }}" style="width:40%"  alt="SIP - Provider">
     </div>
     <div class="auth-box card">
         <div class="card-block">
