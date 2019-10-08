@@ -40,24 +40,24 @@
 
             <div class="row m-b-30">
 
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Titulo</label>
                     <div class="input-group">
-                      <input type="text" required name="name" class="form-control" value="{{ old('name') }}">
-
+                      <span class="input-group-addon"><i class="fas fa-heading"></i></span>
+                      <input type="text" placeholder="Titulo da Tarefa" required name="name" class="form-control" value="{{ old('name') }}">
                     </div>
                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
-                      <textarea type="text" name="description" id="description" rows="3"
-                             placeholder="Descreva a tarefa e informações relevantes." class="form-control">{{ old('description') }}</textarea>
-
+                      <span class="input-group-addon"><i class="fas fa-font"></i></span>
+                      <textarea type="text" name="description" id="description" rows="4"
+                             placeholder="Descreva a tarefa e informações relevantes." class="form-control ckeditor">{{ old('description') }}</textarea>
                     </div>
                     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                 </div>
@@ -67,7 +67,8 @@
                 <div class="form-group {!! $errors->has('sponsor_id') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Responsável</label>
                     <div class="input-group">
-                      <select class="form-control" data-style="btn-white" name="sponsor_id" required>
+                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                      <select class="form-control select2" data-style="btn-white" name="sponsor_id" required>
                           @foreach(\App\Helpers\Helper::users() as $user)
                               <option value="{{$user->id}}" {{ $user->id == Auth::user()->id ? 'selected' : '' }}>{{$user->person->name}}</option>
                           @endforeach
@@ -85,7 +86,8 @@
                     <div class="form-group {!! $errors->has('time_type') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tipo de Tempo</label>
                         <div class="input-group">
-                          <select class="form-control" name="time_type">
+                          <span class="input-group-addon"><i class="far fa-clock"></i></span>
+                          <select class="form-control select2" name="time_type">
                               <option value="day">Dia(s)</option>
                               <option value="hour" selected>Hora(s)</option>
                               <option value="minute">Minuto(s)</option>
@@ -100,6 +102,7 @@
                     <div class="form-group {!! $errors->has('time') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Tempo</label>
                         <div class="input-group">
+                          <span class="input-group-addon"><i class="far fa-clock"></i></span>
                           <input type="number" min="1" required name="time" id="time" class="form-control" value="1">
                         </div>
                         {!! $errors->first('time', '<p class="help-block">:message</p>') !!}
@@ -112,7 +115,8 @@
                     <div class="form-group {!! $errors->has('percent_conclusion') ? 'has-error' : '' !!}">
                         <label class="col-form-label">% Conclusão</label>
                         <div class="input-group">
-                          <select class="form-control" name="percent_conclusion">
+                          <span class="input-group-addon"><i class="fas fa-percent"></i></span>
+                          <select class="form-control select2" name="percent_conclusion">
                               <option value="0">0</option>
                               <option value="10">10</option>
                               <option value="20">20</option>
@@ -135,11 +139,12 @@
 
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <div class="form-group {!! $errors->has('requester_id') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Solicitante</label>
                     <div class="input-group">
-                      <select class="form-control" name="requester_id">
+                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                      <select class="form-control select2" name="requester_id">
                           <option value="">Informe o Solicitante</option>
                           @foreach(\App\Helpers\Helper::users() as $user)
                               <option value="{{$user->id}}">{{$user->person->name}}</option>
@@ -147,6 +152,18 @@
                       </select>
                     </div>
                     {!! $errors->first('requester_id', '<p class="help-block">:message</p>') !!}
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group {!! $errors->has('client_id') ? 'has-error' : '' !!}">
+                    <label class="col-form-label">Cliente</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                      <select class="form-control select-client" name="label">
+                      </select>
+                    </div>
+                    {!! $errors->first('label', '<p class="help-block">:message</p>') !!}
                 </div>
               </div>
 
@@ -158,6 +175,7 @@
                     <div class="form-group {!! $errors->has('start') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Data de Início</label>
                         <div class="input-group">
+                          <span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
                           <input autocomplete="off" type="text" name="start" class="form-control inputDate" value="{{ old('start') }}">
                         </div>
                         {!! $errors->first('start', '<p class="help-block">:message</p>') !!}
@@ -168,6 +186,7 @@
                     <div class="form-group {!! $errors->has('end') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Data de Término</label>
                         <div class="input-group">
+                          <span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
                           <input autocomplete="off" type="text" name="end" class="form-control inputDate" value="{{ old('end') }}">
                         </div>
                         {!! $errors->first('end', '<p class="help-block">:message</p>') !!}
@@ -179,7 +198,8 @@
                     <div class="form-group {!! $errors->has('frequency') ? 'has-error' : '' !!}">
                         <label class="col-form-label">Frequencia</label>
                         <div class="input-group">
-                          <select class="form-control" name="frequency">
+                          <span class="input-group-addon"><i class="fas fa-percent"></i></span>
+                          <select class="form-control select2" name="frequency">
                               <option value="Nao se repete">Não se repete</option>
                               <option value="Diariamente">Diariamente</option>
                               <option value="Semanalmente">Semanalmente</option>
@@ -203,7 +223,7 @@
                 <div class="form-group {!! $errors->has('severity') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Gravidade (Risco)</label>
                     <div class="input-group">
-                      <select class="form-control" name="severity">
+                      <select class="form-control select2" name="severity">
                           <option value="1">1 (baixissima)</option>
                           <option value="2">2 (baixa)</option>
                           <option value="3">3 (moderada)</option>
@@ -220,7 +240,7 @@
                 <div class="form-group {!! $errors->has('urgency') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Urgência (Prioridade)</label>
                     <div class="input-group">
-                      <select class="form-control" name="urgency">
+                      <select class="form-control select2" name="urgency">
                         <option value="1">1 (baixissima)</option>
                         <option value="2">2 (baixa)</option>
                         <option value="3">3 (moderada)</option>
@@ -237,7 +257,7 @@
                 <div class="form-group {!! $errors->has('trend') ? 'has-error' : '' !!}">
                     <label class="col-form-label">Tendência (Importância)</label>
                     <div class="input-group">
-                      <select class="form-control" name="trend">
+                      <select class="form-control select2" name="trend">
                         <option value="1">1 (baixissima)</option>
                         <option value="2">2 (baixa)</option>
                         <option value="3">3 (moderada)</option>

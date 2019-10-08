@@ -7,9 +7,9 @@ use App\Models\{Ticket, Task, Department, Mapper};
 use App\Models\Ticket\Status\Log as TicketLog;
 use App\Models\Task\{Message, Status, Log, Delay, Pause, Archive as FileUpload};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Request as Req;
 use Notification;
+use Auth;
 use Storage;
 use DateTime;
 use DateInterval;
@@ -37,78 +37,60 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = Task::where('id', '>', 0);
+        $tasks = Task::orderByDesc('id');
 
-        if(!\Auth::user()->isAdmin()) {
-            $tasks->where('sponsor_id', \Auth::user()->id)->orWhere('user_id', \Auth::user()->id);
+        $user = $request->user();
+
+        if(!$user->isAdmin()) {
+            $tasks->where('sponsor_id', $user->id)
+            ->orWhere('user_id', $user->id);
         }
 
         if($request->filled('status')) {
             $status = $request->get('status');
-            $tasks = $tasks->where('status_id', $status);
+            $tasks->where('status_id', $status);
         }
 
-        //if(!$request->has('status')) {
-            //$tasks = $tasks->whereIn('status_id', [2]);
-        //}
+        if($request->filled('code')) {
+            $search = $request->get('code');
+            $tasks->where('id', $search)
+            ->orWhere('name', "%$search%")
+            ->orWhere('description', "%$search%");
+        }
+
+        if(!$request->has('find')) {
+            $tasks->whereIn('status_id', [1,2]);
+        }
 
         if($request->filled('severity')) {
             $priority = $request->get('severity');
-            $tasks = $tasks->where('severity', $priority);
+            $tasks->where('severity', $priority);
         }
 
         if($request->filled('urgency')) {
             $priority = $request->get('urgency');
-            $tasks = $tasks->where('urgency', $priority);
+            $tasks->where('urgency', $priority);
         }
 
         if($request->filled('trend')) {
             $priority = $request->get('trend');
-            $tasks = $tasks->where('trend', $priority);
+            $tasks->where('trend', $priority);
         }
 
-        if($request->filled('date')) {
-            $date = $request->get('date');
+        if($request->filled('start')) {
+            $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+            $tasks->where('created_at', '>=', $start->format('Y-m-d') . ' 00:00:00');
+        }
 
-            if($date == 'hoje') {
-
-                $tasks->where('created_at', '>' , now()->setTime(0,0,0))
-                ->where('created_at', '<', now()->setTime(23,59,59));
-
-            } elseif($date == 'ontem') {
-
-                $tasks->where('created_at', '>' , now()->subDays(1)->setTime(0,0,0))
-                ->where('created_at', '<', now()->subDays(1)->setTime(23,59,59));
-
-            } elseif($date == 'semana') {
-
-                $tasks->where('created_at', '>' , now()->subDays(7)->setTime(0,0,0))
-                ->where('created_at', '<', now()->subDays(7)->setTime(23,59,59));
-
-            } elseif($date == 'mes') {
-
-                $tasks->where('created_at', '>' , now()->subDays(30)->setTime(0,0,0))
-                ->where('created_at', '<', now()->subDays(30)->setTime(23,59,59));
-
-            } elseif($date == 'ano') {
-
-                $tasks->where('created_at', '>' , now()->subDays(365)->setTime(0,0,0))
-                ->where('created_at', '<', now()->subDays(365)->setTime(23,59,59));
-
-            } elseif($date == 'recente') {
-
-                $tasks->where('created_at', '>' , now()->subHours(2)->setTime(0,0,0))
-                ->where('created_at', '<', now()->setTime(23,59,59));
-
-            }
+        if($request->filled('end')) {
+            $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+            $tasks->where('created_at', '<=', $end->format('Y-m-d') . ' 23:59:59');
         }
 
         if($request->filled('user')) {
             $user = $request->get('user');
             $tasks = $tasks->where('user_id', $user);
         }
-
-        //$tasks->orderByDesc('id');
 
         $quantity = $tasks->count();
 

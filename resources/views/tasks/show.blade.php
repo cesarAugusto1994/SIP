@@ -49,15 +49,15 @@
 					</div>
         @endif
 					<div class="card">
-							<div class="card-header">
-									<h5 class="card-header-text"><i class="icofont icofont-ui-note m-r-10"></i> Informações</h5>
+							<div class="card-header bg-c-green update-card">
+									<h5 class="card-header-text m-t-5 text-white"><i class="icofont icofont-ui-note m-r-10"></i> Informações</h5>
 							</div>
 							<div class="card-block task-details">
 									<table class="table table-border table-xs">
 											<tbody>
 													<tr>
 															<td><i class="icofont icofont-contrast"></i> Tarefa:</td>
-															<td class="text-right"><span class="f-right">#{{ $task->id }}</span></td>
+															<td class="text-right"><span class="f-right">#{{ str_pad($task->id, 6, "0", STR_PAD_LEFT) }}</span></td>
 													</tr>
 
                           @if($task->ticket)
@@ -137,10 +137,6 @@
 													<tr>
 															<td><i class="icofont icofont-ui-love-add"></i> Solicitante:</td>
 															<td class="text-right"><a href="#">{{ $task->requester ? $task->requester->person->name : '-' }}</a></td>
-													</tr>
-													<tr>
-															<td><i class="icofont icofont-washing-machine"></i> Status:</td>
-															<td class="text-right">{{ $task->status->name }}</td>
 													</tr>
 											</tbody>
 									</table>
@@ -255,14 +251,14 @@
 							<div class="card-header">
 									<h5><i class="icofont icofont-tasks-alt m-r-5"></i>{{ $task->name }}</h5>
 
-                  <span class="label label-lg label-{{\App\Helpers\Helper::getStatusCollor($task->status->name)}} f-right"> {{ $task->status->name }} </span></a>
+                  <span class="select-status label label-lg label-{{\App\Helpers\Helper::getStatusCollor($task->status->name)}} f-right"> {{ $task->status->name }} </span></a>
 
 							</div>
 							<div class="card-block">
 									<div class="">
 											<div class="m-b-20">
 													<h6 class="sub-title m-b-15">Descrição</h6>
-													{{ $task->description }}
+													{!! $task->description !!}
 											</div>
 									</div>
 							</div>
@@ -365,6 +361,9 @@
                 dataType: 'json',
                 data: {
                   value: value
+                },
+                success: function(data) {
+                    notify(data.message, 'inverse');
                 }
 
               });
@@ -375,7 +374,9 @@
 
           var self = $(this);
           var statusValue = self.val();
+          var statusLabel = self.text;
           const ipAPI = self.data('route');
+          var itemStatus = $(".select-status");
 
           if(statusValue == 5) {
 
@@ -420,7 +421,9 @@
                          }
                        }).done(function(data) {
 
-                         window.location.reload();
+                         notify(data.message, 'inverse');
+                         itemStatus.text($("#select-status :selected").text());
+                         swal.close();
 
                        });
 
@@ -451,7 +454,10 @@
                   }
                 }).done(function(data) {
 
-                  window.location.reload();
+                  notify(data.message, 'inverse');
+                  itemStatus.text($("#select-status :selected").text());
+
+                  swal.close();
 
                 });
 

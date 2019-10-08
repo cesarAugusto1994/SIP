@@ -20,7 +20,7 @@ class Task extends Model
     protected $fillable = [
         'name', 'description', 'user_id',
         'frequency', 'time', 'schedule_id',
-        'client_id', 'ticket_id', 'created_at',
+        'client_id', 'ticket_id', 'created_at', 'client_id',
         'severity', 'urgency', 'trend', 'sponsor_id',
         'status_id', 'requester_id', 'active', 'time_type',
         'percent_conclusion', 'start', 'end', 'parent_id'
@@ -30,7 +30,7 @@ class Task extends Model
       'name', 'description', 'user_id',
       'frequency', 'time', 'schedule_id',
       'client_id', 'ticket_id', 'created_at',
-      'severity', 'urgency', 'trend', 'sponsor_id',
+      'severity', 'urgency', 'trend', 'sponsor_id', 'client_id',
       'status_id', 'requester_id', 'active', 'time_type',
       'percent_conclusion', 'start', 'end', 'parent_id'
     ];

@@ -30,190 +30,157 @@
   <div class="row">
 
     <div class="col-xl-12 col-lg-12 filter-bar">
-      <nav class="navbar navbar-light bg-faded m-b-30 p-10">
-          <ul class="nav navbar-nav">
-              <li class="nav-item active">
-                  <a class="nav-link" href="#!">Filtros: <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-clock-time"></i> Data</a>
-                  <div class="dropdown-menu" aria-labelledby="bydate">
-                      <a class="dropdown-item" href="?date=recente">Recente</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?date=hoje">Hoje</a>
-                      <a class="dropdown-item" href="?date=ontem">Ontem</a>
-                      <a class="dropdown-item" href="?date=semana">Nesta Semana</a>
-                      <a class="dropdown-item" href="?date=mes">Neste Mês</a>
-                      <a class="dropdown-item" href="?date=ano">Neste Ano</a>
-                  </div>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-chart-histogram-alt"></i>Situação</a>
-                  <div class="dropdown-menu" aria-labelledby="bystatus">
-                      <a class="dropdown-item" href="?status=">Todos</a>
-                      <div class="dropdown-divider"></div>
-                      @foreach(\App\Helpers\Helper::taskStatus() as $status)
-                          <a class="dropdown-item" href="?status={{$status->id}}">{{$status->name}}</a>
-                      @endforeach
-                  </div>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Gravidade</a>
-                  <div class="dropdown-menu" aria-labelledby="bypriority">
-                      <a class="dropdown-item" href="?severity=">Todas</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?severity=1">1</a>
-                      <a class="dropdown-item" href="?severity=2">2</a>
-                      <a class="dropdown-item" href="?severity=3">3</a>
-                      <a class="dropdown-item" href="?severity=4">4</a>
-                      <a class="dropdown-item" href="?severity=5">5</a>
-                  </div>
-              </li>
 
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Urgencia</a>
-                  <div class="dropdown-menu" aria-labelledby="bypriority">
-                      <a class="dropdown-item" href="?urgency=">Todas</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?urgency=1">1</a>
-                      <a class="dropdown-item" href="?urgency=2">2</a>
-                      <a class="dropdown-item" href="?urgency=3">3</a>
-                      <a class="dropdown-item" href="?urgency=4">4</a>
-                      <a class="dropdown-item" href="?urgency=5">5</a>
-                  </div>
-              </li>
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#!" id="bypriority" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-sub-listing"></i> Tendencia</a>
-                  <div class="dropdown-menu" aria-labelledby="bypriority">
-                      <a class="dropdown-item" href="?trend=">Todas</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="?trend=1">1</a>
-                      <a class="dropdown-item" href="?trend=2">2</a>
-                      <a class="dropdown-item" href="?trend=3">3</a>
-                      <a class="dropdown-item" href="?trend=4">4</a>
-                      <a class="dropdown-item" href="?trend=5">5</a>
-                  </div>
-              </li>
-              @if(auth()->user()->isAdmin())
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#!" id="bystatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-users-alt-5"></i>Usuário</a>
-                      <div class="dropdown-menu" aria-labelledby="bystatus">
-                          <a class="dropdown-item" href="?user=">Todos</a>
-                          <div class="dropdown-divider"></div>
-                          @foreach(\App\Helpers\Helper::users() as $user)
-                              <a class="dropdown-item" href="?user={{$user->id}}">{{$user->person->name}}</a>
-                          @endforeach
-                      </div>
-                  </li>
-              @endif
+                  @permission('create.tarefas')
+                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('tasks.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Tarefa</a>
+                  @endpermission
 
-          </ul>
-          <div class="nav-item nav-grid">
-              @permission('create.chamados')
-                <a href="{{route('tasks.create')}}" class="btn bottom-right btn-primary btn-sm pull-right">Criar Tarefa</a>
-              @endpermission
+              </div>
           </div>
-
-      </nav>
+      </div>
     </div>
 
   </div>
 
-  <h4 class="m-b-20"><b>{{ $quantity }}</b> Registros Encontrados</h4>
-
   <div class="row">
-    @forelse ($tasks as $task)
 
-    @php
+    <div class="col-lg-3">
 
-      $status = $task->status->id;
-
-      $bgColor = 'success';
-
-      switch($status) {
-        case '2':
-          $bgColor = 'warning';
-          break;
-        case '3':
-          $bgColor = 'primary';
-          break;
-        case '4':
-          $bgColor = 'primary';
-          break;
-        case '5':
-          $bgColor = 'danger';
-          break;
-      }
-
-    @endphp
-
-    <div class="col-sm-4">
-        <div class="card card-border-{{ $bgColor }}">
+        <div class="card">
             <div class="card-header">
-                <a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">#{{$task->id}} </a>
-                <a href="{{ route('tasks.show', $task->uuid) }}"><b>{{$task->name}}</b></a>
-                <a href="{{ route('tasks.show', $task->uuid) }}">
-                  <span class="label label-{{$bgColor}} f-right"> {{$task->status->name}} </span></a>
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
             </div>
             <div class="card-block">
-                <div class="row">
-                    <div class="col-sm-12">
-                      <a href="{{ route('tasks.show', $task->uuid) }}">
-                        <p class="task-detail">{{substr($task->description,0,150)}}...</p>
-                      </a>
-                        <small>Tempo Previsto:  <b>
-                          {{ \App\Helpers\Helper::formatTime($task->time, $task->time_type) }}
-                        </b></small>
-
-                        @if($task->start)
-                        <hr/>
-                        <p class="task-due"><strong> Agendada para : </strong>
-                        {{ $task->start->format('d/m/Y') }}
-                        <label class="label label-inverse-primary">{{ $task->start->diffForHumans() }}</label></p>
-                        @endif
+                <form method="get" action="?">
+                    <input type="hidden" name="find" value="1"/>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="code" placeholder="Código da Tarefa, Titulo, Descrição">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="task-list-table">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" id="daterange" class="form-control" placeholder="Periodo">
+                            <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                            <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+                        </div>
+                    </div>
 
-                  <a href="#!"><img class="img-fluid img-radius" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""></a>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-controls select2" name="status">
+                              <option value="">Situação</option>
+                              @foreach(\App\Helpers\Helper::taskStatus() as $status)
+                                  <option value="{{$status->id}}">{{$status->name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-                </div>
-                <div class="task-board">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-controls select2" name="status">
+                              <option value="">Situação</option>
+                              @foreach(\App\Helpers\Helper::users() as $user)
+                                  <option value="{{$user->id}}">{{$user->person->name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->severity); !!}">G {{$task->severity}}</span>
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->urgency); !!}">U {{$task->urgency}}</span>
-                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">T {{$task->trend}}</span>
-
-                </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-sm btn-block">
+                            <i class="icofont icofont-job-search m-r-5"></i> Pesquisar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    @empty
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <h5>Tarefas Recentes</h5>
+                <span>Registros retornados: {{ $quantity }}</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>No.</th>
+                                <th>Titulo</th>
+                                <th>Usuário</th>
+                                <th>Situação</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($tasks as $task)
 
-      <div class="col-md-12 col-lg-12">
+                            @php
 
-        <div class="widget white-bg no-padding">
-            <div class="p-m text-center">
-                <h1 class="m-md"><i class="fas fa-bullhorn fa-2x"></i></h1>
-                <br/>
-                <h6 class="font-bold no-margins">
-                    Nenhuma tarefa encontrada.
-                </h6>
+                              $status = $task->status->id;
+
+                              $bgColor = 'success';
+
+                              switch($status) {
+                                case '2':
+                                  $bgColor = 'warning';
+                                  break;
+                                case '3':
+                                  $bgColor = 'primary';
+                                  break;
+                                case '4':
+                                  $bgColor = 'primary';
+                                  break;
+                                case '5':
+                                  $bgColor = 'danger';
+                                  break;
+                              }
+
+                            @endphp
+
+                            <tr>
+                                <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">#{{ str_pad($task->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">{{ $task->name }}<br/>
+                                  <small>Descrição: {{ html_entity_decode(strip_tags(substr($task->description, 0, 800))) }}</small></a>
+                                </td>
+                                <td>
+                                  <a href="#!"><img width="24" class="img-fluid img-radius" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""> {{ $task->user->person->name }}</a>
+                                </td>
+                                <td>
+                                  <span class="label label-{{$bgColor}}"> {{$task->status->name}} </span>
+                                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->severity); !!}">G {{$task->severity}}</span>
+                                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->urgency); !!}">U {{$task->urgency}}</span>
+                                  <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">T {{$task->trend}}</span>
+                                </td>
+
+                                <td>
+                                  @if($task->start)
+                                  {{ $task->start->format('d/m/Y') }}
+                                  <br/>
+                                  <label class="label label-inverse-primary">{{ $task->start->diffForHumans() }}</label>
+                                  @endif
+                                </td>
+
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-      </div>
+    </div>
 
-    @endforelse
+    {{ $tasks->links() }}
 
-  </div>
-
-  <div class="row">
-      {{ $tasks->links() }}
   </div>
 
 </div>
