@@ -30,4 +30,9 @@ class ServiceOrder extends Model
   {
       return $this->belongsTo('App\Models\ServiceOrder\ServiceOrder\Status', 'status_id');
   }
+
+  public function services()
+  {
+      return $this->hasMany('App\Models\ServiceOrder\ServiceOrder\Item');
+  }
 }

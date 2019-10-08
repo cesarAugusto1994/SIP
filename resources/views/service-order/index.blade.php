@@ -57,17 +57,32 @@
                     <input type="hidden" name="find" value="1"/>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="search" placeholder="Código do Serviço, Nome">
+                            <input type="text" class="form-control" name="search" placeholder="Código da OS">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <select class="form-control select2" name="service_type_id">
-                              <option value="">Tipo</option>
-                              @foreach(\App\Helpers\Helper::serviceTypes() as $item)
+                              <option value="">Contrato</option>
+                              @foreach(\App\Helpers\Helper::contracts() as $item)
                                   <option value="{{$item->id}}">{{$item->name}}</option>
                               @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <input type="text" id="daterange" class="form-control" placeholder="Periodo">
+                            <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
+                            <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control select-client" name="client">
                             </select>
                         </div>
                     </div>
@@ -104,7 +119,7 @@
                         <tbody>
                           @foreach($services as $service)
                             <tr>
-                                <th scope="row">{{ $service->id }}</th>
+                                <th scope="row"><a href="{{ route('service-order.show', $service->uuid) }}">#{{ str_pad($service->id, 6, "0", STR_PAD_LEFT) }}</a></th>
                                 <td>{{ $service->contract->name }}</td>
                                 <td>{{ $service->client->name }}</td>
                                 <td>{{ $service->status->name }}</td>

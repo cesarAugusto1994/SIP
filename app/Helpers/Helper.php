@@ -545,7 +545,7 @@ class Helper
             return self::get($key);
         }
 
-        $data = Contract::all();
+        $data = Contract::where('active', true)->get();
 
         self::set($key, $data);
         return self::get($key);

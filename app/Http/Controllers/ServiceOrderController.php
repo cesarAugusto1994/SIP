@@ -99,7 +99,8 @@ class ServiceOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = ServiceOrder::uuid($id);
+        return view('service-order.show', compact('order'));
     }
 
     /**
@@ -110,7 +111,9 @@ class ServiceOrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = ServiceOrder::uuid($id);
+        $services = Service::where('active', true)->orderBy('service_type_id')->get();
+        return view('service-order.edit', compact('order', 'services'));
     }
 
     /**
@@ -122,7 +125,46 @@ class ServiceOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        if(!$request->has('contract_id')) {
+            abort(403, 'Error');
+        }
+
+        if(!$request->has('client')) {
+            abort(403, 'Error');
+        }
+
+        $client = Client::uuid($request->get('client'));
+        $data['client_id'] = $client->id;
+
+        $data['status_id'] = 1;
+
+        $serviceOrder = ServiceOrder::uuid($id);
+        $serviceOrder->update($data);
+
+        $services = $data['services'];
+
+        $serviceOrder->services->map(function($service) use($services) {
+            if(!in_array($service->service->uuid, $services)) {
+                $service->delete();
+            }
+        });
+
+        foreach ($services as $key => $service) {
+            $service = Service::uuid($service);
+
+            ServiceOrderItem::updateOrCreate([
+              'service_id' => $service->id,
+              'service_order_id' => $serviceOrder->id,
+            ]);
+        }
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Ordem de Serviço atualizada com sucesso.'
+        ]);
+
+        return redirect()->route('service-order.index');
     }
 
     /**

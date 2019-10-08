@@ -56,7 +56,7 @@ class ServiceController extends Controller
 
         $service = Service::create($data);
 
-        $contracts = Contract::all();
+        $contracts = Contract::where('active', true)->get();
 
         foreach ($contracts as $key => $contract) {
 
@@ -83,6 +83,10 @@ class ServiceController extends Controller
                 ]);
             }
         }
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Serviço adicionado com sucesso.'
+        ]);
 
         return redirect()->route('services.index');
     }
@@ -129,7 +133,7 @@ class ServiceController extends Controller
         $service = Service::uuid($id);
         $service->update($data);
 
-        $contracts = Contract::all();
+        $contracts = Contract::where('active', true)->get();
 
         foreach ($contracts as $key => $contract) {
 
@@ -148,19 +152,23 @@ class ServiceController extends Controller
                   $cost = $value = 0.00;
                 }
 
-                $serviceValues = $service->values->where('id', $contract->id)
+                $serviceValues = $service->values->where('contract_id', $contract->id)
                   ->where('active', true);
 
-                  foreach ($serviceValues as $key => $serviceValue) {
+                foreach ($serviceValues as $key => $serviceValue) {
 
-                      $serviceValue->value = $value ?: 0.00;
-                      $serviceValue->cost = $cost ?: 0.00;
-                      $serviceValue->save();
+                    $serviceValue->value = $value ?: 0.00;
+                    $serviceValue->cost = $cost ?: 0.00;
+                    $serviceValue->save();
 
-                  }
+                }
 
             }
         }
+
+        notify()->flash('Sucesso', 'success', [
+          'text' => 'Serviço atualizado com sucesso.'
+        ]);
 
         return redirect()->route('services.show', $service->uuid);
     }

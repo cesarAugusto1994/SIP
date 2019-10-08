@@ -15,4 +15,9 @@ class Item extends Model
 
     protected $fillable = ['service_order_id', 'service_id'];
     protected static $logAttributes = ['service_order_id', 'service_id'];
+
+    public function service()
+    {
+        return $this->belongsTo('App\Models\ServiceOrder\Service');
+    }
 }
