@@ -175,7 +175,7 @@ class DeliveryOrderController extends Controller
         }
 
         $deliveries = $deliveries->get();
-        $deliveriesGroupedByClient = $deliveries->sortBy('client.name')->groupBy('client_id');
+        //$deliveriesGroupedByClient = $deliveries->sortBy('client.name')->groupBy('client_id');
 
         $lava = new Lavacharts;
 
@@ -343,9 +343,16 @@ class DeliveryOrderController extends Controller
             $amount = 0.00;
             $loopTotal++;
 
+            if(!isset($deliveriesGroupedByClient[$delivery->client->uuid]['deliveries'])) {
+                $deliveriesGroupedByClient[$delivery->client->uuid] = ['deliveries' => 0, 'value' => 0.00, 'client_name' => $delivery->client->name];
+            }
+
             if($delivery->client->charge_delivery && $delivery->charge_delivery) {
                 $amount = 5.00;
+                $deliveriesGroupedByClient[$delivery->client->uuid]['value'] += $amount;
             }
+
+            $deliveriesGroupedByClient[$delivery->client->uuid]['deliveries'] += 1;
 
             if($delivery->delivered_at->format('Y-m-d') == now()->format('Y-m-d')) {
 

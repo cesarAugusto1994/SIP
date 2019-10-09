@@ -206,19 +206,13 @@
                               </tr>
                           </thead>
                           <tbody>
-                            @foreach($deliveriesGroupedByClient as $deliveries)
+                            @foreach($deliveriesGroupedByClient as $key => $deliveries)
 
-                              <tr @if(!$deliveries->first()->client->charge_delivery || !$deliveries->sum('amount'))
-                                      class="table-inverse"
-                                  @endif>
-                                  <td>{{ $deliveries->first()->client->name }}  <a class="btn btn-mini btn-success f-right" target="_blank" href="{{route('clients.show', $deliveries->first()->client->uuid)}}"> Acessar </a></td>
-                                  <td>{{ $deliveries->count() }}</td>
+                              <tr>
+                                  <td>{{ $deliveries['client_name'] }}  <a class="btn btn-mini btn-success f-right" target="_blank" href="{{route('clients.show', $key)}}"> Acessar </a></td>
+                                  <td>{{ $deliveries['deliveries'] }}</td>
                                   <td>
-                                    @if($deliveries->first()->client->charge_delivery && $deliveries->sum('amount'))
-                                      <label class="label label-md label-success">{{ number_format($deliveries->count()*5.00, 2, ',', '.') }}</label>
-                                    @else
-                                      <label class="label label-md label-primary">Valor não cobrado</label>
-                                    @endif
+                                      <label class="label label-md label-success">{{ number_format($deliveries['value'], 2, ',', '.') }}</label>
                                   </td>
                               </tr>
 
