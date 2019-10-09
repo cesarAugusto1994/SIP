@@ -222,6 +222,13 @@
 
                             @endforeach
                           </tbody>
+
+                          <tfoot>
+                              <tr>
+                                <td colspan="2"></td>
+                                <td><p class="lead text-primary">Total: {{ number_format(array_sum(array_column($deliveriesGroupedByClient, 'value')), 2, ',', '.') }}</p></td>
+                              </tr>
+                          </tfoot>
                       </table>
                   </div>
               </div>
