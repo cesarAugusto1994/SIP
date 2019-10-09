@@ -344,12 +344,17 @@ class DeliveryOrderController extends Controller
             $loopTotal++;
 
             if(!isset($deliveriesGroupedByClient[$delivery->client->uuid]['deliveries'])) {
-                $deliveriesGroupedByClient[$delivery->client->uuid] = ['deliveries' => 0, 'value' => 0.00, 'client_name' => $delivery->client->name];
+                $deliveriesGroupedByClient[$delivery->client->uuid] = ['deliveries' => 0, 'value' => 0.00, 'client_name' => $delivery->client->name, 'charge' => true];
+            }
+
+            if(!$delivery->client->charge_delivery) {
+                $deliveriesGroupedByClient[$delivery->client->uuid]['charge'] = false;
             }
 
             if($delivery->client->charge_delivery && $delivery->charge_delivery) {
                 $amount = 5.00;
                 $deliveriesGroupedByClient[$delivery->client->uuid]['value'] += $amount;
+                $deliveriesGroupedByClient[$delivery->client->uuid]['charge'] = true;
             }
 
             $deliveriesGroupedByClient[$delivery->client->uuid]['deliveries'] += 1;

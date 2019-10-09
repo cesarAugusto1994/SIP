@@ -209,10 +209,14 @@
                             @foreach($deliveriesGroupedByClient as $key => $deliveries)
 
                               <tr>
-                                  <td>{{ $deliveries['client_name'] }}  <a class="btn btn-mini btn-success f-right" target="_blank" href="{{route('clients.show', $key)}}"> Acessar </a></td>
+                                  <td><a target="_blank" href="{{route('clients.show', $key)}}">{{ $deliveries['client_name'] }}</a></td>
                                   <td>{{ $deliveries['deliveries'] }}</td>
                                   <td>
-                                      <label class="label label-md label-success">{{ number_format($deliveries['value'], 2, ',', '.') }}</label>
+                                    @if($deliveries['charge'])
+                                      <p class="lead">{{ number_format($deliveries['value'], 2, ',', '.') }}</p>
+                                    @else
+                                      <label class="label label-lg label-danger">Valor Não Cobrado</label>
+                                    @endif
                                   </td>
                               </tr>
 
