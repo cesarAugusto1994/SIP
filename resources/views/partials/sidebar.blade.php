@@ -60,9 +60,20 @@
             @permission('view.chat')
 
             <li class="">
-                <a href="{{ route('chat') }}">
+                <a target="_blank" href="https://providersadee-x6r4398​.slack​.com">
                     <span class="pcoded-micon"><i class="far fa-comment-dots"></i></span>
-                    <span class="pcoded-mtext">Chat</span>
+                    <span class="pcoded-mtext">Chat Slack</span>
+                </a>
+            </li>
+
+            @endpermission
+
+            @permission('view.email')
+
+            <li>
+                <a class="text-success" target="_blank" href="https://webmail.umbler.com">
+                    <span class="pcoded-micon"><i class="far fa-envelope"></i></span>
+                    <span class="pcoded-mtext">E-mail Umbler</span>
                 </a>
             </li>
 
