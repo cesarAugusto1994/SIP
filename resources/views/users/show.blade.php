@@ -39,7 +39,7 @@
                         <div class="col-md-12">
                             <div class="media-left">
                                 <a href="#" class="profile-image">
-                                    <img class="user-img img-radius" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="user-img">
+                                    <img class="user-img img-radius" width="258" src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" alt="">
                                 </a>
                             </div>
                             <div class="media-body row">
@@ -58,6 +58,8 @@
                                 </div>
                                 <div>
                                     <div class="pull-right cover-btn">
+
+                                        <a href="#" class="btn btn-primary btn-sm waves-effect waves-light m-r-10">Trocar Foto de Perfil</a>
 
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                         <div class="dropdown-menu dropdown-menu-right b-none contact-menu">

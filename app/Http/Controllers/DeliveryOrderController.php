@@ -343,7 +343,7 @@ class DeliveryOrderController extends Controller
             $amount = 0.00;
             $loopTotal++;
 
-            if($delivery->client->charge_delivery && $delivery->amount) {
+            if($delivery->client->charge_delivery && $delivery->charge_delivery && $delivery->amount) {
                 $amount = 5.00;
             }
 
