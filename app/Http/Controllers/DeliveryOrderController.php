@@ -338,7 +338,7 @@ class DeliveryOrderController extends Controller
           'count' => 0
         ];
 
-        foreach ($deliveries as $key => $delivery) {
+        foreach ($deliveries->sortBy('client.name') as $key => $delivery) {
 
             $amount = 0.00;
             $loopTotal++;
