@@ -317,7 +317,7 @@ function notify(message, type){
 
 function initMap() {
 
-  if (navigator.geolocation) {
+  /*if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
         lat: position.coords.latitude,
@@ -344,7 +344,7 @@ function initMap() {
   } else {
     // Browser doesn't support Geolocation
 
-  }
+  }*/
 
   var input = document.getElementById('pac-input');
 
