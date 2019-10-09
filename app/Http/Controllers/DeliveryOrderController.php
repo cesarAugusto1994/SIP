@@ -171,7 +171,7 @@ class DeliveryOrderController extends Controller
         }
 
         if(!$request->has('find')) {
-            $deliveries->whereBetween('delivered_at', [$first, $last]);
+            $deliveries->whereBetween('finished_at', [$first, $last]);
         }
 
         $deliveries = $deliveries->get();
@@ -199,8 +199,8 @@ class DeliveryOrderController extends Controller
                continue;
             }
 
-            $date = $delivery->delivered_at->format('Y-m-d');
-            $dateA = $delivery->delivered_at->format('Y-m-d');
+            $date = $delivery->finished_at ? $delivery->finished_at->format('Y-m-d') : $delivery->delivered_at->format('Y-m-d');
+            $dateA = $delivery->finished_at ? $delivery->finished_at->format('Y-m-d') : $delivery->delivered_at->format('Y-m-d');
 
             if(!isset($quantityPerDay[$date])) {
                 $quantityPerDay[$date] = 0;
@@ -343,7 +343,7 @@ class DeliveryOrderController extends Controller
             $amount = 0.00;
             $loopTotal++;
 
-            if($delivery->client->charge_delivery && $delivery->charge_delivery && $delivery->amount) {
+            if($delivery->client->charge_delivery && $delivery->charge_delivery) {
                 $amount = 5.00;
             }
 
