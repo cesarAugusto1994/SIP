@@ -34,6 +34,19 @@
                         <i class="feather icon-maximize full-screen"></i>
                     </a>
                 </li>
+
+                <li>
+                    <a target="_blank" href="https://providersadee-x6r4398​.slack​.com">
+                        Slack <i class="fab fa-slack"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a target="_blank" href="https://webmail.umbler.com">
+                        Webmail <i class="far fa-envelope"></i>
+                    </a>
+                </li>
+
             </ul>
 
             @php

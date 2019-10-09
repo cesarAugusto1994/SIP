@@ -61,7 +61,7 @@
 
             <li class="">
                 <a target="_blank" href="https://providersadee-x6r4398​.slack​.com">
-                    <span class="pcoded-micon"><i class="far fa-comment-dots"></i></span>
+                    <span class="pcoded-micon"><i class="fab fa-slack"></i></span>
                     <span class="pcoded-mtext">Chat Slack</span>
                 </a>
             </li>
@@ -73,7 +73,7 @@
             <li>
                 <a class="text-success" target="_blank" href="https://webmail.umbler.com">
                     <span class="pcoded-micon"><i class="far fa-envelope"></i></span>
-                    <span class="pcoded-mtext">E-mail Umbler</span>
+                    <span class="pcoded-mtext">Webmail</span>
                 </a>
             </li>
 
