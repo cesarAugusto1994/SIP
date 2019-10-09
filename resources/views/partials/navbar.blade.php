@@ -9,7 +9,7 @@
                 <!--<img class="img" src="{{ asset('images\logo-provider.png') }}" width="138px" alt="SIP - Provider">
                 -->
 
-                <h5><b>SIP - Provider</b></h5>
+                <h5><b>{{ config('app.name') }}</b></h5>
             </a>
             <a class="mobile-options">
                 <i class="feather icon-more-horizontal"></i>
