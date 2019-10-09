@@ -272,6 +272,8 @@ Route::middleware('auth')->group(function () {
           Route::get('training/schedules', 'TeamsController@schedule')->name('team_schedules');
           Route::get('training/schedule/list', 'TeamsController@list')->name('team_schedule_list');
 
+          Route::post('training/team/schedule/update', 'TeamsController@updateScheduleDate')->name('team_schedule_update');
+
           Route::get('training/teams/{id}/employees/{employee}/certified', 'TeamsController@certified')->name('team_certified');
 
           Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');

@@ -160,6 +160,17 @@
                           {!! $errors->first('grade', '<p class="help-block">:message</p>') !!}
                       </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group {!! $errors->has('color') ? 'has-error' : '' !!}">
+                            <label class="col-form-label" for="color">Cor de Fundo</label>
+                            <div class="input-group">
+                                <input type="color" required id="color" value="{{ $course->color }}" name="color" class="form-control" placeholder="Informe a cor de fundo">
+                            </div>
+                            {!! $errors->first('color', '<p class="help-block">:message</p>') !!}
+                        </div>
+                    </div>
+
                 </div>
 
                 <button class="btn btn-success">Salvar</button>

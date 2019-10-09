@@ -17,6 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
+                    <li class="breadcrumb-item"><a href="#!">Treinamentos</a>
                     <li class="breadcrumb-item"><a href="#!">Agenda</a>
                     </li>
                 </ul>
@@ -155,6 +156,7 @@
 </div>
 
 <input type="hidden" id="schedule-json" value="{{ route('team_schedule_list') }}"/>
+<input type="hidden" id="team-schedule-update" value="{{ route('team_schedule_update') }}"/>
 
 @endsection
 
@@ -167,8 +169,8 @@ $(document).ready(function() {
 let $calendar = $('#calendar-teams');
 
 $calendar.fullCalendar({
-    height: 380,
-    contentHeight: 590,
+    //height: 380,
+    //contentHeight: 590,
     views: {
       listDay: {
         buttonText: 'list day',
@@ -214,41 +216,65 @@ $calendar.fullCalendar({
     eventBorderColor: "#de1f1f",
     eventColor: "#AC1E23",
     slotLabelFormat: 'HH:mm',
-    eventLimitText: 'Compromissos',
+    eventLimitText: 'Treinamentos',
     borderColor: '#FC6180',
     backgroundColor: '#FC6180',
     droppable: true,
+    nowIndicator: true,
     businessHours: true,
     editable: true,
     allDaySlot: true,
     eventLimit: false,
-    minTime: '06:00:00',
-    maxTime: '22:00:00',
+    minTime: '07:00:00',
+    maxTime: '20:00:00',
     header: {
         left: 'prev,next,today',
         center: 'title',
         right: 'month,agendaWeek,agendaDay,listMonth,listWeek,listDay'
     },
+    /*businessHours: {
+      // days of week. an array of zero-based day of week integers (0=Sunday)
+      daysOfWeek: [ 1, 2, 3, 4 ], // Monday - Thursday
+
+      startTime: '10:00', // a start time (10am in this example)
+      endTime: '18:00', // an end time (6pm in this example)
+    },*/
+    //selectConstraint: "businessHours",
     navLinks: true,
     selectable: true,
     selectHelper: true,
     select: function(start, end, jsEvent, view) {
         var view = $('.calendar').fullCalendar('getView');
         $("#calendar-modal").modal('show');
-        $("#start").val(start.format('DD/MM/YYYY HH:mm'));
-        $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+
+        if(start.format('HH') == '00') {
+            $("#start").val(start.format('DD/MM/YYYY '+'08:00'));
+        } else {
+            $("#start").val(start.format('DD/MM/YYYY HH:mm'));
+        }
+
+        if(end.format('HH') == '00') {
+            $("#end").val(end.subtract(1, 'd').format('DD/MM/YYYY '+'18:00'));
+        } else {
+            $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+        }
+
     },
     eventClick: function(event, element, view) {
 
-        window.swal({
-          title: 'Em progresso...',
-          text: 'Aguarde enquanto carregamos o compromisso.',
-          type: 'success',
-          showConfirmButton: false,
-          allowOutsideClick: false
+        swal({
+          title: 'Acessar registro?',
+          text: "Informações do Treinamento.",
+          showCancelButton: true,
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
+          confirmButtonText: 'Sim',
+          cancelButtonText: 'Cancelar'
+          }).then((result) => {
+          if (result.value) {
+              window.location.href = event.route;
+          }
         });
-
-        window.location.href = event.route;
     },
 
     dayClick: function(date, jsEvent, view) {
@@ -267,13 +293,43 @@ $calendar.fullCalendar({
     //textColor: 'yellow', // an option!
     //When u drop an event in the calendar do the following:
     eventDrop: function(event, delta, revertFunc) {
-        //console.log(event);
-        //popularModal(event);
+
+        $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'POST',
+          url: $('#team-schedule-update').val(),
+          data: {
+            id:event.uuid,
+            start:event.start.format('DD/MM/YYYY HH:mm'),
+            end:event.end.format('DD/MM/YYYY HH:mm'),
+          },
+          success: function(data) {
+              notify(data.message, 'inverse');
+          }
+        })
+
     },
     //When u resize an event in the calendar do the following:
     eventResize: function(event, delta, revertFunc) {
-        //console.log(event);
-        //popularModal(event);
+
+      $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        url: $('#team-schedule-update').val(),
+        data: {
+          id:event.uuid,
+          start:event.start.format('DD/MM/YYYY HH:mm'),
+          end:event.end.format('DD/MM/YYYY HH:mm'),
+        },
+        success: function(data) {
+            notify(data.message, 'inverse');
+        }
+      })
+
     },
     eventRender: function(event, element) {
         $(element).tooltip({

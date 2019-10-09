@@ -399,7 +399,7 @@ class TeamsController extends Controller
         $data = [];
 
         foreach ($teams as $key => $team) {
-          switch($team->course->type) {
+          /*switch($team->course->type) {
             case 'Treinamento':
               $cardCollor = "#23c6c8";
               $editable = true;
@@ -411,13 +411,19 @@ class TeamsController extends Controller
             default:
               $cardCollor = "#0ac282";
             break;
+          }*/
+
+          if($team->start > now()) {
+              $editable = true;
           }
+
+          $cardCollor = $team->course->color;
 
           if($team->status != 'RESERVADO') {
             $editable = false;
           }
 
-          $title = $team->course->type . ' - ' . $team->course->title;
+          $title = $team->course->type . ' - ' . $team->course->title . ' - Instrutor(a): ' . $team->teacher->person->name;
 
           $data[] = [
               'id' => $team->id,
@@ -434,6 +440,35 @@ class TeamsController extends Controller
         }
 
         return json_encode($data);
+    }
+
+    public function updateScheduleDate(Request $request)
+    {
+        $data = $request->request->all();
+
+        try {
+
+          $team = Team::uuid($data['id']);
+
+          $start = DateTime::createFromFormat('d/m/Y H:i', $data['start']);
+          $end = DateTime::createFromFormat('d/m/Y H:i', $data['end']);
+
+          $data['start'] = $start;
+          $data['end'] = $end;
+
+          $team->update($data);
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Data de Agendamento atualizada com sucesso.'
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+          ]);
+        }
     }
 
     public function addEmployes($id, Request $request)
