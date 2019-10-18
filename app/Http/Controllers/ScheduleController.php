@@ -159,13 +159,17 @@ class ScheduleController extends Controller
     public function schedule(Request $request)
     {
         $user = auth()->user();
+        $req = $request->request->all();
 
         $cardCollor = "#1ab394";
         $editable = false;
 
+        $start = new \DateTime($req['start']);
+        $end = new \DateTime($req['end']);
+
         $data = [];
 
-        foreach ($user->schedules as $key => $schedule) {
+        foreach ($user->schedules->where('start', '>=', $start)->where('end', '<=', $end) as $key => $schedule) {
           switch($schedule->type_id) {
             case 1:
               $cardCollor = "#23c6c8";
@@ -199,6 +203,7 @@ class ScheduleController extends Controller
         }
 
         foreach ($user->guest as $key => $guest) {
+
             foreach ($guest->schedules as $keya => $schedule) {
 
               switch($schedule->type_id) {
