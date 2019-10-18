@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-xl-4">
+        <div class="col-md-4">
             <div class="card widget-statstic-card">
                 <div class="card-header">
                     <div class="card-header-left">
@@ -208,7 +208,7 @@
             </div>
         </div>
 
-        <div class="col-md-12 col-xl-4">
+        <div class="col-md-4">
             <div class="card widget-statstic-card">
                 <div class="card-header">
                     <div class="card-header-left">
@@ -224,7 +224,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-xl-4">
+        <div class="col-md-4">
             <div class="card widget-statstic-card">
                 <div class="card-header">
                     <div class="card-header-left">

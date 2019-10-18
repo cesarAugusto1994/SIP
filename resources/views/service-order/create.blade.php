@@ -41,18 +41,43 @@
 
             <div class="row m-b-30">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="form-control select-client" required name="client"></select>
+                        <select class="form-control select-client-employees select-client-addresses select-client" required
+                        name="client"
+                        data-search-employees="{{ route('client_employees_search') }}"
+                        data-search-addresses="{{ route('client_addresses_search') }}"
+                        id="client_id" data-target="#select-employee"></select>
                       </div>
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
-                      <label class="col-form-label">Contrato</label>
+                      <label class="col-form-label">Unidades</label>
+                      <div class="input-group">
+                        <select class="form-control select2" id="select-address"
+                          name="addresses[]" multiple>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="col-form-label">Contato</label>
+                      <div class="input-group">
+                        <select class="form-control select2" id="select-employee" name="contact_id">
+                        </select>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="col-form-label">Tipo de Contrato</label>
                       <div class="input-group">
                         <select class="form-control select2" required name="contract_id">
                             <option value="">Selecione</option>
@@ -63,8 +88,6 @@
                       </div>
                   </div>
                 </div>
-
-
 
             </div>
 
@@ -90,9 +113,11 @@
                             <td><input class="js-switch select-item" type="checkbox" name="services[]" value="{{ $service->uuid }}"/></td>
                             <th scope="row">{{ str_pad($service->id, 6, "0", STR_PAD_LEFT) }}</th>
                             <td>{{ $service->name }}</td>
+                            <td><small>
                             @foreach($service->values as $value)
-                                <td>{{ $value->contract->name }}<br/> <b>{{ number_format($value->value, 2) }}</b></td>
-                            @endforeach
+                                {{ $value->contract->name }}: <b>{{ number_format($value->value, 2) }}</b><br/>
+                            @endforeach</small>
+                            </td>
                         </tr>
                       @endforeach
 
@@ -145,6 +170,38 @@
           });
 
       }
+    });
+
+    $("#select-client-address").select2({
+      ajax: {
+        type: "GET",
+        dataType: 'json',
+        delay: 250,
+        url: $('#input-search-addresses').val(),
+        data: function (params) {
+          var query = {
+            search: params.term,
+            client: $("#client_id").val(),
+            type: 'public'
+          }
+
+          return query;
+        },
+        processResults: function (data, params) {
+
+          return {
+              results: $.map(data, function (item) {
+                  return {
+                      text: item.address,
+                      id: item.id
+                  }
+              })
+          };
+        }
+      },
+      cache: true,
+      placeholder: 'Procurar um Endereço',
+      minimumInputLength: 3,
     });
 
 </script>

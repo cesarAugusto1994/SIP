@@ -15,7 +15,7 @@
 <script>
     function displayLog(data) {
         let $log = $('<div>').addClass('list-group-item')
-            .html(`<pre><code>${JSON.stringify(data, null, 4)}</code></pre>`);
+            .html(`<pre><code>${JSON.stringify(data.message, null, 4)}</code></pre>`);
         $('#logs').prepend($log);
     }
 </script>

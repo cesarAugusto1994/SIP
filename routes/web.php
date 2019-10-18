@@ -378,6 +378,10 @@ Route::middleware('auth')->group(function () {
           Route::resource('service-order', 'ServiceOrderController');
 
           Route::get('service-order/{id}/contract', 'ServiceOrderController@contract')->name('service_order_contract');
+          Route::get('service-order/{id}/receipt', 'ServiceOrderController@receipt')->name('service_order_receipt');
+
+          Route::post('service-order-item/{id}/update-by-ajax', 'ServiceOrderController@updateItemByAjax')->name('service_order_item_update');
+          Route::post('service-order/{id}/update-by-ajax', 'ServiceOrderController@updateByAjax')->name('service_order_update');
 
     });
 

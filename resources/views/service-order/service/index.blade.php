@@ -104,7 +104,7 @@
                         <tbody>
                           @foreach($services as $service)
                             <tr>
-                                <th scope="row">{{ $service->id }}</th>
+                                <th scope="row">{{ str_pad($service->id, 6, "0", STR_PAD_LEFT) }}</th>
                                 <td>  <a href="{{route('services.show', ['id' => $service->uuid])}}">{{ $service->name }}</a></td>
                                 <td>{{ $service->description }}</td>
                                 <td>{{ $service->type->name }}</td>

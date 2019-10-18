@@ -96,11 +96,12 @@ class ClientController extends Controller
         $clients = Client::where('id', $search)
         ->orWhere('name', 'like', "%$search%")
         ->orWhere('document', 'like', "%$search%")
+        ->where('active', true)
         ->get();
 
         $result = [];
 
-        $result = $clients->map(function($client) {
+        $result = $clients->where('active', true)->map(function($client) {
             return [
               'id' => $client->uuid,
               'name' => $client->name

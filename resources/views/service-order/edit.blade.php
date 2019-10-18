@@ -41,20 +41,53 @@
 
             <div class="row m-b-30">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                       <label class="col-form-label">Cliente</label>
                       <div class="input-group">
-                        <select class="form-control select-client" required name="client">
-                            <option value="{{ $order->client->uuid }}">{{ $order->client->name }}</option>
+                        <input type="hidden" name="client" value="{{ $order->client->uuid }}"/>
+                        {{ $order->client->name }}
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="col-form-label">Unidades</label>
+                      <div class="input-group">
+                        <select class="form-control select2" id="select-address"
+                          name="addresses[]" multiple>
+                          @foreach($order->client->addresses as $address)
+
+                              @php
+                                  $selected = '';
+                                  $has = $order->addresses->where('address_id', $address->id)->first();
+                                  if($has) { $selected = 'selected'; }
+                              @endphp
+
+                              <option value="{{ $address->uuid }}" {{ $selected }}>{{ $address->description }}</option>
+                          @endforeach
                         </select>
                       </div>
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
-                      <label class="col-form-label">Contrato</label>
+                      <label class="col-form-label">Contato</label>
+                      <div class="input-group">
+                        <select class="form-control select2" id="select-employee" name="contact_id">
+                          @foreach($order->client->employees as $employee)
+                            <option value="{{ $employee->uuid }}" {{ $employee->id == $order->contact_id ? 'selected' : '' }}>{{ $employee->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="col-form-label">Tipo de Contrato</label>
                       <div class="input-group">
                         <select class="form-control select2" required name="contract_id">
                             <option value="">Selecione</option>
@@ -65,8 +98,6 @@
                       </div>
                   </div>
                 </div>
-
-
 
             </div>
 

@@ -1295,7 +1295,7 @@
                       @endif
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                           <b>{{ $employee->name }}</b>, portador da CPF: {{ $employee->cpf }},
+                           <b>{{ $employee->name }}</b>, portador do CPF: {{ $employee->cpf }},
                       </p>
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">

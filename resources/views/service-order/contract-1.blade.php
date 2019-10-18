@@ -58,7 +58,9 @@
           </tr>
         <tr>
           <td colspan="3" valign="top" width="425">
+            @if($order->client->addresses->isNotEmpty())
           <p><strong>Rua, Avenida, Logradouro:</strong> {{ $order->client->addresses->first()->description }}</p>
+            @endif
           </td>
           <td valign="top" width="168">
           <p><strong>CEP:</strong></p>
