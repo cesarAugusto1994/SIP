@@ -656,7 +656,7 @@ class DeliveryOrderController extends Controller
 
         $validator = Validator::make($request->all(), [
             //'document' => 'required|image|mimes:jpeg,png,jpg|max:10024',
-            'document' => 'required|image|max:10024',
+            'document' => 'required|max:10024',
         ]);
 
         if ($validator->fails()) {
