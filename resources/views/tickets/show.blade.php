@@ -301,7 +301,7 @@
 
       <div class="card user-activity-card">
           <div class="card-header">
-            <h5>Logs</h5>
+            <h5>Registro de Atividades</h5>
           </div>
           <div class="card-block">
 
@@ -313,7 +313,7 @@
                     <div class="col">
                         <h6 class="m-b-5">{{ $activity->created_at->format('d/m/Y H:i') }}</h6>
                         <p class="text-muted m-b-0">{{ $activity->description }} {{ html_entity_decode(\App\Helpers\Helper::getTagHmtlForModel($activity->subject_type, $activity->subject_id)) }}</p>
-                        <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ \App\Helpers\TimesAgo::render($activity->created_at) }}</p>
+                        <p class="text-muted m-b-0"><i class="feather icon-clock m-r-10"></i>{{ $activity->created_at->diffForHumans() }}</p>
                     </div>
                 </div>
 
