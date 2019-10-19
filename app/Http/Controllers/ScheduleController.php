@@ -169,7 +169,16 @@ class ScheduleController extends Controller
 
         $data = [];
 
-        foreach ($user->schedules->where('start', '>=', $start)->where('end', '<=', $end) as $key => $schedule) {
+        $schedules = Schedule::where('user_id', $user->id)
+        ->where('start', '>=', $start)
+        ->where('end', '<=', $end)
+        ->orWhereHas('guests', function($query) use($user,$start,$end) {
+            $query->where('user_id', $user->id)
+            ->where('start', '>=', $start)
+            ->where('end', '<=', $end);
+        })->get();
+
+        foreach ($schedules as $key => $schedule) {
           switch($schedule->type_id) {
             case 1:
               $cardCollor = "#23c6c8";
@@ -200,43 +209,6 @@ class ScheduleController extends Controller
               'route' => route('schedules.show', $schedule->uuid),
               'update' => route('schedules.update', $schedule->uuid)
           ];
-        }
-
-        foreach ($user->guest as $key => $guest) {
-
-            foreach ($guest->schedules as $keya => $schedule) {
-
-              switch($schedule->type_id) {
-                case 1:
-                  $cardCollor = "#23c6c8";
-                  $editable = true;
-                break;
-                case 2:
-                  $cardCollor = "#f8ac59";
-                  $editable = true;
-                break;
-                case 3:
-                  $cardCollor = "#0ac282";
-                break;
-                default:
-                  $cardCollor = "#0ac282";
-                break;
-              }
-
-              $data[] = [
-                  'id' => $schedule->id,
-                  'uuid' => $schedule->uuid,
-                  'type_id' => $schedule->type_id,
-                  'title' => 'Compartilhado por ' . $schedule->user->person->name . ' - ' . $schedule->type->name . ': ' . $schedule->title,
-                  'description' => $schedule->description,
-                  'start' => $schedule->start ? $schedule->start->format('Y-m-d H:i') : null,
-                  'end' => $schedule->end ? $schedule->end->format('Y-m-d H:i') : null,
-                  'color' => $cardCollor,
-                  'editable' => false,
-                  'route' => route('schedules.show', $schedule->uuid),
-                  'update' => route('schedules.update', $schedule->uuid)
-              ];
-            }
         }
 
         return json_encode($data);
