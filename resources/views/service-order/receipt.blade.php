@@ -82,23 +82,26 @@
 
       <table class="table table-style">
         <tr class="m-t-20">
-            <th style="text-align: center;padding-top:20px;color:white;font-size:12px;">VITÓRIA
-              <br><small style="font-size:8px">Av. Paulino Muller, 885 - Ilha de Santa Maria, Vitória - ES, 29051-035</small>
+            <th colspan="6" style="text-align: center;padding-top:5px;color:white;font-size:12px;">CONHEÇA NOSSAS UNIDADES</th>
+        </tr>
+        <tr class="m-t-20">
+            <th style="text-align: center;padding-top:10px;color:white;font-size:12px;">VITÓRIA
+              <br><small style="font-size:8px">Av. Paulino Muller, 885 - Jucutuquara, Vitória - ES, 29051-035</small>
             </th>
-            <th style="text-align: center;padding-top:20px;color:white;font-size:12px;">VILA VELHA I
+            <th style="text-align: center;padding-top:10px;color:white;font-size:12px;">VILA VELHA I
               <br><small style="font-size:8px">R. Araribóia, 719, Centro, Vila Velha - ES, 29100-970</small>
             </th>
-            <th style="text-align: center;padding-top:20px;color:white;font-size:12px;">VILA VELHA II
+            <th style="text-align: center;padding-top:10px;color:white;font-size:12px;">VILA VELHA II
               <br><small style="font-size:8px">AR. Rejente Feijó, 04, Nossa Senhora da Penha, Vila Velha - ES, 29110-160</small>
             </th>
-            <th style="text-align: center;padding-top:20px;color:white;font-size:12px;">CARIACICA
+            <th style="text-align: center;padding-top:10px;color:white;font-size:12px;">CARIACICA
               <br><small style="font-size:8px">Av. Espírito Santo, 13 - Morada de Campo Grande, Cariacica - ES, 29144-080</small>
             </th>
-            <th style="text-align: center;padding-top:20px;color:white;font-size:12px;">SERRA
+            <th style="text-align: center;padding-top:10px;color:white;font-size:12px;">SERRA
               <br><small style="font-size:8px">R. Isaac Newton, 154 - Parque Res. Laranjeiras, Serra - ES, 29165-180</small>
             </th>
-            <th style="text-align: center;padding-top:20px;color:white;font-size:12px;">BAIXO GUANDU
-              <br><small style="font-size:8px">R. Sebastião Cândido de Oliveira, 507, 3º andar, Sl 303, Centro, Baixo Guandu - ES, 29730-000</small>
+            <th style="text-align: center;padding-top:10px;color:white;font-size:12px;">BAIXO GUANDU
+              <br><small style="font-size:8px">R. Sebastião Cândido de Oliveira, 507, 3º andar, Sl 303, Centro, Baixo Guandú - ES, 29730-000</small>
             </th>
         </tr>
       </table>
@@ -122,11 +125,11 @@
                         </tr>
                         <tr>
                             <td colspan="6" style="padding-left:13px;">
-                              <h3>Provider Saúde Coporativa Integral LTDA-ME</h3>
+                              <h3>PROVIDER SAÚDE E SEGURANÇA DO TRABALHO LTDA ME</h3>
 
                               <address>
                                   <b>CNPJ:</b> 07.110.470/0001-57<br>
-                                  <b>Endereço:</b> Av. Paulino Muller, 885 - Ilha de Santa Maria, Vitória - ES, 29051-035<br>
+                                  <b>Endereço:</b> Av. Paulino Muller, 885 - Jucutuquara, Vitória - ES, 29051-035<br>
                                   <b>Telefones:</b> (27) 3223-3130 e (27) 3322-0030
                               </address>
                             </td>
@@ -251,7 +254,7 @@
                             <td>{{ $order->discount ? number_format($order->discount, 2, ',', '.') : '0,00' }}</td>
                             <td>R$ {{ $order->input_value ? number_format($order->input_value, 2, ',', '.') : '0,00' }}</td>
                             <td>{{ $order->due_date ? $order->due_date->format('d/m/Y') : '' }}</td>
-                            <td>R$ {{ $order->installment_value ? number_format($order->installment_value, 2, ',', '.') : '0,00' }}</td>
+                            <td>{{ $order->installment_quantity }} x R$ {{ $order->installment_value ? number_format($order->installment_value, 2, ',', '.') : '0,00' }}</td>
                             <td>{{ $order->installment_date ? $order->installment_date->format('d/m/Y') : '' }}</td>
                         </tr>
 
@@ -267,17 +270,17 @@
 
                         <tr>
                             <td colspan="3">
-                              <span>DATA DE SOLICITAÇÃO DE DADOS AO CLIENTE</span>: {{ $order->client_data_solicitation_date ? $order->client_data_solicitation_date->format('d/m/Y') : '' }}
+                              <span><b>DATA DE SOLICITAÇÃO DE DADOS AO CLIENTE</b></span>: {{ $order->client_data_solicitation_date ? $order->client_data_solicitation_date->format('d/m/Y') : '' }}
                               <br/>
-                              <span>DATA DE RETORNO DO CLIENTE</span>: {{ $order->client_feedback_date ? $order->client_feedback_date->format('d/m/Y') : '' }}
+                              <span><b>DATA DE RETORNO DO CLIENTE</b></span>: {{ $order->client_feedback_date ? $order->client_feedback_date->format('d/m/Y') : '' }}
                               <br/>
-                              <span>DATA DE LIBERAÇÃO DA OS PARA ÁREA TÉCNICA</span>: {{ $order->release_date ? $order->release_date->format('d/m/Y') : '' }}
+                              <span><b>DATA DE LIBERAÇÃO DA OS PARA ÁREA TÉCNICA</b></span>: {{ $order->release_date ? $order->release_date->format('d/m/Y') : '' }}
                               <br/>
-                              <span>SERVIÇO CONCLUÍDO?</span>: {{ $order->completed_service ? 'Sim' : 'Não' }}
+                              <span><b>SERVIÇO CONCLUÍDO?</b></span>: {{ $order->completed_service ? 'Sim' : 'Não' }}
 
                             </td>
-                            <td colspan="3">
-                              <span>OBSERVAÇÕES QUANTO A EVOLUÇÃO DA OS</span>: {{ $order->observation }}
+                            <td colspan="3" style="text-align:justify;">
+                              <span><b>OBSERVAÇÕES QUANTO A EVOLUÇÃO DA OS</b></span>:<br/> {{ $order->observation }}
                             </td>
                         </tr>
 
