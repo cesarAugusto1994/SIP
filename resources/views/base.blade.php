@@ -224,7 +224,7 @@
 <script type="text/javascript" src="{{ asset('adminty\components\i18next-browser-languagedetector\js\i18nextBrowserLanguageDetector.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-i18next\js\jquery-i18next.min.js') }}"></script>
 <script src="{{ asset('adminty\js\pcoded.min.js') }}"></script>
-<script src="{{ asset('adminty\js\vartical-layout.min.js') }}"></script>
+<script src="{{ asset('adminty\js\vartical-layout.min.js') }}?v1.0"></script>
 <script src="{{ asset('adminty\js\jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Custom js -->
 <script type="text/javascript" src="{{ asset('adminty\js\script.js') }}"></script>
