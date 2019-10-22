@@ -11,6 +11,7 @@ use App\Models\Client\Employee;
 use App\Models\Client as Company;
 use App\Models\People;
 use App\User;
+use PDF;
 use DateTime, DatePeriod, DateInterval;
 
 class TeamsController extends Controller
@@ -182,7 +183,7 @@ class TeamsController extends Controller
         }
     }
 
-    public function presenceList($id)
+    public function presenceList($id, Request $request)
     {
         $team = Team::uuid($id);
 
@@ -195,7 +196,16 @@ class TeamsController extends Controller
         $interval = DateInterval::createFromDateString('1 day');
         $periodDate = new DatePeriod($team->start, $interval, $team->end);
 
-        return view('training.teams.presence', compact('team', 'diffDays', 'periodDate'));
+        //return view('training.teams.presence', compact('team', 'diffDays', 'periodDate'));
+
+        $user = $request->user();
+
+        $id = str_pad($team->id, 6, "0", STR_PAD_LEFT);
+        $title = "Lista de Presenca:$id:";
+
+        $pdf = PDF::loadView('training.teams.presence', compact('team', 'diffDays', 'periodDate'));
+
+        return $pdf->stream($title. ".pdf");
     }
 
     public function uploadPresenceList($id, Request $request)
