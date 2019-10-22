@@ -491,14 +491,14 @@ class TeamsController extends Controller
 
         $team = Team::uuid($id);
 
-        if($team->vacancies < ($team->employees->count() + count($data['employees']))) {
+        /*if($team->vacancies < ($team->employees->count() + count($data['employees']))) {
 
             notify()->flash('Limite de vagas excedido', 'error', [
               'text' => 'O número de funcionários excede o limite de usuários.'
             ]);
 
             return back();
-        }
+        }*/
 
         foreach ($data['employees'] as $key => $employeeID) {
 

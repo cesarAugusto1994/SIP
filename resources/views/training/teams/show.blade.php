@@ -30,10 +30,6 @@
 <div class="page-body">
 
     <div class="card">
-        <div class="card-header">
-            <h5>Menu de opções </h5>
-
-        </div>
         <div class="card-block">
 
           @if($team->status == 'RESERVADO')
@@ -70,6 +66,13 @@
           <div class="card-header">
               <h4>Treinamento Cancelado</h4>
           </div>
+      </div>
+    @endif
+
+    @if($team->vacancies < $team->employees->count())
+      <div class="alert alert-warning">
+          <h3>Atenção</h3>
+          <p>A quantidade de participantes excede o limite de vagas atribuído à turma.</p>
       </div>
     @endif
 
