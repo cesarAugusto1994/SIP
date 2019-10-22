@@ -23,167 +23,196 @@
 <div class="page-body">
     <div class="row">
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="m-b-5">Chamados</p>
-                            <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsTotal() }}</h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-bookmark f-50 text-c-yellow"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="col-xl-6 col-md-12">
+          <div class="card user-card-full">
+              <div class="row m-l-0 m-r-0">
+                  <div class="col-sm-4 bg-c-green user-profile">
+                      <div class="card-block text-center text-white">
+                          <div class="m-b-25">
+                              <img src="{{ route('image', ['link' => \Auth::user()->avatar, 'avatar' => true])}}" class="img-radius" alt="">
+                          </div>
+                          <h6 class="f-w-600">{{ Auth()->user()->person->name }}</h6>
+                          <p>{{ Auth()->user()->person->department->name }}</p>
+                          <a href="{{route('user')}}"><i class="feather icon-edit m-t-10 f-16"></i></a>
+                      </div>
+                  </div>
+                  <div class="col-sm-8">
+                      <div class="card-block">
+                          <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Suas Informações</h6>
+                          <div class="row">
+                              <div class="col-sm-6">
+                                  <p class="m-b-10 f-w-600">E-mail</p>
+                                  <h6 class="text-muted f-w-400">{{ Auth()->user()->email }}</h6>
+                              </div>
+                              <div class="col-sm-6">
+                                  <p class="m-b-10 f-w-600">Ramal</p>
+                                  <h6 class="text-muted f-w-400">{{ Auth()->user()->person->branch }}</h6>
+                              </div>
+                          </div>
+                          <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Suas Atividades</h6>
+                          <div class="row">
+                              <div class="col-sm-6">
+                                  <p class="m-b-10 f-w-600">Último Login</p>
+                                  <h6 class="text-muted f-w-400">{{ Auth()->user()->lastLoginAt() ? Auth()->user()->lastLoginAt()->format('d/m/Y H:i') : '-' }}</h6>
+                              </div>
+                              <div class="col-sm-6">
+                                  <p class="m-b-10 f-w-600">Última Atividade</p>
+                                  <h6 class="text-muted f-w-400">{{ auth()->user()->activities->last()->description }}</h6>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-6 col-md-12">
+
+        <div class="row">
+
+          <div class="col-xl-6 col-md-6">
+              <div class="card">
+                  <div class="card-block">
+                      <div class="row align-items-center">
+                          <div class="col">
+                              <p class="m-b-5">Chamados</p>
+                              <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsTotal() }}</h4>
+                          </div>
+                          <div class="col col-auto text-right">
+                              <i class="feather icon-bookmark f-50 text-c-yellow"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+              <div class="card">
+                  <div class="card-block">
+                      <div class="row align-items-center">
+                          <div class="col">
+                              <p class="m-b-5">Cham. Realizados</p>
+                              <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsClosedTotal() }}</h4>
+                          </div>
+                          <div class="col col-auto text-right">
+                              <i class="feather icon-check-square f-50 text-c-green"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+              <div class="card">
+                  <div class="card-block">
+                      <div class="row align-items-center">
+                          <div class="col">
+                              <p class="m-b-5">Tarefas</p>
+                              <h4 class="m-b-0">{{ \App\Helpers\Helper::tasksTotal() }}</h4>
+                          </div>
+                          <div class="col col-auto text-right">
+                              <i class="feather icon-layers f-50 text-c-pink"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+              <div class="card">
+                  <div class="card-block">
+                      <div class="row align-items-center">
+                          <div class="col">
+                              <p class="m-b-5">Mensagens Recentes</p>
+                              <h4 class="m-b-0">{{ \App\Helpers\Helper::unSeenEmailsCount() }}</h4>
+                          </div>
+                          <div class="col col-auto text-right">
+                              <i class="feather icon-bell f-50 text-c-blue"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
         </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="m-b-5">Cham. Realizados</p>
-                            <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsClosedTotal() }}</h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-check-square f-50 text-c-green"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="m-b-5">Tarefas</p>
-                            <h4 class="m-b-0">{{ \App\Helpers\Helper::tasksTotal() }}</h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-layers f-50 text-c-pink"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-block">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="m-b-5">Mensagens Recentes</p>
-                            <h4 class="m-b-0">{{ \App\Helpers\Helper::unSeenEmailsCount() }}</h4>
-                        </div>
-                        <div class="col col-auto text-right">
-                            <i class="feather icon-bell f-50 text-c-blue"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
 
         @if(auth()->user()->isAdmin())
 
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-2 col-md-6">
             <div class="card update-card">
                 <div class="card-block">
                     <div class="row align-items-end">
                         <div class="col-12">
-                            <h4 class="text-warning">{{ \App\Helpers\Helper::documentsTotal() }}</h4>
-                            <h6 class="text-warning m-b-0">Documentos</h6>
+                            <h4 class="text-inverse">{{ \App\Helpers\Helper::documentsTotal() }}</h4>
+                            <h6 class="text-inverse m-b-0">Documentos</h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-2 col-md-6">
             <div class="card update-card">
                 <div class="card-block">
                     <div class="row align-items-end">
                         <div class="col-12">
-                            <h4 class="text-success">{{ \App\Helpers\Helper::deliveriesTotal() }}</h4>
-                            <h6 class="text-success m-b-0">Ordens de Entrega</h6>
+                            <h4 class="text-inverse">{{ \App\Helpers\Helper::deliveriesTotal() }}</h4>
+                            <h6 class="text-inverse m-b-0">Ordens de Entrega</h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-2 col-md-6">
             <div class="card update-card">
                 <div class="card-block">
                     <div class="row align-items-end">
                         <div class="col-12">
-                            <h4 class="text-danger">{{ \App\Helpers\Helper::teamsTotal() }}</h4>
-                            <h6 class="text-danger m-b-0">Treinamentos</h6>
+                            <h4 class="text-inverse">{{ \App\Helpers\Helper::teamsTotal() }}</h4>
+                            <h6 class="text-inverse m-b-0">Treinamentos</h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-2 col-md-6">
             <div class="card update-card">
                 <div class="card-block">
                     <div class="row align-items-end">
                         <div class="col-12">
-                            <h4 class="text-primary">{{ \App\Helpers\Helper::teamEmloyeesTotal() }}</h4>
-                            <h6 class="text-primary m-b-0">Alunos dos Treinamentos</h6>
+                            <h4 class="text-inverse">{{ \App\Helpers\Helper::teamEmloyeesTotal() }}</h4>
+                            <h6 class="text-inverse m-b-0">Alunos dos Treinamentos</h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card widget-statstic-card">
-                <div class="card-header">
-                    <div class="card-header-left">
-                        <h5>Clientes</h5>
-                    </div>
-                </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card update-card">
                 <div class="card-block">
-                    <i class="feather icon-users st-icon bg-c-pink txt-lite-color"></i>
-                    <div class="text-left">
-                        <h3 class="d-inline-block">{{ \App\Helpers\Helper::clients()->count() }}</h3>
+                    <div class="row align-items-end">
+                        <div class="col-12">
+                            <h4 class="text-inverse">{{ \App\Helpers\Helper::clients()->count() }}</h4>
+                            <h6 class="text-inverse m-b-0">Clientes</h6>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card widget-statstic-card">
-                <div class="card-header">
-                    <div class="card-header-left">
-                        <h5>Funcionários</h5>
-                    </div>
-                </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card update-card">
                 <div class="card-block">
-                    <i class="feather icon-map-pin st-icon bg-c-yellow"></i>
-                    <div class="text-left">
-                        <h3 class="d-inline-block">{{ \App\Helpers\Helper::employees()->count() }}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card widget-statstic-card">
-                <div class="card-header">
-                    <div class="card-header-left">
-                        <h5>Endereços</h5>
-                    </div>
-                </div>
-                <div class="card-block">
-                    <i class="feather icon-file-text st-icon bg-c-blue"></i>
-                    <div class="text-left">
-                        <h3 class="d-inline-block">{{ \App\Helpers\Helper::addresses()->count() }}</h3>
+                    <div class="row align-items-end">
+                        <div class="col-12">
+                            <h4 class="text-inverse">{{ \App\Helpers\Helper::employees()->count() }}</h4>
+                            <h6 class="text-inverse m-b-0">Funcionários</h6>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -196,7 +225,6 @@
                 <div class="card-header">
                     <h5>Gestão à Vista</h5>
                     <span>Mural de recados com informes e anúncios da empresa ou setor</span>
-
                 </div>
                 <div class="card-block">
 
@@ -255,6 +283,7 @@
                 <div class="card feed-card">
                     <div class="card-header">
                         <h5>Próximos Compromissos</h5>
+                        <span>Lista de seus compromissos</span>
                     </div>
                     <div class="card-block">
                       @forelse(\App\Helpers\Helper::listNextSchedules() as $schedule)
