@@ -92,6 +92,7 @@ class ServiceOrderController extends Controller
 
         $services = $data['services'];
 
+        if($request->filled('services')) {
         foreach ($services as $key => $service) {
             $service = Service::uuid($service);
 
@@ -115,6 +116,7 @@ class ServiceOrderController extends Controller
                 ]);
             }
 
+        }
         }
 
         $addresses = $data['addresses'];

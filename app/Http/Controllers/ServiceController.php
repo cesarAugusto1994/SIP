@@ -91,24 +91,24 @@ class ServiceController extends Controller
             }
         }
 
-        foreach ($ticketTypes as $key => $ticketType) {
-
-            $ticketType = TicketType::uuid($ticketType);
-
-            ServiceTicketType::create([
-              'service_id' => $service->id,
-              'ticket_type_id' => $ticketType->id
-            ]);
+        if($request->filled('ticket_types')) {
+            foreach ($ticketTypes as $key => $ticketType) {
+                $ticketType = TicketType::uuid($ticketType);
+                ServiceTicketType::create([
+                  'service_id' => $service->id,
+                  'ticket_type_id' => $ticketType->id
+                ]);
+            }
         }
 
-        foreach ($courses as $key => $course) {
-
-            $course = Course::uuid($course);
-
-            ServiceTrainingCourse::create([
-              'service_id' => $service->id,
-              'course_id' => $course->id
-            ]);
+        if($request->filled('courses')) {
+            foreach ($courses as $key => $course) {
+                $course = Course::uuid($course);
+                ServiceTrainingCourse::create([
+                  'service_id' => $service->id,
+                  'course_id' => $course->id
+                ]);
+            }
         }
 
         notify()->flash('Sucesso', 'success', [
@@ -214,24 +214,32 @@ class ServiceController extends Controller
             }
         }
 
-        foreach ($ticketTypes as $key => $ticketType) {
+        if($request->filled('ticket_types')) {
 
-            $ticketType = TicketType::uuid($ticketType);
+          foreach ($ticketTypes as $key => $ticketType) {
 
-            ServiceTicketType::updateOrCreate([
-              'service_id' => $service->id,
-              'ticket_type_id' => $ticketType->id
-            ]);
+              $ticketType = TicketType::uuid($ticketType);
+
+              ServiceTicketType::updateOrCreate([
+                'service_id' => $service->id,
+                'ticket_type_id' => $ticketType->id
+              ]);
+          }
+
         }
 
-        foreach ($courses as $key => $course) {
+        if($request->filled('courses')) {
 
-            $course = Course::uuid($course);
+          foreach ($courses as $key => $course) {
 
-            ServiceTrainingCourse::updateOrCreate([
-              'service_id' => $service->id,
-              'course_id' => $course->id
-            ]);
+              $course = Course::uuid($course);
+
+              ServiceTrainingCourse::updateOrCreate([
+                'service_id' => $service->id,
+                'course_id' => $course->id
+              ]);
+          }
+
         }
 
         notify()->flash('Sucesso', 'success', [
