@@ -70,64 +70,117 @@
 
         <div class="row">
 
-          <div class="col-xl-6 col-md-6">
-              <div class="card">
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
                   <div class="card-block">
-                      <div class="row align-items-center">
-                          <div class="col">
-                              <p class="m-b-5">Chamados</p>
-                              <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsTotal() }}</h4>
-                          </div>
-                          <div class="col col-auto text-right">
-                              <i class="feather icon-bookmark f-50 text-c-yellow"></i>
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::ticketsTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Chamados</h6>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
 
-          <div class="col-xl-6 col-md-6">
-              <div class="card">
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
                   <div class="card-block">
-                      <div class="row align-items-center">
-                          <div class="col">
-                              <p class="m-b-5">Cham. Realizados</p>
-                              <h4 class="m-b-0">{{ \App\Helpers\Helper::ticketsClosedTotal() }}</h4>
-                          </div>
-                          <div class="col col-auto text-right">
-                              <i class="feather icon-check-square f-50 text-c-green"></i>
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::ticketsClosedTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Chamados Concluídos</h6>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
 
-          <div class="col-xl-6 col-md-6">
-              <div class="card">
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
                   <div class="card-block">
-                      <div class="row align-items-center">
-                          <div class="col">
-                              <p class="m-b-5">Tarefas</p>
-                              <h4 class="m-b-0">{{ \App\Helpers\Helper::tasksTotal() }}</h4>
-                          </div>
-                          <div class="col col-auto text-right">
-                              <i class="feather icon-layers f-50 text-c-pink"></i>
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::tasksTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Tarefas</h6>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
 
-          <div class="col-xl-6 col-md-6">
-              <div class="card">
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
                   <div class="card-block">
-                      <div class="row align-items-center">
-                          <div class="col">
-                              <p class="m-b-5">Mensagens Recentes</p>
-                              <h4 class="m-b-0">{{ \App\Helpers\Helper::unSeenEmailsCount() }}</h4>
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::documentsTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Documentos</h6>
                           </div>
-                          <div class="col col-auto text-right">
-                              <i class="feather icon-bell f-50 text-c-blue"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
+                  <div class="card-block">
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::deliveriesTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Ordens de Entrega</h6>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
+                  <div class="card-block">
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::teamsTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Treinamentos</h6>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
+                  <div class="card-block">
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::teamEmloyeesTotal() }}</h4>
+                              <h6 class="text-inverse m-b-0">Alunos dos Treinamentos</h6>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
+                  <div class="card-block">
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::clients()->count() }}</h4>
+                              <h6 class="text-inverse m-b-0">Clientes</h6>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6">
+              <div class="card update-card">
+                  <div class="card-block">
+                      <div class="row align-items-end">
+                          <div class="col-12">
+                              <h4 class="text-inverse">{{ \App\Helpers\Helper::employees()->count() }}</h4>
+                              <h6 class="text-inverse m-b-0">Funcionários</h6>
                           </div>
                       </div>
                   </div>
@@ -138,87 +191,7 @@
 
       </div>
 
-        @if(auth()->user()->isAdmin())
 
-        <div class="col-xl-2 col-md-6">
-            <div class="card update-card">
-                <div class="card-block">
-                    <div class="row align-items-end">
-                        <div class="col-12">
-                            <h4 class="text-inverse">{{ \App\Helpers\Helper::documentsTotal() }}</h4>
-                            <h6 class="text-inverse m-b-0">Documentos</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-2 col-md-6">
-            <div class="card update-card">
-                <div class="card-block">
-                    <div class="row align-items-end">
-                        <div class="col-12">
-                            <h4 class="text-inverse">{{ \App\Helpers\Helper::deliveriesTotal() }}</h4>
-                            <h6 class="text-inverse m-b-0">Ordens de Entrega</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-2 col-md-6">
-            <div class="card update-card">
-                <div class="card-block">
-                    <div class="row align-items-end">
-                        <div class="col-12">
-                            <h4 class="text-inverse">{{ \App\Helpers\Helper::teamsTotal() }}</h4>
-                            <h6 class="text-inverse m-b-0">Treinamentos</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-2 col-md-6">
-            <div class="card update-card">
-                <div class="card-block">
-                    <div class="row align-items-end">
-                        <div class="col-12">
-                            <h4 class="text-inverse">{{ \App\Helpers\Helper::teamEmloyeesTotal() }}</h4>
-                            <h6 class="text-inverse m-b-0">Alunos dos Treinamentos</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-2 col-md-6">
-            <div class="card update-card">
-                <div class="card-block">
-                    <div class="row align-items-end">
-                        <div class="col-12">
-                            <h4 class="text-inverse">{{ \App\Helpers\Helper::clients()->count() }}</h4>
-                            <h6 class="text-inverse m-b-0">Clientes</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-2 col-md-6">
-            <div class="card update-card">
-                <div class="card-block">
-                    <div class="row align-items-end">
-                        <div class="col-12">
-                            <h4 class="text-inverse">{{ \App\Helpers\Helper::employees()->count() }}</h4>
-                            <h6 class="text-inverse m-b-0">Funcionários</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @endif
 
         <div class="col-xl-8 col-md-12 col-sm-12">
             <div class="card latest-update-card">

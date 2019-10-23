@@ -236,7 +236,7 @@
                 <div class="table-responsive">
                     <table class="table table-lg table-styling">
                         <thead>
-                            <tr class="table-primary">
+                            <tr class="table-inverse">
                                 <th>Ordem No.</th>
                                 <th>Situação</th>
                                 <th>Cliente</th>
@@ -281,7 +281,7 @@
                                   </p>
                                 </td>
                                 <td><a href="{{route('clients.show', ['id' => $delivery->client->uuid])}}">{{ $delivery->client->name }}</a><br/>
-                                  <label class="label label-inverse-primary">{{$delivery->address->street}}, {{$delivery->address->number}} - {{$delivery->address->district}}, {{$delivery->address->city}}</label>
+                                  <small>Endereço: {{$delivery->address->street}}, {{$delivery->address->number}} - {{$delivery->address->district}}, {{$delivery->address->city}}</small>
 
                                   <br/>
 
@@ -292,7 +292,7 @@
                                       </small>
 
                                       @if($delivery->delivery_date < now()->format('Y-m-d'))
-                                        <label class="label label-danger">Entrega em Atraso</label>
+                                        <label class="label label-danger f-right">Entrega em Atraso</label>
                                       @endif
 
                                     @elseif($delivery->delivered_at)
