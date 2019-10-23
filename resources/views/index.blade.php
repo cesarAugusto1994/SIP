@@ -57,7 +57,7 @@
                               </div>
                               <div class="col-sm-6">
                                   <p class="m-b-10 f-w-600">Última Atividade</p>
-                                  <h6 class="text-muted f-w-400">{{ auth()->user()->activities ? auth()->user()->activities->last()->description : '' }}</h6>
+                                  <h6 class="text-muted f-w-400">{{ auth()->user()->activities->isNotEmpty() ? auth()->user()->activities->last()->description : '' }}</h6>
                               </div>
                           </div>
                       </div>
