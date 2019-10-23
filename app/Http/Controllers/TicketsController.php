@@ -12,9 +12,12 @@ use Notification;
 use Storage;
 use File;
 use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
+use App\Models\ServiceOrder\ServiceOrder\Ticket as ServiceOrderTicket;
 use App\Events\Notifications;
 use App\Jobs\Ticket as TicketJob;
 use Khill\Lavacharts\Lavacharts;
+use App\Models\ServiceOrder\ServiceOrder;
+use App\Models\Ticket\Message as TicketMessage;
 
 class TicketsController extends Controller
 {
@@ -178,9 +181,23 @@ class TicketsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('tickets.create');
+        $message = "";
+
+        if($request->has('service_order')) {
+
+            $ticketType = $request->get('type');
+
+            $serviceOrder = ServiceOrder::uuid($request->get('service_order'));
+
+            $message = "Chamado referente à OS #" . str_pad($serviceOrder->id, 6, "0", STR_PAD_LEFT) . "<br/>
+            Cliente: " . $serviceOrder->client->name . "
+            ";
+
+        }
+
+        return view('tickets.create', compact('message'));
     }
 
     /**
@@ -207,6 +224,12 @@ class TicketsController extends Controller
         $data['status_id'] = 1;
 
         $ticket = Ticket::create($data);
+
+        if($request->has('service_order_ticket')) {
+            $serviceOrderTicket = ServiceOrderTicket::uuid($request->get('service_order_ticket'));
+            $serviceOrderTicket->ticket_id = $ticket->id;
+            $serviceOrderTicket->save();
+        }
 
         $alreadyExists = Log::where('ticket_id', $ticket->id)->where('status_id', 1)->get();
 
@@ -246,7 +269,7 @@ class TicketsController extends Controller
             broadcast(new Notifications($userA, 'Novo Chamado aberto por ' . $user->person->name))->toOthers();
         }
 
-        return redirect()->route('tickets.index');
+        return redirect()->route('tickets.show', $ticket->uuid);
     }
 
     public function startTicket($id, Request $request)
@@ -380,6 +403,10 @@ class TicketsController extends Controller
 
         $message = $request->get('message');
 
+        if($ticket->serviceTicket) {
+
+        }
+
         Log::create([
           'status_id' => 5,
           'ticket_id' => $ticket->id,
@@ -397,6 +424,38 @@ class TicketsController extends Controller
         return redirect()->route('tickets.show', $ticket->uuid);
     }
 
+    public function comment($id, Request $request)
+    {
+        try {
+
+            $ticket = Ticket::uuid($id);
+            $user = $request->user();
+
+            $message = $request->get('message');
+
+            TicketMessage::create([
+              'message' => $message,
+              'user_id' => $user->id,
+              'ticket_id' => $ticket->id
+            ]);
+
+            return response()->json([
+              'success' => true,
+              'message' => 'Mensagem postada com sucesso.'
+            ]);
+
+        } catch(\Exception $e) {
+
+            return $e->getMessage();
+
+            return response()->json([
+              'success' => false,
+              'message' => 'Ocorreu um erro ao remover a mensagem'
+            ]);
+
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -406,7 +465,6 @@ class TicketsController extends Controller
     public function show($id)
     {
         $ticket = Ticket::uuid($id);
-
         return view('tickets.show', compact('ticket'));
     }
 

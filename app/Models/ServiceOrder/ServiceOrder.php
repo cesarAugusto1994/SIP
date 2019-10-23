@@ -59,6 +59,16 @@ class ServiceOrder extends Model
       return $this->hasMany('App\Models\ServiceOrder\ServiceOrder\Item');
   }
 
+  public function tickets()
+  {
+      return $this->hasMany('App\Models\ServiceOrder\ServiceOrder\Ticket', 'service_order_id');
+  }
+
+  public function courses()
+  {
+      return $this->hasMany('App\Models\ServiceOrder\ServiceOrder\Training\Course', 'service_order_id');
+  }
+
   public function addresses()
   {
       return $this->hasMany('App\Models\ServiceOrder\ServiceOrder\Address');

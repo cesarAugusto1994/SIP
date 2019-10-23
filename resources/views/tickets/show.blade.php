@@ -55,7 +55,7 @@
                       @endif
 
                       @if($ticket->status_id != 4)
-                        <a href="{{ route('tickets.edit', $ticket->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="icofont icofont-edit-alt"></i></a>
+                        <a href="{{ route('tickets.edit', $ticket->uuid) }}" class="btn btn-info btn-sm waves-effect waves-light"><i class="icofont icofont-edit-alt"></i></a>
                       @endif
 
                       @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
@@ -256,10 +256,13 @@
 
       <div class="card comment-block">
           <div class="card-header">
-              <h5 class="card-header-text"><i class="icofont icofont-comment m-r-5"></i> Comentários</h5>
+              <h5 class="card-header-text"><i class="icofont icofont-comment m-r-5"></i>Comentários</h5>
           </div>
           <div class="card-block">
               <ul class="media-list">
+
+                  <div id="div-coments-list"></div>
+
                 @foreach($ticket->messages->sortByDesc('id') as $message)
 
                   <li class="media mediaFile">
@@ -267,11 +270,15 @@
                           <img class="media-object img-radius comment-img" src="{{ route('image', ['user' => $message->user->uuid, 'link' => $message->user->avatar, 'avatar' => true])}}" title="{{$message->user->name}}" alt="{{$message->user->name}}">
                       </div>
                       <div class="media-body">
-                          <h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ $message->user->person->name }}, {{$message->created_at->format('d/m/Y H:i:s')}}</span> </h6>
-                          <p>{{$message->message}}</p>
+                          <h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ $message->user->person->name }}, {{$message->created_at->format('d/m/Y H:i:s')}}</span>
+
                             @if(auth()->user()->isAdmin() || $message->user->id == auth()->user()->id)
-                                <a href="#" data-route="{{ route('ticket_message_destroy', $message->uuid) }}" class="btn btn-danger btn-sm btnRemoveItem" style="cursor:pointer"><i class="fa fa-trash"></i> Apagar</a>
+                                <a href="#" data-route="{{ route('ticket_message_destroy', $message->uuid) }}" class="btn btn-danger btn-sm btn-round f-right btnRemoveItem" style="cursor:pointer"><i class="fa fa-trash"></i> Apagar</a>
                             @endif
+
+                          </h6>
+                          <p>{{$message->message}}</p>
+
                           <hr/>
                       </div>
                   </li>
@@ -281,10 +288,10 @@
               </ul>
               <div class="md-float-material d-flex">
                   <div class="col-md-12 btn-add-task">
-                    <form class="formValidation" data-parsley-validate method="post" action="{{route('ticket_message_store')}}">
+                    <form id="formTicketComment" class="formValidation" data-parsley-validate method="post" action="{{route('ticket_message_store')}}">
                       {{csrf_field()}}
                       <input name="id" type="hidden" value="{{$ticket->uuid}}"/>
-                      <textarea rows="5" name="message" class="form-control" required placeholder="Insira um Comentário"></textarea>
+                      <textarea rows="5" name="message" id="message" class="form-control" required placeholder="Insira um Comentário"></textarea>
                       <br/>
                       <button class="btn btn-success">Enviar</button>
                     </form>
@@ -295,7 +302,6 @@
       </div>
 
     </div>
-
 
     <div class="col-lg-3 col-sm-12">
 
@@ -342,11 +348,56 @@
 
 </div>
 
+<input type="hidden" id="input-post-ticket-comment" value="{{ route('ticket_comment_post', $ticket->uuid) }}">
+
 @endsection
 
 @section('scripts')
 
 <script>
+
+    var formTicket = $("#formTicketComment");
+    var comentsList = $("#div-coments-list");
+    var inputPostComment = $("#input-post-ticket-comment").val();
+
+    var $html = "";
+
+    formTicket.submit(function(e) {
+
+      var message = $("#message").val();
+
+      e.preventDefault();
+      swal.close();
+
+      $html += '<li class="media mediaFile">' +
+                  '<div class="media-left">' +
+                      '<img class="media-object img-radius comment-img" src="{{ route('image', ['user' => auth()->user()->uuid, 'link' => auth()->user()->avatar, 'avatar' => true])}}" alt="">' +
+                  '</div>' +
+                  '<div class="media-body">' +
+                      '<h6 class="media-heading txt-primary"><span class="f-12 text-muted m-l-5">{{ auth()->user()->person->name }}, {{ now()->format("d/m/Y H:i:s") }}</span> </h6>' +
+                      '<p>' + message + '</p>' +
+                  '</div>' +
+              '</li>';
+
+      comentsList.append($html);
+
+      $.ajax({
+        headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        url: inputPostComment,
+        data: {
+            message: message,
+        }
+
+      });
+
+      $("#message").val("");
+
+      return false;
+
+    });
 
     function startTicket() {
 
@@ -383,32 +434,7 @@
             })
           }
         });
-/*
-        swal({
-          title: 'Iniciar Chamado?',
-          text: "O tempo de execução será contabilizado.",
-          type: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#0ac282',
-          cancelButtonColor: '#D46A6A',
-          confirmButtonText: 'Sim',
-          cancelButtonText: 'Cancelar'
-          }).then((result) => {
-          if (result.value) {
 
-            swal({
-              title: 'Aguarde um instante.',
-              text: 'Carregando os dados...',
-              type: 'info',
-              showConfirmButton: false,
-              allowOutsideClick: false
-            });
-
-            $("#ticket-start").submit();
-
-          }
-        });
-*/
     }
 
     function concludeTicket() {

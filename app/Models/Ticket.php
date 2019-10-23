@@ -42,6 +42,16 @@ class Ticket extends Model
         return $this->hasMany('App\Models\Ticket\Status\Log', 'ticket_id');
     }
 
+    public function serviceTicket()
+    {
+        return $this->hasOne('App\Models\ServiceOrder\Service\Ticket\Type', 'ticket_id');
+    }
+
+    public function serviceOrderTicket()
+    {
+        return $this->hasOne('App\Models\ServiceOrder\ServiceOrder\Ticket', 'ticket_id');
+    }
+
     public function messages()
     {
         return $this->hasMany('App\Models\Ticket\Message');

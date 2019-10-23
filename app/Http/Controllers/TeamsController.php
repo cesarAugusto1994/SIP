@@ -13,6 +13,8 @@ use App\Models\People;
 use App\User;
 use PDF;
 use DateTime, DatePeriod, DateInterval;
+use App\Models\ServiceOrder\ServiceOrder;
+use App\Models\ServiceOrder\ServiceOrder\Training\Course as ServiceOrderTrainingCourse;
 
 class TeamsController extends Controller
 {
@@ -77,13 +79,25 @@ class TeamsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $companies = Helper::companiesWhereHasEmployees();
         $courses = Helper::courses();
         $teachers = Helper::usersByOccupation(28);
 
-        return view('training.teams.create', compact('companies', 'courses', 'teachers'));
+        $message = "";
+
+        if($request->has('service_order')) {
+
+            $serviceOrder = ServiceOrder::uuid($request->get('service_order'));
+
+            $message = "Treinamento referente à OS #" . str_pad($serviceOrder->id, 6, "0", STR_PAD_LEFT) . "<br/>
+            Cliente: " . $serviceOrder->client->name . "
+            ";
+
+        }
+
+        return view('training.teams.create', compact('companies', 'courses', 'teachers', 'message'));
     }
 
     public function certified($id, $employee)
@@ -343,6 +357,12 @@ class TeamsController extends Controller
         $data['end'] = $end;
 
         $team = Team::create($data);
+
+        if($request->has('service_order_course')) {
+            $serviceOrderCourse = ServiceOrderTrainingCourse::uuid($request->get('service_order_course'));
+            $serviceOrderCourse->team_id = $team->id;
+            $serviceOrderCourse->save();
+        }
 
         if($request->has('employees')) {
 

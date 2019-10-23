@@ -38,6 +38,10 @@
         <form class="formValidation" method="post" action="{{route('tickets.store')}}" data-parsley-validate>
             @csrf
 
+            @if(request()->has('ticket'))
+                <input type="hidden" name="service_order_ticket" value="{{ request()->get('ticket') }}">
+            @endif
+
             <div class="row m-b-30">
 
               <div class="col-md-4">
@@ -51,7 +55,7 @@
                             <optgroup label="{{ $category->name }}">
                             @foreach($category->types as $type)
                               @if(!$type->active) @continue; @endif
-                              <option value="{{$type->id}}">{{$type->name}}</option>
+                              <option value="{{$type->id}}" {{ request()->has('type') && request()->get('type') == $type->uuid ? 'selected' : '' }}>{{$type->name}}</option>
                             @endforeach
                             </optgroup>
                           @endforeach
@@ -66,7 +70,7 @@
                 <div class="form-group">
                     <label class="col-form-label">Descrição</label>
                     <div class="input-group">
-                      <textarea rows="5" required name="description" class="form-control ckeditor"></textarea>
+                      <textarea rows="5" required name="description" class="form-control ckeditor">{!! $message !!}</textarea>
                     </div>
                 </div>
 
@@ -88,21 +92,7 @@
 @section('scripts')
 
 <script>
-/*
-    $(":submit").click(function(e) {
 
-
-        return false;
-        window.swal({
-          title: 'Em progresso',
-          text: 'Aguarde enquanto os dados são salvos.',
-          type: 'success',
-          showConfirmButton: false,
-          allowOutsideClick: false
-        })
-
-    });
-*/
 </script>
 
 @endsection

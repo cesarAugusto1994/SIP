@@ -11,6 +11,8 @@ class Message extends Model
 
     protected $table = 'ticket_messages';
 
+    protected $fillable = ['message', 'user_id', 'ticket_id'];
+
     public function user()
     {
         return $this->belongsTo('App\User');

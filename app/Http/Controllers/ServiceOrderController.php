@@ -9,6 +9,8 @@ use App\Models\ServiceOrder\Service;
 use App\Models\ServiceOrder\ServiceOrder\{Item as ServiceOrderItem, Address as ServiceOrderAddress};
 use App\Models\Client;
 use App\Models\Client\{Address, Employee};
+use App\Models\ServiceOrder\ServiceOrder\Ticket as ServiceOrderTicket;
+use App\Models\ServiceOrder\ServiceOrder\Training\Course as ServiceOrderTrainingCourse;
 use App\Helpers\Helper;
 use PDF;
 
@@ -37,6 +39,12 @@ class ServiceOrderController extends Controller
         $quantity = $services->count();
         $services = $services->paginate();
         return view('service-order.index', compact('services', 'quantity'));
+    }
+
+    public function email($id, Request $request)
+    {
+        $order = ServiceOrder::uuid($id);
+        return view('service-order.email', compact('order'));
     }
 
     /**
@@ -92,6 +100,21 @@ class ServiceOrderController extends Controller
               'service_order_id' => $serviceOrder->id,
               'status_id' => 1
             ]);
+
+            foreach ($service->ticketTypes as $key => $ticketType) {
+                ServiceOrderTicket::create([
+                    'service_order_id' => $serviceOrder->id,
+                    'ticket_type_id' => $ticketType->type->id,
+                ]);
+            }
+
+            foreach ($service->courses as $key => $trainingCourse) {
+                ServiceOrderTrainingCourse::create([
+                    'service_order_id' => $serviceOrder->id,
+                    'course_id' => $trainingCourse->course->id,
+                ]);
+            }
+
         }
 
         $addresses = $data['addresses'];
@@ -109,7 +132,7 @@ class ServiceOrderController extends Controller
           'text' => 'Ordem de Serviço adicionada com sucesso.'
         ]);
 
-        return redirect()->route('service-order.index');
+        return redirect()->route('service-order.show', $serviceOrder->uuid);
     }
 
     public function contract($id)
@@ -139,9 +162,24 @@ class ServiceOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $order = ServiceOrder::uuid($id);
+        $user = $request->user();
+
+        if($order->status_id == 1) {
+            $order->status_id = 3;
+            $order->save();
+
+            ServiceOrderLog::create([
+              'message' => 'Ordem de Serviço Em Elaboração',
+              'service_order_id' => $order->id,
+              'status_id' => 1,
+              'user_id' => $user->id
+            ]);
+
+        }
+
         return view('service-order.show', compact('order'));
     }
 
@@ -248,6 +286,32 @@ class ServiceOrderController extends Controller
         foreach ($services as $key => $service) {
 
             $service = Service::uuid($service);
+
+            $serviceOrder->tickets->map(function($ticket) use($service) {
+                if(!in_array($ticket->ticket_type_id, $service->ticketTypes->pluck('ticket_type_id')->toArray())) {
+                    $ticket->delete();
+                }
+            });
+
+            $serviceOrder->courses->map(function($course) use($service) {
+                if(!in_array($course->course_id, $service->courses->pluck('course_id')->toArray())) {
+                    $course->delete();
+                }
+            });
+
+            foreach ($service->ticketTypes as $key => $ticketType) {
+                ServiceOrderTicket::updateOrCreate([
+                    'service_order_id' => $serviceOrder->id,
+                    'ticket_type_id' => $ticketType->type->id,
+                ]);
+            }
+
+            foreach ($service->courses as $key => $trainingCourse) {
+                ServiceOrderTrainingCourse::updateOrCreate([
+                    'service_order_id' => $serviceOrder->id,
+                    'course_id' => $trainingCourse->course->id,
+                ]);
+            }
 
             $originalValue = 0.00;
 

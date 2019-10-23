@@ -88,6 +88,62 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-header">
+                <h5>Tipos de Chamados</h5>
+                <span>Lista de chamados por tipo que serão vinculados para a abertura automática dos chamados.</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Tipo de Chamados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach($service->ticketTypes as $ticketType)
+                              <tr>
+                                  <th scope="row">{{ $ticketType->type->name }}<br/>
+                                    <small>Categoria: {{ $ticketType->type->category->name }}</small>
+                                  </th>
+                              </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Treinamentos</h5>
+                <span>Lista de treinamenos que serão vinculados para a abertura automática dos chamados.</span>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Treinamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach($service->courses as $trainingCourse)
+                              <tr>
+                                  <th scope="row">{{ $trainingCourse->course->title }}</th>
+                              </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
   </div>

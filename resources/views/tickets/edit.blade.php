@@ -89,21 +89,7 @@
 @section('scripts')
 
 <script>
-/*
-    $(":submit").click(function(e) {
 
-
-        return false;
-        window.swal({
-          title: 'Em progresso',
-          text: 'Aguarde enquanto os dados são salvos.',
-          type: 'success',
-          showConfirmButton: false,
-          allowOutsideClick: false
-        })
-
-    });
-*/
 </script>
 
 @endsection

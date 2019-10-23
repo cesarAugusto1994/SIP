@@ -149,7 +149,7 @@
 
                                               <tr>
                                                   <th scope="row">Observações</th>
-                                                  <td>{{ $team->description }}</td>
+                                                  <td>{!! $team->description !!}</td>
                                               </tr>
 
                                           </tbody>

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ServiceOrder\Service;
 use App\Models\ServiceOrder\Service\Value as ServiceValue;
+use App\Models\ServiceOrder\Service\Ticket\Type as ServiceTicketType;
+use App\Models\ServiceOrder\Service\Training\Course as ServiceTrainingCourse;
+use App\Models\Ticket\Type as TicketType;
+use App\Models\Training\Course as Course;
 use App\Models\{Contract};
 
 class ServiceController extends Controller
@@ -54,6 +58,9 @@ class ServiceController extends Controller
     {
         $data = $request->request->all();
 
+        $ticketTypes = $request->get('ticket_types');
+        $courses = $request->get('courses');
+
         $service = Service::create($data);
 
         $contracts = Contract::where('active', true)->get();
@@ -84,6 +91,26 @@ class ServiceController extends Controller
             }
         }
 
+        foreach ($ticketTypes as $key => $ticketType) {
+
+            $ticketType = TicketType::uuid($ticketType);
+
+            ServiceTicketType::create([
+              'service_id' => $service->id,
+              'ticket_type_id' => $ticketType->id
+            ]);
+        }
+
+        foreach ($courses as $key => $course) {
+
+            $course = Course::uuid($course);
+
+            ServiceTrainingCourse::create([
+              'service_id' => $service->id,
+              'course_id' => $course->id
+            ]);
+        }
+
         notify()->flash('Sucesso', 'success', [
           'text' => 'Serviço adicionado com sucesso.'
         ]);
@@ -100,6 +127,7 @@ class ServiceController extends Controller
     public function show($id)
     {
         $service = Service::uuid($id);
+
         $values = $service->values->where('active', true);
         return view('service-order.service.show', compact('service', 'values'));
     }
@@ -114,7 +142,11 @@ class ServiceController extends Controller
     {
         $service = Service::uuid($id);
         $values = $service->values->where('active', true);
-        return view('service-order.service.edit', compact('service', 'values'));
+
+        $ticketTypes = $service->ticketTypes->pluck('ticket_type_id')->toArray();
+        $courses = $service->courses->pluck('course_id')->toArray();
+
+        return view('service-order.service.edit', compact('service', 'values', 'ticketTypes', 'courses'));
     }
 
     /**
@@ -128,9 +160,25 @@ class ServiceController extends Controller
     {
         $data = $request->request->all();
 
-        $data['active'] = $request->has('active');
+        $ticketTypes = $request->get('ticket_types');
+        $courses = $request->get('courses');
 
         $service = Service::uuid($id);
+
+        $service->ticketTypes->map(function($serviceTicketType) use($ticketTypes) {
+            if(!in_array($serviceTicketType->type->uuid, $ticketTypes)) {
+                $serviceTicketType->delete();
+            }
+        });
+
+        $service->courses->map(function($serviceCourses) use($courses) {
+            if(!in_array($serviceCourses->course->uuid, $courses)) {
+                $serviceCourses->delete();
+            }
+        });
+
+        $data['active'] = $request->has('active');
+
         $service->update($data);
 
         $contracts = Contract::where('active', true)->get();
@@ -164,6 +212,26 @@ class ServiceController extends Controller
                 }
 
             }
+        }
+
+        foreach ($ticketTypes as $key => $ticketType) {
+
+            $ticketType = TicketType::uuid($ticketType);
+
+            ServiceTicketType::updateOrCreate([
+              'service_id' => $service->id,
+              'ticket_type_id' => $ticketType->id
+            ]);
+        }
+
+        foreach ($courses as $key => $course) {
+
+            $course = Course::uuid($course);
+
+            ServiceTrainingCourse::updateOrCreate([
+              'service_id' => $service->id,
+              'course_id' => $course->id
+            ]);
         }
 
         notify()->flash('Sucesso', 'success', [

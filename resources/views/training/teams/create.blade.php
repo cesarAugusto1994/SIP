@@ -39,6 +39,10 @@
 
           {{csrf_field()}}
 
+          @if(request()->has('service_order_course'))
+              <input type="hidden" name="service_order_course" value="{{ request()->get('service_order_course') }}">
+          @endif
+
           <div class="row m-b-30">
               <div class="col-md-12">
 
@@ -52,7 +56,7 @@
                             <span class="input-group-addon"><i class="fa fa-users"></i></span>
                             <select class="form-control select2" name="course_id" required>
                                 @foreach($courses->sortBy('title') as $course)
-                                      <option value="{{$course->uuid}}">{{$course->title}}</option>
+                                      <option value="{{$course->uuid}}" {{ request()->has('course') && request()->get('course') == $course->uuid ? 'selected' : '' }}>{{$course->title}}</option>
                                 @endforeach
                             </select>
                           </div>
@@ -135,8 +139,7 @@
                         <div class="form-group">
                             <label>Adicionar uma descrição</label>
                             <div class="input-group">
-                              <span class="input-group-addon"><i class="fa fa-edit"></i></span>
-                              <textarea class="form-control" rows="6" id="description" name="description"></textarea>
+                              <textarea class="form-control ckeditor" rows="6" id="description" name="description">{!! $message !!}</textarea>
                             </div>
                         </div>
                     </div>

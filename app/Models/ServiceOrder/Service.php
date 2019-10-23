@@ -25,4 +25,14 @@ class Service extends Model
     {
         return $this->belongsTo('App\Models\ServiceOrder\Service\Type', 'service_type_id');
     }
+
+    public function ticketTypes()
+    {
+        return $this->hasMany('App\Models\ServiceOrder\Service\Ticket\Type', 'service_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany('App\Models\ServiceOrder\Service\Training\Course', 'service_id');
+    }
 }

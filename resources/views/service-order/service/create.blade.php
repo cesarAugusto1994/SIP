@@ -72,6 +72,43 @@
                   </div>
                 </div>
 
+                <div class="col-md-12">
+
+                  <div class="form-group">
+                      <label class="col-form-label">Tipo de Chamados</label>
+                      <div class="input-group">
+                        <select class="form-control m-b select2" name="ticket_types[]" required multiple>
+                            <option value="">Informe o tipo de chamado</option>
+                            @foreach(\App\Helpers\Helper::ticketCategories() as $category)
+                              <optgroup label="{{ $category->name }}">
+                              @foreach($category->types as $type)
+                                @if(!$type->active) @continue; @endif
+                                <option value="{{$type->uuid}}">{{$type->name}}</option>
+                              @endforeach
+                              </optgroup>
+                            @endforeach
+                        </select>
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-12">
+
+                  <div class="form-group">
+                      <label class="col-form-label">Treinamentos</label>
+                      <div class="input-group">
+                        <select class="form-control m-b select2" name="courses[]" required multiple>
+                            <option value="">Informe o curso</option>
+                            @foreach(\App\Helpers\Helper::courses() as $couse)
+                                <option value="{{$couse->uuid}}">{{$couse->title}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                  </div>
+
+                </div>
+
                 @foreach(\App\Helpers\Helper::contracts() as $contract)
 
                   <div class="col-md-3">

@@ -214,6 +214,8 @@ Route::middleware('auth')->group(function () {
           Route::post('tickets/{id}/finish', 'TicketsController@finishTicket')->name('ticket_finish');
           Route::post('tickets/{id}/cancel', 'TicketsController@cancelTicket')->name('ticket_cancel');
 
+          Route::post('tickets/{id}/comment/post', 'TicketsController@comment')->name('ticket_comment_post');
+
           Route::post('tickets/message/store', 'TicketMessagesController@store')->name('ticket_message_store');
           Route::delete('task/message/{id}/destroy', 'TicketMessagesController@destroy')->name('ticket_message_destroy');
 
@@ -382,6 +384,8 @@ Route::middleware('auth')->group(function () {
 
           Route::post('service-order-item/{id}/update-by-ajax', 'ServiceOrderController@updateItemByAjax')->name('service_order_item_update');
           Route::post('service-order/{id}/update-by-ajax', 'ServiceOrderController@updateByAjax')->name('service_order_update');
+
+          Route::get('service-order/{id}/email', 'ServiceOrderController@email')->name('service_order_email');
 
     });
 
