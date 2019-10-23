@@ -29,7 +29,7 @@
                   <div class="col-sm-4 bg-c-green user-profile">
                       <div class="card-block text-center text-white">
                           <div class="m-b-25">
-                              <img src="{{ route('image', ['link' => \Auth::user()->avatar, 'avatar' => true])}}" class="img-radius" alt="">
+                              <img style="width:100%" src="{{ route('image', ['link' => \Auth::user()->avatar, 'avatar' => true])}}" class="img-radius" alt="">
                           </div>
                           <h6 class="f-w-600">{{ Auth()->user()->person->name }}</h6>
                           <p>{{ Auth()->user()->person->department->name }}</p>
