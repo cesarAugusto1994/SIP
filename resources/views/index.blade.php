@@ -195,9 +195,9 @@
 
         <div class="col-xl-8 col-md-12 col-sm-12">
             <div class="card latest-update-card">
-                <div class="card-header">
-                    <h5>Gestão à Vista</h5>
-                    <span>Mural de recados com informes e anúncios da empresa ou setor</span>
+                <div class="card-header card bg-c-green update-card">
+                    <h5 class="text-white">Gestão à Vista</h5>
+                    <span class="text-white">Mural de recados com informes e anúncios da empresa ou setor</span>
                 </div>
                 <div class="card-block">
 
@@ -234,7 +234,7 @@
 
                       <div class="widget white-bg no-padding">
                           <div class="p-m text-center">
-                              <h1 class="m-md"><i class="far fa-bell-slash fa-2x"></i></h1>
+                              <h1 class="m-md"><i class="far fa-comment fa-2x"></i></h1>
                               <br/>
                               <h6 class="font-bold no-margins">
                                   Voce não possui nenhum recado até o momento.
@@ -254,9 +254,9 @@
 
             <div class="col-xl-12 col-md-12">
                 <div class="card feed-card">
-                    <div class="card-header">
-                        <h5>Próximos Compromissos</h5>
-                        <span>Lista de seus compromissos</span>
+                    <div class="card-header card bg-c-green update-card">
+                        <h5 class="text-white">Próximos Compromissos</h5>
+                        <span class="text-white">Lista de seus compromissos</span>
                     </div>
                     <div class="card-block">
                       @forelse(\App\Helpers\Helper::listNextSchedules() as $schedule)
