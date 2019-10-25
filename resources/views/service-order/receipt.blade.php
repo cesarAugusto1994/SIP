@@ -91,20 +91,25 @@
     </tr>
 
     <tr>
-      <td>Serviço</td>
-      <td>Observação</td>
-      <td style="width:140px;">Executor</td>
-      <td>Prazo</td>
-      <td>Quantidade</td>
-      <td>Valor</td>
+      <td colspan="3">Serviço</td>
+      <td style="width:80px">Prazo</td>
+      <td style="width:80px">Quantidade</td>
+      <td style="width:80px">Valor</td>
     </tr>
 
     @foreach($order->services as $service)
       @foreach($service->service->values->where('contract_id', $order->contract_id) as $value)
       <tr>
-          <td>{{ $service->service->name }}</td>
-          <td>{{ $service->observation }}</td>
-          <td>{{ $service->user ? $service->user->person->name : '' }}</td>
+          <td colspan="3">{{ $service->service->name }}
+            @if($service->observation)
+            <br/>
+            <small style="font-size:9px">Observação: {{ $service->observation ?? '-' }}</small>
+            @endif
+            @if($service->user)
+            <br/>
+            <small style="font-size:9px">Executor: {{ $service->user ? $service->user->person->name : '' }}</small>
+            @endif
+          </td>
           <td>{{ $service->deadline ? $service->deadline->format('d/m/Y') : '' }}</td>
           <td>{{ $service->quantity ?? 1}}</td>
           @if(!request()->has('without_value'))
