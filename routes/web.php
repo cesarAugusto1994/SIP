@@ -276,7 +276,7 @@ Route::middleware('auth')->group(function () {
 
           Route::post('training/team/schedule/update', 'TeamsController@updateScheduleDate')->name('team_schedule_update');
 
-          Route::get('training/teams/{id}/employees/{employee}/certified', 'TeamsController@certified')->name('team_certified');
+          Route::get('training/teams/{id}/employees/certified', 'TeamsController@certified')->name('team_certified');
 
           Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');
           Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');
@@ -408,3 +408,4 @@ Route::get('delivery-order/{id}/delivery', 'DeliveryOrderController@deliveryRece
 Route::get('delivery-order/{id}/delivery/receipt/print', 'DeliveryOrderController@deliveryReceiptImage')->name('delivery_receipt_image');
 
 Route::get('tickets/auto-search/by/email', 'TicketsController@autoSearchTicketsByEmail')->name('auto_search_tickets_by_email');
+Route::get('training/team/{id}/certified', 'TeamsController@showCertified')->name('training_team_certified');

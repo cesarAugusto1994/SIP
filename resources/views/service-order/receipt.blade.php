@@ -78,7 +78,6 @@
           <td colspan="4">{{ $address->street }}, {{ $address->number }} - {{ $address->district }}, {{ $address->city }} / {{ $address->state }} - {{ $address->zip }}<br/>
               <small>{{ $address->complement }}</small>
           </td>
-
       </tr>
     @endforeach
 

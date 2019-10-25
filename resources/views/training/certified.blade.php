@@ -1331,27 +1331,38 @@
                     <br>
 
                     <div>
-                    <div>
+                        <div>
 
-                      <p class="item-left">
-                          <b>{{ $team->teacher->person->name }}</b><br/>
-                          {{ $team->teacher->person->occupation->name }}<br/>
-                          {{ $team->teacher->person->department->name }}<br/>
-                           REG/MTE: {{ $team->teacher->person->registry }}
-                      </p>
+                          <p class="item-left">
+                              <b>{{ $team->teacher->person->name }}</b><br/>
+                              {{ $team->teacher->person->occupation->name }}<br/>
+                              {{ $team->teacher->person->department->name }}<br/>
+                               REG/MTE: {{ $team->teacher->person->registry }}
+                          </p>
+
+                        </div>
+                        <div>
+
+                          <p class="item-right">
+                               <b>{{ $employee->name }}</b><br/>
+                               {{ $employee->cpf }}<br/>
+                               Participante
+                          </p>
+
+                        </div>
 
                     </div>
-                    <div>
 
-                      <p class="item-right">
-                           <b>{{ $employee->name }}</b><br/>
-                           {{ $employee->cpf }}<br/>
-                           Participante
-                      </p>
-
-                    </div>
-                    </div>
                 </div>
+
+                @php
+                    $route = route('training_team_certified', $teamEmployee->uuid);
+                @endphp
+
+                <div style="bottom:15px;position:absolute;float:right;right:15px;">
+                  {!! QrCode::size(100)->generate($route); !!}
+                </div>
+
             </div>
             <div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div>
         </div>

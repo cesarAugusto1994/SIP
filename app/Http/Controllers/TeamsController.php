@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Training\{Team, Course};
-use App\Models\Training\Team\Employee as TeamEmployees;
+use App\Models\Training\Team\Employee as TeamEmployee;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\Helper;
 use App\Models\Client\Employee;
@@ -100,10 +100,11 @@ class TeamsController extends Controller
         return view('training.teams.create', compact('companies', 'courses', 'teachers', 'message'));
     }
 
-    public function certified($id, $employee)
+    public function certified($id)
     {
-        $employee = Employee::uuid($employee);
-        $team = Team::uuid($id);
+        $teamEmployee = TeamEmployee::uuid($id);
+        $employee = $teamEmployee->employee;
+        $team = $teamEmployee->team;
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($team->start, $interval, $team->end);
@@ -113,7 +114,6 @@ class TeamsController extends Controller
         $yearString = $monthString = $textDate = "";
 
         foreach ($period as $dt) {
-            //$textDate .= $dt->format('d') . ', ';
             $monthString = Helper::convertMonths($dt->format('m'));
             $yearString = $dt->format('Y');
             $arrayDate[$monthString][] = $dt->format('d');
@@ -126,7 +126,36 @@ class TeamsController extends Controller
 
         $textDate .= 'de ' . $yearString;
 
-        return view('training.certified', compact('team', 'employee', 'textDate'));
+        return view('training.certified', compact('team', 'employee', 'textDate', 'teamEmployee'));
+    }
+
+    public function showCertified($id)
+    {
+        $teamEmployee = TeamEmployee::uuid($id);
+        $employee = $teamEmployee->employee;
+        $team = $teamEmployee->team;
+
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($team->start, $interval, $team->end);
+
+        $arrayDate = [];
+
+        $yearString = $monthString = $textDate = "";
+
+        foreach ($period as $dt) {
+            $monthString = Helper::convertMonths($dt->format('m'));
+            $yearString = $dt->format('Y');
+            $arrayDate[$monthString][] = $dt->format('d');
+        }
+
+        foreach ($arrayDate as $key => $item) {
+          $stringA = implode(', ', $item);
+          $textDate .= $stringA . ' de ' . $key . ' ';
+        }
+
+        $textDate .= 'de ' . $yearString;
+
+        return view('training.certified', compact('team', 'employee', 'textDate', 'teamEmployee'));
     }
 
     public function start($id, Request $request)
@@ -269,7 +298,7 @@ class TeamsController extends Controller
 
         foreach ($data['employees'] as $key => $employee) {
 
-            $teamEmployee = TeamEmployees::uuid($employee);
+            $teamEmployee = TeamEmployee::uuid($employee);
 
             $status = 'FALTA';
 
@@ -291,7 +320,7 @@ class TeamsController extends Controller
 
     public function employeeStatus($id)
     {
-        $employee = TeamEmployees::uuid($id);
+        $employee = TeamEmployee::uuid($id);
         return view('training.teams.employee.status', compact('employee'));
     }
 
@@ -299,7 +328,7 @@ class TeamsController extends Controller
     {
         $data = $request->request->all();
 
-        $teamEmployee = TeamEmployees::uuid($id);
+        $teamEmployee = TeamEmployee::uuid($id);
         $teamEmployee->status = $data['status'];
         $teamEmployee->save();
 
@@ -316,7 +345,7 @@ class TeamsController extends Controller
 
           $status = $request->get('status');
 
-          $teamEmployee = TeamEmployees::uuid($id);
+          $teamEmployee = TeamEmployee::uuid($id);
           $teamEmployee->status = $status;
           $teamEmployee->save();
           //$teamEmployee->delete();
@@ -369,7 +398,7 @@ class TeamsController extends Controller
           $employees = Employee::whereIn('uuid', $data['employees'])->get();
 
           foreach ($employees as $key => $employee) {
-            TeamEmployees::create([
+            TeamEmployee::create([
               'team_id' => $team->id,
               'employee_id' => $employee->id,
             ]);
@@ -389,14 +418,14 @@ class TeamsController extends Controller
           $endDate = $team->end;
 
           $newTeam = $team->replicate();
-          $teamEmployees = $team->employees;
+          $TeamEmployee = $team->employees;
 
           $newTeam->start = $startDate->modify('+1 day');
           $newTeam->end = $endDate->modify('+1 day');
           $newTeam->save();
 
-          foreach ($teamEmployees as $key => $employee) {
-            TeamEmployees::create([
+          foreach ($TeamEmployee as $key => $employee) {
+            TeamEmployee::create([
               'team_id' => $newTeam->id,
               'employee_id' => $employee->employee->id,
             ]);
@@ -524,13 +553,13 @@ class TeamsController extends Controller
 
           $employee = Employee::uuid($employeeID);
 
-          $hasEmployee = TeamEmployees::where('team_id', $team->id)->where('employee_id', $employee->id)->first();
+          $hasEmployee = TeamEmployee::where('team_id', $team->id)->where('employee_id', $employee->id)->first();
 
           if($hasEmployee) {
               continue;
           }
 
-          TeamEmployees::create([
+          TeamEmployee::create([
             'team_id' => $team->id,
             'employee_id' => $employee->id,
           ]);
@@ -643,7 +672,7 @@ class TeamsController extends Controller
             ]);
           }
 
-          $employee = TeamEmployees::uuid($employee);
+          $employee = TeamEmployee::uuid($employee);
           $employee->delete();
 
           return response()->json([

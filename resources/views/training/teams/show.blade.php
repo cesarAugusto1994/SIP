@@ -338,7 +338,7 @@
                                     @endif
 
                                     @if($employeeItem->approved)
-                                      <a target="_blank" href="{{route('team_certified', [$team->uuid, $employee->uuid])}}"
+                                      <a target="_blank" href="{{route('team_certified', [$employeeItem->uuid])}}"
                                         class="dropdown-item text-success">Gerar Certificado</a>
                                     @endif
 
