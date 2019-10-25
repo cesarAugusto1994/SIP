@@ -675,21 +675,36 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function uploadAvatar($id, $avatar)
+    public function uploadAvatar($id, Request $request)
     {
-        $user = User::find($id);
+        $user = User::uuid($id);
 
-        $src = 'admin/avatars/'.$user->avatar;
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
 
-        if ($user->avatar) {
-            if (file_exists($src)) {
-                unlink($src);
+            $file = $request->file('avatar');
+
+            $path = $file->hashName('avatar');
+
+            $image = Image::make($file);
+
+            $image->fit(250, 250, function ($constraint) {
+               $constraint->aspectRatio();
+            });
+
+            Storage::put($path, (string) $image->encode());
+
+            if(Storage::exists($user->avatar) && $user->avatar != 'defaults/avatar.jpg') {
+                Storage::delete($user->avatar);
             }
+
+            $user->avatar = $path;
+            $user->avatar_type = 'upload';
+            $user->save();
+
+            notify()->flash('Sucesso!', 'success', [
+              'text' => 'Imagem de perfil atualizada com sucesso.'
+            ]);
         }
-
-        $user->avatar = $avatar;
-
-        $user->save();
 
         return redirect()->route('user', ['id' => $id]);
     }

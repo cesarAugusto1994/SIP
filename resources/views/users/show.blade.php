@@ -59,7 +59,7 @@
                                 <div>
                                     <div class="pull-right cover-btn">
 
-                                        <a href="#" class="btn btn-primary btn-sm waves-effect waves-light m-r-10">Trocar Foto de Perfil</a>
+                                        <a href="#" class="btn btn-primary btn-sm waves-effect waves-light m-r-10" data-toggle="modal" data-target="#default-Modal">Trocar Foto de Perfil</a>
 
                                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                         <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
@@ -80,6 +80,36 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="default-Modal" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Trocar Imagem</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form method="post" action="{{ route('user_upload_avatar', $person->user->uuid) }}" enctype="multipart/form-data">
+                  @csrf
+                  <div class="modal-body">
+
+                      <div class="form-group">
+                          <div class="input-group">
+                            <input name="avatar" data-buttonText="Selecionar Imagem" data-dragdrop="true" data-badge="true" type="file" data-input="false" accept="image/*" class="filestyle" data-buttonName="btn-success"/>
+                          </div>
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary waves-effect waves-light ">Salvar</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!--profile cover end-->
     <div class="row">
         <div class="col-lg-12">
@@ -259,7 +289,7 @@
 
                                 @if($person->user->authentications->isNotEmpty())
 
-                                  @foreach($person->user->authentications as $login)
+                                  @foreach($person->user->authentications->take(5) as $login)
 
                                     <div class="row m-b-25">
                                         <div class="col">
@@ -435,7 +465,7 @@
                                             <label class="col-form-label">Avatar</label>
                                             <div class="input-group">
 
-                                              <input name="avatar" data-buttonText="Selecionar Imagem" data-dragdrop="true" data-badge="false" type="file" data-input="true" accept="image/*" class="filestyle" multiple/>
+                                              <input name="avatar" data-buttonText="Selecionar Imagem" data-classButton="btn btn-success" data-dragdrop="true" data-badge="false" type="file" data-input="true" accept="image/*" class="filestyle" multiple/>
 
                                             </div>
                                         </div>
