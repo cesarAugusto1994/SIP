@@ -34,7 +34,7 @@
       <div class="card">
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
-                  @permission('create.ativos')
+                  @permission('create.ordens.de.servico')
                     <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('service-order.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Ordem de Serviço</a>
                   @endpermission
               </div>
@@ -129,11 +129,11 @@
                                   <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                   <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
-                                    @permission('edit.ativos')
+                                    @permission('edit.ordens.de.servico')
                                       <a href="{{route('services.edit', ['id' => $service->uuid])}}" class="dropdown-item">Editar </a>
                                     @endpermission
 
-                                    @permission('edit.ativos')
+                                    @permission('edit.ordens.de.servico')
                                       <a href="{{route('service_order_contract', ['id' => $service->uuid])}}" class="dropdown-item">Contrato </a>
                                     @endpermission
 

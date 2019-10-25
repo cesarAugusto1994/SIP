@@ -118,8 +118,8 @@
 
       <div class="col-lg-6">
           <div class="card">
-              <div class="card-header">
-                  <h5>Informações Gerais</h5>
+              <div class="card-header bg-c-green update-card">
+                  <h5 class="text-white">Informações Gerais</h5>
               </div>
               <div class="card-block">
 
@@ -256,8 +256,8 @@
 
       <div class="col-lg-6">
         <div class="card">
-            <div class="card-header">
-                <h5>Endereço</h5>
+            <div class="card-header bg-c-green update-card">
+                <h5 class="text-white">Endereço</h5>
             </div>
             <div class="card-block">
 
@@ -313,16 +313,15 @@
 
       <div class="col-lg-6">
           <div class="card">
-              <div class="card-header">
-                  <h5>Documentos</h5>
+              <div class="card-header bg-c-green update-card">
+                  <h5 class="text-white">Documentos</h5>
               </div>
-              <div class="card-block">
-
+              <div class="card-block table-border-style">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-lg table-styling">
 
                         <thead>
-                            <tr>
+                            <tr class="table-inverse">
                               <th>ID</th>
                               <th>Tipo</th>
                               @if($order->shipment)
@@ -410,8 +409,8 @@
 
       <div class="col-lg-6">
           <div class="card">
-              <div class="card-header">
-                  <h5>Comprovante</h5>
+              <div class="card-header card bg-c-green update-card">
+                  <h5 class="text-white">Comprovante</h5>
               </div>
               <div class="card-block">
 
@@ -426,7 +425,7 @@
   </div>
 
   <div class="card">
-      <div class="card-header">
+      <div class="card-header card bg-c-green update-card">
           <h5 class="card-header-text"><i class="icofont icofont-certificate-alt-2 m-r-10"></i> Atividades</h5>
       </div>
       <div class="card-block revision-block">
