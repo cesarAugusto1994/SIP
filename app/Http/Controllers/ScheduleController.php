@@ -182,11 +182,9 @@ class ScheduleController extends Controller
           switch($schedule->type_id) {
             case 1:
               $cardCollor = "#23c6c8";
-              $editable = true;
             break;
             case 2:
               $cardCollor = "#f8ac59";
-              $editable = true;
             break;
             case 3:
               $cardCollor = "#0ac282";
@@ -194,6 +192,10 @@ class ScheduleController extends Controller
             default:
               $cardCollor = "#0ac282";
             break;
+          }
+
+          if($user->id == $schedule->user_id) {
+              $editable = true;
           }
 
           $data[] = [
