@@ -339,6 +339,8 @@ class DeliveryOrderController extends Controller
           'count' => 0
         ];
 
+        $deliveriesGroupedByClient = [];
+
         foreach ($deliveries->sortBy('client.name') as $key => $delivery) {
 
             $amount = 0.00;
@@ -413,7 +415,7 @@ class DeliveryOrderController extends Controller
 
         }
 
-        return view('delivery-order.billing', compact('result', 'deliveriesGroupedByClient', 'lava'));
+        return view('delivery-order.billing', compact('result', 'deliveriesGroupedByClient', 'lava', 'first', 'last'));
     }
 
     public function billingreport(Request $request)
