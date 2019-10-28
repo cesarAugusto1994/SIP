@@ -16,6 +16,7 @@ use App\Mail\DeliveryOrder as DeliveryOrderMail;
 use App\Jobs\DeliveryOrder as DeliveryOrderJob;
 use Illuminate\Support\Facades\Validator;
 use Khill\Lavacharts\Lavacharts;
+use Storage;
 use Notification;
 use Auth;
 use PDF;
@@ -1560,6 +1561,13 @@ class DeliveryOrderController extends Controller
 
         if ($request->hasFile('receipt') && $request->file('receipt')->isValid()) {
             $path = $request->receipt->store('receipt');
+
+            if($delivery->receipt) {
+                if(Storage::exists($delivery->receipt)) {
+                    Storage::delete($delivery->receipt);
+                }
+            }
+
             $delivery->receipt = $path;
             $delivery->save();
 
