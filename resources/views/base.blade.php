@@ -249,7 +249,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 <script src="{{ asset('adminty\pages\jquery.filer\js\jquery.filer.js') }}"></script>
-<script src="{{ asset('adminty\pages\filer\custom-filer.js') }}" type="text/javascript"></script>
+<script src="{{ asset('adminty\pages\filer\custom-filer.js?v1.0') }}" type="text/javascript"></script>
 
 <script src="{{ asset('adminty\js\parsley.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.1/dist/i18n/pt-br.js"></script>
