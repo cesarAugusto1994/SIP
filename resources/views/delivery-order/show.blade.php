@@ -37,12 +37,12 @@
             <div class="card-block">
 
               @permission('view.ordem.entrega')
-                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-info btn-sm"> Imprimir Etiqueta </a>
+                <a href="{{route('print_tags', ['id' => $order->uuid])}}" target="_blank" class="btn btn-primary btn-sm"> Imprimir Etiqueta </a>
               @endpermission
 
               @if($order->status_id == 1 || $order->status_id == 2 || $order->status_id == 10)
                 @permission('view.ordem.entrega')
-                  <a href="{{ route('start_delivery_client', $order->uuid) }}" class="btn btn-warning btn-sm"> Retirada Pelo Cliente </a>
+                  <a href="{{ route('start_delivery_client', $order->uuid) }}" class="btn btn-primary btn-sm"> Retirada Pelo Cliente </a>
                 @endpermission
               @endif
 
@@ -60,7 +60,7 @@
 
               @if($order->status_id == 3 || $order->status_id == 5)
                 @permission('view.ordem.entrega')
-                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-info btn-sm"> Ver Comprovante </a>
+                  <a href="{{route('start_delivery', $order->uuid)}}" target="_blank" class="btn btn-primary btn-sm"> Ver Comprovante </a>
                 @endpermission
               @endif
 
@@ -412,11 +412,24 @@
               <div class="card-header card bg-c-green update-card">
                   <h5 class="text-white">Comprovante</h5>
               </div>
-              <div class="card-block">
+              <div class="card-block task-attachment">
 
-                @if($order->receipt)
-                    <a target="_blank" href="{{ route('delivery_get_receipt', $order->uuid) }}">Visualizar Comprovante</a>
-                @endif
+                <input type="file" name="receipt" id="filer2" data-route="{{ route('delivery_receipt_upload', $order->uuid) }}">
+
+                <ul class="media-list">
+
+                  @if($order->receipt)
+                    <li class="media d-flex m-b-10 mediaFile">
+                        <div class="m-r-20 v-middle">
+                            <i class="icofont icofont-file-pdf f-28 text-muted"></i>
+                        </div>
+                        <div class="media-body">
+                            <a target="_blank" href="{{ route('delivery_get_receipt', $order->uuid) }}" class="m-b-5 d-block">Visualizar Comprovante</a>
+                        </div>
+                    </li>
+                  @endif
+                </ul>
+
 
               </div>
           </div>
@@ -426,7 +439,7 @@
 
   <div class="card">
       <div class="card-header card bg-c-green update-card">
-          <h5 class="card-header-text"><i class="icofont icofont-certificate-alt-2 m-r-10"></i> Atividades</h5>
+          <h5 class="card-header-text text-white"><i class="icofont icofont-certificate-alt-2 m-r-10"></i> Atividades</h5>
       </div>
       <div class="card-block revision-block">
           <div class="form-group">

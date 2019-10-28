@@ -1552,4 +1552,24 @@ class DeliveryOrderController extends Controller
             return abort(404);
         }
     }
+
+    public function receiptUpload($id, Request $request)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+        $user = $request->user();
+
+        if ($request->hasFile('receipt') && $request->file('receipt')->isValid()) {
+            $path = $request->receipt->store('receipt');
+            $delivery->receipt = $path;
+            $delivery->save();
+
+            Log::create([
+              'delivery_order_id' => $delivery->id,
+              'status_id' => $delivery->status_id,
+              'user_id' => $user->id,
+              'message' => 'Comprovante de Entrega alterado por ' . $user->person->name
+            ]);
+
+        }
+    }
 }

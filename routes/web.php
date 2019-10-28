@@ -387,6 +387,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('service-order/{id}/email', 'ServiceOrderController@email')->name('service_order_email');
 
+          Route::post('delivery-order/{id}/receipt/upload', 'DeliveryOrderController@receiptUpload')->name('delivery_receipt_upload');
+
     });
 
   });
