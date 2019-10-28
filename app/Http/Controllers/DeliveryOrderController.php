@@ -436,7 +436,13 @@ class DeliveryOrderController extends Controller
         $deliveries = $deliveries->get();
         $deliveries = $deliveries->sortBy('client.name')->groupBy('client_id');
 
-        return view('delivery-order.billing-report', compact('deliveries'));
+        $title = "Entregas:Faturamento";
+
+        $pdf = PDF::loadView('delivery-order.billing-report', compact('deliveries', 'first', 'last'));
+
+        return $pdf->stream($title. ".pdf");
+
+        //return view('delivery-order.billing-report', compact('deliveries'));
     }
 
     public function billingGraph()
