@@ -314,7 +314,7 @@ $(document).ready(function(){
 
 			},
 			onComplete: function() {
-				//window.location.reload();
+				window.location.reload();
 			}
 		},
 		files: null,
