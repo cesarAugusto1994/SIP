@@ -88,12 +88,12 @@ class DeliveryOrderController extends Controller
 
           if($request->filled('start')) {
               $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
-              $orders->where('created_at', '>=', $start->format('Y-m-d') . ' 00:00:00');
+              $orders->where('finished_at', '>=', $start->format('Y-m-d') . ' 00:00:00');
           }
 
           if($request->filled('end')) {
               $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
-              $orders->where('created_at', '<=', $end->format('Y-m-d') . ' 23:59:59');
+              $orders->where('finished_at', '<=', $end->format('Y-m-d') . ' 23:59:59');
           }
         }
 
@@ -167,16 +167,13 @@ class DeliveryOrderController extends Controller
         $last = new DateTime('last day of this month');
 
         if($request->filled('start') && $request->filled('end')) {
-          $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
-          $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
+            $first = DateTime::createFromFormat('d/m/Y', $request->get('start'));
+            $last = DateTime::createFromFormat('d/m/Y', $request->get('end'));
         }
 
-        if(!$request->has('find')) {
-            $deliveries->whereBetween('finished_at', [$first, $last]);
-        }
+        $deliveries->where('finished_at', '>=', $first)->where('finished_at', '<=', $last);
 
         $deliveries = $deliveries->get();
-        //$deliveriesGroupedByClient = $deliveries->sortBy('client.name')->groupBy('client_id');
 
         $lava = new Lavacharts;
 
@@ -345,22 +342,28 @@ class DeliveryOrderController extends Controller
 
             $amount = 0.00;
             $loopTotal++;
+            $dateMark = $delivery->finished_at->format('Ymd');
 
             if(!isset($deliveriesGroupedByClient[$delivery->client->uuid]['deliveries'])) {
                 $deliveriesGroupedByClient[$delivery->client->uuid] = ['deliveries' => 0, 'value' => 0.00, 'client_name' => $delivery->client->name, 'charge' => true];
             }
 
-            if(!$delivery->client->charge_delivery) {
+            if(!$delivery->client->charge_delivery || !$delivery->charge_delivery) {
                 $deliveriesGroupedByClient[$delivery->client->uuid]['charge'] = false;
             }
 
             if($delivery->client->charge_delivery && $delivery->charge_delivery) {
+              if(!isset($deliveriesGroupedByClient[$delivery->client->uuid]['date']) ||
+                $deliveriesGroupedByClient[$delivery->client->uuid]['date'] != $dateMark
+                ) {
                 $amount = 5.00;
                 $deliveriesGroupedByClient[$delivery->client->uuid]['value'] += $amount;
                 $deliveriesGroupedByClient[$delivery->client->uuid]['charge'] = true;
+              }
             }
 
             $deliveriesGroupedByClient[$delivery->client->uuid]['deliveries'] += 1;
+            $deliveriesGroupedByClient[$delivery->client->uuid]['date'] = $dateMark;
 
             if($delivery->delivered_at->format('Y-m-d') == now()->format('Y-m-d')) {
 

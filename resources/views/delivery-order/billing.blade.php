@@ -42,8 +42,8 @@
                       <div class="col-sm-12">
                           <input type="text" id="daterange" class="form-control" placeholder="Periodo">
 
-                          <input type="hidden" name="start" id="start" value="{{ now()->format('d/m/Y') }}"/>
-                          <input type="hidden" name="end" id="end" value="{{ now()->format('d/m/Y') }}"/>
+                          <input type="hidden" name="start" id="start" value="{{ (new \DateTime('first day of this month'))->format('d/m/Y') }}"/>
+                          <input type="hidden" name="end" id="end" value="{{ (new \DateTime('last day of this month'))->format('d/m/Y') }}"/>
 
                       </div>
                   </div>
@@ -209,7 +209,7 @@
                             @foreach($deliveriesGroupedByClient as $key => $deliveries)
 
                               <tr>
-                                  <td><a target="_blank" href="{{route('clients.show', $key)}}">{{ $deliveries['client_name'] }}</a></td>
+                                  <td><a target="_blank" href="{{route('delivery-order.index', ['client' => $key, 'start' => $first->format('d/m/Y'), 'end' => $last->format('d/m/Y'), 'find' => 1, 'status' => 5])}}">{{ $deliveries['client_name'] }}</a></td>
                                   <td>{{ $deliveries['deliveries'] }}</td>
                                   <td>
                                     @if($deliveries['charge'])
@@ -233,90 +233,8 @@
                   </div>
               </div>
           </div>
-          <!-- Recent Orders card end -->
       </div>
   </div>
 </div>
 
-<input type="hidden" id="billing-graph" value="{{ route('delivery_billing_graph') }}"/>
-
 @endsection
-
-@section('scripts')
-
-  <script>
-
-    if (document.getElementById("barChart")) {
-
-        var url = $("#billing-graph").val();
-
-        /*$.ajax({
-          type: 'GET',
-          url: url,
-          async: true,
-          cache: true,
-          success: function(retorno) {
-
-            var doughnutData = JSON.parse(retorno);
-
-            var doughnutOptions = {
-                segmentShowStroke: true,
-                segmentStrokeColor: "#fff",
-                segmentStrokeWidth: 2,
-                percentageInnerCutout: 45, // This is 0 for Pie charts
-                animationSteps: 100,
-                animationEasing: "easeOutBounce",
-                animateRotate: true,
-                animateScale: false,
-                legend: {
-                    display: false,
-                    position: 'right',
-                    labels: {}
-                }
-            };
-
-            var data = {
-
-                datasets: [{
-                    data: doughnutData.data,
-                    backgroundColor: doughnutData.backgroundColor
-                }],
-
-                labels: doughnutData.labels,
-                display: false,
-
-            };
-
-            var config = {
-                type: 'bar',
-                data: data,
-                //options: doughnutOptions,
-                options: {
-                    barValueSpacing: 20,
-                    maintainAspectRatio: false,
-                    legend: {
-                        display: false,
-                        position: 'right',
-                        labels: {}
-                    },
-                    scales: {
-                      yAxes: [{
-                        ticks: {
-                          stepSize: 1
-                        }
-                      }]
-                    }
-                }
-            };
-
-            var ctx = document.getElementById("barChart").getContext("2d");
-            var DoughnutChart = new Chart(ctx, config);
-
-          }
-        })
-        */
-    }
-
-  </script>
-
-@stop

@@ -11,7 +11,6 @@ WORKDIR /var/www
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
-    mysql-client \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
@@ -27,10 +26,11 @@ RUN apt-get update && apt-get install -y \
     libmcrypt-dev \
     zlib1g-dev \
     libicu-dev \
+    mariadb-client \
     g++
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
-RUN apt-get -y install nodejs npm
+# RUN apt-get -y install nodejs npm
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -55,7 +55,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
-RUN npm install
+# RUN npm install
 
 # Copy existing application directory contents
 # COPY . /var/www
