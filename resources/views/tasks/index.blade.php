@@ -149,7 +149,7 @@
                             <tr>
                                 <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">#{{ str_pad($task->id, 6, "0", STR_PAD_LEFT) }}</a></td>
                                 <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">{{ $task->name }}<br/>
-                                  <small>Descrição: {{ html_entity_decode(strip_tags(substr($task->description, 0, 200))) }}</small></a>
+                                  <small>Descrição: {{ html_entity_decode(strip_tags(substr($task->description, 0, 80))) }}</small></a>
                                 </td>
                                 <td>
                                   <a href="#!"><img width="24" class="img-fluid img-radius" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""> {{ $task->user->person->name }}</a>
