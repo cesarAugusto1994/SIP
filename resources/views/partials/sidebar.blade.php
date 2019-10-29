@@ -20,6 +20,16 @@
 
                 @if($user->hasPermission($menu->permission))
 
+                  @php
+
+                    $hasActiveItems = $menu->childs->where('active', true)->first();
+
+                    if(!$hasActiveItems && $menu->childs->isNotEmpty()) {
+                       continue;
+                    }
+
+                  @endphp
+
                   <li class="@if($menu->childs->isNotEmpty()) pcoded-hasmenu @endif">
                       <a href="@if($menu->childs->isNotEmpty()) javascript:void(0) @elseif($menu->route) {{ route($menu->route) }} @endif">
                           <span class="pcoded-micon"><i class="{{ $menu->icon }}"></i></span>
