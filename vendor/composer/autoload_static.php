@@ -43,6 +43,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'ee1fbf6a277042bb7f2ccb06366b2716' => __DIR__ . '/..' . '/canducci/cep/src/Canducci/Cep/CepHelper.php',
         'd92e6dafb93e67e5b59c39d9b9d00659' => __DIR__ . '/..' . '/codecourse/notify/src/Codecourse/Notify/functions.php',
         'd9fc00ffac3dc4b7868e8efb0efdc85c' => __DIR__ . '/..' . '/kris/laravel-form-builder/src/helpers.php',
+        'e45cfea11e5f327d4009ce1fae8fa9fc' => __DIR__ . '/..' . '/shetabit/visitor/src/helpers.php',
         '72b1e3f4a2af9b30b3f137b3ec2057fc' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/helpers.php',
         '0c3c22e27afa83be19b4c938f4c6e9ea' => __DIR__ . '/..' . '/spatie/laravel-backup/src/Helpers/functions.php',
     );
@@ -84,6 +85,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             'Unicodeveloper\\DumbPassword\\' => 28,
             'Underscore\\' => 11,
+            'UAParser\\' => 9,
         ),
         'T' => 
         array (
@@ -121,6 +123,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
             'Spatie\\DbDumper\\' => 16,
             'Spatie\\Backup\\' => 14,
             'Spatie\\Activitylog\\' => 19,
+            'Shetabit\\Visitor\\' => 17,
             'Shalvah\\MonologPusher\\' => 22,
             'Seedster\\' => 9,
         ),
@@ -171,6 +174,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         ),
         'J' => 
         array (
+            'Jenssegers\\Agent\\' => 17,
+            'Jaybizzle\\CrawlerDetect\\' => 24,
             'JakubOnderka\\PhpConsoleHighlighter\\' => 35,
             'JakubOnderka\\PhpConsoleColor\\' => 29,
         ),
@@ -218,6 +223,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'C' => 
         array (
             'Cron\\' => 5,
+            'Composer\\CaBundle\\' => 18,
             'Collective\\Html\\' => 16,
             'Chumper\\Zipper\\' => 15,
             'Carbon\\' => 7,
@@ -289,6 +295,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/anahkiasen/underscore-php/src',
             1 => __DIR__ . '/..' . '/anahkiasen/underscore-php/tests',
+        ),
+        'UAParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ua-parser/uap-php/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -414,6 +424,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-activitylog/src',
         ),
+        'Shetabit\\Visitor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/shetabit/visitor/src',
+        ),
         'Shalvah\\MonologPusher\\' => 
         array (
             0 => __DIR__ . '/..' . '/shalvah/monolog-pusher/src',
@@ -520,6 +534,14 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/khill/lavacharts/src',
         ),
+        'Jenssegers\\Agent\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/agent/src',
+        ),
+        'Jaybizzle\\CrawlerDetect\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
+        ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
             0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -624,6 +646,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Composer\\CaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
         'Collective\\Html\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravelcollective/html/src',
@@ -696,6 +722,13 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
             'Kris\\LaravelFormBuilder' => 
             array (
                 0 => __DIR__ . '/..' . '/kris/laravel-form-builder/src',
+            ),
+        ),
+        'D' => 
+        array (
+            'Detection' => 
+            array (
+                0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced',
             ),
         ),
         'C' => 
@@ -897,6 +930,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\ServiceOrder\\ServiceOrder\\Log' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder/Log.php',
         'App\\Models\\ServiceOrder\\ServiceOrder\\Status' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder/Status.php',
         'App\\Models\\ServiceOrder\\ServiceOrder\\Ticket' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder/Ticket.php',
+        'App\\Models\\ServiceOrder\\ServiceOrder\\Training\\Course' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/ServiceOrder/Training/Course.php',
         'App\\Models\\ServiceOrder\\Service\\Ticket\\Type' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/Service/Ticket/Type.php',
         'App\\Models\\ServiceOrder\\Service\\Training\\Course' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/Service/Training/Course.php',
         'App\\Models\\ServiceOrder\\Service\\Type' => __DIR__ . '/../..' . '/app/Models/ServiceOrder/Service/Type.php',
@@ -1057,6 +1091,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Collective\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlBuilder.php',
         'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
         'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
+        'Composer\\CaBundle\\CaBundle' => __DIR__ . '/..' . '/composer/ca-bundle/src/CaBundle.php',
         'ConfigurationsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ConfigurationsTableSeeder.php',
         'ConnectRelationshipsSeeder' => __DIR__ . '/../..' . '/database/seeds/ConnectRelationshipsSeeder.php',
         'CoursesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CoursesTableSeeder.php',
@@ -1098,6 +1133,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'DeliveryDocumentTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/DeliveryDocumentTypesTableSeeder.php',
         'DeliveryOrderStatusesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/DeliveryOrderStatusesTableSeeder.php',
         'DepartmentTableSeeder' => __DIR__ . '/../..' . '/database/seeds/DepartmentTableSeeder.php',
+        'Detection\\MobileDetect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced/Detection/MobileDetect.php',
         'Doctrine\\Common\\Inflector\\Inflector' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector/Inflector.php',
         'Doctrine\\Common\\Lexer\\AbstractLexer' => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer/AbstractLexer.php',
         'Doctrine\\Instantiator\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator/Exception/ExceptionInterface.php',
@@ -2904,6 +2940,14 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
+        'Jaybizzle\\CrawlerDetect\\CrawlerDetect' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/CrawlerDetect.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\AbstractProvider' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/AbstractProvider.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\Crawlers' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/Crawlers.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\Exclusions' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/Exclusions.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\Headers' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/Headers.php',
+        'Jenssegers\\Agent\\Agent' => __DIR__ . '/..' . '/jenssegers/agent/src/Agent.php',
+        'Jenssegers\\Agent\\AgentServiceProvider' => __DIR__ . '/..' . '/jenssegers/agent/src/AgentServiceProvider.php',
+        'Jenssegers\\Agent\\Facades\\Agent' => __DIR__ . '/..' . '/jenssegers/agent/src/Facades/Agent.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Khill\\Lavacharts\\Builders\\ChartBuilder' => __DIR__ . '/..' . '/khill/lavacharts/src/Builders/ChartBuilder.php',
         'Khill\\Lavacharts\\Builders\\DashboardBuilder' => __DIR__ . '/..' . '/khill/lavacharts/src/Builders/DashboardBuilder.php',
@@ -3191,6 +3235,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'MapperStatusTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MapperStatusTableSeeder.php',
         'MenuTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MenuTableSeeder.php',
         'MessageTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/MessageTypesTableSeeder.php',
+        'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV5.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV6' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV6.php',
@@ -4685,6 +4730,18 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'ServiceOrderStatusesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ServiceOrderStatusesTableSeeder.php',
         'ServiceTypeTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ServiceTypeTableSeeder.php',
         'Shalvah\\MonologPusher\\PusherHandler' => __DIR__ . '/..' . '/shalvah/monolog-pusher/src/PusherHandler.php',
+        'Shetabit\\Visitor\\Contracts\\UserAgentParser' => __DIR__ . '/..' . '/shetabit/visitor/src/Contracts/UserAgentParser.php',
+        'Shetabit\\Visitor\\Drivers\\JenssegersAgent' => __DIR__ . '/..' . '/shetabit/visitor/src/Drivers/JenssegersAgent.php',
+        'Shetabit\\Visitor\\Drivers\\UAParser' => __DIR__ . '/..' . '/shetabit/visitor/src/Drivers/UAParser.php',
+        'Shetabit\\Visitor\\Exceptions\\DriverNotFoundException' => __DIR__ . '/..' . '/shetabit/visitor/src/Exceptions/DriverNotFoundException.php',
+        'Shetabit\\Visitor\\Facade\\Visitor' => __DIR__ . '/..' . '/shetabit/visitor/src/Facade/Visitor.php',
+        'Shetabit\\Visitor\\Middlewares\\LogVisits' => __DIR__ . '/..' . '/shetabit/visitor/src/Middlewares/LogVisits.php',
+        'Shetabit\\Visitor\\Models\\Visit' => __DIR__ . '/..' . '/shetabit/visitor/src/Models/Visit.php',
+        'Shetabit\\Visitor\\Provider\\VisitorServiceProvider' => __DIR__ . '/..' . '/shetabit/visitor/src/Provider/VisitorServiceProvider.php',
+        'Shetabit\\Visitor\\Traits\\CanVisit' => __DIR__ . '/..' . '/shetabit/visitor/src/Traits/CanVisit.php',
+        'Shetabit\\Visitor\\Traits\\Visitable' => __DIR__ . '/..' . '/shetabit/visitor/src/Traits/Visitable.php',
+        'Shetabit\\Visitor\\Traits\\Visitor' => __DIR__ . '/..' . '/shetabit/visitor/src/Traits/Visitor.php',
+        'Shetabit\\Visitor\\Visitor' => __DIR__ . '/..' . '/shetabit/visitor/src/Visitor.php',
         'SimpleSoftwareIO\\QrCode\\BaconQrCodeGenerator' => __DIR__ . '/..' . '/simplesoftwareio/simple-qrcode/src/SimpleSoftwareIO/QrCode/BaconQrCodeGenerator.php',
         'SimpleSoftwareIO\\QrCode\\DataTypes\\BTC' => __DIR__ . '/..' . '/simplesoftwareio/simple-qrcode/src/SimpleSoftwareIO/QrCode/DataTypes/BTC.php',
         'SimpleSoftwareIO\\QrCode\\DataTypes\\DataTypeInterface' => __DIR__ . '/..' . '/simplesoftwareio/simple-qrcode/src/SimpleSoftwareIO/QrCode/DataTypes/DataTypeInterface.php',
@@ -5526,6 +5583,33 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+        'UAParser\\AbstractParser' => __DIR__ . '/..' . '/ua-parser/uap-php/src/AbstractParser.php',
+        'UAParser\\Command\\ConvertCommand' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Command/ConvertCommand.php',
+        'UAParser\\Command\\FetchCommand' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Command/FetchCommand.php',
+        'UAParser\\Command\\LogfileCommand' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Command/LogfileCommand.php',
+        'UAParser\\Command\\ParserCommand' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Command/ParserCommand.php',
+        'UAParser\\Command\\UpdateCommand' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Command/UpdateCommand.php',
+        'UAParser\\DeviceParser' => __DIR__ . '/..' . '/ua-parser/uap-php/src/DeviceParser.php',
+        'UAParser\\Exception\\DomainException' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Exception/DomainException.php',
+        'UAParser\\Exception\\FetcherException' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Exception/FetcherException.php',
+        'UAParser\\Exception\\FileNotFoundException' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Exception/FileNotFoundException.php',
+        'UAParser\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Exception/InvalidArgumentException.php',
+        'UAParser\\Exception\\ReaderException' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Exception/ReaderException.php',
+        'UAParser\\OperatingSystemParser' => __DIR__ . '/..' . '/ua-parser/uap-php/src/OperatingSystemParser.php',
+        'UAParser\\Parser' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Parser.php',
+        'UAParser\\Result\\AbstractClient' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/AbstractClient.php',
+        'UAParser\\Result\\AbstractSoftware' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/AbstractSoftware.php',
+        'UAParser\\Result\\AbstractVersionedSoftware' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/AbstractVersionedSoftware.php',
+        'UAParser\\Result\\Client' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/Client.php',
+        'UAParser\\Result\\Device' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/Device.php',
+        'UAParser\\Result\\OperatingSystem' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/OperatingSystem.php',
+        'UAParser\\Result\\UserAgent' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Result/UserAgent.php',
+        'UAParser\\UserAgentParser' => __DIR__ . '/..' . '/ua-parser/uap-php/src/UserAgentParser.php',
+        'UAParser\\Util\\Converter' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Util/Converter.php',
+        'UAParser\\Util\\Fetcher' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Util/Fetcher.php',
+        'UAParser\\Util\\Logfile\\AbstractReader' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Util/Logfile/AbstractReader.php',
+        'UAParser\\Util\\Logfile\\ApacheCommonLogFormatReader' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Util/Logfile/ApacheCommonLogFormatReader.php',
+        'UAParser\\Util\\Logfile\\ReaderInterface' => __DIR__ . '/..' . '/ua-parser/uap-php/src/Util/Logfile/ReaderInterface.php',
         'URLify' => __DIR__ . '/..' . '/jbroadway/urlify/URLify.php',
         'URLifyTest' => __DIR__ . '/..' . '/jbroadway/urlify/tests/URLifyTest.php',
         'Underscore\\Dispatch' => __DIR__ . '/..' . '/anahkiasen/underscore-php/src/Dispatch.php',

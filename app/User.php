@@ -13,6 +13,7 @@ use Emadadly\LaravelUuid\Uuids;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 use App\Models\{Department, Task, MessageBoard};
+use Shetabit\Visitor\Traits\Visitor;
 
 use Lab404\Impersonate\Models\Impersonate;
 
@@ -23,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     use Uuids;
     use LogsActivity;
+    use Visitor;
 
     /**
      * The attributes that are mass assignable.

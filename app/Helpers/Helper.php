@@ -32,6 +32,7 @@ use App\Models\Delivery\Document\Type as DocumentType;
 use App\Models\Delivery\Document\Status as DocumentStatus;
 use App\Models\Stock\Product\Type as ProductType;
 use App\Models\ServiceOrder\Service\Type as ServiceType;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  *
@@ -909,9 +910,17 @@ class Helper
 
     public static function onlineUsers()
     {
-        $onlineUsers = self::users()->where('status', 'online')->count();
+        return User::online()->count();
+    }
 
-        return $onlineUsers;
+    public static function userLogs($user)
+    {
+        return $user->activities()->count();
+    }
+
+    public static function usersLogs()
+    {
+        return Activity::count();
     }
 
     public static function getRouteForModel($model, $subject)

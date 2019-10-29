@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/image/external', 'UtilController@image')->name('image');
 
-    Route::middleware('status')->group(function () {
+    Route::middleware('status')->middleware('visitor')->group(function () {
 
         Route::get('lockscreen', 'LockAccountController@lockscreen')->name('lockscreen');
         Route::post('lockscreen', 'LockAccountController@unlock')->name('post_lockscreen');

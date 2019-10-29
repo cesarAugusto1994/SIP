@@ -189,6 +189,7 @@ return [
         Unicodeveloper\DumbPassword\DumbPasswordServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Shetabit\Visitor\Provider\VisitorServiceProvider::class,
 
     ],
 
@@ -250,7 +251,8 @@ return [
         'Zipper' => Chumper\Zipper\Zipper::class,
         'Lava' => 'Khill\Lavacharts\Laravel\LavachartsFacade',
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'JsonReader' => pcrov\JsonReader\JsonReader::class
+        'JsonReader' => pcrov\JsonReader\JsonReader::class,
+        'Visitor' => Shetabit\Visitor\Facade\Visitor::class,
     ],
 
 ];

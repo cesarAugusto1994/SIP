@@ -13,6 +13,7 @@ return array(
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Kris\\LaravelFormBuilder' => array($vendorDir . '/kris/laravel-form-builder/src'),
+    'Detection' => array($vendorDir . '/mobiledetect/mobiledetectlib/namespaced'),
     'Codecourse\\Notify\\' => array($vendorDir . '/codecourse/notify/src'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

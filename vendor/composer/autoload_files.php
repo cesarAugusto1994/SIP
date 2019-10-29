@@ -42,6 +42,7 @@ return array(
     'ee1fbf6a277042bb7f2ccb06366b2716' => $vendorDir . '/canducci/cep/src/Canducci/Cep/CepHelper.php',
     'd92e6dafb93e67e5b59c39d9b9d00659' => $vendorDir . '/codecourse/notify/src/Codecourse/Notify/functions.php',
     'd9fc00ffac3dc4b7868e8efb0efdc85c' => $vendorDir . '/kris/laravel-form-builder/src/helpers.php',
+    'e45cfea11e5f327d4009ce1fae8fa9fc' => $vendorDir . '/shetabit/visitor/src/helpers.php',
     '72b1e3f4a2af9b30b3f137b3ec2057fc' => $vendorDir . '/spatie/laravel-activitylog/src/helpers.php',
     '0c3c22e27afa83be19b4c938f4c6e9ea' => $vendorDir . '/spatie/laravel-backup/src/Helpers/functions.php',
 );

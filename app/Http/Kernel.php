@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'lock' => \App\Http\Middleware\LockAccount::class,
         'status' => \App\Http\Middleware\CheckStatus::class,
+        'visitor' => \Shetabit\Visitor\Middlewares\LogVisits::class,
     ];
 
     /**
