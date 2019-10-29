@@ -913,6 +913,11 @@ class Helper
         return User::online()->count();
     }
 
+    public static function onlineUsersList()
+    {
+        return User::online()->get();
+    }
+
     public static function userLogs($user)
     {
         return $user->activities()->count();

@@ -186,7 +186,7 @@
                   @endphp
 
 
-                  @forelse($users->sortBy('person.name') as $user)
+                  @forelse(\App\Helpers\Helper::onlineUsersList() as $user)
 
                     @if(Auth::user()->id == $user->id)
                         @continue;
