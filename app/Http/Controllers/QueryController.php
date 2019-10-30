@@ -747,11 +747,7 @@ class QueryController extends Controller
 
       $parametrosQuery = $query->parameters;
 
-      //dd($itens);
-
       $parametrosR = ParametersHelper::render($parametrosQuery, $request);
-
-      //dd($parametrosR);
 
       foreach ($itens as $item) {
 
@@ -771,17 +767,11 @@ class QueryController extends Controller
 
       }
 
-      //dd($parametros);
-
       if ($pR) {
 
           $parametrosE = $query->parameters;
 
-          //dd($parametrosE);
-
           $arrParametros = [];
-
-          //dd($parametrosE);
 
           foreach ($parametrosE as $param) {
               $arrParametros[] = array_merge(
