@@ -738,8 +738,6 @@ class QueryController extends Controller
 
       $string = $query->query;
 
-      dd($string);
-
       $parametros = $dados = [];
 
       $slug = strstr($string, ':');

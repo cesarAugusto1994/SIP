@@ -187,8 +187,8 @@
   <input type="hidden" id="currentUser" value="{{ Auth::user()->uuid }}"/>
   <input type="hidden" id="receiver" value="{{ $user->uuid }}"/>
 
-  <input type="hidden" id="route-messages" value="{{ route('chat_messages', $user->id) }}"/>
-  <input type="hidden" id="route-post-message" value="{{ route('chat_messages', $user->id) }}"/>
+  <input type="hidden" id="route-messages" value="{{ route('chat_messages', $user->uuid) }}"/>
+  <input type="hidden" id="route-post-message" value="{{ route('chat_messages', $user->uuid) }}"/>
 
   <div id="app" :user="{{ $user->id }}">
     <div class="row">
