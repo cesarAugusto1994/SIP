@@ -40,8 +40,9 @@
 
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}?v1.0.1">
+    <!--
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\jquery.mCustomScrollbar.css') }}">
-
+    -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\font-awesome\css\font-awesome.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">
 
@@ -526,7 +527,7 @@ $(document).ready(function() {
   channel.bind('App\\Events\\Notifications', function(data) {
 
     notifyMe('Notificação', data.message, '/admin/notifications');
-    //console.log(data);
+    console.log(data);
     var existingNotifications = notifications.html();
     var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
     var newNotificationHtml = `
