@@ -96,7 +96,7 @@ import VueChatScroll from 'vue-chat-scroll'
 
  Echo.private('chat.'+privateChat)
   .listen('MessageSent', (e) => {
-    //console.log('Recebendo Mensagem: '+e);
+    console.log('Recebendo Mensagem: '+e);
     app.messages.push({
       message: e.message.message,
       user: e.user,
@@ -106,7 +106,7 @@ import VueChatScroll from 'vue-chat-scroll'
     });
 
     axios.post('/admin/chat/message/'+ e.message.uuid +'/markasread', e.message).then(response => {
-        //console.log(response);
+        console.log(response);
     });
 
   })
