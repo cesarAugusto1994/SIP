@@ -31,6 +31,35 @@
 
   <div class="row">
 
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.ordem.entrega')
+                    <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5"><i class="fa fa-truck"></i>Gerar Entrega</a>
+                  @endpermission
+
+                  @if($document->status_id == 1)
+                      @permission('edit.documentos')
+                        <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5"><i class="fa fa-edit"></i> Editar</a>
+                      @endpermission
+                  @endif
+
+                  @permission('delete.documentos')
+                    <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="btn btn-sm btn-danger waves-effect waves-light m-r-15 m-b-5 m-t-5 btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
+                  @endpermission
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
     <div class="col-md-12">
 
         <div class="card">
@@ -39,15 +68,7 @@
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
 
-                      @if($document->status_id == 1)
 
-                          @permission('edit.documentos')
-
-                            <li><a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="btn btn-primary text-white btn-sm">Editar</a></li>
-
-                          @endpermission
-
-                      @endif
                     </ul>
                 </div>
             </div>
