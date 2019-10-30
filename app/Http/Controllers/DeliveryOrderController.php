@@ -1570,6 +1570,12 @@ class DeliveryOrderController extends Controller
         $delivery = DeliveryOrder::uuid($id);
         $user = $request->user();
 
+        if(!in_array($delivery->status_id, [1,2,3])) {
+            notify()->flash('Erro!', 'error', [
+              'text' => 'A imagem do protocolo não pode ser alterada devido o status da Ordem de Entrega.'
+            ]);
+        }
+
         if ($request->hasFile('receipt') && $request->file('receipt')->isValid()) {
             $path = $request->receipt->store('receipt');
 
