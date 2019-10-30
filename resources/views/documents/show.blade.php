@@ -37,19 +37,21 @@
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
+                @if($document->status_id == 1)
+
                   @permission('create.ordem.entrega')
                     <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5"><i class="fa fa-truck"></i>Gerar Entrega</a>
                   @endpermission
-
-                  @if($document->status_id == 1)
-                      @permission('edit.documentos')
-                        <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5"><i class="fa fa-edit"></i> Editar</a>
-                      @endpermission
-                  @endif
+    
+                  @permission('edit.documentos')
+                    <a href="{{route('documents.edit', ['id' => $document->uuid])}}" class="btn btn-sm btn-primary waves-effect waves-light m-r-15 m-b-5 m-t-5"><i class="fa fa-edit"></i> Editar</a>
+                  @endpermission
 
                   @permission('delete.documentos')
                     <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="btn btn-sm btn-danger waves-effect waves-light m-r-15 m-b-5 m-t-5 btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
                   @endpermission
+
+                @endif
 
               </div>
           </div>
