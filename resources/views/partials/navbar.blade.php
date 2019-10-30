@@ -204,13 +204,7 @@
                               <br/>
                               <span>Ramal: {{ $user->person->branch }}</span>
                             @endif
-                            <span class="badge bg-c-green">Nova Mensagem</span>
                           </a>
-                          @if(config('app.env') == 'local')
-                          <span class="float-right">
-
-                          <span>
-                          @endif
                         </div>
                     </div>
 
