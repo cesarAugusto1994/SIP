@@ -94,7 +94,7 @@ import VueChatScroll from 'vue-chat-scroll'
      },
  });
 
- Echo.private('chat.'+privateChatInverse)
+ Echo.private('chat.'+privateChat)
   .listen('MessageSent', (e) => {
     console.log('Recebendo Mensagem: '+e);
     app.messages.push({
