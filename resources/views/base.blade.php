@@ -228,7 +228,7 @@
 <script src="{{ asset('adminty\js\vartical-layout.min.js') }}?v1.0"></script>
 <!--<script src="{{ asset('adminty\js\jquery.mCustomScrollbar.concat.min.js') }}"></script>-->
     <!-- Custom js -->
-<script type="text/javascript" src="{{ asset('adminty\js\script.js') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\js\script.jsv1.0.1') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\js\bootstrap-growl.min.js') }}"></script>
 

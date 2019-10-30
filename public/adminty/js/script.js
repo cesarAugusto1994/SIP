@@ -42,6 +42,7 @@ $(document).ready(function() {
     $(".mobile-options").on('click', function() {
         $(".navbar-container .nav-right").slideToggle('slow');
     });
+    /*
     // card js end
     $.mCustomScrollbar.defaults.axis = "yx";
     $("#styleSelector .style-cont").slimScroll({
@@ -52,7 +53,7 @@ $(document).ready(function() {
     $(".main-menu").mCustomScrollbar({
         setTop: "10px",
         setHeight: "calc(100% - 80px)",
-    });
+    });*/
     /*chatbar js start*/
 
     /*chat box scroll*/
