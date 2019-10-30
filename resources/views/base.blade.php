@@ -513,7 +513,7 @@ $(document).ready(function() {
   }
 
   // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = false;
+  Pusher.logToConsole = true;
 
   var pusher = new Pusher('fbc40aa0ff741e4532da', {
     encrypted: true,
