@@ -208,7 +208,7 @@
 <script type="text/javascript" src="{{ asset('adminty\components\jquery\js\jquery.min.js') }}"></script>
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js?v1.0.1') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-ui\js\jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\popper.js\js\popper.min.js') }}"></script>
