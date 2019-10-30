@@ -17,8 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-Route::middleware('auth:api')->put('user/{user}/online', 'UserOnlineController');
-Route::middleware('auth:api')->put('user/{user}/offline', 'UserOfflineController');
+Route::put('user/{user}/online', 'UserOnlineController');
+Route::put('user/{user}/offline', 'UserOfflineController');
 /*
 Route::prefix('v1')->group(function() {
 
