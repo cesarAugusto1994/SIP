@@ -146,9 +146,15 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('documents.create');
+        $client = null;
+
+        if($request->filled('client')) {
+            $client = Client::uuid($request->get('client'));
+        }
+
+        return view('documents.create', compact('client'));
     }
 
     public function createManyForOneClient()

@@ -45,12 +45,20 @@
             <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-primary btn-sm"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
         @endpermission
 
+        @permission('create.documentos')
+            <a href="{{route('documents.create', ['client' => $client->uuid])}}" class="btn btn-primary btn-sm"><i class="fas fa-file"></i> Novo Documento Entrega</a>
+        @endpermission
+
+        @permission('edit.clientes')
+            <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="btn btn-info btn-sm"><i class="far fa-edit"></i> Editar</a>
+        @endpermission
+
       </div>
   </div>
 
   <div class="row">
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-3">
           <div class="card widget-statstic-card">
               <div class="card-header">
                   <div class="card-header-left">
@@ -68,7 +76,7 @@
           </div>
       </div>
 
-      <div class="col-md-12 col-xl-4">
+      <div class="col-md-6 col-xl-3">
           <div class="card widget-statstic-card">
               <div class="card-header">
                   <div class="card-header-left">
@@ -86,28 +94,46 @@
           </div>
       </div>
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-3">
           <div class="card widget-statstic-card">
               <div class="card-header">
                   <div class="card-header-left">
                       <h5>Protocolos</h5>
-                      <p class="p-t-10 m-b-0 text-c-blue">Ordens de Entrega geradas.</p>
+                      <p class="p-t-10 m-b-0 text-c-green">Ordens de Entrega geradas.</p>
                   </div>
               </div>
               <div class="card-block">
-                  <i class="feather icon-file-text st-icon bg-c-blue"></i>
+                  <i class="feather icon-file-text st-icon bg-c-green"></i>
                   <div class="text-left">
                       <h3 class="d-inline-block">{{ $client->deliveries->count() }}</h3>
-                      <span class="f-right bg-c-blue"><a class="text-white" href="{{ route('delivery-order.index', ['find' => 1, 'client' => $client->uuid]) }}">Acessar</a></span>
+                      <span class="f-right bg-c-green"><a class="text-white" href="{{ route('delivery-order.index', ['find' => 1, 'client' => $client->uuid]) }}">Acessar</a></span>
                   </div>
               </div>
           </div>
       </div>
 
-      <div class="col-xl-6 col-md-12">
+      <div class="col-md-6 col-xl-3">
+          <div class="card widget-statstic-card">
+              <div class="card-header">
+                  <div class="card-header-left">
+                      <h5>Documentos</h5>
+                      <p class="p-t-10 m-b-0 text-c-blue">Documentos do Cliente.</p>
+                  </div>
+              </div>
+              <div class="card-block">
+                  <i class="feather icon-file-text st-icon bg-c-blue"></i>
+                  <div class="text-left">
+                      <h3 class="d-inline-block">{{ $client->documents->count() }}</h3>
+                      <span class="f-right bg-c-blue"><a class="text-white" href="{{ route('client-documents.index', ['client' => $client->uuid]) }}">Acessar</a></span>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-8 col-md-12">
           <div class="card user-card-full">
               <div class="row m-l-0 m-r-0">
-                  <div class="col-sm-4 bg-c-lite-green user-profile">
+                  <div class="col-sm-4 bg-c-green user-profile">
                       <div class="card-block text-center text-white">
                           <h4 class="f-w-600">{{ $client->name}}</h4>
                           @if($client->active)
@@ -115,12 +141,6 @@
                           @else
                               <i class="fa fa-circle text-danger"></i> Inativo
                           @endif
-
-                          @permission('edit.clientes')
-                            <p class="text-center m-t-30">
-                              <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="btn btn-success btn-sm"><i class="far fa-edit"></i> Editar</a>
-                            </p>
-                          @endpermission
 
                       </div>
                   </div>
@@ -155,7 +175,7 @@
           </div>
       </div>
 
-      <div class="col-xl-3 col-md-12">
+      <div class="col-xl-2 col-md-6">
           <div class="card feed-card">
               <div class="card-header">
                   <h5>Telefone</h5>
@@ -191,7 +211,7 @@
           </div>
       </div>
 
-      <div class="col-xl-3 col-md-12">
+      <div class="col-xl-2 col-md-6">
           <div class="card feed-card">
               <div class="card-header">
                   <h5>E-mail</h5>
@@ -226,99 +246,6 @@
               </div>
           </div>
       </div>
-
-  </div>
-
-  <div class="row">
-
-    <div class="col-md-4">
-
-      <div class="card">
-          <div class="card-header">
-              <h5>Upload</h5>
-          </div>
-          <div class="card-block">
-                <input type="file" name="files[]" id="filer" data-route="{{ route('client_documents_upload', $client->uuid) }}" multiple="multiple">
-          </div>
-      </div>
-
-    </div>
-
-    <div class="col-md-8">
-
-      <div class="card">
-          <div class="card-header">
-              <h5>Documentos</h5>
-          </div>
-          <div class="card-block">
-
-            @if($client->files->isNotEmpty())
-              <div class="table-responsive">
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                          <th>Arquivo</th>
-                          <th>Adionado por</th>
-                          <th>Upload em</th>
-                          <th>Opções</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($client->files as $document)
-                            <tr>
-
-                                <td>
-                                    <a target="_blank" href="{{ route('document_preview', ['id' => $document->uuid, 'filename' => $document->filename]) }}">{{$document->filename}}</a>
-                                </td>
-
-                                <td>
-                                    <a>{{$document->creator->person->name}}</a>
-                                </td>
-
-                                <td>
-                                      <span>{{$document->created_at->diffForHumans() }}</span><br/>
-                                      <small>({{$document->created_at->format('d/m/Y H:i:s') }})</small>
-                                </td>
-
-                                <td class="dropdown">
-                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                  <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                    @permission('edit.clientes')
-                                      <a target="_blank" href="{{ route('document_preview', $document->uuid) }}" class="dropdown-item"><i class="fas fa-eye"></i> Visualizar</a>
-                                    @endpermission
-
-                                    @permission('edit.clientes')
-                                      <a href="{{route('document_download', [$document->uuid])}}" class="dropdown-item"><i class="fas fa-cloud-download-alt"></i> Download</a>
-                                    @endpermission
-
-                                    @permission('delete.clientes')
-                                      <a href="#!" data-route="{{route('document_delete', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fas fa-trash-alt"></i> Remover</a>
-                                    @endpermission
-
-                                  </div>
-                                </td>
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-              </div>
-            @else
-              <div class="widget white-bg no-padding">
-                  <div class="p-m text-center">
-                      <h1 class="m-md"><i class="far fa-folder-open fa-2x"></i></h1>
-                      <p class="font-bold no-margins">Nenhum documento encontrado.</p>
-                  </div>
-              </div>
-            @endif
-
-      </div>
-
-    </div>
-
-    </div>
 
   </div>
 

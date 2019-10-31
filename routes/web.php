@@ -111,6 +111,7 @@ Route::middleware('auth')->group(function () {
           });
 
           Route::resource('client-occupations', 'ClientOccupationsController');
+          Route::resource('client-documents', 'ClientDocumentController');
 
           Route::resource('employees', 'EmployeesController');
 

@@ -81,6 +81,9 @@
                   <select class="form-control select-client-employees select-client"
                     data-search-employees="{{ route('client_employees_search') }}"
                     name="client_id" id="client_id" data-target="#select-employee" required>
+                    @if($client)
+                        <option value="{{ $client->uuid }}">{{ $client->name }}</option>
+                    @endif
                   </select>
                 </div>
                 {!! $errors->first('client_id', '<p class="help-block">:message</p>') !!}

@@ -223,19 +223,18 @@ class ClientController extends Controller
           $documentType = "cpf";
       }
 
+      $documentString = str_replace(['.','/','-'], ['','',''], $data['document']);
+      $data['document'] = $documentString;
+
       $validator = Validator::make($request->all(), [
           'name' => 'required|string|max:255',
           'contract_id' => 'required',
-          //'document' => 'required|unique:clients|'.$documentType,
+          'document' => 'required|unique:clients|'.$documentType,
       ]);
 
       if ($validator->fails()) {
           return back()->withErrors($validator)->withInput();
       }
-
-      $documentString = str_replace(['.','/','-'], ['','',''], $data['document']);
-
-      $data['document'] = $documentString;
 
       $data['active'] = $request->has('active');
       $data['charge_delivery'] = $request->has('charge_delivery');
