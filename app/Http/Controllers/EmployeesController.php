@@ -100,7 +100,7 @@ class EmployeesController extends Controller
     public function create(Request $request)
     {
         if(!Auth::user()->hasPermission('create.cliente.funcionarios')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado.');
         }
 
         $company = null;
@@ -109,9 +109,7 @@ class EmployeesController extends Controller
             $company = Client::uuid($request->get('client'));
         }
 
-        $companies = Client::all();
-
-        return view('clients.employees.create', compact('company', 'companies'));
+        return view('clients.employees.create', compact('company'));
     }
 
     public function createMany($id, Request $request)
@@ -171,6 +169,9 @@ class EmployeesController extends Controller
                   $data['created_by'] = $request->user()->id;
                   $data['active'] = $request->has($fieldActive);
 
+                  $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
+                  $data['cpf'] = $documentString;
+
                   Employee::create($data);
 
               }
@@ -222,13 +223,16 @@ class EmployeesController extends Controller
         $data['created_by'] = $request->user()->id;
         $data['active'] = $request->has('active');
 
-        Employee::create($data);
+        $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
+        $data['cpf'] = $documentString;
+
+        $employee = Employee::create($data);
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo Funcionário adicionado ao Cliente com sucesso.'
         ]);
 
-        return redirect()->route('clients.show', $company->uuid);
+        return redirect()->route('employees.show', $employee->uuid);
     }
 
     public function show($id)
@@ -246,13 +250,12 @@ class EmployeesController extends Controller
     public function edit($id)
     {
         if(!Auth::user()->hasPermission('edit.cliente.funcionarios')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado.');
         }
 
-        $companies = Client::all();
         $employee = Employee::uuid($id);
 
-        return view('clients.employees.edit', compact('companies', 'employee'));
+        return view('clients.employees.edit', compact('employee'));
     }
 
     /**
@@ -290,6 +293,9 @@ class EmployeesController extends Controller
 
         $occupation = Occupation::uuid($data['occupation_id']);
         $data['occupation_id'] = $occupation->id;
+
+        $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
+        $data['cpf'] = $documentString;
 
         $data['active'] = $request->has('active');
         $employee->update($data);

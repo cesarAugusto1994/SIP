@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
-use App\Models\Client\Address;
+use App\Models\Client\{Address,Employee};
 use App\Helpers\TimesAgo;
 use App\User;
 
@@ -18,7 +18,7 @@ class SearchController extends Controller
 
         $results = [];
 
-        $records = Client::where('name', 'like', "%$search%")->get();
+        $records = Client::where('name', 'like', "%$search%")->orWhere('document', 'like', "%$search%")->get();
 
         foreach ($records as $key => $record) {
             $results[] = [
@@ -26,7 +26,19 @@ class SearchController extends Controller
               'image' => '',
               'content' => '',
               'url' => route('clients.show', $record->uuid),
-              'date' => TimesAgo::render($record->created_at)
+              'date' => $record->created_at->diffForHumans()
+            ];
+        }
+
+        $records = Employee::where('name', 'like', "%$search%")->orWhere('cpf', 'like', "%$search%")->get();
+
+        foreach ($records as $key => $record) {
+            $results[] = [
+              'header' => 'Funcionário: ' . $record->name,
+              'image' => '',
+              'content' => $record->company->name,
+              'url' => route('employees.show', $record->uuid),
+              'date' => $record->created_at->diffForHumans()
             ];
         }
 
@@ -40,7 +52,7 @@ class SearchController extends Controller
               'image' => '',
               'content' => $record->street,
               'url' => route('clients.show', $record->client->uuid),
-              'date' => TimesAgo::render($record->created_at)
+              'date' => $record->created_at->diffForHumans()
             ];
         }
 

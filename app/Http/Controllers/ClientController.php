@@ -233,6 +233,10 @@ class ClientController extends Controller
           return back()->withErrors($validator)->withInput();
       }
 
+      $documentString = str_replace(['.','/','-'], ['','',''], $data['document']);
+
+      $data['document'] = $documentString;
+
       $data['active'] = $request->has('active');
       $data['charge_delivery'] = $request->has('charge_delivery');
       $data['deliver_documents'] = $request->has('deliver_documents');
@@ -449,6 +453,10 @@ class ClientController extends Controller
         $data['charge_delivery'] = $request->has('charge_delivery');
         $data['deliver_documents'] = $request->has('deliver_documents');
 
+        $documentString = str_replace(['.','/','-'], ['','',''], $data['document']);
+
+        $data['document'] = $documentString;
+
         $client->update($data);
 
         notify()->flash('Sucesso!', 'success', [
@@ -533,6 +541,9 @@ class ClientController extends Controller
 
                     $contractId = 1;
 
+                    $documentString = str_replace(['.','/','-'], ['','',''], $item['cnpj']);
+                    $item['cnpj'] = $documentString;
+
                     $company = Client::where('document', $item['cnpj'])
                     ->where('name', trim($item['razaoSocial']))
                     ->where('code', trim($item['codigo']))
@@ -569,6 +580,9 @@ class ClientController extends Controller
             foreach ($clientData as $key => $item) {
 
                 $contractId = 1;
+
+                $documentString = str_replace(['.','/','-'], ['','',''], $item['cnpj']);
+                $item['cnpj'] = $documentString;
 
                 $company = Client::where('document', $item['cnpj'])
                 ->where('name', trim($item['razaoSocial']))
