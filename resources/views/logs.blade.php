@@ -24,7 +24,7 @@
         encrypted: true,
         cluster: 'mt1',
     });
-    socket.subscribe('{{ config('app.env') }}')
+    socket.subscribe({{ config('app.env') }})
         .bind('log', displayLog);
 </script>
 @stop

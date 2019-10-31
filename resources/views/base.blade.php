@@ -40,9 +40,8 @@
 
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}?v1.0.1">
-    <!--
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\jquery.mCustomScrollbar.css') }}">
-    -->
+
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\font-awesome\css\font-awesome.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" rel="stylesheet">
 
@@ -223,9 +222,9 @@
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-i18next\js\jquery-i18next.min.js') }}"></script>
 <script src="{{ asset('adminty\js\pcoded.min.js') }}"></script>
 <script src="{{ asset('adminty\js\vartical-layout.min.js') }}?v1.0"></script>
-<!--<script src="{{ asset('adminty\js\jquery.mCustomScrollbar.concat.min.js') }}"></script>-->
+<script src="{{ asset('adminty\js\jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Custom js -->
-<script type="text/javascript" src="{{ asset('adminty\js\script.js?v1.0.1') }}"></script>
+<script type="text/javascript" src="{{ asset('adminty\js\script.js?v1.0.2') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\js\bootstrap-growl.min.js') }}"></script>
 
