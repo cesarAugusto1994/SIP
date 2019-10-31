@@ -524,7 +524,7 @@ $(document).ready(function() {
   channel.bind('App\\Events\\Notifications', function(data) {
 
     notifyMe('Notificação', data.message, '/admin/notifications');
-    console.log(data);
+    //console.log(data);
     var existingNotifications = notifications.html();
     var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
     var newNotificationHtml = `
