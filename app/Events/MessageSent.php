@@ -49,7 +49,7 @@ class MessageSent implements ShouldBroadcast
         $this->user = $user;
         $this->message = $message;
         $this->receiver = $receiver;
-        $this->receiverCode = $receiver->uuid .'.'.$user->uuid;
+        $this->receiverCode = $receiver->id .'.'.$user->id;
     }
 
     /**

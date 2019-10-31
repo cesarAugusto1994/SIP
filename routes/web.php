@@ -13,21 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-if (\App::environment('production')) {
-    //\URL::forceScheme('https');
-}
-
-//Auth::routes();
-
 Auth::routes(['verify' => true]);
-/*
-Route::get('test', function () {
+
+/*Route::get('test', function () {
     $user = \App\User::find(1);
-    //event(new \App\Events\NewUser($user));
-    \Notification::send(\App\User::where('id', 2)->get(), new \App\Notifications\NewUser($user));
+    event(new \App\Events\Notifications($user, 'teste0'));
+    //\Notification::send(\App\User::where('id', 2)->get(), new \App\Notifications\NewUser($user));
     return "Event has been sent!";
-});
-*/
+});*/
 
 Route::middleware('auth')->group(function () {
 

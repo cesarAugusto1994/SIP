@@ -85,7 +85,7 @@ class ChatsController extends Controller
     */
     public function fetchMessages($id)
     {
-        $user = User::uuid($id);
+        $user = User::find($id);
         $messages = Message::where('user_id', $user->id)->where('receiver_id', Auth::user()->id)
         ->orWhere('receiver_id', $user->id)->where('user_id', Auth::user()->id)->get();
 
@@ -105,7 +105,7 @@ class ChatsController extends Controller
     */
     public function sendMessage($id, Request $request)
     {
-        $user = User::uuid($id);
+        $user = User::find($id);
 
         $message = Auth::user()->messages()->create([
           'message' => $request->input('message'),
@@ -117,7 +117,7 @@ class ChatsController extends Controller
         Helper::drop('messages');
 
         broadcast(new MessageSent(Auth::user(), $message, $user))->toOthers();
-        broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
+        //broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
 
         return ['status' => 'Mensagem Enviada!'];
     }

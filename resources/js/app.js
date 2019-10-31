@@ -67,14 +67,14 @@ import VueChatScroll from 'vue-chat-scroll'
      methods: {
          fetchMessages() {
              axios.get(receiver+'/messages').then(response => {
-                 //console.log('fetchMessages: '+response);
+                 console.log('fetchMessages: '+response);
                  this.messages = response.data;
              });
          },
 
          addMessage(message) {
 
-              //console.log(message.message);
+              console.log(message.message);
 
               if(message.message.trim().length > 0) {
 
@@ -85,7 +85,7 @@ import VueChatScroll from 'vue-chat-scroll'
                     avatar: message.user.avatar,
                 });
                 axios.post(receiver+'/messages', message).then(response => {
-                    //console.log(response.data);
+                    console.log(response.data);
                 });
 
               }
@@ -94,7 +94,7 @@ import VueChatScroll from 'vue-chat-scroll'
      },
  });
 
- Echo.private('chat.'+ $("#currentUser").val() +'.'+$("#receiver").val())
+ Echo.private('chat.'+privateChat)
   .listen('MessageSent', (e) => {
     console.log('Recebendo Mensagem: '+e);
     app.messages.push({

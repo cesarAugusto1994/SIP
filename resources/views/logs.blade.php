@@ -20,7 +20,8 @@
     }
 </script>
 <script>
-    var socket = new Pusher("fbc40aa0ff741e4532da", {
+    var socket = new Pusher("c9a5abf31bb9598d99c7", {
+        encrypted: true,
         cluster: 'mt1',
     });
     socket.subscribe('{{ config('app.env') }}')

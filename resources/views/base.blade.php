@@ -180,7 +180,7 @@
 </div>
 <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
-    <div class="pcoded-container navbar-wrapper" id="app" :user="{{ \Auth::user()->id }}">
+    <div class="pcoded-container navbar-wrapper">
 
         @include('partials.navbar')
 
@@ -193,15 +193,12 @@
                             <div class="page-wrapper">
                                 @yield('content')
                             </div>
-
-                            <div id="styleSelector">
-
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -209,7 +206,7 @@
 <script type="text/javascript" src="{{ asset('adminty\components\jquery\js\jquery.min.js') }}"></script>
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
-<script src="{{ asset('js/app.js?v1.0.2') }}"></script>
+<script src="{{ asset('js/app.js?v1.0.3') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-ui\js\jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\popper.js\js\popper.min.js') }}"></script>
@@ -515,7 +512,7 @@ $(document).ready(function() {
   // Enable pusher logging - don't include this in production
   Pusher.logToConsole = false;
 
-  var pusher = new Pusher('fbc40aa0ff741e4532da', {
+  var pusher = new Pusher('c9a5abf31bb9598d99c7', {
     encrypted: true,
     cluster: 'mt1',
   });
@@ -545,8 +542,8 @@ $(document).ready(function() {
     `;
     notifications.html(newNotificationHtml + existingNotifications);
 
-    //var audio = new Audio("{{ asset('media/sounds/light.mp3') }}");
-    //audio.play();
+    var audio = new Audio("{{ asset('media/sounds/light.mp3') }}");
+    audio.play();
 
     notificationsCount += 1;
     notificationsCountElem.attr('data-count', notificationsCount);
