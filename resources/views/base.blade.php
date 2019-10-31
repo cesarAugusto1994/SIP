@@ -513,10 +513,10 @@ $(document).ready(function() {
   }
 
   // Enable pusher logging - don't include this in production
-  Pusher.logToConsole = true;
+  Pusher.logToConsole = false;
 
   var pusher = new Pusher('fbc40aa0ff741e4532da', {
-    //encrypted: true,
+    encrypted: true,
     cluster: 'mt1',
   });
 
