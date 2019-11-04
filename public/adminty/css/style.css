@@ -7698,24 +7698,35 @@ table tbody .border-bottom-info td {
     position: relative
 }
 
+.header-navbar .navbar-wrapper .navbar-container .nav-center li {
+    text-align: center;
+    line-height: 3.5;
+    padding: 0 10px;
+    position: relative
+}
+
 @media only screen and (max-width: 575px) {
     .header-navbar .navbar-wrapper .navbar-container .nav-left li,
+    .header-navbar .navbar-wrapper .navbar-container .nav-center li,
     .header-navbar .navbar-wrapper .navbar-container .nav-right li {
         padding: 0 5px
     }
 }
 
 .header-navbar .navbar-wrapper .navbar-container .nav-left li .sidebar_toggle a,
+.header-navbar .navbar-wrapper .navbar-container .nav-center li .sidebar_toggle a,
 .header-navbar .navbar-wrapper .navbar-container .nav-right li .sidebar_toggle a {
     display: none
 }
 
 .header-navbar .navbar-wrapper .navbar-container .nav-left li>a,
+.header-navbar .navbar-wrapper .navbar-container .nav-center li>a,
 .header-navbar .navbar-wrapper .navbar-container .nav-right li>a {
     font-size: 16px
 }
 
 .header-navbar .navbar-wrapper .navbar-container .nav-left li>a>i.flag-icon,
+.header-navbar .navbar-wrapper .navbar-container .nav-center li>a>i.flag-icon,
 .header-navbar .navbar-wrapper .navbar-container .nav-right li>a>i.flag-icon {
     border-radius: 50%;
     width: 20px;
@@ -7728,6 +7739,7 @@ table tbody .border-bottom-info td {
 }
 
 .header-navbar .navbar-wrapper .navbar-container .nav-left .mega-menu-top i,
+.header-navbar .navbar-wrapper .navbar-container .nav-center .mega-menu-top i,
 .header-navbar .navbar-wrapper .navbar-container .nav-right .mega-menu-top i {
     font-size: 10px;
     margin-left: 10px
@@ -11843,6 +11855,7 @@ body .pcoded[vertical-placement="right"] .header-navbar .navbar-wrapper .navbar-
 }
 
 body .pcoded[vertical-placement="right"] .header-navbar .navbar-wrapper .navbar-container .nav-left,
+body .pcoded[vertical-placement="right"] .header-navbar .navbar-wrapper .navbar-container .nav-center,
 body .pcoded[vertical-placement="right"] .header-navbar .navbar-wrapper .navbar-container .nav-right {
     float: right
 }

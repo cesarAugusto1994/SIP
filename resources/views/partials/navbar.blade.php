@@ -88,7 +88,6 @@
                         </ul>
                     </div>
                 </li>
-
                 <li class="header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
@@ -158,9 +157,78 @@
                     </div>
                 </li>
             </ul>
+
+            <ul class="nav-center">
+
+              <li>
+                  <a class="btn btn-outline-success btn-round btn-sm" style="color:#07885b!important" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="https://webmail.umbler.com">
+                      Novo Chamado <i class="feather icon-bell feed-icon"></i>
+                  </a>
+              </li>
+
+            </ul>
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="tickets-Modal" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Novo Chamado</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form class="formValidation" data-parsley-validate method="post" action="{{ route('tickets.store') }}">
+              @csrf
+              <div class="modal-body">
+
+                <div class="row m-b-30">
+
+                  <div class="col-md-12">
+
+                    <div class="form-group">
+                        <label class="col-form-label">Qual é o problema?</label>
+                        <div class="input-group">
+                          <select class="form-control m-b select2" name="type_id" required>
+                              <option value="">Informe o tipo de chamado</option>
+                              @foreach(\App\Helpers\Helper::ticketCategories() as $category)
+                                <optgroup label="{{ $category->name }}">
+                                @foreach($category->types as $type)
+                                  @if(!$type->active) @continue; @endif
+                                  <option value="{{$type->id}}" {{ request()->has('type') && request()->get('type') == $type->uuid ? 'selected' : '' }}>{{$type->name}}</option>
+                                @endforeach
+                                </optgroup>
+                              @endforeach
+                          </select>
+                        </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-12">
+
+                    <div class="form-group">
+                        <label class="col-form-label">Descrição</label>
+                        <div class="input-group">
+                          <textarea rows="5" required name="description" class="form-control ckeditor"></textarea>
+                        </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-success waves-effect waves-light ">Salvar</button>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!-- Sidebar chat start -->
 <div id="sidebar" class="users p-chat-user showChat">
