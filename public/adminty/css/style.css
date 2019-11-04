@@ -7685,6 +7685,7 @@ table tbody .border-bottom-info td {
 }
 
 .header-navbar .navbar-wrapper .navbar-container .nav-left,
+.header-navbar .navbar-wrapper .navbar-container .nav-center,
 .header-navbar .navbar-wrapper .navbar-container .nav-right {
     float: left;
     margin-bottom: 0
