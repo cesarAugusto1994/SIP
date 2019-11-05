@@ -114,6 +114,11 @@ class TeamsController extends Controller
         $yearString = $monthString = $textDate = "";
 
         foreach ($period as $dt) {
+          
+            if(in_array($dt->format('w'), [0,6])) {
+                continue;
+            }
+
             $monthString = Helper::convertMonths($dt->format('m'));
             $yearString = $dt->format('Y');
             $arrayDate[$monthString][] = $dt->format('d');

@@ -329,25 +329,22 @@
 
                               <td class="dropdown">
 
+                                @if(in_array($team->status, ['RESERVADO', 'EM ANDAMENTO']))
+
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-
-                                    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
-                                     <a href="{{ route('teams_employee_status', $employeeItem->uuid) }}"
-                                     class="dropdown-item" style="cursor:pointer">Editar Situação</a>
-                                    @endif
-
-                                    @if($employeeItem->approved)
-                                      <a target="_blank" href="{{route('team_certified', [$employeeItem->uuid])}}"
-                                        class="dropdown-item text-success">Gerar Certificado</a>
-                                    @endif
-
-                                    @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
-                                      <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
-                                       class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
-                                    @endif
-
+                                   <a href="{{ route('teams_employee_status', $employeeItem->uuid) }}"
+                                   class="dropdown-item" style="cursor:pointer">Editar Situação</a>
+                                   <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
+                                     class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
                                 </div>
+
+                                @endif
+
+                                @if($employeeItem->approved)
+                                  <a target="_blank" href="{{route('team_certified', [$employeeItem->uuid])}}"
+                                    class="btn btn-sm btn-success">Gerar Certificado</a>
+                                @endif
 
                               </td>
 
