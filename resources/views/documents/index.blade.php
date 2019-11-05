@@ -17,8 +17,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('home') }}"> <i class="feather icon-home"></i> </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Documentos</a>
-                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Documentos</a></li>
                 </ul>
             </div>
         </div>
@@ -53,6 +52,8 @@
       </div>
 
     </div>
+
+    @if($lava)
 
     <div class="row">
 
@@ -93,6 +94,8 @@
       </div>
 
     </div>
+
+    @endif
 
     <div class="row">
 
@@ -171,14 +174,12 @@
               </div>
               <div class="card-block table-border-style">
                   <div class="table-responsive">
-                      <table class="table table-lg table-styling">
+                      <table class="table table-lg table-hover table-styling">
                           <thead>
-                              <tr class="table-primary">
+                              <tr class="table-inverse">
                                   <th>No.</th>
                                   <th>Tipo</th>
-                                  <th>Situação</th>
                                   <th>Cliente</th>
-                                  <th>Adicionado Em</th>
                                   <th>Opções</th>
                               </tr>
                           </thead>
@@ -209,12 +210,10 @@
                               @endphp
 
                               <tr>
-                                  <td><a href="{{ route('documents.show', $document->uuid) }}" class="card-title">#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+                                  <td><a href="{{ route('documents.show', $document->uuid) }}" class="card-title">#{{ str_pad($document->id, 6, "0", STR_PAD_LEFT) }}</a> <span data-toggle="tooltip" data-original-title="Adicionado em {{ $document->created_at->format('d/m/Y') }} - {{ $document->created_at->diffForHumans() }}"><i class="icofont icofont-question-circle"></i></span></td>
                                   <td>
-                                    <p><a href="{{route('documents.show', ['id' => $document->uuid])}}">{{ $document->type->name }}</a></p>
-                                  </td>
-                                  <td>
-                                    <span class="label label-{{$bgColor}} f-right"> {{$document->status->name}} </span>
+                                    <p><a href="{{route('documents.show', ['id' => $document->uuid])}}">{{ $document->type->name }} </a></p>
+                                    <span class="label label-{{$bgColor}}"> {{$document->status->name}} </span>
                                   </td>
                                   <td><a href="{{route('clients.show', ['id' => $document->client->uuid])}}">{{ $document->client->name }}</a><br/>
                                     @if($document->employee)
@@ -224,30 +223,18 @@
                                     <br/><small>Referência: {{ $document->reference ?? '' }}</small>
                                     @endif
                                   </td>
+
                                   <td>
-
-                                    {{ $document->created_at->format('d/m/Y') }}
-                                    <br/>
-                                    <label class="label label-inverse-primary">{{ $document->created_at->diffForHumans() }}</label>
-
-                                  </td>
-
-                                  <td class="dropdown">
 
                                     @if($document->status_id == 1)
 
-                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+                                      @permission('create.ordem.entrega')
+                                        <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-truck"></i>Gerar Entrega</a>
+                                      @endpermission
 
-                                        @permission('create.ordem.entrega')
-                                          <a href="{{route('delivery-order.create', ['client' => $document->client->uuid, 'document[]' => $document->uuid])}}" class="dropdown-item"><i class="fa fa-truck"></i>Gerar Entrega</a>
-                                        @endpermission
-
-                                        @permission('delete.documentos')
-                                          <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                                        @endpermission
-
-                                    </div>
+                                      @permission('delete.documentos')
+                                        <a href="#!" data-route="{{route('documents.destroy', ['id' => $document->uuid])}}" class="btn btn-danger btn-sm btn-block btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
+                                      @endpermission
 
                                     @endif
 
@@ -255,6 +242,11 @@
 
                               </tr>
                             @endforeach
+
+                              <tr class="text-center">
+                                  <td colspan="5">{{ $documents->links() }}</td>
+                              </tr>
+
                           </tbody>
                       </table>
                   </div>
@@ -263,7 +255,7 @@
 
       </div>
 
-      {{ $documents->links() }}
+
 
     </div>
 
