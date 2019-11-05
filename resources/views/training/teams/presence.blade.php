@@ -17,9 +17,9 @@
           <b>Curso:</b> {{ $team->course->title }}<br/>
           <b>Turma:</b> #{{ str_pad($team->id, 6, "0", STR_PAD_LEFT) }},
           <b>Carga horaria: </b>{{ $team->course->workload }} hora(s)<br>
-          <b>Instrutor:</b> {{ $team->teacher->person->name }} - {{ $team->teacher->person->cpf }}<br/>
+          <b>Instrutor:</b> {{ $team->teacher->person->name }} - {{ $team->teacher->person->cpf }}
             @if($team->teacher->person->registry)
-                {{ $team->teacher->person->registry }}<br/>
+                - {{ $team->teacher->person->registry }}<br/>
             @endif
         </td>
         <td colspan="2">
