@@ -114,7 +114,7 @@ class TeamsController extends Controller
         $yearString = $monthString = $textDate = "";
 
         foreach ($period as $dt) {
-          
+
             if(in_array($dt->format('w'), [0,6])) {
                 continue;
             }
@@ -244,14 +244,16 @@ class TeamsController extends Controller
         $interval = DateInterval::createFromDateString('1 day');
         $periodDate = new DatePeriod($team->start, $interval, $team->end);
 
-        //return view('training.teams.presence', compact('team', 'diffDays', 'periodDate'));
-
         $user = $request->user();
 
         $id = str_pad($team->id, 6, "0", STR_PAD_LEFT);
         $title = "Lista de Presenca:$id:";
 
         $pdf = PDF::loadView('training.teams.presence', compact('team', 'diffDays', 'periodDate'));
+
+        $stylePdf = $pdf->getDomPDF();
+        $canvas = $stylePdf ->get_canvas();
+        $canvas->page_text(520, 2, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(255, 255, 255));
 
         return $pdf->stream($title. ".pdf");
     }
