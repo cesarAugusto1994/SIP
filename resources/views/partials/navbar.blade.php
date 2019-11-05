@@ -158,11 +158,11 @@
                 </li>
             </ul>
 
-            <ul class="nav-center">
+            <ul class="nav-right nav-center">
 
               <li>
-                  <a class="btn btn-outline-success btn-round btn-sm" style="color:#07885b!important" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="https://webmail.umbler.com">
-                      Novo Chamado <i class="feather icon-bell feed-icon"></i>
+                  <a class="btn btn-round" style="color:#07885b!important" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="#!">
+                      Novo Chamado
                   </a>
               </li>
 
