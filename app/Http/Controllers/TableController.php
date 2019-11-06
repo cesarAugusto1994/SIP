@@ -26,7 +26,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        $schema = env('DB_DATABASE', 'providersipdb');
+        $schema = env('DB_DATABASE');
 
         $tables = [];
 
@@ -393,7 +393,7 @@ class TableController extends Controller
     {
         $data = $request->request->all();
 
-        $schema = env('DB_DATABASE', 'providersipdb');
+        $schema = env('DB_DATABASE');
         $data['database'] = $schema;
 
         Table::create($data);
@@ -421,7 +421,7 @@ class TableController extends Controller
 
         $columns = [];
 
-        $schema = env('DB_DATABASE', 'providersipdb');
+        $schema = env('DB_DATABASE');
 
         $sql = "
           SELECT

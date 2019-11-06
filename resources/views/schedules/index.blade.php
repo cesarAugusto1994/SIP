@@ -50,7 +50,7 @@
               <h4 class="modal-title">Novo Compromisso</h4>
             </div>
 
-            <form class="formValidation" data-parsley-validate method="POST" action="{{ route('schedules.store') }}">
+            <form data-parsley-validate method="POST" action="{{ route('schedules.store') }}">
             <div class="modal-body">
 
                   {{  csrf_field() }}
