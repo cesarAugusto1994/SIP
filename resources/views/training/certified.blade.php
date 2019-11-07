@@ -1328,7 +1328,7 @@
                       <h4 style="text-align:center;"><i>Conteúdo Programático:</i></h4>
 
                       <p style="text-align:center;margin:0;padding:0;text-align:justify">
-                           <i>{{ html_entity_decode(strip_tags(substr($team->course->grade, 0, 800))) }}</i>
+                           <i>{{ html_entity_decode(strip_tags(substr($team->course->grade, 0, 1000))) }}</i>
                       </p>
 
                       <br>
