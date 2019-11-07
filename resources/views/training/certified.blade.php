@@ -1355,7 +1355,7 @@
                                   @if($team->course->engineer)
                                     <b>{{ $team->course->engineer->person->name }}</b><br/>
                                     Responsável de Treinamentos<br/>
-                                     REG/MTE: {{ $team->course->engineer->person->registry }}
+                                     CREA-MG: {{ $team->course->engineer->person->registry }}
                                   @endif
                                 </td>
 
