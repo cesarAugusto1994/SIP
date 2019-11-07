@@ -97,12 +97,16 @@
                                     <td><a href="{{ route('courses.edit', $course->uuid) }}" class="card-title">#{{ str_pad($course->id, 6, "0", STR_PAD_LEFT) }}</a></td>
 
                                     <td>
-                                        <a>{{substr(($course->title), 0, 50)}}<br>
-                                          @if($course->ordinance)
+                                        <a>{{substr(($course->title), 0, 50)}}
+                                          @if($course->ordinance)<br>
                                             <small>Portaria de {{ $course->ordinance }} - {{ $course->ordinance }}</small>
-                                          @elseif($course->nbr)
+                                          @elseif($course->nbr)<br>
                                             <small>NBR {{ $course->nbr }} e NT {{ $course->nt }}</small>
                                           @endif</a>
+
+                                          @if($course->engineer)<br/>
+                                            <small>Engenheiro Responsável: {{ $course->engineer->person->name }}</small>
+                                          @endif
                                     </td>
 
                                     <td>{{$course->type}}</td>

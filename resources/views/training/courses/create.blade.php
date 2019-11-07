@@ -143,6 +143,24 @@
 
                     </div>
                   </div>
+
+                  <div class="col-md-12">
+
+                    <div class="form-group {!! $errors->has('engineer_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="engineer_id">Engenheiro</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                          <select class="form-control select2" name="engineer_id" required>
+                              @foreach(\App\Helpers\Helper::users() as $user)
+                                    <option value="{{$user->id}}">{{$user->person->name}}</option>
+                              @endforeach
+                          </select>
+                        </div>
+                        {!! $errors->first('engineer_id', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                  </div>
+
                   <div class="col-md-12">
                       <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
                           <label class="col-form-label" for="description">Descrição</label>

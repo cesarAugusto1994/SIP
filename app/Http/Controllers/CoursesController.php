@@ -77,6 +77,14 @@ class CoursesController extends Controller
           'workload' => 'required|integer|min:1',
         ]);
 
+        $engineer = null;
+
+        if($request->filled('engineer_id')) {
+            $engineer = $request->get('engineer_id');
+        }
+
+        $data['engineer_id'] = $engineer;
+
         Course::create($data);
 
         Helper::drop('courses');
@@ -137,6 +145,14 @@ class CoursesController extends Controller
           'description' => 'required|string',
           'workload' => 'required|integer|min:1',
         ]);
+
+        $engineer = null;
+
+        if($request->filled('engineer_id')) {
+            $engineer = $request->get('engineer_id');
+        }
+
+        $data['engineer_id'] = $engineer;
 
         $curso->update($data);
 

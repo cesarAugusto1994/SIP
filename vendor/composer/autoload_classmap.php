@@ -31,6 +31,7 @@ return array(
     'App\\Http\\Controllers\\BrandsController' => $baseDir . '/app/Http/Controllers/BrandsController.php',
     'App\\Http\\Controllers\\ChatsController' => $baseDir . '/app/Http/Controllers/ChatsController.php',
     'App\\Http\\Controllers\\ClientController' => $baseDir . '/app/Http/Controllers/ClientController.php',
+    'App\\Http\\Controllers\\ClientDocumentController' => $baseDir . '/app/Http/Controllers/ClientDocumentController.php',
     'App\\Http\\Controllers\\ClientEmailsController' => $baseDir . '/app/Http/Controllers/ClientEmailsController.php',
     'App\\Http\\Controllers\\ClientOccupationsController' => $baseDir . '/app/Http/Controllers/ClientOccupationsController.php',
     'App\\Http\\Controllers\\ClientPhonesController' => $baseDir . '/app/Http/Controllers/ClientPhonesController.php',

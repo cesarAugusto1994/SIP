@@ -37,6 +37,11 @@
             #sidebar.opened+#page-container {
                 left: 250px
             }
+            .table {
+              padding: 20px 50px 50px 130px;
+              text-align:center;
+              font-size:10px;
+            }
             #page-container {
                 bottom: 0;
                 right: 0;
@@ -86,6 +91,10 @@
             }
             .d {
                 display: none
+            }
+            .table {
+                padding: 20px 50px 50px 250px;
+                text-align:center;
             }
         }
 
@@ -1328,40 +1337,61 @@
 
                     </div>
 
-                    <br>
-
                     <div>
-                        <div>
 
-                          <p class="item-left">
-                              <b>{{ $team->teacher->person->name }}</b><br/>
-                              {{ $team->teacher->person->occupation->name }}<br/>
-                              {{ $team->teacher->person->department->name }}<br/>
-                               REG/MTE: {{ $team->teacher->person->registry }}
-                          </p>
+                        <table class="table" width="100%" style="">
+                          <tbody style="vertical-align: top;">
+                            <tr>
+                                <td>
 
-                        </div>
-                        <div>
+                                  <b>{{ $team->teacher->person->name }}</b><br/>
+                                  {{ $team->teacher->person->occupation->name }}<br/>
+                                  {{ $team->teacher->person->department->name }}<br/>
+                                   REG/MTE: {{ $team->teacher->person->registry }}
 
-                          <p class="item-right">
-                               <b>{{ $employee->name }}</b><br/>
-                               {{ $employee->cpf }}<br/>
-                               Participante
-                          </p>
+                                </td>
 
-                        </div>
+                                <td>
+                                  @if($team->course->engineer)
+                                    <b>{{ $team->course->engineer->person->name }}</b><br/>
+                                    {{ $team->teacher->person->occupation->name }}<br/>
+                                    {{ $team->teacher->person->department->name }}<br/>
+                                     REG/MTE: {{ $team->course->engineer->person->registry }}
+                                  @endif
+                                </td>
+
+                                <td>
+
+                                  <b>{{ $employee->name }}</b><br/>
+                                  {{ $employee->cpf }}<br/>
+                                  Participante
+
+                                </td>
+                            </tr>
+
+                            <tr>
+
+                              <td colspan="3">
+
+                                @php
+                                    $route = route('training_team_certified', $teamEmployee->uuid);
+                                @endphp
+
+                                <div style="bottom:15px;position:absolute;float:right;right:15px;">
+                                  {!! QrCode::size(100)->generate($route); !!}
+                                </div>
+
+                              </td>
+
+                            </tr>
+                          </tbody>
+                        </table>
 
                     </div>
 
                 </div>
 
-                @php
-                    $route = route('training_team_certified', $teamEmployee->uuid);
-                @endphp
 
-                <div style="bottom:15px;position:absolute;float:right;right:15px;">
-                  {!! QrCode::size(100)->generate($route); !!}
-                </div>
 
             </div>
             <div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div>

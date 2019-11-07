@@ -773,6 +773,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Http\\Controllers\\BrandsController' => __DIR__ . '/../..' . '/app/Http/Controllers/BrandsController.php',
         'App\\Http\\Controllers\\ChatsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ChatsController.php',
         'App\\Http\\Controllers\\ClientController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClientController.php',
+        'App\\Http\\Controllers\\ClientDocumentController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClientDocumentController.php',
         'App\\Http\\Controllers\\ClientEmailsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClientEmailsController.php',
         'App\\Http\\Controllers\\ClientOccupationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClientOccupationsController.php',
         'App\\Http\\Controllers\\ClientPhonesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClientPhonesController.php',

@@ -13,13 +13,18 @@ class Course extends Model
 
     protected $table = 'courses';
 
-    protected $fillable = ['title', 'description', 'type', 'color', 'workload', 'ordinance', 'ordinance_year', 'nbr', 'nt', 'created_by', 'grade', 'active'];
+    protected $fillable = ['title', 'description', 'type', 'engineer_id', 'color', 'workload', 'ordinance', 'ordinance_year', 'nbr', 'nt', 'created_by', 'grade', 'active'];
 
-    protected static $logAttributes = ['title', 'description', 'type', 'color', 'workload', 'ordinance', 'ordinance_year', 'nbr', 'nt', 'created_by', 'grade', 'active'];
+    protected static $logAttributes = ['title', 'description', 'type', 'engineer_id', 'color', 'workload', 'ordinance', 'ordinance_year', 'nbr', 'nt', 'created_by', 'grade', 'active'];
 
     public function teams()
     {
         return $this->hasMany('App\Models\Training\Team', 'course_id');
+    }
+
+    public function engineer()
+    {
+        return $this->belongsTo('App\User', 'engineer_id');
     }
 
     public function getDescriptionForEvent(string $eventName): string
