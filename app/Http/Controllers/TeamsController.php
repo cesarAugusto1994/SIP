@@ -43,6 +43,10 @@ class TeamsController extends Controller
               $teams->where('teacher_id', $request->get('teacher_id'));
           }
 
+          if($request->filled('course_id')) {
+              $teams->where('course_id', $request->get('course_id'));
+          }
+
           if($request->filled('start')) {
               $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
               $teams->where('start', '>=', $start->format('Y-m-d') . ' 00:00:00');
