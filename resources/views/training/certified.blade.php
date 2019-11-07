@@ -1354,8 +1354,7 @@
                                 <td>
                                   @if($team->course->engineer)
                                     <b>{{ $team->course->engineer->person->name }}</b><br/>
-                                    {{ $team->teacher->person->occupation->name }}<br/>
-                                    {{ $team->teacher->person->department->name }}<br/>
+                                    Responsável de Treinamentos<br/>
                                      REG/MTE: {{ $team->course->engineer->person->registry }}
                                   @endif
                                 </td>
