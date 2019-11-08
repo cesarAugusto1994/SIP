@@ -108,6 +108,8 @@
 
   </div>
 
+  @if($lava)
+
   <div class="row">
 
     <div class="col-xl-4 col-md-6">
@@ -138,6 +140,8 @@
     </div>
 
   </div>
+
+  @endif
 
   <div class="row">
 

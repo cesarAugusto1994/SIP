@@ -97,55 +97,61 @@ class DeliveryOrderController extends Controller
           }
         }
 
-        $lava = new Lavacharts;
+        $lava = null;
 
-        $reasons = $lava->DataTable();
-        $reasons2 = $lava->DataTable();
-        $reasons3 = $lava->DataTable();
-        $reasons4 = $lava->DataTable();
+        if($request->has('find')) {
 
-        $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $orders->get();
+          $lava = new Lavacharts;
 
-        $groupedByType = $groupedByType->groupBy('delivered_by');
+          $reasons = $lava->DataTable();
+          $reasons2 = $lava->DataTable();
+          $reasons3 = $lava->DataTable();
+          $reasons4 = $lava->DataTable();
 
-        $reasons->addStringColumn('Entregue Por')
-                ->addNumberColumn('Percent');
+          $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $orders->get();
 
-        foreach ($groupedByType as $key => $grouped) {
-          $reasons->addRow([$grouped->first()->user->person->name, $grouped->count()]);
+          $groupedByType = $groupedByType->groupBy('delivered_by');
+
+          $reasons->addStringColumn('Entregue Por')
+                  ->addNumberColumn('Percent');
+
+          foreach ($groupedByType as $key => $grouped) {
+            $reasons->addRow([$grouped->first()->user->person->name, $grouped->count()]);
+          }
+
+          $lava->DonutChart('Entregador', $reasons, [
+              'title' => 'Entregas'
+          ]);
+
+          $reasons3->addStringColumn('Situação')
+                  ->addNumberColumn('Porcentagem');
+
+          $groupedByStatus = $groupedByStatus->groupBy('status_id');
+
+          foreach ($groupedByStatus as $key => $grouped) {
+            $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
+          }
+
+          $lava->DonutChart('Status', $reasons3, [
+              'title' => 'Entregas Por Situação'
+          ]);
+
+          // Prioridade
+
+          $reasons4->addStringColumn('Cliente')
+                  ->addNumberColumn('Quantidade');
+
+          $groupedByPriority = $groupedByPriority->groupBy('client_id');
+
+          foreach ($groupedByPriority as $key => $grouped) {
+            $reasons4->addRow([$grouped->first()->client->name, $grouped->count()]);
+          }
+
+          $lava->BarChart('Empresa', $reasons4, [
+              'title' => 'Documentos Por Empresa'
+          ]);
+
         }
-
-        $lava->DonutChart('Entregador', $reasons, [
-            'title' => 'Entregas'
-        ]);
-
-        $reasons3->addStringColumn('Situação')
-                ->addNumberColumn('Porcentagem');
-
-        $groupedByStatus = $groupedByStatus->groupBy('status_id');
-
-        foreach ($groupedByStatus as $key => $grouped) {
-          $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
-        }
-
-        $lava->DonutChart('Status', $reasons3, [
-            'title' => 'Entregas Por Situação'
-        ]);
-
-        // Prioridade
-
-        $reasons4->addStringColumn('Cliente')
-                ->addNumberColumn('Quantidade');
-
-        $groupedByPriority = $groupedByPriority->groupBy('client_id');
-
-        foreach ($groupedByPriority as $key => $grouped) {
-          $reasons4->addRow([$grouped->first()->client->name, $grouped->count()]);
-        }
-
-        $lava->BarChart('Empresa', $reasons4, [
-            'title' => 'Documentos Por Empresa'
-        ]);
 
         $quantity = $orders->count();
 
