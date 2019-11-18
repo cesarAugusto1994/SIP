@@ -95,6 +95,8 @@
             .table {
                 padding: 20px 50px 50px 250px;
                 text-align:center;
+                position: absolute;
+                bottom: 0;
             }
         }
 
@@ -1304,7 +1306,7 @@
                       @endif
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                           <b>{{ $employee->name }}</b>, portador do CPF: {{ $employee->cpf }},
+                           <b>{{ $employee->name }}</b>, {{ $employee->occupation->name }},
                       </p>
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
@@ -1339,7 +1341,7 @@
 
                     <div>
 
-                        <table class="table" width="100%" style="">
+                        <table class="table" width="100%">
                           <tbody style="vertical-align: top;">
                             <tr>
                                 <td>
@@ -1377,7 +1379,7 @@
                                 @endphp
 
                                 <div style="bottom:15px;position:absolute;float:right;right:15px;">
-                                  {!! QrCode::size(100)->generate($route); !!}
+                                  {!! QrCode::size(90)->generate($route); !!}
                                 </div>
 
                               </td>
