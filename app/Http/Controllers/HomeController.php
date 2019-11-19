@@ -41,7 +41,7 @@ class HomeController extends Controller
         $user = $request->user();
 
         if(!$user->hasPermission('view.painel.principal')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso Negado.');
         }
 
         if(!$user->active) {
@@ -49,11 +49,7 @@ class HomeController extends Controller
             return Redirect::route('login')->withErrors('Desculpe, mas o Usuário está desativado, entre em contato com o Administrador.');
         }
 
-        $messages = MessageBoard::whereHas('messages', function($query) use($request) {
-          $query->where('user_id', $request->user()->id);
-        })->orderByDesc('id')->get();
-
-        return view('index', compact('messages'));
+        return view('index');
     }
 
     public function createTasksFromProcesses()
