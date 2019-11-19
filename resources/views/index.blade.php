@@ -25,23 +25,25 @@
 
       <div class="col-xl-6 col-md-12">
 
-          @asyncWidget('\App\Widgets\Profile', [])
+          {{ AsyncWidget::run('\App\Widgets\Profile') }}
 
       </div>
 
       <div class="col-xl-6 col-md-12">
 
-          @asyncWidget('\App\Widgets\Dashboard', [])
+          {{ AsyncWidget::run('\App\Widgets\Dashboard') }}
 
       </div>
 
         <div class="col-xl-8 col-md-12 col-sm-12">
-            @asyncWidget('\App\Widgets\MessageBoard', [])
+
+            {{ AsyncWidget::run('\App\Widgets\MessageBoard') }}
+
         </div>
 
         <div class="col-xl-4 col-md-12">
 
-          @asyncWidget('\App\Widgets\NextSchedules', [])
+          {{ AsyncWidget::run('\App\Widgets\NextSchedules') }}
 
         </div>
 
