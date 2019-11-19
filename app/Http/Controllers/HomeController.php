@@ -38,13 +38,15 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if(!Auth::user()->hasPermission('view.painel.principal')) {
+        $user = $request->user();
+
+        if(!$user->hasPermission('view.painel.principal')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        if(!Auth::user()->active) {
-          Auth::logout();
-          return Redirect::route('login')->withErrors('Desculpe, mas o Usuário está desativado, entre em contato com o Administrador.');
+        if(!$user->active) {
+            Auth::logout();
+            return Redirect::route('login')->withErrors('Desculpe, mas o Usuário está desativado, entre em contato com o Administrador.');
         }
 
         $messages = MessageBoard::whereHas('messages', function($query) use($request) {

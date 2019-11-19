@@ -18,4 +18,9 @@ class User extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function board()
+    {
+        return $this->belongsTo('App\Models\MessageBoard', 'board_id');
+    }
 }

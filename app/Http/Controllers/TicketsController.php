@@ -403,10 +403,6 @@ class TicketsController extends Controller
 
         $message = $request->get('message');
 
-        if($ticket->serviceTicket) {
-
-        }
-
         Log::create([
           'status_id' => 5,
           'ticket_id' => $ticket->id,
