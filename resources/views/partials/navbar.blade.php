@@ -129,6 +129,12 @@
                                 </a>
                             </li>
 
+                            <li>
+                                <a href="{{ route('change_password', ['user' => auth()->user()->uuid]) }}">
+                                    <i class="feather icon-key"></i> Alterar Senha
+                                </a>
+                            </li>
+
                             @php
 
                               $manager = app('impersonate');
