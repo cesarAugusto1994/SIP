@@ -4,16 +4,14 @@ namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
 
-class Tickets extends AbstractWidget
+class TicketsTable extends AbstractWidget
 {
     /**
      * The configuration array.
      *
      * @var array
      */
-    protected $config = [
-      'count' => 5,
-    ];
+    protected $config = [];
 
     /**
      * The number of minutes before cache expires.
@@ -32,12 +30,10 @@ class Tickets extends AbstractWidget
      * Treat this method as a controller action.
      * Return view() or other content to display.
      */
-    public function run()
+    public function run($tickets)
     {
-        //
-
-        return view('widgets.tickets', [
-            'config' => $this->config,
+        return view('widgets.tickets_table', [
+            'tickets' => $tickets,
         ]);
     }
 }

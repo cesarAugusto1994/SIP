@@ -383,6 +383,8 @@ Route::middleware('auth')->group(function () {
 
           Route::post('delivery-order/{id}/receipt/upload', 'DeliveryOrderController@receiptUpload')->name('delivery_receipt_upload');
 
+          Route::get('tickets/list/json', 'TicketsController@listJson')->name('tickets_json');
+
     });
 
   });

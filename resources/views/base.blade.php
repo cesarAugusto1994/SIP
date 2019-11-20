@@ -37,6 +37,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\fullcalendar\css\fullcalendar.print.css') }}" media='print'>
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\datatables.net-bs4\css\dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\pages\data-table\css\buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminty\components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css') }}">
 
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('adminty\css\style.css') }}?v1.0.1">
@@ -215,6 +218,7 @@
 <!-- modernizr js -->
 <script type="text/javascript" src="{{ asset('adminty\components\modernizr\js\modernizr.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\modernizr\js\css-scrollbars.js') }}"></script>
+
 <!-- i18next.min.js -->
 <script type="text/javascript" src="{{ asset('adminty\components\i18next\js\i18next.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\i18next-xhr-backend\js\i18nextXHRBackend.min.js') }}"></script>

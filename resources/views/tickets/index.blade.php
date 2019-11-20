@@ -97,6 +97,8 @@
         </div>
     </div>
 
+    @if($lava)
+
     <div class="col-xl-3 col-md-6">
         <div class="card">
             <div class="card-block">
@@ -132,6 +134,8 @@
             </div>
         </div>
     </div>
+
+    @endif
 
   </div>
 
@@ -282,7 +286,7 @@
                 <div class="table-responsive">
                     <table class="table table-lg table-styling">
                         <thead>
-                            <tr class="table-primary">
+                            <tr class="table-inverse">
                                 <th>No.</th>
                                 <th>Situação</th>
                                 <th>Descrição</th>
@@ -293,55 +297,24 @@
                         <tbody>
                           @foreach($tickets as $ticket)
 
-                          @php
-
-                            $status = $ticket->status->id;
-
-                            $bgColor = 'success';
-
-                            switch($status) {
-                              case '1':
-                                $bgColor = 'primary';
-                                break;
-                              case '2':
-                                $bgColor = 'warning';
-                                break;
-                              case '3':
-                                $bgColor = 'success';
-                                break;
-                              case '4':
-                                $bgColor = 'danger';
-                                break;
-                            }
-
-                            @endphp
-
                             <tr>
-
                                 <td><a href="{{ route('tickets.show', $ticket->uuid) }}" class="card-title">#{{ str_pad($ticket->id, 6, "0", STR_PAD_LEFT) }}</a></td>
-
                                 <td>
-                                  <span class="label label-{{$bgColor}} f-right"> {{$ticket->status->name}} </span>
+                                  <span class="label label-{{\App\Helpers\Helper::getColorFromValue($ticket->status->id)}} f-right"> {{$ticket->status->name}} </span>
                                 </td>
-
                                 <td>
                                   <p data-toggle="tooltip" data-original-title="{{ html_entity_decode(strip_tags(substr($ticket->description, 0, 800))) }}">
                                       {{$ticket->type->category->name}} - {{$ticket->type->name}}
                                   </p>
                                 </td>
                                 <td>
-                                  <img width="32" class="img-fluid img-radius" src="{{ route('image', ['user' => $ticket->user->uuid, 'link' => $ticket->user->avatar, 'avatar' => true])}}" title="{{ $ticket->user->person->name }}" alt="{{ $ticket->user->person->name }}">
-                                  &nbsp;&nbsp;{{ $ticket->user->person->name }}
+                                  {{ $ticket->user->person->name }}
                                 </td>
                                 <td>
-
                                   {{$ticket->created_at->format('d/m/Y H:i')}}
                                   <br/>
                                   <label class="label label-inverse-primary">{{ $ticket->created_at->diffForHumans() }}</label>
-
                                 </td>
-
-
                             </tr>
                           @endforeach
                         </tbody>

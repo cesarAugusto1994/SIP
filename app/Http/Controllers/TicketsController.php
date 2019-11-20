@@ -30,12 +30,7 @@ class TicketsController extends Controller
     {
         $user = Auth::user();
 
-        $lava = new Lavacharts;
-
-        $reasons = $lava->DataTable();
-        $reasons2 = $lava->DataTable();
-        $reasons3 = $lava->DataTable();
-        $reasons4 = $lava->DataTable();
+        $lava = null;
 
         if(!$user->isAdmin()) {
 
@@ -93,65 +88,76 @@ class TicketsController extends Controller
 
         $quantity = $tickets->count();
 
-        $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $tickets->get();
+        if($request->has('find')) {
 
-        $groupedByType = $groupedByType->groupBy('type_id');
+          $lava = new Lavacharts;
 
-        $reasons->addStringColumn('Tipos')
-                ->addNumberColumn('Percent');
+          $reasons = $lava->DataTable();
+          $reasons2 = $lava->DataTable();
+          $reasons3 = $lava->DataTable();
+          $reasons4 = $lava->DataTable();
 
-        foreach ($groupedByType as $key => $grouped) {
-          $reasons->addRow([$grouped->first()->type->name. ' - '.$grouped->first()->type->category->name, $grouped->count()]);
+          $groupedByPriority = $groupedByStatus = $groupedByUser = $groupedByType = $tickets->get();
+
+          $groupedByType = $groupedByType->groupBy('type_id');
+
+          $reasons->addStringColumn('Tipos')
+                  ->addNumberColumn('Percent');
+
+          foreach ($groupedByType as $key => $grouped) {
+            $reasons->addRow([$grouped->first()->type->name. ' - '.$grouped->first()->type->category->name, $grouped->count()]);
+          }
+
+          $lava->DonutChart('Tipo', $reasons, [
+              'title' => 'Chamados Por Tipo'
+          ]);
+
+          // Usuário
+
+          $reasons2->addStringColumn('Usuários')
+                  ->addNumberColumn('Quantidade');
+
+          $groupedByUser = $groupedByUser->groupBy('user_id');
+
+          foreach ($groupedByUser as $key => $grouped) {
+            $reasons2->addRow([$grouped->first()->user->person->name, $grouped->count()]);
+          }
+
+          $lava->DonutChart('Usuario', $reasons2, [
+              'title' => 'Chamados Por Usuário'
+          ]);
+
+          // Status
+
+          $reasons3->addStringColumn('Situação')
+                  ->addNumberColumn('Percent');
+
+          $groupedByStatus = $groupedByStatus->groupBy('status_id');
+
+          foreach ($groupedByStatus as $key => $grouped) {
+            $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
+          }
+
+          $lava->DonutChart('Status', $reasons3, [
+              'title' => 'Chamados Por Situação'
+          ]);
+
+          // Prioridade
+
+          $reasons4->addStringColumn('Prioridades')
+                  ->addNumberColumn('Quantidade');
+
+          $groupedByPriority = $groupedByPriority->groupBy('priority');
+
+          foreach ($groupedByPriority as $key => $grouped) {
+            $reasons4->addRow([$grouped->first()->priority, $grouped->count()]);
+          }
+
+          $lava->BarChart('Prioridade', $reasons4, [
+              'title' => 'Chamados Por Prioridade'
+          ]);
+
         }
-
-        $lava->DonutChart('Tipo', $reasons, [
-            'title' => 'Chamados Por Tipo'
-        ]);
-
-        // Usuário
-
-        $reasons2->addStringColumn('Usuários')
-                ->addNumberColumn('Quantidade');
-
-        $groupedByUser = $groupedByUser->groupBy('user_id');
-
-        foreach ($groupedByUser as $key => $grouped) {
-          $reasons2->addRow([$grouped->first()->user->person->name, $grouped->count()]);
-        }
-
-        $lava->DonutChart('Usuario', $reasons2, [
-            'title' => 'Chamados Por Usuário'
-        ]);
-
-        // Status
-
-        $reasons3->addStringColumn('Situação')
-                ->addNumberColumn('Percent');
-
-        $groupedByStatus = $groupedByStatus->groupBy('status_id');
-
-        foreach ($groupedByStatus as $key => $grouped) {
-          $reasons3->addRow([$grouped->first()->status->name, $grouped->count()]);
-        }
-
-        $lava->DonutChart('Status', $reasons3, [
-            'title' => 'Chamados Por Situação'
-        ]);
-
-        // Prioridade
-
-        $reasons4->addStringColumn('Prioridades')
-                ->addNumberColumn('Quantidade');
-
-        $groupedByPriority = $groupedByPriority->groupBy('priority');
-
-        foreach ($groupedByPriority as $key => $grouped) {
-          $reasons4->addRow([$grouped->first()->priority, $grouped->count()]);
-        }
-
-        $lava->BarChart('Prioridade', $reasons4, [
-            'title' => 'Chamados Por Prioridade'
-        ]);
 
         $total = $tickets->count();
 
@@ -174,6 +180,78 @@ class TicketsController extends Controller
         $highest = number_format(($highest/$totalTickets) * 100, 2);
 
         return view('tickets.index', compact('tickets', 'quantity', 'opened', 'finished', 'canceled', 'total', 'low', 'normal', 'high', 'highest', 'lava'));
+    }
+
+    public function listJson(Request $request)
+    {
+        $user = $request->user();
+
+        $lava = null;
+
+        if(!$user->isAdmin()) {
+
+            $tickets = $user->tickets();
+            $ticketTypeDepts = $user->person->department->ticketTypesDepartments;
+
+            foreach ($ticketTypeDepts as $key => $ticketTypeDept) {
+                foreach ($ticketTypeDept->type->tickets as $key => $ticket) {
+                  if(!$tickets->contains($ticket)) {
+                      $tickets->push($ticket);
+                  }
+                }
+            }
+
+        } else {
+            $tickets = Ticket::orderByDesc('id');
+        }
+
+        if($request->filled('code')) {
+            $tickets->where('id', $request->get('code'));
+        } else {
+
+          if($request->filled('status')) {
+              $tickets->where('status_id', $request->get('status'));
+          }
+
+          if(!$request->has('find')) {
+              $tickets->whereIn('status_id', [1,2]);
+          }
+
+          if($request->filled('priority')) {
+              $tickets->where('priority', $request->get('priority'));
+          }
+
+          if($request->filled('user')) {
+              $tickets->where('user_id', $request->get('user'));
+          }
+
+          if($request->filled('type')) {
+              $tickets->where('type_id', $request->get('type'));
+          }
+
+          if($request->filled('start')) {
+              $start = \DateTime::createFromFormat('d/m/Y', $request->get('start'));
+              //$tickets->where('created_at', '>=', $start->format('Y-m-d'))
+              //->orWhere('solved_at', $start->format('Y-m-d'));
+          }
+
+          if($request->filled('end')) {
+              $end = \DateTime::createFromFormat('d/m/Y', $request->get('end'));
+              $tickets->where('created_at', '<=', $end->format('Y-m-d'))
+              ->orWhere('solved_at', $end->format('Y-m-d'));
+          }
+        }
+
+        $result = [];
+
+        foreach ($tickets->get() as $key => $ticket) {
+            $result[] = [
+              'id' => $ticket->id
+            ];
+        }
+
+        return json_encode($result);
+
     }
 
     /**
