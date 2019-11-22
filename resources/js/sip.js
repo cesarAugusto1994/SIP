@@ -21,7 +21,7 @@ $('.select-client').select2({
         return {
             results: $.map(data, function (item) {
                 return {
-                    text: item.name,
+                    text: item.name + ' - ' + item.document,
                     id: item.id
                 }
             })

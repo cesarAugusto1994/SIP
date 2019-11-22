@@ -64,9 +64,6 @@
                         {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
                     </div>
 
-
-
-
                     <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="company_id">Função</label>
                         <div class="input-group">
@@ -123,7 +120,7 @@
                         </div>
                         {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                     </div>
-                    
+
                 </div>
             </div>
 

@@ -104,7 +104,8 @@ class ClientController extends Controller
         $result = $clients->where('active', true)->map(function($client) {
             return [
               'id' => $client->uuid,
-              'name' => $client->name
+              'name' => $client->name,
+              'document' => $client->document
             ];
         });
 
