@@ -80,7 +80,7 @@ $('.select-employees').select2({
 
             results: $.map(data, function (item) {
                 return {
-                    text: item.name + ' - ' + item.company,
+                    text: item.name + ' - ' + item.company + ' - ' + item.document,
                     id: item.id
                 }
             })

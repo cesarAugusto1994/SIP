@@ -85,7 +85,8 @@ class EmployeesController extends Controller
               'id' => $employee->uuid,
               'name' => $employee->name,
               'document' => $employee->cpf ?? '',
-              'company' => $employee->company->name
+              'company' => $employee->company->name,
+              'document' => $employee->company->document
             ];
         });
 

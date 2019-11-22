@@ -314,6 +314,8 @@ Route::middleware('auth')->group(function () {
           Route::resource('purchasing', 'PurchasingController');
           Route::resource('purchasing-item', 'PurchasingItemsController');
 
+          Route::post('purchasing/{id}/request', 'PurchasingController@requestPurchasing')->name('purchasing_request');
+
           Route::resource('products', 'ProductsController');
           Route::resource('product-types', 'ProductTypesController');
           Route::resource('stock', 'StockController');

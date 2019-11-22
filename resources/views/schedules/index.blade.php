@@ -28,12 +28,44 @@
 <div class="page-body">
 
   <div class="card">
+      <div class="card-block">
+
+        <div id="openviewWeather">
+            <a class="weatherwidget-io" href="https://forecast7.com/pt/n20d30n40d30/vitoria/" data-label_1="VITORIA" data-label_2="Clima" data-theme="original" >VITORIA Clima</a>
+        </div>
+
+      </div>
+  </div>
+
+  <div class="card">
       <div class="card-header">
           <h5>Seus Compromissos</h5>
       </div>
       <div class="card-block">
+
           <div class="row">
-              <div class="col-xl-12 col-md-12">
+              <div class="col-xl-2 col-sm-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="icofont icofont-filter m-r-5"></i>Filtro</h5>
+                    </div>
+                    <div class="card-block">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <select class="form-controls select2" name="user" id="user-schedules">
+                                      <option value="">Usuário</option>
+                                      @foreach(\App\Helpers\Helper::users() as $user)
+                                        <option value="{{ $user->uuid }}">{{$user->person->name}}</option>
+                                      @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+              </div>
+              <div class="col-xl-10 col-sm-12">
                   <div id='calendar'></div>
               </div>
           </div>
@@ -169,3 +201,29 @@
 <input type="hidden" id="schedule-json" value="{{ route('schedule_list') }}"/>
 
 @endsection
+
+@section('scripts')
+
+  <script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+  </script>
+
+  <script>
+
+    $(document).ready(function() {
+
+      $('#user-schedules').on('select2:select', function (e) {
+
+        var userSchedule = $("#user-schedules").val();
+        var route = $("#schedule-json").val() + '?user=' + userSchedule;
+
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', route);
+
+      });
+
+    });
+
+  </script>
+
+@stop

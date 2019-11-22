@@ -115,6 +115,13 @@ class PurchasingController extends Controller
         return view('purchasing.show', compact('purchasing'));
     }
 
+    public function requestPurchasing($id, Request $request)
+    {
+        $purchasing = Purchasing::uuid($id);
+
+        dd($purchasing);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

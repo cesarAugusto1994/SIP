@@ -36,6 +36,8 @@
       </div>
       <div class="card-block">
 
+        <button class="btn btn-inverse f-right btnRequest" data-url="{{ route('purchasing_request', $purchasing->uuid) }}">Fazer Solicitação</button>
+
         <p class="lead text-primary">#{{ str_pad($purchasing->id, 6, "0", STR_PAD_LEFT) }}<p>
 
         <p class="text-muted">Solicitante: {{ $purchasing->user->person->name }}<p>
@@ -118,6 +120,60 @@
 <script>
 
 	$(document).ready(function() {
+
+    var btnRequest = $('.btnRequest');
+
+    btnRequest.click(function() {
+
+      var self = $(this);
+      var url = self.data('url');
+
+      swal({
+        title: 'Fazer Solicitação?',
+        text: "Não será possível adicionar mais itens!",
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0ac282',
+        cancelButtonColor: '#D46A6A',
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não'
+        }).then((result) => {
+        if (result.value) {
+
+          swal({
+            title: 'Aguarde um instante.',
+            text: 'Carregando os dados...',
+            type: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false
+          });
+
+          $.ajax({
+            headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+
+          }).done(function(data) {
+
+            swal({
+              title: 'Solicitação Realizada.',
+              text: 'As informações foram enviadas...',
+              type: 'success',
+              showConfirmButton: true,
+              allowOutsideClick: false
+            });
+
+            self.hide();
+
+          });;
+
+        }
+      });
+
+    });
 
   });
 

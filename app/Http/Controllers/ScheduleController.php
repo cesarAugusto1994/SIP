@@ -159,6 +159,11 @@ class ScheduleController extends Controller
     public function schedule(Request $request)
     {
         $user = auth()->user();
+
+        if($request->filled('user') && $user->isAdmin()) {
+            $user = User::uuid($request->get('user'));
+        }
+
         $req = $request->request->all();
 
         $cardCollor = "#1ab394";
