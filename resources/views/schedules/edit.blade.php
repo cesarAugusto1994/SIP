@@ -75,6 +75,15 @@
 
               <div class="col-md-12">
                   <div class="form-group">
+                      <label>Dia Inteiro</label>
+                      <div class="input-group">
+                        <input type="checkbox" data-plugin="switchery" data-switchery="true" value="1" name="all_day" class="js-switch">
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12">
+                  <div class="form-group">
                       <label>Adicionar convidados</label>
                       <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-users"></i></span>

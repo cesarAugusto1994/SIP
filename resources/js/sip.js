@@ -1191,12 +1191,10 @@ $('#daterange').daterangepicker({
           },
           dataType: 'json',
           success: function(data) {
-              //console.log(data);
-              //openSwalScreenProgress();
+              notify(data.message, 'inverse');
           },
           error: function(data) {
-              //alert(data.message);
-              //openSwalMessage('Erro ao Processar Requisição', data.message);
+              notify(data.message, 'danger');
           }
       })
 

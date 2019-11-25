@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Schedule\Guest;
 use App\Notifications\ScheduleInvite;
-use App\Models\Task;
-use App\Models\Task\Log;
 use App\Helpers\Helper;
 use App\Events\Notifications;
 use Notification;
@@ -27,16 +25,6 @@ class ScheduleController extends Controller
         $user = auth()->user();
 
         return view('schedules.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -69,6 +57,8 @@ class ScheduleController extends Controller
 
         }
 
+        $allDayEvent = $request->has('all_day');
+
         $schedule = Schedule::create([
           'title' => $data['title'],
           'description' => $data['description'],
@@ -77,6 +67,7 @@ class ScheduleController extends Controller
           'user_id' => $user->id,
           'start' => $start,
           'end' => $end,
+          'all_day' => $allDayEvent
         ]);
 
         if($request->has('do_task')) {
@@ -221,6 +212,30 @@ class ScheduleController extends Controller
         return json_encode($data);
     }
 
+    public function presence($id)
+    {
+        try {
+
+            $guest = Guest::uuid($id);
+            $guest->accept = true;
+            $guest->save();
+
+            return response()->json([
+              'success' => true,
+              'message' => 'Presença marcada com sucesso.'
+            ]);
+
+        } catch(\Exception $e) {
+
+            return response()->json([
+              'success' => false,
+              'message' => 'Ocorreu um erro ao marcar presença'
+            ]);
+
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -230,6 +245,15 @@ class ScheduleController extends Controller
     public function show($id)
     {
         $schedule = Schedule::uuid($id);
+        $user = auth()->user();
+
+        $userGuest = $schedule->guests->where('user_id', $user->id)->first();
+
+        if($userGuest && !$userGuest->read_at) {
+            $userGuest->read_at = now();
+            $userGuest->save();
+        }
+
         return view('schedules.show', compact('schedule'));
     }
 
@@ -263,6 +287,9 @@ class ScheduleController extends Controller
 
         $data['start'] = $start;
         $data['end'] = $end;
+
+        $allDayEvent = $request->has('all_day');
+        $data['all_day'] = $allDayEvent;
 
         $schedule->update($data);
 

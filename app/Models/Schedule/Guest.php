@@ -11,7 +11,9 @@ class Guest extends Model
 
     protected $table = 'schedule_guests';
 
-    protected $fillable = ['user_id', 'schedule_id'];
+    protected $fillable = ['user_id', 'schedule_id', 'accept', 'read_at'];
+
+    protected $dates = ['read_at'];
 
     public function user()
     {

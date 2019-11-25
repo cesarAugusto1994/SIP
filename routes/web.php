@@ -311,6 +311,10 @@ Route::middleware('auth')->group(function () {
 
           Route::get('schedule/list', 'ScheduleController@schedule')->name('schedule_list');
 
+          Route::post('schedules/message/store', 'ScheduleMessageController@store')->name('schedule_message_store');
+          Route::post('schedules/event/guest/{id}/confirm-presence', 'ScheduleController@presence')->name('schedule_event_presence');
+          Route::delete('schedules/message/{id}/destroy', 'ScheduleMessageController@destroy')->name('schedule_message_destroy');
+
           Route::resource('purchasing', 'PurchasingController');
           Route::resource('purchasing-item', 'PurchasingItemsController');
 

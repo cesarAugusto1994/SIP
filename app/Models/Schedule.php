@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Emadadly\LaravelUuid\Uuids;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Models\Schedule\Message as ScheduleMessage;
 
 class Schedule extends Model
 {
@@ -22,6 +23,11 @@ class Schedule extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Schedule\Message', 'schedule_id');
     }
 
     public function type()
