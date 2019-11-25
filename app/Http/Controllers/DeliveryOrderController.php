@@ -658,6 +658,8 @@ class DeliveryOrderController extends Controller
     {
         $data = $request->request->all();
 
+        $delivery = DeliveryOrder::uuid($id);
+
         if(!$request->hasFile('document') && !$delivery->receipt) {
 
           $message = 'Para confirmar a entrega da Ordem de Entrega de nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' é preciso enviar o comprovante.';
@@ -680,8 +682,6 @@ class DeliveryOrderController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-
-        $delivery = DeliveryOrder::uuid($id);
 
         if ($request->hasFile('document') && $request->file('document')->isValid()) {
             $path = $request->document->store('receipt');
