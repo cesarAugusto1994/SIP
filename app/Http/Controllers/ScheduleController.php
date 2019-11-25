@@ -377,6 +377,7 @@ class ScheduleController extends Controller
           $schedule = Schedule::uuid($id);
 
           $schedule->guests()->delete();
+          $schedule->messages()->delete();
 
           $route = route('schedules.index');
 
