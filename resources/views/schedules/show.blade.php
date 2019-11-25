@@ -46,12 +46,19 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <p class="m-b-10 f-w-600">Inicio</p>
-                            <h6 class="text-muted f-w-400">{{ $schedule->start->format('d/m/Y H:i') }}</h6>
+                            <h6 class="text-muted f-w-400">{{ !$schedule->all_day ? $schedule->start->format('d/m/Y H:i') : $schedule->start->format('d/m/Y') }}</h6>
                         </div>
                         <div class="col-sm-6">
                             <p class="m-b-10 f-w-600">Fim</p>
-                            <h6 class="text-muted f-w-400">{{ $schedule->end->format('d/m/Y H:i') }}</h6>
+                            <h6 class="text-muted f-w-400">{{ !$schedule->all_day ? $schedule->end->format('d/m/Y H:i') : $schedule->end->format('d/m/Y') }}</h6>
                         </div>
+
+                        <div class="col-sm-12 m-t-15">
+                          <div class="alert alert-primary icons-alert">
+                              <p><strong>Aviso!</strong> Este evento está marcado para o dia inteiro.</p>
+                          </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="m-b-20">

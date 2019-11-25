@@ -1104,8 +1104,21 @@ $('#daterange').daterangepicker({
       select: function(start, end, jsEvent, view) {
           var view = $('.calendar').fullCalendar('getView');
           $("#sechedule-modal").modal('show');
-          $("#start").val(start.format('DD/MM/YYYY HH:mm'));
-          $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+          //$("#start").val(start.format('DD/MM/YYYY HH:mm'));
+          //$("#end").val(end.format('DD/MM/YYYY HH:mm'));
+
+          if(start.format('HH') == '00') {
+              $("#start").val(start.format('DD/MM/YYYY '+'08:00'));
+          } else {
+              $("#start").val(start.format('DD/MM/YYYY HH:mm'));
+          }
+
+          if(end.format('HH') == '00') {
+              $("#end").val(end.subtract(1, 'd').format('DD/MM/YYYY '+'18:00'));
+          } else {
+              $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+          }
+
       },
       eventClick: function(event, element, view) {
 
