@@ -21,7 +21,7 @@ class Department extends Model
         return $this->hasMany('App\Models\Person', 'department_id');
     }
 
-    public function ticketTypesDepartments()
+    public function ticketTypes()
     {
         return $this->hasMany('App\Models\Ticket\Type\Department', 'department_id');
     }

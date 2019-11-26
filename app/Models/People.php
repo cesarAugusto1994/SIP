@@ -22,6 +22,11 @@ class People extends Model
         return $this->belongsTo('App\Models\Department');
     }
 
+    public function ticketTypesDepartment()
+    {
+        return $this->belongsTo('App\Models\Ticket\Type\Department', 'department_id');
+    }
+
     public function user()
     {
         return $this->hasOne('App\User', 'person_id');

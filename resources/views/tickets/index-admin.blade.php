@@ -331,6 +331,9 @@
         </div>
 
     </div>
+
+    {{ $tickets->links() }}
+
   </div>
 
 </div>

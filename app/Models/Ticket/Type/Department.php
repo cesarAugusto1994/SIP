@@ -24,4 +24,9 @@ class Department extends Model
     {
         return $this->belongsTo('App\Models\Ticket\Type', 'type_id');
     }
+
+    public function types()
+    {
+        return $this->hasMany('App\Models\Ticket\Type\Department', 'department_id');
+    }
 }
