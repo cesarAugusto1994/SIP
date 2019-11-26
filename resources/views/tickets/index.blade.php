@@ -318,12 +318,6 @@
                             </tr>
                           @endforeach
 
-                          <tr>
-                            <td colspan="6">
-                              {{ $tickets->links() }}
-                            </td>
-                          </tr>
-
                         </tbody>
                     </table>
                 </div>

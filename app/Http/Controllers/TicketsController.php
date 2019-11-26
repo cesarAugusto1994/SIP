@@ -34,26 +34,18 @@ class TicketsController extends Controller
 
         if(!$user->isAdmin()) {
 
-            /*
-              $tickets = $user->tickets();
-              $ticketTypeDepts = $user->person->department->ticketTypesDepartments;
-              foreach ($ticketTypeDepts as $key => $ticketTypeDept) {
-                  foreach ($ticketTypeDept->type->tickets as $key => $ticket) {
-                    if(!$tickets->contains($ticket)) {
-                        $tickets->push($ticket);
-                    }
+            /*$tickets = $user->tickets();
+            $ticketTypeDepts = $user->person->department->ticketTypesDepartments;
+
+            foreach ($ticketTypeDepts as $key => $ticketTypeDept) {
+                foreach ($ticketTypeDept->type->tickets as $key => $ticket) {
+                  if(!$tickets->contains($ticket)) {
+                      $tickets->push($ticket);
                   }
-              }
-            */
-
-            $tickets = $user->tickets;
-            $ticketTypeDepts = $user->person->ticketTypesDepartment;
-
-            foreach ($ticketTypeDepts->types as $key => $type) {
-                foreach ($type->type->tickets as $key2 => $ticket) {
-                    $tickets->push($ticket);
                 }
-            }
+            }*/
+
+            $tickets = Ticket::orderByDesc('id')->where('user_id', auth()->user()->id);
 
         } else {
             $tickets = Ticket::orderByDesc('id');
