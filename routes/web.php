@@ -272,6 +272,7 @@ Route::middleware('auth')->group(function () {
 
           Route::get('training/teams/{id}/employees/certified', 'TeamsController@certified')->name('team_certified');
           Route::get('training/teams/{id}/companies/all/certified', 'TeamsController@certifiedCompany')->name('team_certified_company');
+          Route::get('training/teams/{id}/employees/all/certified', 'TeamsController@certifiedTeam')->name('team_certified_team');
 
           Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');
           Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');

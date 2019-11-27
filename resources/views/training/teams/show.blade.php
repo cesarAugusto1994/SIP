@@ -49,6 +49,7 @@
           @if($team->status == 'FINALIZADA')
 
               <a target="_blank" href="{{ route('team_certified_company', $team->uuid) }}" class="btn btn-success btn-sm"><i class="ti-file"></i> <span>Certificado por Empresa</span></a>
+              <a target="_blank" href="{{ route('team_certified_team', $team->uuid) }}" class="btn btn-success btn-sm"><i class="ti-file"></i> <span>Certificado por Turma</span></a>
 
           @endif
 
