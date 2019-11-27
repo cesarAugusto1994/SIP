@@ -133,6 +133,40 @@ class TeamsController extends Controller
         return view('training.certified', compact('team', 'employee', 'textDate', 'teamEmployee'));
     }
 
+    public function certifiedCompany($id)
+    {
+        $team = Team::uuid($id);
+
+        $companies = [];
+
+        foreach ($team->employees as $key => $employee) {
+            $cnpj = Helper::formatCnpjCpf($employee->employee->company->document);
+            $companies[$employee->employee->company->name . ', CNPJ '. $cnpj][] = $employee->employee->name;
+        }
+
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($team->start, $interval, $team->end);
+
+        $arrayDate = [];
+
+        $yearString = $monthString = $textDate = "";
+
+        foreach ($period as $dt) {
+            $monthString = Helper::convertMonths($dt->format('m'));
+            $yearString = $dt->format('Y');
+            $arrayDate[$monthString][] = $dt->format('d');
+        }
+
+        foreach ($arrayDate as $key => $item) {
+          $stringA = implode(', ', $item);
+          $textDate .= $stringA . ' de ' . $key . ' ';
+        }
+
+        $textDate .= 'de ' . $yearString;
+
+        return view('training.certified-company', compact('team', 'textDate', 'companies'));
+    }
+
     public function showCertified($id)
     {
         $teamEmployee = TeamEmployee::uuid($id);

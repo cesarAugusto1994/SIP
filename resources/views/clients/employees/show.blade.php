@@ -31,19 +31,30 @@
 
   <div class="row">
 
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('edit.cliente.funcionarios')
+                    <a href="{{route('employees.edit', ['id' => $employee->uuid])}}" class="btn btn-primary text-white btn-sm">Editar</a>
+                  @endpermission
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
     <div class="col-md-12">
 
         <div class="card">
             <div class="card-header">
                 <h5>Informações do Funcionário</h5>
-                <div class="card-header-right">
-                    <ul class="list-unstyled card-option">
-                        <li><a href="{{route('employees.edit', ['id' => $employee->uuid])}}" class="btn btn-primary text-white btn-sm">Editar</a></li>
-
-                        <!--<li><a href="{{route('employee_grant_access', ['id' => $employee->uuid])}}" class="btn btn-success text-white btn-sm">Conceder Acesso ao SIP</a></li>
-                        -->
-                    </ul>
-                </div>
             </div>
             <div class="card-block">
               <h2>{{ $employee->name}} </h2>

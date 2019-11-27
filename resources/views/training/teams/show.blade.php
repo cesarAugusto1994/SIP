@@ -46,6 +46,12 @@
 
           @endif
 
+          @if($team->status == 'FINALIZADA')
+
+              <a target="_blank" href="{{ route('team_certified_company', $team->uuid) }}" class="btn btn-success btn-sm"><i class="ti-file"></i> <span>Certificado por Empresa</span></a>
+
+          @endif
+
           <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="btn btn-warning btn-sm"><i class="ti-list"></i> <span>Lista de Presença</span></a>
 
           <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
