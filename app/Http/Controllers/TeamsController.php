@@ -140,6 +140,11 @@ class TeamsController extends Controller
         $companies = [];
 
         foreach ($team->employees as $key => $employee) {
+
+            if($employee->status != 'PRESENTE') {
+                continue;
+            }
+
             $cnpj = Helper::formatCnpjCpf($employee->employee->company->document);
             $companies[$employee->employee->company->name . ', CNPJ '. $cnpj][] = $employee->employee->name;
         }
