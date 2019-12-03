@@ -36,7 +36,7 @@
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
 
-                  @permission('create.ordem.entrega')
+                  @permission('create.remessa.de.entrega')
                     <a class="btn btn-sm btn-success waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('delivery-packings.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Remessa</a>
                   @endpermission
 

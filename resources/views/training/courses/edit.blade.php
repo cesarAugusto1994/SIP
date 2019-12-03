@@ -146,7 +146,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><i class="fa fa-users"></i></span>
                                   <select class="form-control select2" name="engineer_id" required>
-                                      <option value="">Sem Engenheiro</option>
+                                      <option value="0">Sem Engenheiro</option>
                                       @foreach(\App\Helpers\Helper::users() as $user)
                                             <option value="{{$user->id}}" {{ $course->engineer_id == $user->id ? 'selected' : '' }}>{{$user->person->name}}</option>
                                       @endforeach
