@@ -121,6 +121,8 @@ return array(
     'App\\Models\\DeliveryOrder' => $baseDir . '/app/Models/DeliveryOrder.php',
     'App\\Models\\DeliveryOrder\\Documents' => $baseDir . '/app/Models/DeliveryOrder/Documents.php',
     'App\\Models\\DeliveryOrder\\Log' => $baseDir . '/app/Models/DeliveryOrder/Log.php',
+    'App\\Models\\DeliveryOrder\\Packing' => $baseDir . '/app/Models/DeliveryOrder/Packing.php',
+    'App\\Models\\DeliveryOrder\\Packing\\Item' => $baseDir . '/app/Models/DeliveryOrder/Packing/Item.php',
     'App\\Models\\DeliveryOrder\\Status' => $baseDir . '/app/Models/DeliveryOrder/Status.php',
     'App\\Models\\Delivery\\Document' => $baseDir . '/app/Models/Delivery/Document.php',
     'App\\Models\\Delivery\\Document\\Status' => $baseDir . '/app/Models/Delivery/Document/Status.php',

@@ -29,6 +29,11 @@ class DeliveryOrder extends Model
         return $this->hasMany('App\Models\DeliveryOrder\Documents');
     }
 
+    public function packings()
+    {
+        return $this->hasMany('App\Models\DeliveryOrder\Packing\Item', 'delivery_id');
+    }
+
     public function logs()
     {
         return $this->hasMany('App\Models\DeliveryOrder\Log');

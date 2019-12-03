@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'key'       => 'AIzaSyCdFj8jkxW4lzvZjL7R86Smrgy9lmO5wAE',
+    'key'       => 'AIzaSyA4TbGLyQ0U1tNERt09Gl-sk41e_7Nmzuo',
 
     /*
     |--------------------------------------------------------------------------

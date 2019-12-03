@@ -868,6 +868,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Models/DeliveryOrder.php',
         'App\\Models\\DeliveryOrder\\Documents' => __DIR__ . '/../..' . '/app/Models/DeliveryOrder/Documents.php',
         'App\\Models\\DeliveryOrder\\Log' => __DIR__ . '/../..' . '/app/Models/DeliveryOrder/Log.php',
+        'App\\Models\\DeliveryOrder\\Packing' => __DIR__ . '/../..' . '/app/Models/DeliveryOrder/Packing.php',
+        'App\\Models\\DeliveryOrder\\Packing\\Item' => __DIR__ . '/../..' . '/app/Models/DeliveryOrder/Packing/Item.php',
         'App\\Models\\DeliveryOrder\\Status' => __DIR__ . '/../..' . '/app/Models/DeliveryOrder/Status.php',
         'App\\Models\\Delivery\\Document' => __DIR__ . '/../..' . '/app/Models/Delivery/Document.php',
         'App\\Models\\Delivery\\Document\\Status' => __DIR__ . '/../..' . '/app/Models/Delivery/Document/Status.php',

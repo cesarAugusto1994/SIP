@@ -461,7 +461,7 @@ function initMap() {
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-CeVILuddTrCi4EcPcpXAMN6rj_5Je3k&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4TbGLyQ0U1tNERt09Gl-sk41e_7Nmzuo&libraries=places&callback=initMap" async defer></script>
 
 @yield('scripts')
 

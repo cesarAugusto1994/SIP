@@ -393,6 +393,13 @@ Route::middleware('auth')->group(function () {
 
           Route::get('tickets/list/json', 'TicketsController@listJson')->name('tickets_json');
 
+          Route::resource('delivery-packings', 'DeliveryPackingController');
+          Route::post('delivery-packings/{id}/confirm', 'DeliveryPackingController@confirm')->name('delivery_packings_confirm');
+
+          Route::get('delivery-packings/{id}/print', 'DeliveryPackingController@print')->name('delivery_packings_print');
+
+          Route::get('clients/addresses/update/coordinates', 'AddressesController@updateCoordinates')->name('client_addresses_update_coordinates');
+
     });
 
   });

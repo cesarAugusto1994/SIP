@@ -292,4 +292,48 @@ class AddressesController extends Controller
 
         return response()->json('Enderecos importados com sucesso!');
     }
+
+    public function updateCoordinates()
+    {
+        $addresses = Address::all();
+
+        foreach ($addresses as $key => $address) {
+
+            $addressFormated = "";
+
+            if(!empty($data['street'])) {
+                $addressFormated .= $address->street . " " . $address->number . " ";
+            } elseif (!empty($address->district)) {
+                $addressFormated .= $address->district . " ";
+            } elseif (!empty($address->city)) {
+                $addressFormated .= $address->city . " ";
+            } elseif (!empty($address->state)) {
+                $addressFormated .= $address->state . " ";
+            }
+
+            $addressFormated .= $address->zip;
+
+            $responseGoogle = \GoogleMaps::load('geocoding')
+            ->setParam (['address' => $addressFormated])
+            ->get();
+
+            $local = json_decode($responseGoogle);
+            $lat = $lng = null;
+
+            #dd($local);
+
+            if($local && $local->results) {
+                $geometry = $local->results[0]->geometry;
+                $address->lat = $geometry->location->lat;
+                $address->long = $geometry->location->lng;
+                $address->save();
+
+                echo '>> Endereço atualizado : ' . $address->description . PHP_EOL;
+            }
+
+        }
+
+        return response()->json('Enderecos atualizados com sucesso!');
+
+    }
 }

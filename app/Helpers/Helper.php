@@ -1223,6 +1223,26 @@ class Helper
         );
     }
 
+    public static function deliveryStatusColor($value)
+    {
+          switch($value) {
+            case '1':
+              return'primary';
+              break;
+            case '2':
+              return 'warning';
+              break;
+            case '3':
+              return 'success';
+              break;
+            case '4':
+              return 'danger';
+              break;
+            default:
+                return 'info';
+          }
+    }
+
     public static function getColorFromValue($value)
     {
           switch ($value) {
@@ -1528,6 +1548,30 @@ class Helper
         }
 
         return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
+    }
+
+    public static function calculateDistances($lat1, $lon1, $lat2, $lon2, $unit) {
+
+      if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+        return 0;
+      }
+      else {
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $unit = strtoupper($unit);
+
+        if ($unit == "K") {
+          return ($miles * 1.609344);
+        } else if ($unit == "N") {
+          return ($miles * 0.8684);
+        } else {
+          return $miles;
+        }
+      }
+      
     }
 
 }
