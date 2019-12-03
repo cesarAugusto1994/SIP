@@ -8,6 +8,7 @@ use App\Models\Stock\Stock\Transfer;
 use App\Models\Stock\Stock\Transfer\Item;
 use App\Models\Stock\Stock\Log;
 use DateTime;
+use PDF;
 
 class TransferController extends Controller
 {
@@ -108,7 +109,18 @@ class TransferController extends Controller
             }
         }
 
-        return view('transfer.term', compact('transfer', 'due'));
+        $id = str_pad($transfer->id, 6, "0", STR_PAD_LEFT);
+        $title = "Transferencia:$id:";
+
+        $pdf = PDF::loadView('transfer.term', compact('transfer', 'due'));
+
+        $stylePdf = $pdf->getDomPDF();
+        $canvas = $stylePdf ->get_canvas();
+        $canvas->page_text(520, 2, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(255, 255, 255));
+
+        return $pdf->stream($title. ".pdf");
+
+        //return view('transfer.term', compact('transfer', 'due'));
     }
 
     public function transfer($id, Request $request)
