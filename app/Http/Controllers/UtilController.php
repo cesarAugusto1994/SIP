@@ -50,7 +50,9 @@ class UtilController extends Controller
               $address .= $cepResult->uf . " ";
           }
 
-          $address .= $cepResult->cep;
+          if($cepResult->cep) {
+              $address .= $cepResult->cep;
+          }
 
           $response = \GoogleMaps::load('geocoding')
           ->setParam (['address' => $address])

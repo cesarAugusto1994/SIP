@@ -30,8 +30,8 @@
 <div class="page-body">
 
   <div class="card">
-      <div class="card-header">
-          <h5>Novo Endereço</h5>
+      <div class="card-header card bg-c-green update-card">
+          <h5 class="text-white">Novo Endereço</h5>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
                   <li><i class="feather icon-maximize full-card"></i></li>

@@ -122,7 +122,54 @@
       </div>
   </div>
 
+  <div class="card">
+      <div class="card-block">
+
+        <div id="map"></div>
+
+      </div>
+  </div>
+
 </div>
 
 
 @endsection
+
+@section('scripts')
+<script>
+
+  function initMap() {
+    var center = {lat: -20.3101037 , lng: -40.320972999999995};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 11,
+      center: center
+    });
+
+    var locations = [];
+
+    var infowindow =  new google.maps.InfoWindow({});
+    var marker, count;
+
+    @foreach($client->addresses as $address)
+
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng('{{ $address->lat }}', '{{ $address->long }}'),
+        map: map,
+        title: '{{ $address->description }}'
+      });
+
+      google.maps.event.addListener(marker, 'click', (function (marker, count) {
+        return function () {
+          infowindow.setContent('{{ $address->description }}');
+          infowindow.open(map, marker);
+        }
+      })(marker, count));
+
+    @endforeach
+
+  }
+
+</script>
+
+@stop
