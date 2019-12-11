@@ -400,6 +400,10 @@ Route::middleware('auth')->group(function () {
 
           Route::get('clients/addresses/update/coordinates', 'AddressesController@updateCoordinates')->name('client_addresses_update_coordinates');
 
+          Route::get('deliveries/report/bi', 'DeliveryOrderController@report')->name('report_deliveries');
+          Route::get('clients/report/bi', 'ClientsController@report')->name('report_clients');
+          Route::get('training/report/bi', 'TeamsController@report')->name('report_training');
+
     });
 
   });

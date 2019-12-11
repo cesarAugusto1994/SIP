@@ -164,6 +164,11 @@ class DeliveryOrderController extends Controller
         return view('delivery-order.index', compact('orders', 'quantity', 'lava', 'delay'));
     }
 
+    public function report()
+    {
+        return view('bi.deliveries');
+    }
+
     public function billing(Request $request)
     {
         $deliveries = DeliveryOrder::whereIn('status_id',

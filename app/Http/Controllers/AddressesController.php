@@ -204,7 +204,7 @@ class AddressesController extends Controller
         } catch(\Exception $e) {
           return response()->json([
             'success' => false,
-            'message' => $e->getMessage()
+            'message' => 'Ocorreu um erro inesperado.'
           ]);
         }
     }

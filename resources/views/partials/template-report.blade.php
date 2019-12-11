@@ -16,7 +16,6 @@
           margin-top: 20px;
           margin-left: 0;
           margin-right: 0;
-          /*margin-bottom: 20px;*/
       }
 
       @page {
@@ -30,10 +29,6 @@
 
       p:last-child { page-break-after: auto; }
       .wrapper-content { padding: 2em 2em;}
-
-      .table>tbody>tr {
-        page-break-inside: avoid
-      }
 
       .watermark {
             opacity: 0.1;
@@ -54,7 +49,7 @@
   <header>
 
     <div class="watermark">
-      <img class="img" width="700" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
+      <img class="img" width="700" src="{{ asset('images/logo-provider.png') }}" alt="" />
     </div>
 
   </header>

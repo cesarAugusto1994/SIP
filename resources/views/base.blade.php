@@ -134,6 +134,29 @@
           width: 100%;
           background-color: grey;
         }
+
+        .pcoded-main-container {
+          background-image: url('images/natal.jpg');
+          background-size: cover;
+          background-position: center center;
+          background-attachment: fixed;
+        }
+
+        .page-header {
+          position: relative;
+          background-color: #fff;
+          border: 1px solid rgba(0,0,0,.125);
+          border-radius: .25rem;
+          padding: 25px 20px;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          min-width: 0;
+          word-wrap: break-word;
+          background-clip: border-box;
+        }
+
     </style>
 
     <script>

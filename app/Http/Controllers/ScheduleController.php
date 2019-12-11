@@ -287,9 +287,7 @@ class ScheduleController extends Controller
 
         $data['start'] = $start;
         $data['end'] = $end;
-
-        $allDayEvent = $request->has('all_day');
-        $data['all_day'] = $allDayEvent;
+        $data['all_day'] = $request->has('all_day');
 
         $schedule->update($data);
 
