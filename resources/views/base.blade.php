@@ -136,7 +136,7 @@
         }
 
         .pcoded-main-container {
-          background-image: url('images/natal.jpg');
+          background-image: url("{{ asset('images/natal.jpg') }}");
           background-size: cover;
           background-position: center center;
           background-attachment: fixed;
