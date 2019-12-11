@@ -4,11 +4,12 @@
 
 <form class="md-float-material form-material" action="{{ route('post_lockscreen') }}" method="post">
     @csrf
-    <div class="text-center m-b-30">
-        <img src="{{ asset('images\logo-provider.png') }}" style="width:40%"  alt="SIP - Provider">
-    </div>
     <div class="auth-box card">
         <div class="card-block">
+
+            <div class="text-center m-b-30">
+                <img src="{{ asset('images\logo-provider.png') }}" style="width:40%"  alt="SIP - Provider">
+            </div>
 
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>

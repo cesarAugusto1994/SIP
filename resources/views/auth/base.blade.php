@@ -44,6 +44,13 @@
         border-left: 12px solid #dc3545;
       }
 
+      .fix-menu {
+        background-image: url("{{ asset('images/natal.jpg') }}");
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+      }
+
     </style>
 
 </head>

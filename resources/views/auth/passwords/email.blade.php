@@ -6,11 +6,12 @@
 
     @csrf
 
-    <div class="text-center m-b-30">
-        <img src="{{ asset('images\logo-provider.png') }}" style="width:40%"  alt="SIP - Provider">
-    </div>
     <div class="auth-box card">
         <div class="card-block">
+
+            <div class="text-center m-b-30">
+                <img src="{{ asset('images\logo-provider.png') }}" style="width:40%"  alt="SIP - Provider">
+            </div>
 
             <h5 class="text-center"><i class="feather icon-lock text-primary f-60 p-t-15 p-b-20 d-block"></i>Recuperar Senha</h5>
 
@@ -35,7 +36,7 @@
                     <button type="submit" class="btn btn-success btn-md btn-block waves-effect text-center m-b-20"> Enviar </button>
                 </div>
             </div>
-            <p class="text-inverse text-right">voltar ao <a href="{{ route('login') }}">Login</a></p>
+            <p class="text-inverse text-right"><a href="{{ route('login') }}">voltar ao Login</a></p>
 
         </div>
     </div>
