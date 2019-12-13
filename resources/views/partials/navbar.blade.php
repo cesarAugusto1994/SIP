@@ -34,14 +34,20 @@
                 </li>
 
                 <li>
-                    <a target="_blank" href="https://providersadee-x6r4398​.slack​.com">
+                    <a class="text-primary" target="_blank" href="https://providersadee-x6r4398​.slack​.com">
                         Slack <i class="fab fa-slack"></i>
                     </a>
                 </li>
 
                 <li>
-                    <a target="_blank" href="https://webmail.umbler.com">
+                    <a class="text-danger" target="_blank" href="https://webmail-seguro.com.br/locaweb.com/">
                         Webmail <i class="far fa-envelope"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="text-success" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="#!">
+                        Novo Chamado <i class="fas fa-ticket-alt"></i>
                     </a>
                 </li>
 
@@ -164,15 +170,6 @@
                 </li>
             </ul>
 
-            <ul class="nav-right nav-center">
-
-              <li>
-                  <a class="btn btn-round" style="color:#07885b!important" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="#!">
-                      Novo Chamado
-                  </a>
-              </li>
-
-            </ul>
         </div>
     </div>
 </nav>

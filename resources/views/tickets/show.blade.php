@@ -55,7 +55,7 @@
                       @endif
 
                       @if($ticket->status_id != 4)
-                        <a href="{{ route('tickets.edit', $ticket->uuid) }}" class="btn btn-info btn-sm waves-effect waves-light"><i class="icofont icofont-edit-alt"></i></a>
+                        <a href="{{ route('tickets.edit', $ticket->uuid) }}" class="btn btn-info btn-sm waves-effect waves-light"><i class="icofont icofont-edit-alt"></i> Editar</a>
                       @endif
 
                       @if($ticket->status_id == 1 || $ticket->status_id == 2 || $ticket->status_id == 3)
