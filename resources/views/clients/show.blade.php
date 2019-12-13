@@ -20,7 +20,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('clients.index') }}"> Clientes </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Informações do Cliente</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Informações</a></li>
                 </ul>
             </div>
         </div>
@@ -179,9 +179,10 @@
           <div class="card feed-card">
               <div class="card-header">
                   <h5>Telefone</h5>
+                  <span>Contatos do Cliente</span>
                   <div class="card-header-right">
                       <ul class="list-unstyled card-option">
-                          <li><a class="btn btn-sm btn-success" href="{{route('phones.create', ['client' => $client->uuid])}}">Novo</a></li>
+                          <li><a class="btn btn-sm btn-outline-success" href="{{route('phones.create', ['client' => $client->uuid])}}">Novo</a></li>
                       </ul>
                   </div>
               </div>
@@ -215,9 +216,10 @@
           <div class="card feed-card">
               <div class="card-header">
                   <h5>E-mail</h5>
+                  <span>Contatos do Cliente</span>
                   <div class="card-header-right">
                       <ul class="list-unstyled card-option">
-                          <li><a class="btn btn-sm btn-success" href="{{route('email.create', ['client' => $client->uuid])}}">Novo</a></li>
+                          <li><a class="btn btn-sm btn-outline-success" href="{{route('email.create', ['client' => $client->uuid])}}">Novo</a></li>
                       </ul>
                   </div>
               </div>
@@ -245,6 +247,57 @@
                   </div>
               </div>
           </div>
+      </div>
+
+      <div class="col-md-12">
+
+          <div class="card">
+              <div class="card-header">
+                  <h5>Treinamentos</h5>
+              </div>
+              <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                      <table class="table table-lg table-styling">
+                          <thead>
+                              <tr class="table-primary">
+                                <th>Nome</th>
+                                <th>Curso</th>
+                                <th>Data</th>
+                                <th>Certificado</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($client->employees as $employee)
+                              @foreach($employee->trainings as $training)
+
+                                  @if($training->status == 'FINALIZADA')
+                                      @continue;
+                                  @endif
+
+                                  <tr>
+                                      <td>
+                                          <p>{{ $employee->name }}</p>
+                                      </td>
+                                      <td>
+                                          {{$training->team->course->title}}<br/><a href="{{ route('teams.show', $training->team->uuid) }}" class="card-title"><small>Turma: #{{ str_pad($training->team->id, 6, "0", STR_PAD_LEFT) }}</small></a>
+                                      </td>
+                                      <td>
+                                          <p>{{$training->team->start->format('d/m/Y H:i')}} até {{$training->team->end->format('d/m/Y H:i')}}</p>
+                                      </td>
+                                      <td>
+                                        <a target="_blank" href="{{route('team_certified', [$training->uuid])}}"
+                                          class="btn btn-sm btn-outline-success">Gerar Certificado</a>
+                                      </td>
+                                  </tr>
+                              @endforeach
+                            @endforeach
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+          </div>
+
       </div>
 
   </div>

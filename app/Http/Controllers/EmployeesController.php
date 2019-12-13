@@ -239,6 +239,7 @@ class EmployeesController extends Controller
     public function show($id)
     {
         $employee = Employee::uuid($id);
+        //dd($employee->trainings);
         return view('clients.employees.show', compact('employee'));
     }
 

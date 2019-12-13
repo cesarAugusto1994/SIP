@@ -50,28 +50,99 @@
 
   <div class="row">
 
-    <div class="col-md-12">
+    <div class="col-md-4">
 
         <div class="card">
             <div class="card-header">
                 <h5>Informações do Funcionário</h5>
             </div>
             <div class="card-block">
-              <h2>{{ $employee->name}} </h2>
-              <p>
-                @if($employee->active)
-                    <i class="fa fa-circle text-success"></i> Ativo
-                @else
-                    <i class="fa fa-circle text-danger"></i> Inativo
-                @endif
+              <div class="table-responsive">
+                  <table class="table m-0">
+                      <tbody>
+                          <tr>
+                              <th scope="row">Nome</th>
+                              <td>{{ $employee->name}}</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">Situação</th>
+                              <td>
+                                @if($employee->active)
+                                    <i class="fa fa-circle text-success"></i> Ativo
+                                @else
+                                    <i class="fa fa-circle text-danger"></i> Inativo
+                                @endif
+                              </td>
+                          </tr>
+                          <tr>
+                              <th scope="row">E-mail</th>
+                              <td>{{ $employee->email }}</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">CPF</th>
+                              <td>{{ $employee->cpf }}</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">RG</th>
+                              <td>{{ $employee->rg }}</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">Empresa</th>
+                              <td><a href="{{route('clients.show', $employee->company->uuid)}}"><b>{{ $employee->company->name }}</b></a></td>
+                          </tr>
+                          <tr>
+                              <th scope="row">Função</th>
+                              <td>{{ $employee->occupation->name }}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
 
-              </p>
-              <p>E-mail: {{ $employee->email }}</p>
-              <p>CPF: {{ $employee->cpf }}</p>
-              <p>RG: {{ $employee->rg }}</p>
-              <p>Empresa: <a href="{{route('clients.show', $employee->company->uuid)}}"><b>{{ $employee->company->name }}</b></a></p>
-              <p>Função: {{ $employee->occupation->name }}</p>
+            </div>
+        </div>
 
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Treinamentos</h5>
+            </div>
+            <div class="card-block table-border-style">
+                <div class="table-responsive">
+                    <table class="table table-lg table-styling">
+                        <thead>
+                            <tr class="table-primary">
+                              <th>Curso</th>
+                              <th>Data</th>
+                              <th>Certificado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($employee->trainings as $training)
+
+                                @if($training->status == 'FINALIZADA')
+                                    @continue;
+                                @endif
+
+                                <tr>
+                                    <td>
+                                        {{$training->team->course->title}}<br/><a href="{{ route('teams.show', $training->team->uuid) }}" class="card-title"><small>Turma: #{{ str_pad($training->team->id, 6, "0", STR_PAD_LEFT) }}</small></a>
+                                    </td>
+                                    <td>
+                                        <p>{{$training->team->start->format('d/m/Y H:i')}} até {{$training->team->end->format('d/m/Y H:i')}}</p>
+                                    </td>
+                                    <td>
+                                      <a target="_blank" href="{{route('team_certified', [$training->uuid])}}"
+                                        class="btn btn-sm btn-outline-success">Gerar Certificado</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
 

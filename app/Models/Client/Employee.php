@@ -28,6 +28,11 @@ class Employee extends Model
         return $this->belongsTo('App\Models\Client', 'company_id');
     }
 
+    public function trainings()
+    {
+        return $this->hasMany('App\Models\Training\Team\Employee', 'employee_id');
+    }
+
     public function occupation()
     {
         return $this->belongsTo('App\Models\Client\Occupation', 'occupation_id');

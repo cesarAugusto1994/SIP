@@ -249,6 +249,19 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::uuid($id);
+
+        foreach ($client->employees as $key => $employee) {
+
+            //dd($employee);
+
+            if(!$employee->trainings) {
+                continue;
+            }
+
+            //
+
+        }
+
         return view('clients.show', compact('client'));
     }
 
