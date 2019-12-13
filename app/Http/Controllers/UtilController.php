@@ -143,14 +143,8 @@ class UtilController extends Controller
           }
 
           if($user->avatar_type == 'words') {
-
               $image = $user->avatar;  // your base64 encoded
-
               $image = str_replace('data:image/png;base64,', '', $image);
-              //$image = str_replace(' ', '+', $image);
-              //$imageName = str_random(10).'.'.'png';
-              //$file = \File::put(storage_path(). '/' . $imageName, base64_decode($image));
-
               return base64_decode($image);
           }
 

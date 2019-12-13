@@ -26,45 +26,6 @@ class ChatsController extends Controller
     */
     public function index(Request $request)
     {
-      /*
-        $people = People::where('id', '>', 0);
-
-        if($request->filled('active')) {
-          $active = $request->get('active');
-          $people->where('active', $active);
-        }
-
-        if($request->filled('department')) {
-          $department = $request->get('department');
-          $department = Department::uuid($department);
-          $people->where('department_id', $department->id);
-        }
-
-        if($request->filled('occupation')) {
-          $occupation = $request->get('occupation');
-          $occupation = Occupation::uuid($occupation);
-          $people->where('occupation_id', $occupation->id);
-        }
-
-        if($request->filled('search')) {
-
-          $search = $request->get('search');
-
-          $people->where('name', 'like', "%$search%")
-          ->orWhere('id', 'like', "%$search%")
-          ->orWhere('phone', 'like', "%$search%")
-          ->orWhere('cpf', 'like', "%$search%");
-
-          $people->whereHas('user', function($query) use ($search) {
-            $query->where('email', 'like', "%$search%")
-            ->where('nick', 'like', "%$search%");
-          });
-
-        }
-
-        $people = $people->all();
-*/
-
         $users = Helper::users();
         $departments = Helper::departments();
         $occupations = Occupation::where('department_id', $departments->first()->id)->get();

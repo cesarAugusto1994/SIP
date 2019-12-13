@@ -424,5 +424,4 @@ Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start'
 Route::get('delivery-order/{id}/delivery', 'DeliveryOrderController@deliveryReceipt')->name('delivery_receipt_view');
 Route::get('delivery-order/{id}/delivery/receipt/print', 'DeliveryOrderController@deliveryReceiptImage')->name('delivery_receipt_image');
 
-Route::get('tickets/auto-search/by/email', 'TicketsController@autoSearchTicketsByEmail')->name('auto_search_tickets_by_email');
 Route::get('training/team/{id}/certified', 'TeamsController@showCertified')->name('training_team_certified');

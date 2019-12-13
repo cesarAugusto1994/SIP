@@ -19,17 +19,6 @@ use App\Notifications\{NewTicket,FinishedTicket,ConcludedTicket};
 
 class TaskController extends Controller
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -418,8 +407,6 @@ class TaskController extends Controller
         }
       }
 
-
-
     /**
      * Display the specified resource.
      *
@@ -764,8 +751,6 @@ class TaskController extends Controller
         return $dateTime > $start ? 'class="danger" data-toggle="tooltip" data-placement="bottom" title="Tarefa Atrasada"' : '';
     }
 
-
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -928,17 +913,6 @@ class TaskController extends Controller
         }
 
         return json_encode($itens);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public static function ociousTime($mapperID)

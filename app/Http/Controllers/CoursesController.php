@@ -49,7 +49,7 @@ class CoursesController extends Controller
     public function create()
     {
         if(!Auth::user()->hasPermission('create.cursos')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado, favor procurar o Administrador do Sistema..');
         }
 
         return view('training.courses.create');
@@ -64,7 +64,7 @@ class CoursesController extends Controller
     public function store(Request $request)
     {
         if(!Auth::user()->hasPermission('create.cursos')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado, favor procurar o Administrador do Sistema..');
         }
 
         $data = $request->request->all();
@@ -104,7 +104,12 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-        //
+        if(!Auth::user()->hasPermission('view.cursos')) {
+            return abort(403, 'Acesso negado, favor procurar o Administrador do Sistema.');
+        }
+
+        $course = Course::uuid($id);
+        return view('training.courses.show', compact('course'));
     }
 
     /**
@@ -116,7 +121,7 @@ class CoursesController extends Controller
     public function edit($id)
     {
         if(!Auth::user()->hasPermission('edit.cursos')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado, favor procurar o Administrador do Sistema..');
         }
 
         $course = Course::uuid($id);
@@ -133,7 +138,7 @@ class CoursesController extends Controller
     public function update(Request $request, $id)
     {
         if(!Auth::user()->hasPermission('edit.cursos')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado, favor procurar o Administrador do Sistema..');
         }
 
         $data = $request->request->all();

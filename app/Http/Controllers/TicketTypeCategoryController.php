@@ -15,7 +15,7 @@ class TicketTypeCategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Helper::ticketCategories();
         return view('tickets.categories.index', compact('categories'));
     }
 
@@ -53,17 +53,6 @@ class TicketTypeCategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -98,16 +87,5 @@ class TicketTypeCategoryController extends Controller
         ]);
 
         return redirect()->route('ticket-type-categories.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

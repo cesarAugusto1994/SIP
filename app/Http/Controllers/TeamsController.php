@@ -720,17 +720,6 @@ class TeamsController extends Controller
         return redirect()->route('teams.show', $team->uuid);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function destroyEmployes($id, $employee, Request $request)
     {
         try {

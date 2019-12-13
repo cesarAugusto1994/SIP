@@ -119,8 +119,6 @@ class TransferController extends Controller
         $canvas->page_text(520, 2, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(255, 255, 255));
 
         return $pdf->stream($title. ".pdf");
-
-        //return view('transfer.term', compact('transfer', 'due'));
     }
 
     public function transfer($id, Request $request)
@@ -371,39 +369,5 @@ class TransferController extends Controller
     {
         $transfer = Transfer::uuid($id);
         return view('transfer.show', compact('transfer'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

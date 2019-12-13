@@ -248,15 +248,4 @@ class ServiceController extends Controller
 
         return redirect()->route('services.show', $service->uuid);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

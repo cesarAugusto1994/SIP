@@ -16,7 +16,7 @@ class TicketTypesController extends Controller
      */
     public function index()
     {
-        $types = Type::all();
+        $types = Helper::TicketType();
         return view('tickets.types.index', compact('types'));
     }
 
@@ -56,24 +56,13 @@ class TicketTypesController extends Controller
           }
         }
 
-        Helper::drop('ticket_types');
+        Helper::drop('ticket-types');
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo Tipo de chamado adicionado com sucesso.'
         ]);
 
         return redirect()->route('ticket-types.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -120,23 +109,12 @@ class TicketTypesController extends Controller
           }
         }
 
-        Helper::drop('ticket_types');
+        Helper::drop('ticket-types');
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Tipo de chamado atualizado com sucesso.'
         ]);
 
         return redirect()->route('ticket-types.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

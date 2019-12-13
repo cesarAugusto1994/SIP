@@ -413,17 +413,6 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
-        /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function editAvatar($id)
     {
         return view('admin.users.avatar')->with('user', User::find($id));
@@ -763,16 +752,5 @@ class UsersController extends Controller
         }
 
         return response()->json($results);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

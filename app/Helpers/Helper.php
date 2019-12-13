@@ -15,6 +15,7 @@ use App\Models\Ticket\{Type,Status};
 use App\Models\{Department, Module};
 use App\Models\Department\Occupation;
 use App\Models\Ticket\Type\Category;
+use App\Models\Ticket\Type as TicketType;
 use App\Models\{Unit,Email};
 use App\Models\Schedule\Type as ScheduleType;
 use App\Models\{Message, Folder, Ticket, Task};
@@ -378,6 +379,20 @@ class Helper
         }
 
         $data = Status::all();
+
+        self::set($key, $data);
+        return self::get($key);
+    }
+
+    public static function ticketTypes()
+    {
+        $key = 'ticket-types';
+
+        if(self::has($key)) {
+            return self::get($key);
+        }
+
+        $data = TicketType::where('active', true)->get();
 
         self::set($key, $data);
         return self::get($key);
@@ -779,20 +794,6 @@ class Helper
         $data = ['Almoxarifado','Usuário', 'Departamento', 'Unidade', 'Fornecedor'];
 
         self::set($key, $data);
-        return self::get($key);
-    }
-
-    public static function ticketTypes()
-    {
-        $key = 'ticket_types';
-
-        if(self::has($key)) {
-            return self::get($key);
-        }
-
-        $types = Type::where('active', true)->get();
-
-        self::set($key, $types);
         return self::get($key);
     }
 
@@ -1571,7 +1572,7 @@ class Helper
           return $miles;
         }
       }
-      
+
     }
 
 }
