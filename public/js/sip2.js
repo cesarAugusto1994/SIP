@@ -1,3 +1,45 @@
+$(".btnRedirectSoc").click(function() {
+    var loginSoc = $("#usu").val();
+    var passwordSoc = $("#senha").val();
+    var idSoc = $("#empsoc").val();
+    if(usu && loginSoc && loginSoc) {
+        $("#formularioLoginSoc").submit();
+    } else {
+      Swal.fire({
+        type: 'error',
+        title: 'Falha ao logar no SOC',
+        text: 'Informe as suas credenciais SOC no seu perfil',
+      })
+    }
+});
+
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe(title, message, url) {
+  if (!Notification) {
+    console.log('Desktop notifications not available in your browser. Try Chromium.');
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(title, {
+      icon: '{{ asset("images/favicon.ico") }}',
+      body: message,
+    });
+
+    notification.onclick = function () {
+      window.open(url);
+    };
+
+  }
+}
+
 $('.select2').select2({
   width: '100%',
   placeholder: "Selecione"
@@ -21,7 +63,7 @@ $('.select-client').select2({
         return {
             results: $.map(data, function (item) {
                 return {
-                    text: item.name,
+                    text: item.name + ' - ' + item.document,
                     id: item.id
                 }
             })
@@ -879,6 +921,24 @@ $('#daterange').daterangepicker({
 
   }
 
+  var $formValidTickets = $('.formValidationTickets').parsley();
+
+  if($formValidTickets) {
+
+    $formValidTickets.on('form:submit', function(e) {
+      // This global callback will be called for any field that fails validation.
+      //e.preventDefault();
+      window.swal({
+        title: 'Em progresso...',
+        text: 'Aguarde enquanto o chamado é aberto.',
+        type: 'success',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      });
+    });;
+
+  }
+
   function ignoreTour(url) {
 
       $.ajax({
@@ -1104,8 +1164,21 @@ $('#daterange').daterangepicker({
       select: function(start, end, jsEvent, view) {
           var view = $('.calendar').fullCalendar('getView');
           $("#sechedule-modal").modal('show');
-          $("#start").val(start.format('DD/MM/YYYY HH:mm'));
-          $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+          //$("#start").val(start.format('DD/MM/YYYY HH:mm'));
+          //$("#end").val(end.format('DD/MM/YYYY HH:mm'));
+
+          if(start.format('HH') == '00') {
+              $("#start").val(start.format('DD/MM/YYYY '+'08:00'));
+          } else {
+              $("#start").val(start.format('DD/MM/YYYY HH:mm'));
+          }
+
+          if(end.format('HH') == '00') {
+              $("#end").val(end.subtract(1, 'd').format('DD/MM/YYYY '+'18:00'));
+          } else {
+              $("#end").val(end.format('DD/MM/YYYY HH:mm'));
+          }
+
       },
       eventClick: function(event, element, view) {
 
@@ -1191,14 +1264,10 @@ $('#daterange').daterangepicker({
           },
           dataType: 'json',
           success: function(data) {
-              //console.log(data);
-              //openSwalScreenProgress();
+              notify(data.message, 'inverse');
           },
           error: function(data) {
-              //alert(data.message);
-              //openSwalMessage('Erro ao Processar Requisição', data.message);
+              notify(data.message, 'danger');
           }
       })
-
-
   }

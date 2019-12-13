@@ -55,7 +55,9 @@
 
           <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="btn btn-warning btn-sm"><i class="ti-list"></i> <span>Lista de Presença</span></a>
 
-          <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
+          @if($team->status != 'FINALIZADA' || $team->status == 'FINALIZADA' && auth()->user()->isAdmin())
+              <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
+          @endif
 
           <a href="#!" data-route="{{ route('team_duplicate', $team->uuid) }}" class="btn btn-inverse btnDuplicate btn-sm waves-effect waves-light"><i class="far fa-copy"></i> Duplicar</a>
 
@@ -117,7 +119,7 @@
                                                     @if($diffDays > 1)
                                                         {{ $team->start->format('d/m/Y') }} à {{ $team->end->format('d/m/Y') }}
                                                     @else
-                                                        {{ $team->start->format('d/m/Y') }} {{ $team->start->format('H:i') }}:{{ $team->end->format('H:i') }}
+                                                        {{ $team->start->format('d/m/Y') }} {{ $team->start->format('H:i') }} até {{ $team->end->format('H:i') }}
                                                     @endif
                                                     </td>
                                               </tr>

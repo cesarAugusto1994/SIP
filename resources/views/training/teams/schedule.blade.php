@@ -60,8 +60,8 @@
                         <div class="form-group">
                             <label>Curso</label>
                             <div class="input-group">
-                              <select class="form-control" name="course_id" required>
-                                  @foreach($courses->sortBy('name') as $course)
+                              <select class="form-control select2" name="course_id" required>
+                                  @foreach(\App\Helpers\Helper::courses()->sortBy('title') as $course)
                                         <option value="{{$course->uuid}}">{{$course->title}}</option>
                                   @endforeach
                               </select>
@@ -74,7 +74,7 @@
                             <label>Instrutor</label>
                             <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                              <select class="form-control" name="teacher_id" required>
+                              <select class="form-control select2" name="teacher_id" required>
                                   @foreach($teachers->sortBy('name') as $teacher)
                                         <option value="{{$teacher->user->uuid}}">{{$teacher->name}}</option>
                                   @endforeach

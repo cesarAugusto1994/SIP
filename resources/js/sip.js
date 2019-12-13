@@ -1,3 +1,45 @@
+$(".btnRedirectSoc").click(function() {
+    var loginSoc = $("#usu").val();
+    var passwordSoc = $("#senha").val();
+    var idSoc = $("#empsoc").val();
+    if(usu && loginSoc && loginSoc) {
+        $("#formularioLoginSoc").submit();
+    } else {
+      Swal.fire({
+        type: 'error',
+        title: 'Falha ao logar no SOC',
+        text: 'Informe as suas credenciais SOC no seu perfil',
+      })
+    }
+});
+
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe(title, message, url) {
+  if (!Notification) {
+    console.log('Desktop notifications not available in your browser. Try Chromium.');
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(title, {
+      icon: '{{ asset("images/favicon.ico") }}',
+      body: message,
+    });
+
+    notification.onclick = function () {
+      window.open(url);
+    };
+
+  }
+}
+
 $('.select2').select2({
   width: '100%',
   placeholder: "Selecione"
@@ -879,6 +921,24 @@ $('#daterange').daterangepicker({
 
   }
 
+  var $formValidTickets = $('.formValidationTickets').parsley();
+
+  if($formValidTickets) {
+
+    $formValidTickets.on('form:submit', function(e) {
+      // This global callback will be called for any field that fails validation.
+      //e.preventDefault();
+      window.swal({
+        title: 'Em progresso...',
+        text: 'Aguarde enquanto o chamado é aberto.',
+        type: 'success',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      });
+    });;
+
+  }
+
   function ignoreTour(url) {
 
       $.ajax({
@@ -1210,6 +1270,4 @@ $('#daterange').daterangepicker({
               notify(data.message, 'danger');
           }
       })
-
-
   }

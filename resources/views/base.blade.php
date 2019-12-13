@@ -232,6 +232,7 @@
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
 <script src="{{ asset('js/app.js?v1.0.3') }}"></script>
+<script src="{{ asset('adminty\js\parsley.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-ui\js\jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\popper.js\js\popper.min.js') }}"></script>
@@ -256,40 +257,30 @@
 <script type="text/javascript" src="{{ asset('adminty\js\bootstrap-growl.min.js') }}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-
 <!-- ck editor -->
 <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
-
 <script src="{{ asset('adminty\components\bootstrap-tagsinput\js\bootstrap-tagsinput.js') }}"></script>
-
 <script src="{{ asset('adminty\components\switchery\js\switchery.min.js') }}"></script>
-
 <script src="{{ asset('adminty\components/bootstrap-filestyle/js/bootstrap-filestyle.min.js') }}" type="text/javascript"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-
 <script src="{{ asset('adminty\pages\jquery.filer\js\jquery.filer.js') }}"></script>
 <script src="{{ asset('adminty\pages\filer\custom-filer.js?v1.0') }}" type="text/javascript"></script>
-
-<script src="{{ asset('adminty\js\parsley.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.1/dist/i18n/pt-br.js"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\accordion\accordion.js') }}"></script>
 <script src="{{ asset('adminty\components\countdown\js\jquery.countdown.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\moment\js\moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\fullcalendar\js\fullcalendar.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.0/locale/pt-br.js"></script>
-
 <script src="{{ asset('adminty\components\stroll\js\stroll.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\pages\list-scroll\list-custom.js') }}"></script>
 <!-- Date-range picker js -->
 <script type="text/javascript" src="{{ asset('adminty\components\bootstrap-daterangepicker\js\daterangepicker.js') }}"></script>
 <!-- Chart js -->
 <script type="text/javascript" src="{{ asset('adminty\components\chart.js\js\Chart.js') }}"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <input type="hidden" value="{{ route('user_localization') }}" id="user-localization"/>
@@ -303,75 +294,7 @@
 
 <script>
 
-  $(".btnRedirectSoc").click(function() {
-  		var loginSoc = $("#usu").val();
-  		var passwordSoc = $("#senha").val();
-  		var idSoc = $("#empsoc").val();
-  		if(usu && loginSoc && loginSoc) {
-  				$("#formularioLoginSoc").submit();
-  		} else {
-  			Swal.fire({
-  				type: 'error',
-  				title: 'Falha ao logar no SOC',
-  				text: 'Informe as suas credenciais SOC no seu perfil',
-  			})
-  		}
-  });
-
-function notify(message, type){
-    $.growl({
-        message: message
-    },{
-        type: type,
-        allow_dismiss: false,
-        label: 'Cancel',
-        className: 'btn-xs btn-inverse',
-        placement: {
-            from: 'bottom',
-            align: 'center'
-        },
-        delay: 5000,
-        animate: {
-                enter: 'animated fadeInRight',
-                exit: 'animated fadeOutRight'
-        },
-        offset: {
-            x: 30,
-            y: 30
-        }
-    });
-};
-
 function initMap() {
-
-  /*if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-
-      var url = $("#user-localization").val();
-
-      $.ajax({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          type: "POST",
-          url: url,
-          data: pos,
-          dataType: 'json',
-      });
-
-      //console.log(pos);
-
-    }, function() {
-
-    });
-  } else {
-    // Browser doesn't support Geolocation
-
-  }*/
 
   var input = document.getElementById('pac-input');
 
@@ -482,6 +405,30 @@ function initMap() {
 
 }
 
+function notify(message, type){
+  $.growl({
+      message: message
+  },{
+      type: type,
+      allow_dismiss: false,
+      label: 'Cancel',
+      className: 'btn-xs btn-inverse',
+      placement: {
+          from: 'bottom',
+          align: 'center'
+      },
+      delay: 5000,
+      animate: {
+              enter: 'animated fadeInRight',
+              exit: 'animated fadeOutRight'
+      },
+      offset: {
+          x: 30,
+          y: 30
+      }
+  });
+};
+
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4TbGLyQ0U1tNERt09Gl-sk41e_7Nmzuo&libraries=places&callback=initMap" async defer></script>
@@ -495,33 +442,6 @@ function initMap() {
 @endif
 
 <script>
-
-// request permission on page load
-document.addEventListener('DOMContentLoaded', function () {
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-});
-
-function notifyMe(title, message, url) {
-  if (!Notification) {
-    console.log('Desktop notifications not available in your browser. Try Chromium.');
-    return;
-  }
-
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-  else {
-    var notification = new Notification(title, {
-      icon: '{{ asset("images/favicon.ico") }}',
-      body: message,
-    });
-
-    notification.onclick = function () {
-      window.open(url);
-    };
-
-  }
-}
 
 $(document).ready(function() {
 
@@ -581,17 +501,6 @@ $(document).ready(function() {
 });
 
 </script>
-
-<!-- Global site tag (gtag.js) - Google Analytics
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-</script>
--->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXB1H1CSNY"></script>
 <script>

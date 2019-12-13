@@ -30,8 +30,8 @@
 <div class="page-body">
 
 <div class="card">
-    <div class="card-header">
-        <h5>Nova Turma</h5>
+    <div class="card-header card bg-c-green update-card">
+        <h5 class="text-white">Nova Turma</h5>
     </div>
     <div class="card-block">
 

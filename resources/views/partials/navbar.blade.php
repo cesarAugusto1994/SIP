@@ -186,7 +186,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form class="formValidation" data-parsley-validate method="post" action="{{ route('tickets.store') }}">
+            <form class="formValidationTickets" data-parsley-validate method="post" action="{{ route('tickets.store') }}">
               @csrf
               <div class="modal-body">
 

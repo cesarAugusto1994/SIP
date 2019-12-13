@@ -30,8 +30,8 @@
 <div class="page-body">
 
 <div class="card">
-    <div class="card-header">
-        <h5>Editar Turma</h5>
+    <div class="card-header card bg-c-green update-card">
+        <h5 class="text-white">Editar Turma</h5>
     </div>
     <div class="card-block">
 
@@ -46,35 +46,30 @@
                 <div class="row">
 
                     <div class="col-md-6">
-
-                      <div class="form-group {!! $errors->has('course_id') ? 'has-error' : '' !!}">
-                          <label class="col-form-label" for="course_id">Curso</label>
-                          <div class="input-group">
-                            <select class="form-control" name="course_id" required>
-                                @foreach($courses->sortBy('name') as $course)
-                                      <option value="{{$course->uuid}}" {{ $team->course_id == $course->id ? 'selected' : '' }}>{{$course->title}}</option>
-                                @endforeach
-                            </select>
-                          </div>
-                          {!! $errors->first('course_id', '<p class="help-block">:message</p>') !!}
-                      </div>
-
+                        <div class="form-group">
+                            <label>Curso</label>
+                            <div class="input-group">
+                              <select class="form-control select2" name="course_id" required>
+                                  @foreach(\App\Helpers\Helper::courses()->sortBy('title') as $course)
+                                        <option value="{{$course->uuid}}" {{ $team->course_id == $course->id ? 'selected' : '' }}>{{$course->title}}</option>
+                                  @endforeach
+                              </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-6">
-
-                      <div class="form-group {!! $errors->has('teacher_id') ? 'has-error' : '' !!}">
-                          <label class="col-form-label" for="teacher_id">Instrutor</label>
-                          <div class="input-group">
-                            <select class="form-control" name="teacher_id" required>
-                                @foreach($teachers->sortBy('name') as $teacher)
-                                      <option value="{{$teacher->user->uuid}}" {{ $team->teacher_id == $teacher->id ? 'selected' : '' }}>{{$teacher->name}}</option>
-                                @endforeach
-                            </select>
-                          </div>
-                          {!! $errors->first('teacher_id', '<p class="help-block">:message</p>') !!}
-                      </div>
-
+                        <div class="form-group">
+                            <label>Instrutor</label>
+                            <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                              <select class="form-control select2" name="teacher_id" required>
+                                  @foreach($teachers->sortBy('name') as $teacher)
+                                        <option value="{{$teacher->user->uuid}}" {{ $team->teacher_id == $teacher->id ? 'selected' : '' }}>{{$teacher->name}}</option>
+                                  @endforeach
+                              </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-3">
