@@ -30,8 +30,8 @@
 
 <div class="page-body">
   <div class="card">
-      <div class="card-header">
-          <h5>Nova Transferencia</h5>
+      <div class="card-header card bg-c-green update-card">
+          <h5 class="text-white">Nova Transferencia</h5>
       </div>
       <div class="card-block">
 
@@ -40,12 +40,71 @@
 
             <div class="row m-b-30">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
-                      <label class="col-form-label">Ativo</label>
+                      <label class="col-form-label">Ativo (Produto)</label>
                       <div class="input-group">
-                        <p>{{ $stock->product->name }}</p>
-                        <input type="hidden" name="stock_id" value="{{ $stock->uuid }}">
+                        @if($stock)
+                            <p>{{ $stock->product->name }}</p>
+                            <input type="hidden" name="stock_id" value="{{ $stock->uuid }}">
+                        @else
+
+                          <select class="select2" name="stock_id">
+                            @foreach($stocks as $item)
+                              <option value="{{ $item->uuid }}">{{ $item->product->name }} - {{ $item->equity_registration_code ?: $item->id }}</option>
+                            @endforeach
+                          </select>
+
+                        @endif
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="col-form-label">Solicitante:</label>
+                      <div class="input-group">
+                        <select class="form-control select2" data-style="btn-white" name="requester_id" required>
+                            @foreach(\App\Helpers\Helper::users()->sortBy('person.name') as $user)
+                                <option value="{{$user->id}}">{{$user->person->name}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                      <label class="col-form-label">Data Agendamento</label>
+                      <div class="input-group">
+                        <input type="text" name="scheduled_to" class="form-control inputDate" value="{{ now()->format('d/m/Y') }}" autocomplete="off">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                      <label class="col-form-label">Data retirada</label>
+                      <div class="input-group">
+                        <input type="text" name="withdrawn_at" class="form-control inputDate" value="{{ now()->format('d/m/Y') }}" autocomplete="off">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                      <label class="col-form-label">Data Devolução</label>
+                      <div class="input-group">
+                        <input type="text" name="returned_at" class="form-control inputDate" autocomplete="off">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                      <label class="col-form-label">Chamado</label>
+                      <div class="input-group">
+                        <input type="text"  name="ticket_id" class="form-control" placeholder="Código do Chamado">
                       </div>
                   </div>
                 </div>
@@ -59,7 +118,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                       <label class="col-form-label">Descrição</label>
                       <div class="input-group">
@@ -68,38 +127,11 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
-                  <div class="form-group">
-                      <label class="col-form-label">Data Agendamento</label>
-                      <div class="input-group">
-                        <input type="text" name="scheduled_to" class="form-control inputDate" autocomplete="off">
-                      </div>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                      <label class="col-form-label">Data retirada</label>
-                      <div class="input-group">
-                        <input type="text" name="withdrawn_at" class="form-control inputDate" autocomplete="off">
-                      </div>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                      <label class="col-form-label">Data Devolução</label>
-                      <div class="input-group">
-                        <input type="text" name="returned_at" class="form-control inputDate" autocomplete="off">
-                      </div>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                       <label class="col-form-label">Empréstimo para:</label>
                       <div class="input-group">
-                        <select class="form-control" id="select-owner" name="localization" required>
+                        <select class="form-control select2" id="select-owner" name="localization" required>
                             <option value="">Selecione</option>
                             @foreach(\App\Helpers\Helper::stockLocalization() as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>
@@ -109,12 +141,12 @@
                   </div>
                 </div>
 
-                <div class="col-md-4" id="div-user" style="display:none;">
+                <div class="col-md-9" id="div-user" style="display:none;">
                   <div class="form-group">
                       <label class="col-form-label">Usuário:</label>
                       <div class="input-group">
-                        <select class="form-control" data-style="btn-white" name="user_id" required>
-                            @foreach(\App\Helpers\Helper::users() as $user)
+                        <select class="form-control select2" data-style="btn-white" name="user_id" required>
+                            @foreach(\App\Helpers\Helper::users()->sortBy('person.name') as $user)
                                 <option value="{{$user->id}}">{{$user->person->name}}</option>
                             @endforeach
                         </select>
@@ -122,12 +154,12 @@
                   </div>
                 </div>
 
-                <div class="col-md-4" id="div-department" style="display:none;">
+                <div class="col-md-9" id="div-department" style="display:none;">
                   <div class="form-group">
                       <label class="col-form-label">Departmaneto:</label>
                       <div class="input-group">
-                        <select class="form-control" data-style="btn-white" name="department_id" required>
-                            @foreach(\App\Helpers\Helper::departments() as $item)
+                        <select class="form-control select2" data-style="btn-white" name="department_id" required>
+                            @foreach(\App\Helpers\Helper::departments()->sortBy('name') as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
@@ -135,11 +167,11 @@
                   </div>
                 </div>
 
-                <div class="col-md-4" id="div-unit" style="display:none;">
+                <div class="col-md-9" id="div-unit" style="display:none;">
                   <div class="form-group">
                       <label class="col-form-label">Unidade:</label>
                       <div class="input-group">
-                        <select class="form-control" data-style="btn-white" name="unity_id" required>
+                        <select class="form-control select2" data-style="btn-white" name="unity_id" required>
                             @foreach(\App\Helpers\Helper::units() as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
@@ -148,11 +180,11 @@
                   </div>
                 </div>
 
-                <div class="col-md-4" id="div-vendor" style="display:none;">
+                <div class="col-md-9" id="div-vendor" style="display:none;">
                   <div class="form-group">
                       <label class="col-form-label">Fornecedor:</label>
                       <div class="input-group">
-                        <select class="form-control" data-style="btn-white" name="vendor_id">
+                        <select class="form-control select2" data-style="btn-white" name="vendor_id">
                             @foreach(\App\Helpers\Helper::vendors() as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach

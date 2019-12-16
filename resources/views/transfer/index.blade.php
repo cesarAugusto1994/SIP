@@ -27,6 +27,25 @@
 
 <div class="page-body">
 
+  <div class="row">
+
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  @permission('create.transferencias')
+                      <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{ route('transfer.create') }}"><i class="icofont icofont-paper-plane"></i> Nova Transferência</a>
+                  @endpermission
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
   <div class="card">
       <div class="card-header">
           <h5>Listagem de Transferencias</h5>
@@ -50,7 +69,7 @@
 
                     @foreach($transfers as $transfer)
                       <tr>
-                          <th scope="row">{{ $transfer->id }}</th>
+                          <th scope="row">#{{ str_pad($transfer->id, 6, "0", STR_PAD_LEFT) }}</th>
                           <td>  <a href="{{route('transfer.show', ['id' => $transfer->uuid])}}">{{ $transfer->subject }}</a></td>
                           <td>
                             @if($transfer->localization == 'Usuário')

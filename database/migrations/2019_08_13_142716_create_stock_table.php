@@ -66,7 +66,7 @@ class CreateStockTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->string('equity_registration_code')->nullable();
             $table->date('buyed_at')->nullable();
-            $table->enum('status', ['Disponível', 'Em Uso', 'Em Manutenção', 'Troca', 'Danificado', 'Perdido', 'Descartado'])->default('Disponível');
+            $table->enum('status', ['Disponível', 'Reservado', 'Em Uso', 'Em Manutenção', 'Troca', 'Danificado', 'Perdido', 'Descartado'])->default('Disponível');
             $table->enum('localization', ['Almoxarifado','Usuário', 'Departamento', 'Unidade', 'Fornecedor'])->default('Almoxarifado');
             $table->integer('user_id')->nullable();
             $table->integer('department_id')->nullable();

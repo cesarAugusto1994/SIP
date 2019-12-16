@@ -30,28 +30,35 @@
 
 <div class="page-body">
 
+  <div class="row">
+
+    <div class="col-xl-12 col-lg-12 filter-bar">
+
+      <div class="card">
+          <div class="card-block">
+              <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
+
+                  <a target="_blank" class="btn btn-info btn-sm waves-light waves-effect" href="{{ route('transfer_term_signature', $transfer->uuid) }}">Termo de Compromisso</a>
+                  @if($transfer->status == 'Pendente')
+                    <a href="#!" class="btn btn-success btn-sm waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'approve']) }}">Aprovar</a>
+                    <a href="#!" class="btn btn-danger btn-sm waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'deny']) }}">Cancelar</a>
+                  @elseif($transfer->status == 'Autorizado')
+                    <a href="#!" class="btn btn-outline-danger btn-sm waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'withdrawn']) }}">Rerirar Itens</a>
+                  @elseif($transfer->status == 'Em Uso')
+                    <a href="#!" class="btn btn-primary btn-sm waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'return']) }}">Devolver</a>
+                  @endif
+
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
   <div class="card">
       <div class="card-header">
-          <h5>Informações da transferência</h5>
-          <div class="card-header-right">
-
-              <div class="dropdown-inverse dropdown open">
-                  <button class="btn btn-primary btn-sm dropdown-toggle waves-effect waves-light " type="button" id="dropdown-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Opções</button>
-                  <div class="dropdown-menu" aria-labelledby="dropdown-3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-
-                      <a target="_blank" class="dropdown-item waves-light waves-effect" href="{{ route('transfer_term_signature', $transfer->uuid) }}">Termo de Compromisso</a>
-                      @if($transfer->status == 'Pendente')
-                        <a class="dropdown-item waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'approve']) }}">Aprovar</a>
-                        <a class="dropdown-item waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'deny']) }}">Cancelar</a>
-                      @elseif($transfer->status == 'Autorizado')
-                        <a class="dropdown-item waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'withdrawn']) }}">Rerirar Itens</a>
-                      @elseif($transfer->status == 'Em Uso')
-                        <a class="dropdown-item waves-light waves-effect btnTransfer" data-route="{{ route('transfer_itens_options', ['id' => $transfer->uuid, 'action' => 'return']) }}">Devolver</a>
-                      @endif
-                  </div>
-              </div>
-
-          </div>
+          <h5>Informações</h5>
+          <span>Detalhes da transferência</span>
       </div>
       <div class="card-block">
 
@@ -62,7 +69,7 @@
                           <tbody>
                               <tr>
                                   <th scope="row">ID</th>
-                                  <td>#{{ $transfer->id }}</td>
+                                  <td>#{{ str_pad($transfer->id, 6, "0", STR_PAD_LEFT) }}</td>
                               </tr>
                               <tr>
                                   <th scope="row">Assunto/Motivo: </th>
@@ -76,6 +83,16 @@
                                   <th scope="row">Agendamento</th>
                                   <td>{{ $transfer->scheduled_to ? $transfer->scheduled_to->format('d/m/Y') : '-' }}</td>
                               </tr>
+
+                              @if($transfer->ticket)
+
+                                  <tr>
+                                      <th scope="row">Chamado: </th>
+                                      <td><a href="{{ route('tickets.show', $transfer->ticket->uuid) }}" class="card-title">#{{ str_pad($transfer->ticket->id, 6, "0", STR_PAD_LEFT) }}<a></td>
+                                  </tr>
+
+                              @endif
+
                           </tbody>
                       </table>
                   </div>
@@ -129,7 +146,7 @@
   <div class="card">
       <div class="card-header">
           <h5>Listagem de Itens do Ativo </h5>
-          <span class="text-success">Itens de Ativo<span>
+          <span>Itens de Ativo<span>
           <div class="card-header-right">
               <ul class="list-unstyled card-option">
                 @if($transfer->status == 'Pendente')
@@ -148,7 +165,7 @@
                           <th>Matricula</th>
                           <th>Situação Atual</th>
                           <th>Localização Atual</th>
-                          <th>#</th>
+                          <th>Opções</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -158,8 +175,8 @@
                           $stock = $item->stock;
                       @endphp
                       <tr>
-                          <th scope="row">#{{ $stock->id }}</th>
-                          <td>{{ $stock->product->name }}</td>
+                          <th scope="row"><a href="{{route('stock.show', ['id' => $stock->uuid])}}">#{{ str_pad($stock->id, 6, "0", STR_PAD_LEFT) }}</a></th>
+                          <td><a href="{{route('stock.show', ['id' => $stock->uuid])}}">{{ $stock->product->name }}</a></td>
                           <td>{{ $stock->equity_registration_code }}</td>
                           <td>{{ $stock->status }}</td>
                           <td>{{ $stock->localization }}
@@ -176,12 +193,9 @@
                             @endif
                           </td>
 
-                          <td class="dropdown">
+                          <td>
                             @if($transfer->status == 'Pendente')
-                            <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-                                <a href="#!" data-route="{{route('transfer_item_destroy', ['id' => $transfer->uuid, 'item' => $item->uuid])}}" class="dropdown-item btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
-                            </div>
+                              <a href="#!" data-route="{{route('transfer_item_destroy', ['id' => $transfer->uuid, 'item' => $item->uuid])}}" class="btn btn-sm btn-outline-danger btnRemoveItem"><i class="fa fa-trash"></i> Remover</a>
                             @endif
                           </td>
 

@@ -134,7 +134,7 @@
           width: 100%;
           background-color: grey;
         }
-
+/*
         .pcoded-main-container {
           background-image: url("{{ asset('images/natal.jpg') }}");
           background-size: cover;
@@ -156,7 +156,7 @@
           word-wrap: break-word;
           background-clip: border-box;
         }
-
+*/
     </style>
 
     <script>
@@ -429,6 +429,10 @@ function notify(message, type){
   });
 };
 
+function notify2() {
+
+}
+
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4TbGLyQ0U1tNERt09Gl-sk41e_7Nmzuo&libraries=places&callback=initMap" async defer></script>
@@ -437,7 +441,23 @@ function notify(message, type){
 
 @if (notify()->ready())
     <script>
+      @if(notify()->option('modal') === true)
+
+        swal({
+            title: "{!! notify()->message() !!}",
+            text: "{!! notify()->option('text') !!}",
+            type: "{{ notify()->type() }}",
+            @if (notify()->option('timer'))
+                timer: {{ notify()->option('timer') }},
+                showConfirmButton: false
+            @endif
+        });
+
+      @else
+
         notify("{!! notify()->option('text') !!}", 'inverse');
+
+      @endif
     </script>
 @endif
 

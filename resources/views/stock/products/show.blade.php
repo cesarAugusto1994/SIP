@@ -47,7 +47,7 @@
       </div>
       <div class="card-block">
 
-        <p class="lead text-success">#{{ $product->id }} - {{ $product->name }}<p>
+        <p class="lead text-success">#{{ str_pad($product->id, 6, "0", STR_PAD_LEFT) }} - {{ $product->name }}<p>
 
         <p class="">Tipo: {{ $product->type->name }}<p>
         <p class="text-muted">Descrição: {{ $product->description }}<p>
@@ -92,7 +92,7 @@
 
                     @foreach($product->stocks as $stock)
                       <tr>
-                          <th scope="row">#{{ $stock->id }}</th>
+                          <th scope="row"> <a href="{{ route('stock.show', $stock->uuid) }}" class="card-title">#{{ str_pad($stock->id, 6, "0", STR_PAD_LEFT) }}</a></th>
                           <td>{{ $stock->equity_registration_code }}</td>
                           <td>{{ $stock->status }}</td>
                           <td>{{ $stock->localization }}</td>

@@ -15,6 +15,7 @@
         "canducci/cep": "^2.0",
         "chumper/zipper": "^1.0",
         "codecourse/notify": "^1.1",
+        "doctrine/dbal": "^2.10",
         "emadadly/laravel-uuid": "^1.2",
         "fideloper/proxy": "^4.0",
         "geekcom/validator-docs": "^1.5",

@@ -12,11 +12,15 @@ class Transfer extends Model
 
     protected $table = 'product_transfer';
 
-    protected $fillable = ['user_id', 'subject', 'description', 'status',
+    protected $fillable = ['user_id', 'subject', 'description', 'status', 'requester_id', 'returned_to', 'ticket_id',
     'localization', 'target_id', 'term_path', 'scheduled_to', 'withdrawn_at', 'returned_at'];
 
-    protected static $logAttributes = ['user_id', 'subject', 'description', 'status',
-    'localization', 'target_id', 'term_path', 'scheduled_to', 'withdrawn_at', 'returned_at'];
+    protected static $logAttributes = [
+      'user_id', 'subject', 'description', 'status',
+      'requester_id', 'returned_to', 'ticket_id',
+      'localization', 'target_id', 'term_path', 'scheduled_to',
+      'withdrawn_at', 'returned_at'
+    ];
 
     protected $dates = ['scheduled_to', 'withdrawn_at', 'returned_at'];
 
@@ -28,6 +32,11 @@ class Transfer extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'target_id');
+    }
+
+    public function ticket()
+    {
+        return $this->belongsTo('App\Models\Ticket', 'ticket_id');
     }
 
     public function department()

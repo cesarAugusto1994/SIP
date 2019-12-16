@@ -7,6 +7,7 @@ use App\Models\Stock\Stock;
 use App\Models\Stock\Stock\Transfer;
 use App\Models\Stock\Stock\Transfer\Item;
 use App\Models\Stock\Stock\Log;
+use App\Models\Ticket;
 use DateTime;
 use PDF;
 
@@ -50,19 +51,23 @@ class TransferController extends Controller
 
         foreach ($stocks as $key => $stock) {
 
-            $hasTransfer = Transfer::whereIn('status', ['Pendente', 'Autorizado', 'Em Uso'])
-            ->whereHas('items', function($query) use($stock) {
-                $query->where('stock_id', $stock->id);
-            })->get();
+            if($stock->status != 'Disponível') {
 
-            if($hasTransfer->isNotEmpty()) {
+              notify()->flash('Atenção!', 'info', [
+                'text' => 'O Item #' . $stock->id . ' já se encontra adicionado à uma transferência.'
+              ]);
+
               continue;
+
             }
 
             Item::updateOrcreate([
               'stock_id' => $stock->id,
               'transfer_id' => $transfer->id,
             ]);
+
+            $stock->status = 'Reservado';
+            $stock->save();
         }
 
         notify()->flash('Sucesso!', 'success', [
@@ -77,6 +82,9 @@ class TransferController extends Controller
         try {
 
           $item = Item::uuid($item);
+
+          $item->stock->status = 'Disponível';
+          $item->stock->save();
 
           $item->delete();
 
@@ -173,7 +181,7 @@ class TransferController extends Controller
                   [
                     'stock_id' => $item->stock->id,
                     'user_id' => $user->id,
-                    'message' => 'Item transferido, codigo tranferencia: ' . $transfer->id
+                    'message' => 'Item transferido, codigo transferência: ' . $transfer->id
                   ]
                 );
 
@@ -197,13 +205,14 @@ class TransferController extends Controller
                 $item->stock->save();
 
                 $transfer->status = 'Devolvido';
+                $transfer->returned_to = $user->id;
                 $transfer->save();
 
                 Log::create(
                   [
                     'stock_id' => $item->stock->id,
                     'user_id' => $user->id,
-                    'message' => 'Item devolvido, codigo tranferencia: ' . $transfer->id
+                    'message' => 'Itens devolvidos com sucesso, código transferência: ' . $transfer->id
                   ]
                 );
 
@@ -225,43 +234,33 @@ class TransferController extends Controller
      */
     public function create(Request $request)
     {
-        if(!$request->has('stock')) {
+        $stocks = $stock = null;
+
+        if($request->has('stock')) {
 
           notify()->flash('Erro!', 'error', [
             'text' => 'Nenhum Ativo foi informado.'
           ]);
 
-          return back();
-        }
+          $stock = Stock::uuid($request->get('stock'));
 
-        $stock = Stock::uuid($request->get('stock'));
+          if($stock->status != 'Disponível') {
 
-        $hasTransfer = Transfer::whereIn('status', ['Pendente', 'Autorizado', 'Em Uso'])
-        ->whereHas('items', function($query) use($stock) {
-            $query->where('stock_id', $stock->id);
-        })->get();
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Este ativo deve estar disponivel para uma transferência.'
+            ]);
 
-        if($hasTransfer->isNotEmpty()) {
+            return back();
 
-          notify()->flash('Erro!', 'error', [
-            'text' => 'Este ativo já esta vinculado a uma transferência.'
-          ]);
+          }
 
-          return back();
+        } else {
+
+              $stocks = Stock::where('status', 'Disponível')->get();
 
         }
 
-        if($stock->status != 'Disponível') {
-
-          notify()->flash('Erro!', 'error', [
-            'text' => 'Este ativo deve estar disponivel para uma transferência.'
-          ]);
-
-          return back();
-
-        }
-
-        return view('transfer.create', compact('stock'));
+        return view('transfer.create', compact('stocks', 'stock'));
     }
 
     /**
@@ -276,30 +275,55 @@ class TransferController extends Controller
 
         if(!$request->filled('subject')) {
           notify()->flash('Erro!', 'error', [
-            'text' => 'O assunto/motivo deve ser informado.'
+            'text' => 'O assunto/motivo deve ser informado.',
+            'modal' => true
           ]);
           return back();
         }
 
         if(!$request->filled('description')) {
           notify()->flash('Erro!', 'error', [
-            'text' => 'A descrição deve ser informada.'
+            'text' => 'A descrição deve ser informada.',
+            'modal' => true
           ]);
           return back();
         }
 
         if(!$request->filled('scheduled_to')) {
           notify()->flash('Erro!', 'error', [
-            'text' => 'A Data de Agendamento deve ser informada.'
+            'text' => 'A Data de Agendamento deve ser informada.',
+            'modal' => true
           ]);
           return back();
         }
 
         if(!$request->filled('withdrawn_at')) {
           notify()->flash('Erro!', 'error', [
-            'text' => 'A Data de Retirada deve ser informada.'
+            'text' => 'A Data de Retirada deve ser informada.',
+            'modal' => true
           ]);
           return back();
+        }
+
+        $ticket = null;
+
+        if($request->filled('ticket_id')) {
+
+            $ticket = Ticket::find($request->get('ticket_id'));
+
+            if($ticket) {
+
+              $ticket = $ticket->id;
+
+            } else {
+
+              notify()->flash('Erro!', 'error', [
+                'text' => 'O chamado informado não foi encontrado.',
+                'modal' => true
+              ]);
+              return back();
+
+            }
         }
 
         $user = $request->user();
@@ -344,6 +368,7 @@ class TransferController extends Controller
         $data['stock_id'] = $stock->id;
         $data['user_id'] = $user->id;
         $data['target_id'] = $target;
+        $data['ticket_id'] = $ticket;
 
         $transfer = Transfer::create($data);
 

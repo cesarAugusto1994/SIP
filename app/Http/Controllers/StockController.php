@@ -74,6 +74,13 @@ class StockController extends Controller
         return redirect()->route('products.show', $product->uuid);
     }
 
+    public function show($id)
+    {
+        $stock = Stock::uuid($id);
+        $product = $stock->product;
+        return view('stock.stock.show', compact('stock', 'product'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

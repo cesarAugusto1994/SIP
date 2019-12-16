@@ -2,7 +2,7 @@
 
 @section('content')
 
-<table class="table table-bordered table-style">
+<table class="table table-bordered table-style" style="width:auto;margin-bottom:50px;">
 
   <thead>
     <tr>
@@ -10,14 +10,16 @@
         <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
     </tr>
     <tr>
-        <td colspan="3" style="padding-left:13px;">
+        <td colspan="2">
           <address>
               <p><b>Código: #{{ str_pad($transfer->id, 6, "0", STR_PAD_LEFT) }}</b></p>
 
-              <p>Assunto/Motivo: {{ $transfer->subject }}</p>
-              <p>Descrição: {{ $transfer->description }}</p>
+              <p><b>Criada Por:</b> {{ $transfer->user->person->name }}</p>
 
-              <p>Destino:
+              <p><b>Assunto/Motivo:</b> {{ $transfer->subject }}</p>
+              <p><b>Descrição:</b> {{ $transfer->description }}</p>
+
+              <p><b>Destino:</b>
 
                 @if($transfer->localization == 'Usuário')
                   {{ $transfer->user->person->name }} - {{ $transfer->user->person->department->name }}
@@ -33,21 +35,25 @@
 
               </p>
 
-              <p>Data de Agendamento: {{ $transfer->scheduled_to ? $transfer->scheduled_to->format('d/m/Y') : '-' }}</p>
-              <p>Data de Retirada: {{ $transfer->withdrawn_at ? $transfer->withdrawn_at->format('d/m/Y') : '-' }}</p>
-              <p>Data de Devolução: {{ $transfer->returned_at ? $transfer->returned_at->format('d/m/Y') : '-' }}</p>
 
           </address>
         </td>
 
+        <td colspan="1">
+
+          <p><b>Data Solicitação:</b> {{ $transfer->created_at->format('d/m/Y H:i') ?? '-' }}</p>
+          <p><b>Data Agendamento:</b> {{ $transfer->scheduled_to ? $transfer->scheduled_to->format('d/m/Y') : '-' }}</p>
+          <p><b>Data Retirada:</b> {{ $transfer->withdrawn_at ? $transfer->withdrawn_at->format('d/m/Y') : '-' }}</p>
+          <p><b>Data Devolução:</b> {{ $transfer->returned_at ? $transfer->returned_at->format('d/m/Y') : '-' }}</p>
+
+        </td>
+
     </tr>
 
-
-
-    <tr class="table-success">
-      <th style="width:100px">Item</th>
+    <tr>
+      <th style="width:230px">Item</th>
       <th>Matricula</th>
-      <th style="width:100px">Serial</th>
+      <th>Serial</th>
     </tr>
   </thead>
 
@@ -88,7 +94,7 @@
     </tr>
 
     <tr>
-        <td colspan="3">Assinatura do Responsável:</td>
+        <td colspan="3">Assinatura do Solicitante:</td>
     </tr>
 
     <tr>
@@ -100,14 +106,9 @@
     </tr>
 
     <tr>
-        <td colspan="3">Data de Devolução: __/__/_____</td>
+        <td colspan="1"><b>Data de Devolução: __/__/_____</b></td>
+        <td colspan="2"><b>Assinatura do Conferente:</b></td>
     </tr>
-
-    <tr>
-        <td colspan="3">Assinatura do Responsável:</td>
-    </tr>
-
-
 
   </tbody>
   <tfoot>

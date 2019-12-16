@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Transferencia de Ativos #{{ $transfer->id }}</h4>
+                    <h4>Transferencia de Ativos #{{ str_pad($transfer->id, 6, "0", STR_PAD_LEFT) }}</h4>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                       @foreach($stocks as $stock)
                         <tr>
                             <th scope="row"><input class="js-switch" value="{{ $stock->id }}" type="checkbox" name="items[]"/></th>
-                            <th scope="row">#{{ $stock->id }}</th>
+                            <th scope="row">#{{ str_pad($stock->id, 6, "0", STR_PAD_LEFT) }}</th>
                             <td>{{ $stock->product->name }}</td>
                             <td>{{ $stock->equity_registration_code }}</td>
                             <td>{{ $stock->status }}</td>
