@@ -23,18 +23,12 @@ class CreateAttendancesTable extends Migration
 
         Schema::create('attendances', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('employee_id')->unsigned();
-            $table->foreign('employee_id')->references('id')->on('employees');
-
-            $table->integer('client_id')->unsigned();
+            $table->integer('employee_id');
+            $table->integer('client_id')->unsigned()->default(1);
             $table->foreign('client_id')->references('id')->on('clients');
-
             $table->integer('status_id')->unsigned()->default(1);
             $table->foreign('status_id')->references('id')->on('attendance_statuses');
-
             $table->date('delivery_date');
-
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->uuid('uuid')->unique();

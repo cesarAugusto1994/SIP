@@ -81,7 +81,7 @@
             @permission('view.email')
 
             <li>
-                <a class="text-success" target="_blank" href="https://webmail.umbler.com">
+                <a class="text-success" target="_blank" href="https://webmail-seguro.com.br/locaweb.com/">
                     <span class="pcoded-micon"><i class="far fa-envelope"></i></span>
                     <span class="pcoded-mtext">Webmail</span>
                 </a>
