@@ -234,6 +234,8 @@ Route::middleware('auth')->group(function () {
 
           Route::get('clients/documents/search', 'ClientController@documents')->name('client_documents_search');
 
+          Route::get('clients/{id}/trainings', 'ClientController@trainings')->name('client_trainings');
+
           Route::resource('employees', 'EmployeesController');
 
           Route::get('clients/{id}/employees', 'EmployeesController@show')->name('client_employees');

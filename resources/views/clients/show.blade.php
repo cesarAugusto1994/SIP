@@ -53,6 +53,8 @@
             <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="btn btn-info btn-sm"><i class="far fa-edit"></i> Editar</a>
         @endpermission
 
+        <a target="_blank" href="{{route('client_trainings', ['client' => $client->uuid])}}" class="btn btn-outline-danger btn-sm"><i class="fas fa-file"></i> Treinamentos</a>
+
       </div>
   </div>
 
@@ -123,7 +125,7 @@
               <div class="card-block">
                   <i class="feather icon-file-text st-icon bg-c-blue"></i>
                   <div class="text-left">
-                      <h3 class="d-inline-block">{{ $client->documents->count() }}</h3>
+                      <h3 class="d-inline-block">{{ $client->documentFiles->count() }}</h3>
                       <span class="f-right bg-c-blue"><a class="text-white" href="{{ route('client-documents.index', ['client' => $client->uuid]) }}">Acessar</a></span>
                   </div>
               </div>
@@ -249,57 +251,6 @@
           </div>
       </div>
 
-      <div class="col-md-12">
-
-          <div class="card">
-              <div class="card-header">
-                  <h5>Treinamentos</h5>
-              </div>
-              <div class="card-block table-border-style">
-                  <div class="table-responsive">
-                      <table class="table table-lg table-styling">
-                          <thead>
-                              <tr class="table-primary">
-                                <th>Nome</th>
-                                <th>Curso</th>
-                                <th>Data</th>
-                                <th>Certificado</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($client->employees as $employee)
-                              @foreach($employee->trainings as $training)
-
-                                  @if($training->status == 'FINALIZADA')
-                                      @continue;
-                                  @endif
-
-                                  <tr>
-                                      <td>
-                                          <p>{{ $employee->name }}</p>
-                                      </td>
-                                      <td>
-                                          {{$training->team->course->title}}<br/><a href="{{ route('teams.show', $training->team->uuid) }}" class="card-title"><small>Turma: #{{ str_pad($training->team->id, 6, "0", STR_PAD_LEFT) }}</small></a>
-                                      </td>
-                                      <td>
-                                          <p>{{$training->team->start->format('d/m/Y H:i')}} até {{$training->team->end->format('d/m/Y H:i')}}</p>
-                                      </td>
-                                      <td>
-                                        <a target="_blank" href="{{route('team_certified', [$training->uuid])}}"
-                                          class="btn btn-sm btn-outline-success">Gerar Certificado</a>
-                                      </td>
-                                  </tr>
-                              @endforeach
-                            @endforeach
-                          </tbody>
-                      </table>
-
-                  </div>
-              </div>
-          </div>
-
-      </div>
-
   </div>
 
 </div>
@@ -315,8 +266,6 @@
 
   formUpload.on('submit', function(e) {
 
-      //e.preventDefault();
-
       modalForm.modal('hide');
 
       window.swal({
@@ -326,8 +275,6 @@
         showConfirmButton: false,
         allowOutsideClick: false
       })
-
-      //formUpload.submit();
 
   });
 

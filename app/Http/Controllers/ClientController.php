@@ -77,6 +77,12 @@ class ClientController extends Controller
         return view('clients.index', compact('clients', 'quantity'));
     }
 
+    public function trainings($id)
+    {
+        $client = Client::uuid($id);
+        return view('clients.trainings', compact('client'));
+    }
+
     public function search(Request $request)
     {
         if(!$request->filled('search')) {}

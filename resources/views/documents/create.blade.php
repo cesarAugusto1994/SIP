@@ -53,7 +53,6 @@
                   <label class="col-form-label">Tipo</label>
                   <div class="input-group">
                     <select class="form-control select2" title="Selecione" name="type_id[]" required multiple>
-
                         @foreach(\App\Helpers\Helper::documentTypes()->sortBy('name') as $type)
                             <option value="{{$type->uuid}}">{{$type->name}}</option>
                         @endforeach
@@ -96,6 +95,11 @@
                 <div class="input-group">
                   <select class="form-control select2" id="select-employee" multiple
                     name="employee_id[]">
+                    @if($client)
+                      @foreach($client->employees as $employee)
+                        <option value="{{ $employee->uuid }}">{{ $employee->name }}</option>
+                      @endforeach
+                    @endif
                   </select>
                 </div>
             </div>
