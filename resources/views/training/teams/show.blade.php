@@ -32,34 +32,49 @@
     <div class="card">
         <div class="card-block">
 
-          @if($team->status == 'RESERVADO')
-
-              <form action="{{ route('team_start', $team->uuid) }}" method="POST" style="display: inline;">{{ csrf_field() }}
-                <button class="btn btn-success btn-sm"><i class="ti-control-play"></i> <span>Iniciar Curso</span></button>
-              </form>
-
+          @if($hasAgendado)
+            <button type="button" class="btn btn-outline-success btn-sm waves-effect waves-light" data-toggle="modal" data-target=".statusTeam">Marcar Presença</button>
           @endif
 
-          @if($team->status == 'EM ANDAMENTO')
+          <div class="btn-group dropdown-split-primary">
+            @permission('edit.turmas')
 
-              <a href="#!" data-route="{{ route('team_finish', $team->uuid) }}" class="btn btn-danger btn-sm btnFinishTeam"><i class="ti-control-pause"></i> <span>Finalizar Curso</span></a>
+              @if($team->status == 'RESERVADO')
 
-          @endif
+                  <a href="#!" data-route="{{ route('team_start', $team->uuid) }}" class="btn btn-success btn-sm btnStartTeam"><i class="ti-control-play"></i> <span>Iniciar Curso</span></a>
 
-          @if($team->status == 'FINALIZADA')
+              @endif
 
-              <a target="_blank" href="{{ route('team_certified_company', $team->uuid) }}" class="btn btn-success btn-sm"><i class="ti-file"></i> <span>Certificado por Empresa</span></a>
-              <a target="_blank" href="{{ route('team_certified_team', $team->uuid) }}" class="btn btn-success btn-sm"><i class="ti-file"></i> <span>Certificado por Turma</span></a>
+              @if($team->status == 'EM ANDAMENTO')
 
-          @endif
+                  <a href="#!" data-route="{{ route('team_finish', $team->uuid) }}" class="btn btn-success btn-sm btnFinishTeam"><i class="ti-control-pause"></i> <span>Finalizar Curso</span></a>
 
-          <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="btn btn-warning btn-sm"><i class="ti-list"></i> <span>Lista de Presença</span></a>
+              @endif
 
-          @if($team->status != 'FINALIZADA' || $team->status == 'FINALIZADA' && auth()->user()->isAdmin())
-              <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-primary btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
-          @endif
+            @endpermission
+              <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="sr-only">Toggle primary</span>
+              </button>
+              <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-          <a href="#!" data-route="{{ route('team_duplicate', $team->uuid) }}" class="btn btn-inverse btnDuplicate btn-sm waves-effect waves-light"><i class="far fa-copy"></i> Duplicar</a>
+                  <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-list"></i> <span>Lista de Presença</span></a>
+
+                  @if($team->status != 'FINALIZADA' || $team->status == 'FINALIZADA' && auth()->user()->isAdmin())
+                      <a href="{{ route('teams.edit', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-edit"></i> Editar Informações</a>
+                  @endif
+                  <!--
+                  <a href="#!" data-route="{{ route('team_duplicate', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-copy"></i> Duplicar</a>
+                -->
+                  @if($team->status == 'FINALIZADA')
+
+                      <a target="_blank" href="{{ route('team_certified_company', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-file"></i> <span>Certificado por Empresa</span></a>
+                      <a target="_blank" href="{{ route('team_certified_team', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-file"></i> <span>Certificado por Turma</span></a>
+
+                  @endif
+
+              </div>
+
+          </div>
 
         </div>
     </div>
@@ -86,9 +101,8 @@
     @endif
 
     <div class="card">
-        <div class="card-header">
-            <h5>Informações da turma </h5>
-
+        <div class="card-header card bg-c-green update-card">
+            <h5 class="text-white">Informações da turma </h5>
         </div>
         <div class="card-block">
 
@@ -165,27 +179,25 @@
                                       </table>
                                   </div>
                               </div>
-                              <!-- end of table col-lg-6 -->
                           </div>
-                          <!-- end of row -->
                       </div>
-                      <!-- end of general info -->
                   </div>
-                  <!-- end of col-lg-12 -->
               </div>
-              <!-- end of row -->
           </div>
-
         </div>
     </div>
+
+    <div class="row">
+
+      <div class="col-md-3">
 
     @permission('create.turmas')
 
       @if($team->status == 'RESERVADO' || $team->status == 'EM ANDAMENTO')
 
         <div class="card">
-            <div class="card-header">
-                <h5>Adicionar Funcionários </h5>
+            <div class="card-header card bg-danger update-card">
+                <h5 class="text-white">Adicionar Funcionários</h5>
             </div>
             <div class="card-block">
 
@@ -213,167 +225,173 @@
 
     @endpermission
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Lista Funcionários para o Curso </h5>
-            <span>({{ $team->employees->count() }}) registros encontrados.</span>
-            <div class="card-header-right">
-                <ul class="list-unstyled card-option">
-                  @if($hasAgendado)
-                    <li><button type="button" class="btn btn-success btn-sm waves-effect waves-light" data-toggle="modal" data-target=".statusTeam">Presença</button></li>
-                  @endif
-                </ul>
-            </div>
+      </div>
 
-            <div class="modal fade statusTeam" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mySmallModalLabel">Presença</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        </div>
+      <div class="col-md-9">
 
-                        <form data-parsley-validate method="post" action="{{route('team_employee_presence', $team->uuid)}}">
+        <div class="card">
+            <div class="card-header">
+                <h5>Lista Funcionários para o Curso </h5>
+                <span>({{ $team->employees->count() }}) registros encontrados.</span>
 
-                        <div class="modal-body">
+                <div class="modal fade statusTeam" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="mySmallModalLabel">Presença</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
 
-                              {{csrf_field()}}
+                            <form data-parsley-validate method="post" action="{{route('team_employee_presence', $team->uuid)}}">
 
-                              <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
+                            <div class="modal-body">
 
-                                          <th>Presente?</th>
-                                          <th>Nome</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($team->employees->sortBy('employee.name') as $employeeItem)
+                                  {{csrf_field()}}
 
-                                            @php
-                                                $employee = $employeeItem->employee;
-
-                                                $checked = null;
-
-                                                if($employeeItem->status == 'PRESENTE') {
-                                                    $checked = 'checked';
-                                                }
-                                            @endphp
-
-                                            <input name="employees[]" value="{{ $employeeItem->uuid }}" type="hidden"/>
-
+                                  <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
                                             <tr>
 
-                                                <td><input class="js-switch" type="checkbox" {{ $checked }} name="employee-{{ $employeeItem->uuid }}" value="1"/></td>
-                                                <td>
-                                                    <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
-                                                    <br/>
-                                                    <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
-                                                </td>
-
+                                              <th>Presente?</th>
+                                              <th>Nome</th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($team->employees->sortBy('employee.name') as $employeeItem)
 
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                              </div>
+                                                @php
+                                                    $employee = $employeeItem->employee;
+
+                                                    $checked = null;
+
+                                                    if($employeeItem->status == 'PRESENTE') {
+                                                        $checked = 'checked';
+                                                    }
+                                                @endphp
+
+                                                <input name="employees[]" value="{{ $employeeItem->uuid }}" type="hidden"/>
+
+                                                <tr>
+
+                                                    <td><input class="js-switch" type="checkbox" {{ $checked }} name="employee-{{ $employeeItem->uuid }}" value="1"/></td>
+                                                    <td>
+                                                        <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
+                                                        @if(\App\Helpers\helper::actualCompany($employee))
+                                                          <br/>
+                                                          <a href="{{route('clients.show', \App\Helpers\helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\helper::actualCompany($employee)->name }}</small></a>
+                                                        @endif
+                                                    </td>
+
+                                                </tr>
+
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                  </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary btnChangeStatus waves-effect waves-light">Salvar</button>
+                            </div>
+
+                            </form>
 
                         </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary btnChangeStatus waves-effect waves-light">Salvar</button>
-                        </div>
-
-                        </form>
-
                     </div>
                 </div>
+
             </div>
+            <div class="card-block table-border-style">
 
-        </div>
-        <div class="card-block table-border-style">
-
-          @if($team->employees->isNotEmpty())
-            <div class="table-responsive">
-              <table class="table table-lg table-styling">
-                  <thead>
-                      <tr class="table-inverse">
-                        <th>Nome</th>
-                        <th>Situação</th>
-                        <th>Opções</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      @foreach($team->employees->sortBy('employee.name') as $employeeItem)
-
-                          @php
-                              $employee = $employeeItem->employee;
-                          @endphp
-
-                          <tr>
-
-                              <td>
-                                  <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
-                                  <br/>
-                                  <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
-
-                                  <br/>
-                                  <small>Função: {{$employee->occupation->name}}</small>
-                                  <br/>
-                                  <small>CPF: {{$employee->cpf}}</small>
-
-                              </td>
-
-                              <td>
-                                @if($employeeItem->status == 'AGENDADO')
-                                  <span class="badge badge-primary">{{ $employeeItem->status }}</span>
-                                @elseif($employeeItem->status == 'PRESENTE')
-                                  <span class="badge badge-success">{{ $employeeItem->status }}</span>
-                                @elseif($employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA')
-                                  <span class="badge badge-danger">{{ $employeeItem->status }}</span>
-                                @endif
-                              </td>
-
-                              <td class="dropdown">
-
-                                @if(in_array($team->status, ['RESERVADO', 'EM ANDAMENTO']))
-
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
-                                <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
-                                   <a href="{{ route('teams_employee_status', $employeeItem->uuid) }}"
-                                   class="dropdown-item" style="cursor:pointer">Editar Situação</a>
-                                   <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
-                                     class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
-                                </div>
-
-                                @endif
-
-                                @if($employeeItem->approved)
-                                  <a target="_blank" href="{{route('team_certified', [$employeeItem->uuid])}}"
-                                    class="btn btn-sm btn-success">Gerar Certificado</a>
-                                @endif
-
-                              </td>
-
+              @if($team->employees->isNotEmpty())
+                <div class="table-responsive">
+                  <table class="table table-lg table-styling">
+                      <thead>
+                          <tr class="table-inverse">
+                            <th>Nome</th>
+                            <th>Situação</th>
+                            <th>Opções</th>
                           </tr>
-                      @endforeach
-                  </tbody>
-              </table>
-            </div>
-          @else
-            <div class="widget white-bg no-padding">
-                <div class="p-m text-center">
-                    <h1 class="m-md"><i class="fas fa-users fa-2x"></i></h1>
-                    <h6 class="font-bold no-margins">
-                        Nenhum registro encontrado.
-                    </h6>
-                </div>
-            </div>
-          @endif
+                      </thead>
+                      <tbody>
+                          @foreach($team->employees->sortBy('employee.name') as $employeeItem)
 
+                              @php
+                                  $employee = $employeeItem->employee;
+                              @endphp
+
+                              <tr>
+
+                                  <td>
+                                      <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
+                                      @if(\App\Helpers\helper::actualCompany($employee))
+                                      <br/>
+                                      <a href="{{route('clients.show', \App\Helpers\helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\helper::actualCompany($employee)->name }}</small></a>
+                                      @endif
+                                      @if(\App\Helpers\helper::actualOccupation($employee))
+                                      <br/>
+                                      <small>Função: {{ \App\Helpers\helper::actualOccupation($employee)->name }}</small>
+                                      @endif
+                                      <br/>
+                                      <small>CPF: {{ \App\Helpers\helper::formatCnpjCpf($employee->cpf) }}</small>
+
+                                  </td>
+
+                                  <td>
+                                    @if($employeeItem->status == 'AGENDADO')
+                                      <span class="badge badge-primary">{{ $employeeItem->status }}</span>
+                                    @elseif($employeeItem->status == 'PRESENTE')
+                                      <span class="badge badge-success">{{ $employeeItem->status }}</span>
+                                    @elseif($employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA')
+                                      <span class="badge badge-danger">{{ $employeeItem->status }}</span>
+                                    @endif
+                                  </td>
+
+                                  <td class="dropdown">
+
+                                    @if(in_array($team->status, ['RESERVADO', 'EM ANDAMENTO']))
+
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
+                                       <a href="{{ route('teams_employee_status', $employeeItem->uuid) }}"
+                                       class="dropdown-item" style="cursor:pointer">Editar Situação</a>
+                                       <a data-route="{{route('teams_employee_destroy', [$team->uuid, $employeeItem->uuid])}}" data-reload="1"
+                                         class="dropdown-item btnRemoveItem" style="cursor:pointer">Remover </a>
+                                    </div>
+
+                                    @endif
+
+                                    @if($employeeItem->approved)
+                                      <a target="_blank" href="{{route('team_certified', [$employeeItem->uuid])}}"
+                                        class="btn btn-sm btn-success">Gerar Certificado</a>
+                                    @endif
+
+                                  </td>
+
+                              </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+                </div>
+              @else
+                <div class="widget white-bg no-padding">
+                    <div class="p-m text-center">
+                        <h1 class="m-md"><i class="fas fa-users fa-2x"></i></h1>
+                        <h6 class="font-bold no-margins">
+                            Nenhum registro encontrado.
+                        </h6>
+                    </div>
+                </div>
+              @endif
+
+            </div>
         </div>
+
+      </div>
+
     </div>
 
     <div class="card">
@@ -434,6 +452,59 @@
 
 <script>
 
+    $(".btnStartTeam").click(function(e) {
+        var self = $(this);
+
+        swal({
+          title: 'Iniciar o Curso?',
+          text: "Tenha certeza que quer Iniciar o curso!",
+          showCancelButton: true,
+          confirmButtonColor: '#0ac282',
+          cancelButtonColor: '#D46A6A',
+          confirmButtonText: 'Sim, Iniciar',
+          cancelButtonText: 'Não'
+          }).then((result) => {
+          if (result.value) {
+
+            e.preventDefault();
+
+            window.swal({
+              title: 'Em progresso...',
+              text: 'Iniciando o Curso.',
+              type: 'success',
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+
+            $.ajax({
+              headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+              url: self.data('route'),
+              type: 'POST',
+              dataType: 'json',
+              data: {}
+            }).done(function(data) {
+
+              swal.close();
+
+              if(data.success) {
+
+                window.location.reload();
+
+                notify(data.message, 'inverse');
+
+              } else {
+
+                notify2(data.message, 'danger');
+
+              }
+
+            });
+          }
+        });
+    });
+
     $(".btnFinishTeam").click(function(e) {
         var self = $(this);
 
@@ -478,7 +549,7 @@
 
               } else {
 
-                notify(data.message, 'danger');
+                notify2(data.message, 'danger');
 
               }
 
@@ -531,7 +602,7 @@
 
                 swal.close();
 
-                notify(data.message, 'danger');
+                notify2(data.message, 'danger');
 
               }
 

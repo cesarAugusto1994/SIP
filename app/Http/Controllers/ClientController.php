@@ -334,7 +334,14 @@ class ClientController extends Controller
           return response()->json([
             'success' => true,
             'message' => 'Registros retornados',
-            'data' => $client->employees
+            'data' => $client->employees->map(function($employee) {
+                return [
+                  'name' => $employee->employee->name,
+                  'id' => $employee->employee->id,
+                  'uuid' => $employee->employee->uuid,
+                  'cpf' => $employee->employee->cpf,
+                ];
+            })
           ]);
 
         } catch(\Exception $e) {

@@ -140,7 +140,7 @@ class ServiceOrderController extends Controller
     public function contract($id)
     {
         $order = ServiceOrder::uuid($id);
-        return view('service-order.contract-1', compact('order'));
+        return view('service-order.contract-edit', compact('order'));
     }
 
     public function receipt($id, Request $request)

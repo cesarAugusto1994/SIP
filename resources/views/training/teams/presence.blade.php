@@ -25,7 +25,7 @@
         <td colspan="2">
             <b>Data:</b>
             {{ $dt->format('d/m/Y') }}<br/>
-          <b>Local:</b> {{ $team->localization }}</td>
+          <b>Local:</b> {{ $team->localization ?? 'Centro de Treinamentos Provider' }}</td>
     </tr>
 
     <tr>
@@ -42,21 +42,30 @@
         $employee = $employeeItem->employee;
     @endphp
       <tr class="{{ $employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA' ? 'table-danger' : '' }}">
-          <td colspan="2"><span style="text-transform:uppercase;">{{$employee->name}}</span><br>
-            <small style="font-size:10px">CPF: {{ $employee->cpf }}</small><br/>
-            <small style="font-size:10px">Função: {{ $employee->occupation->name }}</small>
-          </td>
-          <td colspan="3"><span style="font-size:12px">{{$employee->company->name}}</span>
+          <td colspan="2"><span style="text-transform:uppercase;">{{$employee->name}}</span>
+            @if($employee->cpf)
+            <br>
+            <small style="font-size:10px">CPF: {{ \App\Helpers\helper::formatCnpjCpf($employee->cpf) }}</small>
+            @endif
+            @if(\App\Helpers\helper::actualOccupation($employee))
             <br/>
-            <small style="font-size:10px">CNPJ: {{ $employee->company->document }}</small>
+            <small style="font-size:10px">Função: {{ \App\Helpers\helper::actualOccupation($employee)->name }}</small>
+            @endif
+          </td>
+          <td colspan="3" style="font-size:10px">
+
+            @if(\App\Helpers\helper::actualCompany($employee))
+              {{ \App\Helpers\helper::actualCompany($employee)->name }}<br/>
+              CNPJ: {{ \App\Helpers\helper::formatCnpjCpf(\App\Helpers\helper::actualCompany($employee)->document) }}
+            @endif
+
           </td>
           <td class="text-center" style="vertical-align:middle;">
             @if($employeeItem->status == 'CANCELADO' || $employeeItem->status == 'FALTA')
               AUSENTE
-
             @else
 
-            <span style="opacity:0.3;">{{$employee->name}}</span>
+              <span style="opacity:0.3;">{{$employee->name}}</span>
 
             @endif
           </td>

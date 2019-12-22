@@ -52,7 +52,7 @@ class Client extends Model
 
     public function employees()
     {
-        return $this->hasMany('App\Models\Client\Employee', 'company_id');
+        return $this->hasMany('App\Models\Client\Employee\Job', 'company_id');
     }
 
     public function deliveries()

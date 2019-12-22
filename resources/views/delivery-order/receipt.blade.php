@@ -10,7 +10,7 @@
                     <table class="table table-responsive invoice-table table-borderless">
                         <tbody>
                             <tr>
-                                <td><img width="200" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" class="m-b-10" alt=""></td>
+                                <td><img width="200" src="{{ asset('images/logo-provider.png') }}" class="m-b-10" alt=""></td>
 
                             </tr>
                             <tr>

@@ -54,7 +54,7 @@ class Task extends Model
 
     public function client()
     {
-        return $this->belongsTo(Department::class, 'client_id');
+        return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
     public function vendor()

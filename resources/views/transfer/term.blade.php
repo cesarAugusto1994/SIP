@@ -7,7 +7,7 @@
   <thead>
     <tr>
         <td class="text-center" colspan="2"><h4><b> TRANSFERÊNCIA DE ATIVO</b> </h4></td>
-        <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+        <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ asset('images/logo-provider.png') }}" alt="" /></td>
     </tr>
     <tr>
         <td colspan="2">

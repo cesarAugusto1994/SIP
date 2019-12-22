@@ -112,7 +112,7 @@
 
                                     <td class="dropdown">
 
-                                      <button type="button" class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                                      <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></button>
                                       <div class="dropdown-menu dropdown-menu-right b-none contact-menu">
 
                                         @permission('view.clientes')
@@ -149,7 +149,7 @@
                                     </td>
 
                                     <td>
-                                        <p>{{$client->document}}</p>
+                                        <p>{{ \App\Helpers\Helper::formatCnpjCpf($client->document) }}</p>
                                     </td>
 
                                     <td>

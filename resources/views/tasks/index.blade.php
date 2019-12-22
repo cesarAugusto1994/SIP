@@ -122,40 +122,17 @@
                         </thead>
                         <tbody>
                           @foreach($tasks as $task)
-
-                            @php
-
-                              $status = $task->status->id;
-
-                              $bgColor = 'success';
-
-                              switch($status) {
-                                case '2':
-                                  $bgColor = 'warning';
-                                  break;
-                                case '3':
-                                  $bgColor = 'primary';
-                                  break;
-                                case '4':
-                                  $bgColor = 'primary';
-                                  break;
-                                case '5':
-                                  $bgColor = 'danger';
-                                  break;
-                              }
-
-                            @endphp
-
                             <tr>
                                 <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">#{{ str_pad($task->id, 6, "0", STR_PAD_LEFT) }}</a></td>
-                                <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">{{ $task->name }}<br/>
-                                  <small>Descrição: {{ html_entity_decode(strip_tags(substr($task->description, 0, 80))) }}</small></a>
+                                <td><a href="{{ route('tasks.show', $task->uuid) }}" class="card-title">{{ $task->name }}
+                                  @if($task->description)<br/>
+                                  <small>Descrição: {{ html_entity_decode(strip_tags(substr($task->description, 0, 40))) }}</small>@endif</a>
                                 </td>
                                 <td>
                                   <a href="#!"><img width="24" class="img-fluid img-radius" src="{{ route('image', ['user' => $task->sponsor->uuid ?? '', 'link' => $task->sponsor->avatar ?? '', 'avatar' => true])}}" title="{{ $task->user->person->name }}" alt=""> {{ $task->user->person->name }}</a>
                                 </td>
                                 <td>
-                                  <span class="label label-{{$bgColor}}"> {{$task->status->name}} </span>
+                                  <span class="label label-{{ \App\Helpers\Helper::statusTaskCollor($task->status->id) }}"> {{$task->status->name}} </span>
                                   <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->severity); !!}">G {{$task->severity}}</span>
                                   <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->urgency); !!}">U {{$task->urgency}}</span>
                                   <span class="label label-{!! \App\Helpers\Helper::getColorFromValue($task->trend); !!}">T {{$task->trend}}</span>
@@ -171,16 +148,19 @@
 
                             </tr>
                           @endforeach
+
+                          <tr>
+                              <td colspan="4">
+                                  {{ $tasks->links() }}
+                              </td>
+                          </tr>
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
     </div>
-
-    {{ $tasks->links() }}
-
   </div>
 
 </div>

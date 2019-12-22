@@ -49,7 +49,7 @@
 <body class="pace-done">
 <div style="width:100%;max-height:60px;min-height:60px;padding:0.6em 0.6em;top:0;margin-top:0">
   <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
-<img class="img" style="max-height:80px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
+<img class="img" style="max-height:80px;padding:1.6em 1.6em" src="{{ asset('images/logo-provider.png') }}" alt="" />
 </div>
   <div style="padding:0px 10px 0px 10px">
       <div class="ibox-content">
@@ -93,7 +93,7 @@
                       <thead>
                         <tr>
                             <td class="text-center" colspan="2"><b>Comprovante de Entrega de Documentos</b></td>
-                            <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+                            <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ asset('images/logo-provider.png') }}" alt="" /></td>
                         </tr>
                         <tr>
                             <th>Tipo</th>
@@ -177,7 +177,7 @@
                       <thead>
                         <tr>
                             <td class="text-center" colspan="2"><b>Comprovante de Entrega de Documentos</b></td>
-                            <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+                            <td class="text-center"><img style="padding:3px" class="img" width="64" src="{{ asset('images/logo-provider.png') }}" alt="" /></td>
                         </tr>
                         <tr>
                             <th>Tipo</th>

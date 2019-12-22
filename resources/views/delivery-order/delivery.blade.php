@@ -43,7 +43,7 @@
 <body class="pace-done">
 <div class="text-center" style="width:100%;max-height:100px;min-height:100px;padding:0.6em 0.6em;top:0;margin-top:0">
   <!--public_path('/admin/img/RedukLogo/LogoNegativoPdf.png-->
-<img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" />
+<img class="img" style="max-height:100px;padding:1.6em 1.6em" src="{{ asset('images/logo-provider.png') }}" alt="" />
 </div>
   <div style="padding:0px 10px 0px 10px">
       <div class="ibox-content">

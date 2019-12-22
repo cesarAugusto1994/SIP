@@ -248,30 +248,6 @@
                         </thead>
                         <tbody>
                           @foreach($orders->sortByDesc('id') as $delivery)
-
-                          @php
-
-                            $status = $delivery->status->id;
-
-                            $bgColor = 'success';
-
-                            switch($status) {
-                              case '1':
-                                $bgColor = 'primary';
-                                break;
-                              case '2':
-                                $bgColor = 'warning';
-                                break;
-                              case '3':
-                                $bgColor = 'success';
-                                break;
-                              case '4':
-                                $bgColor = 'danger';
-                                break;
-                            }
-
-                            @endphp
-
                             <tr>
                                 <td><a href="{{ route('delivery-order.show', $delivery->uuid) }}" class="card-title" data-toggle="tooltip" data-original-title="Adicionado Por {{$delivery->creator->person->name}} em {{ $delivery->created_at->format('d/m/Y H:i:s') }}">#{{ str_pad($delivery->id, 6, "0", STR_PAD_LEFT) }}</a>
                                   @if($delivery->shipment)
@@ -281,7 +257,7 @@
                                 </td>
                                 <td>
                                   <p data-toggle="tooltip" data-original-title="Adicionado Por {{$delivery->creator->person->name}} em {{ $delivery->created_at->format('d/m/Y H:i:s') }}">
-                                      <span class="label label-{{$bgColor}}"> {{$delivery->status->name}} </span>
+                                      <span class="label label-{{ \App\Helpers\Helper::deliveryStatusColor($delivery->status->id) }}"> {{$delivery->status->name}} </span>
                                   </p>
                                 </td>
                                 <td><a href="{{route('clients.show', ['id' => $delivery->client->uuid])}}">{{ $delivery->client->name }}</a><br/>
@@ -311,6 +287,9 @@
 
                             </tr>
                           @endforeach
+                          <tr>
+                            <td colspan="4">{{ $orders->links() }}</td>
+                          </tr>
                         </tbody>
                     </table>
                 </div>
@@ -319,7 +298,7 @@
 
     </div>
 
-    {{ $orders->links() }}
+
 
   </div>
 

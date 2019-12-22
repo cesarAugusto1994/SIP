@@ -12,11 +12,11 @@ class Employee extends Model
     use LogsActivity;
 
     protected $fillable = ['name', 'email', 'phone', 'cpf', 'code',
-    'biometric', 'occupation_id','company_id', 'created_by', 'active',
+    'biometric', 'created_by', 'active',
     'birth','hired_at','fired_at', 'rg'];
 
     protected static $logAttributes = ['name', 'email', 'phone', 'cpf', 'code',
-    'biometric', 'occupation_id', 'company_id', 'created_by', 'active',
+    'biometric', 'created_by', 'active',
     'birth','hired_at','fired_at', 'rg'];
 
     protected $table = 'client_employees';
@@ -26,6 +26,21 @@ class Employee extends Model
     public function company()
     {
         return $this->belongsTo('App\Models\Client', 'company_id');
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany('App\Models\Client\Employee\Job', 'employee_id');
+    }
+
+    public function occupations()
+    {
+        return $this->hasMany('App\Models\Client\Employee\Occupation', 'employee_id');
+    }
+
+    public function companies()
+    {
+        return $this->hasManyThrough('App\Models\Client', 'App\Models\Client\Employee\Job');
     }
 
     public function trainings()

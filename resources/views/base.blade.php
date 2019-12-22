@@ -134,7 +134,7 @@
           width: 100%;
           background-color: grey;
         }
-/*
+
         .pcoded-main-container {
           background-image: url("{{ asset('images/natal.jpg') }}");
           background-size: cover;
@@ -156,7 +156,7 @@
           word-wrap: break-word;
           background-clip: border-box;
         }
-*/
+
     </style>
 
     <script>
@@ -407,7 +407,13 @@ function notify(message, type){
   });
 };
 
-function notify2() {
+function notify2(text) {
+
+  swal({
+      title: "Atenção",
+      text: text,
+      type: "warning",
+  });
 
 }
 

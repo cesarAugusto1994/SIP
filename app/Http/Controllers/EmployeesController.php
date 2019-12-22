@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Okipa\LaravelTable\Table;
 use App\Models\Client;
+use App\Models\Client\Employee\{Job, Occupation as EmployeeOccupation};
 use App\Models\Client\{Employee, Occupation};
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client as GuzzleClient;
 use pcrov\JsonReader\JsonReader;
+use App\Helpers\Helper;
 
 class EmployeesController extends Controller
 {
@@ -37,7 +39,9 @@ class EmployeesController extends Controller
             $client = $request->get('client');
             $client = Client::uuid($client);
 
-            $employees->where('company_id', $client->id);
+            $employees->whereHas('jobs', function($query) use($client){
+                $query->where('company_id', $client->id);
+            });
 
           }
 
@@ -73,7 +77,10 @@ class EmployeesController extends Controller
 
         if($request->filled('client')) {
             $client = Client::uuid($request->get('client'));
-            $employees->where('company_id', $client->id);
+
+            $employees->whereHas('jobs', function($query) use($client){
+                $query->where('company_id', $client->id);
+            });
         }
 
         $employees = $employees->get();
@@ -84,9 +91,8 @@ class EmployeesController extends Controller
             return [
               'id' => $employee->uuid,
               'name' => $employee->name,
-              'document' => $employee->cpf ?? '',
-              'company' => $employee->company->name,
-              'document' => $employee->company->document
+              'document' => Helper::formatCnpjCpf($employee->cpf) ?? '',
+              'company' =>  Helper::actualOccupation($employee)->name,
             ];
         });
 
@@ -173,7 +179,17 @@ class EmployeesController extends Controller
                   $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
                   $data['cpf'] = $documentString;
 
-                  Employee::create($data);
+                  $employee = Employee::create($data);
+
+                  Job::create([
+                    'company_id' => $company->id,
+                    'employee_id' => $employee->id,
+                  ]);
+
+                  EmployeeOccupation::create([
+                    'occupation_id' => $occupation->id,
+                    'employee_id' => $employee->id,
+                  ]);
 
               }
 
@@ -204,11 +220,8 @@ class EmployeesController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            //'email' => 'required|string|email|max:255|unique:employees',
-            //'phone' => 'string|max:20',
             'company_id' => 'required',
             'occupation_id' => 'required',
-            //'cpf' => 'required|cpf|unique:employees',
         ]);
 
         if ($validator->fails()) {
@@ -225,9 +238,33 @@ class EmployeesController extends Controller
         $data['active'] = $request->has('active');
 
         $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
+
+        $hasClient = Employee::where('cpf', $documentString)->first();
+
+        if($hasClient) {
+
+          notify()->flash('Atenção!', 'error', [
+            'text' => 'Documento já registrado para outro Cliente.',
+            'modal' => true
+          ]);
+
+          return back();
+
+        }
+
         $data['cpf'] = $documentString;
 
         $employee = Employee::create($data);
+
+        Job::create([
+          'company_id' => $company->id,
+          'employee_id' => $employee->id,
+        ]);
+
+        EmployeeOccupation::create([
+          'occupation_id' => $occupation->id,
+          'employee_id' => $employee->id,
+        ]);
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo Funcionário adicionado ao Cliente com sucesso.'
@@ -279,23 +316,19 @@ class EmployeesController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            //'email' => 'required|string|email|max:255|unique:employees,email,'.$employee->id,
-            //'phone' => 'string|max:20',
-            'company_id' => 'required',
-            'occupation_id' => 'required',
-            //'cpf' => 'required|cpf|unique:employees,cpf,'.$employee->id,
+            'cpf' => 'required|cpf|unique:client_employees,cpf,'.$employee->id,
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-
+/*
         $company = Client::uuid($data['company_id']);
         $data['company_id'] = $company->id;
 
         $occupation = Occupation::uuid($data['occupation_id']);
         $data['occupation_id'] = $occupation->id;
-
+*/
         $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
         $data['cpf'] = $documentString;
 
@@ -340,6 +373,27 @@ class EmployeesController extends Controller
             'success' => false,
             'message' => $e->getMessage()
           ]);
+        }
+    }
+
+    public function migrateEmployees()
+    {
+        $employees = Employee::all();
+
+        foreach ($employees as $key => $employee) {
+
+            Job::updateOrCreate([
+              'employee_id' => $employee->id,
+              'company_id' => $employee->company->id,
+              'hired_at' => $employee->hired_at,
+              'fired_at' => $employee->fired_at,
+            ]);
+
+            EmployeeOccupation::updateOrCreate([
+              'employee_id' => $employee->id,
+              'occupation_id' => $employee->occupation_id,
+            ]);
+
         }
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Schedule\Guest;
+use App\Models\Task;
+use App\Models\Task\Log;
 use App\Notifications\ScheduleInvite;
 use App\Helpers\Helper;
 use App\Events\Notifications;

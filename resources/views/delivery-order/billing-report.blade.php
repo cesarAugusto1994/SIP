@@ -9,7 +9,7 @@
         <td class="text-center" colspan="2"><h4><b>FATURAMENTO DE ENTREGAS </b></h4>
             <span>{{ $first->format('d/m/Y') }} até {{ $last->format('d/m/Y') }}</span>
         </td>
-        <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+        <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ asset('images/logo-provider.png') }}" alt="" /></td>
     </tr>
     <tr class="table-primary">
         <th>Cliente</th>

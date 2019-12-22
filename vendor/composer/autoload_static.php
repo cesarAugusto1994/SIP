@@ -878,6 +878,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Models\\Client\\Email' => __DIR__ . '/../..' . '/app/Models/Client/Email.php',
         'App\\Models\\Client\\Employee' => __DIR__ . '/../..' . '/app/Models/Client/Employee.php',
         'App\\Models\\Client\\Employee\\Course' => __DIR__ . '/../..' . '/app/Models/Client/Employee/Course.php',
+        'App\\Models\\Client\\Employee\\Job' => __DIR__ . '/../..' . '/app/Models/Client/Employee/Job.php',
+        'App\\Models\\Client\\Employee\\Occupation' => __DIR__ . '/../..' . '/app/Models/Client/Employee/Occupation.php',
         'App\\Models\\Client\\Occupation' => __DIR__ . '/../..' . '/app/Models/Client/Occupation.php',
         'App\\Models\\Client\\Phone' => __DIR__ . '/../..' . '/app/Models/Client/Phone.php',
         'App\\Models\\Configuration' => __DIR__ . '/../..' . '/app/Models/Configuration.php',

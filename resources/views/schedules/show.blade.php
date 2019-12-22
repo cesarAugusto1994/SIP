@@ -53,11 +53,13 @@
                             <h6 class="text-muted f-w-400">{{ !$schedule->all_day ? $schedule->end->format('d/m/Y H:i') : $schedule->end->format('d/m/Y') }}</h6>
                         </div>
 
-                        <div class="col-sm-12 m-t-15">
-                          <div class="alert alert-primary icons-alert">
-                              <p><strong>Aviso!</strong> Este evento está marcado para o dia inteiro.</p>
+                        @if($schedule->all_day)
+                          <div class="col-sm-12 m-t-15">
+                            <div class="alert alert-primary icons-alert">
+                                <p><strong>Aviso!</strong> Este evento está marcado para o dia inteiro.</p>
+                            </div>
                           </div>
-                        </div>
+                        @endif
 
                     </div>
                 </div>

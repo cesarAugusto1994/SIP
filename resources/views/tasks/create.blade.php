@@ -30,8 +30,8 @@
 
 <div class="page-body">
   <div class="card">
-      <div class="card-header">
-          <h5>Nova Tarefa</h5>
+      <div class="card-header card bg-c-green update-card">
+          <h5 class="text-white">Nova Tarefa</h5>
       </div>
       <div class="card-block">
 
@@ -160,7 +160,7 @@
                     <label class="col-form-label">Cliente</label>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                      <select class="form-control select-client" name="label">
+                      <select class="form-control select-client" name="client_id">
                       </select>
                     </div>
                     {!! $errors->first('label', '<p class="help-block">:message</p>') !!}
@@ -193,6 +193,7 @@
                     </div>
                   </div>
 
+
                   <div class="col-md-4">
 
                     <div class="form-group {!! $errors->has('frequency') ? 'has-error' : '' !!}">
@@ -200,7 +201,9 @@
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fas fa-percent"></i></span>
                           <select class="form-control select2" name="frequency">
+
                               <option value="Nao se repete">Não se repete</option>
+                              <!--
                               <option value="Diariamente">Diariamente</option>
                               <option value="Semanalmente">Semanalmente</option>
                               <option value="Mensalmente">Mensalmente</option>
@@ -209,12 +212,14 @@
                               <option value="Quarta">Quarta-Feira</option>
                               <option value="Quinta">Quinta-Feira</option>
                               <option value="Sexta">Sexta-Feira</option>
+                              -->
                           </select>
                         </div>
                         {!! $errors->first('frequency', '<p class="help-block">:message</p>') !!}
                     </div>
 
                   </div>
+
                 </div>
 
               </div>

@@ -247,6 +247,10 @@ Route::middleware('auth')->group(function () {
 
           Route::get('delivery-order/conference/documents', 'DeliveryOrderController@conference')->name('delivery_order_conference');
 
+          Route::get('employees/{id}/transfer', 'EmployeesController@transferToCompany')->name('employee_transfer_company');
+
+          Route::get('employees/migrate/all', 'EmployeesController@migrateEmployees')->name('employees_migrate');
+
           Route::get('/department/occupations/search', 'OccupationController@search')->name('occupation_search');
 
           Route::get('cep', 'UtilController@cep')->name('cep');

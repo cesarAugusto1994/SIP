@@ -145,8 +145,16 @@ class TeamsController extends Controller
                 continue;
             }
 
-            $cnpj = Helper::formatCnpjCpf($employee->employee->company->document);
-            $companies[$employee->employee->company->name . ', CNPJ '. $cnpj][] = $employee->employee->name;
+            $company = Helper::actualCompany($employee->employee);
+
+            $cnpj = Helper::formatCnpjCpf($company->document);
+
+            if($cnpj) {
+                $companies[$company->name . ', CNPJ '. $cnpj][] = $employee->employee->name;
+            } else {
+                $companies[null][] = $employee->employee->name;
+            }
+
         }
 
         $interval = DateInterval::createFromDateString('1 day');
@@ -230,28 +238,40 @@ class TeamsController extends Controller
 
     public function start($id, Request $request)
     {
-        $team = Team::uuid($id);
+        try {
 
-        $preReservados = $team->employees->where('status', 'AGENDADO');
+          $team = Team::uuid($id);
 
-        if($preReservados->isNotEmpty()) {
+          $preReservados = $team->employees->where('status', 'AGENDADO');
 
-          notify()->flash('Aula não iniciada!', 'warning', [
-            'text' => 'Informe a presença dos participantes.'
+          if($preReservados->isNotEmpty()) {
+
+            return response()->json([
+              'success' => false,
+              'message' => 'Informe a presença dos participantes.',
+              'modal' => true,
+            ]);
+
+          }
+
+          $team->status = 'EM ANDAMENTO';
+          $team->save();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'O Curso foi Iniciado com sucesso.',
+            'modal' => true,
+            'route' => route('teams.show', $team->uuid)
           ]);
 
-          return back();
-
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado, o suporte já foi informado sobre o ocorrido',
+            'modal' => true,
+            'route' => null
+          ]);
         }
-
-        $team->status = 'EM ANDAMENTO';
-        $team->save();
-
-        notify()->flash('Curso em Andamento!', 'success', [
-          'text' => 'O Curso foi iniciado com sucesso'
-        ]);
-
-        return redirect()->route('teams.show', $team->uuid);
 
     }
 

@@ -36,8 +36,8 @@
 <div class="page-body">
 
   <div class="card">
-      <div class="card-header">
-          <h5>Novo Funcionário</h5>
+      <div class="card-header card bg-c-green update-card">
+          <h5 class="text-white">Novo Funcionário</h5>
       </div>
       <div class="card-block">
 

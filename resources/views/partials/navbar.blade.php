@@ -47,7 +47,7 @@
 
                 <li>
                     <a class="text-success" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="#!">
-                        Novo Chamado <i class="fas fa-ticket-alt"></i>
+                        Chamado <i class="fas fa-ticket-alt"></i>
                     </a>
                 </li>
 

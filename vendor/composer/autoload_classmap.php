@@ -116,6 +116,8 @@ return array(
     'App\\Models\\Client\\Email' => $baseDir . '/app/Models/Client/Email.php',
     'App\\Models\\Client\\Employee' => $baseDir . '/app/Models/Client/Employee.php',
     'App\\Models\\Client\\Employee\\Course' => $baseDir . '/app/Models/Client/Employee/Course.php',
+    'App\\Models\\Client\\Employee\\Job' => $baseDir . '/app/Models/Client/Employee/Job.php',
+    'App\\Models\\Client\\Employee\\Occupation' => $baseDir . '/app/Models/Client/Employee/Occupation.php',
     'App\\Models\\Client\\Occupation' => $baseDir . '/app/Models/Client/Occupation.php',
     'App\\Models\\Client\\Phone' => $baseDir . '/app/Models/Client/Phone.php',
     'App\\Models\\Configuration' => $baseDir . '/app/Models/Configuration.php',

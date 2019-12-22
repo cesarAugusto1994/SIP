@@ -13,14 +13,9 @@ class Occupation extends Model
 
     protected $table = 'client_occupations';
 
-    protected $fillable = ['name', 'active', 'client_id'];
+    protected $fillable = ['name', 'active'];
 
-    protected static $logAttributes = ['name', 'active', 'client_id'];
-
-    public function company()
-    {
-        return $this->belongsTo('App\Models\Client', 'client_id');
-    }
+    protected static $logAttributes = ['name', 'active'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

@@ -1228,7 +1228,7 @@ class Helper
     {
           switch($value) {
             case '1':
-              return'primary';
+              return'primary'; 
               break;
             case '2':
               return 'warning';
@@ -1573,6 +1573,28 @@ class Helper
         }
       }
 
+    }
+
+    public static function actualCompany($employee)
+    {
+        $jobs = $employee->jobs;
+
+        if($jobs->isEmpty()) {
+            return null;
+        }
+
+        return $jobs->last()->company;
+    }
+
+    public static function actualOccupation($employee)
+    {
+        $occupations = $employee->occupations;
+
+        if($occupations->isEmpty()) {
+            return null;
+        }
+
+        return $occupations->last()->occupation;
     }
 
 }

@@ -7,7 +7,7 @@
   <tbody>
     <tr>
         <td class="text-center" colspan="5"><h4><b>ORDEM DE SERVIÇO</b></h4></td>
-        <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ 'http://www.provider-es.com.br/logo_marca.png' }}" alt="" /></td>
+        <td class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ asset('images/logo-provider.png') }}" alt="" /></td>
     </tr>
     <tr>
         <td colspan="6" style="padding-left:13px;">

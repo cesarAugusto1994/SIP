@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\{Ticket, Task, Department, Mapper};
+use App\Models\{Ticket, Task, Department, Mapper, Client};
 use App\Models\Ticket\Status\Log as TicketLog;
 use App\Models\Task\{Message, Status, Log, Delay, Pause, Archive as FileUpload};
 use Illuminate\Http\Request;
@@ -194,7 +194,7 @@ class TaskController extends Controller
 
         $weekDays = ['Segunda','Terca','Quarta','Quinta','Sexta'];
 
-        if(in_array($data['frequency'], $weekDays)) {
+        if($request->has('frequency') && in_array($data['frequency'], $weekDays)) {
 
           if(!$start) {
             return back()->withErrors(['frequency' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
@@ -206,7 +206,7 @@ class TaskController extends Controller
 
           $interval = DateInterval::createFromDateString('7 day');
 
-        } elseif($data['frequency'] == 'Diariamente') {
+        } elseif($request->has('frequency') && $data['frequency'] == 'Diariamente') {
 
           if(!$start) {
             return back()->withErrors(['start' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
@@ -226,7 +226,7 @@ class TaskController extends Controller
 
           $interval = DateInterval::createFromDateString('1 day');
 
-        } elseif($data['frequency'] == 'Semanalmente') {
+        } elseif($request->has('frequency') && $data['frequency'] == 'Semanalmente') {
 
           if(!$start) {
             return back()->withErrors(['frequency' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
@@ -246,7 +246,7 @@ class TaskController extends Controller
 
           $interval = DateInterval::createFromDateString('1 week');
 
-        } elseif($data['frequency'] == 'Mensalmente') {
+        } elseif($request->has('frequency') && $data['frequency'] == 'Mensalmente') {
 
           if(!$start) {
             return back()->withErrors(['frequency' => 'A data de Início deve ser informada para a frequencia selecionada.'])->withInput();
@@ -273,6 +273,11 @@ class TaskController extends Controller
           if($start) {
             $endTask = $start;
             $data['end'] = $endTask->modify('+' . $data['time'] . ' ' . $data['time_type']);
+          }
+
+          if($request->filled('client_id')) {
+              $client = Client::uuid($request->get('client_id'));
+              $data['client_id'] = $client->id;
           }
 
           $task = Task::create($data);
@@ -308,6 +313,12 @@ class TaskController extends Controller
 
             $data['created_at'] = $dt;
             $data['start'] = $dt;
+
+            if($request->filled('client_id')) {
+                $client = Client::uuid($request->get('client_id'));
+                $data['client_id'] = $client->id;
+            }
+
             $task = Task::create($data);
 
             Log::create([

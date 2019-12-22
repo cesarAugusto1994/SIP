@@ -20,7 +20,10 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('employees.index') }}"> Funcionários </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Editar Funcionário</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('employees.show', $employee->uuid) }}"> {{ $employee->name }} </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Editar</a></li>
                 </ul>
             </div>
         </div>
@@ -30,8 +33,8 @@
 <div class="page-body">
 
   <div class="card">
-      <div class="card-header">
-          <h5>Editar Funcionário</h5>
+      <div class="card-header card bg-c-green update-card">
+          <h5 class="text-white">Editar Funcionário</h5>
       </div>
       <div class="card-block">
 
@@ -51,24 +54,12 @@
                         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                     </div>
 
-                    <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="company_id">Empresa</label>
+                    <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="active">Ativo</label>
                         <div class="input-group">
-                            <select class="form-control select-client" name="company_id" required data-url="{{ route('client_search') }}">
-                                <option value="{{$employee->company->uuid}}" >{{$employee->company->name}}</option>
-                            </select>
+                            <input class="js-switch" type="checkbox" id="active" name="active" {{ $employee->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
                         </div>
-                        {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
-                    </div>
-                    
-                    <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="company_id">Função</label>
-                        <div class="input-group">
-                            <select class="form-control select-client-occuparions" name="occupation_id" required data-url="{{ route('client_occupations_search') }}">
-                                <option value="{{$employee->occupation->uuid}}">{{$employee->occupation->name}}</option>
-                            </select>
-                        </div>
-                        {!! $errors->first('occupation_id', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
                     </div>
 
                 </div>
@@ -77,7 +68,7 @@
                     <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="cpf">CPF</label>
                         <div class="input-group">
-                            <input type="text" id="cpf" name="cpf" value="{{ $employee->cpf }}" class="form-control" placeholder="Informe o CPF">
+                            <input type="text" id="cpf" name="cpf" value="{{ $employee->cpf }}" class="form-control inputCpf" placeholder="Informe o CPF">
                         </div>
                         {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
                     </div>
@@ -90,13 +81,7 @@
                         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                     </div>
 
-                    <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="active">Ativo</label>
-                        <div class="input-group">
-                            <input class="js-switch" type="checkbox" id="active" name="active" {{ $employee->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
-                        </div>
-                        {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
-                    </div>
+
 
                 </div>
 
@@ -123,7 +108,7 @@
             </div>
 
             <button class="btn btn-success btn-sm">Salvar</button>
-            <a class="btn btn-danger btn-sm" href="{{ route('clients.show', $employee->company->uuid) }}">Cancelar</a>
+            <a class="btn btn-danger btn-sm" href="{{ route('employees.show', $employee->uuid) }}">Cancelar</a>
         </form>
 
       </div>

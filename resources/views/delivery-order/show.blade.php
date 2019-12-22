@@ -448,7 +448,7 @@
                     @foreach($order->logs->sortByDesc('id') as $log)
                       <li class="media d-flex m-b-15">
                           <div class="p-l-15 p-r-20 d-inline-block v-middle">
-                            <img width="40" class="img-radius" src="{{ route('image', ['user' => $log->user->uuid, 'link' => $log->user->avatar, 'avatar' => true])}}" alt="chat-user">
+                            <img width="40" class="img-radius" src="{{ route('image', ['user' => $log->user->uuid, 'link' => $log->user->avatar, 'avatar' => true])}}" alt="">
                           </div>
                           <div class="d-inline-block">
                               {{ $log->message }}

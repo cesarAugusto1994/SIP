@@ -64,12 +64,6 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <select class="form-control select-client" name="client"></select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-12">
                             <select class="form-control select2" name="status">
                               <option value="">Situação</option>
                               <option value="1">Ativo</option>
@@ -98,7 +92,7 @@
                 <div class="table-responsive">
                     <table class="table table-lg table-styling">
                         <thead>
-                            <tr class="table-primary">
+                            <tr class="table-inverse">
                               <th>Nome</th>
                               <th>Função</th>
                               <th>Documento</th>
@@ -113,17 +107,15 @@
                                     <td>
                                         <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                         <br/>
-
-                                        <a href="{{route('clients.show', $employee->company->uuid)}}"><small>{{$employee->company->name}}</small></a>
-
+                                        <a href="{{route('clients.show', \App\Helpers\helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\helper::actualCompany($employee)->name }}</small></a>
                                     </td>
 
                                     <td>
-                                        <p>{{$employee->occupation->name}}</p>
+                                        <p>{{$employee->name}}</p>
                                     </td>
 
                                     <td>
-                                        <p>{{$employee->cpf}}</p>
+                                        <p>{{ \App\Helpers\helper::formatCnpjCpf($employee->cpf) }}</p>
                                     </td>
 
                                     <td>

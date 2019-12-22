@@ -1323,12 +1323,14 @@
                       @endif
 
                       <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                           <b>{{ $employee->employee->name }}</b>, {{ $employee->employee->occupation->name }},
+                           <b>{{ $employee->employee->name }}</b>, @if(\App\Helpers\helper::actualOccupation($employee->employee)){{ \App\Helpers\helper::actualOccupation($employee->employee)->name }},@endif
                       </p>
 
-                      <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
-                           Empregado da empresa <b>{{ $employee->employee->company->name }}</b> CNPJ {{ $employee->employee->company->document }},
-                      </p>
+                      @if(\App\Helpers\helper::actualCompany($employee->employee))
+                        <p style="text-align:center;margin-top:4px;margin-bottom:4px;padding:0;">
+                             Empregado da empresa <b>{{ \App\Helpers\helper::actualCompany($employee->employee)->name }}</b> CNPJ {{ \App\Helpers\helper::formatCnpjCpf(\App\Helpers\helper::actualCompany($employee->employee)->document) }},
+                        </p>
+                      @endif
 
                       <br>
 
