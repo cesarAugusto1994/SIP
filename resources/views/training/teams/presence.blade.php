@@ -7,7 +7,7 @@
 
   <thead>
     <tr>
-        <th class="text-center" colspan="5" style="vertical-align: middle;text-transform:uppercase;"><h5><b>Lista de Presença - Treinamento {{ $team->course->title }}</b></h5></th>
+        <th class="text-center" colspan="5" style="vertical-align: middle;text-transform:uppercase;"><h5><b>Lista de Presença <br/> Treinamento {{ $team->course->title }}</b></h5></th>
         <th class="text-center" style="vertical-align:middle;"><img style="padding:3px;vertical-align:middle;" class="img" width="86" src="{{ asset('images/logo-provider.png') }}" alt="" /></th>
     </tr>
 

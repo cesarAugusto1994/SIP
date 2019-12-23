@@ -111,7 +111,7 @@
                                     </td>
 
                                     <td>
-                                        <p>{{$employee->name}}</p>
+                                        <p>{{ \App\Helpers\Helper::actualOccupation($employee)->name ?? '-' }}</p>
                                     </td>
 
                                     <td>
@@ -140,19 +140,20 @@
 
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td>
+                                    @if(!empty($employees))
+                                        {{ $employees->links() }}
+                                    @endif
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
-    @if(!empty($employees))
-    {{ $employees->links() }}
-    @endif
   </div>
-
 </div>
 
 @endsection

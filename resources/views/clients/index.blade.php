@@ -159,19 +159,21 @@
                                         <span class="badge badge-danger">Inativo</span>
                                       @endif
                                     </td>
-
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td>
+                                    @if(!empty($clients))
+                                    {{ $clients->links() }}
+                                    @endif
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
-    @if(!empty($clients))
-    {{ $clients->links() }}
-    @endif
   </div>
 
 </div>
