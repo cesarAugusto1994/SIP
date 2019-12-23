@@ -107,7 +107,7 @@
                                     <td>
                                         <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                         <br/>
-                                        <a href="{{route('clients.show', \App\Helpers\helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\helper::actualCompany($employee)->name }}</small></a>
+                                        <a href="{{route('clients.show', \App\Helpers\Helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\Helper::actualCompany($employee)->name }}</small></a>
                                     </td>
 
                                     <td>
@@ -115,7 +115,7 @@
                                     </td>
 
                                     <td>
-                                        <p>{{ \App\Helpers\helper::formatCnpjCpf($employee->cpf) }}</p>
+                                        <p>{{ \App\Helpers\Helper::formatCnpjCpf($employee->cpf) }}</p>
                                     </td>
 
                                     <td>

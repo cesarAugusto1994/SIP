@@ -155,7 +155,6 @@ class ClientController extends Controller
     public function downloadDocument($id)
     {
         $document = Documents::uuid($id);
-
         return Storage::download($document->link);
     }
 
@@ -210,40 +209,40 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-      $data = $request->request->all();
+        $data = $request->request->all();
 
-      $documentType = "";
+        $documentType = "";
 
-      if(strlen($data['document']) == 18) {
-          $documentType = "cnpj";
-      } elseif (strlen($data['document']) < 18) {
-          $documentType = "cpf";
-      }
+        if(strlen($data['document']) == 18) {
+            $documentType = "cnpj";
+        } elseif (strlen($data['document']) < 18) {
+            $documentType = "cpf";
+        }
 
-      $documentString = str_replace(['.','/','-'], ['','',''], $data['document']);
-      $data['document'] = $documentString;
+        $documentString = str_replace(['.','/','-'], ['','',''], $data['document']);
+        $data['document'] = $documentString;
 
-      $validator = Validator::make($request->all(), [
-          'name' => 'required|string|max:255',
-          'contract_id' => 'required',
-          'document' => 'required|unique:clients|'.$documentType,
-      ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'contract_id' => 'required',
+            'document' => 'required|unique:clients|'.$documentType,
+        ]);
 
-      if ($validator->fails()) {
-          return back()->withErrors($validator)->withInput();
-      }
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
-      $data['active'] = $request->has('active');
-      $data['charge_delivery'] = $request->has('charge_delivery');
-      $data['deliver_documents'] = $request->has('deliver_documents');
+        $data['active'] = $request->has('active');
+        $data['charge_delivery'] = $request->has('charge_delivery');
+        $data['deliver_documents'] = $request->has('deliver_documents');
 
-      $client = Client::create($data);
+        $client = Client::create($data);
 
-      notify()->flash('Sucesso!', 'success', [
-        'text' => 'Novo Cliente adicionado com sucesso.'
-      ]);
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Novo Cliente adicionado com sucesso.'
+        ]);
 
-      return redirect()->route('clients.show', $client->uuid);
+        return redirect()->route('clients.show', $client->uuid);
     }
 
     /**
@@ -458,7 +457,6 @@ class ClientController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            //'document' => 'required|unique:clients,document,'.$client->id.'|'.$documentType,
         ]);
 
         if ($validator->fails()) {
@@ -528,28 +526,11 @@ class ClientController extends Controller
         try {
 
             $clientData = [];
-/*
-            $client = new GuzzleClient([
-              'handler' => new \GuzzleHttp\Handler\CurlHandler(),
-            ]);
-            $response = $client->get("http://soc.com.br/WebSoc/exportadados?parametro={'empresa':'235164','codigo':'23703','chave':'d32494177fab74b4df10','tipoSaida':'json','empresafiltro':'','subgrupo':'','socnet':'','mostrarinativas':''}");
 
-            $contents = $response->getBody()->getContents();
-
-            $clientData = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
-
-            $data = [];
-
-            if(!$clientData) {
-                return response()->json('Ocorreu um erro.');
-            }
-*/
             $reader = new JsonReader();
             $reader->open("http://soc.com.br/WebSoc/exportadados?parametro={'empresa':'235164','codigo':'23703','chave':'d32494177fab74b4df10','tipoSaida':'json','empresafiltro':'','subgrupo':'','socnet':'','mostrarinativas':''}");
 
             while ($reader->read()) {
-                //dd($reader->value());
-                //print_r($reader->value()) . " \n ";
 
                 $clientData = $reader->value();
 

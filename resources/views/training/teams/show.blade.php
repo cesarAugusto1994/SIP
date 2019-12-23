@@ -277,9 +277,9 @@
                                                     <td><input class="js-switch" type="checkbox" {{ $checked }} name="employee-{{ $employeeItem->uuid }}" value="1"/></td>
                                                     <td>
                                                         <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
-                                                        @if(\App\Helpers\helper::actualCompany($employee))
+                                                        @if(\App\Helpers\Helper::actualCompany($employee))
                                                           <br/>
-                                                          <a href="{{route('clients.show', \App\Helpers\helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\helper::actualCompany($employee)->name }}</small></a>
+                                                          <a href="{{route('clients.show', \App\Helpers\Helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\Helper::actualCompany($employee)->name }}</small></a>
                                                         @endif
                                                     </td>
 
@@ -327,16 +327,16 @@
 
                                   <td>
                                       <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
-                                      @if(\App\Helpers\helper::actualCompany($employee))
+                                      @if(\App\Helpers\Helper::actualCompany($employee))
                                       <br/>
-                                      <a href="{{route('clients.show', \App\Helpers\helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\helper::actualCompany($employee)->name }}</small></a>
+                                      <a href="{{route('clients.show', \App\Helpers\Helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\Helper::actualCompany($employee)->name }}</small></a>
                                       @endif
-                                      @if(\App\Helpers\helper::actualOccupation($employee))
+                                      @if(\App\Helpers\Helper::actualOccupation($employee))
                                       <br/>
-                                      <small>Função: {{ \App\Helpers\helper::actualOccupation($employee)->name }}</small>
+                                      <small>Função: {{ \App\Helpers\Helper::actualOccupation($employee)->name }}</small>
                                       @endif
                                       <br/>
-                                      <small>CPF: {{ \App\Helpers\helper::formatCnpjCpf($employee->cpf) }}</small>
+                                      <small>CPF: {{ \App\Helpers\Helper::formatCnpjCpf($employee->cpf) }}</small>
 
                                   </td>
 

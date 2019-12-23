@@ -45,18 +45,18 @@
           <td colspan="2"><span style="text-transform:uppercase;">{{$employee->name}}</span>
             @if($employee->cpf)
             <br>
-            <small style="font-size:10px">CPF: {{ \App\Helpers\helper::formatCnpjCpf($employee->cpf) }}</small>
+            <small style="font-size:10px">CPF: {{ \App\Helpers\Helper::formatCnpjCpf($employee->cpf) }}</small>
             @endif
-            @if(\App\Helpers\helper::actualOccupation($employee))
+            @if(\App\Helpers\Helper::actualOccupation($employee))
             <br/>
-            <small style="font-size:10px">Função: {{ \App\Helpers\helper::actualOccupation($employee)->name }}</small>
+            <small style="font-size:10px">Função: {{ \App\Helpers\Helper::actualOccupation($employee)->name }}</small>
             @endif
           </td>
           <td colspan="3" style="font-size:10px">
 
-            @if(\App\Helpers\helper::actualCompany($employee))
-              {{ \App\Helpers\helper::actualCompany($employee)->name }}<br/>
-              CNPJ: {{ \App\Helpers\helper::formatCnpjCpf(\App\Helpers\helper::actualCompany($employee)->document) }}
+            @if(\App\Helpers\Helper::actualCompany($employee))
+              {{ \App\Helpers\Helper::actualCompany($employee)->name }}<br/>
+              CNPJ: {{ \App\Helpers\Helper::formatCnpjCpf(\App\Helpers\Helper::actualCompany($employee)->document) }}
             @endif
 
           </td>

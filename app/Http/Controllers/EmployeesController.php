@@ -7,11 +7,11 @@ use Okipa\LaravelTable\Table;
 use App\Models\Client;
 use App\Models\Client\Employee\{Job, Occupation as EmployeeOccupation};
 use App\Models\Client\{Employee, Occupation};
-use Auth;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client as GuzzleClient;
 use pcrov\JsonReader\JsonReader;
 use App\Helpers\Helper;
+use Auth;
 
 class EmployeesController extends Controller
 {
@@ -276,7 +276,6 @@ class EmployeesController extends Controller
     public function show($id)
     {
         $employee = Employee::uuid($id);
-        //dd($employee->trainings);
         return view('clients.employees.show', compact('employee'));
     }
 
@@ -307,7 +306,7 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         if(!Auth::user()->hasPermission('edit.cliente.funcionarios')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso negado.');
         }
 
         $data = $request->request->all();
@@ -322,13 +321,7 @@ class EmployeesController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-/*
-        $company = Client::uuid($data['company_id']);
-        $data['company_id'] = $company->id;
 
-        $occupation = Occupation::uuid($data['occupation_id']);
-        $data['occupation_id'] = $occupation->id;
-*/
         $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
         $data['cpf'] = $documentString;
 
@@ -403,35 +396,8 @@ class EmployeesController extends Controller
 
           $employeesData = [];
 
-          /*$client = new GuzzleClient([
-            'handler' => new \GuzzleHttp\Handler\CurlHandler(),
-          ]);
-          $response = $client->get('http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}');
-
-          $contents = $response->getBody()->getContents();
-
-          $employeesData = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $contents), true);
-
-          if(!$employeesData) {
-              return response()->json('Dados não informados.');
-          }
-
-          $data = [];*/
-
           $reader = new JsonReader();
           $reader->open("http://soc.com.br/WebSoc/exportadados?parametro={%27empresa%27:%27235164%27,%27codigo%27:%2723175%27,%27chave%27:%277edf603bbc49f9b1e241%27,%27tipoSaida%27:%27json%27}");
-
-          //dd($reader);
-
-          //$companies = Client::where('active', true)->get();
-
-          //foreach ($companies as $key => $company) {
-
-            /*echo '> Empresa: ' . $company->name . PHP_EOL;
-
-            $result = array_filter($employeesData, function($item) use ($company) {
-                return $item['CODIGOEMPRESA'] == $company->code;
-            });*/
 
             while($reader->read()) {
 
