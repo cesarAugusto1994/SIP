@@ -162,7 +162,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td>
+                                <td colspan="4">
                                     @if(!empty($clients))
                                     {{ $clients->links() }}
                                     @endif

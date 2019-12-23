@@ -140,7 +140,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td>
+                                <td colspan="4">
                                     @if(!empty($employees))
                                         {{ $employees->links() }}
                                     @endif
