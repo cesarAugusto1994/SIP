@@ -95,7 +95,6 @@
                             <tr class="table-inverse">
                               <th>Nome</th>
                               <th>Função</th>
-                              <th>Documento</th>
                               <th>Status</th>
                               <th>Opções</th>
                             </tr>
@@ -108,6 +107,10 @@
                                         <a href="{{route('employees.show', $employee->uuid)}}"><b>{{$employee->name}}</b></a>
                                         <br/>
                                         <a href="{{route('clients.show', \App\Helpers\Helper::actualCompany($employee)->uuid)}}"><small>{{ \App\Helpers\Helper::actualCompany($employee)->name }}</small></a>
+                                        @if($employee->cpf)
+                                          <br/>
+                                          <small>CPF: {{ \App\Helpers\Helper::formatCnpjCpf($employee->cpf) }}</small>
+                                        @endif
                                     </td>
 
                                     <td>
@@ -115,11 +118,7 @@
                                     </td>
 
                                     <td>
-                                        <p>{{ \App\Helpers\Helper::formatCnpjCpf($employee->cpf) }}</p>
-                                    </td>
-
-                                    <td>
-                                        <p class="text-{{$employee->active ? 'success' : 'danger'}}">{{$employee->active ? 'Ativo' : 'Inativo'}}</p>
+                                        <span class="label label-{{$employee->active ? 'success' : 'danger'}}">{{$employee->active ? 'Ativo' : 'Inativo'}}</span>
                                     </td>
 
                                     <td class="dropdown">
