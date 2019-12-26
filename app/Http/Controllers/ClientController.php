@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Client, Documents};
+use App\Models\Client\Employee;
 use Storage;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client as GuzzleClient;
 use pcrov\JsonReader\JsonReader;
+use App\Helpers\Helper;
 use Auth;
 
 class ClientController extends Controller
@@ -254,19 +256,6 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::uuid($id);
-
-        foreach ($client->employees as $key => $employee) {
-
-            //dd($employee);
-
-            if(!$employee->trainings) {
-                continue;
-            }
-
-            //
-
-        }
-
         return view('clients.show', compact('client'));
     }
 
@@ -328,19 +317,29 @@ class ClientController extends Controller
 
         try {
 
+          $employees = Employee::orderBy('name');
           $client = Client::uuid($id);
+          $employees->whereHas('jobs', function($query) use($client){
+              $query->where('company_id', $client->id)->where('active', true);
+          });
+
+          $employees = $employees->get();
+
+          $result = [];
+
+          $result = $employees->map(function($employee) {
+              return [
+                'id' => $employee->uuid,
+                'name' => $employee->name,
+                'document' => Helper::formatCnpjCpf($employee->cpf) ?? '',
+                'company' =>  Helper::actualOccupation($employee)->name ?? '',
+              ];
+          });
 
           return response()->json([
             'success' => true,
             'message' => 'Registros retornados',
-            'data' => $client->employees->map(function($employee) {
-                return [
-                  'name' => $employee->employee->name,
-                  'id' => $employee->employee->id,
-                  'uuid' => $employee->employee->uuid,
-                  'cpf' => $employee->employee->cpf,
-                ];
-            })
+            'data' => $result
           ]);
 
         } catch(\Exception $e) {
@@ -402,12 +401,21 @@ class ClientController extends Controller
 
         try {
 
-          $employee = Employee::where('name', 'LIKE', "%$param%")->get();
+          $employees = Employee::where('name', 'LIKE', "%$param%")->orWhere('cpf', 'LIKE', "%$param%");
+
+          if($request->get('client')) {
+              $client = Client::uuid($request->get('client'));
+              $employees->whereHas('jobs', function($query) use($client2){
+                  $query->where('company_id', $client->id)->where('active', true);
+              });
+          }
+
+          $employees = $employees->get();
 
           return response()->json([
             'success' => true,
             'message' => 'Registros retornados',
-            'data' => $employee
+            'data' => $employees
           ]);
 
         } catch(\Exception $e) {

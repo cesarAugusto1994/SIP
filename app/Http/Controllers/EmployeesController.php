@@ -157,9 +157,15 @@ class EmployeesController extends Controller
 
         if($request->filled('client')) {
             $client = Client::uuid($request->get('client'));
-
             $employees->whereHas('jobs', function($query) use($client){
-                $query->where('company_id', $client->id);
+                $query->where('company_id', $client->id)->where('active', true);
+            });
+        }
+
+        if($request->filled('param')) {
+            $client2 = Client::uuid($request->get('param'));
+            $employees->whereHas('jobs', function($query) use($client2){
+                $query->where('company_id', $client2->id)->where('active', true);
             });
         }
 

@@ -1590,7 +1590,7 @@ class Helper
     {
         $occupations = $employee->occupations;
 
-        if($occupations->isEmpty()) {
+        if(!$occupations || $occupations->isEmpty()) {
             return null;
         }
 
