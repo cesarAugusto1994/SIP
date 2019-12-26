@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Client\{Address,Employee};
 use App\Helpers\TimesAgo;
+use App\Helpers\Helper;
 use App\User;
 
 class SearchController extends Controller
@@ -36,7 +37,7 @@ class SearchController extends Controller
             $results[] = [
               'header' => 'Funcionário: ' . $record->name,
               'image' => '',
-              'content' => $record->company->name,
+              'content' => Helper::actualCompany($record)->name ?? '',
               'url' => route('employees.show', $record->uuid),
               'date' => $record->created_at->diffForHumans()
             ];
