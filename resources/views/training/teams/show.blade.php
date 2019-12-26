@@ -36,6 +36,8 @@
             <button type="button" class="btn btn-outline-success btn-sm waves-effect waves-light" data-toggle="modal" data-target=".statusTeam">Marcar Presença</button>
           @endif
 
+          <a href="{{ route('teams.edit', $team->uuid) }}" class="btn btn-outline-info btn-sm waves-effect waves-light"><i class="far fa-edit"></i> Editar Informações</a>
+
           <div class="btn-group dropdown-split-primary">
             @permission('edit.turmas')
 
@@ -57,8 +59,7 @@
               </button>
               <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-                  <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-list"></i> <span>Lista de Presença</span></a
-                  <a href="{{ route('teams.edit', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-edit"></i> Editar Informações</a>
+                  <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-list"></i> <span>Lista de Presença</span></a>
 
                   <!--
                   <a href="#!" data-route="{{ route('team_duplicate', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-copy"></i> Duplicar</a>

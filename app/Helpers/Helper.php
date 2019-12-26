@@ -1174,8 +1174,8 @@ class Helper
         if($model == 'App\Models\Client\Employee') {
 
           if($item) {
-            $route = route('clients.show', $item->company->uuid);
-            $html = '<a href='.$route.'>'.$item->name.'</a>';
+            $route = route('clients.show', self::actualCompany($item)->uuid);
+            $html = '<a href='.$route.'>'. self::actualCompany($item)->name .'</a>';
           }
 
         }
@@ -1228,7 +1228,7 @@ class Helper
     {
           switch($value) {
             case '1':
-              return'primary'; 
+              return'primary';
               break;
             case '2':
               return 'warning';

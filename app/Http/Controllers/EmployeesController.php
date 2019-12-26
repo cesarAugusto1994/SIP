@@ -98,7 +98,7 @@ class EmployeesController extends Controller
               'id' => $employee->uuid,
               'name' => $employee->name,
               'document' => Helper::formatCnpjCpf($employee->cpf) ?? '',
-              'company' =>  Helper::actualOccupation($employee)->name,
+              'company' =>  Helper::actualOccupation($employee)->name ?? '',
             ];
         });
 
