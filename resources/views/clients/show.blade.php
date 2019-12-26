@@ -71,7 +71,7 @@
               <div class="card-block">
                   <i class="feather icon-users st-icon bg-c-pink txt-lite-color"></i>
                   <div class="text-left">
-                      <h3 class="d-inline-block">{{ $client->employees->count() }}</h3>
+                      <h3 class="d-inline-block">{{ $client->employees->where('active', true)->count() }}</h3>
                       <span class="f-right bg-c-pink"><a class="text-white" href="{{ route('employees.index', ['find' => 1, 'client' => $client->uuid]) }}">Acessar</a></span>
                   </div>
               </div>

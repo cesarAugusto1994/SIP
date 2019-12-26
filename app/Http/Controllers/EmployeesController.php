@@ -40,7 +40,7 @@ class EmployeesController extends Controller
             $client = Client::uuid($client);
 
             $employees->whereHas('jobs', function($query) use($client){
-                $query->where('company_id', $client->id);
+                $query->where('company_id', $client->id)->where('active', true);
             });
 
           }
