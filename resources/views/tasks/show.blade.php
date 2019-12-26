@@ -261,12 +261,16 @@
 													{!! $task->description !!}
 											</div>
 
-                      <div class="m-b-20">
-													<h6 class="sub-title m-b-15">Cliente</h6>
-													<p class="lead">{{ $task->client->name }}</p>
-                          <p>{{ \App\Helpers\Helper::formatCnpjCpf($task->client->document) }}<p>
-                          <p>{{ $task->client->contract->name }}<p>
-											</div>
+                      @if($task->client)
+
+                        <div class="m-b-20">
+  													<h6 class="sub-title m-b-15">Cliente</h6>
+  													<p class="lead">{{ $task->client->name ?? '-' }}</p>
+                            <p>{{ \App\Helpers\Helper::formatCnpjCpf($task->client->document) }}<p>
+                            <p>{{ $task->client->contract->name }}<p>
+  											</div>
+
+                      @endif
 
 									</div>
 							</div>
