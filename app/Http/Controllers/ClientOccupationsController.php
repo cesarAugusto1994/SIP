@@ -97,11 +97,8 @@ class ClientOccupationsController extends Controller
     {
         $data = $request->request->all();
 
-        $client = Client::uuid($request->get('company_id'));
-
         Occupation::updateOrCreate([
           'name' => $data['name'],
-          'client_id' => $client->id
         ]);
 
         notify()->flash('Sucesso!', 'success', [
@@ -133,10 +130,6 @@ class ClientOccupationsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->request->all();
-
-        $client = Client::uuid($request->get('company_id'));
-
-        $data['client_id'] = $client->id;
 
         $occupation = Occupation::uuid($id);
         $occupation->update($data);

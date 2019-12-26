@@ -91,16 +91,19 @@
                   <div class="table-responsive">
                       <table class="table table-lg table-styling">
                           <thead>
-                              <tr class="table-primary">
-                                  <th>Opções</th>
+                              <tr class="table-inverse">
                                   <th>No.</th>
                                   <th>Nome</th>
-                                  <th>Empresa</th>
+                                  <th>Opções</th>
                               </tr>
                           </thead>
                           <tbody>
                               @foreach($occupations as $occupation)
                                   <tr>
+
+                                      <td><a href="{{route('client-occupations.edit', ['id' => $occupation->uuid])}}">#{{ str_pad($occupation->id, 6, "0", STR_PAD_LEFT) }}</a></td>
+
+                                      <td><a href="{{route('client-occupations.edit', ['id' => $occupation->uuid])}}">{{ $occupation->name }}</a></td>
 
                                       <td class="dropdown">
 
@@ -112,14 +115,6 @@
                                           @endpermission
 
                                         </div>
-                                      </td>
-
-                                      <td>#{{ str_pad($occupation->id, 6, "0", STR_PAD_LEFT) }}</td>
-
-                                      <td>{{ $occupation->name }}</td>
-
-                                      <td>
-                                          <a href="{{route('clients.show', ['id' => $occupation->company->uuid])}}">{{$occupation->company->name}}</a>
                                       </td>
 
                                   </tr>
