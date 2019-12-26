@@ -136,10 +136,11 @@
         }
 
         .pcoded-main-container {
-          background-image: url("{{ asset('images/natal.jpg') }}");
+          /*background-image: url("{{ asset('images/natal.jpg') }}");*/
+          /*background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,95,104,1) 0%, rgba(15,156,168,1) 90% );
           background-size: cover;
           background-position: center center;
-          background-attachment: fixed;
+          background-attachment: fixed;*/
         }
 
         .page-header {
@@ -227,7 +228,7 @@
 <script type="text/javascript" src="{{ asset('adminty\components\i18next-browser-languagedetector\js\i18nextBrowserLanguageDetector.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('adminty\components\jquery-i18next\js\jquery-i18next.min.js') }}"></script>
 <script src="{{ asset('adminty\js\pcoded.min.js') }}"></script>
-<script src="{{ asset('adminty\js\vartical-layout.min.js') }}?v1.0"></script>
+<script src="{{ asset('adminty\js\vartical-layout.min.js') }}?v1.1"></script>
 <script src="{{ asset('adminty\js\jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Custom js -->
 <script type="text/javascript" src="{{ asset('adminty\js\script.js?v1.0.4') }}"></script>

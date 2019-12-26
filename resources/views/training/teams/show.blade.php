@@ -57,14 +57,13 @@
               </button>
               <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
 
-                  <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-list"></i> <span>Lista de Presença</span></a>
+                  <a target="_blank" href="{{ route('team_presence_list', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-list"></i> <span>Lista de Presença</span></a
+                  <a href="{{ route('teams.edit', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-edit"></i> Editar Informações</a>
 
-                  @if($team->status != 'FINALIZADA' || $team->status == 'FINALIZADA' && auth()->user()->isAdmin())
-                      <a href="{{ route('teams.edit', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-edit"></i> Editar Informações</a>
-                  @endif
                   <!--
                   <a href="#!" data-route="{{ route('team_duplicate', $team->uuid) }}" class="dropdown-item btn-primary"><i class="far fa-copy"></i> Duplicar</a>
                 -->
+
                   @if($team->status == 'FINALIZADA')
 
                       <a target="_blank" href="{{ route('team_certified_company', $team->uuid) }}" class="dropdown-item btn-primary"><i class="ti-file"></i> <span>Certificado por Empresa</span></a>

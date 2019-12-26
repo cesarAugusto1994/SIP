@@ -62,6 +62,9 @@
                           </thead>
                           <tbody>
                             @foreach($client->employees as $employee)
+                              @php
+                                  $employee = $employee->employee;
+                              @endphp
                               @foreach($employee->trainings as $training)
 
                                   @if($training->status == 'FINALIZADA')
@@ -97,34 +100,5 @@
   </div>
 
 </div>
-
-@endsection
-
-@section('scripts')
-
-<script>
-
-  var formUpload = $("#formUpload");
-  var modalForm = $("#uploadDocuments");
-
-  formUpload.on('submit', function(e) {
-
-      //e.preventDefault();
-
-      modalForm.modal('hide');
-
-      window.swal({
-        title: 'Em progresso',
-        text: 'o upload esta em andamento.',
-        type: 'info',
-        showConfirmButton: false,
-        allowOutsideClick: false
-      })
-
-      //formUpload.submit();
-
-  });
-
-</script>
 
 @endsection

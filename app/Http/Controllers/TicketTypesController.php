@@ -16,7 +16,7 @@ class TicketTypesController extends Controller
      */
     public function index()
     {
-        $types = Helper::TicketType();
+        $types = Helper::ticketType();
         return view('tickets.types.index', compact('types'));
     }
 

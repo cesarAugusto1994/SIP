@@ -46,7 +46,7 @@ class EmployeesController extends Controller
           }
 
           if($request->filled('status')) {
-            $employees->where('active', $request->get('status'));
+              $employees->where('active', $request->get('status'));
           }
 
           $quantity = $employees->count();
@@ -60,6 +60,12 @@ class EmployeesController extends Controller
         }
 
         return view('clients.employees.index', compact('employees', 'quantity'));
+    }
+
+    public function transferToCompany($id)
+    {
+        $employee = Employee::uuid($id);
+        return view('clients.employees.transfer-company', compact('employee'));
     }
 
     public function search(Request $request)
@@ -213,7 +219,7 @@ class EmployeesController extends Controller
     public function store(Request $request)
     {
         if(!Auth::user()->hasPermission('create.cliente.funcionarios')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, 'Acesso Negado.');
         }
 
         $data = $request->request->all();
@@ -239,17 +245,20 @@ class EmployeesController extends Controller
 
         $documentString = str_replace(['.','/','-'], ['','',''], $data['cpf']);
 
-        $hasClient = Employee::where('cpf', $documentString)->first();
+        if(!empty($documentString)) {
 
-        if($hasClient) {
+            $hasClient = Employee::where('cpf', $documentString)->first();
 
-          notify()->flash('Atenção!', 'error', [
-            'text' => 'Documento já registrado para outro Cliente.',
-            'modal' => true
-          ]);
+            if($hasClient) {
 
-          return back();
+              notify()->flash('Atenção!', 'error', [
+                'text' => 'Documento já registrado para outro Cliente.',
+                'modal' => true
+              ]);
 
+              return back();
+
+            }
         }
 
         $data['cpf'] = $documentString;
@@ -292,7 +301,6 @@ class EmployeesController extends Controller
         }
 
         $employee = Employee::uuid($id);
-
         return view('clients.employees.edit', compact('employee'));
     }
 

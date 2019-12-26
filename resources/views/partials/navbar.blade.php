@@ -6,8 +6,8 @@
                 <i class="feather icon-menu"></i>
             </a>
             <a href="{{ route('home') }}" class="text-center">
-                <!--<img class="img" src="{{ asset('images\logo-provider.png') }}" width="138px" alt="SIP - Provider">-->
-                <h5 class="text-center">{{ config('app.name') }}</h5>
+                <img class="img" src="{{ asset('images\logo-provider.png') }}" width="138px" alt="SIP - Provider">
+                <!--<h5 class="text-center">{{ config('app.name') }}</h5>-->
             </a>
             <a class="mobile-options">
                 <i class="feather icon-more-horizontal"></i>
@@ -34,19 +34,19 @@
                 </li>
 
                 <li>
-                    <a class="text-primary" target="_blank" href="https://providersadee-x6r4398​.slack​.com">
+                    <a target="_blank" href="https://providersadee-x6r4398​.slack​.com">
                         Slack <i class="fab fa-slack"></i>
                     </a>
                 </li>
 
                 <li>
-                    <a class="text-danger" target="_blank" href="https://webmail-seguro.com.br/locaweb.com/">
+                    <a target="_blank" href="https://webmail-seguro.com.br/locaweb.com/">
                         Webmail <i class="far fa-envelope"></i>
                     </a>
                 </li>
 
                 <li>
-                    <a class="text-success" data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="#!">
+                    <a data-toggle="modal" data-target="#tickets-Modal" target="_blank" href="#!">
                         Chamado <i class="fas fa-ticket-alt"></i>
                     </a>
                 </li>
@@ -137,7 +137,7 @@
 
                             <li>
                                 <a href="{{ route('change_password', ['user' => auth()->user()->uuid]) }}">
-                                    <i class="feather icon-key"></i> Alterar Senha
+                                    <i class="fa fa-key"></i> Alterar Senha
                                 </a>
                             </li>
 
