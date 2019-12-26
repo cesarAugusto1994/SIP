@@ -78,11 +78,7 @@
                             <tr>
                                 <th scope="row">Situação</th>
                                 <td>
-                                  @if($employee->active)
-                                      <i class="fa fa-circle text-success"></i> Ativo
-                                  @else
-                                      <i class="fa fa-circle text-danger"></i> Inativo
-                                  @endif
+                                  <p>{!! \App\Helpers\Helper::activeOrNot($employee->active) !!}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -132,7 +128,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($employee->jobs as $job)
+                                @foreach($employee->jobs->sortByDesc('id') as $job)
 
                                     <tr>
                                         <td>
@@ -150,7 +146,7 @@
                                         </td>
 
                                         <td>
-                                            <p>{{$job->active ? 'Sim' : 'Não'}}</p>
+                                            <p>{!! \App\Helpers\Helper::activeOrNot($job->active) !!}</p>
                                         </td>
                                     </tr>
 
@@ -187,7 +183,7 @@
                                             {{$occupation->occupation->name}}
                                         </td>
                                         <td>
-                                            <p>{{$occupation->active ? 'Sim' : 'Não'}}</p>
+                                            <p>{!! \App\Helpers\Helper::activeOrNot($occupation->active) !!}</p>
                                         </td>
                                     </tr>
 

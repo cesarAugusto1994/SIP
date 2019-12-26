@@ -1597,4 +1597,13 @@ class Helper
         return $occupations->last()->occupation;
     }
 
+    public static function activeOrNot($flag)
+    {
+        if($flag) {
+            return '<span class="label label-success">Ativo</span>';
+        }
+
+        return '<span class="label label-danger">Inativo</span>';
+    }
+
 }

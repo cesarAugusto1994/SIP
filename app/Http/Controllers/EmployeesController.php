@@ -68,6 +68,80 @@ class EmployeesController extends Controller
         return view('clients.employees.transfer-company', compact('employee'));
     }
 
+    public function transferToCompanyStore($id, Request $request)
+    {
+        $data = $request->request->all();
+        $employee = Employee::uuid($id);
+
+        if(!$request->filled('old_company_id')) {
+
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Empresa Atual não informada.'
+            ]);
+
+            return back();
+        }
+
+        $lastCompany = Client::uuid($request->get('old_company_id'));
+
+        if($lastCompany) {
+
+            $lastJob = $employee->jobs->where('company_id', $lastCompany->id)->where('active', true)->first();
+
+            if($lastJob) {
+
+                if($request->filled('fired_at')) {
+                    $fired = \DateTime::createFromFormat('d/m/Y', $request->get('fired_at'));
+                    $lastJob->fired_at = $fired;
+                }
+
+                $lastJob->active = false;
+                $lastJob->save();
+
+            }
+
+        }
+
+        if(!$request->filled('company_id')) {
+
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Empresa não informada.'
+            ]);
+
+            return back();
+        }
+
+        $company = Client::uuid($request->get('company_id'));
+
+        if(!$company) {
+
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Empresa não Encontrada.'
+            ]);
+
+            return back();
+
+        }
+
+        $hired = null;
+
+        if($request->filled('hired_at')) {
+            $hired = \DateTime::createFromFormat('d/m/Y', $request->get('hired_at'));
+        }
+
+        Job::create([
+          'company_id' => $company->id,
+          'employee_id' => $employee->id,
+          'hired_at' => $hired
+        ]);
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Funcionário transferido com sucesso.'
+        ]);
+
+        return redirect()->route('employees.show', $employee->uuid);
+    }
+
     public function search(Request $request)
     {
         if(!$request->has('search')) {

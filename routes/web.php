@@ -196,6 +196,7 @@ Route::middleware('auth')->group(function () {
           Route::get('employees/search/json', 'EmployeesController@search')->name('employee_search');
           Route::get('employees/search', 'ClientController@employeeFind')->name('employees_find');
           Route::get('employees/{id}/transfer', 'EmployeesController@transferToCompany')->name('employee_transfer_company');
+          Route::post('employees/{id}/transfer/store', 'EmployeesController@transferToCompanyStore')->name('employee_transfer_company_store');
           Route::get('employees/migrate/all', 'EmployeesController@migrateEmployees')->name('employees_migrate');
 
           Route::get('addresses/search/json', 'AddressesController@search')->name('addresses_search');

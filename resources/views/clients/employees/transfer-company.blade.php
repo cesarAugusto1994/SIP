@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Funcionários</h4>
+                    <h4>Funcionários: Transferência de Empresa</h4>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('employees.show', $employee->uuid) }}"> {{ $employee->name }} </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#!">Editar</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Transferir</a></li>
                 </ul>
             </div>
         </div>
@@ -34,67 +34,61 @@
 
   <div class="card">
       <div class="card-header card bg-c-green update-card">
-          <h5 class="text-white">Editar Funcionário</h5>
+          <h5 class="text-white">Transferir Funcionário</h5>
       </div>
       <div class="card-block">
 
-        <form class="formValidation" data-parsley-validate method="post" action="{{route('employees.update', $employee->uuid)}}">
+        <form class="formValidation" data-parsley-validate method="post" action="{{route('employee_transfer_company_store', $employee->uuid)}}">
 
             {{csrf_field()}}
-            {{method_field('PUT')}}
+
+            <input type="hidden" name="old_company_id" value="{{ \App\Helpers\Helper::actualCompany($employee)->uuid }}"/>
+
+            <div class="row m-b-30">
+
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <label class="col-form-label" for="company_id">Empresa Atual</label>
+                      <div class="input-group">
+                          {{ \App\Helpers\Helper::actualCompany($employee)->name ?? '' }}
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-2">
+                  <div class="form-group {!! $errors->has('fired_at') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="fired_at">Desligamento</label>
+                      <div class="input-group">
+                          <input type="text" name="fired_at" class="form-control inputDate" placeholder="Informe a data de Desligamento">
+                      </div>
+                      {!! $errors->first('fired_at', '<p class="help-block">:message</p>') !!}
+                  </div>
+              </div>
+
+            </div>
+
+            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Nova Empresa</h6>
 
             <div class="row m-b-30">
 
                 <div class="col-md-4">
-                    <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="name">Nome</label>
+                    <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="company_id">Empresa</label>
                         <div class="input-group">
-                            <input type="text" id="name" required name="name" value="{{ $employee->name }}" class="form-control" placeholder="Informe o nome">
+                            <select class="form-control select-client" name="company_id" data-url="{{ route('client_search') }}" required></select>
                         </div>
-                        {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('company_id', '<p class="help-block">:message</p>') !!}
                     </div>
-
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="cpf">CPF</label>
+                <div class="col-md-2">
+                    <div class="form-group {!! $errors->has('hired_at') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="hired_at">Admissão</label>
                         <div class="input-group">
-                            <input type="text" id="cpf" name="cpf" value="{{ $employee->cpf }}" class="form-control inputCpf" placeholder="Informe o CPF">
+                            <input type="text" name="hired_at" class="form-control inputDate" placeholder="Informe a data de Admissão">
                         </div>
-                        {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
+                        {!! $errors->first('hired_at', '<p class="help-block">:message</p>') !!}
                     </div>
-
-                    <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="email">Email</label>
-                        <div class="input-group">
-                            <input type="text" id="email" name="email" value="{{ $employee->email }}" class="form-control" placeholder="Informe o email">
-                        </div>
-                        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
-                    </div>
-
-
-
-                </div>
-
-                <div class="col-md-4">
-
-                    <div class="form-group {!! $errors->has('rg') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="rg">RG</label>
-                        <div class="input-group">
-                            <input type="text" id="cpf" name="rg" value="{{ $employee->rg }}" class="form-control" placeholder="Informe o RG">
-                        </div>
-                        {!! $errors->first('rg', '<p class="help-block">:message</p>') !!}
-                    </div>
-
-                    <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
-                        <label class="col-form-label" for="phone">Telefone</label>
-                        <div class="input-group">
-                            <input type="text" id="phone" name="phone" value="{{ $employee->phone }}" class="form-control" placeholder="Informe o Telefone">
-                        </div>
-                        {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
-                    </div>
-
                 </div>
 
             </div>
