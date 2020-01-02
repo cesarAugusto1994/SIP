@@ -34,7 +34,7 @@ class DeliveryController extends Controller
                 'status_id' => $delivery->status->id,
                 'status' => $delivery->status->name,
                 'client' => $delivery->client->name,
-                'address' => $delivery->address->description . ' - ' . $delivery->address->street . ', ' . $delivery->address->number . ', ' . $delivery->address->district . ' - ' . $delivery->address->city . ' / ' . $delivery->address->state . ' - ' . $delivery->address->zip,
+                'address' => $delivery->address->street . ', ' . $delivery->address->number . ', ' . $delivery->address->district . ' ' . $delivery->address->city,
                 'latitude' => (float)$delivery->address->lat,
                 'longitude' => (float)$delivery->address->long,
             ];
