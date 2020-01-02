@@ -25,7 +25,7 @@
             $color = $level;
             break;
         default:
-            $color = 'success';
+            $color = 'primary';
     }
 ?>
 @component('mail::button', ['url' => $actionUrl, 'color' => $color])
@@ -43,15 +43,16 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-
+@lang('Regards'),<br>
+{{ config('app.name') }}
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    "Se você estiver com problemas para clicar no botão \":actionText\", copie e cole o URL abaixo\n".
-    'Em seu navegador da web: [:actionURL](:actionURL)',
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
+    'into your web browser: [:actionURL](:actionURL)',
     [
         'actionText' => $actionText,
         'actionURL' => $actionUrl,

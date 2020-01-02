@@ -190,6 +190,7 @@ return [
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Shetabit\Visitor\Provider\VisitorServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 

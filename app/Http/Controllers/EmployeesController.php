@@ -62,6 +62,74 @@ class EmployeesController extends Controller
         return view('clients.employees.index', compact('employees', 'quantity'));
     }
 
+    public function changeOccupation($id)
+    {
+        $employee = Employee::uuid($id);
+        return view('clients.employees.change-occupation', compact('employee'));
+    }
+
+    public function changeOccupationStore(Request $request, $id)
+    {
+        $data = $request->request->all();
+        $employee = Employee::uuid($id);
+
+        if(!$request->filled('old_occupation_id')) {
+
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Função Atual não informada.'
+            ]);
+
+            return back();
+        }
+
+        $occupation = Occupation::uuid($request->get('old_occupation_id'));
+
+        if($occupation) {
+
+            $lastOccupation = $employee->occupations->where('occupation_id', $occupation->id)->first();
+
+            if($lastOccupation) {
+
+                $lastOccupation->active = false;
+                $lastOccupation->save();
+
+            }
+
+        }
+
+        if(!$request->filled('occupation_id')) {
+
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Nova Função não informada.'
+            ]);
+
+            return back();
+        }
+
+        $occupation = Occupation::uuid($request->get('occupation_id'));
+
+        if(!$occupation) {
+
+            notify()->flash('Erro!', 'error', [
+              'text' => 'Nova Função não Encontrada.'
+            ]);
+
+            return back();
+
+        }
+
+        EmployeeOccupation::create([
+          'employee_id' => $employee->id,
+          'occupation_id' => $occupation->id
+        ]);
+
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Função do Funcionário alterada com sucesso.'
+        ]);
+
+        return redirect()->route('employees.show', $employee->uuid);
+    }
+
     public function transferToCompany($id)
     {
         $employee = Employee::uuid($id);

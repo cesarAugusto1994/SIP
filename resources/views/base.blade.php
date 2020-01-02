@@ -269,7 +269,7 @@
 <input type="hidden" value="{{ route('addresses_search') }}" id="input-search-addresses"/>
 <input type="hidden" value="{{ route('client_occupations_search') }}" id="input-search-client-occupations"/>
 
-<script src="{{ asset('js/sip.js') }}"></script>
+<script src="{{ asset('js/sip2.js') }}"></script>
 
 <script>
 

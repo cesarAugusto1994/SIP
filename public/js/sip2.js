@@ -76,6 +76,37 @@ $('.select-client').select2({
 
 });
 
+$('.fetch-occupations').select2({
+  ajax: {
+    type: "GET",
+    dataType: 'json',
+    delay: 250,
+    url: $('#input-search-client-occupations').val(),
+    data: function (params) {
+      var query = {
+        search: params.term,
+        type: 'public'
+      }
+
+      return query;
+    },
+    processResults: function (data) {
+        return {
+            results: $.map(data, function (item) {
+                return {
+                    text: item.name,
+                    id: item.id
+                }
+            })
+        };
+    }
+  },
+  cache: true,
+  placeholder: 'Procurar cliente',
+  minimumInputLength: 1,
+
+});
+
 function formatRepo(emp) {
 
     if(!emp.name) return '<span>Pesquisando...</span>';
@@ -643,46 +674,6 @@ $(document).on('change','.select-client-employees',function(){
 
 });
 
-$(document).on('change','.select-employees-list',function(){
-
-  let self = $(this);
-  let route = self.data('search-employees');
-  let client = $(self.data('target'));
-
-  if(!client.val()) {
-      notify('Informe o Cliente para pesquisar os funcionários');
-      return false;
-  }
-
-  let value = self.val();
-
-  $.ajax({
-    type: 'GET',
-    url: route + '?param=' + value + '&client=' + client.val(),
-    async: true,
-    success: function(response) {
-
-      data = response.data;
-
-      data = $.map(data, function(item) {
-        if(item) {
-          return { id: item.uuid, text: item.name };
-        }
-
-      });
-
-      selectEmployee.html("");
-      selectEmployee.trigger('change');
-
-      selectEmployee.select2({
-          data: data,
-      });
-
-    }
-  })
-
-});
-
 let selectClientEmails = $(".select-client-emails");
 let selectEmail = $("#select-email");
 
@@ -754,7 +745,6 @@ selectOccupations.change(function () {
       });
 
       occupation.append(html);
-      //occupation.selectpicker('refresh');
 
       swal.close();
 

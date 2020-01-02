@@ -47,7 +47,7 @@
                       <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(113px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
                         @permission('edit.cliente.funcionarios')
                           <a class="dropdown-item text-primary" href="{{route('employee_transfer_company', ['id' => $employee->uuid])}}">Transferir de Empresa</a>
-                          <a class="dropdown-item text-primary" href="{{route('employee_transfer_company', ['id' => $employee->uuid])}}">Transferir de Cargo</a>
+                          <a class="dropdown-item text-danger" href="{{route('employee_occupation_change', ['id' => $employee->uuid])}}">Alterar de Cargo</a>
                         @endpermission
                       </div>
                   </div>
@@ -176,7 +176,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($employee->occupations as $occupation)
+                                @foreach($employee->occupations->sortByDesc('id') as $occupation)
 
                                     <tr>
                                         <td>
@@ -214,7 +214,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($employee->trainings as $training)
+                                @foreach($employee->trainings->sortByDesc('id') as $training)
 
                                     @if($training->status == 'FINALIZADA')
                                         @continue;

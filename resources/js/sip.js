@@ -76,6 +76,37 @@ $('.select-client').select2({
 
 });
 
+$('.fetch-occupations').select2({
+  ajax: {
+    type: "GET",
+    dataType: 'json',
+    delay: 250,
+    url: $('#input-search-client-occupations').val(),
+    data: function (params) {
+      var query = {
+        search: params.term,
+        type: 'public'
+      }
+
+      return query;
+    },
+    processResults: function (data) {
+        return {
+            results: $.map(data, function (item) {
+                return {
+                    text: item.name,
+                    id: item.id
+                }
+            })
+        };
+    }
+  },
+  cache: true,
+  placeholder: 'Procurar cliente',
+  minimumInputLength: 1,
+
+});
+
 function formatRepo(emp) {
 
     if(!emp.name) return '<span>Pesquisando...</span>';
@@ -714,7 +745,6 @@ selectOccupations.change(function () {
       });
 
       occupation.append(html);
-      //occupation.selectpicker('refresh');
 
       swal.close();
 

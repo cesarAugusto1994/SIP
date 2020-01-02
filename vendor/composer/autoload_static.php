@@ -14,8 +14,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
@@ -236,9 +236,11 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             'BeyondCode\\DumpServer\\' => 22,
             'Barryvdh\\DomPDF\\' => 16,
+            'Barryvdh\\Cors\\' => 14,
         ),
         'A' => 
         array (
+            'Asm89\\Stack\\' => 12,
             'Arrilot\\Widgets\\' => 16,
             'App\\' => 4,
         ),
@@ -690,6 +692,14 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
         ),
+        'Barryvdh\\Cors\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-cors/src',
+        ),
+        'Asm89\\Stack\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
+        ),
         'Arrilot\\Widgets\\' => 
         array (
             0 => __DIR__ . '/..' . '/arrilot/laravel-widgets/src',
@@ -783,6 +793,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'App\\Helpers\\TimesAgo' => __DIR__ . '/../..' . '/app/Helpers/TimesAgo.php',
         'App\\Http\\Controllers\\ActivitiesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ActivitiesController.php',
         'App\\Http\\Controllers\\AddressesController' => __DIR__ . '/../..' . '/app/Http/Controllers/AddressesController.php',
+        'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
         'App\\Http\\Controllers\\ArchivesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArchivesController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -1039,6 +1050,8 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Arrilot\\Widgets\\WidgetGroup' => __DIR__ . '/..' . '/arrilot/laravel-widgets/src/WidgetGroup.php',
         'Arrilot\\Widgets\\WidgetGroupCollection' => __DIR__ . '/..' . '/arrilot/laravel-widgets/src/WidgetGroupCollection.php',
         'Arrilot\\Widgets\\WidgetId' => __DIR__ . '/..' . '/arrilot/laravel-widgets/src/WidgetId.php',
+        'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
+        'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'BaconQrCode\\Common\\AbstractEnum' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/BaconQrCode/Common/AbstractEnum.php',
         'BaconQrCode\\Common\\BitArray' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/BaconQrCode/Common/BitArray.php',
         'BaconQrCode\\Common\\BitMatrix' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/BaconQrCode/Common/BitMatrix.php',
@@ -1078,6 +1091,10 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'BaconQrCode\\Renderer\\Text\\Html' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/BaconQrCode/Renderer/Text/Html.php',
         'BaconQrCode\\Renderer\\Text\\Plain' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/BaconQrCode/Renderer/Text/Plain.php',
         'BaconQrCode\\Writer' => __DIR__ . '/..' . '/bacon/bacon-qr-code/src/BaconQrCode/Writer.php',
+        'Barryvdh\\Cors\\HandleCors' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/HandleCors.php',
+        'Barryvdh\\Cors\\HandlePreflight' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/HandlePreflight.php',
+        'Barryvdh\\Cors\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/LumenServiceProvider.php',
+        'Barryvdh\\Cors\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/ServiceProvider.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
@@ -3066,6 +3083,7 @@ class ComposerStaticInitdf905ed2830ea98295cdd599418cfb8a
         'Illuminate\\Translation\\TranslationServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Translation/TranslationServiceProvider.php',
         'Illuminate\\Translation\\Translator' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Translation/Translator.php',
         'Illuminate\\Validation\\ClosureValidationRule' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/ClosureValidationRule.php',
+        'Illuminate\\Validation\\Concerns\\FilterEmailValidation' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Concerns/FilterEmailValidation.php',
         'Illuminate\\Validation\\Concerns\\FormatsMessages' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Concerns/FormatsMessages.php',
         'Illuminate\\Validation\\Concerns\\ReplacesAttributes' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Concerns/ReplacesAttributes.php',
         'Illuminate\\Validation\\Concerns\\ValidatesAttributes' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Validation/Concerns/ValidatesAttributes.php',

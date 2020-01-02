@@ -21,7 +21,7 @@
                         <a href="{{ route('employees.index') }}"> Funcionários </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('employees.show', $employee->uuid) }}"> {{ $employee->name }} </a>
+                        <a href="{{ route('employees.show', $employee->uuid) }}"> Informações </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">Transferir</a></li>
                 </ul>
