@@ -68,6 +68,8 @@ class Kernel extends HttpKernel
         'lock' => \App\Http\Middleware\LockAccount::class,
         'status' => \App\Http\Middleware\CheckStatus::class,
         'visitor' => \Shetabit\Visitor\Middlewares\LogVisits::class,
+        'jwt-auth' => \App\Http\Middleware\jwtMiddleware::class,
+        'api-header' => \App\Http\Middleware\API::class,
     ];
 
     /**

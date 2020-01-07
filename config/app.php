@@ -191,7 +191,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Shetabit\Visitor\Provider\VisitorServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-
+        //Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ],
 
     /*
@@ -254,6 +255,8 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'JsonReader' => pcrov\JsonReader\JsonReader::class,
         'Visitor' => Shetabit\Visitor\Facade\Visitor::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class
     ],
 
 ];
