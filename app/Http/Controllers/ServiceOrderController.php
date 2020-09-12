@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\ServiceOrder\ServiceOrder;
 use App\Models\ServiceOrder\ServiceOrder\Log as ServiceOrderLog;
 use App\Models\ServiceOrder\Service;
-use App\Models\ServiceOrder\ServiceOrder\{Item as ServiceOrderItem, Address as ServiceOrderAddress};
+use App\Models\ServiceOrder\ServiceOrder\Item as ServiceOrderItem;
+use App\Models\ServiceOrder\ServiceOrder\Address as ServiceOrderAddress;
 use App\Models\Client;
-use App\Models\Client\{Address, Employee};
+use App\Models\Client\Address;
+use App\Models\Client\Employee;
 use App\Models\ServiceOrder\ServiceOrder\Ticket as ServiceOrderTicket;
 use App\Models\ServiceOrder\ServiceOrder\Training\Course as ServiceOrderTrainingCourse;
 use App\Helpers\Helper;
@@ -25,14 +27,14 @@ class ServiceOrderController extends Controller
     {
         $services = ServiceOrder::orderByDesc('id');
 
-        if($request->filled('search')) {
-          $search = $request->get('search');
-          $services->where('id', $search)
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $services->where('id', $search)
           ->orWhere('name', 'like', "%$search%")
           ->orWhere('description', 'like', "%$search%");
         }
 
-        if($request->filled('service_type_id')) {
+        if ($request->filled('service_type_id')) {
             $services->where('service_type_id', $request->get('service_type_id'));
         }
 
@@ -69,12 +71,20 @@ class ServiceOrderController extends Controller
         $data = $request->request->all();
         $user = $request->user();
 
-        if(!$request->has('contract_id')) {
+        if (!$request->has('contract_id')) {
             abort(403, 'Error');
         }
 
-        if(!$request->has('client')) {
+        if (!$request->has('client')) {
             abort(403, 'Error');
+        }
+
+        if (!$request->has('addresses') || empty($request->get('addresses'))) {
+            notify()->flash('Erro', 'error', [
+              'text' => 'Por favor informe o endereço para a prestação do Serviço.'
+            ]);
+
+            return back();
         }
 
         $client = Client::uuid($request->get('client'));
@@ -90,33 +100,32 @@ class ServiceOrderController extends Controller
           'user_id' => $user->id
         ]);
 
-        $services = $data['services'];
+        $services = $data['services'] ?? [];
 
-        if($request->filled('services')) {
-        foreach ($services as $key => $service) {
-            $service = Service::uuid($service);
+        if ($request->filled('services')) {
+            foreach ($services as $key => $service) {
+                $service = Service::uuid($service);
 
-            ServiceOrderItem::create([
+                ServiceOrderItem::create([
               'service_id' => $service->id,
               'service_order_id' => $serviceOrder->id,
               'status_id' => 1
             ]);
 
-            foreach ($service->ticketTypes as $key => $ticketType) {
-                ServiceOrderTicket::create([
+                foreach ($service->ticketTypes as $key => $ticketType) {
+                    ServiceOrderTicket::create([
                     'service_order_id' => $serviceOrder->id,
                     'ticket_type_id' => $ticketType->type->id,
                 ]);
-            }
+                }
 
-            foreach ($service->courses as $key => $trainingCourse) {
-                ServiceOrderTrainingCourse::create([
+                foreach ($service->courses as $key => $trainingCourse) {
+                    ServiceOrderTrainingCourse::create([
                     'service_order_id' => $serviceOrder->id,
                     'course_id' => $trainingCourse->course->id,
                 ]);
+                }
             }
-
-        }
         }
 
         $addresses = $data['addresses'];
@@ -169,7 +178,7 @@ class ServiceOrderController extends Controller
         $order = ServiceOrder::uuid($id);
         $user = $request->user();
 
-        if($order->status_id == 1) {
+        if ($order->status_id == 1) {
             $order->status_id = 3;
             $order->save();
 
@@ -179,7 +188,6 @@ class ServiceOrderController extends Controller
               'status_id' => 1,
               'user_id' => $user->id
             ]);
-
         }
 
         return view('service-order.show', compact('order'));
@@ -210,8 +218,7 @@ class ServiceOrderController extends Controller
         $data = $request->request->all();
         $user = $request->user();
 
-        if(!$request->has('contract_id')) {
-
+        if (!$request->has('contract_id')) {
             notify()->flash('Error', 'error', [
               'text' => 'Tipo de Contrado não informado.'
             ]);
@@ -219,8 +226,7 @@ class ServiceOrderController extends Controller
             return back();
         }
 
-        if(!$request->has('client')) {
-
+        if (!$request->has('client')) {
             notify()->flash('Error', 'error', [
               'text' => 'Cliente não informado.'
             ]);
@@ -234,9 +240,9 @@ class ServiceOrderController extends Controller
         $data['status_id'] = 1;
         $data['contact_id'] = null;
 
-        if($request->filled('contact_id')) {
-          $employee = Employee::uuid($request->get('contact_id'));
-          $data['contact_id'] = $employee->id;
+        if ($request->filled('contact_id')) {
+            $employee = Employee::uuid($request->get('contact_id'));
+            $data['contact_id'] = $employee->id;
         }
 
         $serviceOrder = ServiceOrder::uuid($id);
@@ -245,58 +251,50 @@ class ServiceOrderController extends Controller
         $services = $data['services'];
         $addresses = $data['addresses'];
 
-        $serviceOrder->services->map(function($service) use($services) {
-            if(!in_array($service->service->uuid, $services)) {
+        $serviceOrder->services->map(function ($service) use ($services) {
+            if (!in_array($service->service->uuid, $services)) {
                 $service->delete();
             }
         });
 
-        $serviceOrder->addresses->map(function($address) use($addresses) {
-            if(!in_array($address->address->uuid, $addresses)) {
+        $serviceOrder->addresses->map(function ($address) use ($addresses) {
+            if (!in_array($address->address->uuid, $addresses)) {
                 $address->delete();
             }
         });
 
         foreach ($addresses as $key => $address) {
-
             $address = Address::uuid($address);
 
             $serviceOrderAddress = ServiceOrderAddress::where('address_id', $address->id)
                   ->where('service_order_id', $serviceOrder->id)
                   ->first();
 
-            if(!$serviceOrderAddress) {
-
-              ServiceOrderAddress::create([
+            if (!$serviceOrderAddress) {
+                ServiceOrderAddress::create([
                 'service_order_id' => $serviceOrder->id,
                 'client_id' => $client->id,
                 'address_id' => $address->id,
               ]);
-
             } else {
-
-              $serviceOrderAddress->update([
+                $serviceOrderAddress->update([
                 'address_id' => $address->id,
                 'service_order_id' => $serviceOrder->id,
               ]);
-
             }
-
-
         }
 
         foreach ($services as $key => $service) {
-
             $service = Service::uuid($service);
 
-            $serviceOrder->tickets->map(function($ticket) use($service) {
-                if(!in_array($ticket->ticket_type_id, $service->ticketTypes->pluck('ticket_type_id')->toArray())) {
+            $serviceOrder->tickets->map(function ($ticket) use ($service) {
+                if (!in_array($ticket->ticket_type_id, $service->ticketTypes->pluck('ticket_type_id')->toArray())) {
                     $ticket->delete();
                 }
             });
 
-            $serviceOrder->courses->map(function($course) use($service) {
-                if(!in_array($course->course_id, $service->courses->pluck('course_id')->toArray())) {
+            $serviceOrder->courses->map(function ($course) use ($service) {
+                if (!in_array($course->course_id, $service->courses->pluck('course_id')->toArray())) {
                     $course->delete();
                 }
             });
@@ -322,7 +320,7 @@ class ServiceOrderController extends Controller
                 ->where('active', true)
                 ->first();
 
-            if($serviceValues) {
+            if ($serviceValues) {
                 $originalValue = $serviceValues->value;
             }
 
@@ -330,28 +328,22 @@ class ServiceOrderController extends Controller
                   ->where('service_order_id', $serviceOrder->id)
                   ->first();
 
-            if(!$serviceOrderItem) {
-
-              ServiceOrderItem::create([
+            if (!$serviceOrderItem) {
+                ServiceOrderItem::create([
                 'service_id' => $service->id,
                 'service_order_id' => $serviceOrder->id,
                 'original_value' => $originalValue,
                 'value' => $originalValue,
                 'status_id' => 1
               ]);
-
             } else {
-
-              $serviceOrderItem->update([
+                $serviceOrderItem->update([
                 'service_id' => $service->id,
                 'service_order_id' => $serviceOrder->id,
                 'original_value' => $originalValue,
                 'value' => $originalValue,
               ]);
-
             }
-
-
         }
 
         ServiceOrderLog::create([
@@ -374,35 +366,24 @@ class ServiceOrderController extends Controller
         $user = $request->user();
 
         try {
-
             $serviceOrder = ServiceOrder::uuid($id);
 
             $name = $data['name'];
             $value = $data['value'];
             $type = $data['type'];
 
-            if($value == null) {
-
-              $serviceOrder->{$name} = null;
-
+            if ($value == null) {
+                $serviceOrder->{$name} = null;
             } elseif ($type == 'date') {
-
-              $date = \DateTime::createFromFormat('d/m/Y', $value);
-              $serviceOrder->{$name} = $date;
-
+                $date = \DateTime::createFromFormat('d/m/Y', $value);
+                $serviceOrder->{$name} = $date;
             } elseif ($type == 'money') {
-
-              $value = Helper::brl2decimal($value);
-              $serviceOrder->{$name} = $value;
-
+                $value = Helper::brl2decimal($value);
+                $serviceOrder->{$name} = $value;
             } elseif ($type == 'boolean') {
-
-              $serviceOrder->{$name} = (boolean)!$serviceOrder->{$name};
-
+                $serviceOrder->{$name} = (boolean)!$serviceOrder->{$name};
             } else {
-
-              $serviceOrder->{$name} = $value;
-
+                $serviceOrder->{$name} = $value;
             }
 
             $serviceOrder->save();
@@ -418,16 +399,12 @@ class ServiceOrderController extends Controller
               'success' => true,
               'message' => 'OS atualizada com sucesso.',
             ]);
-
-        } catch(\Exception $e) {
-
-          return response()->json([
+        } catch (\Exception $e) {
+            return response()->json([
             'success' => false,
             'message' => 'Ocorreu um erro inesperado.',
           ]);
-
         }
-
     }
 
     public function updateItemByAjax(Request $request, $id)
@@ -436,35 +413,24 @@ class ServiceOrderController extends Controller
         $user = $request->user();
 
         try {
-
             $serviceOrderItem = ServiceOrderItem::uuid($id);
 
             $name = $data['name'];
             $value = $data['value'];
             $type = $data['type'];
 
-            if($value == null) {
-
-              $serviceOrderItem->{$name} = null;
-
+            if ($value == null) {
+                $serviceOrderItem->{$name} = null;
             } elseif ($type == 'date') {
-
-              $date = \DateTime::createFromFormat('d/m/Y', $value);
-              $serviceOrderItem->{$name} = $date;
-
+                $date = \DateTime::createFromFormat('d/m/Y', $value);
+                $serviceOrderItem->{$name} = $date;
             } elseif ($type == 'money') {
-
-              $value = Helper::brl2decimal($value);
-              $serviceOrderItem->{$name} = $value;
-
+                $value = Helper::brl2decimal($value);
+                $serviceOrderItem->{$name} = $value;
             } elseif ($type == 'boolean') {
-
-              $serviceOrderItem->{$name} = (boolean)!$serviceOrderItem->{$name};
-
+                $serviceOrderItem->{$name} = (boolean)!$serviceOrderItem->{$name};
             } else {
-
-              $serviceOrderItem->{$name} = $value;
-
+                $serviceOrderItem->{$name} = $value;
             }
 
             $serviceOrderItem->save();
@@ -473,15 +439,11 @@ class ServiceOrderController extends Controller
               'success' => true,
               'message' => 'Item atualizado com sucesso.',
             ]);
-
-        } catch(\Exception $e) {
-
-          return response()->json([
+        } catch (\Exception $e) {
+            return response()->json([
             'success' => false,
             'message' => 'Ocorreu um erro inesperado.',
           ]);
-
         }
-
     }
 }

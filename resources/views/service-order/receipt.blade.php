@@ -96,29 +96,6 @@
       <td style="width:80px">Valor</td>
     </tr>
 
-    @foreach($order->services as $service)
-      @foreach($service->service->values->where('contract_id', $order->contract_id) as $value)
-      <tr>
-          <td colspan="3">{{ $service->service->name }}
-            @if($service->observation)
-            <br/>
-            <small style="font-size:9px">Observação: {{ $service->observation ?? '-' }}</small>
-            @endif
-            @if($service->user)
-            <br/>
-            <small style="font-size:9px">Executor: {{ $service->user ? $service->user->person->name : '' }}</small>
-            @endif
-          </td>
-          <td>{{ $service->deadline ? $service->deadline->format('d/m/Y') : '' }}</td>
-          <td>{{ $service->quantity ?? 1}}</td>
-          @if(!request()->has('without_value'))
-            <td>{{ number_format($service->value, 2, ',', '.') }}</td>
-          @else
-            <td>0,00</td>
-          @endif
-      </tr>
-      @endforeach
-    @endforeach
 
     <tr>
         <td class="text-center" colspan="6"></td>

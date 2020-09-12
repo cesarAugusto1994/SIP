@@ -34,7 +34,7 @@
       <div class="card">
           <div class="card-block">
               <div class=" waves-effect waves-light m-r-10 v-middle issue-btn-group">
-                  @permission('create.ordens.de.servico')
+                  @permission('create.ordem.de.servico')
                     <a class="btn btn-sm btn-success btn-new-tickets waves-effect waves-light m-r-15 m-b-5 m-t-5" href="{{route('service-order.create')}}"><i class="icofont icofont-paper-plane"></i> Nova Ordem de Serviço</a>
                   @endpermission
               </div>
